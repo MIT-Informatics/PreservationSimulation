@@ -1,0 +1,19 @@
+#!/bin/sh
+
+# run shelf sim from the latest versions of files
+# eventually, need a slightly more sophisticated way to find the 
+# highest version number of each file.  
+# for the moment, hack.  
+
+#cp client02.py client.py
+for ff in client server util readin main; do
+    newffull=$(ls $ff*.py | sort | tail -1 | sed s/\\r//);
+    cp -v $newffull $ff.py ;
+done
+
+#cp server02.py server.py
+#cp util01.py util.py
+#cp main01.py main.py
+#cp globaldata01.py globaldata.py
+
+#python main.py
