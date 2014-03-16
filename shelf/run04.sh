@@ -11,9 +11,15 @@
 # Maybe there's a switch for this that I haven't read about.
 # For the moment, hack.  
 
-if [ "$1" = "help" ] || [ "$1" = "-help" ]
+if [ "$1" = "help" ] || [ "$1" = "-help" ] || [ "$1" = "-h" ] || [ "$1" = "?" ]
 then
-    echo "Usage: $0 [simlength [randomseed [csvdirectory]]]"
+    echo "Usage: $0 [simlength [randomseed [csvdirectory [logfile [loglevel]]]]]"
+    echo "Defaults:"
+    echo "  simlength       0 => use value in parameter file"
+    echo "  randomseed      0 => use random system clock value, different each time"
+    echo "  csvdirectory    '.' i.e., current dir"
+    echo "  logfile         '-' i.e., stderr on console"
+    echo "  loglevel        INFO, may also use DEBUG"
     exit 0
 fi
 
@@ -23,9 +29,11 @@ fi
 #cp util01.py util.py
 #cp main01.py main.py
 #cp globaldata01.py globaldata.py
+
+# Improved version: 
 for ff in client server util readin main globaldata logoutput NewTraceFac repair; do
     newffull=$(ls $ff*.py | sort | tail -1 | sed s/\\r//);
     cp -v $newffull $ff.py ;
 done
 
-python main.py $1 $2 $3 $4 $5
+python main.py $1 $2 $3 $4 $5 $6 $7 $8

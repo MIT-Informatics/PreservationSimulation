@@ -63,7 +63,7 @@ class P(object):
 
     # Log file location and level.
     LOG_LEVEL = "NOTSET"
-    LOG_FILE = None
+    LOG_FILE = "-"
 
     # Seed for random number generators.  Use a constant by default
     #  to permit consistent regression testing.

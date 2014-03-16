@@ -1,162 +1,158 @@
-`client05.py' -> `client.py'
-`server05.py' -> `server.py'
+`client06.py' -> `client.py'
+`server06.py' -> `server.py'
 `util01.py' -> `util.py'
-`readin02.py' -> `readin.py'
-`main04.py' -> `main.py'
-`globaldata02.py' -> `globaldata.py'
-20140312_111940 1       DEBUG info level 3 targets 1 facil NONE +FAIL +MAIN +SHOW
-20140312_111940 0 MAIN  proc Document Preservation simulation 
-20140312_111940 1 MAIN  entr makeServers args=({'Google Drive2': [[2, 40000000]], 'OneDrive Plus': [[2, 20000000]], 'AWS Euro Plus': [[2, 30000000]], 'Amazon West2': [[2, 30000000]], 'Amazon East2': [[2, 20000000]]},),kw={}
-20140312_111940 1 SHOW  entr __init__ args=(<server.CServer object at 0x6ffffcece50>, 'Google Drive2', 2, 40000000),kw={}
-20140312_111940 1 SHOW  exit __init__ result|None|
-20140312_111940 1 SHOW  entr __init__ args=(<server.CServer object at 0x6ffffcec2d0>, 'OneDrive Plus', 2, 20000000),kw={}
-20140312_111940 1 SHOW  exit __init__ result|None|
-20140312_111940 1 SHOW  entr __init__ args=(<server.CServer object at 0x6ffffcec6d0>, 'AWS Euro Plus', 2, 30000000),kw={}
-20140312_111940 1 SHOW  exit __init__ result|None|
-20140312_111940 1 SHOW  entr __init__ args=(<server.CServer object at 0x6ffffcece10>, 'Amazon West2', 2, 30000000),kw={}
-20140312_111940 1 SHOW  exit __init__ result|None|
-20140312_111940 1 SHOW  entr __init__ args=(<server.CServer object at 0x6ffffcec3d0>, 'Amazon East2', 2, 20000000),kw={}
-20140312_111940 1 SHOW  exit __init__ result|None|
-20140312_111940 1 MAIN  exit makeServers result|{2: [['Google Drive2', 'L0'], ['OneDrive Plus', 'L1'], ['AWS Euro Plus', 'L2'], ['Amazon West2', 'L3'], ['Amazon East2', 'L4']]}|
-20140312_111940 1 MAIN  entr makeClients args=({'MIT': [['Books', 2, 100000]]},),kw={}
-20140312_111942 1 SHOW  entr mPlaceCollection args=(<client.CClient object at 0x6ffffcec950>, 'C0'),kw={}
-20140312_111942 3 SHOW  proc mPlaceCollection2 client|T0| send coll|C0| to server|L0|
-20140312_111942 1 SHOW  entr __init__ args=(<server.CShelf object at 0x6fffd0e3b90>, <server.CServer object at 0x6ffffcece50>, 2, 40000000),kw={}
-20140312_111942 1 SHOW  exit __init__ result|None|
-20140312_111943 1 SHOW  entr __init__ args=(<server.CShelf object at 0x6fffd0e3c50>, <server.CServer object at 0x6ffffcece50>, 2, 40000000),kw={}
-20140312_111943 1 SHOW  exit __init__ result|None|
-20140312_111944 3 SHOW  proc mPlaceCollection2 client|T0| send coll|C0| to server|L3|
-20140312_111944 1 SHOW  entr __init__ args=(<server.CShelf object at 0x6fffd0e3d90>, <server.CServer object at 0x6ffffcece10>, 2, 30000000),kw={}
-20140312_111944 1 SHOW  exit __init__ result|None|
-20140312_111945 1 SHOW  entr __init__ args=(<server.CShelf object at 0x6fffd0e3ed0>, <server.CServer object at 0x6ffffcece10>, 2, 30000000),kw={}
-20140312_111945 1 SHOW  exit __init__ result|None|
-20140312_111946 3 SHOW  proc mPlaceCollection2 client|T0| send coll|C0| to server|L2|
-20140312_111946 1 SHOW  entr __init__ args=(<server.CShelf object at 0x6fffd0e9090>, <server.CServer object at 0x6ffffcec6d0>, 2, 30000000),kw={}
-20140312_111946 1 SHOW  exit __init__ result|None|
-20140312_111947 1 SHOW  entr __init__ args=(<server.CShelf object at 0x6fffd0e9190>, <server.CServer object at 0x6ffffcec6d0>, 2, 30000000),kw={}
-20140312_111947 1 SHOW  exit __init__ result|None|
-20140312_111948 3 SHOW  proc mPlaceCollection2 client|T0| send coll|C0| to server|L1|
-20140312_111948 1 SHOW  entr __init__ args=(<server.CShelf object at 0x6fffd0e92d0>, <server.CServer object at 0x6ffffcec2d0>, 2, 20000000),kw={}
-20140312_111948 1 SHOW  exit __init__ result|None|
-20140312_111949 1 SHOW  entr __init__ args=(<server.CShelf object at 0x6fffd0e9410>, <server.CServer object at 0x6ffffcec2d0>, 2, 20000000),kw={}
-20140312_111949 1 SHOW  exit __init__ result|None|
-20140312_111950 1 SHOW  entr __init__ args=(<server.CShelf object at 0x6fffd0e9550>, <server.CServer object at 0x6ffffcec2d0>, 2, 20000000),kw={}
-20140312_111950 1 SHOW  exit __init__ result|None|
-20140312_111950 3 SHOW  proc mPlaceCollection2 client|T0| send coll|C0| to server|L4|
-20140312_111950 1 SHOW  entr __init__ args=(<server.CShelf object at 0x6fffd0e9690>, <server.CServer object at 0x6ffffcec3d0>, 2, 20000000),kw={}
-20140312_111950 1 SHOW  exit __init__ result|None|
-20140312_111951 1 SHOW  entr __init__ args=(<server.CShelf object at 0x6fffd0e97d0>, <server.CServer object at 0x6ffffcec3d0>, 2, 20000000),kw={}
-20140312_111951 1 SHOW  exit __init__ result|None|
-20140312_111952 1 SHOW  entr __init__ args=(<server.CShelf object at 0x6fffd0e9910>, <server.CServer object at 0x6ffffcec3d0>, 2, 20000000),kw={}
-20140312_111952 1 SHOW  exit __init__ result|None|
-20140312_111952 1 SHOW  exit mPlaceCollection result|(['Google Drive2', 'L0'], ['Amazon West2', 'L3'], ['AWS Euro Plus', 'L2'], ['OneDrive Plus', 'L1'], ['Amazon East2', 'L4'])|
-20140312_111952 1 MAIN  exit makeClients result|[<client.CClient object at 0x6ffffcec950>]|
-20140312_111952 0 MAIN  proc Begin run time|0|
-20140312_111952 3 FAIL  proc t|2613| sector failure server|L0| qual|2| shelf|H1| doc|None|
-20140312_111952 3 FAIL  proc t|2784| sector failure server|L2| qual|2| shelf|H5| doc|D82171|
-20140312_111952 3 FAIL  proc t|3519| sector failure server|L0| qual|2| shelf|H0| doc|D26306|
-20140312_111952 3 FAIL  proc t|4479| sector failure server|L0| qual|2| shelf|H0| doc|D30020|
-20140312_111952 3 FAIL  proc t|5041| sector failure server|L2| qual|2| shelf|H5| doc|D60498|
-20140312_111952 3 FAIL  proc t|5091| sector failure server|L4| qual|2| shelf|H10| doc|D77417|
-20140312_111952 3 FAIL  proc t|5451| sector failure server|L0| qual|2| shelf|H1| doc|None|
-20140312_111952 3 FAIL  proc t|6888| sector failure server|L2| qual|2| shelf|H4| doc|None|
-20140312_111952 3 FAIL  proc t|7398| sector failure server|L3| qual|2| shelf|H2| doc|D21079|
-20140312_111952 3 FAIL  proc t|8824| sector failure server|L4| qual|2| shelf|H9| doc|D28240|
-20140312_111952 3 FAIL  proc t|10660| sector failure server|L4| qual|2| shelf|H9| doc|D9927|
-20140312_111955 3 FAIL  proc t|13369| shelf failure server|L1| qual|2| shelf|H6| docs|40029|
-20140312_111955 3 FAIL  proc t|17126| sector failure server|L4| qual|2| shelf|H10| doc|D44961|
-20140312_111955 3 FAIL  proc t|18170| sector failure server|L4| qual|2| shelf|H9| doc|D12562|
-20140312_111955 3 FAIL  proc t|20865| sector failure server|L0| qual|2| shelf|H1| doc|D95960|
-20140312_111955 3 FAIL  proc t|23005| sector failure server|L4| qual|2| shelf|H9| doc|D12437|
-20140312_111955 3 FAIL  proc t|24165| sector failure server|L3| qual|2| shelf|H3| doc|None|
-20140312_111955 3 FAIL  proc t|24606| sector failure server|L3| qual|2| shelf|H2| doc|D24884|
-20140312_111955 3 FAIL  proc t|27329| sector failure server|L3| qual|2| shelf|H2| doc|D24031|
-20140312_111955 3 FAIL  proc t|29553| sector failure server|L0| qual|2| shelf|H1| doc|None|
-20140312_111955 3 FAIL  proc t|33047| sector failure server|L3| qual|2| shelf|H3| doc|None|
-20140312_111955 3 FAIL  proc t|33247| sector failure server|L0| qual|2| shelf|H1| doc|None|
-20140312_111955 3 FAIL  proc t|33323| sector failure server|L4| qual|2| shelf|H10| doc|D47902|
-20140312_111955 3 FAIL  proc t|36114| sector failure server|L1| qual|2| shelf|H7| doc|D54219|
-20140312_111955 3 FAIL  proc t|38455| sector failure server|L2| qual|2| shelf|H5| doc|None|
-20140312_111955 3 FAIL  proc t|42853| sector failure server|L2| qual|2| shelf|H4| doc|D6347|
-20140312_111955 3 FAIL  proc t|43505| sector failure server|L3| qual|2| shelf|H2| doc|D1909|
-20140312_111955 3 FAIL  proc t|44112| sector failure server|L2| qual|2| shelf|H4| doc|None|
-20140312_111955 3 FAIL  proc t|44998| sector failure server|L2| qual|2| shelf|H5| doc|D73081|
-20140312_111955 3 FAIL  proc t|45428| sector failure server|L4| qual|2| shelf|H9| doc|D15442|
-20140312_111955 3 FAIL  proc t|46156| sector failure server|L1| qual|2| shelf|H7| doc|D61278|
-20140312_111955 3 FAIL  proc t|48010| sector failure server|L1| qual|2| shelf|H6| doc|None|
-20140312_112001 3 FAIL  proc t|48301| shelf failure server|L0| qual|2| shelf|H0| docs|79921|
-20140312_112001 3 FAIL  proc t|48591| sector failure server|L0| qual|2| shelf|H0| doc|None|
-20140312_112026 3 FAIL  proc t|48957| shelf failure server|L4| qual|2| shelf|H11| docs|20484|
-20140312_112038 3 FAIL  proc t|49007| shelf failure server|L1| qual|2| shelf|H8| docs|20484|
-20140312_112038 3 FAIL  proc t|49176| sector failure server|L3| qual|2| shelf|H3| doc|D64164|
-20140312_112038 3 FAIL  proc t|49585| sector failure server|L2| qual|2| shelf|H4| doc|None|
-20140312_112038 3 FAIL  proc t|51182| sector failure server|L1| qual|2| shelf|H8| doc|None|
-20140312_112038 3 FAIL  proc t|51515| sector failure server|L2| qual|2| shelf|H5| doc|D63859|
-20140312_112038 3 FAIL  proc t|51835| sector failure server|L4| qual|2| shelf|H11| doc|None|
-20140312_112038 3 FAIL  proc t|56155| sector failure server|L2| qual|2| shelf|H4| doc|None|
-20140312_112038 3 FAIL  proc t|60736| sector failure server|L2| qual|2| shelf|H4| doc|D19679|
-20140312_112102 3 FAIL  proc t|67177| shelf failure server|L4| qual|2| shelf|H10| docs|39891|
-20140312_112104 3 FAIL  proc t|67549| shelf failure server|L4| qual|2| shelf|H9| docs|40024|
-20140312_112104 3 FAIL  proc t|70390| sector failure server|L4| qual|2| shelf|H10| doc|None|
-20140312_112140 3 FAIL  proc t|71813| shelf failure server|L2| qual|2| shelf|H5| docs|40529|
-20140312_112140 3 FAIL  proc t|72998| sector failure server|L1| qual|2| shelf|H7| doc|D62083|
-20140312_112140 3 FAIL  proc t|80267| sector failure server|L4| qual|2| shelf|H9| doc|None|
-20140312_112140 3 FAIL  proc t|81754| sector failure server|L0| qual|2| shelf|H1| doc|None|
-20140312_112140 3 FAIL  proc t|85578| sector failure server|L3| qual|2| shelf|H3| doc|D64144|
-20140312_112140 3 FAIL  proc t|86181| sector failure server|L0| qual|2| shelf|H1| doc|None|
-20140312_112140 3 FAIL  proc t|86296| sector failure server|L2| qual|2| shelf|H4| doc|None|
-20140312_112140 3 FAIL  proc t|90288| sector failure server|L2| qual|2| shelf|H5| doc|None|
-20140312_112140 3 FAIL  proc t|91122| sector failure server|L3| qual|2| shelf|H2| doc|None|
-20140312_112142 3 FAIL  proc t|97192| shelf failure server|L1| qual|2| shelf|H7| docs|39891|
-20140312_112142 3 FAIL  proc t|99068| sector failure server|L2| qual|2| shelf|H4| doc|D4428|
-20140312_112142 3 FAIL  proc t|100030| sector failure server|L1| qual|2| shelf|H7| doc|None|
-20140312_112218 3 FAIL  proc t|104034| shelf failure server|L3| qual|2| shelf|H3| docs|40531|
-20140312_112218 3 FAIL  proc t|107390| sector failure server|L3| qual|2| shelf|H2| doc|None|
-20140312_112218 3 FAIL  proc t|108788| sector failure server|L0| qual|2| shelf|H1| doc|None|
-20140312_112218 3 FAIL  proc t|126993| sector failure server|L3| qual|2| shelf|H3| doc|None|
-20140312_112218 3 FAIL  proc t|128606| sector failure server|L2| qual|2| shelf|H4| doc|D36748|
-20140312_112218 3 FAIL  proc t|136804| sector failure server|L2| qual|2| shelf|H4| doc|D37199|
-20140312_112218 3 FAIL  proc t|136925| sector failure server|L2| qual|2| shelf|H4| doc|D28679|
-20140312_112218 3 FAIL  proc t|138976| sector failure server|L3| qual|2| shelf|H2| doc|D17006|
-20140312_112218 3 FAIL  proc t|138984| sector failure server|L3| qual|2| shelf|H2| doc|D4571|
-20140312_112218 3 FAIL  proc t|156729| sector failure server|L0| qual|2| shelf|H1| doc|None|
-20140312_112219 3 FAIL  proc t|158430| shelf failure server|L0| qual|2| shelf|H1| docs|20483|
-20140312_112219 3 FAIL  proc t|163204| sector failure server|L0| qual|2| shelf|H1| doc|None|
-20140312_112219 3 FAIL  proc t|175073| sector failure server|L2| qual|2| shelf|H4| doc|D11868|
-20140312_112219 3 FAIL  proc t|178506| sector failure server|L2| qual|2| shelf|H4| doc|D34655|
-20140312_112219 3 FAIL  proc t|191909| sector failure server|L2| qual|2| shelf|H4| doc|D36840|
-20140312_112219 3 FAIL  proc t|205345| sector failure server|L2| qual|2| shelf|H4| doc|D3133|
-20140312_112219 3 FAIL  proc t|206250| sector failure server|L2| qual|2| shelf|H4| doc|None|
-20140312_112219 3 FAIL  proc t|209253| sector failure server|L2| qual|2| shelf|H4| doc|D10684|
-20140312_112219 3 FAIL  proc t|213256| sector failure server|L3| qual|2| shelf|H2| doc|D6366|
-20140312_112219 3 FAIL  proc t|231221| sector failure server|L3| qual|2| shelf|H2| doc|D9344|
-20140312_112219 3 FAIL  proc t|246209| sector failure server|L3| qual|2| shelf|H2| doc|D38654|
-20140312_112222 3 FAIL  proc t|252719| shelf failure server|L3| qual|2| shelf|H2| docs|59865|
-20140312_112222 3 FAIL  proc t|256367| sector failure server|L2| qual|2| shelf|H4| doc|None|
-20140312_112222 3 FAIL  proc t|263196| sector failure server|L3| qual|2| shelf|H2| doc|None|
-20140312_112222 3 FAIL  proc t|270743| sector failure server|L2| qual|2| shelf|H4| doc|D33980|
-20140312_112222 3 FAIL  proc t|288393| sector failure server|L2| qual|2| shelf|H4| doc|D36309|
-20140312_112222 3 FAIL  proc t|293106| sector failure server|L2| qual|2| shelf|H4| doc|None|
-20140312_112222 3 FAIL  proc t|342232| sector failure server|L2| qual|2| shelf|H4| doc|D8557|
-20140312_112222 3 FAIL  proc t|348308| sector failure server|L2| qual|2| shelf|H4| doc|D30642|
-20140312_112222 3 FAIL  proc t|437300| sector failure server|L2| qual|2| shelf|H4| doc|D37743|
-20140312_112222 3 FAIL  proc t|439967| sector failure server|L2| qual|2| shelf|H4| doc|D18578|
-20140312_112222 3 FAIL  proc t|458049| sector failure server|L2| qual|2| shelf|H4| doc|D15114|
-20140312_112222 3 FAIL  proc t|466362| sector failure server|L2| qual|2| shelf|H4| doc|D6954|
-20140312_112222 3 FAIL  proc t|471558| sector failure server|L2| qual|2| shelf|H4| doc|None|
-20140312_112222 3 FAIL  proc t|482473| sector failure server|L2| qual|2| shelf|H4| doc|None|
-20140312_112222 3 FAIL  proc t|536110| sector failure server|L2| qual|2| shelf|H4| doc|D15863|
-20140312_112222 3 FAIL  proc t|554055| sector failure server|L2| qual|2| shelf|H4| doc|D19888|
-20140312_112222 3 FAIL  proc t|607042| sector failure server|L2| qual|2| shelf|H4| doc|None|
-20140312_112222 3 FAIL  proc t|624553| sector failure server|L2| qual|2| shelf|H4| doc|D30143|
-20140312_112222 3 FAIL  proc t|626804| sector failure server|L2| qual|2| shelf|H4| doc|None|
-20140312_112222 3 FAIL  proc t|631193| sector failure server|L2| qual|2| shelf|H4| doc|D31424|
-20140312_112222 3 FAIL  proc t|632940| sector failure server|L2| qual|2| shelf|H4| doc|None|
-20140312_112222 3 FAIL  proc t|669333| sector failure server|L2| qual|2| shelf|H4| doc|D1900|
-20140312_112222 3 FAIL  proc t|676299| sector failure server|L2| qual|2| shelf|H4| doc|D9539|
-20140312_112222 3 FAIL  proc t|679870| sector failure server|L2| qual|2| shelf|H4| doc|D6656|
-20140312_112222 3 FAIL  proc t|684515| sector failure server|L2| qual|2| shelf|H4| doc|None|
-20140312_112222 3 FAIL  proc t|689860| sector failure server|L2| qual|2| shelf|H4| doc|D19205|
-20140312_112225 3 FAIL  proc t|696754| shelf failure server|L2| qual|2| shelf|H4| docs|59847|
-20140312_112225 3 FAIL  proc t|748892| sector failure server|L2| qual|2| shelf|H4| doc|None|
-20140312_112225 0 MAIN  proc End simulation timenow|1000000| lastevent|748892| hidoc|D100406| hicoll|C0| hishelf|H11|
+`readin03.py' -> `readin.py'
+`main06.py' -> `main.py'
+`globaldata03.py' -> `globaldata.py'
+`logoutput06.py' -> `logoutput.py'
+`NewTraceFac08.py' -> `NewTraceFac.py'
+`repair00.py' -> `repair.py'
+20140316_183222 MAIN INFO - Simulation parameters
+20140316_183222 PARAMS INFO - begin simulation paramdir|big-q2| seed|1| timelimit|1000000|
+20140316_183222 PARAMS INFO - logfile|-| loglevel|INFO|
+20140316_183222 PARAMS INFO - client|MIT| collection|Books| quality|2| ndocs|100000|
+20140316_183222 PARAMS INFO - server|Google Drive2| quality|2| shelfsize|40000000|
+20140316_183222 PARAMS INFO - server|OneDrive Plus| quality|2| shelfsize|20000000|
+20140316_183222 PARAMS INFO - server|AWS Euro Plus| quality|2| shelfsize|30000000|
+20140316_183222 PARAMS INFO - server|Amazon West2| quality|2| shelfsize|30000000|
+20140316_183222 PARAMS INFO - server|Amazon East2| quality|2| shelfsize|20000000|
+20140316_183222 PARAMS INFO - quality|1| smallfailrate|10000| shelffailrate|100000|
+20140316_183222 PARAMS INFO - quality|2| smallfailrate|20000| shelffailrate|200000|
+20140316_183222 PARAMS INFO - quality|3| smallfailrate|40000| shelffailrate|400000|
+20140316_183222 PARAMS INFO - quality|4| smallfailrate|80000| shelffailrate|800000|
+20140316_183222 PARAMS INFO - quality|5| smallfailrate|160000| shelffailrate|1600000|
+20140316_183222 MAIN INFO - created server|L0|
+20140316_183222 MAIN INFO - created server|L1|
+20140316_183222 MAIN INFO - created server|L2|
+20140316_183222 MAIN INFO - created server|L3|
+20140316_183222 MAIN INFO - created server|L4|
+20140316_183224 SERVER INFO - created storage shelf|H0|
+20140316_183225 SERVER INFO - created storage shelf|H1|
+20140316_183225 CLIENT INFO - client|T0| placed collection|C0| to server|L0|
+20140316_183225 SERVER INFO - created storage shelf|H2|
+20140316_183226 SERVER INFO - created storage shelf|H3|
+20140316_183226 CLIENT INFO - client|T0| placed collection|C0| to server|L3|
+20140316_183226 SERVER INFO - created storage shelf|H4|
+20140316_183227 SERVER INFO - created storage shelf|H5|
+20140316_183227 CLIENT INFO - client|T0| placed collection|C0| to server|L2|
+20140316_183227 SERVER INFO - created storage shelf|H6|
+20140316_183228 SERVER INFO - created storage shelf|H7|
+20140316_183228 SERVER INFO - created storage shelf|H8|
+20140316_183229 CLIENT INFO - client|T0| placed collection|C0| to server|L1|
+20140316_183229 SERVER INFO - created storage shelf|H9|
+20140316_183229 SERVER INFO - created storage shelf|H10|
+20140316_183230 SERVER INFO - created storage shelf|H11|
+20140316_183230 CLIENT INFO - client|T0| placed collection|C0| to server|L4|
+20140316_183230 MAIN INFO - created client|T0|
+20140316_183230 MAIN INFO - begin run
+20140316_183230 SERVER INFO - small error time|2613| server|L0| shelf|H1| hidden failure in doc|None|
+20140316_183230 SERVER INFO - small error time|2784| server|L2| shelf|H5| hidden failure in doc|D82171|
+20140316_183230 SERVER INFO - small error time|3519| server|L0| shelf|H0| hidden failure in doc|D26306|
+20140316_183230 SERVER INFO - small error time|4479| server|L0| shelf|H0| hidden failure in doc|D30020|
+20140316_183230 SERVER INFO - small error time|5041| server|L2| shelf|H5| hidden failure in doc|D60498|
+20140316_183230 SERVER INFO - small error time|5091| server|L4| shelf|H10| hidden failure in doc|D77417|
+20140316_183230 SERVER INFO - small error time|5451| server|L0| shelf|H1| hidden failure in doc|None|
+20140316_183230 SERVER INFO - small error time|6888| server|L2| shelf|H4| hidden failure in doc|None|
+20140316_183230 SERVER INFO - small error time|7398| server|L3| shelf|H2| hidden failure in doc|D21079|
+20140316_183230 SERVER INFO - small error time|8824| server|L4| shelf|H9| hidden failure in doc|D28240|
+20140316_183230 SERVER INFO - small error time|10660| server|L4| shelf|H9| hidden failure in doc|D9927|
+20140316_183233 SERVER INFO - storage shelf failed time|13369| server|L1| shelf|H6| lost |40029| docs
+20140316_183233 SERVER INFO - small error time|17126| server|L4| shelf|H10| hidden failure in doc|D44961|
+20140316_183233 SERVER INFO - small error time|18170| server|L4| shelf|H9| hidden failure in doc|D12562|
+20140316_183233 SERVER INFO - small error time|20865| server|L0| shelf|H1| hidden failure in doc|D95960|
+20140316_183233 SERVER INFO - small error time|23005| server|L4| shelf|H9| hidden failure in doc|D12437|
+20140316_183233 SERVER INFO - small error time|24165| server|L3| shelf|H3| hidden failure in doc|None|
+20140316_183233 SERVER INFO - small error time|24606| server|L3| shelf|H2| hidden failure in doc|D24884|
+20140316_183233 SERVER INFO - small error time|27329| server|L3| shelf|H2| hidden failure in doc|D24031|
+20140316_183233 SERVER INFO - small error time|29553| server|L0| shelf|H1| hidden failure in doc|None|
+20140316_183233 SERVER INFO - small error time|33047| server|L3| shelf|H3| hidden failure in doc|None|
+20140316_183233 SERVER INFO - small error time|33247| server|L0| shelf|H1| hidden failure in doc|None|
+20140316_183233 SERVER INFO - small error time|33323| server|L4| shelf|H10| hidden failure in doc|D47902|
+20140316_183233 SERVER INFO - small error time|36114| server|L1| shelf|H7| hidden failure in doc|D54219|
+20140316_183233 SERVER INFO - small error time|38455| server|L2| shelf|H5| hidden failure in doc|None|
+20140316_183233 SERVER INFO - small error time|42853| server|L2| shelf|H4| hidden failure in doc|D6347|
+20140316_183233 SERVER INFO - small error time|43505| server|L3| shelf|H2| hidden failure in doc|D1909|
+20140316_183233 SERVER INFO - small error time|44112| server|L2| shelf|H4| hidden failure in doc|None|
+20140316_183233 SERVER INFO - small error time|44998| server|L2| shelf|H5| hidden failure in doc|D73081|
+20140316_183233 SERVER INFO - small error time|45428| server|L4| shelf|H9| hidden failure in doc|D15442|
+20140316_183233 SERVER INFO - small error time|46156| server|L1| shelf|H7| hidden failure in doc|D61278|
+20140316_183233 SERVER INFO - small error time|48010| server|L1| shelf|H6| hidden failure in doc|None|
+20140316_183237 SERVER INFO - storage shelf failed time|48301| server|L0| shelf|H0| lost |79921| docs
+20140316_183237 SERVER INFO - small error time|48591| server|L0| shelf|H0| hidden failure in doc|None|
+20140316_183303 SERVER INFO - storage shelf failed time|48957| server|L4| shelf|H11| lost |20484| docs
+20140316_183316 SERVER INFO - storage shelf failed time|49007| server|L1| shelf|H8| lost |20484| docs
+20140316_183316 SERVER INFO - small error time|49176| server|L3| shelf|H3| hidden failure in doc|D64164|
+20140316_183316 SERVER INFO - small error time|49585| server|L2| shelf|H4| hidden failure in doc|None|
+20140316_183316 SERVER INFO - small error time|51182| server|L1| shelf|H8| hidden failure in doc|None|
+20140316_183316 SERVER INFO - small error time|51515| server|L2| shelf|H5| hidden failure in doc|D63859|
+20140316_183316 SERVER INFO - small error time|51835| server|L4| shelf|H11| hidden failure in doc|None|
+20140316_183316 SERVER INFO - small error time|56155| server|L2| shelf|H4| hidden failure in doc|None|
+20140316_183316 SERVER INFO - small error time|60736| server|L2| shelf|H4| hidden failure in doc|D19679|
+20140316_183340 SERVER INFO - storage shelf failed time|67177| server|L4| shelf|H10| lost |39891| docs
+20140316_183341 SERVER INFO - storage shelf failed time|67549| server|L4| shelf|H9| lost |40024| docs
+20140316_183341 SERVER INFO - small error time|70390| server|L4| shelf|H10| hidden failure in doc|None|
+20140316_183418 SERVER INFO - storage shelf failed time|71813| server|L2| shelf|H5| lost |40529| docs
+20140316_183418 SERVER INFO - small error time|72998| server|L1| shelf|H7| hidden failure in doc|D62083|
+20140316_183418 SERVER INFO - small error time|80267| server|L4| shelf|H9| hidden failure in doc|None|
+20140316_183418 SERVER INFO - small error time|81754| server|L0| shelf|H1| hidden failure in doc|None|
+20140316_183418 SERVER INFO - small error time|85578| server|L3| shelf|H3| hidden failure in doc|D64144|
+20140316_183418 SERVER INFO - small error time|86181| server|L0| shelf|H1| hidden failure in doc|None|
+20140316_183418 SERVER INFO - small error time|86296| server|L2| shelf|H4| hidden failure in doc|None|
+20140316_183418 SERVER INFO - small error time|90288| server|L2| shelf|H5| hidden failure in doc|None|
+20140316_183418 SERVER INFO - small error time|91122| server|L3| shelf|H2| hidden failure in doc|None|
+20140316_183419 SERVER INFO - storage shelf failed time|97192| server|L1| shelf|H7| lost |39891| docs
+20140316_183419 SERVER INFO - small error time|99068| server|L2| shelf|H4| hidden failure in doc|D4428|
+20140316_183419 SERVER INFO - small error time|100030| server|L1| shelf|H7| hidden failure in doc|None|
+20140316_183456 SERVER INFO - storage shelf failed time|104034| server|L3| shelf|H3| lost |40531| docs
+20140316_183456 SERVER INFO - small error time|107390| server|L3| shelf|H2| hidden failure in doc|None|
+20140316_183456 SERVER INFO - small error time|108788| server|L0| shelf|H1| hidden failure in doc|None|
+20140316_183456 SERVER INFO - small error time|126993| server|L3| shelf|H3| hidden failure in doc|None|
+20140316_183456 SERVER INFO - small error time|128606| server|L2| shelf|H4| hidden failure in doc|D36748|
+20140316_183456 SERVER INFO - small error time|136804| server|L2| shelf|H4| hidden failure in doc|D37199|
+20140316_183456 SERVER INFO - small error time|136925| server|L2| shelf|H4| hidden failure in doc|D28679|
+20140316_183456 SERVER INFO - small error time|138976| server|L3| shelf|H2| hidden failure in doc|D17006|
+20140316_183456 SERVER INFO - small error time|138984| server|L3| shelf|H2| hidden failure in doc|D4571|
+20140316_183456 SERVER INFO - small error time|156729| server|L0| shelf|H1| hidden failure in doc|None|
+20140316_183456 SERVER INFO - storage shelf failed time|158430| server|L0| shelf|H1| lost |20483| docs
+20140316_183456 SERVER INFO - small error time|163204| server|L0| shelf|H1| hidden failure in doc|None|
+20140316_183456 SERVER INFO - small error time|175073| server|L2| shelf|H4| hidden failure in doc|D11868|
+20140316_183456 SERVER INFO - small error time|178506| server|L2| shelf|H4| hidden failure in doc|D34655|
+20140316_183456 SERVER INFO - small error time|191909| server|L2| shelf|H4| hidden failure in doc|D36840|
+20140316_183456 SERVER INFO - small error time|205345| server|L2| shelf|H4| hidden failure in doc|D3133|
+20140316_183456 SERVER INFO - small error time|206250| server|L2| shelf|H4| hidden failure in doc|None|
+20140316_183456 SERVER INFO - small error time|209253| server|L2| shelf|H4| hidden failure in doc|D10684|
+20140316_183456 SERVER INFO - small error time|213256| server|L3| shelf|H2| hidden failure in doc|D6366|
+20140316_183456 SERVER INFO - small error time|231221| server|L3| shelf|H2| hidden failure in doc|D9344|
+20140316_183456 SERVER INFO - small error time|246209| server|L3| shelf|H2| hidden failure in doc|D38654|
+20140316_183459 SERVER INFO - storage shelf failed time|252719| server|L3| shelf|H2| lost |59865| docs
+20140316_183459 SERVER INFO - small error time|256367| server|L2| shelf|H4| hidden failure in doc|None|
+20140316_183459 SERVER INFO - small error time|263196| server|L3| shelf|H2| hidden failure in doc|None|
+20140316_183459 SERVER INFO - small error time|270743| server|L2| shelf|H4| hidden failure in doc|D33980|
+20140316_183459 SERVER INFO - small error time|288393| server|L2| shelf|H4| hidden failure in doc|D36309|
+20140316_183459 SERVER INFO - small error time|293106| server|L2| shelf|H4| hidden failure in doc|None|
+20140316_183459 SERVER INFO - small error time|342232| server|L2| shelf|H4| hidden failure in doc|D8557|
+20140316_183459 SERVER INFO - small error time|348308| server|L2| shelf|H4| hidden failure in doc|D30642|
+20140316_183459 SERVER INFO - small error time|437300| server|L2| shelf|H4| hidden failure in doc|D37743|
+20140316_183459 SERVER INFO - small error time|439967| server|L2| shelf|H4| hidden failure in doc|D18578|
+20140316_183459 SERVER INFO - small error time|458049| server|L2| shelf|H4| hidden failure in doc|D15114|
+20140316_183459 SERVER INFO - small error time|466362| server|L2| shelf|H4| hidden failure in doc|D6954|
+20140316_183459 SERVER INFO - small error time|471558| server|L2| shelf|H4| hidden failure in doc|None|
+20140316_183459 SERVER INFO - small error time|482473| server|L2| shelf|H4| hidden failure in doc|None|
+20140316_183459 SERVER INFO - small error time|536110| server|L2| shelf|H4| hidden failure in doc|D15863|
+20140316_183459 SERVER INFO - small error time|554055| server|L2| shelf|H4| hidden failure in doc|D19888|
+20140316_183459 SERVER INFO - small error time|607042| server|L2| shelf|H4| hidden failure in doc|None|
+20140316_183459 SERVER INFO - small error time|624553| server|L2| shelf|H4| hidden failure in doc|D30143|
+20140316_183459 SERVER INFO - small error time|626804| server|L2| shelf|H4| hidden failure in doc|None|
+20140316_183459 SERVER INFO - small error time|631193| server|L2| shelf|H4| hidden failure in doc|D31424|
+20140316_183459 SERVER INFO - small error time|632940| server|L2| shelf|H4| hidden failure in doc|None|
+20140316_183459 SERVER INFO - small error time|669333| server|L2| shelf|H4| hidden failure in doc|D1900|
+20140316_183459 SERVER INFO - small error time|676299| server|L2| shelf|H4| hidden failure in doc|D9539|
+20140316_183459 SERVER INFO - small error time|679870| server|L2| shelf|H4| hidden failure in doc|D6656|
+20140316_183459 SERVER INFO - small error time|684515| server|L2| shelf|H4| hidden failure in doc|None|
+20140316_183459 SERVER INFO - small error time|689860| server|L2| shelf|H4| hidden failure in doc|D19205|
+20140316_183502 SERVER INFO - storage shelf failed time|696754| server|L2| shelf|H4| lost |59847| docs
+20140316_183502 SERVER INFO - small error time|748892| server|L2| shelf|H4| hidden failure in doc|None|
+20140316_183502 MAIN INFO - end run, simulated time|1000000|
+20140316_183222 0 MAIN  proc Document Preservation simulation 
+20140316_183230 0 MAIN  proc Begin run time|0|
+20140316_183502 0 MAIN  proc End simulation timenow|1000000| lastevent|748892| hidoc|D100406| hicoll|C0| hishelf|H11|
