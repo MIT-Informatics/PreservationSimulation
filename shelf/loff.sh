@@ -1,0 +1,1 @@
+unset LOG_LEVEL

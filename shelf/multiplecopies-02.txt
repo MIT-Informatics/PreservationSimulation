@@ -1,0 +1,86 @@
+TO MAKE MULTIPLE COPIES OF A COLLECTION: Notes
+
+                        RBLandau 20140304
+                        after call with Micah 0900
+
+
+Client has list of approved servers in contracts.csv; list ordered by preference
+- quality rating for service comes from service info
+
+Client uses distribution params in distribution.csv: client, doc value, store on quality x, make n copies at different services
+
+Client sends out copy of entire collection to multiple libs
+- for a collection of some value, find the set of servers of that value, probably by going down the approved vendor list and taking the first n at the right quality level.
+
+Client creates collection
+- get distribution rules for this type of collection
+- find servers at right quality level
+- for each suitable server send collection to server as individual docs
+- add server id to list for this collection
+- for each document add doc id to list for this server
+- count copies of doc stored on servers, changes with failures and repairs
+
+Client maintains list of copies of each collection
+  - client sends collection to lib, adds lib to list of copies
+  - for each copy, maintain list of docs in that copy
+  - if collection fails at lib, client removes lib from list of copies and resends; re-send re-adds lib to list, now at the end.
+  - if doc fails at lib, collection removes from its copy and resends
+
+-----------------
+
+Change name from "library" to "server"
+- less freighted with assumptions
+- then server can have multiple "services" or "sites"
+
+Change "client" to "owner" too?
+
+Concentrate on one client, one collection, multiple servers.  
+- Multiple servers will eventually need multiple sites with some different characteristics, such as physical failure rates by geography. 
+- A single vendor such as Amazon AWS does offer multiple services with different failure characteristics.  
+
+Documents:
+- PDF, small MB range
+- static pic, slightly larger but still small MB range
+- video, small GB range
+- empirical data not available
+- add sensitivity to small failures in near future
+
+Scale factors, for now:
+- okay to keep doc size click in MB
+- okay to keep sector failure click as 1, i.e., 1MB
+- okay to keep time tick as hour (this makes minimum repair time long)
+
+Sector failures become hidden failures, wait for audit to reveal them
+
+Distributions of document size:
+- bimodal or multimodal
+- trimmed Gaussian with small variance
+- mix two, maybe in separate collections, maybe in one
+- maybe a research library distribution overall is exponential, but a single collection is more nearly uniform
+- [Maybe emprically modeled distribution would be easier to deal with, done in, say, twenty bins or more, uniform within those bins.  Five-percent-iles seems reasonable; single percentiles seems excessive.  Easier to convince people that one can model whatever they think their collection looks like.]
+- fancy calculation for doc size distn is a burden only when initially populating the simulation, not during runtime 
+
+Repair simple 
+- push to server or server will pull another copy
+- must audit remaining copies until you find a good one to give to server, and that might find more dead copies
+
+Repair speed depends on bandwidth 
+- assume 1GB/hour
+- well, maybe 1Mb/sec, which translates to 5MB/min, 300MB/hour
+- [Seems low to me; I get 25Mb from my el cheapo cable modem from Comcast; will 96% of that be consumed by other business?  Could be rate-limited, I suppose.  On the other hand, we might have to change the tick size from hour to minute and the doc size from MB to KB to be more realistic.  That will make the numbers less readable, but we can easily do that later if needed.]
+
+Auditing:
+- cost of auditing << repair cost, where cost = time/bandwidth
+- assume 1-2 orders of magnitude less
+
+Logging: 
+- collection placed
+- initial document placement is too fine-grained and verbose
+- failures at server destroy or damage docs
+- hidden failues at server corrupt doc
+- how many docs left in remote collection after failure, maybe shelf
+- how many copies left of doc in all remote sites; can calculate on the fly if failure is a rare event
+- shelf fail destroys all docs
+- audit reveals hidden failure, get a new copy, repair
+- n-events in general, for judging lengths of longer simulations
+
