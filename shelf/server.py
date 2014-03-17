@@ -4,7 +4,6 @@
 import simpy
 from NewTraceFac import TRC,trace,tracef
 import itertools
-from shelf import *
 from globaldata import *
 from util import *
 import copy
