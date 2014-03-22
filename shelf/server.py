@@ -159,7 +159,7 @@ class CShelf(object):
         # Make a copy of the document and shelve that.  
         cCopy = CCopy(mysDocID,mysClientID)
         sCopyID = cCopy.ID
-        TRC.tracef(3,"SHLF","proc made copy|%s| of doc|%s| from client|%s|" % (sCopyID,mysDocID,mysClientID))
+        TRC.tracef(3,"SHLF","proc mAddDocument made copy|%s| of doc|%s| from client|%s|" % (sCopyID,mysDocID,mysClientID))
 
         nBlkBegin = self.nCapacity - self.nFreeSpace
         self.nFreeSpace -= nSize
@@ -200,14 +200,14 @@ class CShelf(object):
             # Select a victim Document, probability proportional to size.
             # Small error, size=1.  What doc dies as a result?
             sCopyVictimID = self.mSelectVictimCopy(mynErrorSize=1)
-            if sCopyVictimID:
+            if sCopyVictimID:               # Hidden error in victim doc.
                 self.mDestroyCopy(sCopyVictimID)
                 cCopy = G.dID2Copy[sCopyVictimID]
                 cDoc = G.dID2Document[cCopy.sDocID]
                 G.dID2Server[self.sServerID].mDestroyDocument(cDoc.ID,self.ID)
-            else:
+            else:                           # No victim, hit empty space.
                 self.nEmptySectorHits += 1
-                TRC.tracef(3,"SHLF","proc shelf|%s| sector error fell in empty space" % (self.ID))
+                TRC.tracef(3,"SHLF","proc mAge_sector shelf|%s| sector error fell in empty space" % (self.ID))
             TRC.tracef(3,"FAIL","proc t|%d| sector failure server|%s| qual|%d| shelf|%s| doc|%s|" % (G.env.now,self.sServerID,G.dID2Server[self.sServerID].nQual,self.ID,sCopyVictimID))
             logInfo("SERVER","small error time|%s| server|%s| shelf|%s| hidden failure in doc|%s|" % (G.env.now,self.sServerID,self.ID,sCopyVictimID))
 
@@ -229,7 +229,7 @@ class CShelf(object):
             iVictim = cCopy
             sVictimID = cCopy.ID
             if nRandomSpot >= cCopy.nBlkBegin and nRandomSpot <= cCopy.nBlkEnd:
-                TRC.tracef(5,"SHLF","proc mSelectVictimCopy shelf|%s| sector|%d| hits doc|%s| size|%d| outof|%d|" % (self.ID,nRandomSpot,sVictimID, (cCopy.nBlkEnd-cCopy.nBlkBegin+1),self.nCapacity))
+                TRC.tracef(3,"SHLF","proc mSelectVictimCopy shelf|%s| sector|%d| hits doc|%s| placed[%d,%d] size|%d| outof|%d|" % (self.ID,nRandomSpot,sVictimID,cCopy.nBlkBegin,cCopy.nBlkEnd, (cCopy.nBlkEnd-cCopy.nBlkBegin+1),self.nCapacity))
                 break
         else:
             iVictim = None
@@ -266,11 +266,11 @@ class CShelf(object):
 
         # S H E L F  F A I L S 
         G.nTimeLastEvent = G.env.now
-        self.bAlive = False
+        self.bAlive = False         # Shelf can no longer be used to store docs.
         TRC.tracef(3,"SHLF","proc mAge_shelf  time|%d| shelf|%s| shelf_error" % (G.env.now,self.ID))
         logInfo("SERVER","storage shelf failed time|%d| server|%s| shelf|%s| lost |%d| docs" % (G.env.now,self.sServerID,self.ID,len(self.lCopyIDs)))
         # This whole shelf is a goner.  Kill it. 
-        TRC.tracef(5,"SHLF","proc kill shelf contents ldocs|%s| lcopies|%s|" % (self.lDocIDs,self.lCopyIDs)) 
+        TRC.tracef(5,"SHLF","proc mAge_shelf kill contents ldocs|%s| lcopies|%s|" % (self.lDocIDs,self.lCopyIDs)) 
         # Note that we have to copy the list before modifying it and 
         # iterate over the copy of the list.  
         # Standard problem with updating an iterable inside the for loop.
@@ -281,7 +281,7 @@ class CShelf(object):
             G.dID2Server[self.sServerID].mDestroyDocument(sDocID,self.ID)
             self.mReportDocumentLost(sDocID)
         TRC.tracef(3,"FAIL","proc t|%d| shelf failure server|%s| qual|%d| shelf|%s| docs|%d|" % (G.env.now,self.sServerID,G.dID2Server[self.sServerID].nQual,self.ID,len(templCopyIDs)))
-        
+
         # Rescind any pending sector error aging for this shelf.
         # (Only a performance improvement, I think, since the shelf
         # will be destroyed and never reused.)  
@@ -289,7 +289,7 @@ class CShelf(object):
         # Tell the Server to replace the dead shelf.
         # NYI
 
-# Shelf.mReportDocumentLost
+# S h e l f . m R e p o r t D o c u m e n t L o s t 
     @tracef("SHLF")
     def mReportDocumentLost(self,mysDocID):
         cDoc = G.dID2Document[mysDocID]

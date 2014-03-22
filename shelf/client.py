@@ -74,7 +74,7 @@ class CCollection(object):
 # C o l l e c t i o n . m L i s t D o c u m e n t s 
     @tracef("COLL")
     def mListDocuments(self):
-        TRC.tracef(1,"COLL","proc mListDocuments self|%s| returning |%s|" % (self,self.lDocIDs))
+        TRC.tracef(5,"COLL","proc mListDocuments self|%s| returning |%s|" % (self,self.lDocIDs))
         return (self.lDocIDs)
         # tri it as an iterable
 #        for sDocID in self.lDocIDs:
