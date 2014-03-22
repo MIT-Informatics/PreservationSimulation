@@ -6,10 +6,12 @@ from NewTraceFac import TRC,trace,tracef
 import itertools
 from server import *
 from globaldata import *
+from repair import *
 import math
-from logoutput import logInfo
+from logoutput import logInfo,logDebug
 
 
+#===========================================================
 # D O C U M E N T 
 #----------------
 
@@ -17,21 +19,24 @@ class CDocument(object):
     getID = itertools.count(0).next
 
     @tracef("DOC")
-    def __init__(self,size):
+    def __init__(self,size,mysClientID):
         self.ID = "D" + str(self.getID())
         G.dID2Document[self.ID] = self
         G.nDocLastID = self.ID
         self.nSize = size
-        TRC.tracef(3,"DOC","proc init created doc|%s| size|%d|" % (self.ID,self.nSize))
-        self.sServerID = None
-        self.sShelfID = None
-        self.nBlkBegin = None
-        self.nBlkEnd = None
+        self.sClientID = mysClientID
+        TRC.tracef(3,"DOC","proc init client|%s| created doc|%s| size|%d|" % (self.sClientID,self.ID,self.nSize))
+        self.lServers = list()
         self.lCopies = list()
 
-    def mAudit(self):
-        pass
+    @tracef("DOC")
+    def mCopyPlacedOnServer(self,mysCopyID,mysServerID):
+        self.lCopies.append(mysCopyID)
+        self.lServers.append(mysServerID)
+        return self.ID+"+"+mysCopyID+"+"+mysServerID
 
+
+#===========================================================
 # C O L L E C T I O N 
 #--------------------
 
@@ -39,15 +44,18 @@ class CCollection(object):
     getID = itertools.count().next
 
     @tracef("COLL")
-    def __init__(self,mysName,mynValue,mynSize):
+    def __init__(self,mysName,mynValue,mynSize,mysClientID):
         self.ID = "C" + str(self.getID())
         G.dID2Collection[self.ID] = self
         G.nCollLastID = self.ID
+        
         self.sName = mysName
         self.nValue = mynValue
-        self.lDocuments = list()
+        self.sClientID = mysClientID
+        self.lDocIDs = list()
         self.lServers = list()
-        # Create all booksin the collection.
+
+        # Create all books in the collection.
         self.mMakeBooks(mynSize)
 
 # C o l l e c t i o n . m M a k e B o o k s 
@@ -59,15 +67,20 @@ class CCollection(object):
             # T E M P
             ndocsize = makeunif(1,1000)
             # E N D   T E M P 
-            cDoc = CDocument(ndocsize)
-            self.lDocuments.append(cDoc.ID)
+            cDoc = CDocument(ndocsize,self.sClientID)
+            self.lDocIDs.append(cDoc.ID)
         return self.ID
 
-# C o l l e c t i o n . m L i s t B o o k s 
+# C o l l e c t i o n . m L i s t D o c u m e n t s 
     @tracef("COLL")
-    def mListBooks(self):
-        pass
+    def mListDocuments(self):
+        TRC.tracef(1,"COLL","proc mListDocuments self|%s| returning |%s|" % (self,self.lDocIDs))
+        return (self.lDocIDs)
+        # tri it as an iterable
+#        for sDocID in self.lDocIDs:
+#            yield sDocID
 
+#===========================================================
 # C L I E N T 
 #------------
 
@@ -80,15 +93,20 @@ class CClient(object):
     def __init__(self,mysName,mylCollections):
         self.ID = "T" + str(self.getID())
         G.dID2Client[self.ID] = self
+        G.nClientLastID = self.ID
         self.sName = mysName
 
+        # Create the collections for this client.
         for lCollectionParams in mylCollections:
             (sCollName,nCollValue,nCollSize) = lCollectionParams
-            sCollID = CCollection(sCollName,nCollValue,nCollSize).ID
+            cColl = CCollection(sCollName,nCollValue,nCollSize, self.ID)
+            sCollID = cColl.ID
             self.lCollectionIDs.append(sCollID)
 
             # Put the collection in all the right places.  
             self.mPlaceCollection(sCollID)
+
+        self.cRepair = CRepair(self.ID)
 
 # C l i e n t . m P l a c e C o l l e c t i o n
     @tracef("SHOW")
@@ -120,7 +138,7 @@ class CClient(object):
             # Send copy of collection to server.
             TRC.tracef(3,"CLI","proc mPlaceCollection2 client|%s| send coll|%s| to server|%s|" % (self.ID,mysCollID,sServerID))
             TRC.tracef(3,"SHOW","proc mPlaceCollection2 client|%s| send coll|%s| to server|%s|" % (self.ID,mysCollID,sServerID))
-            (G.dID2Server[sServerID]).mAddCollection(mysCollID)
+            (G.dID2Server[sServerID]).mAddCollection(mysCollID,self.ID)
             # Record that this server has a copy of this collection.
             cColl.lServers.append(sServerID)
             logInfo("CLIENT","client|%s| placed collection|%s| to server|%s|" % (self.ID,mysCollID,sServerID))
@@ -149,25 +167,34 @@ class CClient(object):
 
 
     @tracef("CLI")
-    def mDocumentFailed(self,mysDocID,mysServerID):
+    def mDocFailedOnServer(self,mysDocID,mysServerID):
         ''' Client.mDocumentFailed
             Server calls this to inform owner that a document died
             probably due to a major storage failure.
             Find a valid copy of the document and re-add it to server.
         '''
-        pass
+        logDebug("CLIENT","Document failed on server doc|%s| svr|%s|" % (mysDocID,mysServerID))
+        bResult = self.mDocFindValidCopy(mysDocID)
+        if bResult:
+            self.mDocReplaceOnServer(mysDocID,mysServerID)
+        else:
+            self.mDocPermanentFailure(mysDocID)
+        return mysServerID +"-"+ mysDocID
 
     @tracef("CLI")
-    def mReplaceDocument(self,mysDocID,mysServerID):
+    def mDocReplaceOnServer(self,mysDocID,mysServerID):
         ''' Client.mReplaceDocument
             Send the document back to the server that lost it.
             Push or pull does not matter at this level.  Use the
             standard method of distribution.  
         '''
-        pass
+        cServer = G.dID2Server[mysServerID]
+        cServer.mAddDocument(mysDocID,self.ID)
+        logInfo("CLIENT","Document replaced on server doc|%s| svr|%s|" % (mysDocID,mysServerID))
+        return mysServerID +"+"+ mysDocID
 
     @tracef("CLI")
-    def mFindValidCopyOfDoc(self,mysDocID):
+    def mDocFindValidCopy(self,mysDocID):
         ''' Client.mFindValidCopyOfDoc
             Audit all the known copies of the doc.
             If a majority of the servers who are supposed to have
@@ -175,31 +202,17 @@ class CClient(object):
             If not enough of the servers agree about the doc 
             contents, then the document is lost forever.  Oops.  
         '''
+        # T E M P 
+        return True
+        # E N D   T E M P 
+
+    @tracef("SHOW")
+    @tracef("CLI")
+    def mDocPermanentFailure(self,mysDocID):
+        ''' We cannot find a good copy of the document anywhere, 
+            ergo it is lost permanently.  Log this serious event.  
+        '''
+        logInfo("CLIENT","Document lost permanent failure |%s|" % (mysDocID))
         pass
-
-
-    @tracef("CLI")
-    def mAuditCycle(self):
-        # wait for a while, then auditnext
-        pass
-
-    @tracef("CLI")
-    def mAuditNextCollection(self):
-        self.sCollIDLastAudited = self.lCollectionIDs[(index(self.sCollIDLastAudited) + 1) % len(self.lCollections)]
-        self.mAuditCollection(self.sCollIDLastAudited)
-        return self.sCollIDLastAudited
-
-    @tracef("CLI")
-    def mAuditCollection(self,mysCollectionID):
-        # find server with a copy of collection to audit
-        
-        for cDoc in G.dID2Collection[mysCollectionID].lDocumentIDs:
-            # Ask for validation of each doc.
-            # In this case, the only quesiton is if the server
-            #  still has a copy, that is, if a sector error has
-            #  not caused a hidden failure in the document.  
-            # If not valid, initiate repair.
-            pass
-
 
 # END

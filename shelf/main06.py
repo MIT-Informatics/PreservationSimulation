@@ -9,6 +9,7 @@ The plan:
 
 Server
     collection of shelves
+    list of documents
     find a shelf for document
         if out of space, create a shelf
     aging process for institutional failure
@@ -19,10 +20,11 @@ Shelf
     reliability class
     birthdate
     list of documents
-    aging process for small errors that damage a document
+    list of copies
+    aging process for small errors that hidden-damage a document
         pick a victim document to be damaged
     aging process for disk failure that can be rebuilt
-    aging process for array failure that kills all documents
+    aging process for storage array failure that kills all documents
 
 Document
     size
@@ -31,6 +33,13 @@ Document
         determines audit policy
     log of actions
     audit process
+
+Copy of Document
+    doc
+    client
+    server
+    shelf
+    location on shelf
 
 Collection
     create set of documents
@@ -47,7 +56,7 @@ Client
 
 start logs
 create servers
-create client
+create clients
 run
 
 Recent changes in terminology:
@@ -78,6 +87,8 @@ Implemented in the short term:
 - Distribution policy?  Nothing fancy yet.  A client will send distributions only to servers (sites) with adequate quality ratings.  Currently a collection is sent to one site.
 - Most early experiments will probably be done with one client, one collection, stored at one site with one quality rating.
 - Storing a collection in multiple locations, repairing, and auditing come later.
+
+
 
 '''
 
@@ -332,9 +343,11 @@ def main():
     # Run the simulation. 
     TRC.tracef(0,"MAIN","proc Begin run time|%d|" % (env.now))
     logInfo("MAIN","begin run")
+    
     env.run(until=G.runtime)
 
     TRC.tracef(0,"MAIN","proc End simulation timenow|%d| lastevent|%d| hidoc|%s| hicoll|%s| hishelf|%s|" % (env.now,G.nTimeLastEvent,G.nDocLastID,G.nCollLastID,G.nShelfLastID))
+    TRC.tracef(0,"MAIN","proc hiserver|%s| hiclient|%s| hicopy|%s|" % (G.nServerLastID,G.nClientLastID,G.nCopyLastID))
     logInfo("MAIN","end run, simulated time|%d|" % (env.now))
 
 # ---------------------------------------------------------------

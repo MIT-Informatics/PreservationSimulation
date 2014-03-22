@@ -4,13 +4,11 @@ TO MAKE MULTIPLE COPIES OF A COLLECTION: Notes
                         after call with Micah 0900
 
 
-Client has list of approved servers in contracts.csv; list ordered by preference
+Client distributes collection to all servers available at the required quality level.  For the moment, quality level matches the value level of the collection.  
 - quality rating for service comes from service info
 
-Client uses distribution params in distribution.csv: client, doc value, store on quality x, make n copies at different services
-
 Client sends out copy of entire collection to multiple libs
-- for a collection of some value, find the set of servers of that value, probably by going down the approved vendor list and taking the first n at the right quality level.
+- for a collection of some value, find the set of servers of that value; use all servers at the right quality level.
 
 Client creates collection
 - get distribution rules for this type of collection
@@ -62,7 +60,10 @@ Distributions of document size:
 
 Repair simple 
 - push to server or server will pull another copy
-- must audit remaining copies until you find a good one to give to server, and that might find more dead copies
+- short-term: audit remaining copies until you find a good one to give to server.  That process might find more dead copies.  
+- longer-term: audit remaining copies.  Need to find a consensus copy.  
+- in both these cases, if there is not a sufficient number of good copies left, then the document is irretrievably lost.  
+
 
 Repair speed depends on bandwidth 
 - assume 1GB/hour
@@ -76,6 +77,7 @@ Auditing:
 - When audit complete, wait for some time interval and then initiate the next audit.  
 - cost of auditing << repair cost, where cost = time/bandwidth
 - assume 1-2 orders of magnitude less
+- short-term, a document either exists or doesn't; a shelf failure or hidden failure destroys that copy of the document.  
 
 Logging: 
 - collection placed
@@ -86,5 +88,6 @@ Logging:
 - how many copies left of doc in all remote sites; can calculate on the fly if failure is a rare event
 - shelf fail destroys all docs
 - audit reveals hidden failure, get a new copy, repair
+- all copies of document lost = document failure
 - n-events in general, for judging lengths of longer simulations
 

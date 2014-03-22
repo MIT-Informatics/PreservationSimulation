@@ -15,15 +15,22 @@ class G(object):
     lServers = list()
     lAllClients = list()
     dQual2Servers = dict() # key=quality level; val=[sServerName,sServerID]
+
     nDocLastID = None   # scalar
     nCollLastID = None  # scalar
     nShelfLastID = None # scalar
+    nCopyLastID = None
+    nServerLastID = None
+    nClientLastID = None
     nTimeLastEvent = 0
-    dID2Document = dict()   # key=ID; val=instance
-    dID2Shelf = dict()
-    dID2Collection = dict()
-    dID2Server = dict()
+
     dID2Client = dict()
+    dID2Collection = dict()
+    dID2Document = dict()   # key=ID; val=instance
+    dID2Copy = dict()
+    dID2Server = dict()
+    dID2Shelf = dict()
+    dID2Repair = dict()
 
 class P(object):
     ''' Parameters r/o for the simulation run. 
@@ -54,7 +61,7 @@ class P(object):
 
     # Don't know what to do with this yet.
     # It will probably state something like
-    #   clientname : [ [ collectionvaluelevel, serverqualitylevel, numberofcopies ] , ... ] ...
+    #   clientname : [ [ collectionvaluelevel, serverqualitylevel, numberofcopies ] , ... ]
     dDistnParams =      { "MIT" : [ [ 1, 1, 5 ], [ 2, 2, 4 ], [ 3, 3, 3 ] ] 
                         }
 
