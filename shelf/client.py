@@ -190,7 +190,7 @@ class CClient(object):
         '''
         cServer = G.dID2Server[mysServerID]
         cServer.mAddDocument(mysDocID,self.ID)
-        logInfo("CLIENT","Document replaced on server doc|%s| svr|%s|" % (mysDocID,mysServerID))
+        logDebug("CLIENT","Document replaced on server doc|%s| svr|%s|" % (mysDocID,mysServerID))
         return mysServerID +"+"+ mysDocID
 
     @tracef("CLI")
