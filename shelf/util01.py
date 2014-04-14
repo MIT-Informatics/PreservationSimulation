@@ -2,7 +2,7 @@
 # util.py
 
 import random
-from NewTraceFac07 import TRC,trace,tracef
+from NewTraceFac import TRC,trace,tracef
 from math import sqrt
 import itertools
 
@@ -24,12 +24,13 @@ def makeunif(lo,hi):
     interval = int(random.uniform(lo,hi))
     return interval
     
-def makennnorm(mean):
+def makennnorm(mean,sdev=0):
     ''' makennnorm(mean)
         return non-neg gaussian with mean and sd sqrt(mean)
         not because there's any science in that, just because.  
-     '''
-    x = random.gauss(mean,sqrt(mean))
+    '''
+    if sdev == 0: sdev =  sqrt(mean)
+    x = random.gauss(mean,sdev)
     return abs(x)
 
 

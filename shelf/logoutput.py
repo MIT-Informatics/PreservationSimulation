@@ -96,4 +96,16 @@ def logDebug(myname,mystring):
     logger.debug(mystring)
     return logger
 
+# Use error for real errors like permanent document failures.  
+def logError(myname,mystring):
+    logger.name = myname
+    logger.error(mystring)
+    return logger
+
+# Use critical for errors even worse than that.  What?  
+def logCritical(myname,mystring):
+    logger.name = myname
+    logger.critical(mystring)
+    return logger
+
 # END

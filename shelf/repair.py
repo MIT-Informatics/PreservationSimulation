@@ -24,18 +24,20 @@ class CRepair(object):
 
 
 
-
+# m A u d i t C y c l e 
     @tracef("REP")
     def mAuditCycle(self):
         # wait for a while, then auditnext
         pass
 
+# m A u d i t N e x t C o l l e c t i o n 
     @tracef("REP")
     def mAuditNextCollection(self):
         self.sCollIDLastAudited = self.lCollectionIDs[(index(self.sCollIDLastAudited) + 1) % len(self.lCollections)]
         self.mAuditCollection(self.sCollIDLastAudited)
         return self.sCollIDLastAudited
 
+# m A u d i t C o l l e c t i o n 
     @tracef("REP")
     def mAuditCollection(self,mysCollectionID):
         # find server with a copy of collection to audit
@@ -48,14 +50,17 @@ class CRepair(object):
             # If not valid, initiate repair.
             pass
 
+# m D o c A u d i t A l l D o c s O n S e r v e r 
     @tracef("REP")
     def mDocAuditAllDocsOnServer(self,mysCollectionID,mysServerID):
         pass
         
+# m D o c A u d i t O n A l l S e r v e r s 
     @tracef("REP")
     def mDocAuditOnAllServers(self,mysDocID):
         pass
         
+# m D o c A u d i t O n e D o c O n S e r v e r 
     @tracef("REP")
     def mDocAuditOneDocOnServer(self,mysCollectionID):
         pass

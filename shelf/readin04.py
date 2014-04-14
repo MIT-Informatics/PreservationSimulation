@@ -43,6 +43,7 @@ def fdGetParamsParams(mysFile):
     dParams = fdGetParams(mysFile,lGuide)
     return dParams
 
+@tracef("READ")
 def fdGetDistnParams(mysFile):
     lGuide = ["Value",["Quality","Copies"]]
     dDistn = fdGetParams(mysFile,lGuide)

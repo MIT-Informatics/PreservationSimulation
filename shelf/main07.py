@@ -201,25 +201,32 @@ def dumpParamsIntoLog():
         lCollections = P.dClientParams[sClient]
         for lCollection in lCollections:
             (sCollection,nQuality,nDocs) = lCollection
-            lg.logInfo("PARAMS","client|%s| collection|%s| quality|%d| ndocs|%d|" % (sClient,sCollection,nQuality,nDocs))
+            lg.logInfo("PARAMS","CLIENT client|%s| collection|%s| quality|%d| ndocs|%d|" % (sClient,sCollection,nQuality,nDocs))
 
     # Server params
     TRC.tracef(3,"MAIN","server params dict|%s|" % (P.dServerParams))
     for sServer in P.dServerParams:
         (nQuality,nShelfSize) = P.dServerParams[sServer][0]
-        lg.logInfo("PARAMS","server|%s| quality|%d| shelfsize|%d|" % (sServer,nQuality,nShelfSize))
+        lg.logInfo("PARAMS","SERVER server|%s| quality|%d| shelfsize|%d|" % (sServer,nQuality,nShelfSize))
 
     # Shelf params
     TRC.tracef(3,"MAIN","shelf params dict|%s|" % (P.dShelfParams))
     for nQuality in P.dShelfParams:
         (nSmallFailureRate,nShelfFailureRate) = P.dShelfParams[nQuality][0]
-        lg.logInfo("PARAMS","quality|%d| smallfailrate|%d| shelffailrate|%d|" % (nQuality,nSmallFailureRate,nShelfFailureRate))
+        lg.logInfo("PARAMS","SHELF quality|%d| smallfailrate|%d| shelffailrate|%d|" % (nQuality,nSmallFailureRate,nShelfFailureRate))
 
     # Distribution policy params.
     TRC.tracef(3,"MAIN","distn params dict|%s|" % (P.dDistnParams))
     for nValue in P.dDistnParams:
         (nQuality,nCopies) = P.dDistnParams[nValue][0]
-        lg.logInfo("PARAMS","value|%d| quality|%d| copies|%d|" % (nValue,nQuality,nCopies))
+        lg.logInfo("PARAMS","DISTRIBUTION value|%d| quality|%d| copies|%d|" % (nValue,nQuality,nCopies))
+
+    # Document Size params.
+    TRC.tracef(3,"MAIN","document params dict|%s|" % (P.dDistnParams))
+    for nValue in P.dDocParams:
+        for lMode in P.dDocParams[nValue]:
+            (nPercent,nMean,nSdev) = lMode
+            lg.logInfo("PARAMS","DOCUMENT value|%d| percent|%d| mean|%d| sd|%d|" % (nValue,nPercent,nMean,nSdev))
 
 
 # m a k e S e r v e r s 
@@ -228,7 +235,9 @@ def dumpParamsIntoLog():
 def makeServers(mydServers):
     for sServerName in mydServers:
         (nServerQual,nShelfSize) = mydServers[sServerName][0]
-        sServerID = CServer(sServerName,nServerQual,nShelfSize).ID
+        cServer = CServer(sServerName,nServerQual,nShelfSize)
+        sServerID = cServer.ID
+        G.lAllServers.append(cServer)
         logInfo("MAIN","created server|%s| quality|%s| shelfsize|%s|" % (sServerID,nServerQual,nShelfSize))
         # Invert the server list so that clients can look up 
         # all the servers that satisfy a quality criterion.  
@@ -354,9 +363,20 @@ def main():
     TRC.tracef(0,"MAIN","proc hiserver|%s| hiclient|%s| hicopy|%s|" % (G.nServerLastID,G.nClientLastID,G.nCopyLastID))
     logInfo("MAIN","end run, simulated time|%d|" % (env.now))
 
+
+def evaluate():
+    ''' Assess the damage to the collection(s) during the run.  
+        Audit all the docs and see if any have been permanently lost.  
+        Current verison has no repair.
+        Current version question (Q0): Is there at least one valid copy left?
+    '''
+    
+
 # ---------------------------------------------------------------
 # If this is the main program, run it now.  
 if __name__ == "__main__":
     main()
+    evaluate()
+
 
 # END

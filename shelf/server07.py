@@ -28,6 +28,7 @@ class CServer(object):
         self.ID = "L" + str(self.getID())
         self.lShelfIDs = list()
         self.lDocIDs = list()
+        self.lDocIDsComplete = list()
         G.dID2Server[self.ID] = self
         G.nServerLastID = self.ID
 
@@ -68,6 +69,7 @@ class CServer(object):
             
         # Record that the doc has been stored on this server. 
         self.lDocIDs.append(mysDocID)
+        self.lDocIDsComplete.append(mysDocID)
         TRC.tracef(3,"SERV","proc mAddDocument serv|%s| id|%s| docid|%s| size|%s| assigned to shelfid|%s| remaining|%s|" % (self.sName,self.ID,mysDocID,cDoc.nSize,sShelfID,cShelf.nFreeSpace))
 
         return self.ID+"+"+sShelfID+"+"+mysDocID
@@ -96,6 +98,13 @@ class CServer(object):
         self.lDocIDs.remove(mysDocID)
         return self.ID + "-" + mysDocID
 
+# S e r v e r . m T e s t D o c u m e n t 
+    def mTestDocument(self,mysDocID):
+        ''' Do we still have a copy of this document?  Y/N
+        '''
+        return (mysDocID in self.lDocIDs)
+            
+
 #===========================================================
 # C l a s s  S H E L F 
 #---------------------
@@ -111,6 +120,7 @@ class CShelf(object):
         G.dID2Shelf[self.ID] = self
         
         self.lDocIDs = list()
+        self.lDocIDsComplete = list()
         self.lCopyIDs = list()
         self.lClientIDs = list()
         self.nCapacity = mynCapacity
@@ -126,7 +136,7 @@ class CShelf(object):
         # Get error rate params and start aging processes
         (self.nSectorLife,self.nShelfLife) = P.dShelfParams[self.nQual][0]
         G.env.process(self.mAge_shelf(self.nShelfLife))
-        G.env.process(self.mAge_sector(self.nSectorLife))
+        G.env.process(self.mAge_sector())
 
 # S h e l f . m A c c e p t D o c u m e n t 
     @tracef("SHLF")
@@ -152,6 +162,7 @@ class CShelf(object):
             in the document itself.
         '''
         self.lDocIDs.append(mysDocID)
+        self.lDocIDsComplete.append(mysDocID)
         self.lClientIDs.append(mysClientID)
         cDoc = G.dID2Document[mysDocID]
         nSize = cDoc.nSize
@@ -174,23 +185,26 @@ class CShelf(object):
         
         return self.sServerID + "+" + self.ID+"+"+mysDocID+"+"+sCopyID
 
+
 # F A I L U R E S 
 
 # S h e l f . m A g e _ s e c t o r 
     @tracef("SHLF")
-    def mAge_sector(self,mynLifeParam):
+    def mAge_sector(self):
         ''' A sector in the shelf fails.  This corrupts a document.
             For the moment, assume that it destroys the document.  
             Eventually, it will have a probability of destroying the 
-            documeht depending on the portion of the document 
+            document depending on the portion of the document 
             corrupted and the sensitivity of the document to corruption
-            (e.g., compressed or encrypted).  
+            (e.g., compressed or encrypted), or the failure hits an
+            encryption or license key.  
         '''
         # If the shelf has been emptied by a shelf failure, stop 
         # caring about sector failures.
         while self.bAlive:
-            nSectorLife = makeexpo(mynLifeParam)
-            TRC.tracef(3,"SHLF","proc mAge_sector time|%d| shelf|%s| next lifetime|%d|" % (G.env.now,self.ID,nSectorLife))
+            fLifeParam = self.mCalcBlockFailureRate()
+            nSectorLife = makeexpo(fLifeParam)
+            TRC.tracef(3,"SHLF","proc mAge_sector time|%d| shelf|%s| next lifetime|%d| from rate|%.3f|" % (G.env.now,self.ID,nSectorLife,fLifeParam))
             yield G.env.timeout(nSectorLife)
 
             # S E C T O R  F A I L S 
@@ -213,6 +227,23 @@ class CShelf(object):
 
             # Initiate a repair of the dead document.
             # NYI
+
+#  S h e l f . m C a l c B l o c k F a i l u r e R a t e
+    @tracef("SHLF")
+    def mCalcBlockFailureRate(self):
+        ''' Because of the funny way we handle small errors, we have to
+            calculate the aggregate block error rate for the shelf.  
+            When such an error occurs we then choose the block within
+            the shelf that failed.  
+            For the moment, simple: real failure rate for a single block
+            times the number of blocks on the shelf.  Eventually, we might
+            increase this rate if another recent failure has occurred on
+            this shelf.
+            Note that all these parameters are stated as lifetimes in hours.
+            Failure rate per hour = 1 / lifetime.  
+        '''
+        fRate = float(self.nCapacity)/float(self.nSectorLife) 
+        return fRate
 
 # S h e l f . m S e l e c t V i c t i m C o p y  
     @tracef("SHLF")

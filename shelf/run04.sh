@@ -32,7 +32,7 @@ fi
 
 # Improved version: 
 for ff in client server util readin main globaldata logoutput NewTraceFac repair; do
-    newffull=$(ls $ff*.py | sort | tail -1);
+    newffull=$(ls $ff*.py | sort | tail -1 | sed 's/\\r//');
     cp -v $newffull $ff.py ;
 done
 

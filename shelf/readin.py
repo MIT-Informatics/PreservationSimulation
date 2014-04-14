@@ -7,7 +7,7 @@ Read the parameter files into dictionaries.
 
 import csv
 from globaldata import *
-from NewTraceFac07 import TRC,trace,tracef
+from NewTraceFac import TRC,trace,tracef
 from util import fnIntPlease
 
 
@@ -42,6 +42,19 @@ def fdGetParamsParams(mysFile):
     lGuide = ["Name",["Value"]]
     dParams = fdGetParams(mysFile,lGuide)
     return dParams
+
+@tracef("READ")
+def fdGetDistnParams(mysFile):
+    lGuide = ["Value",["Quality","Copies"]]
+    dDistn = fdGetParams(mysFile,lGuide)
+    return dDistn
+
+@tracef("READ")
+def fdGetDocParams(mysFile):
+    lGuide = ["Level",["Percent","Mean","Sdev"]]
+    dParams = fdGetParams(mysFile,lGuide)
+    return dParams
+
 
 @tracef("READ")
 def fdGetParams(mysFile,mylGuide):

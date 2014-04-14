@@ -7,6 +7,7 @@ import itertools
 from server import *
 from globaldata import *
 from repair import *
+from util import *
 import math
 from logoutput import logInfo,logDebug,logError
 
@@ -34,6 +35,22 @@ class CDocument(object):
         self.lCopies.append(mysCopyID)
         self.lServers.append(mysServerID)
         return self.ID+"+"+mysCopyID+"+"+mysServerID
+
+
+# f n n C a l c D o c S i z e ( ) 
+@tracef("DOC")
+def fnnCalcDocSize(mynLevel):
+    lPercents = P.dDocParams[mynLevel]
+    nPctRandom = makeunif(0,100)
+    nPctCum = 0
+    for lTriple in lPercents:
+        (nPercent,nMean,nSdev) = lTriple
+        nPctCum += nPercent
+        if nPctRandom <= nPctCum:
+            nDocSize = int(makennnorm(nMean,nSdev))
+            TRC.tracef(3,"DOC","proc CalcDocSize rand|%s| cum|%s| pct|%s| mean|%s| sd|%s|" % (nPctRandom,nPctCum,nPercent,nMean,nSdev))
+            break
+    return nDocSize
 
 
 #===========================================================
@@ -64,9 +81,7 @@ class CCollection(object):
         # A collection has lots of books
         nrandbooks = int(makennnorm(int(nbooks)))
         for icoll in xrange(nrandbooks):
-            # T E M P
-            ndocsize = makeunif(1,1000)
-            # E N D   T E M P 
+            ndocsize = fnnCalcDocSize(self.nValue)
             cDoc = CDocument(ndocsize,self.sClientID)
             self.lDocIDs.append(cDoc.ID)
         return self.ID
@@ -144,12 +159,13 @@ class CClient(object):
 # C l i e n t . m S e l e c t S e r v e r s F o r C o l l e c t i o n
     @tracef("CLI")
     def mSelectServersForCollection(self,mynCollValue):
-        ''' Client.mSelectServersForCollection()
-            Get list of servers at this quality level.
+        ''' Get list of servers at this quality level.
             Return a random permutation of the list of servers.
         '''
         # Get list of all servers at this quality level.
-        lServersAtLevel = G.dQual2Servers[mynCollValue]
+        # Value level translates to quality required and nr copies.
+        (nQuality,nCopies) = P.dDistnParams[mynCollValue][0]
+        lServersAtLevel = G.dQual2Servers[nQuality]
         # Pick a random number of a permutation.
         nNumPerms = math.factorial(len(lServersAtLevel))
         nPermChoice = int(makeunif(0,nNumPerms))
@@ -159,11 +175,13 @@ class CClient(object):
             lPerms.append(lPerm)
         # Pick one of the permutations. 
         lPermChosenFull = lPerms[nPermChoice]
-        # Now use he distribution params to select maybe
+        # Now use the distribution params to select maybe
         # a subset of the available servers.
-        (nQuality,nCopies) = P.dDistnParams[mynCollValue][0]
-        lPermChosen = lPermChosenFull[0:(nCopies-1)]
-        TRC.tracef(3,"CLI","proc mSelectServers perm|%d| of|%d| list|%s|" % (nPermChoice,nNumPerms,lPermChosen))
+        # (I hate the syntax of slicing lists, the open interval 
+        # on the right.)
+        lPermChosen = lPermChosenFull[0:nCopies]
+        TRC.tracef(5,"CLI","proc mSelectServers1 fulllist|%s| permlist|%s| choose|%d| chosen|%s|" % (lServersAtLevel,lPermChosenFull,nCopies,lPermChosen))
+        TRC.tracef(3,"CLI","proc mSelectServers2 perm|%d| of|%d| list|%s|" % (nPermChoice,nNumPerms,lPermChosen))
         return lPermChosen
 
 

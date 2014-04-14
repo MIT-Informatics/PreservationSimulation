@@ -59,10 +59,10 @@ class P(object):
                         , 2 : [ 20, 200 ]
                         }
 
-    # Don't know what to do with this yet.
-    # It will probably state something like
-    #   clientname : [ [ collectionvaluelevel, serverqualitylevel, numberofcopies ] , ... ]
-    dDistnParams =      { "MIT" : [ [ 1, 1, 5 ], [ 2, 2, 4 ], [ 3, 3, 3 ] ] 
+    #   { collectionvaluelevel : [ serverqualitylevel, numberofcopies ] , ... }
+    dDistnParams =      { 1 : [ 1, 5 ]
+                        , 2 : [ 2, 4 ]
+                        , 3 : [ 3, 3 ] 
                         }
 
     # Directory where the parameter files for the run are to be found.  
