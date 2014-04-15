@@ -263,14 +263,14 @@ def makeClients(mydClients):
 def testAllClients(mylClients):
     for cClient in mylClients:
         lDeadDocIDs = cClient.mTestClient()
+        sClientID = cClient.ID
         if len(lDeadDocIDs) > 0:
-            sClientID = cClient.ID
             for sDocID in lDeadDocIDs:
                 cDoc = G.dID2Document[sDocID]
                 logInfo("MAIN","client |%s| lost doc |%s| size |%s|" % (sClientID,sDocID,cDoc.nSize))
             logInfo("MAIN","BAD NEWS: Total documents lost by client |%s| in all servers |%d|" % (sClientID,len(lDeadDocIDs)))
         else:
-            logInfo("MAIN","GOOD NEWS: NO DOCUMENTS LOST!")
+            logInfo("MAIN","GOOD NEWS: NO DOCUMENTS LOST by client |%s|!" % (sClientID))
 
 
 # M A I N   L I N E
