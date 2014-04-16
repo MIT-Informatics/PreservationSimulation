@@ -85,10 +85,9 @@ class CCollection(object):
 
 # C o l l e c t i o n . m M a k e B o o k s 
     @tracef("COLL")
-    def mMakeBooks(self,nbooks):
+    def mMakeBooks(self,mynBooks):
         # A collection has lots of books
-        nrandbooks = int(makennnorm(int(nbooks)))
-        for icoll in xrange(nrandbooks):
+        for icoll in xrange(mynBooks):
             ndocsize = fnnCalcDocSize(self.nValue)
             cDoc = CDocument(ndocsize,self.sClientID)
             self.lDocIDs.append(cDoc.ID)

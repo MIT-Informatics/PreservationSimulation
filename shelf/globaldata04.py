@@ -78,8 +78,16 @@ class P(object):
                     , 5 : [ [ 50, 5, 2 ], [ 50, 5000, 2000 ] ]
                     }
  
-    # Directory where the parameter files for the run are to be found.  
-    sParamdir = "."
+    dParamsParams = { "RANDOMSEED"  : [[ 1 ]]
+                    , "SIMLENGTH"   : [[ 10000 ]]
+                    , "LOG_FILE"    : [[ "-" ]]
+                    , "LOG_LEVEL"   : [[ "NOTSET" ]]
+                    }
+ 
+    # Directory where the parameter files for the run are to be found. 
+    sWorkingdir = "." 
+    sFamilydir = "."
+    sSpecificdir = "."
 
     # Log file location and level.
     LOG_LEVEL = "NOTSET"

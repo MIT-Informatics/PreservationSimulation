@@ -104,15 +104,22 @@ from os import environ
 from util import fnIntPlease
 import logoutput as lg
 
-# g e t P a r a m s 
+# g e t P a r a m F i l e s 
 def getParamFiles(mysParamdir):
     # ---------------------------------------------------------------
     # Read the parameter files, whatever their formats.
-    P.dClientParams =   readin.fdGetClientParams("%s/clients.csv"%(mysParamdir))
-    P.dServerParams =   readin.fdGetServerParams("%s/servers.csv"%(mysParamdir))
-    P.dShelfParams =    readin.fdGetQualityParams("%s/quality.csv"%(mysParamdir))
-    P.dParamsParams =   readin.fdGetParamsParams("%s/params.csv"%(mysParamdir))
-    P.dDistnParams =   readin.fdGetDistnParams("%s/distn.csv"%(mysParamdir))
+    dResult =   readin.fdGetClientParams("%s/clients.csv"%(mysParamdir))
+    if dResult: P.dClientParams = dResult
+    dResult =   readin.fdGetServerParams("%s/servers.csv"%(mysParamdir))
+    if dResult: P.dServerParams = dResult
+    dResult =    readin.fdGetQualityParams("%s/quality.csv"%(mysParamdir))
+    if dResult: P.dShelfParams = dResult
+    dResult =   readin.fdGetParamsParams("%s/params.csv"%(mysParamdir))
+    if dResult: P.dParamsParams = dResult
+    dResult =   readin.fdGetDistnParams("%s/distn.csv"%(mysParamdir))
+    if dResult: P.dDistnParams = dResult
+    dResult =   readin.fdGetDocParams("%s/docsize.csv"%(mysParamdir))
+    if dResult: P.dDocParams = dResult
 
     # ---------------------------------------------------------------
     # Process the params params specially.
@@ -174,13 +181,13 @@ def getCliArgs():
     G.randomseed = P.RANDOMSEED
 
     try:
-        P.LOG_FILE = argv[4]
+        P.LOG_FILE = argv[5]
     except (IndexError,TypeError,ValueError):
         pass
     G.LOG_FILE = P.LOG_FILE
 
     try:
-        P.LOG_LEVEL = argv[5]
+        P.LOG_LEVEL = argv[6]
     except (IndexError,TypeError,ValueError):
         pass
     G.LOG_LEVEL = P.LOG_LEVEL
@@ -192,8 +199,10 @@ def dumpParamsIntoLog():
     #  of information in it about the parameters that resulted in
     #  the answers.
     lg.logInfo("MAIN","Simulation parameters")
-    lg.logInfo("PARAMS","begin simulation paramdir|%s| seed|%d| timelimit|%d|" % (P.sParamdir,P.RANDOMSEED,P.SIMLENGTH))
+    lg.logInfo("PARAMS","begin simulation seed|%d| timelimit|%d|" % (P.RANDOMSEED,P.SIMLENGTH))
     lg.logInfo("PARAMS","logfile|%s| loglevel|%s|" % (P.LOG_FILE,P.LOG_LEVEL)) 
+    lg.logInfo("PARAMS","familydir|%s| specificdir|%s|" % (P.sFamilydir,P.sSpecificdir)) 
+    
     
     # Client params
     TRC.tracef(3,"MAIN","client params dict|%s|" % (P.dClientParams))
@@ -260,6 +269,7 @@ def makeClients(mydClients):
     return G.lAllClients
 
 # t e s t A l l C l i e n t s 
+@tracef("CLI")
 def testAllClients(mylClients):
     for cClient in mylClients:
         lDeadDocIDs = cClient.mTestClient()
@@ -314,6 +324,33 @@ New philosophy on run parameters.
     4. CLI arg5, if present, overrides LOG_LEVEL.  Note that this is
         a string only, not a numeric value.  
 - Logical, yes, but too damned complicated.  
+- NEW NEW NEW
+- Ah, well, let's make is much more complicated.  There shall be three 
+   levels of param files: the current working directory, a test family 
+   directory, and a test specific directory.  If a file exists in one
+   of these directories, it is processed and its dictionary overrides
+   what is currently in the P database.  This way, there can be generic
+   parameters in the working directory, then params for the family of 
+   tests being done in the family directory, then specific params for
+   the test at hand in the specific directory, which is a child of the 
+   family directory.  
+- Processing order: 
+    0. Compiled-in default param values, usually only examples.
+    1. Environment variables for the locations of the param files.
+        TEST_FAMILY
+        TEST_SPECIFIC
+    2. CLI arg values for the locations of the param files.  
+        CLI arg3 is now TEST_FAMILY
+        CLI arg4 is now TEST_SPECIFIC
+        CLI arg5 is now LOG_FILE
+        CLI arg6 is now LOG_LEVEL  
+    3. Param files in the current working directory, which is typically "."
+    4. Param files in the test family directory.
+    5. Param files in the test specific directory.
+    6. Environment variables that override any params.
+    7. CLI args that override any params.  
+- Whew!
+
 '''
 
 def main():
@@ -322,13 +359,26 @@ def main():
 
     # ---------------------------------------------------------------
     # Read parameter files for simulation.
+    # First read the default ones from the working directory.
+    getParamFiles(P.sWorkingdir)
+    
     # They may be in another directory.  Default dir = "." (i.e., here).  
-    # Take CLI arg3 as the directory location of all param files.  
+    # Take CLI arg3 as the directory location of family param files.  
     try:
-        P.sParamdir = argv[3]
+        P.sFamilydir = argv[3]       # both or neither
     except:
         pass
-    getParamFiles(P.sParamdir)
+    if P.sFamilydir <> P.sWorkingdir: getParamFiles(P.sFamilydir)
+    # And there may be test-specific param files in a child directory
+    # of the family directory.  Default dir = "." (i.e., here).  
+    # Take CLI arg4 as the directory location of specific param files.  
+    try:
+        P.sSpecificdir = argv[4]
+    except:
+        pass
+    if P.sSpecificdir <> P.sFamilydir: 
+        sChilddir = P.sFamilydir + "/" + P.sSpecificdir
+        getParamFiles(sChilddir)
 
     # ---------------------------------------------------------------
     # Check environment variables for parameters.  
@@ -338,9 +388,10 @@ def main():
     # Allow CLI arguments to override some params.
     # arg1 = simulation length (hours)
     # arg2 = seed for random number generator.  zero means use clock. 
-    # arg3 = directory for param files.
-    # arg4 = logfile (relative or absolute)
-    # arg5 = loglevel string (INFO, DEBUG, NOTSET)
+    # arg3 = family directory for param files.
+    # arg4 = specific directory for param files.
+    # arg5 = logfile (relative or absolute)
+    # arg6 = loglevel string (INFO, DEBUG, NOTSET)
     # If the simulation length numeric arg is zero, the default 
     # value will be used. 
     getCliArgs()
