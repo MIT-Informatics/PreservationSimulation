@@ -207,7 +207,7 @@ class CShelf(object):
         # If the shelf has been emptied by a shelf failure, stop 
         # caring about sector failures.
         while self.bAlive:
-            fLifeParam = self.mCalcBlockFailureRate()
+            fLifeParam = self.mCalcBlockLifetime()
             nSectorLife = makeexpo(fLifeParam)
             TRC.tracef(3,"SHLF","proc mAge_sector time|%d| shelf|%s| next lifetime|%d| from rate|%.3f|" % (G.env.now,self.ID,nSectorLife,fLifeParam))
             yield G.env.timeout(nSectorLife)
@@ -236,9 +236,9 @@ class CShelf(object):
             # Initiate a repair of the dead document.
             # NYI
 
-#  S h e l f . m C a l c B l o c k F a i l u r e R a t e
+#  S h e l f . m C a l c B l o c k L i f e t i m e 
     @tracef("SHLF")
-    def mCalcBlockFailureRate(self):
+    def mCalcBlockLifetime(self):
         ''' Because of the funny way we handle small errors, we have to
             calculate the aggregate block error rate for the shelf.  
             When such an error occurs we then choose the block within
@@ -247,11 +247,26 @@ class CShelf(object):
             times the number of blocks on the shelf.  Eventually, we might
             increase this rate if another recent failure has occurred on
             this shelf.
+            Actually, calculate this as lifetime.  What is the exponential
+            mean lifetime of a block?  Probably something like 1E14 hours
+            per bit (1E9 years).  But a megabyte block has about 10E7
+            bits, so that reduces the block lifetime to 1E7 hours = 1E2 years.  
+            Whoa, way small.  Hmmm.  Now if you have a storage structure of 
+            say 10 terabytes = 1E13 bytes = 1E14 bits, then the lifetime of
+            *some* block in that storage structure, i.e., the time to failure
+            of the first block in that structure, is about one hour.  Whoa.  
+            Way too short.  
+            Let's redo that with a lifetime of 
+            - 1e14 years per bit
+            - 1e7 years per megabyte block
+            - storage structure of 10TB = 1e13B = 1e7MB
+            - time to first failure in structure = 1e7/1e7 = 1 year.  
+            Much more plausible.  
             Note that all these parameters are stated as lifetimes in hours.
-            Failure rate per hour = 1 / lifetime.  
         '''
-        fRate = float(self.nCapacity)/float(self.nSectorLife) 
-        return fRate
+#        fRate = 1.0 / ( float(self.nCapacity) / float(self.nSectorLife) )
+        fLife = float(self.nSectorLife) / float(self.nCapacity)
+        return fLife
 
 # S h e l f . m S e l e c t V i c t i m C o p y  
     @tracef("SHLF")

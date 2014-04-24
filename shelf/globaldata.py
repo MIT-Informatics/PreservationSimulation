@@ -90,14 +90,16 @@ class P(object):
     sSpecificdir = "."
 
     # Log file location and level.
-    LOG_LEVEL = "NOTSET"
-    LOG_FILE = "-"
+    sLogLevel = "NOTSET"
+    sLogFile = "-"
 
     # Seed for random number generators.  Use a constant by default
     #  to permit consistent regression testing.
-    RANDOMSEED = 1
+    #RANDOMSEED = 1
+    nRandomseed = 1
 
     # Length of simulation, in hours.  Default = one year.
-    SIMLENGTH = 10000
+    #SIMLENGTH = 100000
+    nSimlength = 100000
 
 # END

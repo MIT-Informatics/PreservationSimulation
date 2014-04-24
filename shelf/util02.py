@@ -15,7 +15,8 @@ def makeexpo(mean):
     ''' fn makeexpo(mean)
         return integer from exponential distribution with mean
     '''
-    interval = int(random.expovariate(1.0/abs(mean)))
+    #interval = int(random.expovariate(1.0/abs(mean)))
+    interval = (random.expovariate(1.0/abs(mean)))
     return interval
 
 def makeunif(lo,hi):

@@ -103,8 +103,11 @@ import readin
 from os import environ
 from util import fnIntPlease
 import logoutput as lg
+from cliparse import *
+
 
 # g e t P a r a m F i l e s 
+@tracef("MAIN")
 def getParamFiles(mysParamdir):
     # ---------------------------------------------------------------
     # Read the parameter files, whatever their formats.
@@ -144,65 +147,56 @@ def getParamFiles(mysParamdir):
         pass
 
 # g e t E n v i r o n m e n t P a r a m s
+@tracef("MAIN")
 def getEnvironmentParams():
     try:
         P.RANDOMSEED = fnIntPlease(environ["RANDOMSEED"])
     except (KeyError,TypeError,ValueError):
         pass
-
     try:
         P.SIMLENGTH = fnIntPlease(environ["SIMLENGTH"])
     except (KeyError,TypeError,ValueError):
         pass
-
     try:
         P.LOG_FILE = environ["LOG_FILE"]
     except KeyError:
         pass
-
     try:
         P.LOG_LEVEL = environ["LOG_LEVEL"]
     except KeyError:
         pass
 
-# g e t C l i A r g s 
-def getCliArgs():
-    try:
-        nTemp = int(argv[1]) 
-        if nTemp > 0: P.SIMLENGTH = nTemp
-    except (IndexError,TypeError,ValueError):
-        pass
-    G.runtime = P.SIMLENGTH
- 
-    try:
-        P.RANDOMSEED = int(argv[2])
-    except (IndexError,TypeError,ValueError):
-        pass
-    G.randomseed = P.RANDOMSEED
+# g e t C l i A r g s F o r P a r a m D i r s
+@tracef("MAIN")
+def getCliArgsForParamDirs():
+    # The only args we really want at this point are the 
+    # Family and Child (Specific) directories.  But this
+    # is just easier.  
+    dCliDict = fndCliParse(None)
 
-    try:
-        P.LOG_FILE = argv[5]
-    except (IndexError,TypeError,ValueError):
-        pass
-    G.LOG_FILE = P.LOG_FILE
-
-    try:
-        P.LOG_LEVEL = argv[6]
-    except (IndexError,TypeError,ValueError):
-        pass
-    G.LOG_LEVEL = P.LOG_LEVEL
-
+# g e t C l i A r g s F o r E v e r y t h i n g E l s e
+@tracef("MAIN")
+def getCliArgsForEverythingElse():
+    # And now do it again, this time overwriting anything
+    # that came from the param files or environment.  
+    dCliDict = fndCliParse(None)
+    # And gloss over the poor naming choices of early weeks.  
+    G.runtime = P.nSimlength
+    G.randomseed = P.nRandomseed
+    G.LOG_FILE = P.sLogFile
+    G.LOG_LEVEL = P.sLogLevel
 
 # d u m p P a r a m s I n t o L o g 
+@tracef("MAIN")
 def dumpParamsIntoLog():
     # We want a log file to be self-contained, so record all sorts
     #  of information in it about the parameters that resulted in
     #  the answers.
     lg.logInfo("MAIN","Simulation parameters")
-    lg.logInfo("PARAMS","begin simulation seed|%d| timelimit|%d|" % (P.RANDOMSEED,P.SIMLENGTH))
-    lg.logInfo("PARAMS","logfile|%s| loglevel|%s|" % (P.LOG_FILE,P.LOG_LEVEL)) 
+    lg.logInfo("MAIN","Command line|%s|" % (argv[1:]))
     lg.logInfo("PARAMS","familydir|%s| specificdir|%s|" % (P.sFamilydir,P.sSpecificdir)) 
-    
+    lg.logInfo("PARAMS","begin simulation seed|%d| timelimit|%d|" % (G.randomseed,G.runtime))
+    lg.logInfo("PARAMS","logfile|%s| loglevel|%s|" % (G.LOG_FILE,G.LOG_LEVEL)) 
     
     # Client params
     TRC.tracef(3,"MAIN","client params dict|%s|" % (P.dClientParams))
@@ -358,31 +352,15 @@ def main():
     TRC.tracef(0,"MAIN","proc Document Preservation simulation " % ())
 
     # ---------------------------------------------------------------
-    # Read parameter files for simulation.
-    # First read the default ones from the working directory.
-    getParamFiles(P.sWorkingdir)
-    
-    # They may be in another directory.  Default dir = "." (i.e., here).  
-    # Take CLI arg3 as the directory location of family param files.  
-    try:
-        P.sFamilydir = argv[3]       # both or neither
-    except:
-        pass
-    if P.sFamilydir <> P.sWorkingdir: getParamFiles(P.sFamilydir)
-    # And there may be test-specific param files in a child directory
-    # of the family directory.  Default dir = "." (i.e., here).  
-    # Take CLI arg4 as the directory location of specific param files.  
-    try:
-        P.sSpecificdir = argv[4]
-    except:
-        pass
-    if P.sSpecificdir <> P.sFamilydir: 
-        sChilddir = P.sFamilydir + "/" + P.sSpecificdir
-        getParamFiles(sChilddir)
-
-    # ---------------------------------------------------------------
-    # Check environment variables for parameters.  
-    getEnvironmentParams()
+    '''
+        NEW NEW NEW
+        parse cli
+        read params from familydir
+        if specificdir not absent and not . 
+        then read params from familydir/specificdir
+        read environment variables
+        use cli options to override params
+    '''
 
     # ---------------------------------------------------------------
     # Allow CLI arguments to override some params.
@@ -394,11 +372,29 @@ def main():
     # arg6 = loglevel string (INFO, DEBUG, NOTSET)
     # If the simulation length numeric arg is zero, the default 
     # value will be used. 
-    getCliArgs()
+    getCliArgsForParamDirs()
+
+    # Read parameter files for simulation.
+    # Take CLI arg as the directory location of family param files.  
+    getParamFiles(P.sFamilydir)
+    # And there may be test-specific param files in a child directory
+    # of the family directory.  Default dir = "." (i.e., same).  
+    # Take CLI arg if present as the directory location of specific param files.  
+    if P.sSpecificdir and P.sSpecificdir <> ".": 
+        sChilddir = P.sFamilydir + "/" + P.sSpecificdir
+        getParamFiles(sChilddir)
+
+    # ---------------------------------------------------------------
+    # Check environment variables for parameters.  
+    getEnvironmentParams()
+
+    # ---------------------------------------------------------------
+    # Now get the rest of the CLI options that may override whatever.  
+    getCliArgsForEverythingElse ()
 
     # ---------------------------------------------------------------
     # Start the Python logging facility.
-    lg.logSetConfig(P.LOG_LEVEL,P.LOG_FILE)
+    lg.logSetConfig(P.sLogLevel,P.sLogFile)
 
     # ---------------------------------------------------------------
     # Log a ton of information so that the log file can be used
