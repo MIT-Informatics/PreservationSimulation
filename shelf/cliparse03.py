@@ -47,4 +47,7 @@ def fndCliParse(mysArglist):
 
     return vars(xx)
 
+# Moved all the data overwriting back to main.  Just return dictionary of 
+# params found on command line.  
+
 # END
