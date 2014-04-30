@@ -225,12 +225,12 @@ class CShelf(object):
                 cCopy = G.dID2Copy[sCopyVictimID]
                 cDoc = G.dID2Document[cCopy.sDocID]
                 G.dID2Server[self.sServerID].mDestroyDocument(cDoc.ID,self.ID)
-                logInfo("SERVER","small error t|%s| svr|%s| shelf|%s| hidden failure in copy|%s| doc|%s|" % (G.env.now,self.sServerID,self.ID,sCopyVictimID,cDoc.ID))
+                logInfo("SERVER","small error t|%6.0f| svr|%s| shelf|%s| hidden failure in copy|%s| doc|%s|" % (G.env.now,self.sServerID,self.ID,sCopyVictimID,cDoc.ID))
                 TRC.tracef(3,"FAIL","proc t|%d| sector failure server|%s| qual|%d| shelf|%s| doc|%s| copy|%s|" % (G.env.now,self.sServerID,G.dID2Server[self.sServerID].nQual,self.ID,cDoc.ID,sCopyVictimID))
             else:                           # No victim, hit empty space.
                 self.nEmptySectorHits += 1
                 TRC.tracef(3,"SHLF","proc mAge_sector shelf|%s| sector error fell in empty space" % (self.ID))
-                logInfo("SERVER","small error t|%s| svr|%s| shelf|%s| hidden failure in copy|%s|" % (G.env.now,self.sServerID,self.ID,sCopyVictimID))
+                logInfo("SERVER","small error t|%6.0f| svr|%s| shelf|%s| hidden failure in copy|%s|" % (G.env.now,self.sServerID,self.ID,sCopyVictimID))
                 TRC.tracef(3,"FAIL","proc t|%d| sector failure server|%s| qual|%d| shelf|%s| copy|%s|" % (G.env.now,self.sServerID,G.dID2Server[self.sServerID].nQual,self.ID,sCopyVictimID))
 
             # Initiate a repair of the dead document.
@@ -322,7 +322,7 @@ class CShelf(object):
         G.nTimeLastEvent = G.env.now
         self.bAlive = False         # Shelf can no longer be used to store docs.
         TRC.tracef(3,"SHLF","proc mAge_shelf  time|%d| shelf|%s| shelf_error" % (G.env.now,self.ID))
-        logInfo("SERVER","storage shelf failed time|%d| server|%s| shelf|%s| lost |%d| docs" % (G.env.now,self.sServerID,self.ID,len(self.lCopyIDs)))
+        logInfo("SERVER","storage shelf failed time|%6q.0f| server|%s| shelf|%s| lost |%d| docs" % (G.env.now,self.sServerID,self.ID,len(self.lCopyIDs)))
         # This whole shelf is a goner.  Kill it. 
         TRC.tracef(5,"SHLF","proc mAge_shelf kill contents ldocs|%s| lcopies|%s|" % (self.lDocIDs,self.lCopyIDs)) 
         # Note that we have to copy the list before modifying it and 

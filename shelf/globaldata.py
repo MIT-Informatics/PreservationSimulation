@@ -85,9 +85,9 @@ class P(object):
                     }
  
     # Directory where the parameter files for the run are to be found. 
-    sWorkingdir = "." 
-    sFamilydir = "."
-    sSpecificdir = "."
+    sWorkingDir = "." 
+    sFamilyDir = "."
+    sSpecificDir = "."
 
     # Log file location and level.
     sLogLevel = "NOTSET"
@@ -96,10 +96,10 @@ class P(object):
     # Seed for random number generators.  Use a constant by default
     #  to permit consistent regression testing.
     #RANDOMSEED = 1
-    nRandomseed = 1
+    nRandomSeed = 1
 
     # Length of simulation, in hours.  Default = one year.
     #SIMLENGTH = 100000
-    nSimlength = 100000
+    nSimLength = 100000
 
 # END
