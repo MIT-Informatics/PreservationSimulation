@@ -17,7 +17,7 @@ from logoutput import logInfo
 class CServer(object):
     # Function to get a unique, autoincrementing ID for instances
     # of this class.  
-    getID = itertools.count().next
+    getID = itertools.count(1).next
 
     @tracef("SHOW")
     @tracef("SERV")
@@ -82,7 +82,7 @@ class CServer(object):
             Called as needed when a doc arrives too large for available space.  
         '''
         cShelf = CShelf(self,self.nQual,self.nShelfSize)
-        logInfo("SERVER","created storage shelf|%s| quality|%s| size|%s|" % (cShelf.ID,cShelf.nQual,cShelf.nCapacity))
+        logInfo("SERVER","server |%s| created storage shelf|%s| quality|%s| size|%s|" % (self.ID,cShelf.ID,cShelf.nQual,cShelf.nCapacity))
         return cShelf.ID
 
 # S e r v e r . m R e p l a c e S h e l f 
@@ -115,7 +115,7 @@ class CServer(object):
 #---------------------
 
 class CShelf(object):
-    getID = itertools.count().next
+    getID = itertools.count(1).next
 
     @tracef("SHOW")
     @tracef("SHLF")
@@ -207,10 +207,10 @@ class CShelf(object):
         # If the shelf has been emptied by a shelf failure, stop 
         # caring about sector failures.
         while self.bAlive:
-            fLifeParam = self.mCalcBlockLifetime()
-            nSectorLife = makeexpo(fLifeParam)
-            TRC.tracef(3,"SHLF","proc mAge_sector time|%d| shelf|%s| next lifetime|%d| from rate|%.3f|" % (G.env.now,self.ID,nSectorLife,fLifeParam))
-            yield G.env.timeout(nSectorLife)
+            fLifeParam = fnfCalcBlockLifetime(self.nSectorLife,self.nCapacity)
+            fSectorLifetime = makeexpo(fLifeParam)
+            TRC.tracef(3,"SHLF","proc mAge_sector time|%d| shelf|%s| next lifetime|%d| from rate|%.3f|" % (G.env.now,self.ID,fSectorLifetime,fLifeParam))
+            yield G.env.timeout(fSectorLifetime)
 
             # S E C T O R  F A I L S 
             self.nSectorHits += 1
@@ -358,7 +358,7 @@ class CShelf(object):
 #---------------------------------
 
 class CCopy(object):
-    getID = itertools.count().next
+    getID = itertools.count(1).next
 
     @tracef("COPY")
     def __init__(self,mysDocID,mysClientID):

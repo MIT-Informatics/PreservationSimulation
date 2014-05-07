@@ -17,7 +17,7 @@ from logoutput import logInfo,logDebug,logError
 #----------------
 
 class CDocument(object):
-    getID = itertools.count(0).next
+    getID = itertools.count(1).next
 
     @tracef("DOC")
     def __init__(self,size,mysClientID):
@@ -66,7 +66,7 @@ class CDocument(object):
 #--------------------
 
 class CCollection(object):
-    getID = itertools.count().next
+    getID = itertools.count(1).next
 
     @tracef("COLL")
     def __init__(self,mysName,mynValue,mynSize,mysClientID):
@@ -121,7 +121,7 @@ class CCollection(object):
 
 class CClient(object):
     sCollIDLastAudited = ""
-    getID = itertools.count().next
+    getID = itertools.count(1).next
 
     @tracef("CLI")
     def __init__(self,mysName,mylCollections):

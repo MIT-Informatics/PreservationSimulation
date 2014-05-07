@@ -272,7 +272,7 @@ def dumpParamsIntoLog():
     lg.logInfo("MAIN","Simulation parameters")
     lg.logInfo("MAIN","Command line|%s|" % (argv[1:]))
     lg.logInfo("PARAMS","familydir|%s| specificdir|%s|" % (G.sFamilyDir,G.sSpecificDir)) 
-    lg.logInfo("PARAMS","begin simulation seed|%d| timelimit|%d|" % (G.nRandomSeed,G.nSimLength))
+    lg.logInfo("PARAMS","begin simulation seed|%d| timelimit|%d|=|%d|yr" % (G.nRandomSeed,G.nSimLength,G.nSimLength/8766))
     lg.logInfo("PARAMS","logfile|%s| loglevel|%s|" % (G.sLogFile,G.sLogLevel)) 
 
     # Client params
@@ -288,13 +288,13 @@ def dumpParamsIntoLog():
     for sServer in G.dServerParams:
         (nQuality,nShelfSize) = G.dServerParams[sServer][0]
         #(nQuality,nShelfSize) = G.dServerParams[sServer]
-        lg.logInfo("PARAMS","SERVER server|%s| quality|%d| shelfsize|%d|" % (sServer,nQuality,nShelfSize))
+        lg.logInfo("PARAMS","SERVER server|%s| quality|%d| shelfsize|%d|=|%d|TB" % (sServer,nQuality,nShelfSize,nShelfSize/1000000))
 
     # Shelf params
     TRC.tracef(3,"MAIN","shelf params dict|%s|" % (G.dShelfParams))
     for nQuality in G.dShelfParams:
         (nSmallFailureRate,nShelfFailureRate) = G.dShelfParams[nQuality][0]
-        lg.logInfo("PARAMS","SHELF quality|%d| smallfailrate|%d| shelffailrate|%d|" % (nQuality,nSmallFailureRate,nShelfFailureRate))
+        lg.logInfo("PARAMS","SHELF quality|%d| smallfailrate|%d|=|%d|yr shelffailrate|%d|=|%d|yr" % (nQuality,nSmallFailureRate,nSmallFailureRate/8766, nShelfFailureRate,nShelfFailureRate/8766))
 
     # Distribution policy params.
     TRC.tracef(3,"MAIN","distn params dict|%s|" % (G.dDistnParams))
@@ -307,7 +307,7 @@ def dumpParamsIntoLog():
     for nValue in G.dDocParams:
         for lMode in G.dDocParams[nValue]:
             (nPercent,nMean,nSdev) = lMode
-            lg.logInfo("PARAMS","DOCUMENT value|%d| percent|%d| mean|%d| sd|%d|" % (nValue,nPercent,nMean,nSdev))
+            lg.logInfo("PARAMS","DOCUMENT value|%d| percent|%d| meanMB|%d| sd|%d|" % (nValue,nPercent,nMean,nSdev))
 
 
 #-----------------------------------------------------------
@@ -320,7 +320,7 @@ def makeServers(mydServers):
         cServer = CServer(sServerName,nServerQual,nShelfSize)
         sServerID = cServer.ID
         G.lAllServers.append(cServer)
-        logInfo("MAIN","created server|%s| quality|%s| shelfsize|%s|" % (sServerID,nServerQual,nShelfSize))
+        logInfo("MAIN","created server|%s| quality|%s| shelfsize|%s| name|%s|" % (sServerID,nServerQual,nShelfSize,sServerName))
         # Invert the server list so that clients can look up 
         # all the servers that satisfy a quality criterion.  
         if nServerQual in G.dQual2Servers:
