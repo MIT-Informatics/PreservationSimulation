@@ -1,6 +1,6 @@
 Name,Quality,ShelfSize
-Amazon East,        1,  10000000
-Amazon West,        1,  30000000
-Google Drive,       1,  100000000
-OneDrive Vanilla,   1,  300000000
-AWS Euro Vanilla,   1,  1000000000
+Amazon East,        1,  10
+Amazon West,        1,  10
+Google Drive,       1,  10
+OneDrive Vanilla,   1,  10
+AWS Euro Vanilla,   1,  10

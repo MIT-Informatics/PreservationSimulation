@@ -24,7 +24,7 @@ class CServer(object):
     def __init__(self,mysName,mynQual,mynShelfSize):
         self.sName = mysName
         self.nQual = mynQual
-        self.nShelfSize = mynShelfSize
+        self.nShelfSize = mynShelfSize * 1000000    # Scale up from TB to MB.
         self.ID = "L" + str(self.getID())
         self.lShelfIDs = list()
         self.lDocIDs = list()
@@ -140,8 +140,8 @@ class CShelf(object):
         self.bContig = True
         
         # Get error rate params and start aging processes
-        (self.nSectorLife,self.nShelfLife) = P.dShelfParams[self.nQual][0]
-        G.env.process(self.mAge_shelf(self.nShelfLife))
+        (self.nSectorLife,self.nShelfLife) = G.dShelfParams[self.nQual][0]
+        G.env.process(self.mAge_shelf(self.nShelfLife*1000))
         G.env.process(self.mAge_sector())
 
 # S h e l f . m A c c e p t D o c u m e n t 
@@ -210,9 +210,9 @@ class CShelf(object):
         # If the shelf has been emptied by a shelf failure, stop 
         # caring about sector failures.
         while self.bAlive:
-            fLifeParam = fnfCalcBlockLifetime(self.nSectorLife,self.nCapacity)
+            fLifeParam = fnfCalcBlockLifetime(self.nSectorLife*1000, self.nCapacity)
             fSectorLifetime = makeexpo(fLifeParam)
-            TRC.tracef(3,"SHLF","proc mAge_sector time|%d| shelf|%s| next lifetime|%d| from rate|%.3f|" % (G.env.now,self.ID,fSectorLifetime,fLifeParam))
+            TRC.tracef(3,"SHLF","proc mAge_sector time|%d| shelf|%s| next lifetime|%d|hr from rate|%.3f|hr" % (G.env.now,self.ID,fSectorLifetime,fLifeParam))
             yield G.env.timeout(fSectorLifetime)
 
             # S E C T O R  F A I L S 
@@ -286,7 +286,7 @@ class CShelf(object):
             collection more vulnerable during the repair.  
         '''
         nShelfLife = makeexpo(mynLifeParam)
-        TRC.tracef(3,"SHLF","proc mAge_shelf  time|%d| shelf|%s| next lifetime|%d|" % (G.env.now,self.ID,nShelfLife))
+        TRC.tracef(3,"SHLF","proc mAge_shelf  time|%d| shelf|%s| next lifetime|%d|khr" % (G.env.now,self.ID,nShelfLife))
         yield G.env.timeout(nShelfLife)
 
         # S H E L F  F A I L S 

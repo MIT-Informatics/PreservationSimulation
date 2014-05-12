@@ -272,7 +272,7 @@ def dumpParamsIntoLog():
     lg.logInfo("MAIN","Simulation parameters")
     lg.logInfo("MAIN","Command line|%s|" % (argv[1:]))
     lg.logInfo("PARAMS","familydir|%s| specificdir|%s|" % (G.sFamilyDir,G.sSpecificDir)) 
-    lg.logInfo("PARAMS","begin simulation seed|%d| timelimit|%d|=|%d|yr" % (G.nRandomSeed,G.nSimLength,G.nSimLength/8766))
+    lg.logInfo("PARAMS","begin simulation seed|%d| timelimit|%d|hr=|%d|yr" % (G.nRandomSeed,G.nSimLength,G.nSimLength/8766))
     lg.logInfo("PARAMS","logfile|%s| loglevel|%s|" % (G.sLogFile,G.sLogLevel)) 
 
     # Client params
@@ -288,13 +288,13 @@ def dumpParamsIntoLog():
     for sServer in G.dServerParams:
         (nQuality,nShelfSize) = G.dServerParams[sServer][0]
         #(nQuality,nShelfSize) = G.dServerParams[sServer]
-        lg.logInfo("PARAMS","SERVER server|%s| quality|%d| shelfsize|%d|=|%d|TB" % (sServer,nQuality,nShelfSize,nShelfSize/1000000))
+        lg.logInfo("PARAMS","SERVER server|%s| quality|%d| shelfsize|%d|TB" % (sServer,nQuality,nShelfSize))
 
     # Shelf params
     TRC.tracef(3,"MAIN","shelf params dict|%s|" % (G.dShelfParams))
     for nQuality in G.dShelfParams:
         (nSmallFailureRate,nShelfFailureRate) = G.dShelfParams[nQuality][0]
-        lg.logInfo("PARAMS","SHELF quality|%d| smallfailrate|%d|=|%d|yr shelffailrate|%d|=|%d|yr" % (nQuality,nSmallFailureRate,nSmallFailureRate/8766, nShelfFailureRate,nShelfFailureRate/8766))
+        lg.logInfo("PARAMS","SHELF quality|%d| smallfailrate|%d|khr=|%d|yr shelffailrate|%d|khr=|%d|yr" % (nQuality,nSmallFailureRate,nSmallFailureRate*1000/8766, nShelfFailureRate,nShelfFailureRate*1000/8766))
 
     # Distribution policy params.
     TRC.tracef(3,"MAIN","distn params dict|%s|" % (G.dDistnParams))
@@ -464,12 +464,12 @@ def main():
 
     # ---------------------------------------------------------------
     # Allow CLI arguments to override some params.
-    # arg1 = simulation length (hours)
-    # arg2 = seed for random number generator.  zero means use clock. 
-    # arg3 = family directory for param files.
-    # arg4 = specific directory for param files.
-    # arg5 = logfile (relative or absolute)
-    # arg6 = loglevel string (INFO, DEBUG, NOTSET)
+    # arg1 = family directory for param files.
+    # arg2 = specific directory for param files.
+    # arg3 = simulation length (hours)
+    # arg4 = seed for random number generator.  zero means use clock. 
+    # --logfile = logfile (relative or absolute)
+    # --loglevel = loglevel string (INFO, DEBUG, NOTSET)
     # If the simulation length numeric arg is zero, the default 
     # value will be used. 
     getCliArgsForParamDirs()

@@ -27,8 +27,8 @@ def fndCliParse(mysArglist):
     #cParse.add_argument('--something', type=, dest='', metavar='', help='')
     cParse.add_argument('sFamilydir', type=str, metavar='sFAMILYDIR', help='Family directory for test parameter files')
     cParse.add_argument('sSpecificdir', type=str, nargs="?", metavar='sSPECIFICDIR', help='Specific dir below Family dir for overriding parameter files, "." for none')
-    cParse.add_argument("nSimlength", type=int, nargs="?", metavar='nSIMLENGTH', help="Length of simulation in kilo-hours")
-    cParse.add_argument("nRandomseed",type=int, nargs="?", metavar='nRANDOMSEED', help='Seed for random number generator, 0=use system clock')
+    cParse.add_argument("nSimLength", type=int, nargs="?", metavar='nSIMLENGTH', help="Length of simulation in kilo-hours")
+    cParse.add_argument("nRandomSeed",type=int, nargs="?", metavar='nRANDOMSEED', help='Seed for random number generator, 0=use system clock')
 
     # O P T I O N S
     cParse.add_argument("--ncopies", type=int, dest='lCopies', metavar='nCOPIES', nargs='*', help='Number of copies to make (for value types from 1 up to 5), 0=no change')

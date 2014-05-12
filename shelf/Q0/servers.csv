@@ -1,19 +1,19 @@
 Name,Quality,ShelfSize
-Amazon East,        1,  10000000
-Amazon West,        1,  20000000
-Google Drive,       1,  30000000
-OneDrive Vanilla,   1,  50000000
-AWS Euro Vanilla,   1,  100000000
-Amazon East Plus,   2,  10000000
-Amazon West Plus,   2,  20000000
-Google Drive Plus,  2,  30000000
-OneDrive  Plus,     2,  50000000
-AWS Euro  Plus,     2,  100000000
-Amazon East Premium,    3,  20000000
-Amazon West Premium,    3,  50000000
-Google Drive Premium,   3,  100000000
-OneDrive  Premium,      3,  200000000
-AWS Euro  Premium,      3,  500000000
+Amazon East,        1,  10
+Amazon West,        1,  10
+Google Drive,       1,  10
+OneDrive Vanilla,   1,  10
+AWS Euro Vanilla,   1,  10
+Amazon East Plus,   2,  20
+Amazon West Plus,   2,  20
+Google Drive Plus,  2,  20
+OneDrive  Plus,     2,  20
+AWS Euro  Plus,     2,  20
+Amazon East Premium,    3,  50
+Amazon West Premium,    3,  50
+Google Drive Premium,   3,  50
+OneDrive  Premium,      3,  50
+AWS Euro  Premium,      3,  50
 Amazon East Super Duper,4,2000000
 Amazon West Super Duper,4,3000000
 Google Drive Super Duper,4,4000000

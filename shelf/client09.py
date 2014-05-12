@@ -184,7 +184,7 @@ class CClient(object):
         '''
         # Get list of all servers at this quality level.
         # Value level translates to quality required and nr copies.
-        (nQuality,nCopies) = P.dDistnParams[mynCollValue][0]
+        (nQuality,nCopies) = G.dDistnParams[mynCollValue][0]
         lServersAtLevel = G.dQual2Servers[nQuality]
         # Pick a random number of a permutation.
         nNumPerms = math.factorial(len(lServersAtLevel))

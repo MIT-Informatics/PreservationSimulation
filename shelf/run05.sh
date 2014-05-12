@@ -20,6 +20,7 @@ then
     echo "  specifdir       '.' i.e., same as familydir"
     echo "  simlength       0 => use value in parameter file"
     echo "  randomseed      0 => use random system clock value, different each time"
+    echo "and many --something options."
     echo ""
     echo "Use --help to get full help message from program."
     exit 0

@@ -48,13 +48,15 @@ class P(object):
                         , "Harvard":[ ["Cheap",1,20], ["Rare",3,10] ]
                         }
     # Server has a name, a quality rating, and a shelf size.
-    dServerParams =    { "Amazon East":[1,2000]
-                        , "Amazon West":[1,3000]
-                        , "Google Drive":[2,4000]
-                        , "AWS Euro Premium":[3,2000]
+    # Shelf size is stored here in Terabytes, scaled up to MB when used in servers.  
+    dServerParams =    { "Amazon East":[1,20]
+                        , "Amazon West":[1,30]
+                        , "Google Drive":[2,40]
+                        , "AWS Euro Premium":[3,20]
                         }
     # Shelf has an MTTF for each quality level.
     # quality : [ sector error rate, shelf error rate ] 
+    # Rates are stored in kilohours here, scaled up to hours when used in servers.
     dShelfParams =      { 1 : [ 10, 100 ]
                         , 2 : [ 20, 200 ]
                         }
