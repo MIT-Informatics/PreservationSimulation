@@ -103,263 +103,141 @@ import readin
 from os import environ
 from util import fnIntPlease
 import logoutput as lg
-from cliparse import *
-import copy
 
-#-----------------------------------------------------------
 # g e t P a r a m F i l e s 
-@tracef("MAIN")
 def getParamFiles(mysParamdir):
     # ---------------------------------------------------------------
     # Read the parameter files, whatever their formats.
     dResult =   readin.fdGetClientParams("%s/clients.csv"%(mysParamdir))
     if dResult: P.dClientParams = dResult
-        
     dResult =   readin.fdGetServerParams("%s/servers.csv"%(mysParamdir))
     if dResult: P.dServerParams = dResult
-        
     dResult =    readin.fdGetQualityParams("%s/quality.csv"%(mysParamdir))
     if dResult: P.dShelfParams = dResult
-        
     dResult =   readin.fdGetParamsParams("%s/params.csv"%(mysParamdir))
     if dResult: P.dParamsParams = dResult
-        
     dResult =   readin.fdGetDistnParams("%s/distn.csv"%(mysParamdir))
     if dResult: P.dDistnParams = dResult
-        
     dResult =   readin.fdGetDocParams("%s/docsize.csv"%(mysParamdir))
     if dResult: P.dDocParams = dResult
 
     # ---------------------------------------------------------------
     # Process the params params specially.
     try:
-        P.nRandomSeed = fnIntPlease(P.dParamsParams["RANDOMSEED"][0][0])
+        P.RANDOMSEED = fnIntPlease(P.dParamsParams["RANDOMSEED"][0][0])
     except KeyError:
         pass
 
     try:
-        P.nSimLength = fnIntPlease(P.dParamsParams["SIMLENGTH"][0][0])
+        P.SIMLENGTH = fnIntPlease(P.dParamsParams["SIMLENGTH"][0][0])
     except KeyError:
         pass
 
     try:
-        P.sLogFile = P.dParamsParams["LOG_FILE"][0][0]
+        P.LOG_FILE = P.dParamsParams["LOG_FILE"][0][0]
     except KeyError:
         pass
 
     try:
-        P.sLogLevel = P.dParamsParams["LOG_LEVEL"][0][0]
+        P.LOG_LEVEL = P.dParamsParams["LOG_LEVEL"][0][0]
     except KeyError:
         pass
 
-#-----------------------------------------------------------
 # g e t E n v i r o n m e n t P a r a m s
-@tracef("MAIN")
 def getEnvironmentParams():
     try:
-        P.nRandomSeed = fnIntPlease(environ["RANDOMSEED"])
+        P.RANDOMSEED = fnIntPlease(environ["RANDOMSEED"])
     except (KeyError,TypeError,ValueError):
         pass
+
     try:
-        P.nSimLength = fnIntPlease(environ["SIMLENGTH"])
+        P.SIMLENGTH = fnIntPlease(environ["SIMLENGTH"])
     except (KeyError,TypeError,ValueError):
         pass
+
     try:
-        P.sLogFile = environ["LOG_FILE"]
-    except KeyError:
-        pass
-    try:
-        P.sLogLevel = environ["LOG_LEVEL"]
+        P.LOG_FILE = environ["LOG_FILE"]
     except KeyError:
         pass
 
-#-----------------------------------------------------------
-# g e t C l i A r g s F o r P a r a m D i r s
-@tracef("MAIN")
-def getCliArgsForParamDirs():
-    # The only args we really want at this point are the 
-    # Family and Child (Specific) directories.  But this
-    # is just easier.  
-    dCliDict = fndCliParse(None)
-    
-    if dCliDict["sFamilydir"]:      P.sFamilyDir = dCliDict["sFamilydir"]
-    if dCliDict["sSpecificdir"]:   P.sSpecificDir = dCliDict["sSpecificdir"]
-    return P.sFamilyDir + "+" + P.sSpecificDir
-
-# g e t C l i A r g s F o r E v e r y t h i n g E l s e
-@tracef("MAIN")
-def getCliArgsForEverythingElse():
-    # Let's gloss over the poor naming choices of early weeks.  
-    # Copy everything from the Params object to the Global object, 
-    # so we can override values in there to actually run with.  
-    G.sLogFile = P.sLogFile
-    G.sLogLevel = P.sLogLevel
-
-    G.dClientParams = copy.deepcopy(P.dClientParams)
-    G.dServerParams = copy.deepcopy(P.dServerParams)
-    G.dShelfParams = copy.deepcopy(P.dShelfParams)
-    G.dDistnParams = copy.deepcopy(P.dDistnParams)
-    G.dDocParams = copy.deepcopy(P.dDocParams)
-    G.dParamsParams = copy.deepcopy(P.dParamsParams)
-
-    G.sWorkingDir = P.sWorkingDir       # Even correct the intercapping.
-    G.sFamilyDir = P.sFamilyDir
-    G.sSpecificDir = P.sSpecificDir
-
-    G.nRandomSeed = P.nRandomSeed
-    G.nSimLength = P.nSimLength
-    
-    # Now scan the command line again, this time overwriting anything
-    # that came from the param files or environment.  
-    dCliDict = fndCliParse(None)
-
-    # Carefully insert any new CLI values into the Global object.
-    fnMaybeOverride("nSimLength",dCliDict,G)
-    fnMaybeOverride("nRandomSeed",dCliDict,G)
-    fnMaybeOverride("sLogLevel",dCliDict,G)
-    fnMaybeOverride("sLogFile",dCliDict,G)
-    fnMaybeOverride("nDocSmall",dCliDict,G)
-    fnMaybeOverride("nDocLarge",dCliDict,G)
-    fnMaybeOverride("nDocSmallPct",dCliDict,G)
-    fnMaybeOverride("nDocPctSdev",dCliDict,G)
-    fnMaybeOverride("lBER",dCliDict,G)
-    fnMaybeOverride("lCopies",dCliDict,G)
-    fnMaybeOverride("lShelfSize",dCliDict,G)
-
-    # Override ncopies if present on the command line.  
-    if getattr(G,"lCopies",None):
-        TRC.tracef(3,"MAIN","CliEverythingElse1bef before G.dDistnParams|%s|" % (G.dDistnParams))
-        for nKey in G.dDistnParams:
-            lValue = G.dDistnParams[nKey][0]
-            # Substitute the second item in the list, which is the 
-            #  number of copies to make.
-            if len(G.lCopies) >= nKey:
-                lValue[1] = G.lCopies[nKey - 1]
-        TRC.tracef(3,"MAIN","CliEverythingElse1aft after  G.dDistnParams|%s|" % (G.dDistnParams))
-
-    # Override lber block err rates if present on the command line.  
-    if getattr(G,"lBER",None):
-        TRC.tracef(3,"MAIN","CliEverythingElse2bef before G.lBER|%s|" % (G.lBER))
-        for nKey in G.dShelfParams:
-            lValue = G.dShelfParams[nKey][0]
-            # Substitute the first item in the list, which is the 
-            #  small block error rate.
-            if len(G.lBER) >= nKey:
-                lValue[0] = G.lBER[nKey - 1]
-        TRC.tracef(3,"MAIN","CliEverythingElse2aft after  G.lBER|%s|" % (G.lBER))
-
-    # Override shelf sizes if present on the command line.  
-    if getattr(G,"lShelfSize",None):
-        TRC.tracef(3,"MAIN","CliEverythingElse3bef before G.lShelfSize|%s|" % (G.lShelfSize))
-        for nKey in G.dServerParams:
-            lValue = G.dServerParams[nKey][0]
-            # The first item in the list is the quality level; the 
-            # second item is the shelf size.  Update shelf size to match
-            # quality level of the server.  
-            if len(G.lShelfSize) >= lValue[0]:
-                lValue[1] = G.lShelfSize[lValue[0] - 1]
-        TRC.tracef(3,"MAIN","CliEverythingElse3aft after  G.lShelfSize|%s|" % (G.lShelfSize))
-
-    # Override doc size params if present on the command line.  
-    # This !@#$%^&*() data structure is waaay too complicated.  
-        TRC.tracef(3,"MAIN","CliEverythingElse4bef before G.dDocParams|%s|" % (G.dDocParams))
-        for nKey in G.dDocParams:
-            (lSmallValues,lLargeValues) = G.dDocParams[nKey]
-            if getattr(G,"nDocSmall",None):
-                lSmallValues[1] = G.nDocSmall
-            if getattr(G,"nDocSmallPct",None):
-                lSmallValues[0] = G.nDocSmallPct
-                lLargeValues[0] = 100 - lSmallValues[0]
-            if getattr(G,"nDocLarge",None):
-                lLargeValues[1] = G.nDocLarge
-            if getattr(G,"nDocPctSdev",None):
-                lSmallValues[2] = int(lSmallValues[1] * G.nDocPctSdev / 100)
-                lLargeValues[2] = int(lLargeValues[1] * G.nDocPctSdev / 100)
-        TRC.tracef(3,"MAIN","CliEverythingElse4aft after  G.dDocParams|%s|" % (G.dDocParams))
-
-
-# f n M a y b e O v e r r i d e 
-@tracef("MAIN"  )
-def fnMaybeOverride(mysCliArg,mydDict,mycClass):
-    ''' Strange function to override a property in G if there is a 
-        version in the command line dictionary.  
-    '''
     try:
-        if mydDict[mysCliArg]:
-            setattr( mycClass, mysCliArg, mydDict[mysCliArg] )
+        P.LOG_LEVEL = environ["LOG_LEVEL"]
     except KeyError:
-            if not getattr(mycClass,mysCliArg,None):
-                setattr( mycClass, mysCliArg, None )
-    return getattr(mycClass,mysCliArg,"XXXXX")
+        pass
+
+# g e t C l i A r g s 
+def getCliArgs():
+    try:
+        nTemp = int(argv[1]) 
+        if nTemp > 0: P.SIMLENGTH = nTemp
+    except (IndexError,TypeError,ValueError):
+        pass
+    G.runtime = P.SIMLENGTH
+ 
+    try:
+        P.RANDOMSEED = int(argv[2])
+    except (IndexError,TypeError,ValueError):
+        pass
+    G.randomseed = P.RANDOMSEED
+
+    try:
+        P.LOG_FILE = argv[5]
+    except (IndexError,TypeError,ValueError):
+        pass
+    G.LOG_FILE = P.LOG_FILE
+
+    try:
+        P.LOG_LEVEL = argv[6]
+    except (IndexError,TypeError,ValueError):
+        pass
+    G.LOG_LEVEL = P.LOG_LEVEL
 
 
-#-----------------------------------------------------------
 # d u m p P a r a m s I n t o L o g 
-@tracef("MAIN")
 def dumpParamsIntoLog():
     # We want a log file to be self-contained, so record all sorts
     #  of information in it about the parameters that resulted in
     #  the answers.
     lg.logInfo("MAIN","Simulation parameters")
-    lg.logInfo("MAIN","Command line|%s|" % (argv[1:]))
-    lg.logInfo("PARAMS","familydir|%s| specificdir|%s|" % (G.sFamilyDir,G.sSpecificDir)) 
-    lg.logInfo("PARAMS","begin simulation seed|%d| timelimit|%d|hr=|%d|yr" % (G.nRandomSeed,G.nSimLength,G.nSimLength/8766))
-    lg.logInfo("PARAMS","logfile|%s| loglevel|%s|" % (G.sLogFile,G.sLogLevel)) 
-
+    lg.logInfo("PARAMS","begin simulation seed|%d| timelimit|%d|" % (P.RANDOMSEED,P.SIMLENGTH))
+    lg.logInfo("PARAMS","logfile|%s| loglevel|%s|" % (P.LOG_FILE,P.LOG_LEVEL)) 
+    lg.logInfo("PARAMS","familydir|%s| specificdir|%s|" % (P.sFamilydir,P.sSpecificdir)) 
+    
+    
     # Client params
-    TRC.tracef(3,"MAIN","client params dict|%s|" % (G.dClientParams))
-    for sClient in G.dClientParams:
-        lCollections = G.dClientParams[sClient]
+    TRC.tracef(3,"MAIN","client params dict|%s|" % (P.dClientParams))
+    for sClient in P.dClientParams:
+        lCollections = P.dClientParams[sClient]
         for lCollection in lCollections:
             (sCollection,nQuality,nDocs) = lCollection
             lg.logInfo("PARAMS","CLIENT client|%s| collection|%s| quality|%d| ndocs|%d|" % (sClient,sCollection,nQuality,nDocs))
 
     # Server params
-    TRC.tracef(3,"MAIN","server params dict|%s|" % (G.dServerParams))
-    for sServer in G.dServerParams:
-        (nQuality,nShelfSize) = G.dServerParams[sServer][0]
-        #(nQuality,nShelfSize) = G.dServerParams[sServer]
-        lg.logInfo("PARAMS","SERVER server|%s| quality|%d| shelfsize|%d|TB" % (sServer,nQuality,nShelfSize))
+    TRC.tracef(3,"MAIN","server params dict|%s|" % (P.dServerParams))
+    for sServer in P.dServerParams:
+        (nQuality,nShelfSize) = P.dServerParams[sServer][0]
+        lg.logInfo("PARAMS","SERVER server|%s| quality|%d| shelfsize|%d|" % (sServer,nQuality,nShelfSize))
 
     # Shelf params
-    TRC.tracef(3,"MAIN","shelf params dict|%s|" % (G.dShelfParams))
-    for nQuality in G.dShelfParams:
-        (nSmallFailureRate,nShelfFailureRate) = G.dShelfParams[nQuality][0]
-        lg.logInfo("PARAMS","SHELF quality|%d| smallfailrate|%d|khr=|%d|yr shelffailrate|%d|khr=|%d|yr" % (nQuality,nSmallFailureRate,nSmallFailureRate*1000/8766, nShelfFailureRate,nShelfFailureRate*1000/8766))
+    TRC.tracef(3,"MAIN","shelf params dict|%s|" % (P.dShelfParams))
+    for nQuality in P.dShelfParams:
+        (nSmallFailureRate,nShelfFailureRate) = P.dShelfParams[nQuality][0]
+        lg.logInfo("PARAMS","SHELF quality|%d| smallfailrate|%d| shelffailrate|%d|" % (nQuality,nSmallFailureRate,nShelfFailureRate))
 
     # Distribution policy params.
-    TRC.tracef(3,"MAIN","distn params dict|%s|" % (G.dDistnParams))
-    for nValue in G.dDistnParams:
-        (nQuality,nCopies) = G.dDistnParams[nValue][0]
+    TRC.tracef(3,"MAIN","distn params dict|%s|" % (P.dDistnParams))
+    for nValue in P.dDistnParams:
+        (nQuality,nCopies) = P.dDistnParams[nValue][0]
         lg.logInfo("PARAMS","DISTRIBUTION value|%d| quality|%d| copies|%d|" % (nValue,nQuality,nCopies))
 
     # Document Size params.
-    TRC.tracef(3,"MAIN","document params dict|%s|" % (G.dDistnParams))
-    for nValue in G.dDocParams:
-        for lMode in G.dDocParams[nValue]:
+    TRC.tracef(3,"MAIN","document params dict|%s|" % (P.dDistnParams))
+    for nValue in P.dDocParams:
+        for lMode in P.dDocParams[nValue]:
             (nPercent,nMean,nSdev) = lMode
-            lg.logInfo("PARAMS","DOCUMENT value|%d| percent|%d| meanMB|%d| sd|%d|" % (nValue,nPercent,nMean,nSdev))
-
-# d u m p S e r v e r U s e S t a t s 
-@tracef("MAIN")
-def dumpServerUseStats():
-    for sKey in sorted(G.dID2Shelf.keys()):
-        cShelf = G.dID2Shelf[sKey]
-        (sID,sServerID,nQual,nCapacity,nHiWater,nCurrentUse) = cShelf.mReportUseStats()
-        lg.logInfo("MAIN","SERVERUSE shelf|%s-%s| qual|%d| size|%d| hiwater|%d| currentuse|%d| full%%|%d|" % (sServerID,sID,nQual,nCapacity,nHiWater,nCurrentUse,100*nCurrentUse/nCapacity))
-    return sServerID+"+"+sID
-
-# d u m p S e r v e r E r r o r S t a t s 
-@tracef("MAIN")
-def dumpServerErrorStats():
-    for sKey in sorted(G.dID2Shelf.keys()):
-        cShelf = G.dID2Shelf[sKey]
-        (sID,sServerID,nQual,nHits,nEmptyHits,bAlive) = cShelf.mReportErrorStats()
-        lg.logInfo("MAIN","SERVERERR shelf|%s-%s| qual|%d| totalhits|%d| nonempty|%d| empty|%d| alive|%s|" % (sServerID,sID,nQual,nHits,(nHits-nEmptyHits),nEmptyHits,bAlive))
-    return sServerID+"+"+sID
+            lg.logInfo("PARAMS","DOCUMENT value|%d| percent|%d| mean|%d| sd|%d|" % (nValue,nPercent,nMean,nSdev))
 
 
-#-----------------------------------------------------------
 # m a k e S e r v e r s 
 @tracef("MAIN")
 @tracef("SVRS")
@@ -369,7 +247,7 @@ def makeServers(mydServers):
         cServer = CServer(sServerName,nServerQual,nShelfSize)
         sServerID = cServer.ID
         G.lAllServers.append(cServer)
-        logInfo("MAIN","created server|%s| quality|%s| shelfsize|%s| name|%s|" % (sServerID,nServerQual,nShelfSize,sServerName))
+        logInfo("MAIN","created server|%s| quality|%s| shelfsize|%s|" % (sServerID,nServerQual,nShelfSize))
         # Invert the server list so that clients can look up 
         # all the servers that satisfy a quality criterion.  
         if nServerQual in G.dQual2Servers:
@@ -379,7 +257,6 @@ def makeServers(mydServers):
         TRC.tracef(5,"SVRS","proc makeServers dQual2Servers qual|%s| servers|%s|" % (nServerQual,G.dQual2Servers[nServerQual]))
     return G.dQual2Servers
 
-#-----------------------------------------------------------
 # m a k e C l i e n t s 
 # Create all clients; give them their params for the simulation.
 @tracef("MAIN")
@@ -406,7 +283,6 @@ def testAllClients(mylClients):
             logInfo("MAIN","GOOD NEWS: NO DOCUMENTS LOST by client |%s|!" % (sClientID))
 
 
-#-----------------------------------------------------------
 # M A I N   L I N E
 #------------------
 ''' 
@@ -439,20 +315,19 @@ New philosophy on run parameters.
     0. The compiled defaults are LOG_FILE=console (the standard
         StreamHandler), LOG_LEVEL=NOTSET (which logs warning, error, 
         and critical events, none of which we use for application
-        events.  We use only INFO and DEBUG levels.
+        events.
     1. The params.csv param file can contain values for LOG_FILE
         and LOG_LEVEL that override the compiled defaults.  
     2. Environment variables LOG_FILE and LOG_LEVEL, if present, 
         override the compiled defaults.  
-    3. CLI arg --logfile, if present, overrides LOG_FILE.  
-    4. CLI arg --loglevel, if present, overrides LOG_LEVEL.  Note that this is
+    3. CLI arg4, if present, overrides LOG_FILE.  
+    4. CLI arg5, if present, overrides LOG_LEVEL.  Note that this is
         a string only, not a numeric value.  
 - Logical, yes, but too damned complicated.  
 - NEW NEW NEW
-- Ah, well, that was altogether too simple and easy to follow.  
-   Let's make it much more complicated.  There shall be two
-   levels of param files: a test family directory (first)
-   and a test specific directory (second).  If a file exists in one
+- Ah, well, let's make is much more complicated.  There shall be three 
+   levels of param files: the current working directory, a test family 
+   directory, and a test specific directory.  If a file exists in one
    of these directories, it is processed and its dictionary overrides
    what is currently in the P database.  This way, there can be generic
    parameters in the working directory, then params for the family of 
@@ -465,11 +340,11 @@ New philosophy on run parameters.
         TEST_FAMILY
         TEST_SPECIFIC
     2. CLI arg values for the locations of the param files.  
-        CLI arg1 is now TEST_FAMILY
-        CLI arg2 is now TEST_SPECIFIC
-        CLI arg3 is now simulation length in hours.
-        CLI arg4 is now randomseed, default=1, 0=use system clock.
-    3. n/a (no longer implemented)
+        CLI arg3 is now TEST_FAMILY
+        CLI arg4 is now TEST_SPECIFIC
+        CLI arg5 is now LOG_FILE
+        CLI arg6 is now LOG_LEVEL  
+    3. Param files in the current working directory, which is typically "."
     4. Param files in the test family directory.
     5. Param files in the test specific directory.
     6. Environment variables that override any params.
@@ -483,50 +358,47 @@ def main():
     TRC.tracef(0,"MAIN","proc Document Preservation simulation " % ())
 
     # ---------------------------------------------------------------
-    '''
-        NEW NEW NEW
-        parse cli
-        read params from familydir
-        if specificdir not absent and not . 
-        then read params from familydir/specificdir
-        read environment variables
-        use cli options to override params
-    '''
-
-    # ---------------------------------------------------------------
-    # Allow CLI arguments to override some params.
-    # arg1 = family directory for param files.
-    # arg2 = specific directory for param files.
-    # arg3 = simulation length (hours)
-    # arg4 = seed for random number generator.  zero means use clock. 
-    # --logfile = logfile (relative or absolute)
-    # --loglevel = loglevel string (INFO, DEBUG, NOTSET)
-    # If the simulation length numeric arg is zero, the default 
-    # value will be used. 
-    getCliArgsForParamDirs()
-
     # Read parameter files for simulation.
-    # Take CLI arg as the directory location of family param files.  
-    getParamFiles(P.sFamilyDir)
-
+    # First read the default ones from the working directory.
+    getParamFiles(P.sWorkingdir)
+    
+    # They may be in another directory.  Default dir = "." (i.e., here).  
+    # Take CLI arg3 as the directory location of family param files.  
+    try:
+        P.sFamilydir = argv[3]       # both or neither
+    except:
+        pass
+    if P.sFamilydir <> P.sWorkingdir: getParamFiles(P.sFamilydir)
     # And there may be test-specific param files in a child directory
-    # of the family directory.  Default dir = "." (i.e., same).  
-    # Take CLI arg if present as the directory location of specific param files.  
-    if P.sSpecificDir and P.sSpecificDir <> ".": 
-        sChildDir = P.sFamilyDir + "/" + P.sSpecificDir
-        getParamFiles(sChildDir)
+    # of the family directory.  Default dir = "." (i.e., here).  
+    # Take CLI arg4 as the directory location of specific param files.  
+    try:
+        P.sSpecificdir = argv[4]
+    except:
+        pass
+    if P.sSpecificdir <> P.sFamilydir: 
+        sChilddir = P.sFamilydir + "/" + P.sSpecificdir
+        getParamFiles(sChilddir)
 
     # ---------------------------------------------------------------
     # Check environment variables for parameters.  
     getEnvironmentParams()
 
     # ---------------------------------------------------------------
-    # Now get the rest of the CLI options that may override whatever.  
-    getCliArgsForEverythingElse()
+    # Allow CLI arguments to override some params.
+    # arg1 = simulation length (hours)
+    # arg2 = seed for random number generator.  zero means use clock. 
+    # arg3 = family directory for param files.
+    # arg4 = specific directory for param files.
+    # arg5 = logfile (relative or absolute)
+    # arg6 = loglevel string (INFO, DEBUG, NOTSET)
+    # If the simulation length numeric arg is zero, the default 
+    # value will be used. 
+    getCliArgs()
 
     # ---------------------------------------------------------------
     # Start the Python logging facility.
-    lg.logSetConfig(G.sLogLevel,G.sLogFile)
+    lg.logSetConfig(P.LOG_LEVEL,P.LOG_FILE)
 
     # ---------------------------------------------------------------
     # Log a ton of information so that the log file can be used
@@ -534,26 +406,22 @@ def main():
     dumpParamsIntoLog()
 
     # ---------------------------------------------------------------
-    # Start the random number generator and the SimPy framework.   
-    random.seed(G.nRandomSeed)
+    # Start a couple things.  
+    random.seed(G.randomseed)
     env = simpy.Environment()
     G.env = env
 
     # ---------------------------------------------------------------
     # Populate servers, clients, collections of documents.
-    makeServers(G.dServerParams)
-    makeClients(G.dClientParams)
-    dumpServerUseStats()
+    makeServers(P.dServerParams)
+    makeClients(P.dClientParams)
 
     # ---------------------------------------------------------------
     # Run the simulation. 
     TRC.tracef(0,"MAIN","proc Begin run time|%d|" % (env.now))
     logInfo("MAIN","begin run")
     
-    env.run(until=G.nSimLength)
-
-    dumpServerUseStats()
-    dumpServerErrorStats()
+    env.run(until=G.runtime)
 
     TRC.tracef(0,"MAIN","proc End simulation timenow|%d| lastevent|%d| hidoc|%s| hicoll|%s| hishelf|%s|" % (env.now,G.nTimeLastEvent,G.nDocLastID,G.nCollLastID,G.nShelfLastID))
     TRC.tracef(0,"MAIN","proc hiserver|%s| hiclient|%s| hicopy|%s|" % (G.nServerLastID,G.nClientLastID,G.nCopyLastID))
@@ -569,7 +437,7 @@ def evaluate():
     testAllClients(G.lAllClients)
 
 
-# ----------------------------------------------------------
+# ---------------------------------------------------------------
 # If this is the main program, run it now.  
 if __name__ == "__main__":
     main()

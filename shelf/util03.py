@@ -54,7 +54,7 @@ def fnIntPlease(oldval):
 # f n n C a l c D o c S i z e ( ) 
 @tracef("UTIL",level=4)
 def fnnCalcDocSize(mynLevel):
-    lPercents = P.dDocParams[mynLevel]
+    lPercents = G.dDocParams[mynLevel]
     nPctRandom = makeunif(0,100)
     nPctCum = 0
     for lTriple in lPercents:
