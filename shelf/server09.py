@@ -82,7 +82,7 @@ class CServer(object):
             Called as needed when a doc arrives too large for available space.  
         '''
         cShelf = CShelf(self,self.nQual,self.nShelfSize)
-        logInfo("SERVER","server |%s| created storage shelf|%s| quality|%s| size|%s|" % (self.ID,cShelf.ID,cShelf.nQual,cShelf.nCapacity))
+        logInfo("SERVER","server |%s| created storage shelf|%s| quality|%s| size|%s|MB" % (self.ID,cShelf.ID,cShelf.nQual,cShelf.nCapacity))
         return cShelf.ID
 
 # S e r v e r . m R e p l a c e S h e l f 

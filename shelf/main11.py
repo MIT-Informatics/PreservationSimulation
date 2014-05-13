@@ -224,6 +224,7 @@ def getCliArgsForEverythingElse():
     fnMaybeOverride("nDocPctSdev",dCliDict,G)
     fnMaybeOverride("lBER",dCliDict,G)
     fnMaybeOverride("lCopies",dCliDict,G)
+    fnMaybeOverride("lShelfSize",dCliDict,G)
 
     # Override ncopies if present on the command line.  
     if getattr(G,"lCopies",None):
@@ -246,6 +247,18 @@ def getCliArgsForEverythingElse():
             if len(G.lBER) >= nKey:
                 lValue[0] = G.lBER[nKey - 1]
         TRC.tracef(3,"MAIN","CliEverythingElse2aft after  G.lBER|%s|" % (G.lBER))
+
+    # Override shelf sizes if present on the command line.  
+    if getattr(G,"lShelfSize",None):
+        TRC.tracef(3,"MAIN","CliEverythingElse3bef before G.lShelfSize|%s|" % (G.lShelfSize))
+        for nKey in G.dServerParams:
+            lValue = G.dServerParams[nKey][0]
+            # The first item in the list is the quality level; the 
+            # second item is the shelf size.  Update shelf size to match
+            # quality level of the server.  
+            if len(G.lShelfSize) >= lValue[0]:
+                lValue[1] = G.lShelfSize[lValue[0] - 1]
+        TRC.tracef(3,"MAIN","CliEverythingElse3aft after  G.lShelfSize|%s|" % (G.lShelfSize))
 
 # f n M a y b e O v e r r i d e 
 @tracef("MAIN"  )
@@ -324,7 +337,7 @@ def dumpServerErrorStats():
     for sKey in sorted(G.dID2Shelf.keys()):
         cShelf = G.dID2Shelf[sKey]
         (sID,sServerID,nQual,nHits,nEmptyHits,bAlive) = cShelf.mReportErrorStats()
-        lg.logInfo("MAIN","SERVERERR shelf|%s-%s| qual|%d| hits|%d| emptyhits|%d| alive|%s|" % (sServerID,sID,nQual,nHits,nEmptyHits,bAlive))
+        lg.logInfo("MAIN","SERVERERR shelf|%s-%s| qual|%d| totalhits|%d| nonempty|%d| empty|%d| alive|%s|" % (sServerID,sID,nQual,nHits,(nHits-nEmptyHits),nEmptyHits,bAlive))
     return sServerID+"+"+sID
 
 
