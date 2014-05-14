@@ -326,7 +326,7 @@ def dumpParamsIntoLog():
     TRC.tracef(3,"MAIN","shelf params dict|%s|" % (G.dShelfParams))
     for nQuality in G.dShelfParams:
         (nSmallFailureRate,nShelfFailureRate) = G.dShelfParams[nQuality][0]
-        lg.logInfo("PARAMS","SHELF quality|%d| smallfailrate|%d|khr=|%d|yr shelffailrate|%d|khr=|%d|yr" % (nQuality,nSmallFailureRate,nSmallFailureRate*1000/8766, nShelfFailureRate,nShelfFailureRate*1000/8766))
+        lg.logInfo("PARAMS","SHELF quality|%d| smallfailrate|%d|Khr=|%d|yr shelffailrate|%d|Khr=|%d|yr" % (nQuality,nSmallFailureRate,nSmallFailureRate*1000/8766, nShelfFailureRate,nShelfFailureRate*1000/8766))
 
     # Distribution policy params.
     TRC.tracef(3,"MAIN","distn params dict|%s|" % (G.dDistnParams))
@@ -370,7 +370,7 @@ def makeServers(mydServers):
         cServer = CServer(sServerName,nServerQual,nShelfSize)
         sServerID = cServer.ID
         G.lAllServers.append(cServer)
-        logInfo("MAIN","created server|%s| quality|%s| shelfsize|%s| name|%s|" % (sServerID,nServerQual,nShelfSize,sServerName))
+        logInfo("MAIN","created server|%s| quality|%s| shelfsize|%s|TB name|%s|" % (sServerID,nServerQual,nShelfSize,sServerName))
         # Invert the server list so that clients can look up 
         # all the servers that satisfy a quality criterion.  
         if nServerQual in G.dQual2Servers:
@@ -401,7 +401,7 @@ def testAllClients(mylClients):
         if len(lDeadDocIDs) > 0:
             for sDocID in lDeadDocIDs:
                 cDoc = G.dID2Document[sDocID]
-                logInfo("MAIN","client |%s| lost doc |%s| size |%s|" % (sClientID,sDocID,cDoc.nSize))
+                logInfo("MAIN","client |%s| lost doc|%s| size|%s|" % (sClientID,sDocID,cDoc.nSize))
             logInfo("MAIN","BAD NEWS: Total documents lost by client |%s| in all servers |%d|" % (sClientID,len(lDeadDocIDs)))
         else:
             logInfo("MAIN","GOOD NEWS: NO DOCUMENTS LOST by client |%s|!" % (sClientID))
