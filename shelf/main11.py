@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # main.py
+# Recovered, we hope, after commit/delete screw-up.  
 
 ''' M A I N entry of the Shelf simulation
 Blank page version of bookshelf preservation of documents.

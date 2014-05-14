@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # globaldata.py
-    
+# Recovered, we hope, after commit/delete screw-up.  
+
 # G L O B A L  D A T A 
 #---------------------
 

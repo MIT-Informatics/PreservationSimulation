@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # client.py
+# Recovered, we hope, after commit/delete screw-up.  
 
 import simpy
 from NewTraceFac import TRC,trace,tracef

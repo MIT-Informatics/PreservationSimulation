@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # logoutput.py
 # RBLandau 20140315
+# Recovered, we hope, after commit/delete screw-up.  
 
 ''' Wrapper for the Python logging facility.
     To log events as INFO, we want the output to look all the same.

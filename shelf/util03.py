@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # util.py
+# Recovered, we hope, after commit/delete screw-up.  
 
 import random
 from NewTraceFac import TRC,trace,tracef
