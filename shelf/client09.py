@@ -187,6 +187,18 @@ class CClient(object):
         # Value level translates to quality required and nr copies.
         (nQuality,nCopies) = G.dDistnParams[mynCollValue][0]
         lServersAtLevel = G.dQual2Servers[nQuality]
+        '''
+        BZZZT!
+        Cannot use itertools to generate a permutation for servers
+        if there are too many servers.  It generates the actual list,
+        which for 15 servers is 1.3 trillion long.  Oops.  
+        Find another reasonable way to do this in the long term, 
+        e.g., select randomly without replacement until nCopies is 
+        fulfilled.    
+        In the short term, don't care because for Question 0
+        all servers are identical in configuration.  
+        
+        ### Old code now inoperative.
         # Pick a random number of a permutation.
         nNumPerms = math.factorial(len(lServersAtLevel))
         nPermChoice = int(makeunif(0,nNumPerms))
@@ -203,6 +215,9 @@ class CClient(object):
         lPermChosen = lPermChosenFull[0:nCopies]
         TRC.tracef(5,"CLI","proc mSelectServers1 fulllist|%s| permlist|%s| choose|%d| chosen|%s|" % (lServersAtLevel,lPermChosenFull,nCopies,lPermChosen))
         TRC.tracef(3,"CLI","proc mSelectServers2 perm|%d| of|%d| list|%s|" % (nPermChoice,nNumPerms,lPermChosen))
+        '''
+        lPermChosenFull = lServersAtLevel
+        lPermChosen = lPermChosenFull[0:nCopies]
         return lPermChosen
 
 # C l i e n t . m T e s t C l i e n t 
