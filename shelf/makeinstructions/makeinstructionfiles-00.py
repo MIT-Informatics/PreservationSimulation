@@ -1,4 +1,45 @@
 #!/usr/bin/python
+# makeinstructionfiles.py
+'''
+Create instruction files for runsequence.py.
+Substitutes strings into a multi-line template.
+Can be used to expand one dimension at a time.
+Currently used to substitute number of copies, ber, and seeds.
+
+The instruction file for this program contains two regions, the 
+template and the data to be substituted into the template.  Each 
+region begins with an introducer line that starts with an = sign.  
+Template comes first.  
+
+A typical file has the following format:
+
+=template
+A bunch of lines that can contain named substitutions to be resolved
+by the Python string.format() method.  
+Comment lines starting with # and blank lines will be removed.  
+
+HOWEVER, lines starting with ## will be placed in the output
+as single-# comments.  (That's okay because runsequence.py is 
+also happy to remove comments.  Its input is not pure CSV.)
+
+AND lines beginning with ### will be transferred literally to 
+the output with the ### removed; no substitutions will be attempted
+on such lines.  
+
+=parameters
+A CSV region, header plus data lines, that contain the substitutions
+to be made in the template.  This region is processed by the Python 
+csv standard library module DictReader.  
+Again, # comments and blank lines are removed.  
+Substitution variables can be named anything you wish, but the name 
+"filename" is reserved for the output file to be created containing the 
+expanded output from the template and the substitutions.  
+(We don't just send the output to stdout because the filenames are
+pretty intimately tied to the substitutions to be made, and we don't
+want the filenames to get confused.  When there are dozens of them 
+floating around with very similar names, bad idea to permit mistakes.  
+Six sigma, dude.  
+'''
 
 import csv
 import re

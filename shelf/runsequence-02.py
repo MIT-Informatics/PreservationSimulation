@@ -10,6 +10,10 @@ Format of instruction file:
 The template is processed with the Python string.format() function, 
 so you probably want to use keyword args in braces.
 
+The program limits the number of simultaneous processes to the --ncores 
+option.  It looks for the number of python instances in ps, waits if 
+there are too many, looks again.  
+
 @author: landau
 '''
 import csv

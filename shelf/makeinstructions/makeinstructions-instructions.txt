@@ -1,0 +1,32 @@
+=template
+## Run c{copies}b{ber}
+## This should stay.
+# This comment should be removed.
+#
+python main.py {{family}} {{specific}} {{length}} {{seed}} --ncopies {{copies}} --ber {{ber}} {{extra1}} {{extra2}} {{extra3}} > {{output}} 2>&1 &
+
+###output,family,specific,length,seed,copies,ber,extra1,extra2,extra3 
+{family}/{specific}/log/c{copies}b{ber}s{s1}.log,{family},{specific},0,{s1},{copies},{ber}000,,,,
+{family}/{specific}/log/c{copies}b{ber}s{s2}.log,{family},{specific},0,{s2},{copies},{ber}000,,,,
+{family}/{specific}/log/c{copies}b{ber}s{s3}.log,{family},{specific},0,{s3},{copies},{ber}000,,,,
+{family}/{specific}/log/c{copies}b{ber}s{s4}.log,{family},{specific},0,{s4},{copies},{ber}000,,,,
+{family}/{specific}/log/c{copies}b{ber}s{s5}.log,{family},{specific},0,{s5},{copies},{ber}000,,,,
+{family}/{specific}/log/c{copies}b{ber}s{s6}.log,{family},{specific},0,{s6},{copies},{ber}000,,,,
+{family}/{specific}/log/c{copies}b{ber}s{s7}.log,{family},{specific},0,{s7},{copies},{ber}000,,,,
+{family}/{specific}/log/c{copies}b{ber}s{s8}.log,{family},{specific},0,{s8},{copies},{ber}000,,,,
+{family}/{specific}/log/c{copies}b{ber}s{s9}.log,{family},{specific},0,{s9},{copies},{ber}000,,,,
+{family}/{specific}/log/c{copies}b{ber}s{s10}.log,{family},{specific},0,{s10},{copies},{ber}000,,,,
+{family}/{specific}/log/c{copies}b{ber}s{s11}.log,{family},{specific},0,{s11},{copies},{ber}000,,,,
+
+
+=parameters
+filename,copies,ber,family,specific,s1,s2,s3,s4,s5,s6,s7,s8,s9,s10,s11
+c01b300_run1.txt,01,300,q0,value1,01,02,03,04,05,06,07,08,09,10,11,
+c02b300_run1.txt,02,300,q0,value1,01,02,03,04,05,06,07,08,09,10,11,
+c03b300_run1.txt,03,300,q0,value1,01,02,03,04,05,06,07,08,09,10,11,
+c05b300_run1.txt,05,300,q0,value1,01,02,03,04,05,06,07,08,09,10,11,
+c08b300_run1.txt,08,300,q0,value1,01,02,03,04,05,06,07,08,09,10,11,
+c10b300_run1.txt,10,300,q0,value1,01,02,03,04,05,06,07,08,09,10,11,
+c14b300_run1.txt,14,300,q0,value1,01,02,03,04,05,06,07,08,09,10,11,
+c16b300_run1.txt,16,300,q0,value1,01,02,03,04,05,06,07,08,09,10,11,
+c20b300_run1.txt,20,300,q0,value1,01,02,03,04,05,06,07,08,09,10,11,
