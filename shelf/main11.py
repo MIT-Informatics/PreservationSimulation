@@ -355,8 +355,9 @@ def dumpServerUseStats():
 def dumpServerErrorStats():
     for sKey in sorted(G.dID2Shelf.keys()):
         cShelf = G.dID2Shelf[sKey]
-        (sID,sServerID,nQual,nHits,nEmptyHits,bAlive) = cShelf.mReportErrorStats()
-        lg.logInfo("MAIN","SERVERERR shelf|%s-%s| qual|%d| totalhits|%d| nonempty|%d| empty|%d| alive|%s|" % (sServerID,sID,nQual,nHits,(nHits-nEmptyHits),nEmptyHits,bAlive))
+        (sID,sServerID,nQual,nHits,nEmptyHits,bAlive,nAboveHiWater,nMultipleHits) = cShelf.mReportErrorStats()
+        lg.logInfo("MAIN","SERVERERR1 shelf|%s-%s| qual|%d| totalhits|%d| nonempty|%d| empty|%d| alive|%s|" % (sServerID,sID,nQual,nHits,(nHits-nEmptyHits),nEmptyHits,bAlive))
+        lg.logInfo("MAIN","SERVERERR1 shelf|%s-%s| qual|%d| totalhits|%d| abovehiwater|%d| multiples|%d|" % (sServerID,sID,nQual,nHits,nAboveHiWater,nMultipleHits))
     return sServerID+"+"+sID
 
 
@@ -553,9 +554,6 @@ def main():
     
     env.run(until=G.nSimLength)
 
-    dumpServerUseStats()
-    dumpServerErrorStats()
-
     TRC.tracef(0,"MAIN","proc End simulation timenow|%d| lastevent|%d| hidoc|%s| hicoll|%s| hishelf|%s|" % (env.now,G.nTimeLastEvent,G.nDocLastID,G.nCollLastID,G.nShelfLastID))
     TRC.tracef(0,"MAIN","proc hiserver|%s| hiclient|%s| hicopy|%s|" % (G.nServerLastID,G.nClientLastID,G.nCopyLastID))
     logInfo("MAIN","end run, simulated time|%d|" % (env.now))
@@ -575,6 +573,8 @@ def evaluate():
 if __name__ == "__main__":
     main()
     evaluate()
+    dumpServerUseStats()
+    dumpServerErrorStats()
 
 
 # END

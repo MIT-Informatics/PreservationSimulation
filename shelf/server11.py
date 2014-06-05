@@ -135,15 +135,17 @@ class CShelf(object):
 
         self.nCapacity = mynCapacity
         self.nFreeSpace = mynCapacity
-        self.sServerID = mycServer.ID          # Server instance we belong to
+        self.sServerID = mycServer.ID   # Server instance we belong to.
         self.nQual = mynQual
         self.birthdate = G.env.now
         self.bAlive = True              # Shelf failed = False.
         self.nHiWater = 0               # Highest sector used, inclusive.
 
-        self.nSectorHits = 0
-        self.nEmptySectorHits = 0
-        self.bContig = True
+        self.nSectorHits = 0            # How many sector errors.
+        self.nEmptySectorHits = 0       # How many sector errors.
+        self.nHitsAboveHiWater = 0      # How many hits out of the occupied region.
+        self.nMultipleHits = 0          # How many document slots hit more than once.
+        self.bContig = True             # Is the document region still contiguous?
 
         # Get error rate params and start aging processes
         (self.nSectorLife,self.nShelfLife) = G.dShelfParams[self.nQual][0]
@@ -248,6 +250,7 @@ class CShelf(object):
             # Initiate a repair of the dead document.
             # NYI
 
+# OLD OLD OLD OLD OLD OLD OLD OLD OLD OLD OLD OLD OLD OLD OLD OLD OLD OLD
 # S h e l f . m S e l e c t V i c t i m C o p y  
     @tracef("SHLF")
     def mSelectVictimCopy(self,mynErrorSize):
@@ -278,10 +281,9 @@ class CShelf(object):
             sVictimID = None
         return sVictimID
 
-
-
-
 # NEW NEW NEW NEW NEW NEW NEW NEW NEW NEW NEW NEW NEW NEW NEW NEW NEW NEW
+# Replaces old version above.
+
 # S h e l f . m S e l e c t V i c t i m C o p y  
     @tracef("SHLF")
     def mSelectVictimCopy(self,mynErrorSize):
@@ -292,9 +294,10 @@ class CShelf(object):
         '''
         nRandomSpot = makeunif(1,self.nCapacity + mynErrorSize - 1)
         nLoc = 0
-        TRC.trace(5,"proc SelectVictimCopy0 wherehit spot|%s| hiwater|%s|  shelfid|%s| capacity|%s|" % (nRandomSpot,self.nHiWater,self.ID,self.nCapacity))
+        TRC.tracef(5,"SHLF","proc SelectVictimCopy0 wherehit spot|%s| hiwater|%s|  shelfid|%s| capacity|%s|" % (nRandomSpot,self.nHiWater,self.ID,self.nCapacity))
+        # First, check to see if the failure is maybe in an occupied region.  
         if nRandomSpot <= self.nHiWater:
-
+            # Find the document hit by the error.  May have been hit before, too.  
             # New version, binary search with adjacent checking
             # on list of all locations assigned on this shelf.
             # After you find the location, check to see that it 
@@ -304,9 +307,8 @@ class CShelf(object):
             nLoc = nDist
             TRC.trace(5,"proc SelectVictimCopy0 searchsetup len|%s| loc|%s| dist|%s|" % (nLen,nLoc,nDist))
             while 1:
-                
-                #new
-                if nLoc == 0: nLoc = 1
+                if nLoc <= 0: nLoc = 1
+                if nLoc >= nLen: nLoc = nLen - 1
                 nDist = (nDist + 1) / 2
                 if nDist == 0: nDist = 1
 
@@ -328,6 +330,7 @@ class CShelf(object):
                         else:
                             sVictimID = None
                             TRC.trace(5,"proc SelectVictimCopy2D no longer valid copyid|%s| docid|%s|" % (sCopyID,sDocID))
+                            self.nMultipleHits += 1
                         break
                     else:
                         nLoc -= nDist
@@ -350,54 +353,13 @@ class CShelf(object):
                         else:
                             sVictimID = None
                             TRC.trace(5,"proc SelectVictimCopy2U no longer valid copyid|%s| docid|%s|" % (sCopyID,sDocID))
+                            self.nMultipleHits += 1
                         break
                     else:
                         nLoc += nDist
                         TRC.trace(5,"proc SelectVictimCopy3U up   spot|%s| intvl|[%s,%s| newloc|%s| newdist|%s|" % (nRandomSpot,nBottom,nTop,nLoc,nDist))
-                '''
-                #old
-                sCopyID = self.lCopyIDs[nLoc]
-                cCopy = G.dID2Copy[sCopyID]
-                sDocID = cCopy.sDocID
-                cDoc = G.dID2Document[sDocID]
-                TRC.trace(5,"proc SelectVictimCopy1 topofloop loc|%s| dist|%s| copyid|%s| docid|%s|" % (nLoc,nDist,sCopyID,sDocID))
-            
-                nBottom = cCopy.nBlkBegin
-                nTop = cCopy.nBlkEnd
-                
-                if nDist != 1:
-#CAUSE A SYNTAX ERROR HERE!
-                    nDist = (nDist + 1) / 2
-                    if nDist == 0: nDist = 1
-                    
-                    
-                    if nRandomSpot > nTop:
-                        
-                        nLoc += nDist
-                        
-                        TRC.trace(5,"proc SelectVictimCopy3 go up spot|%s| bottom|%s| top|%s| newloc|%s| dist|%s|" % (nRandomSpot,nBottom,nTop,nLoc,nDist))
-                    elif nRandomSpot < nBottom:
-    
-                        nLoc -= nDist
-    
-                        TRC.trace(5,"proc SelectVictimCopy4 go down spot|%s| bottom|%s| top|%s| newloc|%s| dist|%s| " % (nRandomSpot,nBottom,nTop,nLoc,nDist))
-                    else:
-    
-                        if sDocID not in self.lDocIDs:
-                            TRC.trace(5,"proc SelectVictimCopy2 no longer valid copyid|%s| docid|%s|" % (sCopyID,sDocID))
-                            sVictimID = None
-                        else:
-    
-                            sVictimID = sCopyID
-                            TRC.trace(5,"proc SelectVictimCopy5 found victim id|%s| spot|%s| bottom|%s| top|%s| " % (sCopyID,nRandomSpot,nBottom,nTop))
-                            break
 
-                else:
-                    TRC.trace(5,"proc SelectVictimCopy6 ran out of dist copyid|%s| docid|%s| spot|%s| bottom|%s| top|%s|" % (sCopyID,sDocID,nRandomSpot,nBottom,nTop))
-                    sVictimID = None
-                    break
-                '''
-
+            ''' the original old way
             for idxCopy,sCopyID in enumerate(self.lCopyIDs):
                 cCopy = G.dID2Copy[sCopyID]
                 iVictimx = cCopy
@@ -409,10 +371,12 @@ class CShelf(object):
                 iVictimx = None
                 sVictimIDx = None
                 TRC.tracef(5,"SHLF","proc mSelectVictimCopy shelf|%s| sector|%d| hits empty space" % (self.ID,nRandomSpot))
+            '''
 
         else:
-            TRC.tracef(5,"SHLF","proc mSelectVictimCopy shelf|%s| spot|%d| above hiwater|%s| empty" % (self.ID,nRandomSpot,self.nHiWater))
+            TRC.tracef(3,"SHLF","proc mSelectVictimCopy shelf|%s| spot|%d| above hiwater|%s| empty" % (self.ID,nRandomSpot,self.nHiWater))
             sVictimID = None
+            self.nHitsAboveHiWater += 1
 
         return sVictimID
 
@@ -496,7 +460,7 @@ class CShelf(object):
     def mReportErrorStats(self):
         ''' Return ID,server ID,quality,sector hits,empty sector hits,alive flag
         '''
-        return (self.ID,self.sServerID,self.nQual,self.nSectorHits,self.nEmptySectorHits,self.bAlive)
+        return (self.ID,self.sServerID,self.nQual,self.nSectorHits,self.nEmptySectorHits,self.bAlive,self.nHitsAboveHiWater,self.nMultipleHits)
 
 #===========================================================
 # C O P Y  ( of  D o c u m e n t )
