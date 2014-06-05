@@ -167,7 +167,7 @@ class CG(object):
     nCores = 2
     nCoreTimer = 10
     nGroupTimer = 60
-    nStuckLimit = 99
+    nStuckLimit = 299
     nPoliteTimer = 5
 
 # f n M a y b e O v e r r i d e 
