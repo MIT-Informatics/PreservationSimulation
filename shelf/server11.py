@@ -380,10 +380,6 @@ class CShelf(object):
 
         return sVictimID
 
-
-
-
-
 # S h e l f . m D e s t r o y C o p y  
     @tracef("SHLF",level=3)
     def mDestroyCopy(self,mysCopyID):
