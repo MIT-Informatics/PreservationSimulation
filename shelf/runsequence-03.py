@@ -10,6 +10,10 @@ Format of instruction file:
 The template is processed with the Python string.format() function, 
 so you probably want to use keyword args in braces.
 
+The program limits the number of simultaneous processes to the --ncores 
+option.  It looks for the number of python instances in ps, waits if 
+there are too many, looks again.  
+
 @author: landau
 '''
 import csv
@@ -30,13 +34,14 @@ def fndCliParse(mysArglist):
         not necessary, since most of them have already been decanted
         into the P params object.  
     '''
+    sVersion = "0.0.1"
     cParse = argparse.ArgumentParser(description="Digital Library Preservation Simulation Run Sequencer",epilog="Defaults for args as follows:\n\
         cores=2, \n\
         coretimer=20 sec, \
-        grouptimer=60 sec, \
-        version=sVersion"
+        stucklimit=99, \
+        file=instructions.txt, version=%s" % sVersion
         )
-    
+
     # P O S I T I O N A L  arguments
     #cParse.add_argument('--something', type=, dest='', metavar='', help='')
 
@@ -60,10 +65,16 @@ def fndCliParse(mysArglist):
                         , help='Time between starts up to the number of cores, in seconds'
                         )
 
-    cParse.add_argument("--grouptimer", type=int
-                        , dest='nGroupTimer'
-                        , metavar='nGROUPTIMER'
-                        , help='Time between groups of starts (up to nCores max), in seconds'
+#    cParse.add_argument("--grouptimer", type=int
+#                        , dest='nGroupTimer'
+#                        , metavar='nGROUPTIMER'
+#                        , help='Time between groups of starts (up to nCores #max), in seconds'
+#                        )
+
+    cParse.add_argument("--stucklimit", type=int
+                        , dest='nStuckLimit'
+                        , metavar='nSTUCKLIMIT'
+                        , help='Max nr of nCORETIMER intervals to wait before giving up waiting for a free core'
                         )
 
     if mysArglist:          # If there is a specific string, use it.
@@ -140,9 +151,18 @@ def fndParseInput(mysFilename):
         for dRow in lRowDicts:
             dNewRow = dict()
             # Sanitize (i.e., re-integerize) the entire row dict, 
-            # keys and values, and use the new version instead.
+            #  keys and values, and use the new version instead.
+            # Exception: strings that look like integers but have 
+            #  leading zeros will be kept as strings.  This is to 
+            #  avoid corrupting the BER strings that are used in 
+            #  directory and file names.  (The BER string is always
+            #  a value, not a key.)  
             for xKey in dRow:
-                dNewRow[fnIntPlease(xKey)] = fnIntPlease(dRow[xKey])
+                sValue = dRow[xKey]
+                if type(sValue) == type('str') and sValue.startswith('0'):
+                    dNewRow[fnIntPlease(xKey)] = sValue
+                else:
+                    dNewRow[fnIntPlease(xKey)] = fnIntPlease(sValue)
             # Put it back into a list, in order.
             lParams.append(dNewRow)
             TRC.trace(5,"proc fndParseInput dRow|%s| dNewRow|%s| lParams|%s|" % (dRow,dNewRow,lParams))
@@ -154,8 +174,10 @@ class CG(object):
     '''
     sInstructionsFile = "instructions.txt"
     nCores = 2
-    nCoreTimer = 20
+    nCoreTimer = 10
     nGroupTimer = 60
+    nStuckLimit = 299
+    nPoliteTimer = 5
 
 # f n M a y b e O v e r r i d e 
 @trace
@@ -171,13 +193,43 @@ def fnMaybeOverride(mysCliArg,mydDict,mycClass):
                 setattr( mycClass, mysCliArg, None )
     return getattr(mycClass,mysCliArg,"XXXXX")
 
+# f n W a i t F o r O p e n i n g 
+@trace
+def fnWaitForOpening(mynProcessMax,mysProcessName,mynWaitTime,mynWaitLimit):
+    ''' Wait for a small, civilized number of processes to be running.  
+        If the number is too large, wait a while and look again.  
+        But don't wait forever in case something is stuck.  
+        Args: 
+        - max nr of processes, including maybe this one
+        - process name to look for
+        - wait time between retries
+        - max nr of retries before giving up
+    '''
+    cCmd = CCommand()
+    dParams = dict()
+    dParams['Name'] = mysProcessName
+    for idx in range(mynWaitLimit):
+        sCmd = "ps | grep {Name} | wc -l"
+        sFullCmd = cCmd.makeCmd(sCmd,dParams)
+        sResult = cCmd.doCmdStr(sFullCmd)
+        nResult = int(sResult)
+        TRC.trace(3,"proc WaitForOpening1 idx|%d| cmd|%s| result|%s|" % (idx,sFullCmd,sResult))
+        if nResult < mynProcessMax + 1 if (mysProcessName.find("python") >= 0) else 0:
+            break
+        TRC.trace(3,"proc WaitForOpening2 sleep and do again idx|%d| nResult|%d|" % (idx,nResult))
+        sleep(mynWaitTime)
+    return (idx < mynWaitLimit-1)
+
+
 '''
 process:
 - read command
 - read csv file into list
 - for each line, get dict for line
 - using dict args, construct plausible command line
-- launch command with redirection
+- check to see that there aren't too many running already
+- if too many pythons already running, wait a while and look again.
+- launch command with redirection and maybe no-wait &
 - wait a while before launching another
 '''
 
@@ -191,7 +243,9 @@ def main():
     fnMaybeOverride("sInstructionsFile",dCliDict,g)
     fnMaybeOverride("nCores",dCliDict,g)
     fnMaybeOverride("nCoreTimer",dCliDict,g)
-    fnMaybeOverride("nGroupTimer",dCliDict,g)
+#    fnMaybeOverride("nGroupTimer",dCliDict,g)
+    fnMaybeOverride("nStuckLimit",dCliDict,g)
+
     # Read the file of instructions.  
     sFilename = g.sInstructionsFile
     (sCommand,lParams) = fndParseInput(sFilename)
@@ -199,21 +253,24 @@ def main():
 
     # Process the instructions one line at a time.
     for idx in range(len(lParams)):
-        # Substitute params and execute command.
-        dParams = lParams[idx]
-        sFullCmd = cCommand.makeCmd(sCommand,dParams)
-        lResult = cCommand.doCmdLst(sFullCmd)
-        # Print something to let the user know there is progress.
-        print '-----------------'
-        print sFullCmd
-        print '-----------------'
-        for sResult in lResult:
-            print sResult
-        print '-----------------'
-        sleep(g.nCoreTimer)
-        # After filling all the cores, wait a while for some empties, maybe.  
-        if idx+1 % g.nCores == 0:
-            sleep(g.nGroupTimer)
+        # Wait until at least one core is free.  
+        bContinue = fnWaitForOpening(g.nCores,"python",g.nCoreTimer,g.nStuckLimit)
+        if bContinue:
+            # Substitute params and execute command.
+            dParams = lParams[idx]
+            sFullCmd = cCommand.makeCmd(sCommand,dParams)
+            # Print something to let the user know there is progress.
+            print '-----------------'
+            TRC.trace(0,sFullCmd)
+            print '-----------------'
+            lResult = cCommand.doCmdLst(sFullCmd)
+            for sResult in lResult:
+                TRC.trace(0,sResult)
+            print '-----------------'
+            sleep(g.nPoliteTimer)
+        else:
+            TRC.trace(0,"OOPS, Stuck!  Too many python processes running forever.")
+            break
 
 # E n t r y   p o i n t . 
 if __name__ == "__main__":

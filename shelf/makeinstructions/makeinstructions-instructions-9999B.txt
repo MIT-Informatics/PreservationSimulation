@@ -4,21 +4,21 @@
 # This comment should be removed.
 
 # Command to go at the top of each instruction file.  
-python main.py {{family}} {{specific}} {{length}} {{seed}} --ncopies={{copies}} --ber={{berm}} {{extra1}} {{extra2}} {{extra3}} >  {{family}}/{{specific}}/logb{{berid}}/c{{copies}}b{{berid}}s{{seed}}.log  2>&1  &
+python main.py {{family}} {{specific}} {{length}} {{seed}} --ncopies {{copies}} --ber {{ber}} {{extra1}} {{extra2}} {{extra3}} >  {{family}}/}{specific}}/logb{{ber}}/c{{copies}}b{{ber}}s{{seed}}.log  2>&1  &
 
 # Each file will contain the above command line and all these individual instruction lines.  
-family,specific,length,seed,copies,berid,berm,extra1,extra2,extra3 
-{family},{specific},0,{s1},{copies},{ber},{ber}000,{extra1},{extra2},{extra3},
-{family},{specific},0,{s2},{copies},{ber},{ber}000,{extra1},{extra2},{extra3},
-{family},{specific},0,{s3},{copies},{ber},{ber}000,{extra1},{extra2},{extra3},
-{family},{specific},0,{s4},{copies},{ber},{ber}000,{extra1},{extra2},{extra3},
-{family},{specific},0,{s5},{copies},{ber},{ber}000,{extra1},{extra2},{extra3},
-{family},{specific},0,{s6},{copies},{ber},{ber}000,{extra1},{extra2},{extra3},
-{family},{specific},0,{s7},{copies},{ber},{ber}000,{extra1},{extra2},{extra3},
-{family},{specific},0,{s8},{copies},{ber},{ber}000,{extra1},{extra2},{extra3},
-{family},{specific},0,{s9},{copies},{ber},{ber}000,{extra1},{extra2},{extra3},
-{family},{specific},0,{s10},{copies},{ber},{ber}000,{extra1},{extra2},{extra3},
-{family},{specific},0,{s11},{copies},{ber},{ber}000,{extra1},{extra2},{extra3},
+family,specific,length,seed,copies,ber,extra1,extra2,extra3 
+{family},{specific},0,{s1},{copies},{ber}000,{extra1},{extra2},{extra3},
+{family},{specific},0,{s2},{copies},{ber}000,{extra1},{extra2},{extra3},
+{family},{specific},0,{s3},{copies},{ber}000,{extra1},{extra2},{extra3},
+{family},{specific},0,{s4},{copies},{ber}000,{extra1},{extra2},{extra3},
+{family},{specific},0,{s5},{copies},{ber}000,{extra1},{extra2},{extra3},
+{family},{specific},0,{s6},{copies},{ber}000,{extra1},{extra2},{extra3},
+{family},{specific},0,{s7},{copies},{ber}000,{extra1},{extra2},{extra3},
+{family},{specific},0,{s8},{copies},{ber}000,{extra1},{extra2},{extra3},
+{family},{specific},0,{s9},{copies},{ber}000,{extra1},{extra2},{extra3},
+{family},{specific},0,{s10},{copies},{ber}000,{extra1},{extra2},{extra3},
+{family},{specific},0,{s11},{copies},{ber}000,{extra1},{extra2},{extra3},
 
 # Generates one instruction file for each line of parameters.  
 # Each file contains the entire template with substitutions.  

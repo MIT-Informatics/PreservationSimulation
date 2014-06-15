@@ -20,7 +20,7 @@ for copies in 01 02 03 04 05 08 10 14 16 20
 do
 
 echo "grep NEWS $1/c`echo $copies`*"
-grep NEWS $1/c`echo $copies`* | awk '/grep/ {print}; !/grep/ {print $1,$16}'
+grep NEWS $1/c`echo $copies`* | awk '/grep/ {print}; /BAD/ {print $1,$16}; /GOOD/ {print $1,"|0|"}'
 
 done
 

@@ -21,7 +21,7 @@ do
 
 echo "grep NEWS $1/c`echo $copies`*"
 grep NEWS $1/c`echo $copies`*                   \
-| awk '/grep/ {print}; !/grep/ {print $16}'     \
+| awk '/grep/ {print}; /BAD/ {print $16}; /GOOD/ {print "|0|"}' \
 | sed 's/|//g'                                  \
 | sort -n                                       \
 

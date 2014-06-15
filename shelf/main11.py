@@ -405,7 +405,8 @@ def testAllClients(mylClients):
                 logInfo("MAIN","client |%s| lost doc|%s| size|%s|" % (sClientID,sDocID,cDoc.nSize))
             logInfo("MAIN","BAD NEWS: Total documents lost by client |%s| in all servers |%d|" % (sClientID,len(lDeadDocIDs)))
         else:
-            logInfo("MAIN","GOOD NEWS: NO DOCUMENTS LOST by client |%s|!" % (sClientID))
+#            logInfo("MAIN","GOOD NEWS: NO DOCUMENTS LOST by client |%s|!" % (sClientID))
+            logInfo("MAIN","GOOD NEWS: Total documents lost by client |%s| in all servers |%d|" % (sClientID,len(lDeadDocIDs)))
 
 
 #-----------------------------------------------------------

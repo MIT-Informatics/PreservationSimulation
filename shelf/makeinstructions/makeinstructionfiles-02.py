@@ -94,22 +94,28 @@ def fndCliParse(mysArglist):
                         , help='File with command template and CSV params'
                         )
 
-    cParse.add_argument('sOutputDir', type=str
-                        , metavar='sOUTPUTDIR'
+#    cParse.add_argument('sOutputDir', type=str
+#                        , metavar='sOUTPUTDIR'
 #                        , nargs="?"
-                        , help='Directory into which to place the output instruction files.'
-                        )
+#                        , help='Directory into which to place the output instruction files.'
+#                        )
 
     # - - O P T I O N S
     # Some of these so-called options will be considered mandatory; 
     #  sorry about that.  They are options rather than positional arguments
     #  so that they cam be given with nice names.  Basically, they are 
     #  keyword args rather than options.  
+    #  family, familyroot, and specific are all mandatory.  
     
     cParse.add_argument("--family", type=str
                         , dest='family'
                         , metavar='sFAMILYDIR'
                         , help='Family directory for these tests.'
+                        )
+    cParse.add_argument("--familyroot", type=str
+                        , dest='familyroot'
+                        , metavar='sFAMILYROOTDIR'
+                        , help='Family root directory for these tests, often "..".'
                         )
 
     cParse.add_argument("--specific", type=str
@@ -241,6 +247,7 @@ class CG(object):
     sFamilyDir = ""
     sSpecificDir = ""
     family = ""
+    familyroot = ""
     specific = ""
 
 # f n M a y b e O v e r r i d e 
@@ -264,14 +271,22 @@ def main():
     g = CG()                # One instance of the global data.
     
     dCliDict = fndCliParse("")
+    # Check for mandatory options.
+    if not dCliDict['family'] \
+    or not dCliDict['familyroot'] \
+    or not dCliDict['specific']:
+        print "ERROR: must specify --family and --familyroot and --specific mandatory options."
+        exit(1)
     # Clean out "None" strings left over from CLI parsing, grumble.
     for kk in dCliDict: 
         if dCliDict[kk] == None:
             dCliDict[kk] = ""
+
     # Carefully insert any new CLI values into the Global object.
     fnMaybeOverride("sInstructionsFile",dCliDict,g)
     fnMaybeOverride("sOutputDir",dCliDict,g)
     fnMaybeOverride("family",dCliDict,g)
+    fnMaybeOverride("familyroot",dCliDict,g)
     fnMaybeOverride("specific",dCliDict,g)
 
     # Read the file of meta-instructions.  
@@ -289,14 +304,21 @@ def main():
         # Now do backwards substitutions to let CLI override the instructions file.
 #        fnMaybeOverride("family",dCliDict,dParamsFromFile) # can't setattr into a dict, oops
         if "family" in dCliDict: dParamsFromFile["family"] = dCliDict["family"]
+        if "familyroot" in dCliDict: dParamsFromFile["familyroot"] = dCliDict["familyroot"]
         if "specific" in dCliDict: dParamsFromFile["specific"] = dCliDict["specific"]
         if "extra1" in dCliDict: dParamsFromFile["extra1"] = dCliDict["extra1"]
         if "extra2" in dCliDict: dParamsFromFile["extra2"] = dCliDict["extra2"]
         if "extra3" in dCliDict: dParamsFromFile["extra3"] = dCliDict["extra3"]
         dParams = dParamsFromFile
+ 
+        # Construct output dir name from family, specific, and ber from params.
+        sRoot = (dParams['familyroot']+"/" if dParams['familyroot'] else "")
+        g.sOutputDir = dParams['family'] +'/'+ dParams['specific'] +'/'+'logb'+ dParams['ber']
         # Substitute params into each line of template, and write an output file.
-        sOutFile = g.sOutputDir + "/" + dParams["filename"]
+        sOutFile = sRoot + g.sOutputDir + "/" + dParams["filename"]
+        TRC.tracef(3,"MAIN","proc construct output name root|%s| family|%s| specific|%s| outdir|%s| outfile|%s|" % (sRoot,dParams['family'],dParams['specific'],g.sOutputDir,sOutFile))
         with open(sOutFile,"w") as fhOut:
+            print "Writing %s" % (sOutFile)
             for sCommand in lTemplate:
                 sFullCmd = cCommand.makeCmd(sCommand,dParams)
                 TRC.tracef(3,"OUT","proc output line|%s|" % (sFullCmd))

@@ -19,13 +19,16 @@ fi
 for copies in 01 02 03 04 05 08 10 14 16 20
 do
 
-echo "grep NEWS $1/c`echo $copies`*"
-grep NEWS $1/c`echo $copies`*                   \
-| awk '/grep/ {print}; !/grep/ {print $16}'     \
+nfiles=`ls $1/c$copies* | wc -l`
+nmid1=`expr $nfiles + 1`
+nmid=`expr $nmid1 / 2`
+
+echo "grep NEWS $1/c$copies*"
+grep NEWS $1/c$copies*                   \
+| awk '/grep/ {print}; /BAD/ {print $16}; /GOOD/ {print "|0|"}' \
 | sed 's/|//g'                                  \
 | sort -n                                       \
-| head -6 | tail -1
-
+| head -$nmid | tail -1
 
 done
 
