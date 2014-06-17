@@ -14,3 +14,4 @@ cat makeinstructions-instructions-9999.txt | sed 's/9999/1000/g' > makeinstructi
 cat makeinstructions-instructions-9999.txt | sed 's/9999/2000/g' > makeinstructions-b2000.txt
 cat makeinstructions-instructions-9999.txt | sed 's/9999/3000/g' > makeinstructions-b3000.txt
 cat makeinstructions-instructions-9999.txt | sed 's/9999/5000/g' > makeinstructions-b5000.txt
+cat makeinstructions-instructions-9999.txt | sed 's/9999/10000/g' > makeinstructions-b10000.txt
