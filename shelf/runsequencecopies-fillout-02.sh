@@ -14,7 +14,8 @@ then
 fi
 
 #for copies in 01 02 03 04 05 08 10 14 16 20     # for complete runs, yikes.
-for copies in 01 02 03 04 05 08 10              # for medium runs
+for copies in 14 16 20                          # for filling out short runs.
+#for copies in 01 02 03 04 05 08 10              # for medium runs
 #for copies in 01 02 03 04 05                    # for short runs
 #for copies in 01 02                             # for testing
 do

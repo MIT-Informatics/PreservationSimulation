@@ -1,5 +1,5 @@
 #!/bin/sh
-# makelogdirs.sh
+# make-instructionfiles-all-bers.sh
 # Create all the empty log dirs for a family/specific dir.
 #                   RBLandau 20140613
 
