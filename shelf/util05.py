@@ -101,5 +101,21 @@ def fnfCalcBlockLifetime(mynSectorLife,mynCapacity):
     fLife = float(mynSectorLife) / float(mynCapacity)
     return fLife            # returns float
 
+# f n f C a l c T r a n s f e r T i m e 
+@tracef("UTIL",level=5)
+def fnfCalcTransferTime(mynDocSize,mynBandwidth):
+    ''' Convert doc size in MB and bandwidth in Mb/s 
+        to part of an hour that it takes to transmit.  
+    '''
+    fPartialHours = float(mynDocSize)   \
+    * 10                                \
+    / float(mynBandwidth)               \
+    / float(G.fSecondsPerHour)
+    return fPartialHours
+
+
+
+
+
 
 # END

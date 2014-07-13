@@ -1,0 +1,126 @@
+# Search for comment lines beginning with #, added by RBL.  
+# This is the short version of the log: no details, only run parameters and results.  Saves time and space.  
+`client10.py' -> `client.py'
+`server12.py' -> `server.py'
+`util05.py' -> `util.py'
+`readin07.py' -> `readin.py'
+`main13.py' -> `main.py'
+`globaldata07.py' -> `globaldata.py'
+`logoutput07.py' -> `logoutput.py'
+`NewTraceFac08.py' -> `NewTraceFac.py'
+`repair00.py' -> `repair.py'
+`cliparse06.py' -> `cliparse.py'
+`audit-01.py' -> `audit.py'
+20140707_115401 MAIN INFO - Simulation parameters
+# Command line args.  Same as the other run.  
+# The only difference here is the --shortlog=Y option.  
+20140707_115401 MAIN INFO - Command line|['q0', 'v2d50', '00', '1', '--ncopies=2', '--ber', '300000', '--audit=10000', '--bandwidth=10', '--shortlog=Y']|
+20140707_115401 PARAMS INFO - familydir|q0| specificdir|v2d50|
+20140707_115401 PARAMS INFO - begin simulation seed|1| timelimit|100000|hr=|11|yr
+20140707_115401 PARAMS INFO - logfile|-| loglevel|INFO|
+20140707_115401 PARAMS INFO - CLIENT client|MIT| collection|Mags| quality|1| ndocs|10000|
+20140707_115401 PARAMS INFO - SERVER server|AWS Euro  Super Duper| quality|1| shelfsize|10|TB
+20140707_115401 PARAMS INFO - SERVER server|AWS Euro  Premium| quality|1| shelfsize|10|TB
+20140707_115401 PARAMS INFO - SERVER server|Amazon East Platinum| quality|1| shelfsize|10|TB
+20140707_115401 PARAMS INFO - SERVER server|Amazon East Premium| quality|1| shelfsize|10|TB
+20140707_115401 PARAMS INFO - SERVER server|Amazon West Plus| quality|1| shelfsize|10|TB
+20140707_115401 PARAMS INFO - SERVER server|AWS Euro  Plus| quality|1| shelfsize|10|TB
+20140707_115401 PARAMS INFO - SERVER server|OneDrive  Super Duper| quality|1| shelfsize|10|TB
+20140707_115401 PARAMS INFO - SERVER server|Amazon East Plus| quality|1| shelfsize|10|TB
+20140707_115401 PARAMS INFO - SERVER server|Google Drive Plus| quality|1| shelfsize|10|TB
+20140707_115401 PARAMS INFO - SERVER server|Amazon West Platinum| quality|1| shelfsize|10|TB
+20140707_115401 PARAMS INFO - SERVER server|Yet Another 4| quality|1| shelfsize|10|TB
+20140707_115401 PARAMS INFO - SERVER server|AWS Euro Vanilla| quality|1| shelfsize|10|TB
+20140707_115401 PARAMS INFO - SERVER server|Yet Another 2| quality|1| shelfsize|10|TB
+20140707_115401 PARAMS INFO - SERVER server|Yet Another 3| quality|1| shelfsize|10|TB
+20140707_115401 PARAMS INFO - SERVER server|Yet Another 1| quality|1| shelfsize|10|TB
+20140707_115401 PARAMS INFO - SERVER server|Amazon West| quality|1| shelfsize|10|TB
+20140707_115401 PARAMS INFO - SERVER server|AWS Euro  Platinum| quality|1| shelfsize|10|TB
+20140707_115401 PARAMS INFO - SERVER server|OneDrive Vanilla| quality|1| shelfsize|10|TB
+20140707_115401 PARAMS INFO - SERVER server|OneDrive  Platinum| quality|1| shelfsize|10|TB
+20140707_115401 PARAMS INFO - SERVER server|Google Drive| quality|1| shelfsize|10|TB
+20140707_115401 PARAMS INFO - SERVER server|OneDrive  Plus| quality|1| shelfsize|10|TB
+20140707_115401 PARAMS INFO - SERVER server|Amazon West Premium| quality|1| shelfsize|10|TB
+20140707_115401 PARAMS INFO - SERVER server|OneDrive  Premium| quality|1| shelfsize|10|TB
+20140707_115401 PARAMS INFO - SERVER server|Amazon East| quality|1| shelfsize|10|TB
+20140707_115401 PARAMS INFO - SERVER server|Google Drive Super Duper| quality|1| shelfsize|10|TB
+20140707_115401 PARAMS INFO - SERVER server|Amazon East Super Duper| quality|1| shelfsize|10|TB
+20140707_115401 PARAMS INFO - SERVER server|Google Drive Premium| quality|1| shelfsize|10|TB
+20140707_115401 PARAMS INFO - SERVER server|Google Drive Platinum| quality|1| shelfsize|10|TB
+20140707_115401 PARAMS INFO - SERVER server|Yet Another 5| quality|1| shelfsize|10|TB
+20140707_115401 PARAMS INFO - SERVER server|Amazon West Super Duper| quality|1| shelfsize|10|TB
+20140707_115401 PARAMS INFO - SHELF quality|1| smallfailrate|300000|Khr=|34223|yr shelffailrate|100000000|Khr=|11407711|yr
+20140707_115401 PARAMS INFO - SHELF quality|2| smallfailrate|1000|Khr=|114|yr shelffailrate|200000000|Khr=|22815423|yr
+20140707_115401 PARAMS INFO - SHELF quality|3| smallfailrate|2000|Khr=|228|yr shelffailrate|400000000|Khr=|45630846|yr
+20140707_115401 PARAMS INFO - SHELF quality|4| smallfailrate|3000|Khr=|342|yr shelffailrate|800000000|Khr=|91261692|yr
+20140707_115401 PARAMS INFO - SHELF quality|5| smallfailrate|5000|Khr=|570|yr shelffailrate|1600000000|Khr=|182523385|yr
+20140707_115401 PARAMS INFO - DISTRIBUTION value|1| quality|1| copies|2|
+20140707_115401 PARAMS INFO - DISTRIBUTION value|2| quality|2| copies|4|
+20140707_115401 PARAMS INFO - DISTRIBUTION value|3| quality|3| copies|3|
+20140707_115401 PARAMS INFO - DISTRIBUTION value|4| quality|4| copies|2|
+20140707_115401 PARAMS INFO - DISTRIBUTION value|5| quality|5| copies|1|
+20140707_115401 PARAMS INFO - DOCUMENT value|1| percent|100| meanMB|50| sd|0|
+20140707_115401 PARAMS INFO - DOCUMENT value|1| percent|0| meanMB|5000| sd|2000|
+20140707_115401 PARAMS INFO - DOCUMENT value|2| percent|50| meanMB|5| sd|2|
+20140707_115401 PARAMS INFO - DOCUMENT value|2| percent|50| meanMB|5000| sd|2000|
+20140707_115401 PARAMS INFO - DOCUMENT value|3| percent|50| meanMB|5| sd|2|
+20140707_115401 PARAMS INFO - DOCUMENT value|3| percent|50| meanMB|5000| sd|2000|
+20140707_115401 PARAMS INFO - DOCUMENT value|4| percent|50| meanMB|5| sd|2|
+20140707_115401 PARAMS INFO - DOCUMENT value|4| percent|50| meanMB|5000| sd|2000|
+20140707_115401 PARAMS INFO - DOCUMENT value|5| percent|50| meanMB|5| sd|2|
+20140707_115401 PARAMS INFO - DOCUMENT value|5| percent|50| meanMB|5000| sd|2000|
+20140707_115401 PARAMS INFO - AUDIT interval hours|10000| bandwidth Mbps|10|
+20140707_115401 MAIN INFO - created server|L1| quality|1| shelfsize|10|TB name|AWS Euro  Super Duper|
+20140707_115401 MAIN INFO - created server|L2| quality|1| shelfsize|10|TB name|AWS Euro  Premium|
+20140707_115401 MAIN INFO - created server|L3| quality|1| shelfsize|10|TB name|Amazon East Platinum|
+20140707_115401 MAIN INFO - created server|L4| quality|1| shelfsize|10|TB name|Amazon East Premium|
+20140707_115401 MAIN INFO - created server|L5| quality|1| shelfsize|10|TB name|Amazon West Plus|
+20140707_115401 MAIN INFO - created server|L6| quality|1| shelfsize|10|TB name|AWS Euro  Plus|
+20140707_115401 MAIN INFO - created server|L7| quality|1| shelfsize|10|TB name|OneDrive  Super Duper|
+20140707_115401 MAIN INFO - created server|L8| quality|1| shelfsize|10|TB name|Amazon East Plus|
+20140707_115401 MAIN INFO - created server|L9| quality|1| shelfsize|10|TB name|Google Drive Plus|
+20140707_115401 MAIN INFO - created server|L10| quality|1| shelfsize|10|TB name|Amazon West Platinum|
+20140707_115401 MAIN INFO - created server|L11| quality|1| shelfsize|10|TB name|Yet Another 4|
+20140707_115401 MAIN INFO - created server|L12| quality|1| shelfsize|10|TB name|AWS Euro Vanilla|
+20140707_115401 MAIN INFO - created server|L13| quality|1| shelfsize|10|TB name|Yet Another 2|
+20140707_115401 MAIN INFO - created server|L14| quality|1| shelfsize|10|TB name|Yet Another 3|
+20140707_115401 MAIN INFO - created server|L15| quality|1| shelfsize|10|TB name|Yet Another 1|
+20140707_115401 MAIN INFO - created server|L16| quality|1| shelfsize|10|TB name|Amazon West|
+20140707_115401 MAIN INFO - created server|L17| quality|1| shelfsize|10|TB name|AWS Euro  Platinum|
+20140707_115401 MAIN INFO - created server|L18| quality|1| shelfsize|10|TB name|OneDrive Vanilla|
+20140707_115401 MAIN INFO - created server|L19| quality|1| shelfsize|10|TB name|OneDrive  Platinum|
+20140707_115401 MAIN INFO - created server|L20| quality|1| shelfsize|10|TB name|Google Drive|
+20140707_115401 MAIN INFO - created server|L21| quality|1| shelfsize|10|TB name|OneDrive  Plus|
+20140707_115401 MAIN INFO - created server|L22| quality|1| shelfsize|10|TB name|Amazon West Premium|
+20140707_115401 MAIN INFO - created server|L23| quality|1| shelfsize|10|TB name|OneDrive  Premium|
+20140707_115401 MAIN INFO - created server|L24| quality|1| shelfsize|10|TB name|Amazon East|
+20140707_115401 MAIN INFO - created server|L25| quality|1| shelfsize|10|TB name|Google Drive Super Duper|
+20140707_115401 MAIN INFO - created server|L26| quality|1| shelfsize|10|TB name|Amazon East Super Duper|
+20140707_115401 MAIN INFO - created server|L27| quality|1| shelfsize|10|TB name|Google Drive Premium|
+20140707_115401 MAIN INFO - created server|L28| quality|1| shelfsize|10|TB name|Google Drive Platinum|
+20140707_115401 MAIN INFO - created server|L29| quality|1| shelfsize|10|TB name|Yet Another 5|
+20140707_115401 MAIN INFO - created server|L30| quality|1| shelfsize|10|TB name|Amazon West Super Duper|
+20140707_115401 SERVER INFO - server |L1| created storage shelf|H01| quality|1| size|10000000|MB
+20140707_115401 CLIENT INFO - client|T1| placed collection|C1| to server|L1|
+20140707_115401 SERVER INFO - server |L2| created storage shelf|H02| quality|1| size|10000000|MB
+20140707_115402 CLIENT INFO - client|T1| placed collection|C1| to server|L2|
+20140707_115402 MAIN INFO - created client|T1|
+20140707_115402 MAIN INFO - SERVERUSE shelf|L1-H01| qual|1| size|10000000| hiwater|500001| currentuse|500000| full%|5|
+20140707_115402 MAIN INFO - SERVERUSE shelf|L2-H02| qual|1| size|10000000| hiwater|500001| currentuse|500000| full%|5|
+20140707_115402 MAIN INFO - begin run
+# Long hiatus here while the CPU warms the room.
+20140707_115418 MAIN INFO - end run, simulated time|100000|
+# Same results.  
+20140707_115418 MAIN INFO - GOOD NEWS: Total documents lost by client |T1| in all servers |0|
+20140707_115418 MAIN INFO - SERVERUSE shelf|L1-H01| qual|1| size|10000000| hiwater|507251| currentuse|507250| full%|5|
+20140707_115418 MAIN INFO - SERVERUSE shelf|L2-H02| qual|1| size|10000000| hiwater|506851| currentuse|506850| full%|5|
+20140707_115418 MAIN INFO - SERVERERR1 shelf|L1-H01| qual|1| totalhits|3307| nonempty|155| empty|3152| alive|True|
+20140707_115418 MAIN INFO - SERVERERR1 shelf|L1-H01| qual|1| totalhits|3307| abovehiwater|3150| multiples|2|
+20140707_115418 MAIN INFO - SERVERERR1 shelf|L2-H02| qual|1| totalhits|3356| nonempty|158| empty|3198| alive|True|
+20140707_115418 MAIN INFO - SERVERERR1 shelf|L2-H02| qual|1| totalhits|3356| abovehiwater|3195| multiples|3|
+20140707_115400 0 MAIN  proc Document Preservation simulation 
+20140707_115402 0 MAIN  proc Begin run time|0|
+20140707_115418 0 MAIN  proc End simulation1 timenow|100000| cpusecs|15.99| lastevent|99996| 
+20140707_115418 0 MAIN  proc End simulation2 hidoc|D10000| hicoll|C1| hishelf|H02|
+20140707_115418 0 MAIN  proc End simulation3 hiserver|L30| hiclient|T1| hicopy|X20282|
+20140707_115418 0 MAIN  proc End time stats: wall|  17.843| cpu|15.99|

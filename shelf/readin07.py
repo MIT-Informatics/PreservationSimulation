@@ -56,6 +56,12 @@ def fdGetDocParams(mysFile):
     dParams = fdGetParams(mysFile,lGuide)
     return dParams
 
+@tracef("READ")
+def fdGetAuditParams(mysFile):
+    lGuide = ["Name",["Value"]]
+    dParams = fdGetParams(mysFile,lGuide)
+    return dParams
+
 
 @tracef("READ")
 def fdGetParams(mysFile,mylGuide):
@@ -64,6 +70,7 @@ def fdGetParams(mysFile,mylGuide):
         to the specified format.  Generally, the dict has a string
         or int key and returns a list.  The list may contain more
         lists.
+        Remove blank lines and comment lines (#) 
         Integers in this case drive me nucking futs.  Everything
         from a CSV file is a string, but some of the dict keys
         returned and many of the dict values returned are to be

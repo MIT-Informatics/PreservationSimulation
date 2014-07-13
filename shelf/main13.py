@@ -97,14 +97,14 @@ import simpy
 import random
 from NewTraceFac import TRC,trace,tracef
 from sys import argv
-from globaldata import *
-from client import *
-from server import *
+from globaldata import G,P
+from client import CClient
+from server import CServer
 import readin
 from os import environ
 from util import fnIntPlease
 import logoutput as lg
-from cliparse import *
+from cliparse import fndCliParse
 import copy
 from time import clock, time
 
@@ -132,8 +132,11 @@ def getParamFiles(mysParamdir):
     dResult =   readin.fdGetDocParams("%s/docsize.csv"%(mysParamdir))
     if dResult: P.dDocParams = dResult
 
+    dResult =   readin.fdGetAuditParams("%s/audit.csv"%(mysParamdir))
+    if dResult: P.dAuditParams = dResult
+
     # ---------------------------------------------------------------
-    # Process the params params specially.
+    # Process the params params specially.  Unpack them into better names.
     try:
         P.nRandomSeed = fnIntPlease(P.dParamsParams["RANDOMSEED"][0][0])
     except KeyError:
@@ -153,6 +156,21 @@ def getParamFiles(mysParamdir):
         P.sLogLevel = P.dParamsParams["LOG_LEVEL"][0][0]
     except KeyError:
         pass
+
+    # ---------------------------------------------------------------
+    # Process the audit params specially.  Maybe they override defaults.  
+    try:
+        fnMaybeOverride("nAuditCycleInterval",P.dAuditParams,G)
+        fnMaybeOverride("nBandwidthMbps",P.dAuditParams,G)
+    except:
+        pass
+    '''
+    try:
+        P.nAuditCycleInterval = fnIntPlease(P.dAuditParams["nAuditCycleInterval"][0][0])
+    except KeyError:
+        pass
+    '''
+
 
 #-----------------------------------------------------------
 # g e t E n v i r o n m e n t P a r a m s
@@ -197,12 +215,13 @@ def getCliArgsForEverythingElse():
     G.sLogFile = P.sLogFile
     G.sLogLevel = P.sLogLevel
 
-    G.dClientParams = copy.deepcopy(P.dClientParams)
-    G.dServerParams = copy.deepcopy(P.dServerParams)
-    G.dShelfParams = copy.deepcopy(P.dShelfParams)
-    G.dDistnParams = copy.deepcopy(P.dDistnParams)
-    G.dDocParams = copy.deepcopy(P.dDocParams)
-    G.dParamsParams = copy.deepcopy(P.dParamsParams)
+    G.dClientParams =   copy.deepcopy(P.dClientParams)
+    G.dServerParams =   copy.deepcopy(P.dServerParams)
+    G.dShelfParams =    copy.deepcopy(P.dShelfParams)
+    G.dDistnParams =    copy.deepcopy(P.dDistnParams)
+    G.dDocParams =      copy.deepcopy(P.dDocParams)
+    #G.dAuditParams =    copy.deepcopy(P.dAuditParams)
+    G.dParamsParams =   copy.deepcopy(P.dParamsParams)
 
     G.sWorkingDir = P.sWorkingDir       # Even correct the intercapping.
     G.sFamilyDir = P.sFamilyDir
@@ -210,7 +229,7 @@ def getCliArgsForEverythingElse():
 
     G.nRandomSeed = P.nRandomSeed
     G.nSimLength = P.nSimLength
-    
+
     # Now scan the command line again, this time overwriting anything
     # that came from the param files or environment.  
     dCliDict = fndCliParse(None)
@@ -228,6 +247,8 @@ def getCliArgsForEverythingElse():
     fnMaybeOverride("lCopies",dCliDict,G)
     fnMaybeOverride("lShelfSize",dCliDict,G)
     fnMaybeOverride("sShortLogStr",dCliDict,G)
+    fnMaybeOverride("nAuditCycleInterval",dCliDict,G)
+    fnMaybeOverride("nBandwidthMbps",dCliDict,G)
 
     # Override ncopies if present on the command line.  
     if getattr(G,"lCopies",None):
@@ -285,20 +306,19 @@ def getCliArgsForEverythingElse():
     if 'Y' in G.sShortLogStr:
         G.bShortLog = True
 
-
 # f n M a y b e O v e r r i d e 
 @tracef("MAIN"  )
-def fnMaybeOverride(mysCliArg,mydDict,mycClass):
+def fnMaybeOverride(mysArg,mydDict,mycClass):
     ''' Strange function to override a property in G if there is a 
-        version in the command line dictionary.  
+        version in the command line (or other) dictionary.  
     '''
     try:
-        if mydDict[mysCliArg]:
-            setattr( mycClass, mysCliArg, mydDict[mysCliArg] )
+        if mydDict[mysArg]:
+            setattr( mycClass, mysArg, mydDict[mysArg] )
     except KeyError:
-            if not getattr(mycClass,mysCliArg,None):
-                setattr( mycClass, mysCliArg, None )
-    return getattr(mycClass,mysCliArg,"XXXXX")
+            if not getattr(mycClass,mysArg,None):
+                setattr( mycClass, mysArg, None )
+    return getattr(mycClass,mysArg,"XXXXX")
 
 
 #-----------------------------------------------------------
@@ -348,6 +368,9 @@ def dumpParamsIntoLog():
             (nPercent,nMean,nSdev) = lMode
             lg.logInfo("PARAMS","DOCUMENT value|%d| percent|%d| meanMB|%d| sd|%d|" % (nValue,nPercent,nMean,nSdev))
 
+    # Audit params.
+    lg.logInfo("PARAMS","AUDIT interval hours|%s| bandwidth Mbps|%s|" % (G.nAuditCycleInterval,G.nBandwidthMbps)) 
+
 # d u m p S e r v e r U s e S t a t s 
 @tracef("MAIN")
 def dumpServerUseStats():
@@ -378,7 +401,7 @@ def makeServers(mydServers):
         cServer = CServer(sServerName,nServerQual,nShelfSize)
         sServerID = cServer.ID
         G.lAllServers.append(cServer)
-        logInfo("MAIN","created server|%s| quality|%s| shelfsize|%s|TB name|%s|" % (sServerID,nServerQual,nShelfSize,sServerName))
+        lg.logInfo("MAIN","created server|%s| quality|%s| shelfsize|%s|TB name|%s|" % (sServerID,nServerQual,nShelfSize,sServerName))
         # Invert the server list so that clients can look up 
         # all the servers that satisfy a quality criterion.  
         if nServerQual in G.dQual2Servers:
@@ -397,7 +420,7 @@ def makeClients(mydClients):
     for sClientName in mydClients:
         cClient = CClient(sClientName,mydClients[sClientName])
         G.lAllClients.append(cClient)
-        logInfo("MAIN","created client|%s|" % (cClient.ID))
+        lg.logInfo("MAIN","created client|%s|" % (cClient.ID))
     return G.lAllClients
 
 # t e s t A l l C l i e n t s 
@@ -411,12 +434,12 @@ def testAllClients(mylClients):
                 G.bDoNotLogInfo = True
             for sDocID in lDeadDocIDs:
                 cDoc = G.dID2Document[sDocID]
-                logInfo("MAIN","client |%s| lost doc|%s| size|%s|" % (sClientID,sDocID,cDoc.nSize))
+                lg.logInfo("MAIN","client |%s| lost doc|%s| size|%s|" % (sClientID,sDocID,cDoc.nSize))
             G.bDoNotLogInfo = False
-            logInfo("MAIN","BAD NEWS: Total documents lost by client |%s| in all servers |%d|" % (sClientID,len(lDeadDocIDs)))
+            lg.logInfo("MAIN","BAD NEWS: Total documents lost by client |%s| in all servers |%d|" % (sClientID,len(lDeadDocIDs)))
         else:
-#            logInfo("MAIN","GOOD NEWS: NO DOCUMENTS LOST by client |%s|!" % (sClientID))
-            logInfo("MAIN","GOOD NEWS: Total documents lost by client |%s| in all servers |%d|" % (sClientID,len(lDeadDocIDs)))
+#            lg.logInfo("MAIN","GOOD NEWS: NO DOCUMENTS LOST by client |%s|!" % (sClientID))
+            lg.logInfo("MAIN","GOOD NEWS: Total documents lost by client |%s| in all servers |%d|" % (sClientID,len(lDeadDocIDs)))
 
 
 #-----------------------------------------------------------
@@ -551,6 +574,9 @@ def main():
     random.seed(G.nRandomSeed)
     env = simpy.Environment()
     G.env = env
+    # Establish a non-shared resource for network bandwidth 
+    # to be used during auditing.
+    G.NetworkBandwidthResource = simpy.Resource(G.env,capacity=1)
 
     # ---------------------------------------------------------------
     # Populate servers, clients, collections of documents.
@@ -561,7 +587,7 @@ def main():
     # ---------------------------------------------------------------
     # Run the simulation. 
     TRC.tracef(0,"MAIN","proc Begin run time|%d|" % (env.now))
-    logInfo("MAIN","begin run")
+    lg.logInfo("MAIN","begin run")
 
     # If the user asks for short log file, then do not log 
     # any details during the run itself, only intro and conclusion.
@@ -577,7 +603,7 @@ def main():
     TRC.tracef(0,"MAIN","proc End simulation1 timenow|%d| cpusecs|%s| lastevent|%d| " % (env.now,G.tSimCpuLen,G.nTimeLastEvent))
     TRC.tracef(0,"MAIN","proc End simulation2 hidoc|%s| hicoll|%s| hishelf|%s|" % (G.nDocLastID,G.nCollLastID,G.nShelfLastID))
     TRC.tracef(0,"MAIN","proc End simulation3 hiserver|%s| hiclient|%s| hicopy|%s|" % (G.nServerLastID,G.nClientLastID,G.nCopyLastID))
-    logInfo("MAIN","end run, simulated time|%d|" % (env.now))
+    lg.logInfo("MAIN","end run, simulated time|%d|" % (env.now))
 
 
 def evaluate():

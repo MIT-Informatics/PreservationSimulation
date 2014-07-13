@@ -5,8 +5,9 @@
 import simpy
 from NewTraceFac import TRC,trace,tracef
 import itertools
-from server import *
-from globaldata import *
+from server import CServer
+from globaldata import G
+from audit import CAudit
 from repair import *
 from util import *
 import math
@@ -83,7 +84,7 @@ class CCollection(object):
 
         # Create all books in the collection.
         self.mMakeBooks(mynSize)
-
+        
 # C o l l e c t i o n . m M a k e B o o k s 
     @tracef("COLL")
     def mMakeBooks(self,mynBooks):
@@ -168,13 +169,21 @@ class CClient(object):
 
         # Distribute collection to a set of servers.
         for (sServerName,sServerID) in lServersToUse:
-            # Send copy of collection to server.
             TRC.tracef(3,"CLI","proc mPlaceCollection2 client|%s| send coll|%s| to server|%s|" % (self.ID,mysCollID,sServerID))
             TRC.tracef(3,"SHOW","proc mPlaceCollection2 client|%s| send coll|%s| to server|%s|" % (self.ID,mysCollID,sServerID))
-            (G.dID2Server[sServerID]).mAddCollection(mysCollID,self.ID)
+            
+            # Send copy of collection to server.
+            cServer = G.dID2Server[sServerID]
+            cServer.mAddCollection(mysCollID,self.ID)
+
             # Record that this server has a copy of this collection.
             cColl.lServers.append(sServerID)
             logInfo("CLIENT","client|%s| placed collection|%s| to server|%s|" % (self.ID,mysCollID,sServerID))
+
+            # Initialize the auditing process for this collection o this server.
+            if G.nAuditCycleInterval > 0:
+                self.cAudit = CAudit(self.ID,mysCollID,sServerID,G.nAuditCycleInterval)
+
         return lServersToUse
 
 # C l i e n t . m S e l e c t S e r v e r s F o r C o l l e c t i o n

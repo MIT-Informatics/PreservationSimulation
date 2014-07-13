@@ -36,6 +36,11 @@ class G(object):
     sShortLogStr = ""
     bShortLog = False
     bDoNotLogInfo = False
+    
+    nAuditCycleInterval = 0     # auditing turned off by default
+    nBandwidthMbps = 10         # vanilla ethernet speed or cheap ISP
+    fSecondsPerHour = float(60.0 * 60.0)    # conversion constant
+
 
 class P(object):
     ''' Parameters r/o for the simulation run. 

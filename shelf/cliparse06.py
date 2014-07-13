@@ -4,9 +4,8 @@
 # into the Params.  
 # Recovered, we hope, after commit/delete screw-up.  
 
-sVersion = "0.0.1"
+sVersion = "0.0.3"
 import argparse
-from globaldata import *
 from NewTraceFac import TRC,trace,tracef
 
 
@@ -21,7 +20,8 @@ def fndCliParse(mysArglist):
     cParse = argparse.ArgumentParser(description="Digital Library Preservation Simulation, Question 0",epilog="Defaults for args as follows:\n\
         simlen=100 Khrs,\n\
         seed=1, \
-        loglevel=NOTSET, \
+        shortlog=N, loglevel=NOTSET, \
+        audit=0 (off), bandwidth=10Mbps \
         logfile=stdout", version=sVersion)
     
     # P O S I T I O N A L  arguments
@@ -63,7 +63,7 @@ def fndCliParse(mysArglist):
                         , dest='lBER'
                         , metavar='nBER'
                         , nargs='*'
-                        , help='Block error rate(s) for storage shelf (types from 1 up to 5) in kilo-hours, 0=no change'
+                        , help='Block error rate(s) (really sector mean lifetimes) for storage shelf (types from 1 up to 5) in kilo-hours, 0=no change'
                         )
 
     cParse.add_argument("--shelfsize", type=int
@@ -82,7 +82,13 @@ def fndCliParse(mysArglist):
     cParse.add_argument('--logfile', type=str
                         , dest='sLogFile'
                         , metavar='sLOGFILE'
-                        , help='Log file for output, - or absent for stdout'
+                        , help='Log file for output; - or absent for stdout'
+                        )
+
+    cParse.add_argument('--shortlog', type=str
+                        , dest='sShortLogStr'
+                        , choices=['Y','N']
+                        , help='Log no detailed info for this run, params and results only.'
                         )
 
     cParse.add_argument('--smalldoc', type=int, dest='nDocSmall', 
@@ -108,6 +114,18 @@ def fndCliParse(mysArglist):
                         , help='For doc size distribution, std dev is what percentage of mean'
                         )
     
+    cParse.add_argument("--audit", type=int
+                        , dest='nAuditCycleInterval'
+                        , metavar='nAUDITCYCLEINTERVAL'
+                        , help='Hours between auditing cycles.'
+                        )
+
+    cParse.add_argument("--bandwidth", type=int
+                        , dest='nBandwidthMbps'
+                        , metavar='nBANDWIDTHMbps'
+                        , help='Auditing/repair bandwidth in Mbps (mega-*bits* per second).'
+                        )
+
     if mysArglist:          # If there is a specific string, use it.
         (xx) = cParse.parse_args(mysArglist)
     else:                   # If no string, then parse from argv[].

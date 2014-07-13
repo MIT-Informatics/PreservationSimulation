@@ -37,7 +37,8 @@ class CServer(object):
     @tracef("SERV")
     def mAddCollection(self,mysCollID,mysClientID):
         lTempDocIDs = list()
-        lTempDocIDs = G.dID2Collection[mysCollID].mListDocuments()
+        cCollection = G.dID2Collection[mysCollID]
+        lTempDocIDs = cCollection.mListDocuments()
         for sDocID in lTempDocIDs:
             self.mAddDocument(sDocID,mysClientID)
         return mysCollID
@@ -188,10 +189,15 @@ class CShelf(object):
         TRC.tracef(3,"SHLF","proc mAddDocument made copy|%s| of doc|%s| from client|%s|" % (sCopyID,mysDocID,mysClientID))
 
         # Where does document go on this shelf.  Closed interval [Begin,End].
-        nBlkBegin = self.nCapacity - self.nFreeSpace
+#        nBlkBegin = self.nCapacity - self.nFreeSpace
+        # BZZZT: Never reuse space.  Any empty space in the area that 
+        # *used* to be occupied by documents has already been damaged
+        # and destroyed a document.  Do not reuse the space.  
+        nBlkBegin = self.nHiWater + 1
         self.nFreeSpace -= nSize
         nBlkEnd = nBlkBegin + nSize - 1
-        self.nHiWater = nBlkEnd         # Last block used.  
+        if nBlkEnd > self.nHiWater:
+            self.nHiWater = nBlkEnd         # Last block used.  
 #        sShelfID = self.ID
 #        sServerID = self.sServerID
         cCopy.mShelveCopy(self.sServerID,self.ID,nBlkBegin,nBlkEnd)
@@ -410,7 +416,9 @@ class CShelf(object):
         self.bContig = False
         cCopy = G.dID2Copy[mysCopyID]
         cDoc = G.dID2Document[cCopy.sDocID]
-        self.nFreeSpace += cDoc.nSize
+        # BZZZT: DO NOT put this region back into use.  It has already 
+        # suffered an error once and caused a document to fail.  
+        #self.nFreeSpace += cDoc.nSize
         TRC.tracef(3,"SHLF","proc mDestroyCopy remove doc|%s| copy|%s| idx|%d| size|%d| from shelf|%s| remainingdocs|%d| free|%d|" % (cCopy.sDocID,mysCopyID,nCopyIndex,cDoc.nSize,self.ID,len(self.lCopyIDs),self.nFreeSpace))
         return self.ID + "-" + cCopy.sDocID + "-" + mysCopyID
 

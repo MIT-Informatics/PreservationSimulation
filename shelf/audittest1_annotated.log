@@ -1,0 +1,1453 @@
+# Search for comment lines beginning with #, all added by RBL.  
+# Best viewed on a wide screen, like 120 chars wide.  
+# Also helps if the comment lines are syntax-highlighted.
+#
+# I designed this mess initially to be very general, to handle a
+# variety of clients, collections, quality requirements, servers, 
+# document sizes and such, all at once.  And I am sort of regretting
+# that now.  We are not using any of that generality at the moment.  
+# It gets in the way a little when coding, but it doesn't slow
+# things down measurably.  It does clutter the log files a bit, 
+# for which I apologize, but it does permit easier parameterization
+# across the range of situations we want to explore.  
+#
+# Through good random accidents, there are a number of cases here
+# that we have discussed, seriously or tangentially.  Good to see
+# them confirmed.  
+#
+# The version numbers on filenames here are only for fairly major
+# reconstructions where significant functions were added and 
+# probably endangered correct operation of previous versions.  
+# The run script picks up the latest versions of everything.  
+`client10.py' -> `client.py'
+`server12.py' -> `server.py'
+`util05.py' -> `util.py'
+`readin07.py' -> `readin.py'
+`main13.py' -> `main.py'
+`globaldata07.py' -> `globaldata.py'
+`logoutput07.py' -> `logoutput.py'
+`NewTraceFac08.py' -> `NewTraceFac.py'
+# repair.py isn't actually used.  All the functional code 
+# ended up in audit.py for obscure technical reasons.  
+# It will be removed.  
+`repair00.py' -> `repair.py'
+`cliparse06.py' -> `cliparse.py'
+`audit-01.py' -> `audit.py'
+20140707_113308 MAIN INFO - Simulation parameters
+# Command line arguments listed here.  
+20140707_113308 MAIN INFO - Command line|['q0', 'v2d50', '00', '1', '--ncopies=2', '--ber', '300000', '--audit=10000', '--bandwidth=10', '--shortlog=N']|
+20140707_113308 PARAMS INFO - familydir|q0| specificdir|v2d50|
+# Simulation length 100,000 hours = 11 years really, but call it 10.  
+# We always pretend that a year is 10,000 hours long rather than the actual 8765.
+# Astronomers have sidereal time; why can't we have bibliotheque (bibliotech?) time.  
+# One bibliotech year = 10,000 hours.  
+20140707_113308 PARAMS INFO - begin simulation seed|1| timelimit|100000|hr=|11|yr
+20140707_113308 PARAMS INFO - logfile|-| loglevel|INFO|
+# One client, one collection, quality 1, 10,000 documents
+20140707_113308 PARAMS INFO - CLIENT client|MIT| collection|Mags| quality|1| ndocs|10000|
+# All storage structures 10TB
+20140707_113308 PARAMS INFO - SERVER server|AWS Euro  Super Duper| quality|1| shelfsize|10|TB
+20140707_113308 PARAMS INFO - SERVER server|AWS Euro  Premium| quality|1| shelfsize|10|TB
+20140707_113308 PARAMS INFO - SERVER server|Amazon East Platinum| quality|1| shelfsize|10|TB
+20140707_113308 PARAMS INFO - SERVER server|Amazon East Premium| quality|1| shelfsize|10|TB
+20140707_113308 PARAMS INFO - SERVER server|Amazon West Plus| quality|1| shelfsize|10|TB
+20140707_113308 PARAMS INFO - SERVER server|AWS Euro  Plus| quality|1| shelfsize|10|TB
+20140707_113309 PARAMS INFO - SERVER server|OneDrive  Super Duper| quality|1| shelfsize|10|TB
+20140707_113309 PARAMS INFO - SERVER server|Amazon East Plus| quality|1| shelfsize|10|TB
+20140707_113309 PARAMS INFO - SERVER server|Google Drive Plus| quality|1| shelfsize|10|TB
+20140707_113309 PARAMS INFO - SERVER server|Amazon West Platinum| quality|1| shelfsize|10|TB
+20140707_113309 PARAMS INFO - SERVER server|Yet Another 4| quality|1| shelfsize|10|TB
+20140707_113309 PARAMS INFO - SERVER server|AWS Euro Vanilla| quality|1| shelfsize|10|TB
+20140707_113309 PARAMS INFO - SERVER server|Yet Another 2| quality|1| shelfsize|10|TB
+20140707_113309 PARAMS INFO - SERVER server|Yet Another 3| quality|1| shelfsize|10|TB
+20140707_113309 PARAMS INFO - SERVER server|Yet Another 1| quality|1| shelfsize|10|TB
+20140707_113309 PARAMS INFO - SERVER server|Amazon West| quality|1| shelfsize|10|TB
+20140707_113309 PARAMS INFO - SERVER server|AWS Euro  Platinum| quality|1| shelfsize|10|TB
+20140707_113309 PARAMS INFO - SERVER server|OneDrive Vanilla| quality|1| shelfsize|10|TB
+20140707_113309 PARAMS INFO - SERVER server|OneDrive  Platinum| quality|1| shelfsize|10|TB
+20140707_113309 PARAMS INFO - SERVER server|Google Drive| quality|1| shelfsize|10|TB
+20140707_113309 PARAMS INFO - SERVER server|OneDrive  Plus| quality|1| shelfsize|10|TB
+20140707_113309 PARAMS INFO - SERVER server|Amazon West Premium| quality|1| shelfsize|10|TB
+20140707_113309 PARAMS INFO - SERVER server|OneDrive  Premium| quality|1| shelfsize|10|TB
+20140707_113309 PARAMS INFO - SERVER server|Amazon East| quality|1| shelfsize|10|TB
+20140707_113309 PARAMS INFO - SERVER server|Google Drive Super Duper| quality|1| shelfsize|10|TB
+20140707_113309 PARAMS INFO - SERVER server|Amazon East Super Duper| quality|1| shelfsize|10|TB
+20140707_113309 PARAMS INFO - SERVER server|Google Drive Premium| quality|1| shelfsize|10|TB
+20140707_113309 PARAMS INFO - SERVER server|Google Drive Platinum| quality|1| shelfsize|10|TB
+20140707_113309 PARAMS INFO - SERVER server|Yet Another 5| quality|1| shelfsize|10|TB
+20140707_113309 PARAMS INFO - SERVER server|Amazon West Super Duper| quality|1| shelfsize|10|TB
+# Sector mean lifetime for quality 1 = 300K kilo-hours = 300 mega-hours = ridiculous 34,000 years.
+# The lifetime constant for shelf failure is set high enough that it never happens (10 mega-years).  
+20140707_113309 PARAMS INFO - SHELF quality|1| smallfailrate|300000|Khr=|34223|yr shelffailrate|100000000|Khr=|11407711|yr
+20140707_113309 PARAMS INFO - SHELF quality|2| smallfailrate|1000|Khr=|114|yr shelffailrate|200000000|Khr=|22815423|yr
+20140707_113309 PARAMS INFO - SHELF quality|3| smallfailrate|2000|Khr=|228|yr shelffailrate|400000000|Khr=|45630846|yr
+20140707_113309 PARAMS INFO - SHELF quality|4| smallfailrate|3000|Khr=|342|yr shelffailrate|800000000|Khr=|91261692|yr
+20140707_113309 PARAMS INFO - SHELF quality|5| smallfailrate|5000|Khr=|570|yr shelffailrate|1600000000|Khr=|182523385|yr
+# For quality 1, make two copies of doc on separate servers
+20140707_113309 PARAMS INFO - DISTRIBUTION value|1| quality|1| copies|2|
+20140707_113309 PARAMS INFO - DISTRIBUTION value|2| quality|2| copies|4|
+20140707_113309 PARAMS INFO - DISTRIBUTION value|3| quality|3| copies|3|
+20140707_113309 PARAMS INFO - DISTRIBUTION value|4| quality|4| copies|2|
+20140707_113309 PARAMS INFO - DISTRIBUTION value|5| quality|5| copies|1|
+# Fixed document size for quality 1 docs is 50MB for 100% of docs.  
+20140707_113309 PARAMS INFO - DOCUMENT value|1| percent|100| meanMB|50| sd|0|
+20140707_113309 PARAMS INFO - DOCUMENT value|1| percent|0| meanMB|5000| sd|2000|
+20140707_113309 PARAMS INFO - DOCUMENT value|2| percent|50| meanMB|5| sd|2|
+20140707_113309 PARAMS INFO - DOCUMENT value|2| percent|50| meanMB|5000| sd|2000|
+20140707_113309 PARAMS INFO - DOCUMENT value|3| percent|50| meanMB|5| sd|2|
+20140707_113309 PARAMS INFO - DOCUMENT value|3| percent|50| meanMB|5000| sd|2000|
+20140707_113309 PARAMS INFO - DOCUMENT value|4| percent|50| meanMB|5| sd|2|
+20140707_113309 PARAMS INFO - DOCUMENT value|4| percent|50| meanMB|5000| sd|2000|
+20140707_113309 PARAMS INFO - DOCUMENT value|5| percent|50| meanMB|5| sd|2|
+20140707_113309 PARAMS INFO - DOCUMENT value|5| percent|50| meanMB|5000| sd|2000|
+# Auditing turned on, 10,000 hour intervals, low bandwidth.  (Auditing off if interval = 0.)
+20140707_113309 PARAMS INFO - AUDIT interval hours|10000| bandwidth Mbps|10|
+20140707_113309 MAIN INFO - created server|L1| quality|1| shelfsize|10|TB name|AWS Euro  Super Duper|
+20140707_113309 MAIN INFO - created server|L2| quality|1| shelfsize|10|TB name|AWS Euro  Premium|
+20140707_113309 MAIN INFO - created server|L3| quality|1| shelfsize|10|TB name|Amazon East Platinum|
+20140707_113309 MAIN INFO - created server|L4| quality|1| shelfsize|10|TB name|Amazon East Premium|
+20140707_113309 MAIN INFO - created server|L5| quality|1| shelfsize|10|TB name|Amazon West Plus|
+20140707_113309 MAIN INFO - created server|L6| quality|1| shelfsize|10|TB name|AWS Euro  Plus|
+20140707_113309 MAIN INFO - created server|L7| quality|1| shelfsize|10|TB name|OneDrive  Super Duper|
+20140707_113309 MAIN INFO - created server|L8| quality|1| shelfsize|10|TB name|Amazon East Plus|
+20140707_113309 MAIN INFO - created server|L9| quality|1| shelfsize|10|TB name|Google Drive Plus|
+20140707_113309 MAIN INFO - created server|L10| quality|1| shelfsize|10|TB name|Amazon West Platinum|
+20140707_113309 MAIN INFO - created server|L11| quality|1| shelfsize|10|TB name|Yet Another 4|
+20140707_113309 MAIN INFO - created server|L12| quality|1| shelfsize|10|TB name|AWS Euro Vanilla|
+20140707_113309 MAIN INFO - created server|L13| quality|1| shelfsize|10|TB name|Yet Another 2|
+20140707_113309 MAIN INFO - created server|L14| quality|1| shelfsize|10|TB name|Yet Another 3|
+20140707_113309 MAIN INFO - created server|L15| quality|1| shelfsize|10|TB name|Yet Another 1|
+20140707_113309 MAIN INFO - created server|L16| quality|1| shelfsize|10|TB name|Amazon West|
+20140707_113309 MAIN INFO - created server|L17| quality|1| shelfsize|10|TB name|AWS Euro  Platinum|
+20140707_113309 MAIN INFO - created server|L18| quality|1| shelfsize|10|TB name|OneDrive Vanilla|
+20140707_113309 MAIN INFO - created server|L19| quality|1| shelfsize|10|TB name|OneDrive  Platinum|
+20140707_113309 MAIN INFO - created server|L20| quality|1| shelfsize|10|TB name|Google Drive|
+20140707_113309 MAIN INFO - created server|L21| quality|1| shelfsize|10|TB name|OneDrive  Plus|
+20140707_113309 MAIN INFO - created server|L22| quality|1| shelfsize|10|TB name|Amazon West Premium|
+20140707_113309 MAIN INFO - created server|L23| quality|1| shelfsize|10|TB name|OneDrive  Premium|
+20140707_113309 MAIN INFO - created server|L24| quality|1| shelfsize|10|TB name|Amazon East|
+20140707_113309 MAIN INFO - created server|L25| quality|1| shelfsize|10|TB name|Google Drive Super Duper|
+20140707_113309 MAIN INFO - created server|L26| quality|1| shelfsize|10|TB name|Amazon East Super Duper|
+20140707_113309 MAIN INFO - created server|L27| quality|1| shelfsize|10|TB name|Google Drive Premium|
+20140707_113309 MAIN INFO - created server|L28| quality|1| shelfsize|10|TB name|Google Drive Platinum|
+20140707_113309 MAIN INFO - created server|L29| quality|1| shelfsize|10|TB name|Yet Another 5|
+20140707_113309 MAIN INFO - created server|L30| quality|1| shelfsize|10|TB name|Amazon West Super Duper|
+20140707_113309 SERVER INFO - server |L1| created storage shelf|H01| quality|1| size|10000000|MB
+20140707_113309 CLIENT INFO - client|T1| placed collection|C1| to server|L1|
+20140707_113309 SERVER INFO - server |L2| created storage shelf|H02| quality|1| size|10000000|MB
+20140707_113309 CLIENT INFO - client|T1| placed collection|C1| to server|L2|
+20140707_113309 MAIN INFO - created client|T1|
+# Note that 10K docs fill only a few percent of the smallish 10TB storage structure,
+# so almost all errors will occur in empty space.
+20140707_113309 MAIN INFO - SERVERUSE shelf|L1-H01| qual|1| size|10000000| hiwater|500001| currentuse|500000| full%|5|
+20140707_113309 MAIN INFO - SERVERUSE shelf|L2-H02| qual|1| size|10000000| hiwater|500001| currentuse|500000| full%|5|
+20140707_113309 MAIN INFO - begin run
+20140707_113309 SERVER INFO - small error t|    10| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113309 SERVER INFO - small error t|    20| svr|L1| shelf|H01| hidden failure in copy|None|
+# The log is already severely compressed by eliminating almost all the misses 
+# (i.e., errors in empty sectors).  
+20140707_113309 SERVER INFO - small error t|   349| svr|L2| shelf|H02| consecutive misses|10|
+20140707_113309 SERVER INFO - small error t|   349| svr|L2| shelf|H02| hidden failure in copy|X15837| doc|D5837|
+20140707_113309 SERVER INFO - small error t|   359| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113309 SERVER INFO - small error t|   771| svr|L2| shelf|H02| consecutive misses|20|
+20140707_113309 SERVER INFO - small error t|   771| svr|L2| shelf|H02| hidden failure in copy|X15485| doc|D5485|
+20140707_113309 SERVER INFO - small error t|   783| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113309 SERVER INFO - small error t|   813| svr|L1| shelf|H01| consecutive misses|23|
+20140707_113309 SERVER INFO - small error t|   813| svr|L1| shelf|H01| hidden failure in copy|X89| doc|D89|
+20140707_113309 SERVER INFO - small error t|   847| svr|L1| shelf|H01| hidden failure in copy|X783| doc|D783|
+20140707_113309 SERVER INFO - small error t|   854| svr|L2| shelf|H02| consecutive misses|2|
+20140707_113310 SERVER INFO - small error t|   854| svr|L2| shelf|H02| hidden failure in copy|X15285| doc|D5285|
+20140707_113310 SERVER INFO - small error t|   878| svr|L2| shelf|H02| hidden failure in copy|X19696| doc|D9696|
+20140707_113310 SERVER INFO - small error t|   907| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113310 SERVER INFO - small error t|   916| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113310 SERVER INFO - small error t|   927| svr|L2| shelf|H02| consecutive misses|1|
+20140707_113310 SERVER INFO - small error t|   927| svr|L2| shelf|H02| hidden failure in copy|X13387| doc|D3387|
+20140707_113310 SERVER INFO - small error t|   929| svr|L1| shelf|H01| consecutive misses|1|
+20140707_113310 SERVER INFO - small error t|   929| svr|L1| shelf|H01| hidden failure in copy|X6231| doc|D6231|
+20140707_113310 SERVER INFO - small error t|   972| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113310 SERVER INFO - small error t|  1018| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113310 SERVER INFO - small error t|  1415| svr|L1| shelf|H01| consecutive misses|13|
+20140707_113310 SERVER INFO - small error t|  1415| svr|L1| shelf|H01| hidden failure in copy|X2392| doc|D2392|
+20140707_113310 SERVER INFO - small error t|  1479| svr|L1| shelf|H01| hidden failure in copy|X7503| doc|D7503|
+20140707_113310 SERVER INFO - small error t|  1595| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113310 SERVER INFO - small error t|  1959| svr|L1| shelf|H01| consecutive misses|10|
+20140707_113310 SERVER INFO - small error t|  1959| svr|L1| shelf|H01| hidden failure in copy|X623| doc|D623|
+20140707_113310 SERVER INFO - small error t|  2043| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113310 SERVER INFO - small error t|  2048| svr|L2| shelf|H02| consecutive misses|24|
+20140707_113310 SERVER INFO - small error t|  2048| svr|L2| shelf|H02| hidden failure in copy|X19762| doc|D9762|
+20140707_113310 SERVER INFO - small error t|  2069| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113310 SERVER INFO - small error t|  2197| svr|L2| shelf|H02| consecutive misses|4|
+20140707_113310 SERVER INFO - small error t|  2197| svr|L2| shelf|H02| hidden failure in copy|X18895| doc|D8895|
+20140707_113310 SERVER INFO - small error t|  2208| svr|L1| shelf|H01| consecutive misses|8|
+20140707_113310 SERVER INFO - small error t|  2208| svr|L1| shelf|H01| hidden failure in copy|X2799| doc|D2799|
+20140707_113310 SERVER INFO - small error t|  2213| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113310 SERVER INFO - small error t|  2221| svr|L2| shelf|H02| hidden failure in copy|X10288| doc|D288|
+20140707_113310 SERVER INFO - small error t|  2241| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113310 SERVER INFO - small error t|  2505| svr|L2| shelf|H02| consecutive misses|4|
+20140707_113310 SERVER INFO - small error t|  2505| svr|L2| shelf|H02| hidden failure in copy|X15131| doc|D5131|
+20140707_113310 SERVER INFO - small error t|  2518| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113310 SERVER INFO - small error t|  3128| svr|L2| shelf|H02| consecutive misses|25|
+20140707_113310 SERVER INFO - small error t|  3128| svr|L2| shelf|H02| hidden failure in copy|X18190| doc|D8190|
+20140707_113310 SERVER INFO - small error t|  3170| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113310 SERVER INFO - small error t|  3212| svr|L1| shelf|H01| consecutive misses|30|
+20140707_113310 SERVER INFO - small error t|  3212| svr|L1| shelf|H01| hidden failure in copy|X7462| doc|D7462|
+20140707_113310 SERVER INFO - small error t|  3215| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113310 SERVER INFO - small error t|  3791| svr|L1| shelf|H01| consecutive misses|20|
+20140707_113310 SERVER INFO - small error t|  3791| svr|L1| shelf|H01| hidden failure in copy|X9107| doc|D9107|
+20140707_113310 SERVER INFO - small error t|  3805| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113310 SERVER INFO - small error t|  4005| svr|L1| shelf|H01| consecutive misses|8|
+20140707_113310 SERVER INFO - small error t|  4005| svr|L1| shelf|H01| hidden failure in copy|X5007| doc|D5007|
+20140707_113310 SERVER INFO - small error t|  4008| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113310 SERVER INFO - small error t|  4267| svr|L2| shelf|H02| consecutive misses|32|
+20140707_113310 SERVER INFO - small error t|  4267| svr|L2| shelf|H02| hidden failure in copy|X16521| doc|D6521|
+20140707_113310 SERVER INFO - small error t|  4274| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113310 SERVER INFO - small error t|  4479| svr|L2| shelf|H02| consecutive misses|11|
+20140707_113310 SERVER INFO - small error t|  4479| svr|L2| shelf|H02| hidden failure in copy|X11318| doc|D1318|
+20140707_113310 SERVER INFO - small error t|  4591| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113310 SERVER INFO - small error t|  4884| svr|L1| shelf|H01| consecutive misses|30|
+20140707_113310 SERVER INFO - small error t|  4884| svr|L1| shelf|H01| hidden failure in copy|X6200| doc|D6200|
+20140707_113310 SERVER INFO - small error t|  4895| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113310 SERVER INFO - small error t|  5111| svr|L2| shelf|H02| consecutive misses|24|
+20140707_113310 SERVER INFO - small error t|  5111| svr|L2| shelf|H02| hidden failure in copy|X10657| doc|D657|
+20140707_113310 SERVER INFO - small error t|  5124| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113310 SERVER INFO - small error t|  5367| svr|L1| shelf|H01| consecutive misses|12|
+20140707_113310 SERVER INFO - small error t|  5367| svr|L1| shelf|H01| hidden failure in copy|X4050| doc|D4050|
+20140707_113310 SERVER INFO - small error t|  5377| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113310 SERVER INFO - small error t|  5419| svr|L1| shelf|H01| consecutive misses|6|
+20140707_113310 SERVER INFO - small error t|  5419| svr|L1| shelf|H01| hidden failure in copy|X9059| doc|D9059|
+20140707_113310 SERVER INFO - small error t|  5432| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113310 SERVER INFO - small error t|  5637| svr|L1| shelf|H01| consecutive misses|8|
+20140707_113310 SERVER INFO - small error t|  5637| svr|L1| shelf|H01| hidden failure in copy|X982| doc|D982|
+20140707_113310 SERVER INFO - small error t|  5639| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113310 SERVER INFO - small error t|  5685| svr|L1| shelf|H01| consecutive misses|3|
+20140707_113310 SERVER INFO - small error t|  5685| svr|L1| shelf|H01| hidden failure in copy|X7569| doc|D7569|
+20140707_113310 SERVER INFO - small error t|  5691| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113310 SERVER INFO - small error t|  6222| svr|L1| shelf|H01| consecutive misses|15|
+20140707_113310 SERVER INFO - small error t|  6222| svr|L1| shelf|H01| hidden failure in copy|X2347| doc|D2347|
+20140707_113310 SERVER INFO - small error t|  6244| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113310 SERVER INFO - small error t|  6272| svr|L2| shelf|H02| consecutive misses|39|
+20140707_113310 SERVER INFO - small error t|  6272| svr|L2| shelf|H02| hidden failure in copy|X18879| doc|D8879|
+20140707_113310 SERVER INFO - small error t|  6295| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113310 SERVER INFO - small error t|  6545| svr|L2| shelf|H02| consecutive misses|9|
+20140707_113310 SERVER INFO - small error t|  6545| svr|L2| shelf|H02| hidden failure in copy|X19136| doc|D9136|
+20140707_113310 SERVER INFO - small error t|  6555| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113310 SERVER INFO - small error t|  6560| svr|L1| shelf|H01| consecutive misses|7|
+20140707_113310 SERVER INFO - small error t|  6560| svr|L1| shelf|H01| hidden failure in copy|X1218| doc|D1218|
+20140707_113310 SERVER INFO - small error t|  6609| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113310 SERVER INFO - small error t|  7409| svr|L2| shelf|H02| consecutive misses|25|
+20140707_113310 SERVER INFO - small error t|  7409| svr|L2| shelf|H02| hidden failure in copy|X13926| doc|D3926|
+20140707_113310 SERVER INFO - small error t|  7465| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113310 SERVER INFO - small error t|  8376| svr|L2| shelf|H02| consecutive misses|32|
+20140707_113310 SERVER INFO - small error t|  8376| svr|L2| shelf|H02| hidden failure in copy|X18066| doc|D8066|
+20140707_113310 SERVER INFO - small error t|  8389| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113310 SERVER INFO - small error t|  8391| svr|L1| shelf|H01| consecutive misses|46|
+20140707_113310 SERVER INFO - small error t|  8391| svr|L1| shelf|H01| hidden failure in copy|X8412| doc|D8412|
+20140707_113310 SERVER INFO - small error t|  8417| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113310 SERVER INFO - small error t|  8686| svr|L1| shelf|H01| consecutive misses|11|
+20140707_113310 SERVER INFO - small error t|  8686| svr|L1| shelf|H01| hidden failure in copy|X5803| doc|D5803|
+20140707_113310 SERVER INFO - small error t|  8742| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113310 SERVER INFO - small error t|  8823| svr|L1| shelf|H01| consecutive misses|3|
+20140707_113310 SERVER INFO - small error t|  8823| svr|L1| shelf|H01| hidden failure in copy|X2355| doc|D2355|
+20140707_113310 SERVER INFO - small error t|  8824| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113310 SERVER INFO - small error t| 10020| svr|L1| shelf|H01| consecutive misses|45|
+20140707_113310 SERVER INFO - small error t| 10020| svr|L1| shelf|H01| hidden failure in copy|X8055| doc|D8055|
+20140707_113310 SERVER INFO - small error t| 10030| svr|L1| shelf|H01| hidden failure in copy|None|
+# Audit cycle A2 for Server L2 begins at 10K hours plus small random interval.
+20140707_113310 AUDIT INFO - begin cycle t|10191.000| auditid|A2| cli|T1| coll|C1 svr|L2|
+20140707_113310 AUDIT INFO - repair doc  t|10195.000| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D288| rprhr|0.013889|
+# Audit cycle A1 for server L1 begins at 10K hours plus small random interval, too.  
+# Unfortunately, the two random intervals are close together, only 8 hours apart, 
+# so Audit A1 for Server L1 will have to wait.  
+# Currently the random offsets are fixed at the beginning and don't change, 
+# so the same conflict will occur every time.  
+20140707_113310 AUDIT INFO - begin cycle t|10199.000| auditid|A1| cli|T1| coll|C1 svr|L1|
+# Audit cycle A2 proceeds without interruption until done.
+20140707_113310 AUDIT INFO - repair doc  t|10200.125| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D657| rprhr|0.013889|
+20140707_113310 AUDIT INFO - repair doc  t|10209.306| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D1318| rprhr|0.013889|
+20140707_113310 AUDIT INFO - repair doc  t|10238.042| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D3387| rprhr|0.013889|
+20140707_113310 AUDIT INFO - repair doc  t|10245.528| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D3926| rprhr|0.013889|
+20140707_113310 AUDIT INFO - repair doc  t|10262.264| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D5131| rprhr|0.013889|
+20140707_113310 AUDIT INFO - repair doc  t|10264.403| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D5285| rprhr|0.013889|
+20140707_113310 AUDIT INFO - repair doc  t|10267.181| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D5485| rprhr|0.013889|
+20140707_113310 AUDIT INFO - repair doc  t|10272.069| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D5837| rprhr|0.013889|
+20140707_113310 AUDIT INFO - repair doc  t|10281.569| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D6521| rprhr|0.013889|
+20140707_113310 AUDIT INFO - repair doc  t|10303.028| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D8066| rprhr|0.013889|
+20140707_113310 AUDIT INFO - repair doc  t|10304.750| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D8190| rprhr|0.013889|
+20140707_113310 AUDIT INFO - repair doc  t|10314.319| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D8879| rprhr|0.013889|
+20140707_113310 AUDIT INFO - repair doc  t|10314.542| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D8895| rprhr|0.013889|
+20140707_113310 AUDIT INFO - repair doc  t|10317.889| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D9136| rprhr|0.013889|
+20140707_113310 AUDIT INFO - repair doc  t|10325.667| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D9696| rprhr|0.013889|
+20140707_113310 AUDIT INFO - repair doc  t|10326.583| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D9762| rprhr|0.013889|
+# Audit A2 repaired the 17 docs that had been lost in the first 10,191 hours.
+# The duration of the audit is exactly (ndocs * docsize / bandwidth), because
+# every doc is either read or written once.  Duration = 139 hours at this low bandwidth.
+20140707_113310 AUDIT INFO - end cycle   t|10329.889| auditid|A2| cli|T1| coll|C1 svr|L2| repairs|17| total|17| duration|  138.889|
+# Audit A1 can now proceed after A2 releases the network resource lock.
+20140707_113310 AUDIT INFO - waitnetwork t|10329.889| auditid|A1| cli|T1| coll|C1 svr|L1| delay|  130.889|
+20140707_113310 AUDIT INFO - repair doc  t|10331.125| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D89| rprhr|0.013889|
+20140707_113310 AUDIT INFO - repair doc  t|10338.542| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D623| rprhr|0.013889|
+20140707_113310 AUDIT INFO - repair doc  t|10340.764| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D783| rprhr|0.013889|
+20140707_113311 AUDIT INFO - repair doc  t|10343.528| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D982| rprhr|0.013889|
+20140707_113311 AUDIT INFO - repair doc  t|10346.806| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D1218| rprhr|0.013889|
+20140707_113311 AUDIT INFO - repair doc  t|10362.486| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D2347| rprhr|0.013889|
+20140707_113311 AUDIT INFO - repair doc  t|10362.597| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D2355| rprhr|0.013889|
+20140707_113311 AUDIT INFO - repair doc  t|10363.111| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D2392| rprhr|0.013889|
+20140707_113311 AUDIT INFO - repair doc  t|10368.764| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D2799| rprhr|0.013889|
+20140707_113311 AUDIT INFO - repair doc  t|10386.139| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D4050| rprhr|0.013889|
+20140707_113311 AUDIT INFO - repair doc  t|10399.431| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D5007| rprhr|0.013889|
+20140707_113311 AUDIT INFO - repair doc  t|10410.486| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D5803| rprhr|0.013889|
+20140707_113311 AUDIT INFO - repair doc  t|10416.000| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D6200| rprhr|0.013889|
+20140707_113311 AUDIT INFO - repair doc  t|10416.431| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D6231| rprhr|0.013889|
+20140707_113311 AUDIT INFO - repair doc  t|10433.528| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D7462| rprhr|0.013889|
+20140707_113311 AUDIT INFO - repair doc  t|10434.097| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D7503| rprhr|0.013889|
+20140707_113311 AUDIT INFO - repair doc  t|10435.014| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D7569| rprhr|0.013889|
+20140707_113311 AUDIT INFO - repair doc  t|10441.764| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D8055| rprhr|0.013889|
+20140707_113311 AUDIT INFO - repair doc  t|10446.722| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D8412| rprhr|0.013889|
+20140707_113311 AUDIT INFO - repair doc  t|10455.708| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D9059| rprhr|0.013889|
+20140707_113311 AUDIT INFO - repair doc  t|10456.375| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D9107| rprhr|0.013889|
+# Audit A1 finishes, having replaced 21 docs lost in the first sort-of-year.  
+20140707_113311 AUDIT INFO - end cycle   t|10468.778| auditid|A1| cli|T1| coll|C1 svr|L1| repairs|21| total|21| duration|  138.889|
+20140707_113311 SERVER INFO - small error t| 10520| svr|L2| shelf|H02| consecutive misses|77|
+20140707_113311 SERVER INFO - small error t| 10520| svr|L2| shelf|H02| hidden failure in copy|X18448| doc|D8448|
+20140707_113311 SERVER INFO - small error t| 10626| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113311 SERVER INFO - small error t| 10662| svr|L1| shelf|H01| consecutive misses|27|
+20140707_113311 SERVER INFO - small error t| 10662| svr|L1| shelf|H01| hidden failure in copy|X1902| doc|D1902|
+20140707_113311 SERVER INFO - small error t| 10672| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113311 SERVER INFO - small error t| 10856| svr|L1| shelf|H01| consecutive misses|6|
+20140707_113311 SERVER INFO - small error t| 10856| svr|L1| shelf|H01| hidden failure in copy|X4654| doc|D4654|
+20140707_113311 SERVER INFO - small error t| 10882| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113311 SERVER INFO - small error t| 11161| svr|L1| shelf|H01| consecutive misses|8|
+20140707_113311 SERVER INFO - small error t| 11161| svr|L1| shelf|H01| hidden failure in copy|X575| doc|D575|
+20140707_113311 SERVER INFO - small error t| 11204| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113311 SERVER INFO - small error t| 11668| svr|L1| shelf|H01| consecutive misses|5|
+20140707_113311 SERVER INFO - small error t| 11668| svr|L1| shelf|H01| hidden failure in copy|X4832| doc|D4832|
+20140707_113311 SERVER INFO - small error t| 11765| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113311 SERVER INFO - small error t| 12188| svr|L2| shelf|H02| consecutive misses|48|
+20140707_113311 SERVER INFO - small error t| 12188| svr|L2| shelf|H02| hidden failure in copy|X17360| doc|D7360|
+20140707_113311 SERVER INFO - small error t| 12192| svr|L1| shelf|H01| consecutive misses|16|
+20140707_113311 SERVER INFO - small error t| 12192| svr|L1| shelf|H01| hidden failure in copy|X8473| doc|D8473|
+20140707_113311 SERVER INFO - small error t| 12223| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113311 SERVER INFO - small error t| 12228| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113311 SERVER INFO - small error t| 13162| svr|L2| shelf|H02| consecutive misses|31|
+20140707_113311 SERVER INFO - small error t| 13162| svr|L2| shelf|H02| hidden failure in copy|X19565| doc|D9565|
+20140707_113311 SERVER INFO - small error t| 13191| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113311 SERVER INFO - small error t| 13817| svr|L1| shelf|H01| consecutive misses|44|
+20140707_113311 SERVER INFO - small error t| 13817| svr|L1| shelf|H01| hidden failure in copy|X9892| doc|D9892|
+20140707_113311 SERVER INFO - small error t| 13841| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113311 SERVER INFO - small error t| 14788| svr|L2| shelf|H02| consecutive misses|57|
+20140707_113311 SERVER INFO - small error t| 14788| svr|L2| shelf|H02| hidden failure in copy|X10106| doc|D106|
+20140707_113311 SERVER INFO - small error t| 14802| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113311 SERVER INFO - small error t| 14874| svr|L1| shelf|H01| consecutive misses|39|
+20140707_113311 SERVER INFO - small error t| 14874| svr|L1| shelf|H01| hidden failure in copy|X3293| doc|D3293|
+20140707_113311 SERVER INFO - small error t| 14904| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113311 SERVER INFO - small error t| 15031| svr|L1| shelf|H01| consecutive misses|4|
+20140707_113311 SERVER INFO - small error t| 15031| svr|L1| shelf|H01| hidden failure in copy|X4482| doc|D4482|
+20140707_113311 SERVER INFO - small error t| 15079| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113311 SERVER INFO - small error t| 15079| svr|L1| shelf|H01| consecutive misses|1|
+20140707_113311 SERVER INFO - small error t| 15079| svr|L1| shelf|H01| hidden failure in copy|X1976| doc|D1976|
+20140707_113311 SERVER INFO - small error t| 15081| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113311 SERVER INFO - small error t| 15267| svr|L1| shelf|H01| consecutive misses|8|
+20140707_113311 SERVER INFO - small error t| 15267| svr|L1| shelf|H01| hidden failure in copy|X3375| doc|D3375|
+20140707_113311 SERVER INFO - small error t| 15268| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113311 SERVER INFO - small error t| 15813| svr|L2| shelf|H02| consecutive misses|35|
+20140707_113311 SERVER INFO - small error t| 15813| svr|L2| shelf|H02| hidden failure in copy|X10230| doc|D230|
+20140707_113311 SERVER INFO - small error t| 15819| svr|L2| shelf|H02| hidden failure in copy|X11360| doc|D1360|
+20140707_113311 SERVER INFO - small error t| 15821| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113311 SERVER INFO - small error t| 16754| svr|L1| shelf|H01| consecutive misses|38|
+20140707_113311 SERVER INFO - small error t| 16754| svr|L1| shelf|H01| hidden failure in copy|X4513| doc|D4513|
+20140707_113311 SERVER INFO - small error t| 16763| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113311 SERVER INFO - small error t| 16857| svr|L1| shelf|H01| consecutive misses|5|
+20140707_113311 SERVER INFO - small error t| 16857| svr|L1| shelf|H01| hidden failure in copy|X382| doc|D382|
+20140707_113311 SERVER INFO - small error t| 16882| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113311 SERVER INFO - small error t| 16949| svr|L1| shelf|H01| consecutive misses|2|
+20140707_113311 SERVER INFO - small error t| 16949| svr|L1| shelf|H01| hidden failure in copy|X4055| doc|D4055|
+20140707_113311 SERVER INFO - small error t| 16964| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113311 SERVER INFO - small error t| 17037| svr|L1| shelf|H01| consecutive misses|5|
+20140707_113311 SERVER INFO - small error t| 17037| svr|L1| shelf|H01| hidden failure in copy|X6253| doc|D6253|
+20140707_113311 SERVER INFO - small error t| 17042| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113311 SERVER INFO - small error t| 17260| svr|L1| shelf|H01| consecutive misses|9|
+20140707_113311 SERVER INFO - small error t| 17260| svr|L1| shelf|H01| hidden failure in copy|X2748| doc|D2748|
+20140707_113311 SERVER INFO - small error t| 17267| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113311 SERVER INFO - small error t| 17443| svr|L1| shelf|H01| consecutive misses|2|
+20140707_113311 SERVER INFO - small error t| 17443| svr|L1| shelf|H01| hidden failure in copy|X5727| doc|D5727|
+20140707_113311 SERVER INFO - small error t| 17529| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113311 SERVER INFO - small error t| 17558| svr|L2| shelf|H02| consecutive misses|59|
+20140707_113311 SERVER INFO - small error t| 17558| svr|L2| shelf|H02| hidden failure in copy|X19505| doc|D9505|
+20140707_113311 SERVER INFO - small error t| 17595| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113311 SERVER INFO - small error t| 17879| svr|L1| shelf|H01| consecutive misses|11|
+20140707_113311 SERVER INFO - small error t| 17879| svr|L1| shelf|H01| hidden failure in copy|X4163| doc|D4163|
+20140707_113311 SERVER INFO - small error t| 17908| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113311 SERVER INFO - small error t| 18146| svr|L1| shelf|H01| consecutive misses|14|
+20140707_113311 SERVER INFO - small error t| 18146| svr|L1| shelf|H01| hidden failure in copy|X2993| doc|D2993|
+20140707_113311 SERVER INFO - small error t| 18202| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113311 SERVER INFO - small error t| 18207| svr|L2| shelf|H02| consecutive misses|25|
+20140707_113311 SERVER INFO - small error t| 18207| svr|L2| shelf|H02| hidden failure in copy|X17893| doc|D7893|
+20140707_113311 SERVER INFO - small error t| 18232| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113311 SERVER INFO - small error t| 18645| svr|L2| shelf|H02| consecutive misses|13|
+20140707_113311 SERVER INFO - small error t| 18645| svr|L2| shelf|H02| hidden failure in copy|X13475| doc|D3475|
+20140707_113311 SERVER INFO - small error t| 18727| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113311 SERVER INFO - small error t| 19255| svr|L1| shelf|H01| consecutive misses|32|
+20140707_113311 SERVER INFO - small error t| 19255| svr|L1| shelf|H01| hidden failure in copy|X2349| doc|D2349|
+20140707_113311 SERVER INFO - small error t| 19258| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113311 SERVER INFO - small error t| 19624| svr|L2| shelf|H02| consecutive misses|30|
+20140707_113311 SERVER INFO - small error t| 19624| svr|L2| shelf|H02| hidden failure in copy|X14765| doc|D4765|
+20140707_113311 SERVER INFO - small error t| 19639| svr|L2| shelf|H02| hidden failure in copy|None|
+# Another audit cycle begins.
+20140707_113311 AUDIT INFO - begin cycle t|20191.000| auditid|A2| cli|T1| coll|C1 svr|L2|
+20140707_113311 AUDIT INFO - repair doc  t|20192.472| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D106| rprhr|0.013889|
+20140707_113311 AUDIT INFO - repair doc  t|20194.194| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D230| rprhr|0.013889|
+# And the second audit process will have to wait for the network to be freed.  
+20140707_113311 AUDIT INFO - begin cycle t|20199.000| auditid|A1| cli|T1| coll|C1 svr|L1|
+20140707_113311 AUDIT INFO - repair doc  t|20209.889| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D1360| rprhr|0.013889|
+20140707_113312 AUDIT INFO - repair doc  t|20239.264| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D3475| rprhr|0.013889|
+20140707_113312 AUDIT INFO - repair doc  t|20257.181| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D4765| rprhr|0.013889|
+20140707_113312 SERVER INFO - small error t| 20272| svr|L1| shelf|H01| consecutive misses|36|
+# An error occurs asynchronously on Server L1 while Server L2 is being audited. 
+# (The error generation and auditing processes are all separate, for each shelf 
+# storage structure and each audit of a server.)
+# The audit of L1 will pick this up (doc 8634) when it comes around again on the guitar.  
+20140707_113312 SERVER INFO - small error t| 20272| svr|L1| shelf|H01| hidden failure in copy|X8634| doc|D8634|
+20140707_113312 SERVER INFO - small error t| 20287| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113312 AUDIT INFO - repair doc  t|20293.222| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D7360| rprhr|0.013889|
+20140707_113312 AUDIT INFO - repair doc  t|20300.625| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D7893| rprhr|0.013889|
+20140707_113312 AUDIT INFO - repair doc  t|20308.333| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D8448| rprhr|0.013889|
+20140707_113312 AUDIT INFO - repair doc  t|20323.014| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D9505| rprhr|0.013889|
+20140707_113312 AUDIT INFO - repair doc  t|20323.847| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D9565| rprhr|0.013889|
+20140707_113312 AUDIT INFO - end cycle   t|20329.889| auditid|A2| cli|T1| coll|C1 svr|L2| repairs|10| total|27| duration|  138.889|
+20140707_113312 AUDIT INFO - waitnetwork t|20329.889| auditid|A1| cli|T1| coll|C1 svr|L1| delay|  130.889|
+20140707_113312 AUDIT INFO - repair doc  t|20335.194| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D382| rprhr|0.013889|
+20140707_113312 AUDIT INFO - repair doc  t|20337.875| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D575| rprhr|0.013889|
+20140707_113312 AUDIT INFO - repair doc  t|20356.306| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D1902| rprhr|0.013889|
+20140707_113312 AUDIT INFO - repair doc  t|20357.333| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D1976| rprhr|0.013889|
+20140707_113312 AUDIT INFO - repair doc  t|20362.514| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D2349| rprhr|0.013889|
+20140707_113312 AUDIT INFO - repair doc  t|20368.056| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D2748| rprhr|0.013889|
+20140707_113312 AUDIT INFO - repair doc  t|20371.458| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D2993| rprhr|0.013889|
+20140707_113312 AUDIT INFO - repair doc  t|20375.625| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D3293| rprhr|0.013889|
+20140707_113312 AUDIT INFO - repair doc  t|20376.764| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D3375| rprhr|0.013889|
+20140707_113313 AUDIT INFO - repair doc  t|20386.208| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D4055| rprhr|0.013889|
+20140707_113313 AUDIT INFO - repair doc  t|20387.708| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D4163| rprhr|0.013889|
+20140707_113313 AUDIT INFO - repair doc  t|20392.139| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D4482| rprhr|0.013889|
+20140707_113313 AUDIT INFO - repair doc  t|20392.569| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D4513| rprhr|0.013889|
+20140707_113313 AUDIT INFO - repair doc  t|20394.528| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D4654| rprhr|0.013889|
+20140707_113313 AUDIT INFO - repair doc  t|20397.000| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D4832| rprhr|0.013889|
+20140707_113313 AUDIT INFO - repair doc  t|20409.431| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D5727| rprhr|0.013889|
+20140707_113313 AUDIT INFO - repair doc  t|20416.736| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D6253| rprhr|0.013889|
+20140707_113313 SERVER INFO - small error t| 20427| svr|L1| shelf|H01| consecutive misses|3|
+# An error occurs in a doc on Server L1 while that same server is being audited.  
+# Unfortunately, the error occurs in a doc that had already been examined by the audit, 
+# so the error will persist until the next audit (or the end of the simulation, 
+# whichever comes first).  
+# Doc 5478 died, but the audit had already passed doc 6253.
+20140707_113313 SERVER INFO - small error t| 20427| svr|L1| shelf|H01| hidden failure in copy|X5478| doc|D5478|
+20140707_113313 AUDIT INFO - repair doc  t|20447.569| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D8473| rprhr|0.013889|
+# Here is the repair of the doc that failed during the other server's audit.
+20140707_113313 AUDIT INFO - repair doc  t|20449.806| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D8634| rprhr|0.013889|
+20140707_113313 AUDIT INFO - repair doc  t|20467.278| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D9892| rprhr|0.013889|
+20140707_113313 AUDIT INFO - end cycle   t|20468.778| auditid|A1| cli|T1| coll|C1 svr|L1| repairs|20| total|41| duration|  138.889|
+20140707_113313 SERVER INFO - small error t| 20484| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113313 SERVER INFO - small error t| 20520| svr|L1| shelf|H01| consecutive misses|1|
+20140707_113313 SERVER INFO - small error t| 20520| svr|L1| shelf|H01| hidden failure in copy|X6103| doc|D6103|
+20140707_113313 SERVER INFO - small error t| 20543| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113313 SERVER INFO - small error t| 20992| svr|L2| shelf|H02| consecutive misses|45|
+20140707_113313 SERVER INFO - small error t| 20992| svr|L2| shelf|H02| hidden failure in copy|X12778| doc|D2778|
+20140707_113313 SERVER INFO - small error t| 20999| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113313 SERVER INFO - small error t| 21170| svr|L2| shelf|H02| consecutive misses|7|
+20140707_113313 SERVER INFO - small error t| 21170| svr|L2| shelf|H02| hidden failure in copy|X10829| doc|D829|
+20140707_113313 SERVER INFO - small error t| 21210| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113313 SERVER INFO - small error t| 21308| svr|L2| shelf|H02| consecutive misses|9|
+20140707_113313 SERVER INFO - small error t| 21308| svr|L2| shelf|H02| hidden failure in copy|X19564| doc|D9564|
+20140707_113313 SERVER INFO - small error t| 21327| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113313 SERVER INFO - small error t| 21569| svr|L2| shelf|H02| consecutive misses|8|
+20140707_113313 SERVER INFO - small error t| 21569| svr|L2| shelf|H02| hidden failure in copy|X19469| doc|D9469|
+20140707_113313 SERVER INFO - small error t| 21610| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113313 SERVER INFO - small error t| 21761| svr|L1| shelf|H01| consecutive misses|32|
+20140707_113313 SERVER INFO - small error t| 21761| svr|L1| shelf|H01| hidden failure in copy|X3173| doc|D3173|
+20140707_113313 SERVER INFO - small error t| 21764| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113313 SERVER INFO - small error t| 22019| svr|L2| shelf|H02| consecutive misses|16|
+20140707_113313 SERVER INFO - small error t| 22019| svr|L2| shelf|H02| hidden failure in copy|X17109| doc|D7109|
+20140707_113313 SERVER INFO - small error t| 22054| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113313 SERVER INFO - small error t| 22205| svr|L2| shelf|H02| consecutive misses|5|
+20140707_113313 SERVER INFO - small error t| 22205| svr|L2| shelf|H02| hidden failure in copy|X10521| doc|D521|
+20140707_113313 SERVER INFO - small error t| 22226| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113313 SERVER INFO - small error t| 22664| svr|L1| shelf|H01| consecutive misses|38|
+20140707_113313 SERVER INFO - small error t| 22664| svr|L1| shelf|H01| hidden failure in copy|X4343| doc|D4343|
+20140707_113313 SERVER INFO - small error t| 22702| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113313 SERVER INFO - small error t| 23145| svr|L2| shelf|H02| consecutive misses|22|
+20140707_113313 SERVER INFO - small error t| 23145| svr|L2| shelf|H02| hidden failure in copy|X13607| doc|D3607|
+20140707_113313 SERVER INFO - small error t| 23185| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113313 SERVER INFO - small error t| 23191| svr|L2| shelf|H02| consecutive misses|1|
+20140707_113313 SERVER INFO - small error t| 23191| svr|L2| shelf|H02| hidden failure in copy|X17200| doc|D7200|
+20140707_113313 SERVER INFO - small error t| 23215| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113313 SERVER INFO - small error t| 23460| svr|L1| shelf|H01| consecutive misses|21|
+20140707_113313 SERVER INFO - small error t| 23460| svr|L1| shelf|H01| hidden failure in copy|X1150| doc|D1150|
+20140707_113313 SERVER INFO - small error t| 23489| svr|L2| shelf|H02| consecutive misses|16|
+20140707_113313 SERVER INFO - small error t| 23489| svr|L2| shelf|H02| hidden failure in copy|X17789| doc|D7789|
+20140707_113313 SERVER INFO - small error t| 23526| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113313 SERVER INFO - small error t| 23530| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113313 SERVER INFO - small error t| 23732| svr|L1| shelf|H01| consecutive misses|5|
+20140707_113313 SERVER INFO - small error t| 23732| svr|L1| shelf|H01| hidden failure in copy|X4359| doc|D4359|
+20140707_113313 SERVER INFO - small error t| 23745| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113313 SERVER INFO - small error t| 23874| svr|L2| shelf|H02| consecutive misses|10|
+20140707_113313 SERVER INFO - small error t| 23874| svr|L2| shelf|H02| hidden failure in copy|X19048| doc|D9048|
+20140707_113313 SERVER INFO - small error t| 23876| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113313 SERVER INFO - small error t| 23974| svr|L2| shelf|H02| consecutive misses|5|
+20140707_113313 SERVER INFO - small error t| 23974| svr|L2| shelf|H02| hidden failure in copy|X19234| doc|D9234|
+20140707_113313 SERVER INFO - small error t| 24013| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113313 SERVER INFO - small error t| 24103| svr|L1| shelf|H01| consecutive misses|14|
+20140707_113313 SERVER INFO - small error t| 24103| svr|L1| shelf|H01| hidden failure in copy|X5148| doc|D5148|
+20140707_113313 SERVER INFO - small error t| 24105| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113313 SERVER INFO - small error t| 24143| svr|L2| shelf|H02| consecutive misses|5|
+20140707_113313 SERVER INFO - small error t| 24143| svr|L2| shelf|H02| hidden failure in copy|X15794| doc|D5794|
+20140707_113313 SERVER INFO - small error t| 24167| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113313 SERVER INFO - small error t| 24177| svr|L1| shelf|H01| consecutive misses|3|
+20140707_113313 SERVER INFO - small error t| 24177| svr|L1| shelf|H01| hidden failure in copy|X8483| doc|D8483|
+20140707_113313 SERVER INFO - small error t| 24180| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113313 SERVER INFO - small error t| 24269| svr|L1| shelf|H01| consecutive misses|3|
+20140707_113313 SERVER INFO - small error t| 24269| svr|L1| shelf|H01| hidden failure in copy|X45| doc|D45|
+20140707_113313 SERVER INFO - small error t| 24275| svr|L1| shelf|H01| hidden failure in copy|X7966| doc|D7966|
+20140707_113313 SERVER INFO - small error t| 24307| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113313 SERVER INFO - small error t| 24510| svr|L1| shelf|H01| consecutive misses|10|
+20140707_113313 SERVER INFO - small error t| 24510| svr|L1| shelf|H01| hidden failure in copy|X6770| doc|D6770|
+20140707_113313 SERVER INFO - small error t| 24527| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113313 SERVER INFO - small error t| 24839| svr|L1| shelf|H01| consecutive misses|9|
+20140707_113313 SERVER INFO - small error t| 24839| svr|L1| shelf|H01| hidden failure in copy|X9088| doc|D9088|
+20140707_113313 SERVER INFO - small error t| 24843| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113313 SERVER INFO - small error t| 25202| svr|L2| shelf|H02| consecutive misses|38|
+20140707_113313 SERVER INFO - small error t| 25202| svr|L2| shelf|H02| hidden failure in copy|X16439| doc|D6439|
+20140707_113313 SERVER INFO - small error t| 25248| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113313 SERVER INFO - small error t| 25308| svr|L1| shelf|H01| consecutive misses|14|
+20140707_113313 SERVER INFO - small error t| 25308| svr|L1| shelf|H01| hidden failure in copy|X4040| doc|D4040|
+20140707_113313 SERVER INFO - small error t| 25321| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113313 SERVER INFO - small error t| 25441| svr|L1| shelf|H01| consecutive misses|6|
+20140707_113313 SERVER INFO - small error t| 25441| svr|L1| shelf|H01| hidden failure in copy|X5526| doc|D5526|
+20140707_113313 SERVER INFO - small error t| 25458| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113313 SERVER INFO - small error t| 25716| svr|L1| shelf|H01| consecutive misses|9|
+20140707_113313 SERVER INFO - small error t| 25716| svr|L1| shelf|H01| hidden failure in copy|X711| doc|D711|
+20140707_113313 SERVER INFO - small error t| 25730| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113313 SERVER INFO - small error t| 25918| svr|L1| shelf|H01| consecutive misses|9|
+20140707_113313 SERVER INFO - small error t| 25918| svr|L1| shelf|H01| hidden failure in copy|X676| doc|D676|
+20140707_113313 SERVER INFO - small error t| 25937| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113313 SERVER INFO - small error t| 26107| svr|L2| shelf|H02| consecutive misses|26|
+20140707_113313 SERVER INFO - small error t| 26107| svr|L2| shelf|H02| hidden failure in copy|X10510| doc|D510|
+20140707_113313 SERVER INFO - small error t| 26146| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113313 SERVER INFO - small error t| 26268| svr|L1| shelf|H01| consecutive misses|11|
+20140707_113313 SERVER INFO - small error t| 26268| svr|L1| shelf|H01| hidden failure in copy|X3435| doc|D3435|
+20140707_113313 SERVER INFO - small error t| 26290| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113313 SERVER INFO - small error t| 26353| svr|L1| shelf|H01| consecutive misses|6|
+20140707_113313 SERVER INFO - small error t| 26353| svr|L1| shelf|H01| hidden failure in copy|X4230| doc|D4230|
+20140707_113313 SERVER INFO - small error t| 26403| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113313 SERVER INFO - small error t| 27091| svr|L1| shelf|H01| consecutive misses|26|
+20140707_113313 SERVER INFO - small error t| 27091| svr|L1| shelf|H01| hidden failure in copy|X8037| doc|D8037|
+20140707_113313 SERVER INFO - small error t| 27155| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113313 SERVER INFO - small error t| 27550| svr|L1| shelf|H01| consecutive misses|16|
+20140707_113313 SERVER INFO - small error t| 27550| svr|L1| shelf|H01| hidden failure in copy|X2693| doc|D2693|
+20140707_113313 SERVER INFO - small error t| 27562| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113313 SERVER INFO - small error t| 27744| svr|L2| shelf|H02| consecutive misses|56|
+20140707_113313 SERVER INFO - small error t| 27744| svr|L2| shelf|H02| hidden failure in copy|X13085| doc|D3085|
+20140707_113313 SERVER INFO - small error t| 27747| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113313 SERVER INFO - small error t| 29230| svr|L1| shelf|H01| consecutive misses|52|
+20140707_113313 SERVER INFO - small error t| 29230| svr|L1| shelf|H01| hidden failure in copy|X544| doc|D544|
+20140707_113313 SERVER INFO - small error t| 29247| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113313 SERVER INFO - small error t| 29421| svr|L2| shelf|H02| consecutive misses|55|
+20140707_113313 SERVER INFO - small error t| 29421| svr|L2| shelf|H02| hidden failure in copy|X10685| doc|D685|
+20140707_113313 SERVER INFO - small error t| 29436| svr|L2| shelf|H02| hidden failure in copy|X15435| doc|D5435|
+20140707_113313 SERVER INFO - small error t| 29442| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113313 SERVER INFO - small error t| 30178| svr|L2| shelf|H02| consecutive misses|28|
+20140707_113313 SERVER INFO - small error t| 30178| svr|L2| shelf|H02| hidden failure in copy|X14039| doc|D4039|
+20140707_113313 AUDIT INFO - begin cycle t|30191.000| auditid|A2| cli|T1| coll|C1 svr|L2|
+20140707_113313 AUDIT INFO - repair doc  t|30198.083| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D510| rprhr|0.013889|
+20140707_113313 AUDIT INFO - repair doc  t|30198.236| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D521| rprhr|0.013889|
+20140707_113313 AUDIT INFO - begin cycle t|30199.000| auditid|A1| cli|T1| coll|C1 svr|L1|
+20140707_113313 AUDIT INFO - repair doc  t|30200.514| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D685| rprhr|0.013889|
+20140707_113313 AUDIT INFO - repair doc  t|30202.514| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D829| rprhr|0.013889|
+20140707_113313 SERVER INFO - small error t| 30208| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113313 AUDIT INFO - repair doc  t|30229.583| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D2778| rprhr|0.013889|
+20140707_113313 AUDIT INFO - repair doc  t|30233.847| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D3085| rprhr|0.013889|
+20140707_113313 AUDIT INFO - repair doc  t|30241.097| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D3607| rprhr|0.013889|
+20140707_113314 AUDIT INFO - repair doc  t|30247.097| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D4039| rprhr|0.013889|
+20140707_113314 AUDIT INFO - repair doc  t|30266.486| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D5435| rprhr|0.013889|
+20140707_113314 AUDIT INFO - repair doc  t|30271.472| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D5794| rprhr|0.013889|
+20140707_113314 AUDIT INFO - repair doc  t|30280.431| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D6439| rprhr|0.013889|
+20140707_113314 AUDIT INFO - repair doc  t|30289.736| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D7109| rprhr|0.013889|
+20140707_113314 AUDIT INFO - repair doc  t|30291.000| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D7200| rprhr|0.013889|
+20140707_113314 AUDIT INFO - repair doc  t|30299.181| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D7789| rprhr|0.013889|
+20140707_113314 AUDIT INFO - repair doc  t|30316.667| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D9048| rprhr|0.013889|
+20140707_113314 AUDIT INFO - repair doc  t|30319.250| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D9234| rprhr|0.013889|
+20140707_113314 AUDIT INFO - repair doc  t|30322.514| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D9469| rprhr|0.013889|
+20140707_113314 AUDIT INFO - repair doc  t|30323.833| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D9564| rprhr|0.013889|
+20140707_113314 AUDIT INFO - end cycle   t|30329.889| auditid|A2| cli|T1| coll|C1 svr|L2| repairs|18| total|45| duration|  138.889|
+20140707_113314 AUDIT INFO - waitnetwork t|30329.889| auditid|A1| cli|T1| coll|C1 svr|L1| delay|  130.889|
+20140707_113314 AUDIT INFO - repair doc  t|30330.514| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D45| rprhr|0.013889|
+20140707_113314 AUDIT INFO - repair doc  t|30337.444| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D544| rprhr|0.013889|
+20140707_113314 AUDIT INFO - repair doc  t|30339.278| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D676| rprhr|0.013889|
+20140707_113314 AUDIT INFO - repair doc  t|30339.764| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D711| rprhr|0.013889|
+20140707_113314 AUDIT INFO - repair doc  t|30345.861| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D1150| rprhr|0.013889|
+20140707_113314 AUDIT INFO - repair doc  t|30367.292| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D2693| rprhr|0.013889|
+20140707_113314 AUDIT INFO - repair doc  t|30373.958| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D3173| rprhr|0.013889|
+20140707_113314 AUDIT INFO - repair doc  t|30377.597| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D3435| rprhr|0.013889|
+20140707_113314 AUDIT INFO - repair doc  t|30386.000| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D4040| rprhr|0.013889|
+20140707_113314 AUDIT INFO - repair doc  t|30388.639| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D4230| rprhr|0.013889|
+20140707_113314 AUDIT INFO - repair doc  t|30390.208| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D4343| rprhr|0.013889|
+20140707_113314 AUDIT INFO - repair doc  t|30390.431| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D4359| rprhr|0.013889|
+20140707_113314 AUDIT INFO - repair doc  t|30401.389| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D5148| rprhr|0.013889|
+20140707_113315 AUDIT INFO - repair doc  t|30405.972| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D5478| rprhr|0.013889|
+20140707_113315 AUDIT INFO - repair doc  t|30406.639| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D5526| rprhr|0.013889|
+20140707_113315 AUDIT INFO - repair doc  t|30414.653| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D6103| rprhr|0.013889|
+20140707_113315 AUDIT INFO - repair doc  t|30423.917| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D6770| rprhr|0.013889|
+20140707_113315 AUDIT INFO - repair doc  t|30440.528| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D7966| rprhr|0.013889|
+20140707_113315 AUDIT INFO - repair doc  t|30441.514| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D8037| rprhr|0.013889|
+20140707_113315 SERVER INFO - small error t| 30443| svr|L1| shelf|H01| consecutive misses|44|
+# Here an error occurs in Server L1 while the audit is in progress.  
+# However, the audit has not reached that document (9410) yet, so that the 
+# error *will* be caught in this audit cycle.
+20140707_113315 SERVER INFO - small error t| 30443| svr|L1| shelf|H01| hidden failure in copy|X9410| doc|D9410|
+20140707_113315 AUDIT INFO - repair doc  t|30447.708| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D8483| rprhr|0.013889|
+20140707_113315 AUDIT INFO - repair doc  t|30456.111| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D9088| rprhr|0.013889|
+# The doc that failed just a few hours ago, 9410, is caught and repaired right now.  
+# Long auditing cycles leave opportunities for this sort of occurrence.  
+20140707_113315 AUDIT INFO - repair doc  t|30460.583| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D9410| rprhr|0.013889|
+20140707_113315 AUDIT INFO - end cycle   t|30468.778| auditid|A1| cli|T1| coll|C1 svr|L1| repairs|22| total|63| duration|  138.889|
+20140707_113315 SERVER INFO - small error t| 30574| svr|L1| shelf|H01| hidden failure in copy|X6017| doc|D6017|
+20140707_113315 SERVER INFO - small error t| 30591| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113315 SERVER INFO - small error t| 30915| svr|L1| shelf|H01| consecutive misses|6|
+20140707_113315 SERVER INFO - small error t| 30915| svr|L1| shelf|H01| hidden failure in copy|X303| doc|D303|
+20140707_113315 SERVER INFO - small error t| 30959| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113315 SERVER INFO - small error t| 31012| svr|L2| shelf|H02| consecutive misses|22|
+20140707_113315 SERVER INFO - small error t| 31012| svr|L2| shelf|H02| hidden failure in copy|X14323| doc|D4323|
+20140707_113315 SERVER INFO - small error t| 31015| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113315 SERVER INFO - small error t| 31966| svr|L2| shelf|H02| consecutive misses|35|
+20140707_113315 SERVER INFO - small error t| 31966| svr|L2| shelf|H02| hidden failure in copy|X13757| doc|D3757|
+20140707_113315 SERVER INFO - small error t| 31980| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113315 SERVER INFO - small error t| 32233| svr|L2| shelf|H02| consecutive misses|12|
+20140707_113315 SERVER INFO - small error t| 32233| svr|L2| shelf|H02| hidden failure in copy|X19342| doc|D9342|
+20140707_113315 SERVER INFO - small error t| 32237| svr|L2| shelf|H02| hidden failure in copy|X12429| doc|D2429|
+20140707_113315 SERVER INFO - small error t| 32273| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113315 SERVER INFO - small error t| 32386| svr|L2| shelf|H02| consecutive misses|6|
+20140707_113315 SERVER INFO - small error t| 32386| svr|L2| shelf|H02| hidden failure in copy|X13712| doc|D3712|
+20140707_113315 SERVER INFO - small error t| 32429| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113315 SERVER INFO - small error t| 32451| svr|L2| shelf|H02| consecutive misses|2|
+20140707_113315 SERVER INFO - small error t| 32451| svr|L2| shelf|H02| hidden failure in copy|X12235| doc|D2235|
+20140707_113315 SERVER INFO - small error t| 32458| svr|L1| shelf|H01| consecutive misses|53|
+20140707_113315 SERVER INFO - small error t| 32458| svr|L1| shelf|H01| hidden failure in copy|X4277| doc|D4277|
+20140707_113315 SERVER INFO - small error t| 32461| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113315 SERVER INFO - small error t| 32522| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113315 SERVER INFO - small error t| 32661| svr|L1| shelf|H01| consecutive misses|5|
+20140707_113315 SERVER INFO - small error t| 32661| svr|L1| shelf|H01| hidden failure in copy|X1917| doc|D1917|
+20140707_113315 SERVER INFO - small error t| 32662| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113315 SERVER INFO - small error t| 32873| svr|L2| shelf|H02| consecutive misses|6|
+20140707_113315 SERVER INFO - small error t| 32873| svr|L2| shelf|H02| hidden failure in copy|X10741| doc|D741|
+20140707_113315 SERVER INFO - small error t| 32886| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113315 SERVER INFO - small error t| 33006| svr|L1| shelf|H01| consecutive misses|8|
+20140707_113315 SERVER INFO - small error t| 33006| svr|L1| shelf|H01| hidden failure in copy|X1322| doc|D1322|
+20140707_113315 SERVER INFO - small error t| 33007| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113315 SERVER INFO - small error t| 33796| svr|L2| shelf|H02| consecutive misses|27|
+20140707_113315 SERVER INFO - small error t| 33796| svr|L2| shelf|H02| hidden failure in copy|X14250| doc|D4250|
+20140707_113315 SERVER INFO - small error t| 33824| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113315 SERVER INFO - small error t| 33880| svr|L2| shelf|H02| consecutive misses|3|
+20140707_113315 SERVER INFO - small error t| 33880| svr|L2| shelf|H02| hidden failure in copy|X12387| doc|D2387|
+20140707_113315 SERVER INFO - small error t| 33910| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113315 SERVER INFO - small error t| 34612| svr|L1| shelf|H01| consecutive misses|51|
+20140707_113315 SERVER INFO - small error t| 34612| svr|L1| shelf|H01| hidden failure in copy|X4599| doc|D4599|
+20140707_113315 SERVER INFO - small error t| 34617| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113315 SERVER INFO - small error t| 36249| svr|L1| shelf|H01| consecutive misses|43|
+20140707_113315 SERVER INFO - small error t| 36249| svr|L1| shelf|H01| hidden failure in copy|X2312| doc|D2312|
+20140707_113315 SERVER INFO - small error t| 36268| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113315 SERVER INFO - small error t| 36954| svr|L2| shelf|H02| consecutive misses|108|
+20140707_113315 SERVER INFO - small error t| 36954| svr|L2| shelf|H02| hidden failure in copy|X16984| doc|D6984|
+20140707_113315 SERVER INFO - small error t| 36969| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113315 SERVER INFO - small error t| 37614| svr|L1| shelf|H01| consecutive misses|67|
+20140707_113315 SERVER INFO - small error t| 37614| svr|L1| shelf|H01| hidden failure in copy|X2104| doc|D2104|
+20140707_113315 SERVER INFO - small error t| 37642| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113315 SERVER INFO - small error t| 38255| svr|L1| shelf|H01| consecutive misses|24|
+20140707_113315 SERVER INFO - small error t| 38255| svr|L1| shelf|H01| hidden failure in copy|X4732| doc|D4732|
+20140707_113315 SERVER INFO - small error t| 38299| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113315 SERVER INFO - small error t| 38522| svr|L1| shelf|H01| consecutive misses|9|
+20140707_113315 SERVER INFO - small error t| 38522| svr|L1| shelf|H01| hidden failure in copy|X5097| doc|D5097|
+20140707_113315 SERVER INFO - small error t| 38549| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113315 SERVER INFO - small error t| 38841| svr|L1| shelf|H01| consecutive misses|11|
+20140707_113315 SERVER INFO - small error t| 38841| svr|L1| shelf|H01| hidden failure in copy|X3425| doc|D3425|
+20140707_113315 SERVER INFO - small error t| 38880| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113315 SERVER INFO - small error t| 39189| svr|L2| shelf|H02| consecutive misses|74|
+20140707_113315 SERVER INFO - small error t| 39189| svr|L2| shelf|H02| hidden failure in copy|X19075| doc|D9075|
+20140707_113315 SERVER INFO - small error t| 39210| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113315 SERVER INFO - small error t| 39283| svr|L2| shelf|H02| consecutive misses|3|
+20140707_113315 SERVER INFO - small error t| 39283| svr|L2| shelf|H02| hidden failure in copy|X18792| doc|D8792|
+20140707_113315 SERVER INFO - small error t| 39375| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113315 SERVER INFO - small error t| 39398| svr|L1| shelf|H01| consecutive misses|17|
+20140707_113315 SERVER INFO - small error t| 39398| svr|L1| shelf|H01| hidden failure in copy|X3313| doc|D3313|
+20140707_113315 SERVER INFO - small error t| 39445| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113315 SERVER INFO - small error t| 39666| svr|L1| shelf|H01| consecutive misses|9|
+20140707_113315 SERVER INFO - small error t| 39666| svr|L1| shelf|H01| hidden failure in copy|X4148| doc|D4148|
+20140707_113315 SERVER INFO - small error t| 39683| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113315 AUDIT INFO - begin cycle t|40191.000| auditid|A2| cli|T1| coll|C1 svr|L2|
+20140707_113315 AUDIT INFO - begin cycle t|40199.000| auditid|A1| cli|T1| coll|C1 svr|L1|
+20140707_113315 AUDIT INFO - repair doc  t|40201.292| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D741| rprhr|0.013889|
+20140707_113315 AUDIT INFO - repair doc  t|40222.042| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D2235| rprhr|0.013889|
+20140707_113315 AUDIT INFO - repair doc  t|40224.153| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D2387| rprhr|0.013889|
+20140707_113315 AUDIT INFO - repair doc  t|40224.736| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D2429| rprhr|0.013889|
+20140707_113315 AUDIT INFO - repair doc  t|40242.556| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D3712| rprhr|0.013889|
+20140707_113315 AUDIT INFO - repair doc  t|40243.181| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D3757| rprhr|0.013889|
+20140707_113315 AUDIT INFO - repair doc  t|40250.028| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D4250| rprhr|0.013889|
+20140707_113315 AUDIT INFO - repair doc  t|40251.042| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D4323| rprhr|0.013889|
+20140707_113316 AUDIT INFO - repair doc  t|40288.000| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D6984| rprhr|0.013889|
+20140707_113316 AUDIT INFO - repair doc  t|40313.111| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D8792| rprhr|0.013889|
+20140707_113316 AUDIT INFO - repair doc  t|40317.042| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D9075| rprhr|0.013889|
+20140707_113316 AUDIT INFO - repair doc  t|40320.750| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D9342| rprhr|0.013889|
+20140707_113316 AUDIT INFO - end cycle   t|40329.889| auditid|A2| cli|T1| coll|C1 svr|L2| repairs|12| total|57| duration|  138.889|
+20140707_113316 AUDIT INFO - waitnetwork t|40329.889| auditid|A1| cli|T1| coll|C1 svr|L1| delay|  130.889|
+20140707_113316 AUDIT INFO - repair doc  t|40334.097| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D303| rprhr|0.013889|
+20140707_113316 AUDIT INFO - repair doc  t|40348.250| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D1322| rprhr|0.013889|
+20140707_113316 AUDIT INFO - repair doc  t|40356.514| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D1917| rprhr|0.013889|
+20140707_113316 AUDIT INFO - repair doc  t|40359.111| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D2104| rprhr|0.013889|
+20140707_113316 AUDIT INFO - repair doc  t|40362.000| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D2312| rprhr|0.013889|
+20140707_113316 AUDIT INFO - repair doc  t|40375.903| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D3313| rprhr|0.013889|
+20140707_113316 AUDIT INFO - repair doc  t|40377.458| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D3425| rprhr|0.013889|
+20140707_113316 AUDIT INFO - repair doc  t|40387.500| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D4148| rprhr|0.013889|
+20140707_113316 AUDIT INFO - repair doc  t|40389.292| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D4277| rprhr|0.013889|
+20140707_113316 AUDIT INFO - repair doc  t|40393.764| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D4599| rprhr|0.013889|
+20140707_113316 AUDIT INFO - repair doc  t|40395.611| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D4732| rprhr|0.013889|
+20140707_113316 AUDIT INFO - repair doc  t|40400.681| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D5097| rprhr|0.013889|
+20140707_113316 AUDIT INFO - repair doc  t|40413.458| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D6017| rprhr|0.013889|
+20140707_113316 SERVER INFO - small error t| 40415| svr|L2| shelf|H02| consecutive misses|31|
+20140707_113316 SERVER INFO - small error t| 40415| svr|L2| shelf|H02| hidden failure in copy|X10308| doc|D308|
+20140707_113317 SERVER INFO - small error t| 40444| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113317 AUDIT INFO - end cycle   t|40468.778| auditid|A1| cli|T1| coll|C1 svr|L1| repairs|13| total|76| duration|  138.889|
+20140707_113317 SERVER INFO - small error t| 40764| svr|L2| shelf|H02| consecutive misses|11|
+20140707_113317 SERVER INFO - small error t| 40764| svr|L2| shelf|H02| hidden failure in copy|X17788| doc|D7788|
+20140707_113317 SERVER INFO - small error t| 40779| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113317 SERVER INFO - small error t| 41015| svr|L2| shelf|H02| consecutive misses|8|
+20140707_113317 SERVER INFO - small error t| 41015| svr|L2| shelf|H02| hidden failure in copy|X18339| doc|D8339|
+20140707_113317 SERVER INFO - small error t| 41094| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113317 SERVER INFO - small error t| 41101| svr|L2| shelf|H02| consecutive misses|1|
+20140707_113317 SERVER INFO - small error t| 41101| svr|L2| shelf|H02| hidden failure in copy|X12607| doc|D2607|
+20140707_113317 SERVER INFO - small error t| 41103| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113317 SERVER INFO - small error t| 41214| svr|L2| shelf|H02| consecutive misses|2|
+20140707_113317 SERVER INFO - small error t| 41214| svr|L2| shelf|H02| hidden failure in copy|X15678| doc|D5678|
+20140707_113317 SERVER INFO - small error t| 41230| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113317 SERVER INFO - small error t| 41853| svr|L2| shelf|H02| consecutive misses|18|
+20140707_113317 SERVER INFO - small error t| 41853| svr|L2| shelf|H02| hidden failure in copy|X15529| doc|D5529|
+20140707_113317 SERVER INFO - small error t| 41958| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113317 SERVER INFO - small error t| 42080| svr|L2| shelf|H02| consecutive misses|7|
+20140707_113317 SERVER INFO - small error t| 42080| svr|L2| shelf|H02| hidden failure in copy|X14493| doc|D4493|
+20140707_113317 SERVER INFO - small error t| 42191| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113317 SERVER INFO - small error t| 42618| svr|L2| shelf|H02| consecutive misses|15|
+20140707_113317 SERVER INFO - small error t| 42618| svr|L2| shelf|H02| hidden failure in copy|X18946| doc|D8946|
+20140707_113317 SERVER INFO - small error t| 42623| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113317 SERVER INFO - small error t| 43068| svr|L2| shelf|H02| consecutive misses|28|
+20140707_113317 SERVER INFO - small error t| 43068| svr|L2| shelf|H02| hidden failure in copy|X17583| doc|D7583|
+20140707_113317 SERVER INFO - small error t| 43076| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113317 SERVER INFO - small error t| 43148| svr|L1| shelf|H01| consecutive misses|120|
+20140707_113317 SERVER INFO - small error t| 43148| svr|L1| shelf|H01| hidden failure in copy|X516| doc|D516|
+20140707_113317 SERVER INFO - small error t| 43154| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113317 SERVER INFO - small error t| 43350| svr|L1| shelf|H01| consecutive misses|6|
+20140707_113317 SERVER INFO - small error t| 43350| svr|L1| shelf|H01| hidden failure in copy|X11| doc|D11|
+20140707_113317 SERVER INFO - small error t| 43395| svr|L1| shelf|H01| hidden failure in copy|X5777| doc|D5777|
+20140707_113317 SERVER INFO - small error t| 43413| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113317 SERVER INFO - small error t| 44057| svr|L2| shelf|H02| consecutive misses|43|
+20140707_113317 SERVER INFO - small error t| 44057| svr|L2| shelf|H02| hidden failure in copy|X10872| doc|D872|
+20140707_113317 SERVER INFO - small error t| 44078| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113317 SERVER INFO - small error t| 44301| svr|L2| shelf|H02| consecutive misses|8|
+20140707_113317 SERVER INFO - small error t| 44301| svr|L2| shelf|H02| hidden failure in copy|X13304| doc|D3304|
+20140707_113317 SERVER INFO - small error t| 44350| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113317 SERVER INFO - small error t| 44580| svr|L1| shelf|H01| consecutive misses|32|
+20140707_113317 SERVER INFO - small error t| 44580| svr|L1| shelf|H01| hidden failure in copy|X7900| doc|D7900|
+20140707_113317 SERVER INFO - small error t| 44601| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113317 SERVER INFO - small error t| 45166| svr|L2| shelf|H02| consecutive misses|27|
+20140707_113317 SERVER INFO - small error t| 45166| svr|L2| shelf|H02| hidden failure in copy|X13600| doc|D3600|
+20140707_113317 SERVER INFO - small error t| 45235| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113317 SERVER INFO - small error t| 45505| svr|L2| shelf|H02| consecutive misses|10|
+20140707_113317 SERVER INFO - small error t| 45505| svr|L2| shelf|H02| hidden failure in copy|X12556| doc|D2556|
+20140707_113317 SERVER INFO - small error t| 45507| svr|L2| shelf|H02| hidden failure in copy|X19239| doc|D9239|
+20140707_113317 SERVER INFO - small error t| 45555| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113317 SERVER INFO - small error t| 45634| svr|L2| shelf|H02| consecutive misses|2|
+20140707_113317 SERVER INFO - small error t| 45634| svr|L2| shelf|H02| hidden failure in copy|X14320| doc|D4320|
+20140707_113317 SERVER INFO - small error t| 45653| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113317 SERVER INFO - small error t| 46404| svr|L1| shelf|H01| consecutive misses|47|
+20140707_113317 SERVER INFO - small error t| 46404| svr|L1| shelf|H01| hidden failure in copy|X5285| doc|D5285|
+20140707_113317 SERVER INFO - small error t| 46410| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113317 SERVER INFO - small error t| 46914| svr|L2| shelf|H02| consecutive misses|34|
+20140707_113317 SERVER INFO - small error t| 46914| svr|L2| shelf|H02| hidden failure in copy|X14658| doc|D4658|
+20140707_113317 SERVER INFO - small error t| 46914| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113317 SERVER INFO - small error t| 46975| svr|L2| shelf|H02| consecutive misses|5|
+20140707_113317 SERVER INFO - small error t| 46975| svr|L2| shelf|H02| hidden failure in copy|X10313| doc|D313|
+20140707_113317 SERVER INFO - small error t| 46989| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113317 SERVER INFO - small error t| 47680| svr|L1| shelf|H01| consecutive misses|40|
+20140707_113317 SERVER INFO - small error t| 47680| svr|L1| shelf|H01| hidden failure in copy|X6673| doc|D6673|
+20140707_113317 SERVER INFO - small error t| 47713| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113317 SERVER INFO - small error t| 47729| svr|L1| shelf|H01| consecutive misses|5|
+20140707_113317 SERVER INFO - small error t| 47729| svr|L1| shelf|H01| hidden failure in copy|X257| doc|D257|
+20140707_113317 SERVER INFO - small error t| 47731| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113317 SERVER INFO - small error t| 47763| svr|L2| shelf|H02| consecutive misses|20|
+20140707_113317 SERVER INFO - small error t| 47763| svr|L2| shelf|H02| hidden failure in copy|X19051| doc|D9051|
+20140707_113317 SERVER INFO - small error t| 47764| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113317 SERVER INFO - small error t| 48040| svr|L2| shelf|H02| consecutive misses|10|
+20140707_113317 SERVER INFO - small error t| 48040| svr|L2| shelf|H02| hidden failure in copy|X14511| doc|D4511|
+20140707_113317 SERVER INFO - small error t| 48071| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113317 SERVER INFO - small error t| 48132| svr|L1| shelf|H01| consecutive misses|10|
+20140707_113317 SERVER INFO - small error t| 48132| svr|L1| shelf|H01| hidden failure in copy|X7028| doc|D7028|
+20140707_113317 SERVER INFO - small error t| 48163| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113317 SERVER INFO - small error t| 48241| svr|L2| shelf|H02| consecutive misses|7|
+20140707_113317 SERVER INFO - small error t| 48241| svr|L2| shelf|H02| hidden failure in copy|X16793| doc|D6793|
+20140707_113317 SERVER INFO - small error t| 48347| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113317 SERVER INFO - small error t| 48518| svr|L2| shelf|H02| consecutive misses|4|
+20140707_113317 SERVER INFO - small error t| 48518| svr|L2| shelf|H02| hidden failure in copy|X17734| doc|D7734|
+20140707_113317 SERVER INFO - small error t| 48520| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113317 SERVER INFO - small error t| 49458| svr|L2| shelf|H02| consecutive misses|26|
+20140707_113317 SERVER INFO - small error t| 49458| svr|L2| shelf|H02| hidden failure in copy|X18235| doc|D8235|
+20140707_113317 SERVER INFO - small error t| 49463| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113317 SERVER INFO - small error t| 49542| svr|L2| shelf|H02| consecutive misses|2|
+20140707_113317 SERVER INFO - small error t| 49542| svr|L2| shelf|H02| hidden failure in copy|X10444| doc|D444|
+20140707_113317 SERVER INFO - small error t| 49547| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113317 SERVER INFO - small error t| 49753| svr|L2| shelf|H02| consecutive misses|5|
+20140707_113317 SERVER INFO - small error t| 49753| svr|L2| shelf|H02| hidden failure in copy|X10969| doc|D969|
+20140707_113317 SERVER INFO - small error t| 49818| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113317 AUDIT INFO - begin cycle t|50191.000| auditid|A2| cli|T1| coll|C1 svr|L2|
+20140707_113317 AUDIT INFO - repair doc  t|50195.278| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D308| rprhr|0.013889|
+20140707_113317 AUDIT INFO - repair doc  t|50195.347| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D313| rprhr|0.013889|
+20140707_113317 AUDIT INFO - repair doc  t|50197.167| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D444| rprhr|0.013889|
+20140707_113317 AUDIT INFO - begin cycle t|50199.000| auditid|A1| cli|T1| coll|C1 svr|L1|
+20140707_113317 AUDIT INFO - repair doc  t|50203.111| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D872| rprhr|0.013889|
+20140707_113317 AUDIT INFO - repair doc  t|50204.458| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D969| rprhr|0.013889|
+20140707_113317 AUDIT INFO - repair doc  t|50226.500| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D2556| rprhr|0.013889|
+20140707_113317 AUDIT INFO - repair doc  t|50227.208| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D2607| rprhr|0.013889|
+20140707_113317 AUDIT INFO - repair doc  t|50236.889| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D3304| rprhr|0.013889|
+20140707_113317 AUDIT INFO - repair doc  t|50241.000| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D3600| rprhr|0.013889|
+20140707_113317 AUDIT INFO - repair doc  t|50251.000| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D4320| rprhr|0.013889|
+20140707_113317 AUDIT INFO - repair doc  t|50253.403| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D4493| rprhr|0.013889|
+20140707_113317 AUDIT INFO - repair doc  t|50253.653| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D4511| rprhr|0.013889|
+20140707_113317 AUDIT INFO - repair doc  t|50255.694| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D4658| rprhr|0.013889|
+20140707_113317 AUDIT INFO - repair doc  t|50267.792| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D5529| rprhr|0.013889|
+20140707_113317 AUDIT INFO - repair doc  t|50269.861| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D5678| rprhr|0.013889|
+20140707_113317 AUDIT INFO - repair doc  t|50285.347| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D6793| rprhr|0.013889|
+20140707_113318 AUDIT INFO - repair doc  t|50296.319| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D7583| rprhr|0.013889|
+20140707_113318 AUDIT INFO - repair doc  t|50298.417| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D7734| rprhr|0.013889|
+20140707_113318 AUDIT INFO - repair doc  t|50299.167| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D7788| rprhr|0.013889|
+20140707_113318 AUDIT INFO - repair doc  t|50305.375| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D8235| rprhr|0.013889|
+20140707_113318 AUDIT INFO - repair doc  t|50306.819| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D8339| rprhr|0.013889|
+20140707_113318 AUDIT INFO - repair doc  t|50315.250| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D8946| rprhr|0.013889|
+20140707_113318 AUDIT INFO - repair doc  t|50316.708| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D9051| rprhr|0.013889|
+20140707_113318 AUDIT INFO - repair doc  t|50319.319| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D9239| rprhr|0.013889|
+20140707_113318 AUDIT INFO - end cycle   t|50329.889| auditid|A2| cli|T1| coll|C1 svr|L2| repairs|24| total|81| duration|  138.889|
+20140707_113318 AUDIT INFO - waitnetwork t|50329.889| auditid|A1| cli|T1| coll|C1 svr|L1| delay|  130.889|
+20140707_113318 AUDIT INFO - repair doc  t|50330.042| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D11| rprhr|0.013889|
+20140707_113318 AUDIT INFO - repair doc  t|50333.458| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D257| rprhr|0.013889|
+20140707_113318 AUDIT INFO - repair doc  t|50337.056| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D516| rprhr|0.013889|
+20140707_113318 AUDIT INFO - repair doc  t|50403.292| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D5285| rprhr|0.013889|
+20140707_113318 AUDIT INFO - repair doc  t|50410.125| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D5777| rprhr|0.013889|
+20140707_113318 AUDIT INFO - repair doc  t|50422.569| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D6673| rprhr|0.013889|
+20140707_113318 AUDIT INFO - repair doc  t|50427.500| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D7028| rprhr|0.013889|
+20140707_113318 AUDIT INFO - repair doc  t|50439.611| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D7900| rprhr|0.013889|
+20140707_113319 AUDIT INFO - end cycle   t|50468.778| auditid|A1| cli|T1| coll|C1 svr|L1| repairs|8| total|84| duration|  138.889|
+20140707_113319 SERVER INFO - small error t| 51008| svr|L2| shelf|H02| consecutive misses|37|
+20140707_113319 SERVER INFO - small error t| 51008| svr|L2| shelf|H02| hidden failure in copy|X18820| doc|D8820|
+20140707_113319 SERVER INFO - small error t| 51017| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113319 SERVER INFO - small error t| 51112| svr|L2| shelf|H02| consecutive misses|3|
+20140707_113319 SERVER INFO - small error t| 51112| svr|L2| shelf|H02| hidden failure in copy|X18907| doc|D8907|
+20140707_113319 SERVER INFO - small error t| 51149| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113319 SERVER INFO - small error t| 51474| svr|L1| shelf|H01| consecutive misses|114|
+20140707_113319 SERVER INFO - small error t| 51474| svr|L1| shelf|H01| hidden failure in copy|X2098| doc|D2098|
+20140707_113319 SERVER INFO - small error t| 51500| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113319 SERVER INFO - small error t| 51593| svr|L2| shelf|H02| consecutive misses|16|
+20140707_113319 SERVER INFO - small error t| 51593| svr|L2| shelf|H02| hidden failure in copy|X15612| doc|D5612|
+20140707_113319 SERVER INFO - small error t| 51642| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113319 SERVER INFO - small error t| 52260| svr|L2| shelf|H02| consecutive misses|21|
+20140707_113319 SERVER INFO - small error t| 52260| svr|L2| shelf|H02| hidden failure in copy|X17363| doc|D7363|
+20140707_113319 SERVER INFO - small error t| 52291| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113319 SERVER INFO - small error t| 52643| svr|L1| shelf|H01| consecutive misses|28|
+20140707_113319 SERVER INFO - small error t| 52643| svr|L1| shelf|H01| hidden failure in copy|X4807| doc|D4807|
+20140707_113319 SERVER INFO - small error t| 52678| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113319 SERVER INFO - small error t| 52681| svr|L2| shelf|H02| consecutive misses|14|
+20140707_113319 SERVER INFO - small error t| 52681| svr|L2| shelf|H02| hidden failure in copy|X13886| doc|D3886|
+20140707_113319 SERVER INFO - small error t| 52681| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113319 SERVER INFO - small error t| 52886| svr|L1| shelf|H01| consecutive misses|5|
+20140707_113319 SERVER INFO - small error t| 52886| svr|L1| shelf|H01| hidden failure in copy|X4975| doc|D4975|
+20140707_113319 SERVER INFO - small error t| 52932| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113319 SERVER INFO - small error t| 53687| svr|L1| shelf|H01| consecutive misses|32|
+20140707_113319 SERVER INFO - small error t| 53687| svr|L1| shelf|H01| hidden failure in copy|X2765| doc|D2765|
+20140707_113319 SERVER INFO - small error t| 53711| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113319 SERVER INFO - small error t| 53992| svr|L2| shelf|H02| consecutive misses|36|
+20140707_113319 SERVER INFO - small error t| 53992| svr|L2| shelf|H02| hidden failure in copy|X11714| doc|D1714|
+20140707_113319 SERVER INFO - small error t| 54002| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113319 SERVER INFO - small error t| 54522| svr|L2| shelf|H02| consecutive misses|23|
+20140707_113319 SERVER INFO - small error t| 54522| svr|L2| shelf|H02| hidden failure in copy|X12521| doc|D2521|
+20140707_113319 SERVER INFO - small error t| 54545| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113319 SERVER INFO - small error t| 54612| svr|L1| shelf|H01| consecutive misses|29|
+20140707_113319 SERVER INFO - small error t| 54612| svr|L1| shelf|H01| hidden failure in copy|X2727| doc|D2727|
+20140707_113319 SERVER INFO - small error t| 54673| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113319 SERVER INFO - small error t| 54956| svr|L2| shelf|H02| consecutive misses|8|
+20140707_113319 SERVER INFO - small error t| 54956| svr|L2| shelf|H02| hidden failure in copy|X12953| doc|D2953|
+20140707_113319 SERVER INFO - small error t| 54972| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113319 SERVER INFO - small error t| 55443| svr|L1| shelf|H01| consecutive misses|27|
+20140707_113319 SERVER INFO - small error t| 55443| svr|L1| shelf|H01| hidden failure in copy|X6863| doc|D6863|
+20140707_113319 SERVER INFO - small error t| 55455| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113319 SERVER INFO - small error t| 55561| svr|L1| shelf|H01| consecutive misses|4|
+20140707_113319 SERVER INFO - small error t| 55561| svr|L1| shelf|H01| hidden failure in copy|X9138| doc|D9138|
+20140707_113319 SERVER INFO - small error t| 55568| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113319 SERVER INFO - small error t| 56530| svr|L2| shelf|H02| consecutive misses|63|
+20140707_113319 SERVER INFO - small error t| 56530| svr|L2| shelf|H02| hidden failure in copy|X19535| doc|D9535|
+20140707_113319 SERVER INFO - small error t| 56559| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113319 SERVER INFO - small error t| 56653| svr|L1| shelf|H01| consecutive misses|27|
+20140707_113319 SERVER INFO - small error t| 56653| svr|L1| shelf|H01| hidden failure in copy|X2126| doc|D2126|
+20140707_113319 SERVER INFO - small error t| 56685| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113319 SERVER INFO - small error t| 56906| svr|L1| shelf|H01| consecutive misses|5|
+20140707_113319 SERVER INFO - small error t| 56906| svr|L1| shelf|H01| hidden failure in copy|X2346| doc|D2346|
+20140707_113319 SERVER INFO - small error t| 56916| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113319 SERVER INFO - small error t| 57113| svr|L1| shelf|H01| consecutive misses|6|
+20140707_113319 SERVER INFO - small error t| 57113| svr|L1| shelf|H01| hidden failure in copy|X3135| doc|D3135|
+20140707_113319 SERVER INFO - small error t| 57147| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113319 SERVER INFO - small error t| 57417| svr|L1| shelf|H01| consecutive misses|8|
+20140707_113319 SERVER INFO - small error t| 57417| svr|L1| shelf|H01| hidden failure in copy|X367| doc|D367|
+20140707_113319 SERVER INFO - small error t| 57441| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113319 SERVER INFO - small error t| 57540| svr|L1| shelf|H01| consecutive misses|5|
+20140707_113319 SERVER INFO - small error t| 57540| svr|L1| shelf|H01| hidden failure in copy|X3965| doc|D3965|
+20140707_113319 SERVER INFO - small error t| 57549| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113319 SERVER INFO - small error t| 58282| svr|L2| shelf|H02| consecutive misses|49|
+20140707_113319 SERVER INFO - small error t| 58282| svr|L2| shelf|H02| hidden failure in copy|X18949| doc|D8949|
+20140707_113319 SERVER INFO - small error t| 58331| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113319 SERVER INFO - small error t| 58758| svr|L1| shelf|H01| consecutive misses|32|
+20140707_113319 SERVER INFO - small error t| 58758| svr|L1| shelf|H01| hidden failure in copy|X806| doc|D806|
+20140707_113319 SERVER INFO - small error t| 58786| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113319 SERVER INFO - small error t| 58807| svr|L1| shelf|H01| consecutive misses|2|
+20140707_113319 SERVER INFO - small error t| 58807| svr|L1| shelf|H01| hidden failure in copy|X6371| doc|D6371|
+20140707_113319 SERVER INFO - small error t| 58819| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113319 SERVER INFO - small error t| 58911| svr|L2| shelf|H02| consecutive misses|22|
+20140707_113319 SERVER INFO - small error t| 58911| svr|L2| shelf|H02| hidden failure in copy|X17375| doc|D7375|
+20140707_113319 SERVER INFO - small error t| 58925| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113319 SERVER INFO - small error t| 59146| svr|L2| shelf|H02| consecutive misses|9|
+20140707_113319 SERVER INFO - small error t| 59146| svr|L2| shelf|H02| hidden failure in copy|X11184| doc|D1184|
+20140707_113319 SERVER INFO - small error t| 59168| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113319 SERVER INFO - small error t| 59192| svr|L2| shelf|H02| consecutive misses|1|
+20140707_113319 SERVER INFO - small error t| 59192| svr|L2| shelf|H02| hidden failure in copy|X11913| doc|D1913|
+20140707_113319 SERVER INFO - small error t| 59224| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113319 SERVER INFO - small error t| 59372| svr|L2| shelf|H02| consecutive misses|6|
+20140707_113319 SERVER INFO - small error t| 59372| svr|L2| shelf|H02| hidden failure in copy|X11047| doc|D1047|
+20140707_113319 SERVER INFO - small error t| 59379| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113319 SERVER INFO - small error t| 59603| svr|L1| shelf|H01| consecutive misses|32|
+20140707_113319 SERVER INFO - small error t| 59603| svr|L1| shelf|H01| hidden failure in copy|X7597| doc|D7597|
+20140707_113319 SERVER INFO - small error t| 59607| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113319 SERVER INFO - small error t| 60072| svr|L2| shelf|H02| consecutive misses|16|
+20140707_113319 SERVER INFO - small error t| 60072| svr|L2| shelf|H02| hidden failure in copy|X19292| doc|D9292|
+20140707_113319 SERVER INFO - small error t| 60119| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113319 AUDIT INFO - begin cycle t|60191.000| auditid|A2| cli|T1| coll|C1 svr|L2|
+20140707_113319 AUDIT INFO - begin cycle t|60199.000| auditid|A1| cli|T1| coll|C1 svr|L1|
+20140707_113319 AUDIT INFO - repair doc  t|60205.542| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D1047| rprhr|0.013889|
+20140707_113319 AUDIT INFO - repair doc  t|60207.444| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D1184| rprhr|0.013889|
+20140707_113319 AUDIT INFO - repair doc  t|60214.806| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D1714| rprhr|0.013889|
+20140707_113319 AUDIT INFO - repair doc  t|60217.569| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D1913| rprhr|0.013889|
+20140707_113319 AUDIT INFO - repair doc  t|60226.014| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D2521| rprhr|0.013889|
+20140707_113319 AUDIT INFO - repair doc  t|60232.014| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D2953| rprhr|0.013889|
+20140707_113319 AUDIT INFO - repair doc  t|60244.972| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D3886| rprhr|0.013889|
+20140707_113319 AUDIT INFO - repair doc  t|60268.944| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D5612| rprhr|0.013889|
+20140707_113319 AUDIT INFO - repair doc  t|60293.264| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D7363| rprhr|0.013889|
+20140707_113319 AUDIT INFO - repair doc  t|60293.431| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D7375| rprhr|0.013889|
+20140707_113320 AUDIT INFO - repair doc  t|60313.500| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D8820| rprhr|0.013889|
+20140707_113320 AUDIT INFO - repair doc  t|60314.708| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D8907| rprhr|0.013889|
+20140707_113320 AUDIT INFO - repair doc  t|60315.292| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D8949| rprhr|0.013889|
+20140707_113320 AUDIT INFO - repair doc  t|60320.056| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D9292| rprhr|0.013889|
+20140707_113320 AUDIT INFO - repair doc  t|60323.431| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D9535| rprhr|0.013889|
+20140707_113320 AUDIT INFO - end cycle   t|60329.889| auditid|A2| cli|T1| coll|C1 svr|L2| repairs|15| total|96| duration|  138.889|
+20140707_113320 AUDIT INFO - waitnetwork t|60329.889| auditid|A1| cli|T1| coll|C1 svr|L1| delay|  130.889|
+20140707_113320 AUDIT INFO - repair doc  t|60334.986| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D367| rprhr|0.013889|
+20140707_113320 AUDIT INFO - repair doc  t|60341.083| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D806| rprhr|0.013889|
+20140707_113320 AUDIT INFO - repair doc  t|60359.028| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D2098| rprhr|0.013889|
+20140707_113320 AUDIT INFO - repair doc  t|60359.417| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D2126| rprhr|0.013889|
+20140707_113320 AUDIT INFO - repair doc  t|60362.472| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D2346| rprhr|0.013889|
+20140707_113320 AUDIT INFO - repair doc  t|60367.764| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D2727| rprhr|0.013889|
+20140707_113320 AUDIT INFO - repair doc  t|60368.292| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D2765| rprhr|0.013889|
+20140707_113320 AUDIT INFO - repair doc  t|60373.431| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D3135| rprhr|0.013889|
+20140707_113320 SERVER INFO - small error t| 60374| svr|L2| shelf|H02| consecutive misses|7|
+20140707_113320 SERVER INFO - small error t| 60374| svr|L2| shelf|H02| hidden failure in copy|X10875| doc|D875|
+20140707_113320 AUDIT INFO - repair doc  t|60384.958| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D3965| rprhr|0.013889|
+20140707_113320 AUDIT INFO - repair doc  t|60396.653| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D4807| rprhr|0.013889|
+20140707_113320 AUDIT INFO - repair doc  t|60398.986| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D4975| rprhr|0.013889|
+20140707_113320 SERVER INFO - small error t| 60405| svr|L2| shelf|H02| hidden failure in copy|X10779| doc|D779|
+20140707_113320 AUDIT INFO - repair doc  t|60418.375| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D6371| rprhr|0.013889|
+20140707_113320 SERVER INFO - small error t| 60422| svr|L1| shelf|H01| consecutive misses|27|
+20140707_113320 SERVER INFO - small error t| 60422| svr|L1| shelf|H01| hidden failure in copy|X4327| doc|D4327|
+20140707_113320 AUDIT INFO - repair doc  t|60425.208| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D6863| rprhr|0.013889|
+20140707_113320 AUDIT INFO - repair doc  t|60435.403| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D7597| rprhr|0.013889|
+20140707_113320 SERVER INFO - small error t| 60441| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113320 SERVER INFO - small error t| 60441| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113321 AUDIT INFO - repair doc  t|60456.806| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D9138| rprhr|0.013889|
+20140707_113321 AUDIT INFO - end cycle   t|60468.778| auditid|A1| cli|T1| coll|C1 svr|L1| repairs|15| total|99| duration|  138.889|
+20140707_113321 SERVER INFO - small error t| 60931| svr|L2| shelf|H02| consecutive misses|12|
+20140707_113321 SERVER INFO - small error t| 60931| svr|L2| shelf|H02| hidden failure in copy|X20135| doc|D313|
+20140707_113321 SERVER INFO - small error t| 60935| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113321 SERVER INFO - small error t| 61135| svr|L1| shelf|H01| consecutive misses|14|
+20140707_113321 SERVER INFO - small error t| 61135| svr|L1| shelf|H01| hidden failure in copy|X5549| doc|D5549|
+20140707_113321 SERVER INFO - small error t| 61240| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113321 SERVER INFO - small error t| 61388| svr|L2| shelf|H02| consecutive misses|15|
+20140707_113321 SERVER INFO - small error t| 61388| svr|L2| shelf|H02| hidden failure in copy|X16562| doc|D6562|
+20140707_113321 SERVER INFO - small error t| 61391| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113321 SERVER INFO - small error t| 61465| svr|L1| shelf|H01| consecutive misses|8|
+20140707_113321 SERVER INFO - small error t| 61465| svr|L1| shelf|H01| hidden failure in copy|X2789| doc|D2789|
+20140707_113321 SERVER INFO - small error t| 61482| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113321 SERVER INFO - small error t| 62090| svr|L1| shelf|H01| consecutive misses|21|
+20140707_113321 SERVER INFO - small error t| 62090| svr|L1| shelf|H01| hidden failure in copy|X2674| doc|D2674|
+20140707_113321 SERVER INFO - small error t| 62128| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113321 SERVER INFO - small error t| 62283| svr|L2| shelf|H02| consecutive misses|32|
+20140707_113321 SERVER INFO - small error t| 62283| svr|L2| shelf|H02| hidden failure in copy|X19748| doc|D9748|
+20140707_113321 SERVER INFO - small error t| 62321| svr|L2| shelf|H02| hidden failure in copy|X16341| doc|D6341|
+20140707_113321 SERVER INFO - small error t| 62342| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113321 SERVER INFO - small error t| 62571| svr|L1| shelf|H01| consecutive misses|22|
+20140707_113321 SERVER INFO - small error t| 62571| svr|L1| shelf|H01| hidden failure in copy|X4171| doc|D4171|
+20140707_113321 SERVER INFO - small error t| 62606| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113321 SERVER INFO - small error t| 63237| svr|L1| shelf|H01| consecutive misses|22|
+20140707_113321 SERVER INFO - small error t| 63237| svr|L1| shelf|H01| hidden failure in copy|X1808| doc|D1808|
+20140707_113321 SERVER INFO - small error t| 63242| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113321 SERVER INFO - small error t| 64420| svr|L2| shelf|H02| consecutive misses|59|
+20140707_113321 SERVER INFO - small error t| 64420| svr|L2| shelf|H02| hidden failure in copy|X15110| doc|D5110|
+20140707_113321 SERVER INFO - small error t| 64466| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113321 SERVER INFO - small error t| 64887| svr|L2| shelf|H02| consecutive misses|14|
+20140707_113321 SERVER INFO - small error t| 64887| svr|L2| shelf|H02| hidden failure in copy|X13252| doc|D3252|
+20140707_113321 SERVER INFO - small error t| 64941| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113321 SERVER INFO - small error t| 65360| svr|L1| shelf|H01| consecutive misses|56|
+20140707_113321 SERVER INFO - small error t| 65360| svr|L1| shelf|H01| hidden failure in copy|X7077| doc|D7077|
+20140707_113321 SERVER INFO - small error t| 65386| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113321 SERVER INFO - small error t| 65397| svr|L1| shelf|H01| consecutive misses|1|
+20140707_113321 SERVER INFO - small error t| 65397| svr|L1| shelf|H01| hidden failure in copy|X7636| doc|D7636|
+20140707_113321 SERVER INFO - small error t| 65407| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113321 SERVER INFO - small error t| 66072| svr|L2| shelf|H02| consecutive misses|33|
+20140707_113321 SERVER INFO - small error t| 66072| svr|L2| shelf|H02| hidden failure in copy|X16011| doc|D6011|
+20140707_113321 SERVER INFO - small error t| 66076| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113321 SERVER INFO - small error t| 66954| svr|L2| shelf|H02| consecutive misses|26|
+20140707_113321 SERVER INFO - small error t| 66954| svr|L2| shelf|H02| hidden failure in copy|X15290| doc|D5290|
+20140707_113321 SERVER INFO - small error t| 66970| svr|L2| shelf|H02| hidden failure in copy|X11582| doc|D1582|
+20140707_113321 SERVER INFO - small error t| 66980| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113321 SERVER INFO - small error t| 67842| svr|L2| shelf|H02| consecutive misses|34|
+20140707_113321 SERVER INFO - small error t| 67842| svr|L2| shelf|H02| hidden failure in copy|X14576| doc|D4576|
+20140707_113321 SERVER INFO - small error t| 67874| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113321 SERVER INFO - small error t| 69013| svr|L1| shelf|H01| consecutive misses|93|
+20140707_113321 SERVER INFO - small error t| 69013| svr|L1| shelf|H01| hidden failure in copy|X1510| doc|D1510|
+20140707_113321 SERVER INFO - small error t| 69016| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113321 SERVER INFO - small error t| 69458| svr|L1| shelf|H01| consecutive misses|16|
+20140707_113321 SERVER INFO - small error t| 69458| svr|L1| shelf|H01| hidden failure in copy|X7679| doc|D7679|
+20140707_113321 SERVER INFO - small error t| 69465| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113321 SERVER INFO - small error t| 69669| svr|L1| shelf|H01| consecutive misses|9|
+20140707_113321 SERVER INFO - small error t| 69669| svr|L1| shelf|H01| hidden failure in copy|X5627| doc|D5627|
+20140707_113321 SERVER INFO - small error t| 69714| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113321 SERVER INFO - small error t| 70050| svr|L1| shelf|H01| consecutive misses|9|
+20140707_113321 SERVER INFO - small error t| 70050| svr|L1| shelf|H01| hidden failure in copy|X2701| doc|D2701|
+20140707_113321 SERVER INFO - small error t| 70056| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113321 AUDIT INFO - begin cycle t|70191.000| auditid|A2| cli|T1| coll|C1 svr|L2|
+20140707_113321 AUDIT INFO - repair doc  t|70195.347| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D313| rprhr|0.013889|
+20140707_113321 AUDIT INFO - begin cycle t|70199.000| auditid|A1| cli|T1| coll|C1 svr|L1|
+20140707_113321 AUDIT INFO - repair doc  t|70201.819| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D779| rprhr|0.013889|
+20140707_113321 AUDIT INFO - repair doc  t|70203.153| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D875| rprhr|0.013889|
+20140707_113321 AUDIT INFO - repair doc  t|70212.972| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D1582| rprhr|0.013889|
+20140707_113321 AUDIT INFO - repair doc  t|70236.167| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D3252| rprhr|0.013889|
+20140707_113321 AUDIT INFO - repair doc  t|70254.556| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D4576| rprhr|0.013889|
+20140707_113321 AUDIT INFO - repair doc  t|70261.972| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D5110| rprhr|0.013889|
+20140707_113321 AUDIT INFO - repair doc  t|70264.472| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D5290| rprhr|0.013889|
+20140707_113321 AUDIT INFO - repair doc  t|70274.486| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D6011| rprhr|0.013889|
+20140707_113321 AUDIT INFO - repair doc  t|70279.069| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D6341| rprhr|0.013889|
+20140707_113321 AUDIT INFO - repair doc  t|70282.139| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D6562| rprhr|0.013889|
+20140707_113322 AUDIT INFO - repair doc  t|70326.389| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D9748| rprhr|0.013889|
+20140707_113322 AUDIT INFO - end cycle   t|70329.889| auditid|A2| cli|T1| coll|C1 svr|L2| repairs|12| total|108| duration|  138.889|
+20140707_113322 AUDIT INFO - waitnetwork t|70329.889| auditid|A1| cli|T1| coll|C1 svr|L1| delay|  130.889|
+20140707_113322 AUDIT INFO - repair doc  t|70350.861| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D1510| rprhr|0.013889|
+20140707_113322 AUDIT INFO - repair doc  t|70355.000| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D1808| rprhr|0.013889|
+20140707_113322 AUDIT INFO - repair doc  t|70367.028| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D2674| rprhr|0.013889|
+20140707_113322 AUDIT INFO - repair doc  t|70367.403| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D2701| rprhr|0.013889|
+20140707_113322 AUDIT INFO - repair doc  t|70368.625| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D2789| rprhr|0.013889|
+20140707_113322 AUDIT INFO - repair doc  t|70387.819| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D4171| rprhr|0.013889|
+20140707_113322 AUDIT INFO - repair doc  t|70389.986| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D4327| rprhr|0.013889|
+20140707_113322 AUDIT INFO - repair doc  t|70406.958| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D5549| rprhr|0.013889|
+20140707_113322 AUDIT INFO - repair doc  t|70408.042| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D5627| rprhr|0.013889|
+20140707_113322 AUDIT INFO - repair doc  t|70428.181| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D7077| rprhr|0.013889|
+20140707_113322 AUDIT INFO - repair doc  t|70435.944| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D7636| rprhr|0.013889|
+20140707_113322 AUDIT INFO - repair doc  t|70436.542| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D7679| rprhr|0.013889|
+20140707_113322 AUDIT INFO - end cycle   t|70468.778| auditid|A1| cli|T1| coll|C1 svr|L1| repairs|12| total|111| duration|  138.889|
+20140707_113322 SERVER INFO - small error t| 70505| svr|L2| shelf|H02| consecutive misses|77|
+20140707_113322 SERVER INFO - small error t| 70505| svr|L2| shelf|H02| hidden failure in copy|X11191| doc|D1191|
+20140707_113322 SERVER INFO - small error t| 70520| svr|L1| shelf|H01| consecutive misses|17|
+20140707_113322 SERVER INFO - small error t| 70520| svr|L1| shelf|H01| hidden failure in copy|X7801| doc|D7801|
+20140707_113322 SERVER INFO - small error t| 70524| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113322 SERVER INFO - small error t| 70612| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113322 SERVER INFO - small error t| 70621| svr|L1| shelf|H01| consecutive misses|4|
+20140707_113322 SERVER INFO - small error t| 70621| svr|L1| shelf|H01| hidden failure in copy|X7515| doc|D7515|
+20140707_113322 SERVER INFO - small error t| 70624| svr|L2| shelf|H02| consecutive misses|2|
+20140707_113322 SERVER INFO - small error t| 70624| svr|L2| shelf|H02| hidden failure in copy|X10926| doc|D926|
+20140707_113322 SERVER INFO - small error t| 70650| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113322 SERVER INFO - small error t| 70659| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113322 SERVER INFO - small error t| 71726| svr|L2| shelf|H02| consecutive misses|35|
+20140707_113322 SERVER INFO - small error t| 71726| svr|L2| shelf|H02| hidden failure in copy|X18024| doc|D8024|
+20140707_113322 SERVER INFO - small error t| 71753| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113322 SERVER INFO - small error t| 71923| svr|L1| shelf|H01| consecutive misses|45|
+20140707_113322 SERVER INFO - small error t| 71923| svr|L1| shelf|H01| hidden failure in copy|X858| doc|D858|
+20140707_113322 SERVER INFO - small error t| 71925| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113322 SERVER INFO - small error t| 72463| svr|L1| shelf|H01| consecutive misses|11|
+20140707_113322 SERVER INFO - small error t| 72463| svr|L1| shelf|H01| hidden failure in copy|X4544| doc|D4544|
+20140707_113322 SERVER INFO - small error t| 72511| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113322 SERVER INFO - small error t| 72618| svr|L1| shelf|H01| consecutive misses|3|
+20140707_113322 SERVER INFO - small error t| 72618| svr|L1| shelf|H01| hidden failure in copy|X2657| doc|D2657|
+20140707_113322 SERVER INFO - small error t| 72621| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113322 SERVER INFO - small error t| 73124| svr|L2| shelf|H02| consecutive misses|54|
+20140707_113322 SERVER INFO - small error t| 73124| svr|L2| shelf|H02| hidden failure in copy|X13970| doc|D3970|
+20140707_113322 SERVER INFO - small error t| 73132| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113322 SERVER INFO - small error t| 73573| svr|L1| shelf|H01| consecutive misses|42|
+20140707_113322 SERVER INFO - small error t| 73573| svr|L1| shelf|H01| hidden failure in copy|X4367| doc|D4367|
+20140707_113322 SERVER INFO - small error t| 73597| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113322 SERVER INFO - small error t| 74225| svr|L2| shelf|H02| consecutive misses|38|
+20140707_113322 SERVER INFO - small error t| 74225| svr|L2| shelf|H02| hidden failure in copy|X16862| doc|D6862|
+20140707_113322 SERVER INFO - small error t| 74237| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113322 SERVER INFO - small error t| 74302| svr|L1| shelf|H01| consecutive misses|26|
+20140707_113322 SERVER INFO - small error t| 74302| svr|L1| shelf|H01| hidden failure in copy|X1626| doc|D1626|
+20140707_113322 SERVER INFO - small error t| 74306| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113322 SERVER INFO - small error t| 74404| svr|L1| shelf|H01| consecutive misses|5|
+20140707_113322 SERVER INFO - small error t| 74404| svr|L1| shelf|H01| hidden failure in copy|X7836| doc|D7836|
+20140707_113322 SERVER INFO - small error t| 74418| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113322 SERVER INFO - small error t| 74586| svr|L1| shelf|H01| consecutive misses|5|
+20140707_113322 SERVER INFO - small error t| 74586| svr|L1| shelf|H01| hidden failure in copy|X7069| doc|D7069|
+20140707_113323 SERVER INFO - small error t| 74587| svr|L2| shelf|H02| consecutive misses|5|
+20140707_113323 SERVER INFO - small error t| 74587| svr|L2| shelf|H02| hidden failure in copy|X16894| doc|D6894|
+20140707_113323 SERVER INFO - small error t| 74609| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113323 SERVER INFO - small error t| 74663| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113323 SERVER INFO - small error t| 75186| svr|L1| shelf|H01| consecutive misses|16|
+20140707_113323 SERVER INFO - small error t| 75186| svr|L1| shelf|H01| hidden failure in copy|X1553| doc|D1553|
+20140707_113323 SERVER INFO - small error t| 75188| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113323 SERVER INFO - small error t| 76267| svr|L1| shelf|H01| consecutive misses|36|
+20140707_113323 SERVER INFO - small error t| 76267| svr|L1| shelf|H01| hidden failure in copy|X7981| doc|D7981|
+20140707_113323 SERVER INFO - small error t| 76278| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113323 SERVER INFO - small error t| 76609| svr|L1| shelf|H01| consecutive misses|7|
+20140707_113323 SERVER INFO - small error t| 76609| svr|L1| shelf|H01| hidden failure in copy|X9839| doc|D9839|
+20140707_113323 SERVER INFO - small error t| 76619| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113323 SERVER INFO - small error t| 76884| svr|L1| shelf|H01| consecutive misses|16|
+20140707_113323 SERVER INFO - small error t| 76884| svr|L1| shelf|H01| hidden failure in copy|X5882| doc|D5882|
+20140707_113323 SERVER INFO - small error t| 76901| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113323 SERVER INFO - small error t| 77131| svr|L2| shelf|H02| consecutive misses|87|
+20140707_113323 SERVER INFO - small error t| 77131| svr|L2| shelf|H02| hidden failure in copy|X16187| doc|D6187|
+20140707_113323 SERVER INFO - small error t| 77143| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113323 SERVER INFO - small error t| 77377| svr|L2| shelf|H02| consecutive misses|11|
+20140707_113323 SERVER INFO - small error t| 77377| svr|L2| shelf|H02| hidden failure in copy|X11300| doc|D1300|
+20140707_113323 SERVER INFO - small error t| 77384| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113323 SERVER INFO - small error t| 77836| svr|L2| shelf|H02| consecutive misses|16|
+20140707_113323 SERVER INFO - small error t| 77836| svr|L2| shelf|H02| hidden failure in copy|X17326| doc|D7326|
+20140707_113323 SERVER INFO - small error t| 77844| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113323 SERVER INFO - small error t| 78187| svr|L1| shelf|H01| consecutive misses|41|
+20140707_113323 SERVER INFO - small error t| 78187| svr|L1| shelf|H01| hidden failure in copy|X2166| doc|D2166|
+20140707_113323 SERVER INFO - small error t| 78201| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113323 SERVER INFO - small error t| 78289| svr|L2| shelf|H02| consecutive misses|12|
+20140707_113323 SERVER INFO - small error t| 78289| svr|L2| shelf|H02| hidden failure in copy|X13151| doc|D3151|
+20140707_113323 SERVER INFO - small error t| 78289| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113323 SERVER INFO - small error t| 78468| svr|L1| shelf|H01| consecutive misses|5|
+20140707_113323 SERVER INFO - small error t| 78468| svr|L1| shelf|H01| hidden failure in copy|X2467| doc|D2467|
+20140707_113323 SERVER INFO - small error t| 78472| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113323 SERVER INFO - small error t| 78661| svr|L2| shelf|H02| consecutive misses|10|
+20140707_113323 SERVER INFO - small error t| 78661| svr|L2| shelf|H02| hidden failure in copy|X11050| doc|D1050|
+20140707_113323 SERVER INFO - small error t| 78671| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113323 SERVER INFO - small error t| 79253| svr|L1| shelf|H01| consecutive misses|24|
+20140707_113323 SERVER INFO - small error t| 79253| svr|L1| shelf|H01| hidden failure in copy|X1007| doc|D1007|
+20140707_113323 SERVER INFO - small error t| 79255| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113323 SERVER INFO - small error t| 79258| svr|L2| shelf|H02| consecutive misses|27|
+20140707_113323 SERVER INFO - small error t| 79258| svr|L2| shelf|H02| hidden failure in copy|X17140| doc|D7140|
+20140707_113323 SERVER INFO - small error t| 79341| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113323 SERVER INFO - small error t| 79343| svr|L1| shelf|H01| consecutive misses|4|
+20140707_113323 SERVER INFO - small error t| 79343| svr|L1| shelf|H01| hidden failure in copy|X1520| doc|D1520|
+20140707_113323 SERVER INFO - small error t| 79393| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113323 SERVER INFO - small error t| 79431| svr|L2| shelf|H02| consecutive misses|2|
+20140707_113323 SERVER INFO - small error t| 79431| svr|L2| shelf|H02| hidden failure in copy|X10363| doc|D363|
+20140707_113323 SERVER INFO - small error t| 79465| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113323 SERVER INFO - small error t| 79576| svr|L1| shelf|H01| consecutive misses|15|
+20140707_113323 SERVER INFO - small error t| 79576| svr|L1| shelf|H01| hidden failure in copy|X1210| doc|D1210|
+20140707_113323 SERVER INFO - small error t| 79587| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113323 SERVER INFO - small error t| 79865| svr|L1| shelf|H01| consecutive misses|8|
+20140707_113323 SERVER INFO - small error t| 79865| svr|L1| shelf|H01| hidden failure in copy|X4841| doc|D4841|
+20140707_113323 SERVER INFO - small error t| 79931| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113323 SERVER INFO - small error t| 79958| svr|L1| shelf|H01| consecutive misses|1|
+20140707_113323 SERVER INFO - small error t| 79958| svr|L1| shelf|H01| hidden failure in copy|X9296| doc|D9296|
+20140707_113323 SERVER INFO - small error t| 79972| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113323 AUDIT INFO - begin cycle t|80191.000| auditid|A2| cli|T1| coll|C1 svr|L2|
+20140707_113323 AUDIT INFO - repair doc  t|80196.042| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D363| rprhr|0.013889|
+20140707_113323 AUDIT INFO - begin cycle t|80199.000| auditid|A1| cli|T1| coll|C1 svr|L1|
+20140707_113323 AUDIT INFO - repair doc  t|80203.861| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D926| rprhr|0.013889|
+20140707_113323 AUDIT INFO - repair doc  t|80205.583| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D1050| rprhr|0.013889|
+20140707_113323 AUDIT INFO - repair doc  t|80207.542| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D1191| rprhr|0.013889|
+20140707_113323 AUDIT INFO - repair doc  t|80209.056| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D1300| rprhr|0.013889|
+20140707_113323 AUDIT INFO - repair doc  t|80234.764| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D3151| rprhr|0.013889|
+20140707_113323 AUDIT INFO - repair doc  t|80246.139| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D3970| rprhr|0.013889|
+20140707_113323 AUDIT INFO - repair doc  t|80276.931| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D6187| rprhr|0.013889|
+20140707_113323 AUDIT INFO - repair doc  t|80286.306| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D6862| rprhr|0.013889|
+20140707_113323 AUDIT INFO - repair doc  t|80286.750| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D6894| rprhr|0.013889|
+20140707_113323 AUDIT INFO - repair doc  t|80290.167| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D7140| rprhr|0.013889|
+20140707_113323 AUDIT INFO - repair doc  t|80292.750| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D7326| rprhr|0.013889|
+20140707_113323 AUDIT INFO - repair doc  t|80302.444| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D8024| rprhr|0.013889|
+20140707_113323 SERVER INFO - small error t| 80310| svr|L1| shelf|H01| consecutive misses|15|
+20140707_113323 SERVER INFO - small error t| 80310| svr|L1| shelf|H01| hidden failure in copy|X3441| doc|D3441|
+20140707_113323 AUDIT INFO - end cycle   t|80329.889| auditid|A2| cli|T1| coll|C1 svr|L2| repairs|13| total|121| duration|  138.889|
+20140707_113323 AUDIT INFO - waitnetwork t|80329.889| auditid|A1| cli|T1| coll|C1 svr|L1| delay|  130.889|
+20140707_113323 SERVER INFO - small error t| 80337| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113323 AUDIT INFO - repair doc  t|80341.806| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D858| rprhr|0.013889|
+20140707_113323 AUDIT INFO - repair doc  t|80343.875| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D1007| rprhr|0.013889|
+20140707_113323 AUDIT INFO - repair doc  t|80346.694| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D1210| rprhr|0.013889|
+20140707_113323 AUDIT INFO - repair doc  t|80351.000| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D1520| rprhr|0.013889|
+20140707_113323 AUDIT INFO - repair doc  t|80351.458| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D1553| rprhr|0.013889|
+20140707_113323 AUDIT INFO - repair doc  t|80352.472| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D1626| rprhr|0.013889|
+20140707_113324 AUDIT INFO - repair doc  t|80359.972| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D2166| rprhr|0.013889|
+20140707_113324 AUDIT INFO - repair doc  t|80364.153| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D2467| rprhr|0.013889|
+20140707_113324 AUDIT INFO - repair doc  t|80366.792| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D2657| rprhr|0.013889|
+20140707_113324 AUDIT INFO - repair doc  t|80377.681| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D3441| rprhr|0.013889|
+20140707_113324 AUDIT INFO - repair doc  t|80390.542| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D4367| rprhr|0.013889|
+20140707_113324 AUDIT INFO - repair doc  t|80393.000| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D4544| rprhr|0.013889|
+20140707_113324 AUDIT INFO - repair doc  t|80397.125| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D4841| rprhr|0.013889|
+20140707_113324 AUDIT INFO - repair doc  t|80411.583| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D5882| rprhr|0.013889|
+20140707_113324 AUDIT INFO - repair doc  t|80428.069| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D7069| rprhr|0.013889|
+20140707_113324 AUDIT INFO - repair doc  t|80434.264| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D7515| rprhr|0.013889|
+20140707_113324 AUDIT INFO - repair doc  t|80438.236| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D7801| rprhr|0.013889|
+20140707_113324 AUDIT INFO - repair doc  t|80438.722| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D7836| rprhr|0.013889|
+20140707_113324 AUDIT INFO - repair doc  t|80440.736| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D7981| rprhr|0.013889|
+20140707_113324 AUDIT INFO - repair doc  t|80459.000| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D9296| rprhr|0.013889|
+20140707_113324 AUDIT INFO - repair doc  t|80466.542| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D9839| rprhr|0.013889|
+20140707_113324 AUDIT INFO - end cycle   t|80468.778| auditid|A1| cli|T1| coll|C1 svr|L1| repairs|21| total|132| duration|  138.889|
+20140707_113324 SERVER INFO - small error t| 80616| svr|L2| shelf|H02| consecutive misses|39|
+20140707_113324 SERVER INFO - small error t| 80616| svr|L2| shelf|H02| hidden failure in copy|X18518| doc|D8518|
+20140707_113324 SERVER INFO - small error t| 80617| svr|L1| shelf|H01| consecutive misses|6|
+20140707_113324 SERVER INFO - small error t| 80617| svr|L1| shelf|H01| hidden failure in copy|X2020| doc|D2020|
+20140707_113324 SERVER INFO - small error t| 80629| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113324 SERVER INFO - small error t| 80636| svr|L2| shelf|H02| consecutive misses|2|
+20140707_113324 SERVER INFO - small error t| 80636| svr|L2| shelf|H02| hidden failure in copy|X10563| doc|D563|
+20140707_113324 SERVER INFO - small error t| 80639| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113324 SERVER INFO - small error t| 80666| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113324 SERVER INFO - small error t| 80863| svr|L2| shelf|H02| consecutive misses|11|
+20140707_113324 SERVER INFO - small error t| 80863| svr|L2| shelf|H02| hidden failure in copy|X13799| doc|D3799|
+20140707_113324 SERVER INFO - small error t| 80896| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113324 SERVER INFO - small error t| 82578| svr|L1| shelf|H01| consecutive misses|74|
+20140707_113324 SERVER INFO - small error t| 82578| svr|L1| shelf|H01| hidden failure in copy|X8154| doc|D8154|
+20140707_113324 SERVER INFO - small error t| 82587| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113324 SERVER INFO - small error t| 83892| svr|L1| shelf|H01| consecutive misses|49|
+20140707_113324 SERVER INFO - small error t| 83892| svr|L1| shelf|H01| hidden failure in copy|X9830| doc|D9830|
+20140707_113324 SERVER INFO - small error t| 83897| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113324 SERVER INFO - small error t| 84133| svr|L1| shelf|H01| consecutive misses|5|
+20140707_113324 SERVER INFO - small error t| 84133| svr|L1| shelf|H01| hidden failure in copy|X6674| doc|D6674|
+20140707_113324 SERVER INFO - small error t| 84155| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113324 SERVER INFO - small error t| 84390| svr|L1| shelf|H01| consecutive misses|8|
+20140707_113324 SERVER INFO - small error t| 84390| svr|L1| shelf|H01| hidden failure in copy|X4921| doc|D4921|
+20140707_113324 SERVER INFO - small error t| 84489| svr|L2| shelf|H02| consecutive misses|129|
+20140707_113324 SERVER INFO - small error t| 84489| svr|L2| shelf|H02| hidden failure in copy|X10216| doc|D216|
+20140707_113324 SERVER INFO - small error t| 84511| svr|L2| shelf|H02| hidden failure in copy|X15350| doc|D5350|
+20140707_113324 SERVER INFO - small error t| 84516| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113324 SERVER INFO - small error t| 84530| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113324 SERVER INFO - small error t| 84535| svr|L1| shelf|H01| consecutive misses|2|
+20140707_113324 SERVER INFO - small error t| 84535| svr|L1| shelf|H01| hidden failure in copy|X7337| doc|D7337|
+20140707_113324 SERVER INFO - small error t| 84558| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113324 SERVER INFO - small error t| 84760| svr|L1| shelf|H01| consecutive misses|5|
+20140707_113324 SERVER INFO - small error t| 84760| svr|L1| shelf|H01| hidden failure in copy|X515| doc|D515|
+20140707_113324 SERVER INFO - small error t| 84809| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113324 SERVER INFO - small error t| 84946| svr|L2| shelf|H02| consecutive misses|13|
+20140707_113324 SERVER INFO - small error t| 84946| svr|L2| shelf|H02| hidden failure in copy|X15138| doc|D5138|
+20140707_113324 SERVER INFO - small error t| 84959| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113324 SERVER INFO - small error t| 84983| svr|L2| shelf|H02| consecutive misses|1|
+20140707_113324 SERVER INFO - small error t| 84983| svr|L2| shelf|H02| hidden failure in copy|X17416| doc|D7416|
+20140707_113324 SERVER INFO - small error t| 85007| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113324 SERVER INFO - small error t| 85246| svr|L1| shelf|H01| consecutive misses|17|
+20140707_113324 SERVER INFO - small error t| 85246| svr|L1| shelf|H01| hidden failure in copy|X4634| doc|D4634|
+20140707_113324 SERVER INFO - small error t| 85292| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113324 SERVER INFO - small error t| 85437| svr|L1| shelf|H01| consecutive misses|6|
+20140707_113324 SERVER INFO - small error t| 85437| svr|L1| shelf|H01| hidden failure in copy|X4618| doc|D4618|
+20140707_113324 SERVER INFO - small error t| 85525| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113324 SERVER INFO - small error t| 86195| svr|L2| shelf|H02| consecutive misses|38|
+20140707_113324 SERVER INFO - small error t| 86195| svr|L2| shelf|H02| hidden failure in copy|X20225| doc|D3151|
+20140707_113324 SERVER INFO - small error t| 86197| svr|L2| shelf|H02| hidden failure in copy|X18755| doc|D8755|
+20140707_113324 SERVER INFO - small error t| 86205| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113324 SERVER INFO - small error t| 86752| svr|L2| shelf|H02| consecutive misses|15|
+20140707_113324 SERVER INFO - small error t| 86752| svr|L2| shelf|H02| hidden failure in copy|X11615| doc|D1615|
+20140707_113324 SERVER INFO - small error t| 86787| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113324 SERVER INFO - small error t| 86916| svr|L2| shelf|H02| consecutive misses|5|
+20140707_113324 SERVER INFO - small error t| 86916| svr|L2| shelf|H02| hidden failure in copy|X17165| doc|D7165|
+20140707_113324 SERVER INFO - small error t| 86927| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113324 SERVER INFO - small error t| 87193| svr|L2| shelf|H02| consecutive misses|11|
+20140707_113324 SERVER INFO - small error t| 87193| svr|L2| shelf|H02| hidden failure in copy|X11527| doc|D1527|
+20140707_113324 SERVER INFO - small error t| 87207| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113324 SERVER INFO - small error t| 88057| svr|L1| shelf|H01| consecutive misses|84|
+20140707_113324 SERVER INFO - small error t| 88057| svr|L1| shelf|H01| hidden failure in copy|X8383| doc|D8383|
+20140707_113324 SERVER INFO - small error t| 88080| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113324 SERVER INFO - small error t| 88134| svr|L1| shelf|H01| consecutive misses|2|
+20140707_113324 SERVER INFO - small error t| 88134| svr|L1| shelf|H01| hidden failure in copy|X8093| doc|D8093|
+20140707_113324 SERVER INFO - small error t| 88139| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113324 SERVER INFO - small error t| 88851| svr|L2| shelf|H02| consecutive misses|36|
+20140707_113324 SERVER INFO - small error t| 88851| svr|L2| shelf|H02| hidden failure in copy|X17313| doc|D7313|
+20140707_113324 SERVER INFO - small error t| 88869| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113324 SERVER INFO - small error t| 88871| svr|L2| shelf|H02| consecutive misses|1|
+20140707_113324 SERVER INFO - small error t| 88871| svr|L2| shelf|H02| hidden failure in copy|X16465| doc|D6465|
+20140707_113324 SERVER INFO - small error t| 88875| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113324 SERVER INFO - small error t| 89428| svr|L2| shelf|H02| consecutive misses|22|
+20140707_113324 SERVER INFO - small error t| 89428| svr|L2| shelf|H02| hidden failure in copy|X10889| doc|D889|
+20140707_113324 SERVER INFO - small error t| 89432| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113324 SERVER INFO - small error t| 89519| svr|L2| shelf|H02| consecutive misses|1|
+20140707_113324 SERVER INFO - small error t| 89519| svr|L2| shelf|H02| hidden failure in copy|X11938| doc|D1938|
+20140707_113324 SERVER INFO - small error t| 89536| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113324 SERVER INFO - small error t| 90058| svr|L1| shelf|H01| consecutive misses|67|
+20140707_113324 SERVER INFO - small error t| 90058| svr|L1| shelf|H01| hidden failure in copy|X5782| doc|D5782|
+20140707_113324 SERVER INFO - small error t| 90066| svr|L1| shelf|H01| hidden failure in copy|None|
+# This is the last audit cycle in the simulation.  Any errors that occur
+# after this instant, in this period of exposure, might not be caught 
+# in the auditing.  Therefore those documents will be lost on at least
+# one server, and might be lost on all servers.  
+# Basically, this type of total auditing simply shortens the simulation 
+# to the period after the last audit cycle begins.  
+20140707_113324 AUDIT INFO - begin cycle t|90191.000| auditid|A2| cli|T1| coll|C1 svr|L2|
+20140707_113324 AUDIT INFO - repair doc  t|90194.000| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D216| rprhr|0.013889|
+20140707_113324 AUDIT INFO - repair doc  t|90198.819| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D563| rprhr|0.013889|
+20140707_113324 AUDIT INFO - begin cycle t|90199.000| auditid|A1| cli|T1| coll|C1 svr|L1|
+20140707_113324 AUDIT INFO - repair doc  t|90203.347| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D889| rprhr|0.013889|
+20140707_113324 AUDIT INFO - repair doc  t|90212.208| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D1527| rprhr|0.013889|
+20140707_113324 AUDIT INFO - repair doc  t|90213.431| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D1615| rprhr|0.013889|
+20140707_113324 AUDIT INFO - repair doc  t|90217.917| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D1938| rprhr|0.013889|
+20140707_113325 AUDIT INFO - repair doc  t|90234.764| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D3151| rprhr|0.013889|
+20140707_113325 AUDIT INFO - repair doc  t|90243.764| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D3799| rprhr|0.013889|
+20140707_113325 AUDIT INFO - repair doc  t|90262.361| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D5138| rprhr|0.013889|
+20140707_113325 SERVER INFO - small error t| 90264| svr|L1| shelf|H01| consecutive misses|8|
+20140707_113325 SERVER INFO - small error t| 90264| svr|L1| shelf|H01| hidden failure in copy|X154| doc|D154|
+20140707_113325 AUDIT INFO - repair doc  t|90265.306| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D5350| rprhr|0.013889|
+20140707_113325 AUDIT INFO - repair doc  t|90280.792| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D6465| rprhr|0.013889|
+20140707_113325 AUDIT INFO - repair doc  t|90290.514| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D7165| rprhr|0.013889|
+20140707_113325 AUDIT INFO - repair doc  t|90292.569| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D7313| rprhr|0.013889|
+20140707_113325 AUDIT INFO - repair doc  t|90294.000| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D7416| rprhr|0.013889|
+20140707_113325 AUDIT INFO - repair doc  t|90309.306| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D8518| rprhr|0.013889|
+20140707_113325 SERVER INFO - small error t| 90311| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113325 AUDIT INFO - repair doc  t|90312.597| auditid|A2| cli|T1| coll|C1| svr|L2| doc|D8755| rprhr|0.013889|
+20140707_113325 AUDIT INFO - end cycle   t|90329.889| auditid|A2| cli|T1| coll|C1 svr|L2| repairs|16| total|137| duration|  138.889|
+20140707_113325 AUDIT INFO - waitnetwork t|90329.889| auditid|A1| cli|T1| coll|C1 svr|L1| delay|  130.889|
+20140707_113325 AUDIT INFO - repair doc  t|90332.028| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D154| rprhr|0.013889|
+20140707_113325 AUDIT INFO - repair doc  t|90337.042| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D515| rprhr|0.013889|
+20140707_113325 AUDIT INFO - repair doc  t|90357.944| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D2020| rprhr|0.013889|
+20140707_113325 SERVER INFO - small error t| 90390| svr|L2| shelf|H02| consecutive misses|32|
+20140707_113325 SERVER INFO - small error t| 90390| svr|L2| shelf|H02| hidden failure in copy|X13014| doc|D3014|
+20140707_113326 AUDIT INFO - repair doc  t|90394.028| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D4618| rprhr|0.013889|
+20140707_113326 AUDIT INFO - repair doc  t|90394.250| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D4634| rprhr|0.013889|
+20140707_113326 AUDIT INFO - repair doc  t|90398.236| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D4921| rprhr|0.013889|
+20140707_113326 SERVER INFO - small error t| 90401| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113326 AUDIT INFO - repair doc  t|90410.194| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D5782| rprhr|0.013889|
+20140707_113326 AUDIT INFO - repair doc  t|90422.583| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D6674| rprhr|0.013889|
+20140707_113326 AUDIT INFO - repair doc  t|90431.792| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D7337| rprhr|0.013889|
+20140707_113326 AUDIT INFO - repair doc  t|90442.292| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D8093| rprhr|0.013889|
+20140707_113326 AUDIT INFO - repair doc  t|90443.139| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D8154| rprhr|0.013889|
+20140707_113326 AUDIT INFO - repair doc  t|90446.319| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D8383| rprhr|0.013889|
+20140707_113326 AUDIT INFO - repair doc  t|90466.417| auditid|A1| cli|T1| coll|C1| svr|L1| doc|D9830| rprhr|0.013889|
+20140707_113326 AUDIT INFO - end cycle   t|90468.778| auditid|A1| cli|T1| coll|C1 svr|L1| repairs|13| total|145| duration|  138.889|
+20140707_113326 SERVER INFO - small error t| 90510| svr|L2| shelf|H02| consecutive misses|3|
+20140707_113326 SERVER INFO - small error t| 90510| svr|L2| shelf|H02| hidden failure in copy|X12760| doc|D2760|
+20140707_113326 SERVER INFO - small error t| 90527| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113326 SERVER INFO - small error t| 90600| svr|L2| shelf|H02| consecutive misses|4|
+20140707_113326 SERVER INFO - small error t| 90600| svr|L2| shelf|H02| hidden failure in copy|X19882| doc|D9882|
+20140707_113326 SERVER INFO - small error t| 90657| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113326 SERVER INFO - small error t| 91245| svr|L2| shelf|H02| consecutive misses|18|
+20140707_113326 SERVER INFO - small error t| 91245| svr|L2| shelf|H02| hidden failure in copy|X10383| doc|D383|
+20140707_113326 SERVER INFO - small error t| 91299| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113326 SERVER INFO - small error t| 92037| svr|L2| shelf|H02| consecutive misses|27|
+20140707_113326 SERVER INFO - small error t| 92037| svr|L2| shelf|H02| hidden failure in copy|X11310| doc|D1310|
+20140707_113326 SERVER INFO - small error t| 92045| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113326 SERVER INFO - small error t| 92455| svr|L2| shelf|H02| consecutive misses|11|
+20140707_113326 SERVER INFO - small error t| 92455| svr|L2| shelf|H02| hidden failure in copy|X19433| doc|D9433|
+20140707_113326 SERVER INFO - small error t| 92482| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113326 SERVER INFO - small error t| 92741| svr|L2| shelf|H02| consecutive misses|9|
+20140707_113326 SERVER INFO - small error t| 92741| svr|L2| shelf|H02| hidden failure in copy|X14141| doc|D4141|
+20140707_113326 SERVER INFO - small error t| 92774| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113326 SERVER INFO - small error t| 93640| svr|L1| shelf|H01| consecutive misses|108|
+20140707_113326 SERVER INFO - small error t| 93640| svr|L1| shelf|H01| hidden failure in copy|X5024| doc|D5024|
+20140707_113326 SERVER INFO - small error t| 93640| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113326 SERVER INFO - small error t| 94095| svr|L1| shelf|H01| consecutive misses|15|
+20140707_113326 SERVER INFO - small error t| 94095| svr|L1| shelf|H01| hidden failure in copy|X7859| doc|D7859|
+20140707_113326 SERVER INFO - small error t| 94139| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113326 SERVER INFO - small error t| 94281| svr|L2| shelf|H02| consecutive misses|47|
+20140707_113326 SERVER INFO - small error t| 94281| svr|L2| shelf|H02| hidden failure in copy|X15503| doc|D5503|
+20140707_113326 SERVER INFO - small error t| 94345| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113326 SERVER INFO - small error t| 94449| svr|L2| shelf|H02| consecutive misses|1|
+20140707_113326 SERVER INFO - small error t| 94449| svr|L2| shelf|H02| hidden failure in copy|X13694| doc|D3694|
+20140707_113326 SERVER INFO - small error t| 94461| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113326 SERVER INFO - small error t| 94697| svr|L1| shelf|H01| consecutive misses|22|
+20140707_113326 SERVER INFO - small error t| 94697| svr|L1| shelf|H01| hidden failure in copy|X5676| doc|D5676|
+20140707_113326 SERVER INFO - small error t| 94731| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113326 SERVER INFO - small error t| 94803| svr|L2| shelf|H02| consecutive misses|13|
+20140707_113326 SERVER INFO - small error t| 94803| svr|L2| shelf|H02| hidden failure in copy|X18710| doc|D8710|
+20140707_113326 SERVER INFO - small error t| 94811| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113326 SERVER INFO - small error t| 95047| svr|L1| shelf|H01| consecutive misses|17|
+20140707_113326 SERVER INFO - small error t| 95047| svr|L1| shelf|H01| hidden failure in copy|X710| doc|D710|
+20140707_113326 SERVER INFO - small error t| 95047| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113326 SERVER INFO - small error t| 95255| svr|L2| shelf|H02| consecutive misses|12|
+20140707_113326 SERVER INFO - small error t| 95255| svr|L2| shelf|H02| hidden failure in copy|X15141| doc|D5141|
+20140707_113326 SERVER INFO - small error t| 95264| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113326 SERVER INFO - small error t| 95560| svr|L1| shelf|H01| consecutive misses|18|
+20140707_113326 SERVER INFO - small error t| 95560| svr|L1| shelf|H01| hidden failure in copy|X3377| doc|D3377|
+20140707_113326 SERVER INFO - small error t| 95622| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113326 SERVER INFO - small error t| 95758| svr|L1| shelf|H01| consecutive misses|4|
+20140707_113326 SERVER INFO - small error t| 95758| svr|L1| shelf|H01| hidden failure in copy|X3802| doc|D3802|
+20140707_113326 SERVER INFO - small error t| 95761| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113326 SERVER INFO - small error t| 96124| svr|L2| shelf|H02| consecutive misses|28|
+20140707_113326 SERVER INFO - small error t| 96124| svr|L2| shelf|H02| hidden failure in copy|X20167| doc|D1184|
+20140707_113326 SERVER INFO - small error t| 96176| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113326 SERVER INFO - small error t| 96502| svr|L2| shelf|H02| consecutive misses|9|
+20140707_113326 SERVER INFO - small error t| 96502| svr|L2| shelf|H02| hidden failure in copy|X14532| doc|D4532|
+20140707_113326 SERVER INFO - small error t| 96532| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113326 SERVER INFO - small error t| 96807| svr|L2| shelf|H02| consecutive misses|9|
+20140707_113326 SERVER INFO - small error t| 96807| svr|L2| shelf|H02| hidden failure in copy|X11419| doc|D1419|
+20140707_113326 SERVER INFO - small error t| 96837| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113326 SERVER INFO - small error t| 96999| svr|L2| shelf|H02| consecutive misses|5|
+20140707_113326 SERVER INFO - small error t| 96999| svr|L2| shelf|H02| hidden failure in copy|X12959| doc|D2959|
+20140707_113326 SERVER INFO - small error t| 97013| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113326 SERVER INFO - small error t| 97351| svr|L2| shelf|H02| consecutive misses|8|
+20140707_113326 SERVER INFO - small error t| 97351| svr|L2| shelf|H02| hidden failure in copy|X18665| doc|D8665|
+20140707_113326 SERVER INFO - small error t| 97369| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113326 SERVER INFO - small error t| 97589| svr|L1| shelf|H01| consecutive misses|64|
+20140707_113326 SERVER INFO - small error t| 97589| svr|L1| shelf|H01| hidden failure in copy|X872| doc|D872|
+20140707_113326 SERVER INFO - small error t| 97665| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113326 SERVER INFO - small error t| 97853| svr|L1| shelf|H01| consecutive misses|4|
+20140707_113326 SERVER INFO - small error t| 97853| svr|L1| shelf|H01| hidden failure in copy|X8221| doc|D8221|
+20140707_113326 SERVER INFO - small error t| 97853| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113326 SERVER INFO - small error t| 97979| svr|L2| shelf|H02| consecutive misses|24|
+20140707_113326 SERVER INFO - small error t| 97979| svr|L2| shelf|H02| hidden failure in copy|X13266| doc|D3266|
+20140707_113326 SERVER INFO - small error t| 97996| svr|L1| shelf|H01| consecutive misses|6|
+20140707_113326 SERVER INFO - small error t| 97996| svr|L1| shelf|H01| hidden failure in copy|X5376| doc|D5376|
+20140707_113326 SERVER INFO - small error t| 98014| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113326 SERVER INFO - small error t| 98068| svr|L2| shelf|H02| consecutive misses|1|
+20140707_113326 SERVER INFO - small error t| 98068| svr|L2| shelf|H02| hidden failure in copy|X11997| doc|D1997|
+20140707_113326 SERVER INFO - small error t| 98073| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113326 SERVER INFO - small error t| 98085| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113326 SERVER INFO - small error t| 98944| svr|L1| shelf|H01| consecutive misses|21|
+20140707_113326 SERVER INFO - small error t| 98944| svr|L1| shelf|H01| hidden failure in copy|X6658| doc|D6658|
+20140707_113326 SERVER INFO - small error t| 99013| svr|L2| shelf|H02| consecutive misses|35|
+20140707_113326 SERVER INFO - small error t| 99013| svr|L2| shelf|H02| hidden failure in copy|X18475| doc|D8475|
+20140707_113326 SERVER INFO - small error t| 99017| svr|L1| shelf|H01| hidden failure in copy|None|
+20140707_113326 SERVER INFO - small error t| 99020| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113326 SERVER INFO - small error t| 99247| svr|L2| shelf|H02| consecutive misses|9|
+20140707_113326 SERVER INFO - small error t| 99247| svr|L2| shelf|H02| hidden failure in copy|X13203| doc|D3203|
+20140707_113326 SERVER INFO - small error t| 99307| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113326 SERVER INFO - small error t| 99988| svr|L2| shelf|H02| consecutive misses|25|
+20140707_113326 SERVER INFO - small error t| 99988| svr|L2| shelf|H02| hidden failure in copy|X15283| doc|D5283|
+20140707_113326 SERVER INFO - small error t| 99996| svr|L2| shelf|H02| hidden failure in copy|None|
+20140707_113326 MAIN INFO - end run, simulated time|100000|
+# There were 32 doc failures after the last audit started, but, 
+# by good random luck, none of them failed on both servers, so
+# there were no permanent document losses.  
+20140707_113327 MAIN INFO - GOOD NEWS: Total documents lost by client |T1| in all servers |0|
+20140707_113327 MAIN INFO - SERVERUSE shelf|L1-H01| qual|1| size|10000000| hiwater|507251| currentuse|507250| full%|5|
+20140707_113327 MAIN INFO - SERVERUSE shelf|L2-H02| qual|1| size|10000000| hiwater|506851| currentuse|506850| full%|5|
+20140707_113327 MAIN INFO - SERVERERR1 shelf|L1-H01| qual|1| totalhits|3307| nonempty|155| empty|3152| alive|True|
+20140707_113327 MAIN INFO - SERVERERR1 shelf|L1-H01| qual|1| totalhits|3307| abovehiwater|3150| multiples|2|
+20140707_113327 MAIN INFO - SERVERERR1 shelf|L2-H02| qual|1| totalhits|3356| nonempty|158| empty|3198| alive|True|
+20140707_113327 MAIN INFO - SERVERERR1 shelf|L2-H02| qual|1| totalhits|3356| abovehiwater|3195| multiples|3|
+# The odd-looking time stamp confusion here is due to the way that GNU 
+# interdigitates stdout (the trace lines with zeroes after the time stamp)
+# and stderr (the log lines without the zeroes).  
+20140707_113308 0 MAIN  proc Document Preservation simulation 
+20140707_113309 0 MAIN  proc Begin run time|0|
+20140707_113326 0 MAIN  proc End simulation1 timenow|100000| cpusecs|16.13| lastevent|99996| 
+20140707_113326 0 MAIN  proc End simulation2 hidoc|D10000| hicoll|C1| hishelf|H02|
+20140707_113326 0 MAIN  proc End simulation3 hiserver|L30| hiclient|T1| hicopy|X20282|
+20140707_113327 0 MAIN  proc End time stats: wall|  18.626| cpu|16.13|
+# Some final arithmetic, just sanity checking.  
+# The auditing repaired 137+145=282 docs.
+# An additional 32 doc failures occurred after auditing.  Total 314. 
+# The summary statistics at the end of the run indicate 155 hits plus 2 multiples
+# in server 1 and 158 hits plus 3 multiples in server 2.  Total 155+2+158+3=313+5=318.  
+# One doc apparently was hit again after being repaired.  
+# Compare against the Q0 results from last week.  
+# - The same params running without repair with one copy lost 162 docs.
+# This run was with two servers, so 162*2=324.  Pretty close.
+# - There were eleven runs with random seeds; pick whichever the mouse hits first.
+# - The same params running without repair with two copies lost only 2 docs, 
+# BUT there were 159 hits on one server plus two docs hit twice (i.e., after death), 
+# AND there were 153 hits on the other server.  159+2+153=314.  Wow, really close.
+# - The range in the eleven runs was from 304 to 344, still nicely bracketing
+# the number we got here.  Sanity checked.  
+#
