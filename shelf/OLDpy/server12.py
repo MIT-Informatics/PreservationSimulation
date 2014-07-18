@@ -26,10 +26,10 @@ class CServer(object):
         self.sName = mysName
         self.nQual = mynQual
         self.nShelfSize = mynShelfSize * 1000000    # Scale up from TB to MB.
-        self.ID = "L" + str(self.getID())
+        self.ID = "V" + str(self.getID())
         self.lShelfIDs = list()
-        self.lDocIDs = list()
-        self.lDocIDsComplete = list()
+        self.lDocIDs = list()           # Docs that still live in this server.
+        self.lDocIDsComplete = list()   # All docs that were ever in this server.
         G.dID2Server[self.ID] = self
         G.nServerLastID = self.ID
 
@@ -105,7 +105,7 @@ class CServer(object):
         ''' Do we still have a copy of this document?  Y/N
         '''
         bResult = mysDocID in self.lDocIDs
-        # Might want to do something other than just return T/F.
+        # Might someday want to do something other than just return T/F.
         if bResult:
             return True
         else:

@@ -35,8 +35,10 @@
       more popular docs more frequently.  
     - Other auditing strategy 4: partitioned.  4A: server partition: audit each storage
       shelf separately.  4B: client partitioned: systematic portions of collection.  
+
     - Future: auditor maintains guaranteed copy of fixity info for use in auditing.  
 '''
+
 '''
 audit cycle invoked once every x hours:
     foreach client
@@ -63,6 +65,25 @@ client creates an audit object for collection
 that init starts an async process for the auditing
 wait for a random time, so that all client audits do not happen simultaneously
 when audit cycle done, wait for next standard interval
+'''
+
+''' Slightly more sophisticated view of auditing:
+- The client does not have a reserve copy of a document, so any error
+  with copies=1 is permanent.  
+- For any doc that has an error in any copy, we need to know how many
+  copies still exist.  If there is not a majority of the copies still
+  available, then the repair is considered as "requiring forensics."
+- At the beginning of each audit cycle, need to assess how many 
+  copies exist for any document that has any errors on any server.  
+
+- At the beginning of each audit cycle, survey all servers, make
+  a list of how many copies exist for each doc.
+- During the audit, for each doc with an error, how many copies 
+  remain?
+  - zero: permanent failure.
+  - .ge. half of the servers: make the repair.
+  - .lt. half of the servers: repair but with forensics required.
+
 '''
 
 from globaldata import G

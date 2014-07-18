@@ -17,7 +17,7 @@ then
     exit 1
 fi
 
-echo 'after dir test'    
+#echo 'after dir test'    
 
 # Create instruction files in the log dirs for all possible BER values.
 #for berid in 0001 0002 #0003 0005 0010 0020 0030 0050 0100 0200 0300 0500 1000 2000 3000 5000 10000

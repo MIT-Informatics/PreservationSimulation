@@ -117,6 +117,27 @@ class CCollection(object):
                 TRC.tracef(3,"COLL","proc TestColl2 dead doc|%s| in coll|%s| " % (sDocID,self.ID))
         return lDeadDocIDs
 
+    # C C o l l e c t i o n . m H o w M a n y C o p i e s L e f t 
+    @tracef("COLL")
+    def mHowManyCopiesLeft(self):
+        ''' Return list of how many copies exist, across all servers,
+            for all docs.
+        '''
+        lDocAliveCounts = [ 0 for i in xrange(len(self.lDocIDs)) ]
+        idx = 0
+        for sDocID in self.lDocIDs:
+            for sServerID in self.lServerIDs:
+                bResult = self.mDocTestOneServer(sServerID)
+                if bResult: lDocAliveCounts[idx] += 1
+            idx += 1
+        return lDocAliveCounts
+
+'''
+map( lambda docid: countdoc(lServerIDs,docid), lDocIDs)
+map( lambda docid: len(filter(lambda serverid: testdocument(docid,serverid), lServerIDs), lDocIDs )
+'''
+
+
 #===========================================================
 # C L I E N T 
 #------------
