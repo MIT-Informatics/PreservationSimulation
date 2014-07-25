@@ -3,7 +3,7 @@
 # 
 # 
 """
-NewTraceFac08 trace module
+NewTraceFac09 trace module
                                 RBLandau 20080226
                                 updated  20080830
                                 updated  20081003
@@ -12,6 +12,7 @@ NewTraceFac08 trace module
                                 updated  20140114
                                 updated  20140209
                                 updated  20140315
+                                updated  20140723
                                 
   Copyright (C) 2008,2009,2014 Richard Landau.  All rights reserved.
   
@@ -69,7 +70,7 @@ from re import findall
     Instantiate the NewTrace object and store it global static so that any 
      module can use it.  E.g., 
           gt As NewTrace = New NewTrace   (VB)
-          TRC = NewTrace()                (Python)
+          TRC = NewTraceFac()             (Python)
     Call the trace() method of that instance, giving detail level number
      and string.  E.g., 
           gt.trace(1,"This is an item at level 1")
@@ -145,25 +146,30 @@ from re import findall
                      ALL, e.g., "ALL -FOO".
                     If null, then ALL is assumed.
 
-    Decorators:
-    There are two new functions to use as Python decorators to
-     report entry and exit of functions, including arguments in
-     and return value out, painlessly.  
-    Input arguments cannot be identified by the decorator version
-     of trace() and tracef().  If you need individual identification 
-     of input arguments, call the trace manually, as in the old days.  
-        @trace            for calls with no facility code attached
-        @tracef("ABCD")   for calls associated with a facility ABCD
-    As usual, the facility code should be max four letters to preserve 
-     alignment and should be all caps for legibility.  
+Decorators:
+There are two new functions to use as Python decorators to
+ report entry and exit of functions, including arguments in
+ and return value out, painlessly.  
+Input arguments cannot be identified by the decorator version
+ of trace() and tracef().  If you need individual identification 
+ of input arguments, call the trace manually, as in the old days.  
+    @trace            for calls with no facility code attached
+    @tracef("ABCD")   for calls associated with a facility ABCD
+As usual, the facility code should be max four letters to preserve 
+ alignment and should be all caps for legibility.  
 
-    The @trace decorator prints entry at level 1 and exit at level 2.
+The @trace decorator prints entry at level 1 and exit at level 2.
 
 The @tracef() decorator also supports an optional level argument to change
  the trace level of the entry and exit lines.  This can be specified 
  positionally or keyword, e.g., @tracef("FOO",2) or @tracef("FOO",level=2).
- The @trace decorator does not support the level argument, but note that
-  the facility on @tracef() can be left blank, e.g., @tracef("",2).  
+The @trace decorator does not support the level argument; but note that
+ the facility on @tracef() can be left blank, e.g., @tracef("",5).  
+The @tracef decorator processes the first argument specially if 
+ the argument is an instance pointer (usually "self" in class 
+ methods).  In this case, it prints the classname, and the 
+ instance's self.ID if it exists, on both entry and exit.  
+ Much more informative than the hex address.  
 '''
 
 class CNewTrace:
@@ -271,6 +277,7 @@ class CNewTrace:
 
 # D e c o r a t o r s 
 
+# Plain decorator, no facility code.  Logs entry and exit.  
 def trace(func):
     def wrap2(*args,**kwargs):
         TRC.trace(1,"entr %s args=%s,kw=%s" % (func.__name__,args,kwargs))
@@ -280,24 +287,20 @@ def trace(func):
     wrap2.func_name = func.func_name
     return wrap2
 
+# Decorator with facility code and priority level.  
+# Facility code may be left blank to use priority or "self" printing.
 def tracef(facil="",level=1):
     def tracefinner(func):
         def wrap1(*args,**kwargs):
             if len(args)>0 and str(type(args[0])).find("class") >= 0:
-                try:
-                    _id = args[0].ID
-                except:
-                    _id = ""
-                TRC.tracef(level,facil,"entr %s args=<%s inst=|%s|> |%s| kw=%s" % (func.__name__,args[0].__class__.__name__,_id,args[1:],kwargs))
+                _id = getattr(args[0],"ID","")
+                TRC.tracef(level,facil,"entr %s args=<%s id=|%s|> |%s| kw=%s" % (func.__name__,args[0].__class__.__name__,_id,args[1:],kwargs))
             else:
                 TRC.tracef(level,facil,"entr %s args=%s,kw=%s" % (func.__name__,args,kwargs))
             result = func(*args,**kwargs)
             if len(args)>0 and str(type(args[0])).find("class") >= 0:
-                try:
-                    _id = args[0].ID
-                except:
-                    _id = ""
-                TRC.tracef(level,facil,"exit %s <%s inst=|%s|> result|%s|" % (func.func_name,args[0].__class__.__name__,_id,result))
+                _id = getattr(args[0],"ID","")
+                TRC.tracef(level,facil,"exit %s <%s id=|%s|> result|%s|" % (func.func_name,args[0].__class__.__name__,_id,result))
             else:
                 TRC.tracef(level,facil,"exit %s result|%s|" % (func.func_name,result))
             return result
