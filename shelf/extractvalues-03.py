@@ -7,7 +7,11 @@ from os import environ
 import csv
 from NewTraceFac    import TRC,trace,tracef
 import argparse
+#from time import clock
 
+# TODO:
+# - Don't have a separate header line that can get out of sync with
+#   the data.  Form the header by stripping all braces from the template.
 
 # C l i P a r s e 
 @tracef("CLI")
@@ -54,7 +58,7 @@ def fndCliParse(mysArglist):
 
     return vars(xx)
 
-@trace
+@tracef("MCMD")
 def makeCmd(mysCmd,mydArgs):
     ''' Substitute arguments into command template string,
         by name, from the supplied dictionary.  
@@ -96,10 +100,10 @@ def fnldParseInput(mysFilename):
         for sLine in lLines[:]:
             if re.match("^ *#[^#]",sLine) or re.match("^ *$",sLine.rstrip()):
                 lLines.remove(sLine)
-                TRC.trace(3,"proc ParseInput remove comment or blank line |%s|" % (sLine.strip()))
+                TRC.tracef(3,"INPT","proc ParseInput remove comment or blank line |%s|" % (sLine.strip()))
 
         sCmd = lLines.pop(0).strip()
-        TRC.trace(3,"proc ParseInput command line|%s|" % (sCmd))
+        TRC.tracef(3,"INPT","proc ParseInput command line|%s|" % (sCmd))
 
         if re.match("^=template",sCmd):
             lTemplate = list()
@@ -110,7 +114,7 @@ def fnldParseInput(mysFilename):
                 sCmd = sCmd.replace("###","")
                 sCmd = sCmd.replace("##","#")
                 lTemplate.append(sCmd)
-            TRC.trace(3,"proc ParseInput template|%s|" % (lTemplate))
+            TRC.tracef(3,"INPT","proc ParseInput template|%s|" % (lTemplate))
 
         if re.match("^=header",sCmd):
             lHeader = list()
@@ -121,106 +125,101 @@ def fnldParseInput(mysFilename):
                 sCmd = sCmd.replace("###","")
                 sCmd = sCmd.replace("##","#")
                 lHeader.append(sCmd)
-            TRC.trace(3,"proc ParseInput header|%s|" % (lHeader))
+            TRC.tracef(3,"INPT","proc ParseInput header|%s|" % (lHeader))
 
-        # Now get the CSV args into a list of dictionaries.
+        # Now get the CSV args into a dictionary of dictionaries.
         lRowDicts = csv.DictReader(lLines)
         for dd in lRowDicts:
             dParams[dd["varname"]] = dd
-#            lParams.append(dd)
+            TRC.tracef(3,"INPT","proc ParseInput Params len|%s|" % (len(dParams.keys())))
+            TRC.tracef(5,"INPT","proc ParseInput Params len|%s| all|%s|" % (len(dParams.keys()),dParams))
     return (lTemplate,lHeader,dParams)
 
 #===========================================================
 # NEW NEW NEW 
 # functional if possible
 
-
-
 # m a i n ( ) 
 @tracef("MAIN")
 def main(mysInstructionsFileName,mysLogFileName):
-    (lTemplate,lHeader,lVars) = fnldParseInput(mysInstructionsFileName)
-    with open(mysLogFileName,"r") as fhLogFile:
-        lMatchTuples = [ fnMatchLine(sLine,dVar) for dVar in lVar for sLine in fhLogFile ]
-        lLinesSelected = filter( lambda (var,matchobj,line): matchobj, lMatchTuples )
-
-
-def fnMatchLine(mysLine,mydVar):
-    sVarname = mydVar["varname"]
-    sLineregex = mydVar["lineregex"]
-    nLineNr = "???"
-    oMatch = re.search(sLineregex,mysLine)
-    if oMatch:
-        TRC.tracef(3,"LINE","proc found line|%s|=|%s| var|%s| regex|%s|" % (nLineNr,mysLine,sVarname,sLineregex))
-    return (sVarname,oMatch,sLine)
-    pass
-
-#===========================================================
-# OLD OLD OLD
-
-# m a i n ( ) 
-@tracef("MAIN")
-def main(mysInstructionsFileName,mysLogFileName):
-    ''' extractvalues.py
-        Sort of a report generator
-        
-        read the csv instruction file
-        foreach file
-          read file
-            foreach line
-              for each variable
-                does regex select this line
-                split into words
-                choose specific word
-                strip out value
-                store value in var
-        at eof
-        if some environ var is nonzero, print header line containing var names
-        spit out one line
-        
-        first version of this reads one file, writes one line (and maybe header).
-    '''
-
     (lTemplate,lHeader,dVars) = fnldParseInput(mysInstructionsFileName)
+    lLines = list()
     with open(mysLogFileName,"r") as fhLogFile:
-        lLines = fhLogFile.readlines()
+
+        # Double list comprehension to find lines that match.
+        lMatchTuples = [ fnMatchLine(sLine,nLineNr,dVar) \
+            for (sLine,lLines,nLineNr) in fnGetLineAndNumber(fhLogFile,lLines) \
+            for dVar in dVars.values() ]
+        TRC.tracef(5,"MN2","proc MatchTuples len|%s| first|%s|" % (len(lMatchTuples),lMatchTuples[0]))
+
+        # Filter returns only the lines that matched.
+        lLinesSelected = filter( lambda (var,matchobj,line): matchobj, \
+                                lMatchTuples )
+        TRC.tracef(5,"MN2","proc LinesSelected len|%s| all|%s|" % (len(lLinesSelected),lLinesSelected))
+
+        # Extract variable value from each matching line.
         dValues = dict()
-        for (nLineNr,sLine) in enumerate(lLines):
-            nLineNr += 1
-            TRC.tracef(3,"LINE","proc logline nr|%s|=|%s|" % (nLineNr,sLine))
-            for (sVarname,dVar) in dVars.items():
-#                sVarname = dVar["varname"]
-                sLineregex = dVar["lineregex"]
-                sWordnumber = dVar["wordnumber"]
-                sValueregex = dVar["valueregex"]
-                TRC.tracef(5,"LINE","proc matching line var|%s| lineregex|%s|" % (sVarname,sLineregex))
-                if re.search(sLineregex,sLine): 
-                    # Line matches the lineregex.
-                    TRC.tracef(3,"LINE","proc found line|%s|=|%s| var|%s| regex|%s|" % (nLineNr,sLine,sVarname,sLineregex))
-                    lWords = sLine.split()
-                    nWordnumber = int(sWordnumber)
-                    # Get the right word from the line.
-                    #  If asked for word zero, give the whole line.  
-                    #  Makes the extraction harder, but sometimes necessary.
-                    if nWordnumber == 0:
-                        sWord = sLine
-                    elif nWordnumber <= len(lWords):
-                        sWord = lWords[nWordnumber-1]
-                    else: 
-                        sWord = "XXXXXXXXXX"
-                    oMatch = re.search(sValueregex,sWord)
-                    TRC.tracef(5,"LINE","proc matching word var|%s| word|%s| valueregex|%s| matchobj|%s|" % (sVarname,sWord,sValueregex,oMatch))
-                    if oMatch:
-                        # Word matches the valueregex.  Store the value.
-                        sValue = oMatch.group(1)
-                        dValues[sVarname] = sValue
-                        TRC.tracef(3,"VALU","proc addvalue name|%s| val|%s|" % (sVarname,sValue))
+        for (sVarname,oMatch,sLine) in lLinesSelected:
+            TRC.tracef(3,"MN2","proc selectedfromfilter var|%s| line|%s|" % (sVarname,sLine))
+            dVar = dVars[sVarname]
+            sValue = fnMatchValue(sLine,dVar)
+            dValues[sVarname] = sValue
+
+    # Fill in the template with values and print.  
     sTemplate = lTemplate[0]
     sLineout = makeCmd(sTemplate,dValues)
     if g.bHeader or environ.get("header",None):
         sHeader = lHeader[0]
         print sHeader
     print sLineout
+
+# f n G e t L i n e A n d N u m b e r 
+@tracef("GETL")
+def fnGetLineAndNumber(myfh,mylLines):
+    for sLine in myfh:
+        TRC.tracef(3,"GETL","proc GetLine nr|%s| line|%s|" % (len(mylLines)+1,sLine))
+        yield (sLine,mylLines.append(sLine),len(mylLines))
+
+# f n M a t c h L i n e 
+@tracef("MCHL")
+def fnMatchLine(mysLine,mynLineNr,mydVar):
+    sVarname = mydVar["varname"]
+    sLineregex = mydVar["lineregex"]
+    # Check line against regex from dict.  
+    oMatch = re.search(sLineregex,mysLine)
+    TRC.tracef(5,"MTLN","proc MatchLine try regex|%s| nr|%s| line|%s| match|%s|" % (sLineregex,mynLineNr,mysLine,oMatch))
+    if oMatch:
+        TRC.tracef(3,"LINE","proc MatchLine found line|%s|=|%s| var|%s| regex|%s|" % (mynLineNr,mysLine,sVarname,sLineregex))
+    return (sVarname,oMatch,mysLine)
+
+# f n M a t c h V a l u e 
+@tracef("MCHV")
+def fnMatchValue(mysLine,mydVar):
+    # Get the right word from the line.
+    #  If asked for word zero, use the whole line.  
+    #  Makes the extraction harder, but sometimes necessary.
+    sWordnumber = mydVar["wordnumber"]
+    nWordnumber = int(sWordnumber)
+    lWords = mysLine.split()
+    if nWordnumber == 0:
+        sWord = mysLine
+    elif nWordnumber <= len(lWords):
+        sWord = lWords[nWordnumber-1]
+    else: 
+        sWord = "nowordhereindexoutofrange"
+    sValueregex = mydVar["valueregex"]
+    sVarname = mydVar["varname"]
+    oMatch = re.search(sValueregex,sWord)
+    TRC.tracef(5,"MCHV","proc MatchValue matching word var|%s| word|%s| valueregex|%s| matchobj|%s|" % (sVarname,sWord,sValueregex,oMatch))
+    if oMatch:
+        # Word matches the valueregex.  Save the value.
+        sValue = oMatch.group(1)
+        TRC.tracef(3,"MCHV","proc addvalue name|%s| val|%s|" % (sVarname,sValue))
+    else:
+        # If not found, at least supply something conspicuous for printing.
+        sValue = "novaluefound"
+    return sValue
+
 
 # Global data
 class CG(object):
@@ -233,7 +232,9 @@ if "__main__" == __name__:
     g = CG()
     #read filename and options from cli
     fndCliParse("")
+#    timestart = clock()
     main(g.sInstructionsFileName,g.sLogFileName)
-
+#    timestop = clock()
+#    TRC.tracef(0,"MAIN","proc cputime|%s|" % (timestop-timestart))
 
 #END
