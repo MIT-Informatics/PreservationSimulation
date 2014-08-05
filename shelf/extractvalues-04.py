@@ -2,16 +2,24 @@
 # extractvalues.py
 
 import re
-from os import environ
+from os                 import environ
 import csv
-from NewTraceFac    import TRC,trace,tracef
+from NewTraceFac        import TRC,trace,tracef
 import argparse
-from time import clock
+from time               import clock,localtime
+from os                 import stat
 
 # TODO:
 # x- Render as much of the procedural code as possible into functional form.
-# - Don't have a separate header line that can get out of sync with
+# x- Don't have a separate header line that can get out of sync with
 #   the data.  Form the header by stripping all braces from the template.
+# x- Protect against any possible format() errors by putting dummy values 
+#   into the dictionary supplied.
+# - Add synthetic variables that come from this program rather than from 
+#   the log file.  Examples: logfilename, logfilesize, todaysdatetime, 
+#   extractorversion, instructionfilename.
+#   This is exactly the slippery pavement of the road to hell, so I have 
+#   learned from a number of past experiences.  
 
 #===========================================================
 # C l i P a r s e 
@@ -73,7 +81,6 @@ def makeCmd(mysCmd,mydArgs):
 def fnldParseInput(mysFilename):
     ''' Return tuple containing
         - the output template string, 
-        - the header line for the output, 
         - a list, one item per line, of dicts of column args from the 
           csv that contain instructions for getting variable values
           from lines.  
@@ -88,8 +95,6 @@ def fnldParseInput(mysFilename):
         ###send out this string as header for the output, no hashes
         =outputformat
         format string
-        =header
-        varlist,var,var,var#variables
         =variables
         varname,lineregex,wordnumber,valueregex (header)
         (lines of csv data)
@@ -103,14 +108,10 @@ def fnldParseInput(mysFilename):
                         and not re.match("^ *$",sLine.rstrip()) \
                         , fhInfile )
 
-        lTemplate = fnlLinesInRange(lLines,"^=template","^=header")
+        # Get the output template.  It may be longer than one line.  
+        lTemplate = fnlLinesInRange(lLines,"^=template","^=variables")
         lTemplate = map( lambda sLine: sLine.rstrip().replace("###","").replace("##","#"), lTemplate )
         TRC.tracef(3,"INPT","proc ParseInput template|%s|" % (lTemplate))
-
-        lHeader = fnlLinesInRange(lLines,"^=header","^=variables")
-        lHeader = map( lambda sLine: sLine.rstrip().replace("###","").replace("##","#"), lHeader )
-        TRC.tracef(3,"INPT","proc ParseInput header|%s|" % (lHeader))
-
 
         # Now get the CSV args into a dictionary of dictionaries.
         lVarLines = fnlLinesInRange(lLines,"^=variables","^=thiswillnotbefound")
@@ -121,7 +122,7 @@ def fnldParseInput(mysFilename):
             (dRowDict["varname"],dRowDict)      \
             , lRowDicts ))
         
-    return (lTemplate,lHeader,dParams)
+    return (lTemplate,dParams)
 
 @tracef("INPT")
 def fnlLinesInRange(mylLines,mysStart,mysStop):
@@ -140,7 +141,7 @@ def fnlLinesInRange(mylLines,mysStart,mysStop):
 # m a i n ( ) 
 @tracef("MAIN")
 def main(mysInstructionsFileName,mysLogFileName):
-    (lTemplate,lHeader,dVars) = fnldParseInput(mysInstructionsFileName)
+    (lTemplate,dVars) = fnldParseInput(mysInstructionsFileName)
     lLines = list()
     with open(mysLogFileName,"r") as fhLogFile:
 
@@ -162,14 +163,26 @@ def main(mysInstructionsFileName,mysLogFileName):
         dValues = dict(lResults)
         # In case we did not find the line for a variable, dummy up a value.
         for sKey in dVars: dValues.setdefault(sKey,"nolinefound")
+        # And in case we didn't even find a rule for some variable that
+        #  will be used in the template, dummy up a value for it, too.  
+        sTemplateHeader = "\n".join(lTemplate).replace("{","",-1).replace("}","",-1).replace("\n"," ",-1)
+        lTemplateVars = sTemplateHeader.split()
+        for sTemplateVar in lTemplateVars: dValues.setdefault(sTemplateVar,"norulefound")
+
+    # Add the synthetic variables to the value dictionary.
+    dSyntho = fndGetSyntheticVars()
+    dValues.update(dSyntho)
 
     # Fill in the template with values and print.  
     # Template is allowed to be multiple lines.
     sTemplate = "\n".join(lTemplate)
     sLineout = makeCmd(sTemplate,dValues)
     if g.bHeader or environ.get("header",None):
-        # Header is one line only.  
-        sHeader = lHeader[0]
+        # Header is a single line concatenation of all the substitutions
+        #  in the template.
+        #  If the template is longer than one line, well, you can't read 
+        #  the data with a simple header anyway.  Oops.  
+        sHeader = sTemplateHeader
         print sHeader
     # Newline already pasted on the end of template; don't add another.
     print sLineout,
@@ -220,6 +233,24 @@ def fnMatchValue(mysLine,mydVar):
         # If not found, at least supply something conspicuous for printing.
         sValue = "novaluefound"
     return (sVarname,sValue)
+
+# f n d G e t S y n t h e t i c V a r s 
+@tracef("SNTH")
+def fndGetSyntheticVars():
+    dTemp = dict()
+
+    dTemp["logfilename"] = g.sLogFileName
+    dTemp["logfilesize"] =  stat(g.sLogFileName).st_size
+    dTemp["instructionfilename"] = g.sInstructionsFileName
+
+    (yr,mo,da,hr,mins,sec,x,y,z) = localtime()
+    sAsciiT = "%4d%02d%02d_%02d%02d%02d" \
+        % (yr,mo,da,hr,mins,sec)
+    dTemp["todaysdatetime"] = sAsciiT
+
+    dTemp["extractorversion"] = "0.4"
+
+    return dTemp
 
 
 # Global data
