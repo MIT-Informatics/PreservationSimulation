@@ -15,7 +15,7 @@ from os                 import stat
 #   the data.  Form the header by stripping all braces from the template.
 # x- Protect against any possible format() errors by putting dummy values 
 #   into the dictionary supplied.
-# - Add synthetic variables that come from this program rather than from 
+# x- Add synthetic variables that come from this program rather than from 
 #   the log file.  Examples: logfilename, logfilesize, todaysdatetime, 
 #   extractorversion, instructionfilename.
 #   This is exactly the slippery pavement of the road to hell, so I have 
