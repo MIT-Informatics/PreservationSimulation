@@ -9,7 +9,7 @@
 # In the template line, all the variable names must be extracted (successfully)
 #  by a line in the variables section below.  
 =template
-{timestamp} {docsize} {copies} {lifem} {seed} {lost} {auditinterval} {auditrepairs} {auditlosses} {auditforensics} {ndocs} {nokay} {ninjured} {nforensics} {walltime} {cputime} 
+{timestamp} {docsize} {copies} {lifem} {seed} {lost} {auditinterval} {auditrepairs} {auditlosses} {auditforensics} {ndocs} {nokay} {nmajority} {nminority} {walltime} {cputime} {logfilename} 
 
 # The header line will be output or not, depending on the 
 #  --header CLI option or the "header" environment variable.  
@@ -64,9 +64,9 @@ ndocs,COLLECTIONTOTALS,9,(\d+)
 
 nokay,COLLECTIONTOTALS,10,(\d+)
 
-ninjured,COLLECTIONTOTALS,11,(\d+)
+nmajority,COLLECTIONTOTALS,11,(\d+)
 
-nforensics,COLLECTIONTOTALS,12,(\d+)
+nminority,COLLECTIONTOTALS,12,(\d+)
 
 walltime,"MAIN.*End time stats",0,wall. *([0-9\.]+)
 
