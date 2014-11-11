@@ -4,7 +4,7 @@
 # This comment should be removed.
 
 # Command to go at the top of each instruction file.  
-python main.py {{family}} {{specific}} {{length}} {{seed}} --ncopies={{copies}} --ber={{lifek}} --audit=0 --shortlog=Y {{extra1}} {{extra2}} {{extra3}} >  {{family}}/{{specific}}/logb{{lifem}}/c{{copies}}d50b{{lifem}}s{{seed}}.log  2>&1  &
+python main.py {{family}} {{specific}} {{length}} {{seed}} --ncopies={{copies}} --lifek={{lifek}} --audit=0 --shortlog=Y {{extra1}} {{extra2}} {{extra3}} >  {{family}}/{{specific}}/logb{{lifem}}/c{{copies}}d50b{{lifem}}s{{seed}}.log  2>&1  &
 
 # Each file will contain the above command line and all these individual instruction lines.  
 family,specific,length,seed,copies,lifem,lifek,extra1,extra2,extra3 

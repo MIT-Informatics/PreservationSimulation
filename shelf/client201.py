@@ -1,17 +1,16 @@
 #!/usr/bin/python
-# client.py
-# Recovered, we hope, after commit/delete screw-up.  
-
+# client2.py
+# 
 import simpy
 from NewTraceFac import TRC,trace,tracef
 import itertools
-from server import CServer
 from globaldata import G
-from audit import CAudit
-from repair import *
-from util import *
+from server import CServer
+from audit2 import CAudit2
+from repair import CRepair
+import util
 import math
-from logoutput import logInfo,logDebug,logError
+import logoutput as lg
 
 
 #===========================================================
@@ -28,12 +27,16 @@ class CDocument(object):
         G.dID2Document[self.ID] = self
         G.nDocLastID = self.ID
         self.nSize = size
-        self.sClientID = mysClientID
-        self.sCollID = mysCollectionID
+        self.sClientID = mysClientID        # Doc owned by what client
+        self.sCollID = mysCollectionID      # Doc lives in what collection
         TRC.tracef(3,"DOC","proc init client|%s| created doc|%s| size|%d|" % (self.sClientID,self.ID,self.nSize))
-        self.lServerIDs = list()
-        self.lCopyIDs = list()
-        self.bForensicsRequired = False
+        self.lServerIDs = list()            # What servers have this doc
+        self.lCopyIDs = list()              # What copy IDs of this doc
+        self.bMajorityRepair = False        # True if ever repaired from majority of copies
+        self.bMinorityRepair = False        # True if ever repaired from minority of copies
+        self.bDocumentLost = False          # True if completely lost, all copies lost
+        self.nRepairsMajority = 0           # Number of repairs of doc from majority copies
+        self.nRepairsMinority = 0           # Number of repairs of doc from minority copies
 
 # D o c u m e n t . m C o p y P l a c e d O n S e r v e r 
     @tracef("DOC")
@@ -118,7 +121,7 @@ class CCollection(object):
     def mMakeBooks(self,mynBooks):
         # A collection has lots of books
         for icoll in xrange(mynBooks):
-            ndocsize = fnnCalcDocSize(self.nValue)
+            ndocsize = util.fnnCalcDocSize(self.nValue)
             cDoc = CDocument(ndocsize,self.sClientID,self.ID)
             self.lDocIDs.append(cDoc.ID)
         return self.ID
@@ -272,7 +275,7 @@ class CClient(object):
             # Put the collection in all the right places.  
             self.mPlaceCollection(sCollID)
 
-        self.cRepair = CRepair(self.ID)
+        #self.cRepair = CRepair(self.ID)
 
 # C l i e n t . m P l a c e C o l l e c t i o n
     @tracef("SHOW")
@@ -307,11 +310,11 @@ class CClient(object):
 
             # Record that this server has a copy of this collection.
             cColl.lServerIDs.append(sServerID)
-            logInfo("CLIENT","client|%s| placed collection|%s| to server|%s|" % (self.ID,mysCollID,sServerID))
+            lg.logInfo("CLIENT","client|%s| placed collection|%s| to server|%s|" % (self.ID,mysCollID,sServerID))
 
-            # Initialize the auditing process for this collection o this server.
-            if G.nAuditCycleInterval > 0:
-                self.cAudit = CAudit(self.ID,mysCollID,sServerID,G.nAuditCycleInterval)
+        # Initialize the auditing process for this collection.
+        if G.nAuditCycleInterval > 0:
+            self.cAudit = CAudit2(self.ID,mysCollID,G.nAuditCycleInterval)
 
         return lServersToUse
 
@@ -371,7 +374,7 @@ class CClient(object):
         return mysServerID +"-"+ mysDocID
         ### E N D   T E M P 
 
-        logDebug("CLIENT","Document failed on server doc|%s| svr|%s|" % (mysDocID,mysServerID))
+        lg.logDebug("CLIENT","Document failed on server doc|%s| svr|%s|" % (mysDocID,mysServerID))
         bResult = self.mDocFindValidCopy(mysDocID)
         if bResult:
             self.mDocReplaceOnServer(mysDocID,mysServerID)
@@ -389,7 +392,7 @@ class CClient(object):
         '''
         cServer = G.dID2Server[mysServerID]
         cServer.mAddDocument(mysDocID,self.ID)
-        logDebug("CLIENT","Document replaced on server doc|%s| svr|%s|" % (mysDocID,mysServerID))
+        lg.logDebug("CLIENT","Document replaced on server doc|%s| svr|%s|" % (mysDocID,mysServerID))
         return mysServerID +"+"+ mysDocID
 
     def mCollectionTestAll(self,mysCollID):
@@ -402,7 +405,7 @@ class CClient(object):
         ''' We cannot find a good copy of the document anywhere, 
             ergo it is lost permanently.  Log this serious event.  
         '''
-        logError("CLIENT","Document lost, permanent failure |%s| at time |%s|" % (mysDocID,G.env.now))
+        lg.logError("CLIENT","Document lost, permanent failure |%s| at time |%s|" % (mysDocID,G.env.now))
         pass
 
 # END

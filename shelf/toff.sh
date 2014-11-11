@@ -1,2 +1,0 @@
-unset TRACE_LEVEL
-unset TRACE_FACIL
