@@ -101,6 +101,7 @@ class CServer(object):
         TRC.tracef(3,"SERV","proc mDestroyDocument remove doc|%s| from shelf|%s|" % (mysDocID,mysShelfID))
         self.lDocIDs.remove(mysDocID)
         del self.dDocIDs[mysDocID]
+        
         return self.ID + "-" + mysDocID
 
 # S e r v e r . m T e s t D o c u m e n t 
@@ -519,5 +520,16 @@ class CCopy(object):
         self.nBlkEnd = mynBlkEnd
         return self.ID+"+"+mysServerID+"+"+mysShelfID+"+" + "["+str(mynBlkBegin)+","+str(mynBlkEnd)+"]"
 
+
+    @tracef("COPY")
+    def mDestroyCopy(self):
+        pass
+
+
+''' TODO
+- keep list of copies on this server
+- remove copy from server on error 
+- remove server from server list of doc on error
+'''
 
 # END

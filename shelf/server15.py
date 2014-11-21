@@ -72,7 +72,7 @@ class CServer(object):
             
         # Record that the doc has been stored on this server. 
         self.lDocIDs.append(mysDocID)
-        self.dDocIDs[mysDocID] = 1
+        self.dDocIDs[mysDocID] = mysClientID
         self.lDocIDsComplete.append(mysDocID)
         TRC.tracef(3,"SERV","proc mAddDocument serv|%s| id|%s| docid|%s| size|%s| assigned to shelfid|%s| remaining|%s|" % (self.sName,self.ID,mysDocID,cDoc.nSize,sShelfID,cShelf.nFreeSpace))
 
@@ -85,22 +85,27 @@ class CServer(object):
             Add a new shelf of the standard size for this Server.
             Called as needed when a doc arrives too large for available space.  
         '''
-        cShelf = CShelf(self,self.nQual,self.nShelfSize)
+        cShelf = CShelf(self.ID,self.nQual,self.nShelfSize)
         logInfo("SERVER","server |%s| created storage shelf|%s| quality|%s| size|%s|MB" % (self.ID,cShelf.ID,cShelf.nQual,cShelf.nCapacity))
         return cShelf.ID
 
 # S e r v e r . m R e p l a c e S h e l f 
 # NYI
 
-# S e r v e r . m D e s t r o y D o c u m e n t 
+# S e r v e r . m D e s t r o y C o p y 
     @tracef("SERV")
-    def mDestroyDocument(self,mysDocID,mysShelfID):
-        ''' Server.mDestroyDocument()
+    def mDestroyCopy(self,mysCopyID,mysDocID,mysShelfID):
+        ''' Server.mDestroyCopy()
             Oops, a doc died, maybe just one or maybe the whole shelf.
         '''
-        TRC.tracef(3,"SERV","proc mDestroyDocument remove doc|%s| from shelf|%s|" % (mysDocID,mysShelfID))
+        TRC.tracef(3,"SERV","proc mDestroyCopy remove copy|%s| doc|%s| from shelf|%s|" % (mysCopyID,mysDocID,mysShelfID))
+        # Inform the client that the copy is gonzo.  
+        cClient = G.dID2Client[self.dDocIDs[mysDocID]]
+        cClient.mDestroyCopy(mysDocID,self.ID)
+        # Clear out local traces of the doc and copy.
         self.lDocIDs.remove(mysDocID)
         del self.dDocIDs[mysDocID]
+        # The Shelf will nuke the copy, because it created it.  
         return self.ID + "-" + mysDocID
 
 # S e r v e r . m T e s t D o c u m e n t 
@@ -127,9 +132,8 @@ class CServer(object):
 class CShelf(object):
     getID = itertools.count(1).next
 
-    @tracef("SHOW")
     @tracef("SHLF")
-    def __init__(self,mycServer,mynQual,mynCapacity):
+    def __init__(self,mysServerID,mynQual,mynCapacity):
         self.ID = "H" + ("%02d" % self.getID())
         G.nShelfLastID = self.ID
         G.dID2Shelf[self.ID] = self
@@ -144,7 +148,7 @@ class CShelf(object):
 
         self.nCapacity = mynCapacity
         self.nFreeSpace = mynCapacity
-        self.sServerID = mycServer.ID   # Server instance we belong to.
+        self.sServerID = mysServerID   # Server instance we belong to.
         self.nQual = mynQual
         self.birthdate = G.env.now
         self.bAlive = True              # Shelf failed = False.
@@ -192,7 +196,7 @@ class CShelf(object):
         nSize = cDoc.nSize
 
         # Make a copy of the document and shelve that.  
-        cCopy = CCopy(mysDocID,mysClientID)
+        cCopy = CCopy(mysDocID,mysClientID,self.sServerID)
         sCopyID = cCopy.ID
         TRC.tracef(3,"SHLF","proc mAddDocument made copy|%s| of doc|%s| from client|%s|" % (sCopyID,mysDocID,mysClientID))
 
@@ -257,17 +261,15 @@ class CShelf(object):
             # next hit.
             if sCopyVictimID:               # Hidden error in victim doc.
                 # Destroy copy on this shelf.
-                self.mDestroyCopy(sCopyVictimID)
-                # Destroy document on Server, too.  
                 cCopy = G.dID2Copy[sCopyVictimID]
-                cDoc = G.dID2Document[cCopy.sDocID]
-                G.dID2Server[self.sServerID].mDestroyDocument(cDoc.ID,self.ID)
+                sDocID = cCopy.mGetDocID()
+                self.mDestroyCopy(sCopyVictimID)
                 # Log the summary line if we just ended a string of misses
                 if self.nConsecutiveMisses > 0:
                     logInfo("SERVER","small error t|%6.0f| svr|%s| shelf|%s| consecutive misses|%d|" % (G.env.now,self.sServerID,self.ID,self.nConsecutiveMisses))
                 self.nConsecutiveMisses = 0
-                logInfo("SERVER","small error t|%6.0f| svr|%s| shelf|%s| hidden failure in copy|%s| doc|%s|" % (G.env.now,self.sServerID,self.ID,sCopyVictimID,cDoc.ID))
-                TRC.tracef(3,"FAIL","proc t|%d| sector failure server|%s| qual|%d| shelf|%s| doc|%s| copy|%s|" % (G.env.now,self.sServerID,G.dID2Server[self.sServerID].nQual,self.ID,cDoc.ID,sCopyVictimID))
+                logInfo("SERVER","small error t|%6.0f| svr|%s| shelf|%s| hidden failure in copy|%s| doc|%s|" % (G.env.now,self.sServerID,self.ID,sCopyVictimID,sDocID))
+                TRC.tracef(3,"FAIL","proc t|%d| sector failure server|%s| qual|%d| shelf|%s| doc|%s| copy|%s|" % (G.env.now,self.sServerID,G.dID2Server[self.sServerID].nQual,self.ID,sDocID,sCopyVictimID))
             else:                           # No victim, hit empty space.
                 self.nEmptySectorHits += 1
                 TRC.tracef(3,"SHLF","proc mAge_sector shelf|%s| sector error fell in empty space" % (self.ID))
@@ -334,7 +336,7 @@ class CShelf(object):
             nLen = len(self.lCopyIDsComplete)
             nDist = (nLen + 1) / 2
             nLoc = nDist
-            TRC.trace(5,"proc SelectVictimCopy0 searchsetup len|%s| loc|%s| dist|%s|" % (nLen,nLoc,nDist))
+            TRC.tracef(5,"SHLF","proc SelectVictimCopy0 searchsetup len|%s| loc|%s| dist|%s|" % (nLen,nLoc,nDist))
             while 1:
                 if nLoc <= 0: nLoc = 1
                 if nLoc >= nLen: nLoc = nLen - 1
@@ -351,19 +353,19 @@ class CShelf(object):
                     # Lower than top, look down.
                     if nRandomSpot >= nBottom:
                         # Found to left of nLoc.  
-                        TRC.trace(5,"proc SelectVictimCopy5D found victim id|%s| at spot|%s| in[%s,%s]| doc|%s|" % (sCopyID,nRandomSpot,nBottom,nTop,sDocID))
+                        TRC.tracef(5,"SHLF","proc SelectVictimCopy5D found victim id|%s| at spot|%s| in[%s,%s]| doc|%s|" % (sCopyID,nRandomSpot,nBottom,nTop,sDocID))
                         # Is this slot still occupied by a live copy?
                         if sCopyID in self.lCopyIDs:
                             sVictimID = sCopyID
                             TRC.tracef(3,"SHLF","proc mSelectVictimCopy NEWD end shelf|%s| spot|%d| hits doc|%s| placed[%d,%d] size|%d| outof|%d|" % (self.ID,nRandomSpot,sVictimID,cCopy.nBlkBegin,cCopy.nBlkEnd, (cCopy.nBlkEnd-cCopy.nBlkBegin+1),self.nCapacity))
                         else:
                             sVictimID = None
-                            TRC.trace(5,"proc SelectVictimCopy2D no longer valid copyid|%s| docid|%s|" % (sCopyID,sDocID))
+                            TRC.tracef(5,"SHLF","proc SelectVictimCopy2D no longer valid copyid|%s| docid|%s|" % (sCopyID,sDocID))
                             self.nMultipleHits += 1
                         break
                     else:
                         nLoc -= nDist
-                        TRC.trace(5,"proc SelectVictimCopy3D down spot|%s| intvl|[%s,%s| newloc|%s| newdist|%s|" % (nRandomSpot,nBottom,nTop,nLoc,nDist))
+                        TRC.tracef(5,"SHLF","proc SelectVictimCopy3D down spot|%s| intvl|[%s,%s| newloc|%s| newdist|%s|" % (nRandomSpot,nBottom,nTop,nLoc,nDist))
                 else:
                     # Higher than top, look up.
                     if nRandomSpot <= self.lCopyTops[nLoc+1]:
@@ -374,19 +376,19 @@ class CShelf(object):
                         cCopy = G.dID2Copy[sCopyID]
                         nBottom = self.lCopyTops[nLoc+1-1]
                         sCopyID = self.lCopyIDsComplete[nLoc+1-1]
-                        TRC.trace(5,"proc SelectVictimCopy5U found victim id|%s| at spot|%s| in[%s,%s]| doc|%s|" % (sCopyID,nRandomSpot,nBottom,nTop,sDocID))
+                        TRC.tracef(5,"SHLF","proc SelectVictimCopy5U found victim id|%s| at spot|%s| in[%s,%s]| doc|%s|" % (sCopyID,nRandomSpot,nBottom,nTop,sDocID))
                         # Is this slot still occupied by a live copy?
                         if sCopyID in self.lCopyIDs:
                             sVictimID = sCopyID
                             TRC.tracef(3,"SHLF","proc mSelectVictimCopy NEWU end shelf|%s| spot|%d| hits doc|%s| placed[%d,%d] size|%d| outof|%d|" % (self.ID,nRandomSpot,sVictimID,cCopy.nBlkBegin,cCopy.nBlkEnd, (cCopy.nBlkEnd-cCopy.nBlkBegin+1),self.nCapacity))
                         else:
                             sVictimID = None
-                            TRC.trace(5,"proc SelectVictimCopy2U no longer valid copyid|%s| docid|%s|" % (sCopyID,sDocID))
+                            TRC.tracef(5,"SHLF","proc SelectVictimCopy2U no longer valid copyid|%s| docid|%s|" % (sCopyID,sDocID))
                             self.nMultipleHits += 1
                         break
                     else:
                         nLoc += nDist
-                        TRC.trace(5,"proc SelectVictimCopy3U up   spot|%s| intvl|[%s,%s| newloc|%s| newdist|%s|" % (nRandomSpot,nBottom,nTop,nLoc,nDist))
+                        TRC.tracef(5,"SHLF","proc SelectVictimCopy3U up   spot|%s| intvl|[%s,%s| newloc|%s| newdist|%s|" % (nRandomSpot,nBottom,nTop,nLoc,nDist))
 
             ''' the original old way
             for idxCopy,sCopyID in enumerate(self.lCopyIDs):
@@ -420,15 +422,22 @@ class CShelf(object):
         # Remove doc and copy from current lists.  
         del self.lCopyIDs[nCopyIndex]
         del self.lDocIDs[nCopyIndex]
+        # Tell the server that the copy is gone.
+        cCopy = G.dID2Copy[mysCopyID]
+        sDocID = cCopy.sDocID
+        cServer = G.dID2Server[self.sServerID]
+        cServer.mDestroyCopy(mysCopyID,sDocID,self.ID)
         # And give back the space it occupied.  
         self.bContig = False
-        cCopy = G.dID2Copy[mysCopyID]
-        cDoc = G.dID2Document[cCopy.sDocID]
+        cDoc = G.dID2Document[sDocID]
+        
         # BZZZT: DO NOT put this region back into use.  It has already 
         # suffered an error once and caused a document to fail.  
         #self.nFreeSpace += cDoc.nSize
         TRC.tracef(3,"SHLF","proc mDestroyCopy remove doc|%s| copy|%s| idx|%d| size|%d| from shelf|%s| remainingdocs|%d| free|%d|" % (cCopy.sDocID,mysCopyID,nCopyIndex,cDoc.nSize,self.ID,len(self.lCopyIDs),self.nFreeSpace))
-        return self.ID + "-" + cCopy.sDocID + "-" + mysCopyID
+        # And, at long last, destroy the Copy oject itself.
+        del cCopy
+        return self.ID + "-" + sDocID + "-" + mysCopyID
 
 # S h e l f . m A g e _ s h e l f 
     @tracef("SHLF",level=3)
@@ -497,7 +506,7 @@ class CCopy(object):
     getID = itertools.count(1).next
 
     @tracef("COPY")
-    def __init__(self,mysDocID,mysClientID):
+    def __init__(self,mysDocID,mysClientID,mysServerID):
         self.ID = "X" + str(self.getID())
         G.dID2Copy[self.ID] = self
         G.nCopyLastID = self.ID
@@ -506,7 +515,7 @@ class CCopy(object):
         self.sDocID = mysDocID
         self.sClientID = mysClientID
         # Where is this copy being stored?
-        self.sServerID = None
+        self.sServerID = mysServerID
         self.sShelfID = None
         self.nBlkBegin = None
         self.nBlkEnd = None
@@ -519,5 +528,19 @@ class CCopy(object):
         self.nBlkEnd = mynBlkEnd
         return self.ID+"+"+mysServerID+"+"+mysShelfID+"+" + "["+str(mynBlkBegin)+","+str(mynBlkEnd)+"]"
 
+    @tracef("COPY")
+    def mGetDocID(self):
+        return self.sDocID
+
+    @tracef("COPY")
+    def mDestroyCopy(self):
+        pass
+
+
+''' TODO
+- keep list of copies on this server
+- remove copy from server on error 
+- remove server from server list of doc on error
+'''
 
 # END

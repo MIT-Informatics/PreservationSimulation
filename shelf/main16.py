@@ -391,7 +391,7 @@ def dumpParamsIntoLog():
             lg.logInfo("PARAMS","DOCUMENT value|%d| percent|%d| meanMB|%d| sd|%d|" % (nValue,nPercent,nMean,nSdev))
 
     # Audit params.
-    lg.logInfo("PARAMS","AUDIT interval hours|%s| bandwidth Mbps|%s|" % (G.nAuditCycleInterval,G.nBandwidthMbps)) 
+    lg.logInfo("PARAMS","AUDIT interval hours|%s| segments|%s| type|%s| bandwidth Mbps|%s|" % (G.nAuditCycleInterval,G.nAuditSegments,G.sAuditStrategy,G.nBandwidthMbps)) 
 
 # d u m p S e r v e r U s e S t a t s 
 @tracef("MAIN")
@@ -422,20 +422,37 @@ def dumpServerErrorStats():
 
 # d u m p A u d i t S t a t s 
 def dumpAuditStats():
-    (TnRepairsTotal,TnPermanentLosses,TnForensicsRequired) = (0,0,0)
+    (TnNumberOfCycles,TnRepairsTotal,TnPermanentLosses,TnRepairsMajority,TnRepairsMinority) = (0,0,0,0,0)
     for sKey in sorted(G.dID2Audit.keys()):
         cAudit = G.dID2Audit[sKey]
         # Get vector of stats.
-        (ID,sClientID,sCollectionID,sServerID                               \
-        ,nNumberOfCycles,nRepairsTotal                                      \
-        ,nPermanentLosses,nForensicsRequired) = cAudit.mReportAuditStats()
-        lg.logInfo("MAIN","AUDITS id|%s| client|%s| coll|%s| server|%s| ncycles|%s| nrepairs|%s| nlosses|%s| nforensics|%s|" % (ID,sClientID,sCollectionID,sServerID,nNumberOfCycles,nRepairsTotal,nPermanentLosses,nForensicsRequired))
+        dStats = cAudit.mdReportAuditStats()
+        (ID,sClientID,sCollectionID,sServerID
+        ,nNumberOfCycles,nRepairsTotal
+        ,nPermanentLosses,nRepairsMajority,nRepairsMinority) = (sKey,dStats["sClientID"],dStats["sCollectionID"],"*"
+        ,dStats["nNumberOfCycles"],dStats["nRepairsTotal"]
+        ,dStats["nPermanentLosses"],dStats["nRepairsMajority"],dStats["nRepairsMinority"]) 
+        
+        lg.logInfo("MAIN","AUDITS id|%s| client|%s| coll|%s| server|%s| ncycles|%s| nrepairs|%s| nlosses|%s| nmajority|%s| nminority|%s|" % (ID,sClientID,sCollectionID,sServerID,nNumberOfCycles,nRepairsTotal,nPermanentLosses,nRepairsMajority,nRepairsMinority))
+
         # Accumulate totals.
+        TnNumberOfCycles    += nNumberOfCycles
         TnRepairsTotal      += nRepairsTotal
         TnPermanentLosses   += nPermanentLosses
-        TnForensicsRequired += nForensicsRequired
-    lg.logInfo("MAIN","AUDITTOTALS nrepairs|%s| nlosses|%s| nforensics|%s|" % (TnRepairsTotal,TnPermanentLosses,TnForensicsRequired))
+        TnRepairsMajority   += nRepairsMajority
+        TnRepairsMinority   += nRepairsMinority
+    lg.logInfo("MAIN","AUDITTOTALS ncycles|%s| nrepairs|%s| nlost|%s| nmajority|%s| nminority|%s|" % (TnNumberOfCycles,TnRepairsTotal,TnPermanentLosses,TnRepairsMajority,TnRepairsMinority))
     return 
+
+# d u m p C o l l e c t i o n S t a t s 
+def dumpCollectionStats(mysCollID):
+    cColl = G.dID2Collection[mysCollID]
+    dStats = cColl.mdReportCollectionStats()
+
+    (sCollIDx,sClientIDx,nServers,nDocs, nDocsOkay,nDocsInjured,nDocsForensics,nDocsLost) = (mysCollID,dStats["sClientID"],dStats["nServers"],dStats["nDocs"],dStats["nOkay"],dStats["nRepairsMajority"],dStats["nRepairsMinority"],dStats["nLost"])
+
+    lg.logInfo("MAIN","COLLECTIONTOTALS client|%s| collection|%s| nservers|%s| ndocs|%s| nokay|%s| nmajority|%s| nminority|%s| nlost|%s| " \
+        % (sClientIDx,sCollIDx,nServers,nDocs, nDocsOkay,nDocsInjured,nDocsForensics,nDocsLost))
 
 
 #-----------------------------------------------------------
@@ -486,13 +503,11 @@ def testAllClients(mylClients):
             lg.logInfo("MAIN","BAD NEWS: Total documents lost by client |%s| in all servers |%d|" % (sClientID,len(lDeadDocIDs)))
         else:
             lg.logInfo("MAIN","GOOD NEWS: Total documents lost by client |%s| in all servers |%d|" % (sClientID,len(lDeadDocIDs)))
+        
         # Now log stats for the all collections in the client.
         lCollectionIDs = cClient.mListCollectionIDs()
         for sCollID in lCollectionIDs:
-            cColl = G.dID2Collection[sCollID]
-            (sCollIDx,sClientIDx,nServers,nDocs, nDocsOkay,nDocsInjured,nDocsForensics,nDocsLost) = cColl.mReportCollectionStats()
-            lg.logInfo("MAIN","COLLECTIONTOTALS client|%s| collection|%s| nservers|%s| ndocs|%s| nokay|%s| ninjured|%s| nforensics|%s| nlost|%s| " \
-                % (sClientIDx,sCollIDx,nServers,nDocs, nDocsOkay,nDocsInjured,nDocsForensics,nDocsLost))
+            dumpCollectionStats(sCollID)
 
 
 #-----------------------------------------------------------

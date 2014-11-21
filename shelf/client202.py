@@ -1,16 +1,17 @@
 #!/usr/bin/python
-# client.py
+# client2.py
 # 
 import simpy
 from NewTraceFac import TRC,trace,tracef
 import itertools
 from globaldata import G
 from server import CServer
-from audit import CAudit
+from audit2 import fAudit_Select
 from repair import CRepair
 import util
 import math
 import logoutput as lg
+import collections as cc
 
 
 #===========================================================
@@ -27,14 +28,22 @@ class CDocument(object):
         G.dID2Document[self.ID] = self
         G.nDocLastID = self.ID
         self.nSize = size
+        
+        # Who owns this doc
         self.sClientID = mysClientID        # Doc owned by what client
         self.sCollID = mysCollectionID      # Doc lives in what collection
         TRC.tracef(3,"DOC","proc init client|%s| created doc|%s| size|%d|" % (self.sClientID,self.ID,self.nSize))
-        self.lServerIDs = list()            # What servers have this doc
-        self.lCopyIDs = list()              # What copy IDs of this doc
+        
+        # Where are copies of this doc stored
+        self.lServerIDs = list()            # What servers currently have this doc
+        self.lCopyIDs = list()              # What copy IDs are there of this doc
+        self.setServerIDsAll = set([])      # What servers have ever had a copy
+        
+        # How has the doc fared in the storage wars
         self.bMajorityRepair = False        # True if ever repaired from majority of copies
         self.bMinorityRepair = False        # True if ever repaired from minority of copies
         self.bDocumentLost = False          # True if completely lost, all copies lost
+        self.bDocumentOkay = True           # True if never repaired or lost
         self.nRepairsMajority = 0           # Number of repairs of doc from majority copies
         self.nRepairsMinority = 0           # Number of repairs of doc from minority copies
 
@@ -43,25 +52,8 @@ class CDocument(object):
     def mCopyPlacedOnServer(self,mysCopyID,mysServerID):
         self.lCopyIDs.append(mysCopyID)
         self.lServerIDs.append(mysServerID)
+        self.setServerIDsAll.add(mysServerID)
         return self.ID+"+"+mysCopyID+"+"+mysServerID
-
-# D o c u m e n t . m T e s t C o p i e s 
-    @tracef("DOC")
-    def mTestCopies(self):
-        ''' Doc.mTestCopies
-            Audit all the known copies of this doc.
-            If any of the servers who are supposed to have
-            a copy reports correctly, then return success.
-            If one of the servers still has a copy, 
-            then the document is lost forever.  Oops.  
-        '''
-        bAggregate = False
-        for sServerID in self.lServerIDs:
-            bResult = self.mDocTestOneServer(sServerID)
-            bAggregate = bAggregate or bResult
-            if bAggregate:
-                break
-        return bAggregate        
 
 # NEW NEW NEW replacement
 # D o c u m e n t . m T e s t C o p i e s 
@@ -74,18 +66,126 @@ class CDocument(object):
             - lost = zero copies remaining intact.  
         '''
         cColl = G.dID2Collection[self.sCollID]
-        (bOkay,bInjured,bForensics,bLost) = cColl.mEvaluateOneDoc(self.ID)
+        (bOkay,bInjured,bForensics,bLost) = self.mEvaluateMe() #cColl.mEvaluateOneDoc(self.ID)
         # I think I meant to do something more here, but I forgot what.          
         return (bOkay,bInjured,bForensics,bLost)
-        
 
-# D o c u m e n t . m D o c T e s t O n e S e r v e r 
+# D o c u m e n t . m E v a l u a t e M e 
     @tracef("DOC")
-    def mDocTestOneServer(self,mysServerID):
+    def mEvaluateMe(self):
+        # Return tuple of four bools stating doc status.
+        # How many copies do I have left (if any)?
+        nCopiesLeft = len(
+                        filter(
+                            (lambda sServerID:
+                                self.mTestOneServer(sServerID))
+                            ,self.lServerIDs)
+                         )
+        # Are there any or enough copies left from which to repair the doc?
+        nNumberOfServers = len(self.setServerIDsAll)
+        nMajorityOfServers = (nNumberOfServers + 1) / 2
+        # Include results from previous audits (if any).
+        (bOkay, bMajority, bMinority, bLost) = (self.bDocumentOkay, self.bMajorityRepair,self.bMinorityRepair,self.bDocumentLost)
+        TRC.tracef(3,"DOC","proc mEvaluateMe doc|%s| ncopies|%s| nservers|%s| okay|%s| majority|%s| minority|%s| lost|%s|" % (self.ID,nCopiesLeft,nNumberOfServers,bOkay,bMajority,bMinority,bLost))
+        if nCopiesLeft > 0:
+            # If there is a majority of copies remaining, 
+            # then unambiguous repair is possible.
+            if nCopiesLeft < nNumberOfServers and nCopiesLeft >= nMajorityOfServers:
+                bMajority = True
+                bOkay = False
+            # Some copies left, but not enough for unambiguous repair.
+            # Record that forensics are required for this doc repair. 
+            elif nCopiesLeft < nMajorityOfServers:
+                bMinority = True
+                bOkay = False
+        # There are no remaining copies of the doc, 
+        # it cannot be repaired ever, oops.  Permanent loss.  
+        else:
+            bLost = True
+            bOkay = False
+        return (bOkay,bMajority,bMinority,bLost)
+
+# D o c u m e n t . m T e s t O n e S e r v e r 
+    @tracef("DOC")
+    def mTestOneServer(self,mysServerID):
         cServer = G.dID2Server[mysServerID]
         bResult = cServer.mTestDocument(self.ID)
         return bResult
 
+# D o c u m e n t . m D o c M a r k L o s t 
+    @tracef("DOC")
+    def mMarkLost(self):
+        self.bDocumentLost = True
+        self.bDocumentOkay = False
+
+# D o c u m e n t . m D o c I s L o s t 
+    @tracef("DOC")
+    def mIsLost(self):
+        return self.bDocumentLost
+
+# D o c u m e n t . m D o c M a r k M a j o r i t y R e p a i r 
+    @tracef("DOC")
+    def mMarkMajorityRepair(self):
+        self.bMajorityRepair = True
+        self.nRepairsMajority += 1
+        self.bDocumentOkay = False
+        return self.nRepairsMajority
+
+# D o c u m e n t . m D o c M a r k M i n o r i t y R e p a i r
+    @tracef("DOC")
+    def mMarkMinorityRepair(self):
+        self.bMinorityRepair = True
+        self.nRepairsMinority += 1
+        self.bDocumentOkay = False
+        return self.nRepairsMinority
+
+# D o c u m e n t . m D e s t r o y C o p y 
+    @tracef("DOC")
+    def mDestroyCopy(self,mysServerID):
+        '''\
+        Remove Server's Copy of this Document.  
+        Actually, just remove Server from the list of Servers with 
+        copies of this Document.  
+        '''
+        self.lServerIDs.remove(mysServerID)
+
+# Document.mMergeEvaluation
+    @tracef("DOC")
+    def mMergeEvaluation(self,mybOkay,mybMajority,mybMinority,mybLost):
+        '''\
+        Carefully combine new doc info with old from audits, if any.
+        E.g., finally okay only if was okay and still is okay; 
+        finally lost if was lost or is now lost.  
+        '''
+        TRC.tracef(3,"DOC","proc merge in|%s|%s|%s|%s| with doc|%s|%s|%s|%s|" % (mybOkay,mybMajority,mybMinority,mybLost,self.bDocumentOkay,self.bMajorityRepair,self.bMinorityRepair,self.bDocumentLost))
+        self.bDocumentOkay = self.bDocumentOkay and mybOkay
+        self.bMajorityRepair = self.bMajorityRepair or mybMajority
+        self.bMajorityRepair = self.bMajorityRepair or mybMajority
+        self.bDocumentLost = self.bDocumentLost or mybLost
+        return (self.bDocumentOkay,self.bMajorityRepair,self.bMinorityRepair,self.bDocumentLost)
+
+# D o c u m e n t . m G e t R e p a i r C o u n t s 
+    def mGetRepairCounts(self):
+        return(self.nRepairsMajority,self.nRepairsMinority)
+
+# D o c u m e n t . m R e p o r t D o c u m e n t S t a t s 
+    @tracef("DOC")
+    def mdReportDocumentStats(self):
+        '''\
+        Return a dictionary of relevant stats.
+        '''
+        #dd = cc.defaultdict(list)
+        dd = dict()
+        dd["sDocID"]               = self.ID
+        dd["sClientID"]         = self.sClientID
+        dd["sCollectionID"]     = self.sCollID
+        dd["nSize"]             = self.nSize
+        dd["bMajorityRepair"]   = self.bMajorityRepair
+        dd["bMinorityRepair"]   = self.bMinorityRepair
+        dd["bDocumentLost"]     = self.bbDocumentLost
+        dd["nRepairsMajority"]  = self.nRepairsMajority
+        dd["nRepairsMinority"]  = self.nRepairsMinority
+        return dd
 
 
 #===========================================================
@@ -109,8 +209,8 @@ class CCollection(object):
 
         # Summary counters for document status at end of run.
         self.nDocsOkay = 0
-        self.nDocsInjured = 0
-        self.nDocsForensics = 0
+        self.nDocsMajorityRepair = 0
+        self.nDocsMinorityRepair = 0
         self.nDocsLost = 0
 
         # Action: create all books in the collection.
@@ -132,22 +232,6 @@ class CCollection(object):
         TRC.tracef(5,"COLL","proc mListDocuments self|%s| returning |%s|" % (self,self.lDocIDs))
         return (self.lDocIDs)
 
-# C o l l e c t i o n . m T e s t C o l l e c t i o n
-    @tracef("COLL")
-    def mTestCollection(self):
-        ''' Return a list, maybe empty, of documents declared missing
-            from this collection.  
-        '''
-        lDeadDocIDs = list()
-        for sDocID in self.lDocIDs:
-            cDoc = G.dID2Document[sDocID]
-            bResult = cDoc.mTestCopies()
-            TRC.tracef(3,"COLL","proc TestColl1 coll|%s| tests doc|%s| result|%s|" % (self.ID,sDocID,bResult))
-            if not bResult:
-                lDeadDocIDs.append(sDocID)
-                TRC.tracef(3,"COLL","proc TestColl2 dead doc|%s| in coll|%s| " % (sDocID,self.ID))
-        return lDeadDocIDs
-
 # NEW NEW NEW replacement
 # C o l l e c t i o n . m T e s t C o l l e c t i o n
     @tracef("COLL")
@@ -160,15 +244,21 @@ class CCollection(object):
             cDoc = G.dID2Document[sDocID]
             (bOkay,bInjured,bForensics,bLost) = cDoc.mTestCopies()
             TRC.tracef(3,"COLL","proc TestColl1 coll|%s| tests doc|%s| okay|%s| injured|%s| forensics|%s| lost|%s|" % (self.ID,sDocID,bOkay,bInjured,bForensics,bLost))
+            # Merge new info with old info from audits.
+            (bOkay,bInjured,bForensics,bLost) = cDoc.mMergeEvaluation(bOkay,bInjured,bForensics,bLost)
             # Update stats of document statuses.  
             self.nDocsOkay += 1 if bOkay else 0
-            self.nDocsInjured += 1 if bInjured else 0
-            self.nDocsForensics += 1 if bForensics else 0
+            self.nDocsMajorityRepair += 1 if bInjured else 0
+            self.nDocsMinorityRepair += 1 if bForensics else 0
             self.nDocsLost += 1 if bLost else 0
             # Update lost list.
             if bLost:
                 lDeadDocIDs.append(sDocID)
                 TRC.tracef(3,"COLL","proc TestColl2 dead doc|%s| in coll|%s| " % (sDocID,self.ID))
+            TRC.tracef(3,"COLL","proc TestColl3 coll|%s| doc|%s| okay|%s| majority|%s| minority|%s| lost|%s|" % (self.ID,sDocID,bOkay,bInjured,bForensics,bLost))
+            if not bOkay:
+                (nMajority,nMinority) = cDoc.mGetRepairCounts()
+                lg.logInfo("DOCUMENT","doc injured cli|%s| coll|%s| doc|%s| majority|%s|%s| minority|%s|%s| lost|%s|" % (self.sClientID,self.ID,sDocID,bInjured,nMajority,bForensics,nMinority,bLost))
         return lDeadDocIDs
 
 
@@ -223,7 +313,7 @@ class CCollection(object):
         # Are there any or enough copies left from which to repair the doc?
         if nCopiesLeft > 0:
             # If all copies remain, then doc is okay.
-            if nCopiesLeft == nNumberOfServers:
+            if nCopiesLeft == nNumberOfServers :
                 bOkay = True
             # If there is a majority of copies remaining, 
             # then unambiguous repair is possible.
@@ -244,6 +334,22 @@ class CCollection(object):
     @tracef("COLL")
     def mReportCollectionStats(self):
         return (self.ID,self.sClientID,len(self.lServerIDs),len(self.lDocIDs), self.nDocsOkay,self.nDocsInjured,self.nDocsForensics,self.nDocsLost)
+
+    def mdReportCollectionStats(self):
+        '''\
+        Return a dictionary of relevant stats.
+        '''
+        #dd = cc.defaultdict(list)
+        dd = dict()
+        dd["sClientID"]         = self.sClientID
+        dd["sCollectionID"]     = self.ID
+        dd["nDocs"]             = len(self.lDocIDs)
+        dd["nServers"]          = len(self.lServerIDs)
+        dd["nOkay"]             = self.nDocsOkay
+        dd["nRepairsMajority"]  = self.nDocsMajorityRepair
+        dd["nRepairsMinority"]  = self.nDocsMinorityRepair
+        dd["nLost"]             = self.nDocsLost
+        return dd
 
 
 #===========================================================
@@ -275,10 +381,9 @@ class CClient(object):
             # Put the collection in all the right places.  
             self.mPlaceCollection(sCollID)
 
-        self.cRepair = CRepair(self.ID)
+        #self.cRepair = CRepair(self.ID)
 
 # C l i e n t . m P l a c e C o l l e c t i o n
-    @tracef("SHOW")
     @tracef("CLI")
     def mPlaceCollection(self,mysCollID):
         ''' Client.mPlaceCollection()
@@ -312,9 +417,9 @@ class CClient(object):
             cColl.lServerIDs.append(sServerID)
             lg.logInfo("CLIENT","client|%s| placed collection|%s| to server|%s|" % (self.ID,mysCollID,sServerID))
 
-            # Initialize the auditing process for this collection on this server.
-            if G.nAuditCycleInterval > 0:
-                self.cAudit = CAudit(self.ID,mysCollID,sServerID,G.nAuditCycleInterval)
+        # Initialize the auditing process for this collection.
+        if G.nAuditCycleInterval > 0:
+            self.cAudit = fAudit_Select(G.sAuditStrategy,self.ID,mysCollID,G.nAuditCycleInterval)
 
         return lServersToUse
 
@@ -359,53 +464,16 @@ class CClient(object):
     def mListCollectionIDs(self):
         return self.lCollectionIDs
 
-
-#--------- future
-
-# 
+# Client.mDestroyCopy
     @tracef("CLI")
-    def mDocFailedOnServer(self,mysDocID,mysServerID):
-        ''' Client.mDocumentFailed
-            Server calls this to inform owner that a document died
-            probably due to a major storage failure.
-            Find a valid copy of the document and re-add it to server.
+    def mDestroyCopy(self,mysDocID,mysServerID):
         '''
-        ### T E M P 
-        return mysServerID +"-"+ mysDocID
-        ### E N D   T E M P 
-
-        lg.logDebug("CLIENT","Document failed on server doc|%s| svr|%s|" % (mysDocID,mysServerID))
-        bResult = self.mDocFindValidCopy(mysDocID)
-        if bResult:
-            self.mDocReplaceOnServer(mysDocID,mysServerID)
-        else:
-            self.mDocPermanentFailure(mysDocID)
-        return mysServerID +"-"+ mysDocID
-
-# 
-    @tracef("CLI")
-    def mDocReplaceOnServer(self,mysDocID,mysServerID):
-        ''' Client.mReplaceDocument
-            Send the document back to the server that lost it.
-            Push or pull does not matter at this level.  Use the
-            standard method of distribution.  
+        The Server says that it no longer has a copy of the doc.
+        Tell the Document that the copy was lost.
+        The Collection keeps only Server-level, not Doc-level stats.  
         '''
-        cServer = G.dID2Server[mysServerID]
-        cServer.mAddDocument(mysDocID,self.ID)
-        lg.logDebug("CLIENT","Document replaced on server doc|%s| svr|%s|" % (mysDocID,mysServerID))
-        return mysServerID +"+"+ mysDocID
+        cDoc = G.dID2Document[mysDocID]
+        cDoc.mDestroyCopy(mysServerID)
 
-    def mCollectionTestAll(self,mysCollID):
-        pass
-
-# 
-    @tracef("SHOW")
-    @tracef("CLI")
-    def mDocPermanentFailure(self,mysDocID):
-        ''' We cannot find a good copy of the document anywhere, 
-            ergo it is lost permanently.  Log this serious event.  
-        '''
-        lg.logError("CLIENT","Document lost, permanent failure |%s| at time |%s|" % (mysDocID,G.env.now))
-        pass
 
 # END
