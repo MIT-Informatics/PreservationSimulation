@@ -568,7 +568,7 @@ class CAudit_Zipf(CAudit):
 # Stupid factory function to create the right class for this audit strategy.
 @tracef("AUD2")
 def fAudit_Select(mysStrategy,mysClientID,mysCollectionID,mynCycleInterval):
-    if mysStrategy == "TOTAL":
+    if mysStrategy == "TOTAL" or mysStrategy == "OFF":
         thing = CAudit_Total(mysClientID,mysCollectionID,mynCycleInterval)
     elif mysStrategy == "SYSTEMATIC":
         thing = CAudit_Systematic(mysClientID,mysCollectionID,mynCycleInterval)
@@ -579,7 +579,7 @@ def fAudit_Select(mysStrategy,mysClientID,mysCollectionID,mynCycleInterval):
     else:
         # Forgiving version:
         thing = CAudit(mysClientID,mysCollectionID,mynCycleInterval)
-        # Tight-ass version:
+        # Tight-ass version:`
         raise ValueError, "Unknown Audit strategy: %s" % (mysStrategy)
     return thing
 
@@ -739,7 +739,9 @@ TODO (x=done):
 #               Add dict return of stats.
 #               Clean up lost doc detection/marking.
 #               Add empty CAudit class on top of new CAudit2.
-# 
+# 20141121  RBL Rework the scheduling and coordination of auditing segments.
+#               Correct numerous typos and spellos in evaluation of
+#                the health of document copies.  
 # 
 
 
