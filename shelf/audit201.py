@@ -71,13 +71,13 @@ class CAudit2(object):
         # like Ethernet collision retry waits. 
         nRandTime = util.makeunif(0,mynCycleInterval/20)
         yield G.env.timeout(nRandTime)
+        # And now wait for one segment interval before starting the first segment.
+        #  Seems odd, but consider an annual audit in quarterly segments:
+        #  you don't want to wait a whole year before starting quarterly audits.
+        nSegmentInterval = self.mCalcSegmentInterval(mynCycleInterval,mynSegments)
+        yield G.env.timeout(nSegmentInterval)
         
         while True:
-            # Wait one segment time before beginning segment audit.
-            # Seems odd, but consider an annual audit in quarterly segments:
-            # you don't want to wait a whole year before starting quarterly audits.
-            nSegmentInterval = self.mCalcSegmentInterval(mynCycleInterval,mynSegments)
-            yield G.env.timeout(nSegmentInterval)
             lg.logInfo("AUDIT2","begin cycle t|%10.3f| auditid|%s| type|%s| cycle|%s| cli|%s| coll|%s| interval|%s| nsegments|%s|" % (G.env.now,self.ID,self.TYPE,self.nNumberOfCycles,self.sClientID,self.sCollectionID,mynCycleInterval,mynSegments))
             
             # Begin audit cycle.

@@ -683,9 +683,8 @@ def evaluate():
     testAllClients(G.lAllClients)
 
 
-# ----------------------------------------------------------
-# If this is the main program, run it now.  
-if __name__ == "__main__":
+##########################################################
+def mainmain():
     tWallBegin = time()
     
     main()
@@ -700,5 +699,11 @@ if __name__ == "__main__":
     tWallEnd = time()
     G.tWallLen = tWallEnd - tWallBegin
     TRC.tracef(0,"MAIN","proc End time stats: wall|%8.3f| cpu|%s|" % (G.tWallLen,G.tSimCpuLen))
+
+# ----------------------------------------------------------
+# If this is the main program, run it now.  
+if __name__ == "__main__":
+    mainmain()
+
 
 # END

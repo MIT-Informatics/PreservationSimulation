@@ -160,7 +160,7 @@ class CDocument(object):
         TRC.tracef(3,"DOC","proc merge in|%s|%s|%s|%s| with doc|%s|%s|%s|%s|" % (mybOkay,mybMajority,mybMinority,mybLost,self.bDocumentOkay,self.bMajorityRepair,self.bMinorityRepair,self.bDocumentLost))
         self.bDocumentOkay = self.bDocumentOkay and mybOkay
         self.bMajorityRepair = self.bMajorityRepair or mybMajority
-        self.bMajorityRepair = self.bMajorityRepair or mybMajority
+        self.bMinorityRepair = self.bMinorityRepair or mybMinority
         self.bDocumentLost = self.bDocumentLost or mybLost
         return (self.bDocumentOkay,self.bMajorityRepair,self.bMinorityRepair,self.bDocumentLost)
 
