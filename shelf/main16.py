@@ -112,6 +112,7 @@ import logoutput as lg
 from cliparse import fndCliParse
 import copy
 from time import clock, time
+import profile
 
 #-----------------------------------------------------------
 # g e t P a r a m F i l e s 
@@ -703,7 +704,16 @@ def mainmain():
 # ----------------------------------------------------------
 # If this is the main program, run it now.  
 if __name__ == "__main__":
-    mainmain()
+    bAlreadyRan = False
+    try:
+        sProfileVar = environ["PROFILE"]
+        if sProfileVar == "YES":
+            profile.run('mainmain()')
+            bAlreadyRan = True
+    except (KeyError,TypeError,ValueError):
+        pass
+    if not bAlreadyRan:
+        mainmain()
 
 
 # END
