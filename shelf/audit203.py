@@ -763,6 +763,12 @@ TODO (x=done):
 #               Add dict return of stats.
 #               Clean up lost doc detection/marking.
 #               Add empty CAudit class on top of new CAudit2.
+# 20141121  RBL Rework the scheduling and coordination of auditing segments.
+#               Correct numerous typos and spellos in evaluation of
+#                the health of document copies.  
+# 20141128  RBL Correct counting of docs lost.  
+# 20141201  RBL Remove and replace the preceding four lines to resolve 
+#                a git conflict.  Gotta learn that someday.  
 # 
 
 
