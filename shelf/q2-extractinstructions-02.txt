@@ -1,5 +1,5 @@
 # extract instruction file for extractvalues.py
-# RBLandau 20141125
+# RBLandau 20141125, revised 20141130.
 
 # In the template line, all the variable names must be extracted (successfully)
 #  by a line in the variables section below.  
