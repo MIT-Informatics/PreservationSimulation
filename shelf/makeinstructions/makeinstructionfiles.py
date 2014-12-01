@@ -311,9 +311,9 @@ def main():
         if "extra3" in dCliDict: dParamsFromFile["extra3"] = dCliDict["extra3"]
         dParams = dParamsFromFile
  
-        # Construct output dir name from family, specific, and ber from params.
+        # Construct output dir name from family, specific, and lifem from params.
         sRoot = (dParams['familyroot']+"/" if dParams['familyroot'] else "")
-        g.sOutputDir = dParams['family'] +'/'+ dParams['specific'] +'/'+'logb'+ dParams['ber']
+        g.sOutputDir = dParams['family'] +'/'+ dParams['specific'] +'/'+'logb'+ dParams['lifem']
         # Substitute params into each line of template, and write an output file.
         sOutFile = sRoot + g.sOutputDir + "/" + dParams["filename"]
         TRC.tracef(3,"MAIN","proc construct output name root|%s| family|%s| specific|%s| outdir|%s| outfile|%s|" % (sRoot,dParams['family'],dParams['specific'],g.sOutputDir,sOutFile))

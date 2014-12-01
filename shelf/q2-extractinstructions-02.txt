@@ -1,16 +1,17 @@
 # extract instruction file for extractvalues.py
-# RBLandau 20140727
+# RBLandau 20141125
 
 # In the template line, all the variable names must be extracted (successfully)
 #  by a line in the variables section below.  
 =template
-{timestamp} {docsize} {copies} {lifem} {seed} {lost} {auditrepairs} {auditlosses} {forensics} {walltime} {cputime} 
+{timestamp} {docsize} {copies} {lifem} {simlength} {seed} {lost} {docstotal} {docsokay} {docsrepairedmajority} {docsrepairedminority} {docslost} {auditcycles} {auditfrequency} {auditsegments} {auditrepairs} {auditmajority} {auditminority} {auditlost} {walltime} {cputime} {logfilename} {logfilesize} {instructionfilename} {todaysdatetime} {extractorversion} 
 
 # The header line will be output or not, depending on the 
 #  --header CLI option or the "header" environment variable.  
-# Be careful to keep the template and the header line in sync.
-=header
-timestamp docsize copies lifem seed lost auditrepairs auditlosses forensics walltime cputime
+# Bzzzt: new news: the header spec here is irrelevant.  The 
+#  header output is the template with the braces stripped.  
+#=header
+#asdf asdf xyzzy qwerty iou jkl mnop 
 
 # Be very careful constructing the regular expressions for this file.
 # The lineregexes must match only the single line you want.  
@@ -39,18 +40,28 @@ copies,"PARAMS INFO.*DISTRIBUTION.*value.1",8,(\d+)
 #  the sector lifetime in kilo-hours.  Since this number is 
 #  well up in the thousands itself, that's millions of hours total.  
 #  (ber = Bit Error Rate is a thing of the past.)
+lifek,"PARAMS INFO.*SHELF.*quality.1",7,smallfailrate.(\d+)
 lifem,"PARAMS INFO.*SHELF.*quality.1",7,smallfailrate.(\d+)000
+simlength,"PARAMS INFO.*timelimit",8,timelimit.(\d+)
 
 # Include the seed so that we can recover the original log filename if needed.
 seed,PARAMS INFO.*seed,7,(\d+)
 
 lost,NEWS,16,(\d+)
 
-auditrepairs,AUDITTOTALS,6,(\d+)
+docstotal,COLLECTIONTOTALS,9,ndocs.(\d+)
+docsokay,COLLECTIONTOTALS,10,nokay.(\d+)
+docsrepairedmajority,COLLECTIONTOTALS,11,nmajority.(\d+)
+docsrepairedminority,COLLECTIONTOTALS,12,nminority.(\d+)
+docslost,COLLECTIONTOTALS,13,nlost.(\d+)
 
-auditlosses,AUDITTOTALS,7,(\d+)
-
-forensics,AUDITTOTALS,8,(\d+)
+auditcycles,AUDITTOTALS,6,ncycles.(\d+)
+auditfrequency,AUDITTOTALS,7,nfrequency.(\d+)
+auditsegments,AUDITTOTALS,8,nsegments.(\d+)
+auditrepairs,AUDITTOTALS,9,nrepairs.(\d+)
+auditmajority,AUDITTOTALS,10,nmajority.(\d+)
+auditminority,AUDITTOTALS,11,nminority.(\d+)
+auditlost,AUDITTOTALS,12,nlost.(\d+)
 
 timestamp,"MAIN INFO.*Simulation parameters",1,([1234567890_]+)
 

@@ -424,25 +424,36 @@ def dumpServerErrorStats():
 # d u m p A u d i t S t a t s 
 def dumpAuditStats():
     (TnNumberOfCycles,TnRepairsTotal,TnPermanentLosses,TnRepairsMajority,TnRepairsMinority) = (0,0,0,0,0)
-    for sKey in sorted(G.dID2Audit.keys()):
-        cAudit = G.dID2Audit[sKey]
-        # Get vector of stats.
-        dStats = cAudit.mdReportAuditStats()
-        (ID,sClientID,sCollectionID,sServerID
-        ,nNumberOfCycles,nRepairsTotal
-        ,nPermanentLosses,nRepairsMajority,nRepairsMinority) = (sKey,dStats["sClientID"],dStats["sCollectionID"],"*"
-        ,dStats["nNumberOfCycles"],dStats["nRepairsTotal"]
-        ,dStats["nPermanentLosses"],dStats["nRepairsMajority"],dStats["nRepairsMinority"]) 
-        
-        lg.logInfo("MAIN","AUDITS id|%s| client|%s| coll|%s| server|%s| ncycles|%s| nrepairs|%s| nlosses|%s| nmajority|%s| nminority|%s|" % (ID,sClientID,sCollectionID,sServerID,nNumberOfCycles,nRepairsTotal,nPermanentLosses,nRepairsMajority,nRepairsMinority))
+    if G.nAuditCycleInterval:       # If there is any auditing in this run,...
+        for sKey in sorted(G.dID2Audit.keys()):
+            cAudit = G.dID2Audit[sKey]
+            # Get vector of stats.
+            dStats = cAudit.mdReportAuditStats()
+            (ID,sClientID,sCollectionID,sServerID
+            ,nNumberOfCycles,nRepairsTotal
+            ,nPermanentLosses,nRepairsMajority,nRepairsMinority) = (sKey,dStats["sClientID"],dStats["sCollectionID"],"*"
+            ,dStats["nNumberOfCycles"],dStats["nRepairsTotal"]
+            ,dStats["nPermanentLosses"],dStats["nRepairsMajority"],dStats["nRepairsMinority"]) 
+            (nFrequency,nSegments) = (dStats["nFrequency"],dStats["nSegments"])
+            
+            lg.logInfo("MAIN","AUDITS id|%s| client|%s| coll|%s| server|%s| ncycles|%s| nrepairs|%s| nlosses|%s| nmajority|%s| nminority|%s|" % (ID,sClientID,sCollectionID,sServerID,nNumberOfCycles,nRepairsTotal,nPermanentLosses,nRepairsMajority,nRepairsMinority))
+    
+            # Accumulate totals.
+            TnNumberOfCycles    +=  nNumberOfCycles
+            TnRepairsTotal      +=  nRepairsTotal
+            TnPermanentLosses   +=  nPermanentLosses
+            TnRepairsMajority   +=  nRepairsMajority
+            TnRepairsMinority   +=  nRepairsMinority
+            # A couple of these are just declarations, not to be totalled.  
+            TnFrequency         =   nFrequency
+            TnSegments          =   nSegments
 
-        # Accumulate totals.
-        TnNumberOfCycles    += nNumberOfCycles
-        TnRepairsTotal      += nRepairsTotal
-        TnPermanentLosses   += nPermanentLosses
-        TnRepairsMajority   += nRepairsMajority
-        TnRepairsMinority   += nRepairsMinority
-    lg.logInfo("MAIN","AUDITTOTALS ncycles|%s| nrepairs|%s| nlost|%s| nmajority|%s| nminority|%s|" % (TnNumberOfCycles,TnRepairsTotal,TnPermanentLosses,TnRepairsMajority,TnRepairsMinority))
+    else:                           # If no auditing in this run.
+        TnNumberOfCycles = TnRepairsTotal = 0
+        TnPermanentLosses = TnRepairsMajority = TnRepairsMinority = 0
+        TnFrequency = TnSegments = 0
+
+    lg.logInfo("MAIN","AUDITTOTALS ncycles|%s| nfrequency|%s| nsegments|%s| nrepairs|%s| nmajority|%s| nminority|%s| nlost|%s| " % (TnNumberOfCycles,TnFrequency,TnSegments,TnRepairsTotal,TnRepairsMajority,TnRepairsMinority,TnPermanentLosses))
     return 
 
 # d u m p C o l l e c t i o n S t a t s 

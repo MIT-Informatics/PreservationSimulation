@@ -253,7 +253,7 @@ def fndGetSyntheticVars():
     return dTemp
 
 
-# Global data
+# G l o b a l   d a t a 
 class CG(object):
     bHeader = False
     sInstructionsFileName = "instructions.txt"

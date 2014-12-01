@@ -34,6 +34,7 @@ class CAudit2(object):
         self.sClientID = mysClientID
         self.sCollectionID = mysCollectionID
         self.nCycleInterval = mynInterval
+        self.nSegments = G.nAuditSegments
 
         # Per-audit data
         self.nNumberOfCycles = 0
@@ -54,7 +55,7 @@ class CAudit2(object):
 
         # Start the free-running process of audit cycles for 
         # this collection.
-        G.env.process(self.mAuditCycle(self.nCycleInterval,G.nAuditSegments))
+        G.env.process(self.mAuditCycle(self.nCycleInterval,self.nSegments))
 
 
 # NEW NEW NEW
@@ -73,7 +74,8 @@ class CAudit2(object):
         yield G.env.timeout(nRandTime)
         # And now wait for one segment interval before starting the first segment.
         #  Seems odd, but consider an annual audit in quarterly segments:
-        #  you don't want to wait a whole year before starting quarterly audits.
+        #  you don't want to wait a whole year before starting quarterly audits; 
+        #  start after the first quarter.  
         nSegmentInterval = self.mCalcSegmentInterval(mynCycleInterval,mynSegments)
         yield G.env.timeout(nSegmentInterval)
         
@@ -160,25 +162,25 @@ class CAudit2(object):
                 # foreach doc in this segment
                 for sDocID in self.lDocsThisSegment:
                     cDoc = G.dID2Document[sDocID]
-                    # If doc already lost, never mind.
-                    if self.mIsDocumentLost(sDocID):
-                        pass
+                    # If the doc is still on the server, retrieve it
+                    #  and spend time doing that.
+                    # If not, then record that doc damaged on this server. 
+                    fTransferTime = self.mRetrieveDoc(sDocID,sServerID)
+                    if fTransferTime:
+                        yield G.env.timeout(fTransferTime)
                     else:
-                        # If the doc is still on the server, retrieve it
-                        #  and spend time doing that.
-                        # If not, then record that doc damaged on this server. 
-                        fTransferTime = self.mRetrieveDoc(sDocID,sServerID)
-                        if fTransferTime:
-                            yield G.env.timeout(fTransferTime)
-                        else:
-                            # If doc missing here, save server in lost-list for doc
-                            self.dlDocsDamagedOnServers[sDocID].append(sServerID)
-                            lg.logInfo("AUDIT2","cpy missing t|%10.3f| auditid|%s| cycle|%s| seg|%s| cli|%s| coll|%s| doc|%s| svr|%s|" % (G.env.now,self.ID,self.nNumberOfCycles,mynThisSegment,self.sClientID,self.sCollectionID,sDocID,sServerID))
-                            TRC.tracef(5,"AUD2","proc AuditSegment2 doc|%s| svr|%s| loston|%s|" % (sDocID,sServerID,self.dlDocsDamagedOnServers[sDocID]))
-                    # end foreach doc
+                        # If doc missing here, save server in lost-list for doc
+                        self.dlDocsDamagedOnServers[sDocID].append(sServerID)
+                        lg.logInfo("AUDIT2","cpy missing t|%10.3f| auditid|%s| cycle|%s| seg|%s| cli|%s| coll|%s| doc|%s| svr|%s|" % (G.env.now,self.ID,self.nNumberOfCycles,mynThisSegment,self.sClientID,self.sCollectionID,sDocID,sServerID))
+                        TRC.tracef(5,"AUD2","proc AuditSegment2 doc|%s| svr|%s| loston|%s|" % (sDocID,sServerID,self.dlDocsDamagedOnServers[sDocID]))
+                # end foreach doc
             # end foreach server
 
             # Phase 2: Record severity of copy losses.
+            # NOTE: This arithmetic seems to be reasonable for all numbers
+            #  greater than two, but one copy remaining out of two is judged 
+            #  to be a majority, so a repair from that single remaining copy
+            #  is labeled a majority repair.  Seems kinda wrong.  
             nServers = len(cCollection.lServerIDs)
             nMajority = (len(cCollection.lServerIDs)+1) / 2     # int divide truncates
             # foreach doc with any losses
@@ -193,9 +195,11 @@ class CAudit2(object):
                     TRC.tracef(3,"AUD2","proc AuditSegment1 doc|%s| nsvr|%s| loston|%s| nleft|%s|" % (sDocID,nServers,lDocLostOnServers,nCopiesLeft))
                     if nCopiesLeft == 0:
                         # Report permanent loss, one ping only.
-                        if not self.mIsDocumentLost(sDocID):
+                        if self.mIsDocumentLost(sDocID):
+                            pass        # Do not double-count docs already lost.
+                        else:
                             lg.logInfo("AUDIT2","perm loss   t|%10.3f| auditid|%s| cycle|%s| seg|%s| cli|%s| coll|%s| doc|%s|" % (G.env.now,self.ID,self.nNumberOfCycles,mynThisSegment,self.sClientID,self.sCollectionID,sDocID))
-                        self.mMarkDocumentLost(sDocID)
+                            self.mMarkDocumentLost(sDocID)
                     elif nCopiesLeft >= nMajority:
                         self.mMarkDocumentMajorityRepair(sDocID)
                         lg.logInfo("AUDIT2","majority rp t|%10.3f| auditid|%s| cycle|%s| seg|%s| cli|%s| coll|%s| doc|%s|" % (G.env.now,self.ID,self.nNumberOfCycles,mynThisSegment,self.sClientID,self.sCollectionID,sDocID))
@@ -222,9 +226,10 @@ class CAudit2(object):
 # A u d i t . m M a r k D o c u m e n t L o s t 
     @tracef("AUD2")
     def mMarkDocumentLost(self,mysDocID):
-        self.nPermanentLosses += 1
+        self.nPermanentLosses += 1          # WARNING: not idempotent.
         cDoc = G.dID2Document[mysDocID]
         cDoc.mMarkLost()
+        return self.nPermanentLosses
 
 # A u d i t . m I s D o c u m e n t L o s t 
     @tracef("AUD2",level=5)
@@ -235,17 +240,18 @@ class CAudit2(object):
 # A u d i t . m M a r k D o c u m e n t M a j o r i t y R e p a i r
     @tracef("AUD2")
     def mMarkDocumentMajorityRepair(self,mysDocID):
-        self.nRepairsMajority += 1
+        self.nRepairsMajority += 1          # WARNING: not idempotent.
         cDoc = G.dID2Document[mysDocID]
         cDoc.mMarkMajorityRepair()
+        return self.nRepairsMajority
         
 # A u d i t . m M a r k D o c u m e n t M i n o r i t y R e p a i r
     @tracef("AUD2")
     def mMarkDocumentMinorityRepair(self,mysDocID):
-        self.nRepairsMinority += 1
+        self.nRepairsMinority += 1          # WARNING: not idempotent.
         cDoc = G.dID2Document[mysDocID]
         cDoc.mMarkMinorityRepair()
-
+        return self.nRepairsMinority
 
 # NEW NEW NEW 
 # C A u d i t . m C a l c S e g m e n t I n t e r v a l  
@@ -284,6 +290,7 @@ class CAudit2(object):
         but the waiting has to occur in the 
         parent loop.  
         '''
+        """
         cDoc = G.dID2Document[mysDocID]
         if cDoc.bDocumentLost:
             return None
@@ -298,7 +305,20 @@ class CAudit2(object):
                 return fTransferTime
             else:
                 return None
+        """
+        cDoc = G.dID2Document[mysDocID]
+        nDocSize = cDoc.nSize
+        fTransferTime = util.fnfCalcTransferTime(nDocSize,G.nBandwidthMbps)
+        # Now that we know how long it would take to transfer,
+        # test if the document is still there. 
+        cServer = G.dID2Server[mysServerID] 
+        bResult = cServer.mTestDocument(mysDocID)
+        if bResult:
+            return fTransferTime
+        else:
+            return None
 
+        
 # C A u d i t . m R e p a i r D o c 
     @tracef("AUD2")
     def mRepairDoc(self,mysDocID,mysServerID):
@@ -344,6 +364,8 @@ class CAudit2(object):
         dd["nPermanentLosses"]  = self.nPermanentLosses
         dd["nRepairsMajority"]  = self.nRepairsMajority
         dd["nRepairsMinority"]  = self.nRepairsMinority
+        dd["nFrequency"] = self.nCycleInterval
+        dd["nSegments"] = self.nSegments
         return dd
 
 
@@ -714,8 +736,10 @@ segment generator:
 
 '''\
 TODO (x=done):
-    - RetrieveDoc should be looking for COPY lost not doc, oops.  Actual bug, I think.  
-    
+    - RetrieveDoc: remove checking for doc lost at the front; low probability event
+      should not be the first thing we always look at.
+    - AuditSegment: remove checking for doc lost at the front: same reason.
+    - 
     - Future: auditor maintains guaranteed copy of fixity info for use in auditing.  
       Might change the timing characteristics of auditing if we don't have to 
       retrieve the entire doc from the server each time.  Otherwise, not much impact.
@@ -742,6 +766,7 @@ TODO (x=done):
 # 20141121  RBL Rework the scheduling and coordination of auditing segments.
 #               Correct numerous typos and spellos in evaluation of
 #                the health of document copies.  
+# 20141128  RBL Correct counting of docs lost.  
 # 
 
 
