@@ -134,7 +134,7 @@ class CAudit2(object):
         SimPy generator to audit one segment of a collection.
         This does all the work.  
         '''
-        lg.logInfo("AUDIT2","begin segmt t|%10.3f| auditid|%s| cycle|%s| seg|%s| cli|%s| coll|%s| ndocs|%s|%s|%s|" % (G.env.now,self.ID,self.nNumberOfCycles,mynThisSegment,self.sClientID,self.sCollectionID,len(mylDocs),mylDocs[0],mylDocs[-1]))
+        lg.logInfo("AUDIT2","begin segmt t|%10.3f| auditid|%s| cycle|%s| seg|%s| cli|%s| coll|%s| ndocs|%s|%s-%s|" % (G.env.now,self.ID,self.nNumberOfCycles,mynThisSegment,self.sClientID,self.sCollectionID,len(mylDocs),mylDocs[0],mylDocs[-1]))
 
         # Seize the network resource so this audit cycle 
         # can use it exclusively.

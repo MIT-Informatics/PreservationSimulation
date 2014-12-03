@@ -134,7 +134,7 @@ class CAudit2(object):
         SimPy generator to audit one segment of a collection.
         This does all the work.  
         '''
-        lg.logInfo("AUDIT2","begin segmt t|%10.3f| auditid|%s| cycle|%s| seg|%s| cli|%s| coll|%s| ndocs|%s|%s|%s|" % (G.env.now,self.ID,self.nNumberOfCycles,mynThisSegment,self.sClientID,self.sCollectionID,len(mylDocs),mylDocs[0],mylDocs[-1]))
+        lg.logInfo("AUDIT2","begin segmt t|%10.3f| auditid|%s| cycle|%s| seg|%s| cli|%s| coll|%s| ndocs|%s|%s-%s|" % (G.env.now,self.ID,self.nNumberOfCycles,mynThisSegment,self.sClientID,self.sCollectionID,len(mylDocs),mylDocs[0],mylDocs[-1]))
 
         # Seize the network resource so this audit cycle 
         # can use it exclusively.
@@ -763,6 +763,12 @@ TODO (x=done):
 #               Add dict return of stats.
 #               Clean up lost doc detection/marking.
 #               Add empty CAudit class on top of new CAudit2.
+# 20141121  RBL Rework the scheduling and coordination of auditing segments.
+#               Correct numerous typos and spellos in evaluation of
+#                the health of document copies.  
+# 20141128  RBL Correct counting of docs lost.  
+# 20141201  RBL Remove and replace the preceding four lines to resolve 
+#                a git conflict.  Gotta learn that someday.  
 # 
 
 
