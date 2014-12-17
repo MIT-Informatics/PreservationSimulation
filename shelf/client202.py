@@ -25,6 +25,11 @@ class CDocument(object):
     @tracef("DOC")
     def __init__(self,size,mysClientID,mysCollectionID):
         self.ID = "D" + str(self.getID())
+# BEWARE: if we have more than 10,000 docs, this fixed-length 
+#  representation will have to change.  Bad idea.
+#  Change the sorting algorithm instead.
+#        self.ID = "D" + "%04d"%(self.getID())
+#  So, don't use it.
         G.dID2Document[self.ID] = self
         G.nDocLastID = self.ID
         self.nSize = size
@@ -117,8 +122,10 @@ class CDocument(object):
     def mMarkLost(self):
         self.bDocumentLost = True
         self.bDocumentOkay = False
+        cCollection = G.dID2Collection[self.sCollID]
+        cCollection.mMarkDocLost(self.ID)
 
-# D o c u m e n t . m D o c I s L o s t 
+# D o c u m e n t . m I s L o s t 
     @tracef("DOC")
     def mIsLost(self):
         return self.bDocumentLost
@@ -176,13 +183,13 @@ class CDocument(object):
         '''
         #dd = cc.defaultdict(list)
         dd = dict()
-        dd["sDocID"]               = self.ID
+        dd["sDocID"]            = self.ID
         dd["sClientID"]         = self.sClientID
         dd["sCollectionID"]     = self.sCollID
         dd["nSize"]             = self.nSize
         dd["bMajorityRepair"]   = self.bMajorityRepair
         dd["bMinorityRepair"]   = self.bMinorityRepair
-        dd["bDocumentLost"]     = self.bbDocumentLost
+        dd["bDocumentLost"]     = self.bDocumentLost
         dd["nRepairsMajority"]  = self.nRepairsMajority
         dd["nRepairsMinority"]  = self.nRepairsMinority
         return dd
@@ -205,9 +212,11 @@ class CCollection(object):
         self.nValue = mynValue
         self.sClientID = mysClientID
         self.lDocIDs = list()
+        self.lDocIDsRemaining = list()
         self.lServerIDs = list()
 
         # Summary counters for document status at end of run.
+        self.nDocsRemaining = 0
         self.nDocsOkay = 0
         self.nDocsMajorityRepair = 0
         self.nDocsMinorityRepair = 0
@@ -224,6 +233,8 @@ class CCollection(object):
             ndocsize = util.fnnCalcDocSize(self.nValue)
             cDoc = CDocument(ndocsize,self.sClientID,self.ID)
             self.lDocIDs.append(cDoc.ID)
+            self.lDocIDsRemaining.append(cDoc.ID)
+            self.nDocsRemaining += 1
         return self.ID
 
 # C o l l e c t i o n . m L i s t D o c u m e n t s 
@@ -231,6 +242,12 @@ class CCollection(object):
     def mListDocuments(self):
         TRC.tracef(5,"COLL","proc mListDocuments self|%s| returning |%s|" % (self,self.lDocIDs))
         return (self.lDocIDs)
+
+# C o l l e c t i o n . m L i s t D o c u m e n t s R e m a i n i n g 
+    @tracef("COLL")
+    def mListDocumentsRemaining(self):
+        TRC.tracef(5,"COLL","proc mListDocuments self|%s| returning |%s|" % (self,self.lDocIDs))
+        return (self.lDocIDsRemaining)
 
 # NEW NEW NEW replacement
 # C o l l e c t i o n . m T e s t C o l l e c t i o n
@@ -296,6 +313,13 @@ class CCollection(object):
                         self.lServerIDs))
         return nLeftNow
 
+# C o l l e c t i o n . m M a r k D o c L o s t 
+    @tracef("COLL")
+    def mMarkDocLost(self,mysDocID):
+        self.nDocsRemaining -= 1
+        if mysDocID in self.lDocIDsRemaining:
+            self.lDocIDsRemaining.remove(mysDocID)
+
 # C o l l e c t i o n . m E v a l u a t e O n e D o c 
     @tracef("COLL")
     def mEvaluateOneDoc(self,mysDocID):
@@ -345,6 +369,7 @@ class CCollection(object):
         dd["sCollectionID"]     = self.ID
         dd["nDocs"]             = len(self.lDocIDs)
         dd["nServers"]          = len(self.lServerIDs)
+        dd["nDocsRemaining"]    = self.nDocsRemaining
         dd["nOkay"]             = self.nDocsOkay
         dd["nRepairsMajority"]  = self.nDocsMajorityRepair
         dd["nRepairsMinority"]  = self.nDocsMinorityRepair
@@ -464,7 +489,7 @@ class CClient(object):
     def mListCollectionIDs(self):
         return self.lCollectionIDs
 
-# Client.mDestroyCopy
+# C l i e n t . m D e s t r o y C o p y 
     @tracef("CLI")
     def mDestroyCopy(self,mysDocID,mysServerID):
         '''

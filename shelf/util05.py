@@ -114,6 +114,34 @@ def fnfCalcTransferTime(mynDocSize,mynBandwidth):
     return fPartialHours
 
 
+#  f n l S o r t I D L i s t 
+@tracef("UTIL")
+def fnlSortIDList(mylIDs):
+    '''\
+    Sort a list of IDs of the sort we use here.
+    Sort by the numeric integer part, ignoring the 
+    alpha class designator, which is always the same
+    in a list of this sort.
+    Done by decorate-sort-undecorate.
+    '''
+    lFinal= list()
+    lNew = [ (int(id[1:]), id) for id in mylIDs ]
+    lNew.sort()
+    lFinal[:] = [ tup[1] for tup in lNew ]
+    return lFinal
+
+# f n i N u m b e r F r o m I D 
+@tracef("UTIL",level=5)
+def fniNumberFromID(sSomeID):
+    '''\
+    All IDs are one letter followed by an integer.
+    Remove the first letter, convert the rest to int.  
+    Intended to be used as the key function in .sort()
+    or sorted().
+    '''
+    return int(sSomeID[1:])
+
+
 
 
 

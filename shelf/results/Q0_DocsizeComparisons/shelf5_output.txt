@@ -1,0 +1,1799 @@
+Question 0 Summary losses (medians)
+   docsize berid   c1   c2   c3   c4   c5  c8 c10 c14 c16 c20
+1        5     1 3919 1568  624  250  104   8   1   0   0   0
+2        5     2 2239  516  112   25    5   0   0   0   0   0
+3        5     3 1540  244   37    4    1   0   0   0   0   0
+4        5     5  945   93    8    0    0   0   0   0   0   0
+5        5    10  477   26    2    0    0   0   0   0   0   0
+6        5    20  235    6    0    0    0   0   0   0   0   0
+7        5    30  162    2    0    0    0   0   0   0   0   0
+8        5    50   92    1    0    0    0   0   0   0   0   0
+9        5   100   46    0    0    0    0   0   0   0   0   0
+10       5   200   23    0    0    0    0   0   0   0   0   0
+11       5   300   15    0    0    0    0   0   0   0   0   0
+12       5   500   10    0    0    0    0   0   0   0   0   0
+13       5  1000    5    0    0    0    0   0   0   0   0   0
+14      50    10 3917 1543  617  236   90   4   1   0   0   0
+15      50    20 2221  483  108   24    4   0   0   0   0   0
+16      50    30 1541  241   34    6    1   0   0   0   0   0
+17      50    50  938   89    8    1    0   0   0   0   0   0
+18      50   100  474   18    1    0    0   0   0   0   0   0
+19      50   200  244    4    0    0    0   0   0   0   0   0
+20      50   300  162    2    0    0    0   0   0   0   0   0
+21      50   500   98    1    0    0    0   0   0   0   0   0
+22      50  1000   47    0    0    0    0   0   0   0   0   0
+23      50  2000   24    0    0    0    0   0   0   0   0   0
+24      50  3000   16    0    0    0    0   0   0   0   0   0
+25     500    50 6331 3996 2519 1581 1007 253 100  16   8   1
+26     500   100 3936 1539  612  244   93   4   0   0   0   0
+27     500   200 2189  488  108   23    5   0   0   0   0   0
+28     500   300 1530  229   37    7    1   0   0   0   0   0
+29     500   500  945   90    8    1    0   0   0   0   0   0
+30     500  1000  493   21    1    0    0   0   0   0   0   0
+31     500  2000  247    8    0    0    0   0   0   0   0   0
+32     500  3000  166    3    0    0    0   0   0   0   0   0
+33     500  5000  105    1    0    0    0   0   0   0   0   0
+34    5000   500 6348 4015 2544 1615  997 252 101  15   6   0
+35    5000  1000 3928 1563  607  250   91   5   1   0   0   0
+36    5000  2000 2211  488  105   24    5   0   0   0   0   0
+37    5000  3000 1551  244   34    5    1   0   0   0   0   0
+38    5000  5000  967   96    8    1    0   0   0   0   0   0
+39    5000 10000  493   24    1    0    0   0   0   0   0   0
+
+Question 0 Summary losses (trimeans)
+   docsize berid       c1       c2       c3       c4       c5      c8     c10  c14   c16  c20
+1        5     1 3926.125 1570.500  623.750  250.500  104.375   8.125   1.000  0.0 0.000 0.00
+2        5     2 2233.000  513.250  112.500   25.500    5.250   0.000   0.000  0.0 0.000 0.00
+3        5     3 1533.625  244.250   36.750    3.875    1.000   0.000   0.000  0.0 0.000 0.00
+4        5     5  942.375   92.875    8.500    0.375    0.000   0.000   0.000  0.0 0.000 0.00
+5        5    10  477.000   26.000    1.750    0.000    0.000   0.000   0.000  0.0 0.000 0.00
+6        5    20  238.125    6.250    0.000    0.000    0.000   0.000   0.000  0.0 0.000 0.00
+7        5    30  160.625    2.500    0.000    0.000    0.000   0.000   0.000  0.0 0.000 0.00
+8        5    50   93.375    0.875    0.000    0.000    0.000   0.000   0.000  0.0 0.000 0.00
+9        5   100   46.500    0.000    0.000    0.000    0.000   0.000   0.000  0.0 0.000 0.00
+10       5   200   23.875    0.000    0.000    0.000    0.000   0.000   0.000  0.0 0.000 0.00
+11       5   300   15.125    0.000    0.000    0.000    0.000   0.000   0.000  0.0 0.000 0.00
+12       5   500   10.250    0.000    0.000    0.000    0.000   0.000   0.000  0.0 0.000 0.00
+13       5  1000    5.375    0.000    0.000    0.000    0.000   0.000   0.000  0.0 0.000 0.00
+14      50    10 3912.250 1535.750  614.625  237.500   92.500   4.000   0.875  0.0 0.000 0.00
+15      50    20 2218.000  481.625  108.875   24.125    4.000   0.000   0.000  0.0 0.000 0.00
+16      50    30 1539.375  237.125   34.750    5.750    0.750   0.000   0.000  0.0 0.000 0.00
+17      50    50  940.125   88.500    7.875    0.875    0.000   0.000   0.000  0.0 0.000 0.00
+18      50   100  476.625   18.875    0.875    0.000    0.000   0.000   0.000  0.0 0.000 0.00
+19      50   200  243.750    3.750    0.000    0.000    0.000   0.000   0.000  0.0 0.000 0.00
+20      50   300  161.875    1.875    0.000    0.000    0.000   0.000   0.000  0.0 0.000 0.00
+21      50   500   97.375    1.000    0.000    0.000    0.000   0.000   0.000  0.0 0.000 0.00
+22      50  1000   47.625    0.125    0.000    0.000    0.000   0.000   0.000  0.0 0.000 0.00
+23      50  2000   23.500    0.000    0.000    0.000    0.000   0.000   0.000  0.0 0.000 0.00
+24      50  3000   16.000    0.000    0.000    0.000    0.000   0.000   0.000  0.0 0.000 0.00
+25     500    50 6320.250 3994.500 2520.250 1581.375 1007.250 252.375 100.000 16.5 7.875 1.00
+26     500   100 3937.375 1539.500  613.125  245.000   92.750   4.375   0.375  0.0 0.000 0.00
+27     500   200 2191.500  487.250  107.875   23.875    5.000   0.000   0.000  0.0 0.000 0.00
+28     500   300 1531.125  231.875   35.125    7.000    0.750   0.000   0.000  0.0 0.000 0.00
+29     500   500  948.375   88.500    8.125    1.125    0.000   0.000   0.000  0.0 0.000 0.00
+30     500  1000  489.375   22.375    0.750    0.000    0.000   0.000   0.000  0.0 0.000 0.00
+31     500  2000  248.375    8.000    0.000    0.000    0.000   0.000   0.000  0.0 0.000 0.00
+32     500  3000  166.750    3.000    0.000    0.000    0.000   0.000   0.000  0.0 0.000 0.00
+33     500  5000  105.000    1.000    0.000    0.000    0.000   0.000   0.000  0.0 0.000 0.00
+34    5000   500 6348.875 4010.000 2539.000 1613.500  996.625 252.625 100.000 15.0 5.750 0.25
+35    5000  1000 3930.375 1561.125  605.625  247.125   92.750   5.250   1.000  0.0 0.000 0.00
+36    5000  2000 2212.500  484.625  105.625   23.875    5.375   0.000   0.000  0.0 0.000 0.00
+37    5000  3000 1548.625  243.000   35.875    5.250    0.750   0.000   0.000  0.0 0.000 0.00
+38    5000  5000  964.375   96.625    8.125    0.750    0.000   0.000   0.000  0.0 0.000 0.00
+39    5000 10000  490.875   24.500    1.250    0.000    0.000   0.000   0.000  0.0 0.000 0.00
+
+[1] 0
+[1] 0
+[1] 492.3636
+ [1]  1  2  3  4  5  6  7  8  9 10 11
+
+  The decimal point is at the |
+
+  0 | 00
+  2 | 0000
+  4 | 0000
+  6 | 0
+
+docsize 5 berid 1 copies 2 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  15 | 24
+  15 | 55678
+  16 | 000
+  16 | 5
+
+===  docsize 5 berid 1 copies 3 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  58 | 57
+  60 | 52
+  62 | 1425
+  64 | 249
+
+===  docsize 5 berid 1 copies 4 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  20 | 9
+  22 | 469
+  24 | 003
+  26 | 2770
+
+===  docsize 5 berid 1 copies 5 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+   9 | 3
+  10 | 01244688
+  11 | 3
+  12 | 
+  13 | 4
+
+===  docsize 5 berid 1 copies 8 
+
+  The decimal point is at the |
+
+   4 | 0
+   6 | 0000
+   8 | 000
+  10 | 00
+  12 | 0
+
+===  docsize 5 berid 1 copies 10 
+
+  The decimal point is at the |
+
+  0 | 0000
+  0 | 
+  1 | 00
+  1 | 
+  2 | 00000
+
+===  docsize 5 berid 1 copies 14 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+===  docsize 5 berid 2 copies 1 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  21 | 
+  21 | 58
+  22 | 00144
+  22 | 5678
+
+===  docsize 5 berid 2 copies 2 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  46 | 5
+  48 | 24
+  50 | 48678
+  52 | 672
+
+===  docsize 5 berid 2 copies 3 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  10 | 2688
+  11 | 2225
+  12 | 157
+
+===  docsize 5 berid 2 copies 4 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  1 | 79
+  2 | 222
+  2 | 579
+  3 | 122
+
+===  docsize 5 berid 2 copies 5 
+
+  The decimal point is at the |
+
+  2 | 00
+  4 | 00000
+  6 | 0
+  8 | 000
+
+===  docsize 5 berid 2 copies 8 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+===  docsize 5 berid 3 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  148 | 189
+  150 | 33
+  152 | 
+  154 | 0370
+  156 | 4
+  158 | 2
+
+===  docsize 5 berid 3 copies 2 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  23 | 27
+  24 | 001457
+  25 | 149
+
+===  docsize 5 berid 3 copies 3 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  2 | 69
+  3 | 4
+  3 | 567789
+  4 | 01
+
+===  docsize 5 berid 3 copies 4 
+
+  The decimal point is at the |
+
+  2 | 00000
+  4 | 000
+  6 | 0
+  8 | 00
+
+===  docsize 5 berid 3 copies 5 
+
+  The decimal point is at the |
+
+  0 | 0000
+  1 | 000
+  2 | 000
+  3 | 0
+
+===  docsize 5 berid 3 copies 8 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+===  docsize 5 berid 5 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  90 | 3
+  92 | 701
+  94 | 056996
+  96 | 2
+
+===  docsize 5 berid 5 copies 2 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+   8 | 6789
+   9 | 33
+   9 | 577
+  10 | 4
+  10 | 6
+
+===  docsize 5 berid 5 copies 3 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 5678889
+  1 | 012
+  1 | 5
+
+===  docsize 5 berid 5 copies 4 
+
+  The decimal point is at the |
+
+  0 | 000000
+  1 | 00
+  2 | 0
+  3 | 00
+
+===  docsize 5 berid 5 copies 5 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+===  docsize 5 berid 10 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  46 | 6689
+  47 | 6779
+  48 | 
+  49 | 2
+  50 | 02
+
+===  docsize 5 berid 10 copies 2 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  1 | 1
+  2 | 002368
+  3 | 1157
+
+===  docsize 5 berid 10 copies 3 
+
+  The decimal point is at the |
+
+  0 | 00
+  0 | 
+  1 | 000
+  1 | 
+  2 | 000000
+
+===  docsize 5 berid 10 copies 4 
+
+  The decimal point is at the |
+
+  0 | 000000000
+  0 | 
+  1 | 00
+
+===  docsize 5 berid 10 copies 5 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+===  docsize 5 berid 20 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  22 | 47
+  23 | 44558
+  24 | 7
+  25 | 0
+  26 | 39
+
+===  docsize 5 berid 20 copies 2 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 2334
+  0 | 5669
+  1 | 00
+  1 | 5
+
+===  docsize 5 berid 20 copies 3 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+===  docsize 5 berid 20 copies 4 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+===  docsize 5 berid 20 copies 5 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+===  docsize 5 berid 30 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  14 | 51446
+  16 | 2236
+  18 | 65
+
+===  docsize 5 berid 30 copies 2 
+
+  The decimal point is at the |
+
+  0 | 0000
+  2 | 000
+  4 | 0
+  6 | 00
+  8 | 0
+
+===  docsize 5 berid 30 copies 3 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+===  docsize 5 berid 30 copies 4 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+===  docsize 5 berid 30 copies 5 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+===  docsize 5 berid 50 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+   8 | 799
+   9 | 222399
+  10 | 
+  11 | 28
+
+===  docsize 5 berid 50 copies 2 
+
+  The decimal point is at the |
+
+  0 | 000000000
+  2 | 0
+  4 | 0
+
+===  docsize 5 berid 50 copies 3 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+===  docsize 5 berid 50 copies 4 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+===  docsize 5 berid 50 copies 5 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+===  docsize 5 berid 100 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  3 | 8
+  4 | 1445689
+  5 | 18
+  6 | 7
+
+===  docsize 5 berid 100 copies 2 
+
+  The decimal point is at the |
+
+  0 | 000000000
+  0 | 
+  1 | 00
+
+===  docsize 5 berid 100 copies 3 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+===  docsize 5 berid 200 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  1 | 69
+  2 | 11334
+  2 | 89
+  3 | 13
+
+===  docsize 5 berid 200 copies 2 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+===  docsize 5 berid 200 copies 3 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+===  docsize 5 berid 200 copies 4 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+===  docsize 5 berid 200 copies 5 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+===  docsize 5 berid 300 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  1 | 3334
+  1 | 55668
+  2 | 14
+
+===  docsize 5 berid 300 copies 2 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+===  docsize 5 berid 300 copies 3 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00
+
+===  docsize 5 berid 500 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 679
+  1 | 0000122
+  1 | 8
+
+===  docsize 5 berid 500 copies 2 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+===  docsize 5 berid 500 copies 3 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+===  docsize 5 berid 500 copies 4 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+===  docsize 5 berid 500 copies 5 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+===  docsize 5 berid 1000 copies 1 
+
+  The decimal point is at the |
+
+  2 | 00
+  4 | 00000
+  6 | 0
+  8 | 000
+
+===  docsize 5 berid 1000 copies 2 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+===  docsize 50 berid 10 copies 1 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  38 | 4
+  38 | 589
+  39 | 023344
+  39 | 5
+
+===  docsize 50 berid 10 copies 2 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  148 | 9
+  150 | 379
+  152 | 4
+  154 | 36800
+  156 | 
+  158 | 4
+
+===  docsize 50 berid 10 copies 3 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  56 | 2
+  58 | 53
+  60 | 3178
+  62 | 49
+  64 | 53
+
+===  docsize 50 berid 10 copies 4 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  22 | 3
+  23 | 012467
+  24 | 58
+  25 | 1
+  26 | 8
+
+===  docsize 50 berid 10 copies 5 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+   8 | 02779
+   9 | 028
+  10 | 89
+  11 | 5
+
+===  docsize 50 berid 10 copies 8 
+
+  The decimal point is at the |
+
+  0 | 0
+  2 | 000
+  4 | 00000
+  6 | 00
+
+===  docsize 50 berid 10 copies 10 
+
+  The decimal point is at the |
+
+  0 | 000
+  0 | 
+  1 | 0000000
+  1 | 
+  2 | 0
+
+===  docsize 50 berid 10 copies 14 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+===  docsize 50 berid 20 copies 1 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  21 | 3
+  21 | 
+  22 | 0002233444
+
+===  docsize 50 berid 20 copies 2 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  45 | 6
+  46 | 1
+  47 | 036
+  48 | 348
+  49 | 056
+
+===  docsize 50 berid 20 copies 3 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+   9 | 11
+  10 | 4678
+  11 | 04578
+
+===  docsize 50 berid 20 copies 4 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  1 | 7
+  2 | 01344
+  2 | 56789
+
+===  docsize 50 berid 20 copies 5 
+
+  The decimal point is at the |
+
+  2 | 0000
+  4 | 00000
+  6 | 00
+
+===  docsize 50 berid 20 copies 8 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+===  docsize 50 berid 30 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  148 | 1
+  150 | 5
+  152 | 483
+  154 | 15906
+  156 | 5
+
+===  docsize 50 berid 30 copies 2 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  20 | 63
+  22 | 045
+  24 | 14457
+  26 | 1
+
+===  docsize 50 berid 30 copies 3 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  2 | 1
+  2 | 
+  3 | 01334
+  3 | 599
+  4 | 22
+
+===  docsize 50 berid 30 copies 4 
+
+  The decimal point is at the |
+
+  2 | 0
+  4 | 0000
+  6 | 0000
+  8 | 00
+
+===  docsize 50 berid 30 copies 5 
+
+  The decimal point is at the |
+
+  0 | 00000
+  0 | 
+  1 | 00000
+  1 | 
+  2 | 0
+
+===  docsize 50 berid 30 copies 8 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+===  docsize 50 berid 50 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  90 | 27
+  92 | 3458
+  94 | 0
+  96 | 111
+  98 | 5
+
+===  docsize 50 berid 50 copies 2 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+   7 | 2
+   8 | 01489
+   9 | 1349
+  10 | 1
+
+===  docsize 50 berid 50 copies 3 
+
+  The decimal point is at the |
+
+   4 | 00
+   6 | 000
+   8 | 00000
+  10 | 0
+
+===  docsize 50 berid 50 copies 4 
+
+  The decimal point is at the |
+
+  0 | 000
+  0 | 
+  1 | 000000
+  1 | 
+  2 | 00
+
+===  docsize 50 berid 50 copies 5 
+
+  The decimal point is at the |
+
+  0 | 0000000000
+  0 | 
+  1 | 0
+
+===  docsize 50 berid 100 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  44 | 5
+  46 | 24614
+  48 | 416
+  50 | 03
+
+===  docsize 50 berid 100 copies 2 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  1 | 4
+  1 | 77888
+  2 | 0223
+  2 | 8
+
+===  docsize 50 berid 100 copies 3 
+
+  The decimal point is at the |
+
+  0 | 000
+  0 | 
+  1 | 000000
+  1 | 
+  2 | 00
+
+===  docsize 50 berid 100 copies 4 
+
+  The decimal point is at the |
+
+  0 | 000000000
+  0 | 
+  1 | 00
+
+===  docsize 50 berid 200 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  20 | 6
+  22 | 58
+  24 | 1344690
+  26 | 9
+
+===  docsize 50 berid 200 copies 2 
+
+  The decimal point is at the |
+
+  2 | 0000
+  4 | 000000
+  6 | 0
+
+===  docsize 50 berid 200 copies 3 
+
+  The decimal point is at the |
+
+  0 | 0000000000
+  0 | 
+  1 | 0
+
+===  docsize 50 berid 200 copies 4 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+===  docsize 50 berid 200 copies 5 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+===  docsize 50 berid 300 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  14 | 38
+  15 | 47
+  16 | 023799
+  17 | 9
+
+===  docsize 50 berid 300 copies 2 
+
+  The decimal point is at the |
+
+  1 | 0000
+  2 | 0000
+  3 | 00
+  4 | 0
+
+===  docsize 50 berid 300 copies 3 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+===  docsize 50 berid 300 copies 4 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+===  docsize 50 berid 300 copies 5 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+===  docsize 50 berid 500 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+   8 | 348
+   9 | 6689
+  10 | 1299
+
+===  docsize 50 berid 500 copies 2 
+
+  The decimal point is at the |
+
+  0 | 00
+  1 | 0000000
+  2 | 0
+  3 | 
+  4 | 0
+
+===  docsize 50 berid 500 copies 3 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+===  docsize 50 berid 500 copies 4 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+===  docsize 50 berid 500 copies 5 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+===  docsize 50 berid 1000 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  3 | 7
+  4 | 145577
+  5 | 135
+  6 | 7
+
+===  docsize 50 berid 1000 copies 2 
+
+  The decimal point is at the |
+
+  0 | 00000000
+  0 | 
+  1 | 000
+
+===  docsize 50 berid 2000 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  1 | 55
+  2 | 0134456
+  3 | 3
+  4 | 2
+
+===  docsize 50 berid 2000 copies 2 
+
+  The decimal point is at the |
+
+  0 | 0000000000
+  0 | 
+  1 | 0
+
+===  docsize 50 berid 3000 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 9
+  1 | 022
+  1 | 6678
+  2 | 23
+  2 | 7
+
+===  docsize 50 berid 3000 copies 2 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+===  docsize 500 berid 50 copies 1 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  62 | 24
+  62 | 5
+  63 | 0134
+  63 | 5578
+
+===  docsize 500 berid 50 copies 2 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  39 | 23
+  39 | 677
+  40 | 01234
+  40 | 
+  41 | 2
+
+===  docsize 500 berid 50 copies 3 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  24 | 4
+  24 | 79
+  25 | 01223
+  25 | 68
+  26 | 4
+
+===  docsize 500 berid 50 copies 4 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  152 | 9
+  154 | 2
+  156 | 04
+  158 | 0122
+  160 | 19
+  162 | 4
+
+===  docsize 500 berid 50 copies 5 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+   98 | 3
+   99 | 05
+  100 | 3778
+  101 | 57
+  102 | 5
+  103 | 0
+
+===  docsize 500 berid 50 copies 8 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  20 | 5
+  22 | 78
+  24 | 42378
+  26 | 715
+
+===  docsize 500 berid 50 copies 10 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+   8 | 67
+   9 | 156
+  10 | 05778
+  11 | 1
+
+===  docsize 500 berid 50 copies 14 
+
+  The decimal point is at the |
+
+  12 | 0
+  14 | 000
+  16 | 000
+  18 | 00
+  20 | 00
+
+===  docsize 500 berid 50 copies 16 
+
+  The decimal point is at the |
+
+  4 | 00
+  6 | 000
+  8 | 000000
+
+===  docsize 500 berid 50 copies 20 
+
+  The decimal point is at the |
+
+  0 | 0000
+  1 | 000
+  2 | 000
+  3 | 0
+
+===  docsize 500 berid 100 copies 1 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  38 | 6
+  39 | 01134
+  39 | 5779
+  40 | 1
+
+===  docsize 500 berid 100 copies 2 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  150 | 155
+  152 | 119
+  154 | 83
+  156 | 17
+  158 | 9
+
+===  docsize 500 berid 100 copies 3 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  56 | 6
+  58 | 1
+  60 | 57924
+  62 | 239
+  64 | 2
+
+===  docsize 500 berid 100 copies 4 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  22 | 9
+  23 | 1
+  24 | 13349
+  25 | 0029
+
+===  docsize 500 berid 100 copies 5 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+   7 | 7
+   8 | 
+   8 | 589
+   9 | 034
+   9 | 67
+  10 | 01
+
+===  docsize 500 berid 100 copies 8 
+
+  The decimal point is at the |
+
+  0 | 0
+  2 | 0
+  4 | 000000
+  6 | 000
+
+===  docsize 500 berid 100 copies 10 
+
+  The decimal point is at the |
+
+  0 | 0000000
+  0 | 
+  1 | 0
+  1 | 
+  2 | 000
+
+===  docsize 500 berid 200 copies 1 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  21 | 7888999
+  22 | 01
+  22 | 6
+  23 | 2
+
+===  docsize 500 berid 200 copies 2 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  44 | 1
+  46 | 47
+  48 | 258025
+  50 | 27
+
+===  docsize 500 berid 200 copies 3 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+   9 | 27
+  10 | 15689
+  11 | 145
+  12 | 4
+
+===  docsize 500 berid 200 copies 4 
+
+  The decimal point is at the |
+
+  20 | 00
+  22 | 0000
+  24 | 0
+  26 | 000
+  28 | 0
+
+===  docsize 500 berid 200 copies 5 
+
+  The decimal point is at the |
+
+  2 | 00
+  4 | 00000
+  6 | 00
+  8 | 00
+
+===  docsize 500 berid 200 copies 8 
+
+  The decimal point is at the |
+
+  0 | 0000000000
+  0 | 
+  1 | 0
+
+===  docsize 500 berid 300 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  146 | 4
+  148 | 
+  150 | 4226
+  152 | 06
+  154 | 1
+  156 | 472
+
+===  docsize 500 berid 300 copies 2 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  20 | 9
+  21 | 4
+  22 | 5789
+  23 | 9
+  24 | 25
+  25 | 56
+
+===  docsize 500 berid 300 copies 3 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  2 | 556
+  3 | 0
+  3 | 5777
+  4 | 00
+  4 | 6
+
+===  docsize 500 berid 300 copies 4 
+
+  The decimal point is at the |
+
+  0 | 0
+  2 | 
+  4 | 0
+  6 | 0000
+  8 | 00000
+
+===  docsize 500 berid 300 copies 5 
+
+  The decimal point is at the |
+
+  0 | 0000
+  0 | 
+  1 | 000000
+  1 | 
+  2 | 0
+
+===  docsize 500 berid 300 copies 8 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+===  docsize 500 berid 500 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  88 | 9
+  90 | 9
+  92 | 57
+  94 | 159
+  96 | 693
+  98 | 4
+
+===  docsize 500 berid 500 copies 2 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  7 | 789
+  8 | 3
+  8 | 7
+  9 | 0124
+  9 | 55
+
+===  docsize 500 berid 500 copies 3 
+
+  The decimal point is at the |
+
+   4 | 000
+   6 | 00
+   8 | 00
+  10 | 0000
+
+===  docsize 500 berid 500 copies 4 
+
+  The decimal point is at the |
+
+  0 | 000
+  1 | 000
+  2 | 000
+  3 | 0
+  4 | 0
+
+===  docsize 500 berid 500 copies 5 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+===  docsize 500 berid 1000 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  46 | 67
+  47 | 25
+  48 | 
+  49 | 1334
+  50 | 278
+
+===  docsize 500 berid 1000 copies 2 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  1 | 889
+  2 | 1114
+  2 | 78
+  3 | 1
+  3 | 7
+
+===  docsize 500 berid 1000 copies 3 
+
+  The decimal point is at the |
+
+  0 | 0000000000
+  2 | 
+  4 | 0
+
+===  docsize 500 berid 1000 copies 4 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+===  docsize 500 berid 2000 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  22 | 3
+  23 | 8
+  24 | 4777
+  25 | 117
+  26 | 24
+
+===  docsize 500 berid 2000 copies 2 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 24
+  0 | 66789
+  1 | 0034
+
+===  docsize 500 berid 2000 copies 3 
+
+  The decimal point is at the |
+
+  0 | 000000000
+  0 | 
+  1 | 0
+  1 | 
+  2 | 0
+
+===  docsize 500 berid 2000 copies 4 
+===  docsize 500 berid 3000 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  15 | 88
+  16 | 2266
+  17 | 1246
+  18 | 9
+
+===  docsize 500 berid 3000 copies 2 
+
+  The decimal point is at the |
+
+  0 | 000
+  2 | 000
+  4 | 0000
+  6 | 
+  8 | 0
+
+===  docsize 500 berid 3000 copies 3 
+
+  The decimal point is at the |
+
+  0 | 000000000
+  0 | 
+  1 | 0
+  1 | 
+  2 | 0
+
+===  docsize 500 berid 3000 copies 4 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+===  docsize 500 berid 3000 copies 5 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+===  docsize 500 berid 5000 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+   9 | 699
+  10 | 3
+  10 | 558999
+  11 | 1
+
+===  docsize 500 berid 5000 copies 2 
+
+  The decimal point is at the |
+
+  0 | 0000
+  1 | 00
+  2 | 0000
+  3 | 
+  4 | 0
+
+===  docsize 500 berid 5000 copies 3 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+===  docsize 500 berid 5000 copies 4 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+===  docsize 500 berid 5000 copies 5 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+===  docsize 5000 berid 500 copies 1 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  62 | 78
+  63 | 223
+  63 | 56888
+  64 | 
+  64 | 5
+
+===  docsize 5000 berid 500 copies 2 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  39 | 3
+  39 | 679
+  40 | 12233
+  40 | 5
+  41 | 0
+
+===  docsize 5000 berid 500 copies 3 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  24 | 4
+  24 | 9
+  25 | 0234
+  25 | 5568
+  26 | 2
+
+===  docsize 5000 berid 500 copies 4 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  156 | 57
+  158 | 1
+  160 | 745
+  162 | 600
+  164 | 23
+
+===  docsize 5000 berid 500 copies 5 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+   9 | 5579
+  10 | 001114
+  10 | 6
+
+===  docsize 5000 berid 500 copies 8 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  22 | 5
+  23 | 6
+  24 | 28
+  25 | 123
+  26 | 03
+  27 | 03
+
+===  docsize 5000 berid 500 copies 10 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+   8 | 45
+   9 | 035
+  10 | 14677
+  11 | 1
+
+===  docsize 5000 berid 500 copies 14 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  1 | 12344
+  1 | 5667
+  2 | 2
+  2 | 6
+
+===  docsize 5000 berid 500 copies 16 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 2234
+  0 | 56678
+  1 | 02
+
+===  docsize 5000 berid 500 copies 20 
+
+  The decimal point is at the |
+
+  0 | 0000000
+  0 | 
+  1 | 0000
+
+===  docsize 5000 berid 1000 copies 1 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  38 | 79
+  39 | 00134
+  39 | 779
+  40 | 
+  40 | 6
+
+===  docsize 5000 berid 1000 copies 2 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  14 | 9
+  15 | 24
+  15 | 5667789
+  16 | 0
+
+===  docsize 5000 berid 1000 copies 3 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  56 | 6
+  58 | 68
+  60 | 357824
+  62 | 09
+
+===  docsize 5000 berid 1000 copies 4 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  22 | 69
+  23 | 0
+  24 | 06
+  25 | 02349
+  26 | 5
+
+===  docsize 5000 berid 1000 copies 5 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+   7 | 8
+   8 | 789
+   9 | 0148
+  10 | 345
+
+===  docsize 5000 berid 1000 copies 8 
+
+  The decimal point is at the |
+
+  2 | 0
+  4 | 00000
+  6 | 000
+  8 | 00
+
+===  docsize 5000 berid 1000 copies 10 
+
+  The decimal point is at the |
+
+  0 | 000
+  1 | 00000
+  2 | 00
+  3 | 0
+
+===  docsize 5000 berid 1000 copies 14 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+===  docsize 5000 berid 2000 copies 1 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  21 | 8
+  22 | 001112234
+  22 | 9
+
+===  docsize 5000 berid 2000 copies 2 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  44 | 6
+  46 | 232
+  48 | 7800
+  50 | 0
+  52 | 4
+  54 | 5
+
+===  docsize 5000 berid 2000 copies 3 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+   9 | 4679
+  10 | 456
+  11 | 278
+  12 | 1
+
+===  docsize 5000 berid 2000 copies 4 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  1 | 7
+  2 | 012344
+  2 | 66
+  3 | 
+  3 | 58
+
+===  docsize 5000 berid 2000 copies 5 
+
+  The decimal point is at the |
+
+  2 | 00
+  4 | 00000
+  6 | 00
+  8 | 00
+
+===  docsize 5000 berid 2000 copies 8 
+
+  The decimal point is at the |
+
+  0 | 000000000
+  0 | 
+  1 | 00
+
+===  docsize 5000 berid 3000 copies 1 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  15 | 01224
+  15 | 56889
+  16 | 1
+
+===  docsize 5000 berid 3000 copies 2 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  23 | 005
+  24 | 024567
+  25 | 
+  26 | 12
+
+===  docsize 5000 berid 3000 copies 3 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  2 | 9
+  3 | 23334
+  3 | 7
+  4 | 233
+  4 | 7
+
+===  docsize 5000 berid 3000 copies 4 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 23
+  0 | 5555566
+  1 | 02
+
+===  docsize 5000 berid 3000 copies 5 
+
+  The decimal point is at the |
+
+  0 | 00000
+  0 | 
+  1 | 0000
+  1 | 
+  2 | 00
+
+===  docsize 5000 berid 5000 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+   92 | 27
+   94 | 377
+   96 | 792
+   98 | 56
+  100 | 6
+
+===  docsize 5000 berid 5000 copies 2 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+   8 | 36
+   9 | 13667
+  10 | 05
+  11 | 00
+
+===  docsize 5000 berid 5000 copies 3 
+
+  The decimal point is at the |
+
+   6 | 000
+   8 | 000000
+  10 | 00
+
+===  docsize 5000 berid 5000 copies 4 
+
+  The decimal point is at the |
+
+  0 | 00000
+  0 | 
+  1 | 000000
+
+===  docsize 5000 berid 5000 copies 5 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+===  docsize 5000 berid 10000 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  46 | 5359
+  48 | 7345
+  50 | 6
+  52 | 09
+
+===  docsize 5000 berid 10000 copies 2 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  2 | 2223344
+  2 | 69
+  3 | 12
+
+===  docsize 5000 berid 10000 copies 3 
+
+  The decimal point is at the |
+
+  0 | 0
+  1 | 00000
+  2 | 0000
+  3 | 0
+
+===  docsize 5000 berid 10000 copies 4 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+===  docsize 5000 berid 10000 copies 5 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+

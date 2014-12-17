@@ -1,0 +1,6566 @@
+Question 0 Summary losses (medians)
+   docsize berid   c1   c2   c3   c4   c5   c8  c10  c14  c16  c20
+1        5     1 3919 1568  624  250  104    8    1    0    0    0
+2        5     2 2239  516  112   25    5    0    0    0    0    0
+3        5     3 1540  244   37    4    1    0    0    0    0    0
+4        5     5  945   93    8    0    0    0    0    0    0    0
+5        5    10  477   26    2    0    0    0    0    0    0    0
+6        5    20  235    6    0    0    0    0    0    0    0    0
+7        5    30  162    2    0    0    0    0    0    0    0    0
+8        5    50   92    1    0    0    0    0    0    0    0    0
+9        5   100   46    0    0    0    0    0    0    0    0    0
+10       5   200   23    0    0    0    0    0    0    0    0    0
+11       5   300   15    0    0    0    0    0    0    0    0    0
+12       5   500   10    0    0    0    0    0    0    0    0    0
+13       5  1000    5    0    0    0    0    0    0    0    0    0
+14      50     1 9937 9862 9793 9734 9659 9460 9346 9092 8973 8725
+15      50     2 9183 8409 7714 7087 6543 5038 4225 2996 2507 1790
+16      50     3 8097 6575 5328 4323 3504 1877 1239  527  343  149
+17      50     5 6295 3980 2542 1590 1003  245  101   18    7    1
+18      50    10 3917 1543  617  236   90    4    1    0    0    0
+19      50    20 2221  483  108   24    4    0    0    0    0    0
+20      50    30 1541  241   34    6    1    0    0    0    0    0
+21      50    50  938   89    8    1    0    0    0    0    0    0
+22      50   100  474   18    1    0    0    0    0    0    0    0
+23      50   200  244    4    0    0    0    0    0    0    0    0
+24      50   300  162    2    0    0    0    0    0    0    0    0
+25      50   500   98    1    0    0    0    0    0    0    0    0
+26      50  1000   47    0    0    0    0    0    0    0    0    0
+27      50  2000   24    0    0    0    0    0    0    0    0    0
+28      50  3000   16    0    0    0    0    0    0    0    0    0
+29      50  5000   10    0    0    0    0    0    0    0    0    0
+30     500    10 9927 9864 9787 9726 9677 9475 9352 9086 8959 8735
+31     500    20 9169 8413 7757 7089 6501 5036 4224 3031 2520 1796
+32     500    30 8118 6569 5357 4306 3509 1859 1228  538  354  154
+33     500    50 6331 3996 2519 1581 1007  253  100   16    8    1
+34     500   100 3936 1539  612  244   93    4    0    0    0    0
+35     500   200 2189  488  108   23    5    0    0    0    0    0
+36     500   300 1530  229   37    7    1    0    0    0    0    0
+37     500   500  945   90    8    1    0    0    0    0    0    0
+38     500  1000  493   21    1    0    0    0    0    0    0    0
+39     500  2000  247    8    0    0    0    0    0    0    0    0
+40     500  3000  166    3    0    0    0    0    0    0    0    0
+41     500  5000  105    1    0    0    0    0    0    0    0    0
+42    5000   100 9935 9869 9791 9739 9679 9471 9345 9093 8961 8755
+43    5000   200 9175 8421 7711 7087 6496 5018 4240 3038 2537 1792
+44    5000   300 8114 6574 5327 4341 3481 1859 1249  528  366  148
+45    5000   500 6348 4015 2544 1615  997  252  101   15    6    0
+46    5000  1000 3928 1563  607  250   91    5    1    0    0    0
+47    5000  2000 2211  488  105   24    5    0    0    0    0    0
+48    5000  3000 1551  244   34    5    1    0    0    0    0    0
+49    5000  5000  967   96    8    1    0    0    0    0    0    0
+50    5000 10000  493   24    1    0    0    0    0    0    0    0
+
+Question 0 Summary losses (trimeans)
+   docsize berid       c1       c2       c3       c4       c5       c8      c10      c14
+1        5     1 3926.125 1570.500  623.750  250.500  104.375    8.125    1.000    0.000
+2        5     2 2233.000  513.250  112.500   25.500    5.250    0.000    0.000    0.000
+3        5     3 1533.625  244.250   36.750    3.875    1.000    0.000    0.000    0.000
+4        5     5  942.375   92.875    8.500    0.375    0.000    0.000    0.000    0.000
+5        5    10  477.000   26.000    1.750    0.000    0.000    0.000    0.000    0.000
+6        5    20  238.125    6.250    0.000    0.000    0.000    0.000    0.000    0.000
+7        5    30  160.625    2.500    0.000    0.000    0.000    0.000    0.000    0.000
+8        5    50   93.375    0.875    0.000    0.000    0.000    0.000    0.000    0.000
+9        5   100   46.500    0.000    0.000    0.000    0.000    0.000    0.000    0.000
+10       5   200   23.875    0.000    0.000    0.000    0.000    0.000    0.000    0.000
+11       5   300   15.125    0.000    0.000    0.000    0.000    0.000    0.000    0.000
+12       5   500   10.250    0.000    0.000    0.000    0.000    0.000    0.000    0.000
+13       5  1000    5.375    0.000    0.000    0.000    0.000    0.000    0.000    0.000
+14      50     1 9934.125 9862.625 9793.750 9734.875 9659.875 9465.000 9346.875 9089.375
+15      50     2 9177.875 8412.875 7716.750 7088.375 6538.750 5027.000 4233.250 2996.500
+16      50     3 8093.125 6577.625 5328.250 4316.125 3503.000 1874.625 1239.250  531.125
+17      50     5 6294.750 3981.750 2528.375 1592.500 1007.750  246.125   99.750   16.875
+18      50    10 3912.250 1535.750  614.625  237.500   92.500    4.000    0.875    0.000
+19      50    20 2218.000  481.625  108.875   24.125    4.000    0.000    0.000    0.000
+20      50    30 1539.375  237.125   34.750    5.750    0.750    0.000    0.000    0.000
+21      50    50  940.125   88.500    7.875    0.875    0.000    0.000    0.000    0.000
+22      50   100  476.625   18.875    0.875    0.000    0.000    0.000    0.000    0.000
+23      50   200  243.750    3.750    0.000    0.000    0.000    0.000    0.000    0.000
+24      50   300  161.875    1.875    0.000    0.000    0.000    0.000    0.000    0.000
+25      50   500   97.375    1.000    0.000    0.000    0.000    0.000    0.000    0.000
+26      50  1000   47.625    0.125    0.000    0.000    0.000    0.000    0.000    0.000
+27      50  2000   23.500    0.000    0.000    0.000    0.000    0.000    0.000    0.000
+28      50  3000   16.000    0.000    0.000    0.000    0.000    0.000    0.000    0.000
+29      50  5000    9.875    0.000    0.000    0.000    0.000    0.000    0.000    0.000
+30     500    10 9927.375 9863.250 9790.875 9728.625 9673.250 9472.000 9346.875 9086.625
+31     500    20 9169.875 8411.125 7751.750 7088.625 6503.500 5036.125 4236.875 3028.000
+32     500    30 8114.000 6572.750 5347.875 4305.125 3508.500 1858.000 1230.000  540.000
+33     500    50 6320.250 3994.500 2520.250 1581.375 1007.250  252.375  100.000   16.500
+34     500   100 3937.375 1539.500  613.125  245.000   92.750    4.375    0.375    0.000
+35     500   200 2191.500  487.250  107.875   23.875    5.000    0.000    0.000    0.000
+36     500   300 1531.125  231.875   35.125    7.000    0.750    0.000    0.000    0.000
+37     500   500  948.375   88.500    8.125    1.125    0.000    0.000    0.000    0.000
+38     500  1000  489.375   22.375    0.750    0.000    0.000    0.000    0.000    0.000
+39     500  2000  248.375    8.000    0.000    0.000    0.000    0.000    0.000    0.000
+40     500  3000  166.750    3.000    0.000    0.000    0.000    0.000    0.000    0.000
+41     500  5000  105.000    1.000    0.000    0.000    0.000    0.000    0.000    0.000
+42    5000   100 9935.125 9868.250 9792.375 9738.250 9676.875 9474.375 9346.125 9089.750
+43    5000   200 9176.250 8415.375 7714.500 7091.500 6499.875 5016.500 4246.375 3028.000
+44    5000   300 8119.500 6577.375 5321.875 4340.750 3481.375 1856.750 1243.375  529.750
+45    5000   500 6348.875 4010.000 2539.000 1613.500  996.625  252.625  100.000   15.000
+46    5000  1000 3930.375 1561.125  605.625  247.125   92.750    5.250    1.000    0.000
+47    5000  2000 2212.500  484.625  105.625   23.875    5.375    0.000    0.000    0.000
+48    5000  3000 1548.625  243.000   35.875    5.250    0.750    0.000    0.000    0.000
+49    5000  5000  964.375   96.625    8.125    0.750    0.000    0.000    0.000    0.000
+50    5000 10000  490.875   24.500    1.250    0.000    0.000    0.000    0.000    0.000
+        c16      c20
+1     0.000    0.000
+2     0.000    0.000
+3     0.000    0.000
+4     0.000    0.000
+5     0.000    0.000
+6     0.000    0.000
+7     0.000    0.000
+8     0.000    0.000
+9     0.000    0.000
+10    0.000    0.000
+11    0.000    0.000
+12    0.000    0.000
+13    0.000    0.000
+14 8976.250 8725.375
+15 2509.000 1790.625
+16  343.250  147.750
+17    6.875    0.875
+18    0.000    0.000
+19    0.000    0.000
+20    0.000    0.000
+21    0.000    0.000
+22    0.000    0.000
+23    0.000    0.000
+24    0.000    0.000
+25    0.000    0.000
+26    0.000    0.000
+27    0.000    0.000
+28    0.000    0.000
+29    0.000    0.000
+30 8960.625 8730.750
+31 2524.000 1799.875
+32  352.375  154.250
+33    7.875    1.000
+34    0.000    0.000
+35    0.000    0.000
+36    0.000    0.000
+37    0.000    0.000
+38    0.000    0.000
+39    0.000    0.000
+40    0.000    0.000
+41    0.000    0.000
+42 8961.500 8750.875
+43 2535.625 1794.125
+44  363.625  147.250
+45    5.750    0.250
+46    0.000    0.000
+47    0.000    0.000
+48    0.000    0.000
+49    0.000    0.000
+50    0.000    0.000
+
+===  docsize 5 berid 1 copies 1 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  38 | 99
+  39 | 0112
+  39 | 5678
+  40 | 0
+
+     docsize 5 berid 1 [1] "foo"
+[1] "RStudio"       "--interactive"
+edian 		 3919 
+trimean 	 3926.125 
+stddev 		 37.78359 
+IQR 		 63.5 
+mad 		 40.0302 
+SEM 		 11.39218 
+MeanOverSEM 	 345.3245 
+LogMeanOverSEM 	 2.538227 
+
+===  docsize 5 berid 1 copies 2 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  15 | 24
+  15 | 55678
+  16 | 000
+  16 | 5
+
+     docsize 5 berid 1 copies 2 
+mean 		 1573.545 
+midmean 	 1570.714 
+median 		 1568 
+trimean 	 1570.5 
+stddev 		 35.34505 
+IQR 		 50 
+mad 		 40.0302 
+SEM 		 10.65693 
+MeanOverSEM 	 147.6546 
+LogMeanOverSEM 	 2.169247 
+
+===  docsize 5 berid 1 copies 3 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  58 | 57
+  60 | 52
+  62 | 1425
+  64 | 249
+
+     docsize 5 berid 1 copies 3 
+mean 		 621.4545 
+midmean 	 624.4286 
+median 		 624 
+trimean 	 623.75 
+stddev 		 22.06066 
+IQR 		 30 
+mad 		 26.6868 
+SEM 		 6.651539 
+MeanOverSEM 	 93.43018 
+LogMeanOverSEM 	 1.970487 
+
+===  docsize 5 berid 1 copies 4 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  20 | 9
+  22 | 469
+  24 | 003
+  26 | 2770
+
+     docsize 5 berid 1 copies 4 
+mean 		 248.8182 
+midmean 	 249.5714 
+median 		 250 
+trimean 	 250.5 
+stddev 		 16.58203 
+IQR 		 27 
+mad 		 20.7564 
+SEM 		 4.999669 
+MeanOverSEM 	 49.76693 
+LogMeanOverSEM 	 1.696941 
+
+===  docsize 5 berid 1 copies 5 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+   9 | 3
+  10 | 01244688
+  11 | 3
+  12 | 
+  13 | 4
+
+     docsize 5 berid 1 copies 5 
+mean 		 106.6364 
+midmean 	 104.7143 
+median 		 104 
+trimean 	 104.375 
+stddev 		 10.44292 
+IQR 		 6.5 
+mad 		 5.9304 
+SEM 		 3.148658 
+MeanOverSEM 	 33.86724 
+LogMeanOverSEM 	 1.52978 
+
+===  docsize 5 berid 1 copies 8 
+
+  The decimal point is at the |
+
+   4 | 0
+   6 | 0000
+   8 | 000
+  10 | 00
+  12 | 0
+
+     docsize 5 berid 1 copies 8 
+mean 		 8 
+midmean 	 8 
+median 		 8 
+trimean 	 8.125 
+stddev 		 2.19089 
+IQR 		 2.5 
+mad 		 1.4826 
+SEM 		 0.6605783 
+MeanOverSEM 	 12.1106 
+LogMeanOverSEM 	 1.083166 
+
+===  docsize 5 berid 1 copies 10 
+
+  The decimal point is at the |
+
+  0 | 0000
+  0 | 
+  1 | 00
+  1 | 
+  2 | 00000
+
+     docsize 5 berid 1 copies 10 
+mean 		 1.090909 
+midmean 	 1.142857 
+median 		 1 
+trimean 	 1 
+stddev 		 0.9438798 
+IQR 		 2 
+mad 		 1.4826 
+SEM 		 0.2845905 
+MeanOverSEM 	 3.833259 
+LogMeanOverSEM 	 0.5835682 
+
+===  docsize 5 berid 1 copies 14 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 5 berid 1 copies 14 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 5 berid 2 copies 1 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  21 | 
+  21 | 58
+  22 | 00144
+  22 | 5678
+
+     docsize 5 berid 2 copies 1 
+mean 		 2223.909 
+midmean 	 2227.286 
+median 		 2239 
+trimean 	 2233 
+stddev 		 39.5157 
+IQR 		 55 
+mad 		 50.4084 
+SEM 		 11.91443 
+MeanOverSEM 	 186.6567 
+LogMeanOverSEM 	 2.271044 
+
+===  docsize 5 berid 2 copies 2 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  46 | 5
+  48 | 24
+  50 | 48678
+  52 | 672
+
+     docsize 5 berid 2 copies 2 
+mean 		 509 
+midmean 	 511.8571 
+median 		 516 
+trimean 	 513.25 
+stddev 		 19.52434 
+IQR 		 23 
+mad 		 16.3086 
+SEM 		 5.886811 
+MeanOverSEM 	 86.46447 
+LogMeanOverSEM 	 1.936838 
+
+===  docsize 5 berid 2 copies 3 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  10 | 2688
+  11 | 2225
+  12 | 157
+
+     docsize 5 berid 2 copies 3 
+mean 		 113.4545 
+midmean 	 112.5714 
+median 		 112 
+trimean 	 112.5 
+stddev 		 7.929232 
+IQR 		 10 
+mad 		 5.9304 
+SEM 		 2.390754 
+MeanOverSEM 	 47.45556 
+LogMeanOverSEM 	 1.676287 
+
+===  docsize 5 berid 2 copies 4 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  1 | 79
+  2 | 222
+  2 | 579
+  3 | 122
+
+     docsize 5 berid 2 copies 4 
+mean 		 25.27273 
+midmean 	 25.42857 
+median 		 25 
+trimean 	 25.5 
+stddev 		 5.29322 
+IQR 		 8 
+mad 		 5.9304 
+SEM 		 1.595966 
+MeanOverSEM 	 15.83538 
+LogMeanOverSEM 	 1.199628 
+
+===  docsize 5 berid 2 copies 5 
+
+  The decimal point is at the |
+
+  2 | 00
+  4 | 00000
+  6 | 0
+  8 | 000
+
+     docsize 5 berid 2 copies 5 
+mean 		 5.272727 
+midmean 	 5.142857 
+median 		 5 
+trimean 	 5.25 
+stddev 		 1.954017 
+IQR 		 3 
+mad 		 1.4826 
+SEM 		 0.5891582 
+MeanOverSEM 	 8.949594 
+LogMeanOverSEM 	 0.9518033 
+
+===  docsize 5 berid 2 copies 8 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 5 berid 2 copies 8 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 5 berid 3 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  148 | 189
+  150 | 33
+  152 | 
+  154 | 0370
+  156 | 4
+  158 | 2
+
+     docsize 5 berid 3 copies 1 
+mean 		 1531.818 
+midmean 	 1529.286 
+median 		 1540 
+trimean 	 1533.625 
+stddev 		 31.05742 
+IQR 		 42.5 
+mad 		 40.0302 
+SEM 		 9.364166 
+MeanOverSEM 	 163.583 
+LogMeanOverSEM 	 2.213738 
+
+===  docsize 5 berid 3 copies 2 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  23 | 27
+  24 | 001457
+  25 | 149
+
+     docsize 5 berid 3 copies 2 
+mean 		 244.5455 
+midmean 	 244 
+median 		 244 
+trimean 	 244.25 
+stddev 		 7.840455 
+IQR 		 9 
+mad 		 5.9304 
+SEM 		 2.363986 
+MeanOverSEM 	 103.4462 
+LogMeanOverSEM 	 2.014715 
+
+===  docsize 5 berid 3 copies 3 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  2 | 69
+  3 | 4
+  3 | 567789
+  4 | 01
+
+     docsize 5 berid 3 copies 3 
+mean 		 35.63636 
+midmean 	 36.57143 
+median 		 37 
+trimean 	 36.75 
+stddev 		 4.566678 
+IQR 		 4 
+mad 		 2.9652 
+SEM 		 1.376905 
+MeanOverSEM 	 25.8815 
+LogMeanOverSEM 	 1.412989 
+
+===  docsize 5 berid 3 copies 4 
+
+  The decimal point is at the |
+
+  2 | 00000
+  4 | 000
+  6 | 0
+  8 | 00
+
+     docsize 5 berid 3 copies 4 
+mean 		 4.272727 
+midmean 	 3.714286 
+median 		 4 
+trimean 	 3.875 
+stddev 		 2.412091 
+IQR 		 2.5 
+mad 		 2.9652 
+SEM 		 0.7272727 
+MeanOverSEM 	 5.875 
+LogMeanOverSEM 	 0.7690079 
+
+===  docsize 5 berid 3 copies 5 
+
+  The decimal point is at the |
+
+  0 | 0000
+  1 | 000
+  2 | 000
+  3 | 0
+
+     docsize 5 berid 3 copies 5 
+mean 		 1.090909 
+midmean 	 1 
+median 		 1 
+trimean 	 1 
+stddev 		 1.044466 
+IQR 		 2 
+mad 		 1.4826 
+SEM 		 0.3149183 
+MeanOverSEM 	 3.464102 
+LogMeanOverSEM 	 0.5395906 
+
+===  docsize 5 berid 3 copies 8 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 5 berid 3 copies 8 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 5 berid 5 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  90 | 3
+  92 | 701
+  94 | 056996
+  96 | 2
+
+     docsize 5 berid 5 copies 1 
+mean 		 941.6364 
+midmean 	 941.4286 
+median 		 945 
+trimean 	 942.375 
+stddev 		 15.97669 
+IQR 		 18.5 
+mad 		 16.3086 
+SEM 		 4.817153 
+MeanOverSEM 	 195.4757 
+LogMeanOverSEM 	 2.291093 
+
+===  docsize 5 berid 5 copies 2 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+   8 | 6789
+   9 | 33
+   9 | 577
+  10 | 4
+  10 | 6
+
+     docsize 5 berid 5 copies 2 
+mean 		 94.09091 
+midmean 	 93.14286 
+median 		 93 
+trimean 	 92.875 
+stddev 		 6.625021 
+IQR 		 8.5 
+mad 		 5.9304 
+SEM 		 1.997519 
+MeanOverSEM 	 47.10388 
+LogMeanOverSEM 	 1.673057 
+
+===  docsize 5 berid 5 copies 3 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 5678889
+  1 | 012
+  1 | 5
+
+     docsize 5 berid 5 copies 3 
+mean 		 9 
+midmean 	 8.714286 
+median 		 8 
+trimean 	 8.5 
+stddev 		 2.863564 
+IQR 		 3 
+mad 		 2.9652 
+SEM 		 0.8633971 
+MeanOverSEM 	 10.42394 
+LogMeanOverSEM 	 1.018032 
+
+===  docsize 5 berid 5 copies 4 
+
+  The decimal point is at the |
+
+  0 | 000000
+  1 | 00
+  2 | 0
+  3 | 00
+
+     docsize 5 berid 5 copies 4 
+mean 		 0.9090909 
+midmean 	 0.5714286 
+median 		 0 
+trimean 	 0.375 
+stddev 		 1.221028 
+IQR 		 1.5 
+mad 		 0 
+SEM 		 0.3681538 
+MeanOverSEM 	 2.469324 
+LogMeanOverSEM 	 0.3925781 
+
+===  docsize 5 berid 5 copies 5 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 5 berid 5 copies 5 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 5 berid 10 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  46 | 6689
+  47 | 6779
+  48 | 
+  49 | 2
+  50 | 02
+
+     docsize 5 berid 10 copies 1 
+mean 		 479.2727 
+midmean 	 476.8571 
+median 		 477 
+trimean 	 477 
+stddev 		 13.09268 
+IQR 		 17 
+mad 		 13.3434 
+SEM 		 3.947591 
+MeanOverSEM 	 121.4089 
+LogMeanOverSEM 	 2.084251 
+
+===  docsize 5 berid 10 copies 2 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  1 | 1
+  2 | 002368
+  3 | 1157
+
+     docsize 5 berid 10 copies 2 
+mean 		 25.81818 
+midmean 	 25.85714 
+median 		 26 
+trimean 	 26 
+stddev 		 7.600239 
+IQR 		 10 
+mad 		 7.413 
+SEM 		 2.291558 
+MeanOverSEM 	 11.26665 
+LogMeanOverSEM 	 1.051795 
+
+===  docsize 5 berid 10 copies 3 
+
+  The decimal point is at the |
+
+  0 | 00
+  0 | 
+  1 | 000
+  1 | 
+  2 | 000000
+
+     docsize 5 berid 10 copies 3 
+mean 		 1.363636 
+midmean 	 1.571429 
+median 		 2 
+trimean 	 1.75 
+stddev 		 0.8090398 
+IQR 		 1 
+mad 		 0 
+SEM 		 0.2439347 
+MeanOverSEM 	 5.59017 
+LogMeanOverSEM 	 0.747425 
+
+===  docsize 5 berid 10 copies 4 
+
+  The decimal point is at the |
+
+  0 | 000000000
+  0 | 
+  1 | 00
+
+     docsize 5 berid 10 copies 4 
+mean 		 0.1818182 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0.4045199 
+IQR 		 0 
+mad 		 0 
+SEM 		 0.1219673 
+MeanOverSEM 	 1.490712 
+LogMeanOverSEM 	 0.1733937 
+
+===  docsize 5 berid 10 copies 5 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 5 berid 10 copies 5 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 5 berid 20 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  22 | 47
+  23 | 44558
+  24 | 7
+  25 | 0
+  26 | 39
+
+     docsize 5 berid 20 copies 1 
+mean 		 241.4545 
+midmean 	 239 
+median 		 235 
+trimean 	 238.125 
+stddev 		 14.30639 
+IQR 		 14.5 
+mad 		 11.8608 
+SEM 		 4.313538 
+MeanOverSEM 	 55.97598 
+LogMeanOverSEM 	 1.748002 
+
+===  docsize 5 berid 20 copies 2 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 2334
+  0 | 5669
+  1 | 00
+  1 | 5
+
+     docsize 5 berid 20 copies 2 
+mean 		 6.636364 
+midmean 	 6.142857 
+median 		 6 
+trimean 	 6.25 
+stddev 		 3.956583 
+IQR 		 6 
+mad 		 4.4478 
+SEM 		 1.192955 
+MeanOverSEM 	 5.562964 
+LogMeanOverSEM 	 0.7453063 
+
+===  docsize 5 berid 20 copies 3 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 5 berid 20 copies 3 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 5 berid 20 copies 4 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 5 berid 20 copies 4 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 5 berid 20 copies 5 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 5 berid 20 copies 5 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 5 berid 30 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  14 | 51446
+  16 | 2236
+  18 | 65
+
+     docsize 5 berid 30 copies 1 
+mean 		 163.0909 
+midmean 	 159.5714 
+median 		 162 
+trimean 	 160.625 
+stddev 		 14.97634 
+IQR 		 10.5 
+mad 		 11.8608 
+SEM 		 4.515538 
+MeanOverSEM 	 36.11771 
+LogMeanOverSEM 	 1.55772 
+
+===  docsize 5 berid 30 copies 2 
+
+  The decimal point is at the |
+
+  0 | 0000
+  2 | 000
+  4 | 0
+  6 | 00
+  8 | 0
+
+     docsize 5 berid 30 copies 2 
+mean 		 3.363636 
+midmean 	 2.714286 
+median 		 2 
+trimean 	 2.5 
+stddev 		 2.802596 
+IQR 		 4 
+mad 		 1.4826 
+SEM 		 0.8450145 
+MeanOverSEM 	 3.980566 
+LogMeanOverSEM 	 0.5999449 
+
+===  docsize 5 berid 30 copies 3 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 5 berid 30 copies 3 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 5 berid 30 copies 4 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 5 berid 30 copies 4 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 5 berid 30 copies 5 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 5 berid 30 copies 5 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 5 berid 50 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+   8 | 799
+   9 | 222399
+  10 | 
+  11 | 28
+
+     docsize 5 berid 50 copies 1 
+mean 		 96.54545 
+midmean 	 93.71429 
+median 		 92 
+trimean 	 93.375 
+stddev 		 9.953528 
+IQR 		 8.5 
+mad 		 4.4478 
+SEM 		 3.001102 
+MeanOverSEM 	 32.17 
+LogMeanOverSEM 	 1.507451 
+
+===  docsize 5 berid 50 copies 2 
+
+  The decimal point is at the |
+
+  0 | 000000000
+  2 | 0
+  4 | 0
+
+     docsize 5 berid 50 copies 2 
+mean 		 1.181818 
+midmean 	 0.8571429 
+median 		 1 
+trimean 	 0.875 
+stddev 		 1.401298 
+IQR 		 0.5 
+mad 		 0 
+SEM 		 0.4225073 
+MeanOverSEM 	 2.797155 
+LogMeanOverSEM 	 0.4467165 
+
+===  docsize 5 berid 50 copies 3 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 5 berid 50 copies 3 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 5 berid 50 copies 4 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 5 berid 50 copies 4 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 5 berid 50 copies 5 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 5 berid 50 copies 5 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 5 berid 100 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  3 | 8
+  4 | 1445689
+  5 | 18
+  6 | 7
+
+     docsize 5 berid 100 copies 1 
+mean 		 48.27273 
+midmean 	 46.71429 
+median 		 46 
+trimean 	 46.5 
+stddev 		 8.149735 
+IQR 		 6 
+mad 		 4.4478 
+SEM 		 2.457238 
+MeanOverSEM 	 19.64512 
+LogMeanOverSEM 	 1.293255 
+
+===  docsize 5 berid 100 copies 2 
+
+  The decimal point is at the |
+
+  0 | 000000000
+  0 | 
+  1 | 00
+
+     docsize 5 berid 100 copies 2 
+mean 		 0.1818182 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0.4045199 
+IQR 		 0 
+mad 		 0 
+SEM 		 0.1219673 
+MeanOverSEM 	 1.490712 
+LogMeanOverSEM 	 0.1733937 
+
+===  docsize 5 berid 100 copies 3 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 5 berid 100 copies 3 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 5 berid 200 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  1 | 69
+  2 | 11334
+  2 | 89
+  3 | 13
+
+     docsize 5 berid 200 copies 1 
+mean 		 24.36364 
+midmean 	 24.14286 
+median 		 23 
+trimean 	 23.875 
+stddev 		 5.277741 
+IQR 		 7.5 
+mad 		 5.9304 
+SEM 		 1.591299 
+MeanOverSEM 	 15.31054 
+LogMeanOverSEM 	 1.18499 
+
+===  docsize 5 berid 200 copies 2 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 5 berid 200 copies 2 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 5 berid 200 copies 3 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 5 berid 200 copies 3 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 5 berid 200 copies 4 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 5 berid 200 copies 4 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 5 berid 200 copies 5 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 5 berid 200 copies 5 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 5 berid 300 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  1 | 3334
+  1 | 55668
+  2 | 14
+
+     docsize 5 berid 300 copies 1 
+mean 		 16.18182 
+midmean 	 15.28571 
+median 		 15 
+trimean 	 15.125 
+stddev 		 3.544522 
+IQR 		 3.5 
+mad 		 2.9652 
+SEM 		 1.068714 
+MeanOverSEM 	 15.1414 
+LogMeanOverSEM 	 1.180166 
+
+===  docsize 5 berid 300 copies 2 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 5 berid 300 copies 2 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 5 berid 300 copies 3 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00
+
+     docsize 5 berid 300 copies 3 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 5 berid 500 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 679
+  1 | 0000122
+  1 | 8
+
+     docsize 5 berid 500 copies 1 
+mean 		 10.45455 
+midmean 	 10.28571 
+median 		 10 
+trimean 	 10.25 
+stddev 		 3.110101 
+IQR 		 2 
+mad 		 1.4826 
+SEM 		 0.9377307 
+MeanOverSEM 	 11.14877 
+LogMeanOverSEM 	 1.047227 
+
+===  docsize 5 berid 500 copies 2 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 5 berid 500 copies 2 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 5 berid 500 copies 3 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 5 berid 500 copies 3 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 5 berid 500 copies 4 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 5 berid 500 copies 4 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 5 berid 500 copies 5 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 5 berid 500 copies 5 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 5 berid 1000 copies 1 
+
+  The decimal point is at the |
+
+  2 | 00
+  4 | 00000
+  6 | 0
+  8 | 000
+
+     docsize 5 berid 1000 copies 1 
+mean 		 5.363636 
+midmean 	 5.428571 
+median 		 5 
+trimean 	 5.375 
+stddev 		 2.01359 
+IQR 		 2.5 
+mad 		 1.4826 
+SEM 		 0.6071203 
+MeanOverSEM 	 8.834553 
+LogMeanOverSEM 	 0.9461846 
+
+===  docsize 5 berid 1000 copies 2 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 5 berid 1000 copies 2 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 berid 1 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  992 | 0034
+  992 | 
+  993 | 1
+  993 | 778
+  994 | 024
+
+     docsize 50 berid 1 copies 1 
+mean 		 9932.364 
+midmean 	 9932.857 
+median 		 9937 
+trimean 	 9934.125 
+stddev 		 9.091455 
+IQR 		 15.5 
+mad 		 8.8956 
+SEM 		 2.741177 
+MeanOverSEM 	 3623.394 
+LogMeanOverSEM 	 3.559116 
+
+===  docsize 50 berid 1 copies 2 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  984 | 29
+  985 | 4
+  986 | 112499
+  987 | 06
+
+     docsize 50 berid 1 copies 2 
+mean 		 9861.545 
+midmean 	 9862.857 
+median 		 9862 
+trimean 	 9862.625 
+stddev 		 9.973602 
+IQR 		 11.5 
+mad 		 10.3782 
+SEM 		 3.007154 
+MeanOverSEM 	 3279.362 
+LogMeanOverSEM 	 3.515789 
+
+===  docsize 50 berid 1 copies 3 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  978 | 0134
+  979 | 035
+  980 | 0
+  981 | 1
+  982 | 35
+
+     docsize 50 berid 1 copies 3 
+mean 		 9796.818 
+midmean 	 9793.714 
+median 		 9793 
+trimean 	 9793.75 
+stddev 		 16.25926 
+IQR 		 22 
+mad 		 14.826 
+SEM 		 4.902352 
+MeanOverSEM 	 1998.391 
+LogMeanOverSEM 	 3.300681 
+
+===  docsize 50 berid 1 copies 4 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  970 | 68
+  972 | 4024
+  974 | 0453
+  976 | 1
+
+     docsize 50 berid 1 copies 4 
+mean 		 9735.182 
+midmean 	 9735.571 
+median 		 9734 
+trimean 	 9734.875 
+stddev 		 15.78492 
+IQR 		 17.5 
+mad 		 14.826 
+SEM 		 4.759332 
+MeanOverSEM 	 2045.493 
+LogMeanOverSEM 	 3.310798 
+
+===  docsize 50 berid 1 copies 5 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  964 | 08
+  965 | 0569
+  966 | 26
+  967 | 2
+  968 | 39
+
+     docsize 50 berid 1 copies 5 
+mean 		 9661.818 
+midmean 	 9660 
+median 		 9659 
+trimean 	 9659.875 
+stddev 		 14.84465 
+IQR 		 16.5 
+mad 		 13.3434 
+SEM 		 4.47583 
+MeanOverSEM 	 2158.665 
+LogMeanOverSEM 	 3.334185 
+
+===  docsize 50 berid 1 copies 8 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  940 | 5
+  942 | 8
+  944 | 147
+  946 | 05
+  948 | 6929
+
+     docsize 50 berid 1 copies 8 
+mean 		 9465.091 
+midmean 	 9467.429 
+median 		 9460 
+trimean 	 9465 
+stddev 		 25.7622 
+IQR 		 35 
+mad 		 32.6172 
+SEM 		 7.767595 
+MeanOverSEM 	 1218.536 
+LogMeanOverSEM 	 3.085838 
+
+===  docsize 50 berid 1 copies 10 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  930 | 3
+  932 | 31
+  934 | 12676
+  936 | 31
+  938 | 4
+
+     docsize 50 berid 1 copies 10 
+mean 		 9347 
+midmean 	 9346.571 
+median 		 9346 
+trimean 	 9346.875 
+stddev 		 20.81346 
+IQR 		 23.5 
+mad 		 22.239 
+SEM 		 6.275493 
+MeanOverSEM 	 1489.445 
+LogMeanOverSEM 	 3.173024 
+
+===  docsize 50 berid 1 copies 14 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  90 | 4
+  90 | 56899
+  91 | 0012
+  91 | 7
+
+     docsize 50 berid 1 copies 14 
+mean 		 9090.091 
+midmean 	 9088.857 
+median 		 9092 
+trimean 	 9089.375 
+stddev 		 36.13158 
+IQR 		 37.5 
+mad 		 28.1694 
+SEM 		 10.89408 
+MeanOverSEM 	 834.4064 
+LogMeanOverSEM 	 2.921378 
+
+===  docsize 50 berid 1 copies 16 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  890 | 7
+  892 | 
+  894 | 27
+  896 | 923
+  898 | 548
+  900 | 03
+
+     docsize 50 berid 1 copies 16 
+mean 		 8972.727 
+midmean 	 8978.286 
+median 		 8973 
+trimean 	 8976.25 
+stddev 		 29.03133 
+IQR 		 33 
+mad 		 31.1346 
+SEM 		 8.753276 
+MeanOverSEM 	 1025.071 
+LogMeanOverSEM 	 3.010754 
+
+===  docsize 50 berid 1 copies 20 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  86 | 589
+  87 | 0333
+  87 | 6678
+
+     docsize 50 berid 1 copies 20 
+mean 		 8724.091 
+midmean 	 8725.571 
+median 		 8725 
+trimean 	 8725.375 
+stddev 		 39.8132 
+IQR 		 62.5 
+mad 		 47.4432 
+SEM 		 12.00413 
+MeanOverSEM 	 726.7574 
+LogMeanOverSEM 	 2.861389 
+
+===  docsize 50 berid 2 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  912 | 8
+  914 | 690
+  916 | 6
+  918 | 3239
+  920 | 7
+  922 | 4
+
+     docsize 50 berid 2 copies 1 
+mean 		 9177.909 
+midmean 	 9177.429 
+median 		 9183 
+trimean 	 9177.875 
+stddev 		 28.45507 
+IQR 		 46.5 
+mad 		 35.5824 
+SEM 		 8.579526 
+MeanOverSEM 	 1069.745 
+LogMeanOverSEM 	 3.02928 
+
+===  docsize 50 berid 2 copies 2 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  83 | 4
+  83 | 8
+  84 | 0111133
+  84 | 57
+
+     docsize 50 berid 2 copies 2 
+mean 		 8413.545 
+midmean 	 8414 
+median 		 8409 
+trimean 	 8412.875 
+stddev 		 34.6738 
+IQR 		 32.5 
+mad 		 35.5824 
+SEM 		 10.45455 
+MeanOverSEM 	 804.7739 
+LogMeanOverSEM 	 2.905674 
+
+===  docsize 50 berid 2 copies 3 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  768 | 35
+  770 | 2494
+  772 | 939
+  774 | 8
+  776 | 1
+
+     docsize 50 berid 2 copies 3 
+mean 		 7719.727 
+midmean 	 7718.571 
+median 		 7714 
+trimean 	 7716.75 
+stddev 		 24.09602 
+IQR 		 33 
+mad 		 28.1694 
+SEM 		 7.265223 
+MeanOverSEM 	 1062.559 
+LogMeanOverSEM 	 3.026353 
+
+===  docsize 50 berid 2 copies 4 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  704 | 79
+  706 | 87
+  708 | 379
+  710 | 590
+  712 | 
+  714 | 0
+
+     docsize 50 berid 2 copies 4 
+mean 		 7089.455 
+midmean 	 7089.714 
+median 		 7087 
+trimean 	 7088.375 
+stddev 		 26.61715 
+IQR 		 34.5 
+mad 		 28.1694 
+SEM 		 8.025373 
+MeanOverSEM 	 883.3801 
+LogMeanOverSEM 	 2.946148 
+
+===  docsize 50 berid 2 copies 5 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  64 | 4
+  64 | 9
+  65 | 0234
+  65 | 56677
+
+     docsize 50 berid 2 copies 5 
+mean 		 6529.727 
+midmean 	 6537 
+median 		 6543 
+trimean 	 6538.75 
+stddev 		 41.19245 
+IQR 		 51 
+mad 		 34.0998 
+SEM 		 12.41999 
+MeanOverSEM 	 525.7433 
+LogMeanOverSEM 	 2.720774 
+
+===  docsize 50 berid 2 copies 8 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  49 | 6677
+  50 | 044
+  50 | 669
+  51 | 2
+
+     docsize 50 berid 2 copies 8 
+mean 		 5025.636 
+midmean 	 5020.714 
+median 		 5038 
+trimean 	 5027 
+stddev 		 56.20903 
+IQR 		 93 
+mad 		 74.13 
+SEM 		 16.94766 
+MeanOverSEM 	 296.5387 
+LogMeanOverSEM 	 2.472081 
+
+===  docsize 50 berid 2 copies 10 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  41 | 9
+  42 | 11123
+  42 | 777
+  43 | 01
+
+     docsize 50 berid 2 copies 10 
+mean 		 4244.455 
+midmean 	 4240.143 
+median 		 4225 
+trimean 	 4233.25 
+stddev 		 42.58489 
+IQR 		 61 
+mad 		 56.3388 
+SEM 		 12.83983 
+MeanOverSEM 	 330.5695 
+LogMeanOverSEM 	 2.519263 
+
+===  docsize 50 berid 2 copies 14 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  29 | 2
+  29 | 7889
+  30 | 0003
+  30 | 68
+
+     docsize 50 berid 2 copies 14 
+mean 		 2999 
+midmean 	 2995.286 
+median 		 2996 
+trimean 	 2996.5 
+stddev 		 44.14521 
+IQR 		 35 
+mad 		 25.2042 
+SEM 		 13.31028 
+MeanOverSEM 	 225.3145 
+LogMeanOverSEM 	 2.352789 
+
+===  docsize 50 berid 2 copies 16 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  24 | 4
+  24 | 7899
+  25 | 122
+  25 | 568
+
+     docsize 50 berid 2 copies 16 
+mean 		 2510 
+midmean 	 2508.571 
+median 		 2507 
+trimean 	 2509 
+stddev 		 40.9634 
+IQR 		 45 
+mad 		 35.5824 
+SEM 		 12.35093 
+MeanOverSEM 	 203.2236 
+LogMeanOverSEM 	 2.307974 
+
+===  docsize 50 berid 2 copies 20 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  17 | 24
+  17 | 6899
+  18 | 013
+  18 | 57
+
+     docsize 50 berid 2 copies 20 
+mean 		 1791.818 
+midmean 	 1791.571 
+median 		 1790 
+trimean 	 1790.625 
+stddev 		 45.46827 
+IQR 		 49.5 
+mad 		 47.4432 
+SEM 		 13.7092 
+MeanOverSEM 	 130.7019 
+LogMeanOverSEM 	 2.116282 
+
+===  docsize 50 berid 3 copies 1 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  80 | 44
+  80 | 59
+  81 | 001112
+  81 | 7
+
+     docsize 50 berid 3 copies 1 
+mean 		 8092.273 
+midmean 	 8093.571 
+median 		 8097 
+trimean 	 8093.125 
+stddev 		 37.68844 
+IQR 		 35.5 
+mad 		 16.3086 
+SEM 		 11.36349 
+MeanOverSEM 	 712.1291 
+LogMeanOverSEM 	 2.852559 
+
+===  docsize 50 berid 3 copies 2 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  65 | 234
+  65 | 5688
+  66 | 1223
+
+     docsize 50 berid 3 copies 2 
+mean 		 6575.727 
+midmean 	 6576.143 
+median 		 6575 
+trimean 	 6577.625 
+stddev 		 40.94409 
+IQR 		 71.5 
+mad 		 56.3388 
+SEM 		 12.34511 
+MeanOverSEM 	 532.6586 
+LogMeanOverSEM 	 2.726449 
+
+===  docsize 50 berid 3 copies 3 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  52 | 779
+  53 | 1133
+  53 | 667
+  54 | 3
+
+     docsize 50 berid 3 copies 3 
+mean 		 5329 
+midmean 	 5325.857 
+median 		 5328 
+trimean 	 5328.25 
+stddev 		 47.44681 
+IQR 		 65 
+mad 		 51.891 
+SEM 		 14.30575 
+MeanOverSEM 	 372.5075 
+LogMeanOverSEM 	 2.571135 
+
+===  docsize 50 berid 3 copies 4 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  42 | 5669
+  43 | 02244
+  43 | 7
+  44 | 0
+
+     docsize 50 berid 3 copies 4 
+mean 		 4314.727 
+midmean 	 4312.143 
+median 		 4323 
+trimean 	 4316.125 
+stddev 		 47.91052 
+IQR 		 63.5 
+mad 		 47.4432 
+SEM 		 14.44557 
+MeanOverSEM 	 298.6887 
+LogMeanOverSEM 	 2.475219 
+
+===  docsize 50 berid 3 copies 5 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  34 | 12
+  34 | 688
+  35 | 01344
+  35 | 6
+
+     docsize 50 berid 3 copies 5 
+mean 		 3494.455 
+midmean 	 3500.429 
+median 		 3504 
+trimean 	 3503 
+stddev 		 49.34038 
+IQR 		 65 
+mad 		 53.3736 
+SEM 		 14.87668 
+MeanOverSEM 	 234.8947 
+LogMeanOverSEM 	 2.370873 
+
+===  docsize 50 berid 3 copies 8 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  18 | 22
+  18 | 566888
+  19 | 002
+
+     docsize 50 berid 3 copies 8 
+mean 		 1869.727 
+midmean 	 1872.714 
+median 		 1877 
+trimean 	 1874.625 
+stddev 		 31.9565 
+IQR 		 35.5 
+mad 		 28.1694 
+SEM 		 9.635249 
+MeanOverSEM 	 194.0508 
+LogMeanOverSEM 	 2.287915 
+
+===  docsize 50 berid 3 copies 10 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  118 | 6
+  120 | 
+  122 | 99379
+  124 | 4519
+  126 | 4
+
+     docsize 50 berid 3 copies 10 
+mean 		 1238.727 
+midmean 	 1239.714 
+median 		 1239 
+trimean 	 1239.25 
+stddev 		 22.08661 
+IQR 		 17 
+mad 		 14.826 
+SEM 		 6.659362 
+MeanOverSEM 	 186.0129 
+LogMeanOverSEM 	 2.269543 
+
+===  docsize 50 berid 3 copies 14 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  50 | 079
+  52 | 557
+  54 | 689
+  56 | 02
+
+     docsize 50 berid 3 copies 14 
+mean 		 535.2727 
+midmean 	 534.1429 
+median 		 527 
+trimean 	 531.125 
+stddev 		 18.18841 
+IQR 		 26.5 
+mad 		 25.2042 
+SEM 		 5.484011 
+MeanOverSEM 	 97.60606 
+LogMeanOverSEM 	 1.989477 
+
+===  docsize 50 berid 3 copies 16 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  30 | 7
+  32 | 8599
+  34 | 3500
+  36 | 11
+
+     docsize 50 berid 3 copies 16 
+mean 		 344.3636 
+midmean 	 343 
+median 		 343 
+trimean 	 343.25 
+stddev 		 16.26821 
+IQR 		 13 
+mad 		 10.3782 
+SEM 		 4.905049 
+MeanOverSEM 	 70.20595 
+LogMeanOverSEM 	 1.846374 
+
+===  docsize 50 berid 3 copies 20 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  13 | 359
+  14 | 279
+  15 | 01468
+
+     docsize 50 berid 3 copies 20 
+mean 		 146.7273 
+midmean 	 147.4286 
+median 		 149 
+trimean 	 147.75 
+stddev 		 8.415354 
+IQR 		 12 
+mad 		 10.3782 
+SEM 		 2.537325 
+MeanOverSEM 	 57.82755 
+LogMeanOverSEM 	 1.762135 
+
+===  docsize 50 berid 5 copies 1 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  62 | 23
+  62 | 889
+  63 | 01112
+  63 | 6
+
+     docsize 50 berid 5 copies 1 
+mean 		 6291.455 
+midmean 	 6296.429 
+median 		 6295 
+trimean 	 6294.75 
+stddev 		 39.818 
+IQR 		 31 
+mad 		 23.7216 
+SEM 		 12.00558 
+MeanOverSEM 	 524.0443 
+LogMeanOverSEM 	 2.719368 
+
+===  docsize 50 berid 5 copies 2 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  39 | 2
+  39 | 566889
+  40 | 1134
+
+     docsize 50 berid 5 copies 2 
+mean 		 3983.364 
+midmean 	 3982.857 
+median 		 3980 
+trimean 	 3981.75 
+stddev 		 33.15199 
+IQR 		 45 
+mad 		 37.065 
+SEM 		 9.995702 
+MeanOverSEM 	 398.5077 
+LogMeanOverSEM 	 2.600437 
+
+===  docsize 50 berid 5 copies 3 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  24 | 33
+  24 | 59
+  25 | 34
+  25 | 56678
+
+     docsize 50 berid 5 copies 3 
+mean 		 2517.364 
+midmean 	 2525.429 
+median 		 2542 
+trimean 	 2528.375 
+stddev 		 55.84671 
+IQR 		 90.5 
+mad 		 41.5128 
+SEM 		 16.83842 
+MeanOverSEM 	 149.5012 
+LogMeanOverSEM 	 2.174645 
+
+===  docsize 50 berid 5 copies 4 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  15 | 667789
+  16 | 0233
+  16 | 7
+
+     docsize 50 berid 5 copies 4 
+mean 		 1596.818 
+midmean 	 1592 
+median 		 1590 
+trimean 	 1592.5 
+stddev 		 36.51251 
+IQR 		 59 
+mad 		 44.478 
+SEM 		 11.00894 
+MeanOverSEM 	 145.0474 
+LogMeanOverSEM 	 2.16151 
+
+===  docsize 50 berid 5 copies 5 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+   9 | 
+   9 | 58899
+  10 | 0344
+  10 | 57
+
+     docsize 50 berid 5 copies 5 
+mean 		 1009.818 
+midmean 	 1009.571 
+median 		 1003 
+trimean 	 1007.75 
+stddev 		 38.03635 
+IQR 		 58 
+mad 		 37.065 
+SEM 		 11.46839 
+MeanOverSEM 	 88.05231 
+LogMeanOverSEM 	 1.944741 
+
+===  docsize 50 berid 5 copies 8 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  22 | 6
+  23 | 068
+  24 | 35
+  25 | 578
+  26 | 67
+
+     docsize 50 berid 5 copies 8 
+mean 		 247.3636 
+midmean 	 247.4286 
+median 		 245 
+trimean 	 246.125 
+stddev 		 14.12992 
+IQR 		 20.5 
+mad 		 17.7912 
+SEM 		 4.26033 
+MeanOverSEM 	 58.06208 
+LogMeanOverSEM 	 1.763893 
+
+===  docsize 50 berid 5 copies 10 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+   8 | 36
+   9 | 089
+  10 | 1233
+  11 | 02
+
+     docsize 50 berid 5 copies 10 
+mean 		 98.81818 
+midmean 	 99.42857 
+median 		 101 
+trimean 	 99.75 
+stddev 		 9.174074 
+IQR 		 9 
+mad 		 4.4478 
+SEM 		 2.766087 
+MeanOverSEM 	 35.72489 
+LogMeanOverSEM 	 1.552971 
+
+===  docsize 50 berid 5 copies 14 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 9
+  1 | 014
+  1 | 68999
+  2 | 13
+
+     docsize 50 berid 5 copies 14 
+mean 		 16.27273 
+midmean 	 16.57143 
+median 		 18 
+trimean 	 16.875 
+stddev 		 4.670994 
+IQR 		 6.5 
+mad 		 4.4478 
+SEM 		 1.408358 
+MeanOverSEM 	 11.5544 
+LogMeanOverSEM 	 1.062747 
+
+===  docsize 50 berid 5 copies 16 
+
+  The decimal point is at the |
+
+   4 | 0
+   6 | 00000000
+   8 | 
+  10 | 0
+  12 | 0
+
+     docsize 50 berid 5 copies 16 
+mean 		 7.363636 
+midmean 	 6.857143 
+median 		 7 
+trimean 	 6.875 
+stddev 		 2.335497 
+IQR 		 0.5 
+mad 		 0 
+SEM 		 0.7041788 
+MeanOverSEM 	 10.45706 
+LogMeanOverSEM 	 1.019409 
+
+===  docsize 50 berid 5 copies 20 
+
+  The decimal point is at the |
+
+  0 | 0000
+  0 | 
+  1 | 0000
+  1 | 
+  2 | 000
+
+     docsize 50 berid 5 copies 20 
+mean 		 0.9090909 
+midmean 	 0.8571429 
+median 		 1 
+trimean 	 0.875 
+stddev 		 0.8312094 
+IQR 		 1.5 
+mad 		 1.4826 
+SEM 		 0.2506191 
+MeanOverSEM 	 3.627381 
+LogMeanOverSEM 	 0.5595932 
+
+===  docsize 50 berid 10 copies 1 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  38 | 4
+  38 | 589
+  39 | 023344
+  39 | 5
+
+     docsize 50 berid 10 copies 1 
+mean 		 3905.364 
+midmean 	 3910.571 
+median 		 3917 
+trimean 	 3912.25 
+stddev 		 38.37258 
+IQR 		 52 
+mad 		 40.0302 
+SEM 		 11.56977 
+MeanOverSEM 	 337.549 
+LogMeanOverSEM 	 2.528337 
+
+===  docsize 50 berid 10 copies 2 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  148 | 9
+  150 | 379
+  152 | 4
+  154 | 36800
+  156 | 
+  158 | 4
+
+     docsize 50 berid 10 copies 2 
+mean 		 1534.818 
+midmean 	 1533.857 
+median 		 1543 
+trimean 	 1535.75 
+stddev 		 28.40006 
+IQR 		 41 
+mad 		 13.3434 
+SEM 		 8.562941 
+MeanOverSEM 	 179.2396 
+LogMeanOverSEM 	 2.253434 
+
+===  docsize 50 berid 10 copies 3 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  56 | 2
+  58 | 53
+  60 | 3178
+  62 | 49
+  64 | 53
+
+     docsize 50 berid 10 copies 3 
+mean 		 613.6364 
+midmean 	 613.5714 
+median 		 617 
+trimean 	 614.625 
+stddev 		 24.50825 
+IQR 		 28.5 
+mad 		 20.7564 
+SEM 		 7.389517 
+MeanOverSEM 	 83.04147 
+LogMeanOverSEM 	 1.919295 
+
+===  docsize 50 berid 10 copies 4 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  22 | 3
+  23 | 012467
+  24 | 58
+  25 | 1
+  26 | 8
+
+     docsize 50 berid 10 copies 4 
+mean 		 239.5455 
+midmean 	 237.5714 
+median 		 236 
+trimean 	 237.5 
+stddev 		 12.59654 
+IQR 		 15 
+mad 		 8.8956 
+SEM 		 3.797999 
+MeanOverSEM 	 63.0715 
+LogMeanOverSEM 	 1.799833 
+
+===  docsize 50 berid 10 copies 5 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+   8 | 02779
+   9 | 028
+  10 | 89
+  11 | 5
+
+     docsize 50 berid 10 copies 5 
+mean 		 94.27273 
+midmean 	 93 
+median 		 90 
+trimean 	 92.5 
+stddev 		 11.66268 
+IQR 		 16 
+mad 		 11.8608 
+SEM 		 3.516431 
+MeanOverSEM 	 26.8092 
+LogMeanOverSEM 	 1.428284 
+
+===  docsize 50 berid 10 copies 8 
+
+  The decimal point is at the |
+
+  0 | 0
+  2 | 000
+  4 | 00000
+  6 | 00
+
+     docsize 50 berid 10 copies 8 
+mean 		 4.181818 
+midmean 	 4.142857 
+median 		 4 
+trimean 	 4 
+stddev 		 1.88776 
+IQR 		 2 
+mad 		 1.4826 
+SEM 		 0.5691809 
+MeanOverSEM 	 7.34708 
+LogMeanOverSEM 	 0.8661148 
+
+===  docsize 50 berid 10 copies 10 
+
+  The decimal point is at the |
+
+  0 | 000
+  0 | 
+  1 | 0000000
+  1 | 
+  2 | 0
+
+     docsize 50 berid 10 copies 10 
+mean 		 0.8181818 
+midmean 	 0.8571429 
+median 		 1 
+trimean 	 0.875 
+stddev 		 0.6030227 
+IQR 		 0.5 
+mad 		 0 
+SEM 		 0.1818182 
+MeanOverSEM 	 4.5 
+LogMeanOverSEM 	 0.6532125 
+
+===  docsize 50 berid 10 copies 14 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 berid 10 copies 14 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 berid 20 copies 1 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  21 | 3
+  21 | 
+  22 | 0002233444
+
+     docsize 50 berid 20 copies 1 
+mean 		 2211.182 
+midmean 	 2217.571 
+median 		 2221 
+trimean 	 2218 
+stddev 		 30.63599 
+IQR 		 34 
+mad 		 22.239 
+SEM 		 9.237097 
+MeanOverSEM 	 239.3806 
+LogMeanOverSEM 	 2.379089 
+
+===  docsize 50 berid 20 copies 2 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  45 | 6
+  46 | 1
+  47 | 036
+  48 | 348
+  49 | 056
+
+     docsize 50 berid 20 copies 2 
+mean 		 479.2727 
+midmean 	 480.5714 
+median 		 483 
+trimean 	 481.625 
+stddev 		 13.28978 
+IQR 		 17.5 
+mad 		 14.826 
+SEM 		 4.007019 
+MeanOverSEM 	 119.6083 
+LogMeanOverSEM 	 2.077761 
+
+===  docsize 50 berid 20 copies 3 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+   9 | 11
+  10 | 4678
+  11 | 04578
+
+     docsize 50 berid 20 copies 3 
+mean 		 107.3636 
+midmean 	 109.1429 
+median 		 108 
+trimean 	 108.875 
+stddev 		 9.298094 
+IQR 		 9.5 
+mad 		 8.8956 
+SEM 		 2.803481 
+MeanOverSEM 	 38.29655 
+LogMeanOverSEM 	 1.58316 
+
+===  docsize 50 berid 20 copies 4 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  1 | 7
+  2 | 01344
+  2 | 56789
+
+     docsize 50 berid 20 copies 4 
+mean 		 24 
+midmean 	 24.28571 
+median 		 24 
+trimean 	 24.125 
+stddev 		 3.605551 
+IQR 		 4.5 
+mad 		 4.4478 
+SEM 		 1.087115 
+MeanOverSEM 	 22.07679 
+LogMeanOverSEM 	 1.343936 
+
+===  docsize 50 berid 20 copies 5 
+
+  The decimal point is at the |
+
+  2 | 0000
+  4 | 00000
+  6 | 00
+
+     docsize 50 berid 20 copies 5 
+mean 		 4.272727 
+midmean 	 4.142857 
+median 		 4 
+trimean 	 4 
+stddev 		 1.489356 
+IQR 		 2 
+mad 		 1.4826 
+SEM 		 0.4490578 
+MeanOverSEM 	 9.514872 
+LogMeanOverSEM 	 0.9784029 
+
+===  docsize 50 berid 20 copies 8 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 berid 20 copies 8 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 berid 30 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  148 | 1
+  150 | 5
+  152 | 483
+  154 | 15906
+  156 | 5
+
+     docsize 50 berid 30 copies 1 
+mean 		 1536.091 
+midmean 	 1538.571 
+median 		 1541 
+trimean 	 1539.375 
+stddev 		 20.96404 
+IQR 		 23.5 
+mad 		 19.2738 
+SEM 		 6.320895 
+MeanOverSEM 	 243.0179 
+LogMeanOverSEM 	 2.385638 
+
+===  docsize 50 berid 30 copies 2 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  20 | 63
+  22 | 045
+  24 | 14457
+  26 | 1
+
+     docsize 50 berid 30 copies 2 
+mean 		 233.6364 
+midmean 	 234.7143 
+median 		 241 
+trimean 	 237.125 
+stddev 		 16.93678 
+IQR 		 22.5 
+mad 		 23.7216 
+SEM 		 5.106632 
+MeanOverSEM 	 45.75156 
+LogMeanOverSEM 	 1.660406 
+
+===  docsize 50 berid 30 copies 3 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  2 | 1
+  2 | 
+  3 | 01334
+  3 | 599
+  4 | 22
+
+     docsize 50 berid 30 copies 3 
+mean 		 34.45455 
+midmean 	 34.85714 
+median 		 34 
+trimean 	 34.75 
+stddev 		 6.105139 
+IQR 		 7 
+mad 		 5.9304 
+SEM 		 1.840769 
+MeanOverSEM 	 18.71748 
+LogMeanOverSEM 	 1.272247 
+
+===  docsize 50 berid 30 copies 4 
+
+  The decimal point is at the |
+
+  2 | 0
+  4 | 0000
+  6 | 0000
+  8 | 00
+
+     docsize 50 berid 30 copies 4 
+mean 		 5.636364 
+midmean 	 5.571429 
+median 		 6 
+trimean 	 5.75 
+stddev 		 1.501514 
+IQR 		 1 
+mad 		 1.4826 
+SEM 		 0.4527236 
+MeanOverSEM 	 12.4499 
+LogMeanOverSEM 	 1.095166 
+
+===  docsize 50 berid 30 copies 5 
+
+  The decimal point is at the |
+
+  0 | 00000
+  0 | 
+  1 | 00000
+  1 | 
+  2 | 0
+
+     docsize 50 berid 30 copies 5 
+mean 		 0.6363636 
+midmean 	 0.5714286 
+median 		 1 
+trimean 	 0.75 
+stddev 		 0.6741999 
+IQR 		 1 
+mad 		 1.4826 
+SEM 		 0.2032789 
+MeanOverSEM 	 3.130495 
+LogMeanOverSEM 	 0.495613 
+
+===  docsize 50 berid 30 copies 8 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 berid 30 copies 8 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 berid 50 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  90 | 27
+  92 | 3458
+  94 | 0
+  96 | 111
+  98 | 5
+
+     docsize 50 berid 50 copies 1 
+mean 		 942.4545 
+midmean 	 938.8571 
+median 		 938 
+trimean 	 940.125 
+stddev 		 26.24639 
+IQR 		 37.5 
+mad 		 31.1346 
+SEM 		 7.913583 
+MeanOverSEM 	 119.0933 
+LogMeanOverSEM 	 2.075887 
+
+===  docsize 50 berid 50 copies 2 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+   7 | 2
+   8 | 01489
+   9 | 1349
+  10 | 1
+
+     docsize 50 berid 50 copies 2 
+mean 		 88.36364 
+midmean 	 88.57143 
+median 		 89 
+trimean 	 88.5 
+stddev 		 8.628705 
+IQR 		 11 
+mad 		 7.413 
+SEM 		 2.601652 
+MeanOverSEM 	 33.96443 
+LogMeanOverSEM 	 1.531024 
+
+===  docsize 50 berid 50 copies 3 
+
+  The decimal point is at the |
+
+   4 | 00
+   6 | 000
+   8 | 00000
+  10 | 0
+
+     docsize 50 berid 50 copies 3 
+mean 		 7.545455 
+midmean 	 7.714286 
+median 		 8 
+trimean 	 7.875 
+stddev 		 1.694912 
+IQR 		 2.5 
+mad 		 1.4826 
+SEM 		 0.5110352 
+MeanOverSEM 	 14.76504 
+LogMeanOverSEM 	 1.169235 
+
+===  docsize 50 berid 50 copies 4 
+
+  The decimal point is at the |
+
+  0 | 000
+  0 | 
+  1 | 000000
+  1 | 
+  2 | 00
+
+     docsize 50 berid 50 copies 4 
+mean 		 0.9090909 
+midmean 	 0.8571429 
+median 		 1 
+trimean 	 0.875 
+stddev 		 0.700649 
+IQR 		 0.5 
+mad 		 0 
+SEM 		 0.2112536 
+MeanOverSEM 	 4.303315 
+LogMeanOverSEM 	 0.6338031 
+
+===  docsize 50 berid 50 copies 5 
+
+  The decimal point is at the |
+
+  0 | 0000000000
+  0 | 
+  1 | 0
+
+     docsize 50 berid 50 copies 5 
+mean 		 0.09090909 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0.3015113 
+IQR 		 0 
+mad 		 0 
+SEM 		 0.09090909 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 0 
+
+===  docsize 50 berid 100 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  44 | 5
+  46 | 24614
+  48 | 416
+  50 | 03
+
+     docsize 50 berid 100 copies 1 
+mean 		 479.6364 
+midmean 	 478 
+median 		 474 
+trimean 	 476.625 
+stddev 		 18.43514 
+IQR 		 28.5 
+mad 		 17.7912 
+SEM 		 5.558405 
+MeanOverSEM 	 86.29028 
+LogMeanOverSEM 	 1.935962 
+
+===  docsize 50 berid 100 copies 2 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  1 | 4
+  1 | 77888
+  2 | 0223
+  2 | 8
+
+     docsize 50 berid 100 copies 2 
+mean 		 19.72727 
+midmean 	 19.28571 
+median 		 18 
+trimean 	 18.875 
+stddev 		 3.823373 
+IQR 		 4.5 
+mad 		 2.9652 
+SEM 		 1.15279 
+MeanOverSEM 	 17.11263 
+LogMeanOverSEM 	 1.233317 
+
+===  docsize 50 berid 100 copies 3 
+
+  The decimal point is at the |
+
+  0 | 000
+  0 | 
+  1 | 000000
+  1 | 
+  2 | 00
+
+     docsize 50 berid 100 copies 3 
+mean 		 0.9090909 
+midmean 	 0.8571429 
+median 		 1 
+trimean 	 0.875 
+stddev 		 0.700649 
+IQR 		 0.5 
+mad 		 0 
+SEM 		 0.2112536 
+MeanOverSEM 	 4.303315 
+LogMeanOverSEM 	 0.6338031 
+
+===  docsize 50 berid 100 copies 4 
+
+  The decimal point is at the |
+
+  0 | 000000000
+  0 | 
+  1 | 00
+
+     docsize 50 berid 100 copies 4 
+mean 		 0.1818182 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0.4045199 
+IQR 		 0 
+mad 		 0 
+SEM 		 0.1219673 
+MeanOverSEM 	 1.490712 
+LogMeanOverSEM 	 0.1733937 
+
+===  docsize 50 berid 200 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  20 | 6
+  22 | 58
+  24 | 1344690
+  26 | 9
+
+     docsize 50 berid 200 copies 1 
+mean 		 244.0909 
+midmean 	 243.5714 
+median 		 244 
+trimean 	 243.75 
+stddev 		 14.83546 
+IQR 		 8 
+mad 		 7.413 
+SEM 		 4.47306 
+MeanOverSEM 	 54.56911 
+LogMeanOverSEM 	 1.736947 
+
+===  docsize 50 berid 200 copies 2 
+
+  The decimal point is at the |
+
+  2 | 0000
+  4 | 000000
+  6 | 0
+
+     docsize 50 berid 200 copies 2 
+mean 		 3.818182 
+midmean 	 3.714286 
+median 		 4 
+trimean 	 3.75 
+stddev 		 1.401298 
+IQR 		 1 
+mad 		 1.4826 
+SEM 		 0.4225073 
+MeanOverSEM 	 9.036961 
+LogMeanOverSEM 	 0.9560224 
+
+===  docsize 50 berid 200 copies 3 
+
+  The decimal point is at the |
+
+  0 | 0000000000
+  0 | 
+  1 | 0
+
+     docsize 50 berid 200 copies 3 
+mean 		 0.09090909 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0.3015113 
+IQR 		 0 
+mad 		 0 
+SEM 		 0.09090909 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 0 
+
+===  docsize 50 berid 200 copies 4 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 berid 200 copies 4 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 berid 200 copies 5 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 berid 200 copies 5 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 berid 300 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  14 | 38
+  15 | 47
+  16 | 023799
+  17 | 9
+
+     docsize 50 berid 300 copies 1 
+mean 		 161 
+midmean 	 161.7143 
+median 		 162 
+trimean 	 161.875 
+stddev 		 10.25671 
+IQR 		 12.5 
+mad 		 10.3782 
+SEM 		 3.092513 
+MeanOverSEM 	 52.06122 
+LogMeanOverSEM 	 1.716514 
+
+===  docsize 50 berid 300 copies 2 
+
+  The decimal point is at the |
+
+  1 | 0000
+  2 | 0000
+  3 | 00
+  4 | 0
+
+     docsize 50 berid 300 copies 2 
+mean 		 2 
+midmean 	 1.857143 
+median 		 2 
+trimean 	 1.875 
+stddev 		 1 
+IQR 		 1.5 
+mad 		 1.4826 
+SEM 		 0.3015113 
+MeanOverSEM 	 6.63325 
+LogMeanOverSEM 	 0.8217263 
+
+===  docsize 50 berid 300 copies 3 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 berid 300 copies 3 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 berid 300 copies 4 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 berid 300 copies 4 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 berid 300 copies 5 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 berid 300 copies 5 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 berid 500 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+   8 | 348
+   9 | 6689
+  10 | 1299
+
+     docsize 50 berid 500 copies 1 
+mean 		 96.81818 
+midmean 	 97.14286 
+median 		 98 
+trimean 	 97.375 
+stddev 		 8.84102 
+IQR 		 9.5 
+mad 		 5.9304 
+SEM 		 2.665668 
+MeanOverSEM 	 36.32042 
+LogMeanOverSEM 	 1.560151 
+
+===  docsize 50 berid 500 copies 2 
+
+  The decimal point is at the |
+
+  0 | 00
+  1 | 0000000
+  2 | 0
+  3 | 
+  4 | 0
+
+     docsize 50 berid 500 copies 2 
+mean 		 1.181818 
+midmean 	 1 
+median 		 1 
+trimean 	 1 
+stddev 		 1.07872 
+IQR 		 0 
+mad 		 0 
+SEM 		 0.3252463 
+MeanOverSEM 	 3.63361 
+LogMeanOverSEM 	 0.5603384 
+
+===  docsize 50 berid 500 copies 3 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 berid 500 copies 3 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 berid 500 copies 4 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 berid 500 copies 4 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 berid 500 copies 5 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 berid 500 copies 5 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 berid 1000 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  3 | 7
+  4 | 145577
+  5 | 135
+  6 | 7
+
+     docsize 50 berid 1000 copies 1 
+mean 		 48.36364 
+midmean 	 47.42857 
+median 		 47 
+trimean 	 47.625 
+stddev 		 8.053232 
+IQR 		 7.5 
+mad 		 5.9304 
+SEM 		 2.428141 
+MeanOverSEM 	 19.91797 
+LogMeanOverSEM 	 1.299245 
+
+===  docsize 50 berid 1000 copies 2 
+
+  The decimal point is at the |
+
+  0 | 00000000
+  0 | 
+  1 | 000
+
+     docsize 50 berid 1000 copies 2 
+mean 		 0.2727273 
+midmean 	 0.1428571 
+median 		 0 
+trimean 	 0.125 
+stddev 		 0.4670994 
+IQR 		 0.5 
+mad 		 0 
+SEM 		 0.1408358 
+MeanOverSEM 	 1.936492 
+LogMeanOverSEM 	 0.2870156 
+
+===  docsize 50 berid 2000 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  1 | 55
+  2 | 0134456
+  3 | 3
+  4 | 2
+
+     docsize 50 berid 2000 copies 1 
+mean 		 24.36364 
+midmean 	 23.28571 
+median 		 24 
+trimean 	 23.5 
+stddev 		 7.723636 
+IQR 		 5 
+mad 		 4.4478 
+SEM 		 2.328764 
+MeanOverSEM 	 10.46205 
+LogMeanOverSEM 	 1.019617 
+
+===  docsize 50 berid 2000 copies 2 
+
+  The decimal point is at the |
+
+  0 | 0000000000
+  0 | 
+  1 | 0
+
+     docsize 50 berid 2000 copies 2 
+mean 		 0.09090909 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0.3015113 
+IQR 		 0 
+mad 		 0 
+SEM 		 0.09090909 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 0 
+
+===  docsize 50 berid 3000 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 9
+  1 | 022
+  1 | 6678
+  2 | 23
+  2 | 7
+
+     docsize 50 berid 3000 copies 1 
+mean 		 16.54545 
+midmean 	 16.14286 
+median 		 16 
+trimean 	 16 
+stddev 		 5.698485 
+IQR 		 8 
+mad 		 5.9304 
+SEM 		 1.718158 
+MeanOverSEM 	 9.629764 
+LogMeanOverSEM 	 0.9836157 
+
+===  docsize 50 berid 3000 copies 2 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 berid 3000 copies 2 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 berid 5000 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 34
+  0 | 77
+  1 | 00023
+  1 | 69
+
+     docsize 50 berid 5000 copies 1 
+mean 		 10.09091 
+midmean 	 9.857143 
+median 		 10 
+trimean 	 9.875 
+stddev 		 4.826066 
+IQR 		 5.5 
+mad 		 4.4478 
+SEM 		 1.455114 
+MeanOverSEM 	 6.934792 
+LogMeanOverSEM 	 0.8410334 
+
+===  docsize 50 berid 5000 copies 2 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 berid 5000 copies 2 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 berid 5000 copies 3 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 berid 5000 copies 3 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 berid 5000 copies 4 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 berid 5000 copies 4 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 berid 5000 copies 5 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 berid 5000 copies 5 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 berid 5000 copies 8 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 berid 5000 copies 8 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 berid 5000 copies 10 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 berid 5000 copies 10 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 500 berid 10 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  991 | 4
+  991 | 79
+  992 | 24
+  992 | 7
+  993 | 3
+  993 | 5558
+
+     docsize 500 berid 10 copies 1 
+mean 		 9927.182 
+midmean 	 9927.857 
+median 		 9927 
+trimean 	 9927.375 
+stddev 		 8.459529 
+IQR 		 14.5 
+mad 		 11.8608 
+SEM 		 2.550644 
+MeanOverSEM 	 3892.029 
+LogMeanOverSEM 	 3.590176 
+
+===  docsize 500 berid 10 copies 2 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  984 | 3
+  985 | 2278
+  986 | 489
+  987 | 26
+  988 | 3
+
+     docsize 500 berid 10 copies 2 
+mean 		 9863.091 
+midmean 	 9862.857 
+median 		 9864 
+trimean 	 9863.25 
+stddev 		 11.895 
+IQR 		 16 
+mad 		 11.8608 
+SEM 		 3.586476 
+MeanOverSEM 	 2750.079 
+LogMeanOverSEM 	 3.439345 
+
+===  docsize 500 berid 10 copies 3 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  976 | 8
+  977 | 
+  978 | 34467
+  979 | 
+  980 | 24789
+
+     docsize 500 berid 10 copies 3 
+mean 		 9792.909 
+midmean 	 9793.429 
+median 		 9787 
+trimean 	 9790.875 
+stddev 		 13.60481 
+IQR 		 21.5 
+mad 		 22.239 
+SEM 		 4.102005 
+MeanOverSEM 	 2387.347 
+LogMeanOverSEM 	 3.377916 
+
+===  docsize 500 berid 10 copies 4 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  970 | 6
+  971 | 468
+  972 | 46
+  973 | 4
+  974 | 47
+  975 | 00
+
+     docsize 500 berid 10 copies 4 
+mean 		 9729.909 
+midmean 	 9729.857 
+median 		 9726 
+trimean 	 9728.625 
+stddev 		 15.88996 
+IQR 		 28.5 
+mad 		 17.7912 
+SEM 		 4.791004 
+MeanOverSEM 	 2030.871 
+LogMeanOverSEM 	 3.307682 
+
+===  docsize 500 berid 10 copies 5 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  962 | 3
+  964 | 358
+  966 | 17
+  968 | 378
+  970 | 34
+
+     docsize 500 berid 10 copies 5 
+mean 		 9672 
+midmean 	 9672.714 
+median 		 9677 
+trimean 	 9673.25 
+stddev 		 24.28992 
+IQR 		 36 
+mad 		 28.1694 
+SEM 		 7.323685 
+MeanOverSEM 	 1320.647 
+LogMeanOverSEM 	 3.120787 
+
+===  docsize 500 berid 10 copies 8 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  942 | 99
+  944 | 92
+  946 | 059
+  948 | 412
+  950 | 6
+
+     docsize 500 berid 10 copies 8 
+mean 		 9471.455 
+midmean 	 9471.429 
+median 		 9475 
+trimean 	 9472 
+stddev 		 24.50863 
+IQR 		 37 
+mad 		 25.2042 
+SEM 		 7.389629 
+MeanOverSEM 	 1281.723 
+LogMeanOverSEM 	 3.107794 
+
+===  docsize 500 berid 10 copies 10 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  92 | 89
+  93 | 23
+  93 | 555668
+  94 | 0
+
+     docsize 500 berid 10 copies 10 
+mean 		 9342.727 
+midmean 	 9345.286 
+median 		 9352 
+trimean 	 9346.875 
+stddev 		 34.11771 
+IQR 		 33.5 
+mad 		 32.6172 
+SEM 		 10.28688 
+MeanOverSEM 	 908.2181 
+LogMeanOverSEM 	 2.95819 
+
+===  docsize 500 berid 10 copies 14 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  904 | 9
+  906 | 27
+  908 | 02680
+  910 | 247
+
+     docsize 500 berid 10 copies 14 
+mean 		 9086.091 
+midmean 	 9086.429 
+median 		 9086 
+trimean 	 9086.625 
+stddev 		 20.24576 
+IQR 		 17.5 
+mad 		 13.3434 
+SEM 		 6.104327 
+MeanOverSEM 	 1488.467 
+LogMeanOverSEM 	 3.172739 
+
+===  docsize 500 berid 10 copies 16 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  892 | 3
+  894 | 12559
+  896 | 0
+  898 | 0299
+
+     docsize 500 berid 10 copies 16 
+mean 		 8961.364 
+midmean 	 8960.429 
+median 		 8959 
+trimean 	 8960.625 
+stddev 		 23.51711 
+IQR 		 37.5 
+mad 		 26.6868 
+SEM 		 7.090676 
+MeanOverSEM 	 1263.824 
+LogMeanOverSEM 	 3.101686 
+
+===  docsize 500 berid 10 copies 20 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  868 | 34
+  870 | 37
+  872 | 0588
+  874 | 818
+
+     docsize 500 berid 10 copies 20 
+mean 		 8727.727 
+midmean 	 8729.857 
+median 		 8735 
+trimean 	 8730.75 
+stddev 		 22.82144 
+IQR 		 33 
+mad 		 23.7216 
+SEM 		 6.880923 
+MeanOverSEM 	 1268.395 
+LogMeanOverSEM 	 3.103254 
+
+===  docsize 500 berid 20 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  914 | 3
+  915 | 
+  916 | 14579
+  917 | 177
+  918 | 03
+
+     docsize 500 berid 20 copies 1 
+mean 		 9168.818 
+midmean 	 9170 
+median 		 9169 
+trimean 	 9169.875 
+stddev 		 11.10692 
+IQR 		 12.5 
+mad 		 11.8608 
+SEM 		 3.348862 
+MeanOverSEM 	 2737.891 
+LogMeanOverSEM 	 3.437416 
+
+===  docsize 500 berid 20 copies 2 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  83 | 3
+  83 | 77
+  84 | 011344
+  84 | 68
+
+     docsize 500 berid 20 copies 2 
+mean 		 8411.273 
+midmean 	 8411.857 
+median 		 8413 
+trimean 	 8411.125 
+stddev 		 43.11865 
+IQR 		 51.5 
+mad 		 32.6172 
+SEM 		 13.00076 
+MeanOverSEM 	 646.983 
+LogMeanOverSEM 	 2.810893 
+
+===  docsize 500 berid 20 copies 3 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  76 | 9
+  77 | 014
+  77 | 566778
+  78 | 1
+
+     docsize 500 berid 20 copies 3 
+mean 		 7748.091 
+midmean 	 7749.571 
+median 		 7757 
+trimean 	 7751.75 
+stddev 		 36.4018 
+IQR 		 45 
+mad 		 28.1694 
+SEM 		 10.97556 
+MeanOverSEM 	 705.9407 
+LogMeanOverSEM 	 2.848768 
+
+===  docsize 500 berid 20 copies 4 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  69 | 9
+  70 | 3
+  70 | 77899
+  71 | 011
+  71 | 7
+
+     docsize 500 berid 20 copies 4 
+mean 		 7083.545 
+midmean 	 7087.571 
+median 		 7089 
+trimean 	 7088.625 
+stddev 		 45.69543 
+IQR 		 31.5 
+mad 		 23.7216 
+SEM 		 13.77769 
+MeanOverSEM 	 514.1315 
+LogMeanOverSEM 	 2.711074 
+
+===  docsize 500 berid 20 copies 5 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  64 | 
+  64 | 569
+  65 | 000122
+  65 | 66
+
+     docsize 500 berid 20 copies 5 
+mean 		 6505.364 
+midmean 	 6505.143 
+median 		 6501 
+trimean 	 6503.5 
+stddev 		 34.88631 
+IQR 		 29 
+mad 		 28.1694 
+SEM 		 10.51862 
+MeanOverSEM 	 618.4618 
+LogMeanOverSEM 	 2.791313 
+
+===  docsize 500 berid 20 copies 8 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  49 | 1
+  49 | 9
+  50 | 1134
+  50 | 6678
+  51 | 0
+
+     docsize 500 berid 20 copies 8 
+mean 		 5031.636 
+midmean 	 5038.429 
+median 		 5036 
+trimean 	 5036.125 
+stddev 		 51.20405 
+IQR 		 55.5 
+mad 		 41.5128 
+SEM 		 15.4386 
+MeanOverSEM 	 325.9127 
+LogMeanOverSEM 	 2.513101 
+
+===  docsize 500 berid 20 copies 10 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  41 | 8
+  42 | 002224
+  42 | 7
+  43 | 12
+  43 | 6
+
+     docsize 500 berid 20 copies 10 
+mean 		 4249.364 
+midmean 	 4241.429 
+median 		 4224 
+trimean 	 4236.875 
+stddev 		 56.59023 
+IQR 		 80.5 
+mad 		 35.5824 
+SEM 		 17.0626 
+MeanOverSEM 	 249.0455 
+LogMeanOverSEM 	 2.396279 
+
+===  docsize 500 berid 20 copies 14 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  29 | 
+  29 | 589
+  30 | 023
+  30 | 55677
+
+     docsize 500 berid 20 copies 14 
+mean 		 3024.182 
+midmean 	 3028.571 
+median 		 3031 
+trimean 	 3028 
+stddev 		 39.28058 
+IQR 		 61 
+mad 		 48.9258 
+SEM 		 11.84354 
+MeanOverSEM 	 255.3444 
+LogMeanOverSEM 	 2.407126 
+
+===  docsize 500 berid 20 copies 16 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  248 | 7
+  250 | 3508
+  252 | 059
+  254 | 89
+  256 | 
+  258 | 6
+
+     docsize 500 berid 20 copies 16 
+mean 		 2529.091 
+midmean 	 2526.429 
+median 		 2520 
+trimean 	 2524 
+stddev 		 29.50408 
+IQR 		 41 
+mad 		 25.2042 
+SEM 		 8.895816 
+MeanOverSEM 	 284.3012 
+LogMeanOverSEM 	 2.453779 
+
+===  docsize 500 berid 20 copies 20 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  176 | 1289
+  178 | 36
+  180 | 8
+  182 | 44
+  184 | 07
+
+     docsize 500 berid 20 copies 20 
+mean 		 1803.818 
+midmean 	 1801.714 
+median 		 1796 
+trimean 	 1799.875 
+stddev 		 33.67438 
+IQR 		 50.5 
+mad 		 41.5128 
+SEM 		 10.15321 
+MeanOverSEM 	 177.66 
+LogMeanOverSEM 	 2.24959 
+
+===  docsize 500 berid 30 copies 1 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  80 | 588
+  81 | 012333
+  81 | 57
+
+     docsize 500 berid 30 copies 1 
+mean 		 8112.273 
+midmean 	 8113.714 
+median 		 8118 
+trimean 	 8114 
+stddev 		 34.08839 
+IQR 		 45 
+mad 		 31.1346 
+SEM 		 10.27804 
+MeanOverSEM 	 789.2824 
+LogMeanOverSEM 	 2.897232 
+
+===  docsize 500 berid 30 copies 2 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  65 | 1334
+  65 | 57
+  66 | 12233
+
+     docsize 500 berid 30 copies 2 
+mean 		 6575.636 
+midmean 	 6575.714 
+median 		 6569 
+trimean 	 6572.75 
+stddev 		 47.08773 
+IQR 		 84 
+mad 		 63.7518 
+SEM 		 14.19749 
+MeanOverSEM 	 463.155 
+LogMeanOverSEM 	 2.665726 
+
+===  docsize 500 berid 30 copies 3 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  52 | 899
+  53 | 2
+  53 | 5677789
+
+     docsize 500 berid 30 copies 3 
+mean 		 5342.455 
+midmean 	 5346.857 
+median 		 5357 
+trimean 	 5347.875 
+stddev 		 39.69474 
+IQR 		 66.5 
+mad 		 35.5824 
+SEM 		 11.96842 
+MeanOverSEM 	 446.3794 
+LogMeanOverSEM 	 2.649704 
+
+===  docsize 500 berid 30 copies 4 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  42 | 
+  42 | 57999
+  43 | 11223
+  43 | 
+  44 | 0
+
+     docsize 500 berid 30 copies 4 
+mean 		 4306.545 
+midmean 	 4304.143 
+median 		 4306 
+trimean 	 4305.125 
+stddev 		 41.28526 
+IQR 		 37.5 
+mad 		 29.652 
+SEM 		 12.44797 
+MeanOverSEM 	 345.9636 
+LogMeanOverSEM 	 2.53903 
+
+===  docsize 500 berid 30 copies 5 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  346 | 27
+  348 | 18
+  350 | 597
+  352 | 678
+  354 | 3
+
+     docsize 500 berid 30 copies 5 
+mean 		 3508.455 
+midmean 	 3509 
+median 		 3509 
+trimean 	 3508.5 
+stddev 		 27.57667 
+IQR 		 37 
+mad 		 26.6868 
+SEM 		 8.314679 
+MeanOverSEM 	 421.9591 
+LogMeanOverSEM 	 2.62527 
+
+===  docsize 500 berid 30 copies 8 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  18 | 1222
+  18 | 5699
+  19 | 02
+  19 | 8
+
+     docsize 500 berid 30 copies 8 
+mean 		 1868.364 
+midmean 	 1860.714 
+median 		 1859 
+trimean 	 1858 
+stddev 		 52.36654 
+IQR 		 75 
+mad 		 57.8214 
+SEM 		 15.78911 
+MeanOverSEM 	 118.3325 
+LogMeanOverSEM 	 2.073104 
+
+===  docsize 500 berid 30 copies 10 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  118 | 2
+  120 | 2
+  122 | 11486
+  124 | 3359
+
+     docsize 500 berid 30 copies 10 
+mean 		 1228.545 
+midmean 	 1230.857 
+median 		 1228 
+trimean 	 1230 
+stddev 		 17.04913 
+IQR 		 22 
+mad 		 22.239 
+SEM 		 5.140505 
+MeanOverSEM 	 238.9931 
+LogMeanOverSEM 	 2.378385 
+
+===  docsize 500 berid 30 copies 14 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  50 | 5
+  52 | 26068
+  54 | 866
+  56 | 57
+
+     docsize 500 berid 30 copies 14 
+mean 		 541.7273 
+midmean 	 541.4286 
+median 		 538 
+trimean 	 540 
+stddev 		 17.78252 
+IQR 		 28 
+mad 		 23.7216 
+SEM 		 5.361633 
+MeanOverSEM 	 101.0377 
+LogMeanOverSEM 	 2.004484 
+
+===  docsize 500 berid 30 copies 16 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  30 | 5
+  32 | 289
+  34 | 544
+  36 | 2474
+
+     docsize 500 berid 30 copies 16 
+mean 		 349.4545 
+midmean 	 350.8571 
+median 		 354 
+trimean 	 352.375 
+stddev 		 17.5292 
+IQR 		 24.5 
+mad 		 19.2738 
+SEM 		 5.285252 
+MeanOverSEM 	 66.11881 
+LogMeanOverSEM 	 1.820325 
+
+===  docsize 500 berid 30 copies 20 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  14 | 36
+  15 | 012467
+  16 | 059
+
+     docsize 500 berid 30 copies 20 
+mean 		 154.8182 
+midmean 	 154.2857 
+median 		 154 
+trimean 	 154.25 
+stddev 		 7.756522 
+IQR 		 8 
+mad 		 5.9304 
+SEM 		 2.338679 
+MeanOverSEM 	 66.19898 
+LogMeanOverSEM 	 1.820851 
+
+===  docsize 500 berid 50 copies 1 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  62 | 24
+  62 | 5
+  63 | 0134
+  63 | 5578
+
+     docsize 500 berid 50 copies 1 
+mean 		 6311.818 
+midmean 	 6317 
+median 		 6331 
+trimean 	 6320.25 
+stddev 		 52.46679 
+IQR 		 74 
+mad 		 51.891 
+SEM 		 15.81933 
+MeanOverSEM 	 398.994 
+LogMeanOverSEM 	 2.600966 
+
+===  docsize 500 berid 50 copies 2 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  39 | 23
+  39 | 677
+  40 | 01234
+  40 | 
+  41 | 2
+
+     docsize 500 berid 50 copies 2 
+mean 		 3995.091 
+midmean 	 3992.429 
+median 		 3996 
+trimean 	 3994.5 
+stddev 		 55.87567 
+IQR 		 61 
+mad 		 45.9606 
+SEM 		 16.84715 
+MeanOverSEM 	 237.1375 
+LogMeanOverSEM 	 2.375 
+
+===  docsize 500 berid 50 copies 3 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  24 | 4
+  24 | 79
+  25 | 01223
+  25 | 68
+  26 | 4
+
+     docsize 500 berid 50 copies 3 
+mean 		 2523.818 
+midmean 	 2519.143 
+median 		 2519 
+trimean 	 2520.25 
+stddev 		 53.15791 
+IQR 		 50 
+mad 		 42.9954 
+SEM 		 16.02771 
+MeanOverSEM 	 157.4659 
+LogMeanOverSEM 	 2.197186 
+
+===  docsize 500 berid 50 copies 4 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  152 | 9
+  154 | 2
+  156 | 04
+  158 | 0122
+  160 | 19
+  162 | 4
+
+     docsize 500 berid 50 copies 4 
+mean 		 1580.364 
+midmean 	 1581.429 
+median 		 1581 
+trimean 	 1581.375 
+stddev 		 26.31833 
+IQR 		 29.5 
+mad 		 29.652 
+SEM 		 7.935275 
+MeanOverSEM 	 199.1567 
+LogMeanOverSEM 	 2.299195 
+
+===  docsize 500 berid 50 copies 5 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+   98 | 3
+   99 | 05
+  100 | 3778
+  101 | 57
+  102 | 5
+  103 | 0
+
+     docsize 500 berid 50 copies 5 
+mean 		 1007.273 
+midmean 	 1007.429 
+median 		 1007 
+trimean 	 1007.25 
+stddev 		 14.29049 
+IQR 		 17 
+mad 		 14.826 
+SEM 		 4.308746 
+MeanOverSEM 	 233.774 
+LogMeanOverSEM 	 2.368796 
+
+===  docsize 500 berid 50 copies 8 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  20 | 5
+  22 | 78
+  24 | 42378
+  26 | 715
+
+     docsize 500 berid 50 copies 8 
+mean 		 250.6364 
+midmean 	 252.7143 
+median 		 253 
+trimean 	 252.375 
+stddev 		 18.46766 
+IQR 		 21.5 
+mad 		 20.7564 
+SEM 		 5.56821 
+MeanOverSEM 	 45.01202 
+LogMeanOverSEM 	 1.653329 
+
+===  docsize 500 berid 50 copies 10 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+   8 | 67
+   9 | 156
+  10 | 05778
+  11 | 1
+
+     docsize 500 berid 50 copies 10 
+mean 		 99.36364 
+midmean 	 100.1429 
+median 		 100 
+trimean 	 100 
+stddev 		 8.891262 
+IQR 		 14 
+mad 		 10.3782 
+SEM 		 2.680816 
+MeanOverSEM 	 37.06469 
+LogMeanOverSEM 	 1.56896 
+
+===  docsize 500 berid 50 copies 14 
+
+  The decimal point is at the |
+
+  12 | 0
+  14 | 000
+  16 | 000
+  18 | 00
+  20 | 00
+
+     docsize 500 berid 50 copies 14 
+mean 		 16.72727 
+midmean 	 16.57143 
+median 		 16 
+trimean 	 16.5 
+stddev 		 2.611165 
+IQR 		 4 
+mad 		 2.9652 
+SEM 		 0.7872958 
+MeanOverSEM 	 21.24649 
+LogMeanOverSEM 	 1.327287 
+
+===  docsize 500 berid 50 copies 16 
+
+  The decimal point is at the |
+
+  4 | 00
+  6 | 000
+  8 | 000000
+
+     docsize 500 berid 50 copies 16 
+mean 		 7.363636 
+midmean 	 7.714286 
+median 		 8 
+trimean 	 7.875 
+stddev 		 1.747726 
+IQR 		 2.5 
+mad 		 1.4826 
+SEM 		 0.5269592 
+MeanOverSEM 	 13.97383 
+LogMeanOverSEM 	 1.145315 
+
+===  docsize 500 berid 50 copies 20 
+
+  The decimal point is at the |
+
+  0 | 0000
+  1 | 000
+  2 | 000
+  3 | 0
+
+     docsize 500 berid 50 copies 20 
+mean 		 1.090909 
+midmean 	 1 
+median 		 1 
+trimean 	 1 
+stddev 		 1.044466 
+IQR 		 2 
+mad 		 1.4826 
+SEM 		 0.3149183 
+MeanOverSEM 	 3.464102 
+LogMeanOverSEM 	 0.5395906 
+
+===  docsize 500 berid 100 copies 1 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  38 | 6
+  39 | 01134
+  39 | 5779
+  40 | 1
+
+     docsize 500 berid 100 copies 1 
+mean 		 3938.455 
+midmean 	 3938.143 
+median 		 3936 
+trimean 	 3937.375 
+stddev 		 43.14479 
+IQR 		 62.5 
+mad 		 45.9606 
+SEM 		 13.00864 
+MeanOverSEM 	 302.7568 
+LogMeanOverSEM 	 2.481094 
+
+===  docsize 500 berid 100 copies 2 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  150 | 155
+  152 | 119
+  154 | 83
+  156 | 17
+  158 | 9
+
+     docsize 500 berid 100 copies 2 
+mean 		 1540.909 
+midmean 	 1539.714 
+median 		 1539 
+trimean 	 1539.5 
+stddev 		 25.94014 
+IQR 		 34 
+mad 		 32.6172 
+SEM 		 7.821247 
+MeanOverSEM 	 197.0158 
+LogMeanOverSEM 	 2.294501 
+
+===  docsize 500 berid 100 copies 3 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  56 | 6
+  58 | 1
+  60 | 57924
+  62 | 239
+  64 | 2
+
+     docsize 500 berid 100 copies 3 
+mean 		 611.8182 
+midmean 	 613.1429 
+median 		 612 
+trimean 	 613.125 
+stddev 		 17.98231 
+IQR 		 16.5 
+mad 		 14.826 
+SEM 		 5.421872 
+MeanOverSEM 	 112.8426 
+LogMeanOverSEM 	 2.052473 
+
+===  docsize 500 berid 100 copies 4 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  22 | 9
+  23 | 1
+  24 | 13349
+  25 | 0029
+
+     docsize 500 berid 100 copies 4 
+mean 		 244.6364 
+midmean 	 245.7143 
+median 		 244 
+trimean 	 245 
+stddev 		 8.86874 
+IQR 		 8 
+mad 		 8.8956 
+SEM 		 2.674026 
+MeanOverSEM 	 91.48617 
+LogMeanOverSEM 	 1.961355 
+
+===  docsize 500 berid 100 copies 5 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+   7 | 7
+   8 | 
+   8 | 589
+   9 | 034
+   9 | 67
+  10 | 01
+
+     docsize 500 berid 100 copies 5 
+mean 		 91.81818 
+midmean 	 92.42857 
+median 		 93 
+trimean 	 92.75 
+stddev 		 7.025926 
+IQR 		 8 
+mad 		 5.9304 
+SEM 		 2.118396 
+MeanOverSEM 	 43.34325 
+LogMeanOverSEM 	 1.636921 
+
+===  docsize 500 berid 100 copies 8 
+
+  The decimal point is at the |
+
+  0 | 0
+  2 | 0
+  4 | 000000
+  6 | 000
+
+     docsize 500 berid 100 copies 8 
+mean 		 4.363636 
+midmean 	 4.571429 
+median 		 4 
+trimean 	 4.375 
+stddev 		 1.501514 
+IQR 		 1.5 
+mad 		 1.4826 
+SEM 		 0.4527236 
+MeanOverSEM 	 9.638632 
+LogMeanOverSEM 	 0.9840154 
+
+===  docsize 500 berid 100 copies 10 
+
+  The decimal point is at the |
+
+  0 | 0000000
+  0 | 
+  1 | 0
+  1 | 
+  2 | 000
+
+     docsize 500 berid 100 copies 10 
+mean 		 0.6363636 
+midmean 	 0.4285714 
+median 		 0 
+trimean 	 0.375 
+stddev 		 0.9244163 
+IQR 		 1.5 
+mad 		 0 
+SEM 		 0.278722 
+MeanOverSEM 	 2.283148 
+LogMeanOverSEM 	 0.3585341 
+
+===  docsize 500 berid 200 copies 1 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  21 | 7888999
+  22 | 01
+  22 | 6
+  23 | 2
+
+     docsize 500 berid 200 copies 1 
+mean 		 2205.636 
+midmean 	 2191.714 
+median 		 2189 
+trimean 	 2191.5 
+stddev 		 43.55289 
+IQR 		 26 
+mad 		 16.3086 
+SEM 		 13.13169 
+MeanOverSEM 	 167.9629 
+LogMeanOverSEM 	 2.225213 
+
+===  docsize 500 berid 200 copies 2 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  44 | 1
+  46 | 47
+  48 | 258025
+  50 | 27
+
+     docsize 500 berid 200 copies 2 
+mean 		 486.6364 
+midmean 	 487 
+median 		 488 
+trimean 	 487.25 
+stddev 		 18.91176 
+IQR 		 14 
+mad 		 10.3782 
+SEM 		 5.702109 
+MeanOverSEM 	 85.34322 
+LogMeanOverSEM 	 1.931169 
+
+===  docsize 500 berid 200 copies 3 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+   9 | 27
+  10 | 15689
+  11 | 145
+  12 | 4
+
+     docsize 500 berid 200 copies 3 
+mean 		 107.4545 
+midmean 	 107.7143 
+median 		 108 
+trimean 	 107.875 
+stddev 		 8.869765 
+IQR 		 9.5 
+mad 		 8.8956 
+SEM 		 2.674335 
+MeanOverSEM 	 40.17992 
+LogMeanOverSEM 	 1.604009 
+
+===  docsize 500 berid 200 copies 4 
+
+  The decimal point is at the |
+
+  20 | 00
+  22 | 0000
+  24 | 0
+  26 | 000
+  28 | 0
+
+     docsize 500 berid 200 copies 4 
+mean 		 24.09091 
+midmean 	 24.14286 
+median 		 23 
+trimean 	 23.875 
+stddev 		 2.736953 
+IQR 		 4.5 
+mad 		 2.9652 
+SEM 		 0.8252222 
+MeanOverSEM 	 29.19324 
+LogMeanOverSEM 	 1.465282 
+
+===  docsize 500 berid 200 copies 5 
+
+  The decimal point is at the |
+
+  2 | 00
+  4 | 00000
+  6 | 00
+  8 | 00
+
+     docsize 500 berid 200 copies 5 
+mean 		 5 
+midmean 	 5 
+median 		 5 
+trimean 	 5 
+stddev 		 2 
+IQR 		 2 
+mad 		 1.4826 
+SEM 		 0.6030227 
+MeanOverSEM 	 8.291562 
+LogMeanOverSEM 	 0.9186364 
+
+===  docsize 500 berid 200 copies 8 
+
+  The decimal point is at the |
+
+  0 | 0000000000
+  0 | 
+  1 | 0
+
+     docsize 500 berid 200 copies 8 
+mean 		 0.09090909 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0.3015113 
+IQR 		 0 
+mad 		 0 
+SEM 		 0.09090909 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 0 
+
+===  docsize 500 berid 300 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  146 | 4
+  148 | 
+  150 | 4226
+  152 | 06
+  154 | 1
+  156 | 472
+
+     docsize 500 berid 300 copies 1 
+mean 		 1529.818 
+midmean 	 1530.143 
+median 		 1530 
+trimean 	 1531.125 
+stddev 		 30.16892 
+IQR 		 40.5 
+mad 		 26.6868 
+SEM 		 9.096271 
+MeanOverSEM 	 168.1808 
+LogMeanOverSEM 	 2.225776 
+
+===  docsize 500 berid 300 copies 2 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  20 | 9
+  21 | 4
+  22 | 5789
+  23 | 9
+  24 | 25
+  25 | 56
+
+     docsize 500 berid 300 copies 2 
+mean 		 233.5455 
+midmean 	 233.5714 
+median 		 229 
+trimean 	 231.875 
+stddev 		 15.32556 
+IQR 		 17.5 
+mad 		 19.2738 
+SEM 		 4.62083 
+MeanOverSEM 	 50.54189 
+LogMeanOverSEM 	 1.703651 
+
+===  docsize 500 berid 300 copies 3 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  2 | 556
+  3 | 0
+  3 | 5777
+  4 | 00
+  4 | 6
+
+     docsize 500 berid 300 copies 3 
+mean 		 34.36364 
+midmean 	 34.57143 
+median 		 37 
+trimean 	 35.125 
+stddev 		 6.96093 
+IQR 		 10.5 
+mad 		 4.4478 
+SEM 		 2.098799 
+MeanOverSEM 	 16.373 
+LogMeanOverSEM 	 1.214128 
+
+===  docsize 500 berid 300 copies 4 
+
+  The decimal point is at the |
+
+  0 | 0
+  2 | 
+  4 | 0
+  6 | 0000
+  8 | 00000
+
+     docsize 500 berid 300 copies 4 
+mean 		 6.636364 
+midmean 	 7.142857 
+median 		 7 
+trimean 	 7 
+stddev 		 2.203303 
+IQR 		 2 
+mad 		 1.4826 
+SEM 		 0.6643209 
+MeanOverSEM 	 9.989695 
+LogMeanOverSEM 	 0.9995522 
+
+===  docsize 500 berid 300 copies 5 
+
+  The decimal point is at the |
+
+  0 | 0000
+  0 | 
+  1 | 000000
+  1 | 
+  2 | 0
+
+     docsize 500 berid 300 copies 5 
+mean 		 0.7272727 
+midmean 	 0.7142857 
+median 		 1 
+trimean 	 0.75 
+stddev 		 0.6466698 
+IQR 		 1 
+mad 		 0 
+SEM 		 0.1949783 
+MeanOverSEM 	 3.730019 
+LogMeanOverSEM 	 0.5717111 
+
+===  docsize 500 berid 300 copies 8 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 500 berid 300 copies 8 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 500 berid 500 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  88 | 9
+  90 | 9
+  92 | 57
+  94 | 159
+  96 | 693
+  98 | 4
+
+     docsize 500 berid 500 copies 1 
+mean 		 947 
+midmean 	 950.2857 
+median 		 945 
+trimean 	 948.375 
+stddev 		 27.32398 
+IQR 		 31.5 
+mad 		 31.1346 
+SEM 		 8.238491 
+MeanOverSEM 	 114.9482 
+LogMeanOverSEM 	 2.060502 
+
+===  docsize 500 berid 500 copies 2 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  7 | 789
+  8 | 3
+  8 | 7
+  9 | 0124
+  9 | 55
+
+     docsize 500 berid 500 copies 2 
+mean 		 87.36364 
+midmean 	 88 
+median 		 90 
+trimean 	 88.5 
+stddev 		 6.975281 
+IQR 		 12 
+mad 		 7.413 
+SEM 		 2.103126 
+MeanOverSEM 	 41.53989 
+LogMeanOverSEM 	 1.618465 
+
+===  docsize 500 berid 500 copies 3 
+
+  The decimal point is at the |
+
+   4 | 000
+   6 | 00
+   8 | 00
+  10 | 0000
+
+     docsize 500 berid 500 copies 3 
+mean 		 7.909091 
+midmean 	 8.142857 
+median 		 8 
+trimean 	 8.125 
+stddev 		 2.736953 
+IQR 		 4.5 
+mad 		 4.4478 
+SEM 		 0.8252222 
+MeanOverSEM 	 9.584195 
+LogMeanOverSEM 	 0.9815556 
+
+===  docsize 500 berid 500 copies 4 
+
+  The decimal point is at the |
+
+  0 | 000
+  1 | 000
+  2 | 000
+  3 | 0
+  4 | 0
+
+     docsize 500 berid 500 copies 4 
+mean 		 1.454545 
+midmean 	 1.285714 
+median 		 1 
+trimean 	 1.125 
+stddev 		 1.29334 
+IQR 		 1.5 
+mad 		 1.4826 
+SEM 		 0.3899566 
+MeanOverSEM 	 3.730019 
+LogMeanOverSEM 	 0.5717111 
+
+===  docsize 500 berid 500 copies 5 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 500 berid 500 copies 5 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 500 berid 1000 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  46 | 67
+  47 | 25
+  48 | 
+  49 | 1334
+  50 | 278
+
+     docsize 500 berid 1000 copies 1 
+mean 		 488 
+midmean 	 488.5714 
+median 		 493 
+trimean 	 489.375 
+stddev 		 15.49839 
+IQR 		 24.5 
+mad 		 20.7564 
+SEM 		 4.67294 
+MeanOverSEM 	 104.4311 
+LogMeanOverSEM 	 2.01883 
+
+===  docsize 500 berid 1000 copies 2 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  1 | 889
+  2 | 1114
+  2 | 78
+  3 | 1
+  3 | 7
+
+     docsize 500 berid 1000 copies 2 
+mean 		 24.09091 
+midmean 	 23 
+median 		 21 
+trimean 	 22.375 
+stddev 		 6.057302 
+IQR 		 7.5 
+mad 		 4.4478 
+SEM 		 1.826345 
+MeanOverSEM 	 13.19077 
+LogMeanOverSEM 	 1.12027 
+
+===  docsize 500 berid 1000 copies 3 
+
+  The decimal point is at the |
+
+  0 | 0000000000
+  2 | 
+  4 | 0
+
+     docsize 500 berid 1000 copies 3 
+mean 		 0.9090909 
+midmean 	 0.5714286 
+median 		 1 
+trimean 	 0.75 
+stddev 		 1.445998 
+IQR 		 1 
+mad 		 1.4826 
+SEM 		 0.4359847 
+MeanOverSEM 	 2.085144 
+LogMeanOverSEM 	 0.3191361 
+
+===  docsize 500 berid 1000 copies 4 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 500 berid 1000 copies 4 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 500 berid 2000 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  22 | 3
+  23 | 8
+  24 | 4777
+  25 | 117
+  26 | 24
+
+     docsize 500 berid 2000 copies 1 
+mean 		 248.2727 
+midmean 	 249.1429 
+median 		 247 
+trimean 	 248.375 
+stddev 		 11.37621 
+IQR 		 8.5 
+mad 		 5.9304 
+SEM 		 3.430057 
+MeanOverSEM 	 72.38152 
+LogMeanOverSEM 	 1.859628 
+
+===  docsize 500 berid 2000 copies 2 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 24
+  0 | 66789
+  1 | 0034
+
+     docsize 500 berid 2000 copies 2 
+mean 		 8.090909 
+midmean 	 8 
+median 		 8 
+trimean 	 8 
+stddev 		 3.618136 
+IQR 		 4 
+mad 		 2.9652 
+SEM 		 1.090909 
+MeanOverSEM 	 7.416667 
+LogMeanOverSEM 	 0.8702088 
+
+===  docsize 500 berid 2000 copies 3 
+
+  The decimal point is at the |
+
+  0 | 000000000
+  0 | 
+  1 | 0
+  1 | 
+  2 | 0
+
+     docsize 500 berid 2000 copies 3 
+mean 		 0.2727273 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0.6466698 
+IQR 		 0 
+mad 		 0 
+SEM 		 0.1949783 
+MeanOverSEM 	 1.398757 
+LogMeanOverSEM 	 0.1457423 
+
+===  docsize 500 berid 2000 copies 4 
+     docsize 500 berid 2000 copies 4 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 NA 
+IQR 		 0 
+mad 		 0 
+SEM 		 NA 
+MeanOverSEM 	 NA 
+LogMeanOverSEM 	 NA 
+
+===  docsize 500 berid 3000 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  15 | 88
+  16 | 2266
+  17 | 1246
+  18 | 9
+
+     docsize 500 berid 3000 copies 1 
+mean 		 168.5455 
+midmean 	 167.5714 
+median 		 166 
+trimean 	 166.75 
+stddev 		 9.180018 
+IQR 		 11 
+mad 		 8.8956 
+SEM 		 2.76788 
+MeanOverSEM 	 60.89335 
+LogMeanOverSEM 	 1.78457 
+
+===  docsize 500 berid 3000 copies 2 
+
+  The decimal point is at the |
+
+  0 | 000
+  2 | 000
+  4 | 0000
+  6 | 
+  8 | 0
+
+     docsize 500 berid 3000 copies 2 
+mean 		 3.272727 
+midmean 	 3 
+median 		 3 
+trimean 	 3 
+stddev 		 2.533413 
+IQR 		 3 
+mad 		 2.9652 
+SEM 		 0.7638528 
+MeanOverSEM 	 4.2845 
+LogMeanOverSEM 	 0.6319002 
+
+===  docsize 500 berid 3000 copies 3 
+
+  The decimal point is at the |
+
+  0 | 000000000
+  0 | 
+  1 | 0
+  1 | 
+  2 | 0
+
+     docsize 500 berid 3000 copies 3 
+mean 		 0.2727273 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0.6466698 
+IQR 		 0 
+mad 		 0 
+SEM 		 0.1949783 
+MeanOverSEM 	 1.398757 
+LogMeanOverSEM 	 0.1457423 
+
+===  docsize 500 berid 3000 copies 4 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 500 berid 3000 copies 4 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 500 berid 3000 copies 5 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 500 berid 3000 copies 5 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 500 berid 5000 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+   9 | 699
+  10 | 3
+  10 | 558999
+  11 | 1
+
+     docsize 500 berid 5000 copies 1 
+mean 		 104.8182 
+midmean 	 105.4286 
+median 		 105 
+trimean 	 105 
+stddev 		 4.996362 
+IQR 		 8 
+mad 		 5.9304 
+SEM 		 1.50646 
+MeanOverSEM 	 69.57914 
+LogMeanOverSEM 	 1.842479 
+
+===  docsize 500 berid 5000 copies 2 
+
+  The decimal point is at the |
+
+  0 | 0000
+  1 | 00
+  2 | 0000
+  3 | 
+  4 | 0
+
+     docsize 500 berid 5000 copies 2 
+mean 		 1.272727 
+midmean 	 1.142857 
+median 		 1 
+trimean 	 1 
+stddev 		 1.272078 
+IQR 		 2 
+mad 		 1.4826 
+SEM 		 0.3835459 
+MeanOverSEM 	 3.318318 
+LogMeanOverSEM 	 0.520918 
+
+===  docsize 500 berid 5000 copies 3 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 500 berid 5000 copies 3 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 500 berid 5000 copies 4 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 500 berid 5000 copies 4 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 500 berid 5000 copies 5 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 500 berid 5000 copies 5 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 5000 berid 100 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  992 | 04
+  992 | 8
+  993 | 4
+  993 | 5569
+  994 | 012
+
+     docsize 5000 berid 100 copies 1 
+mean 		 9934 
+midmean 	 9935.286 
+median 		 9935 
+trimean 	 9935.125 
+stddev 		 7.155418 
+IQR 		 8.5 
+mad 		 7.413 
+SEM 		 2.15744 
+MeanOverSEM 	 4604.532 
+LogMeanOverSEM 	 3.663186 
+
+===  docsize 5000 berid 100 copies 2 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  984 | 08
+  985 | 
+  986 | 1499
+  987 | 01467
+
+     docsize 5000 berid 100 copies 2 
+mean 		 9865.364 
+midmean 	 9868.286 
+median 		 9869 
+trimean 	 9868.25 
+stddev 		 11.69848 
+IQR 		 10 
+mad 		 7.413 
+SEM 		 3.527226 
+MeanOverSEM 	 2796.919 
+LogMeanOverSEM 	 3.44668 
+
+===  docsize 5000 berid 100 copies 3 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  977 | 56
+  978 | 66
+  979 | 018
+  980 | 126
+  981 | 
+  982 | 2
+
+     docsize 5000 berid 100 copies 3 
+mean 		 9793.909 
+midmean 	 9793.429 
+median 		 9791 
+trimean 	 9792.375 
+stddev 		 13.76557 
+IQR 		 15.5 
+mad 		 14.826 
+SEM 		 4.150475 
+MeanOverSEM 	 2359.708 
+LogMeanOverSEM 	 3.372858 
+
+===  docsize 5000 berid 100 copies 4 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  972 | 123069
+  974 | 589
+  976 | 0
+  978 | 1
+
+     docsize 5000 berid 100 copies 4 
+mean 		 9741.273 
+midmean 	 9738.571 
+median 		 9739 
+trimean 	 9738.25 
+stddev 		 18.23234 
+IQR 		 22 
+mad 		 14.826 
+SEM 		 5.497257 
+MeanOverSEM 	 1772.024 
+LogMeanOverSEM 	 3.24847 
+
+===  docsize 5000 berid 100 copies 5 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  962 | 48
+  964 | 
+  966 | 4179
+  968 | 01303
+
+     docsize 5000 berid 100 copies 5 
+mean 		 9671.818 
+midmean 	 9676.429 
+median 		 9679 
+trimean 	 9676.875 
+stddev 		 19.41555 
+IQR 		 14.5 
+mad 		 11.8608 
+SEM 		 5.854009 
+MeanOverSEM 	 1652.17 
+LogMeanOverSEM 	 3.218055 
+
+===  docsize 5000 berid 100 copies 8 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  94 | 2
+  94 | 6666789
+  95 | 013
+
+     docsize 5000 berid 100 copies 8 
+mean 		 9477.091 
+midmean 	 9475.429 
+median 		 9471 
+trimean 	 9474.375 
+stddev 		 28.5498 
+IQR 		 30.5 
+mad 		 16.3086 
+SEM 		 8.608088 
+MeanOverSEM 	 1100.952 
+LogMeanOverSEM 	 3.041768 
+
+===  docsize 5000 berid 100 copies 10 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  92 | 
+  93 | 03444
+  93 | 55566
+  94 | 0
+
+     docsize 5000 berid 100 copies 10 
+mean 		 9346 
+midmean 	 9346.143 
+median 		 9345 
+trimean 	 9346.125 
+stddev 		 24.94795 
+IQR 		 16.5 
+mad 		 11.8608 
+SEM 		 7.522089 
+MeanOverSEM 	 1242.474 
+LogMeanOverSEM 	 3.094287 
+
+===  docsize 5000 berid 100 copies 14 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  90 | 4
+  90 | 567999
+  91 | 1114
+
+     docsize 5000 berid 100 copies 14 
+mean 		 9087.636 
+midmean 	 9089.286 
+median 		 9093 
+trimean 	 9089.75 
+stddev 		 30.46399 
+IQR 		 40 
+mad 		 31.1346 
+SEM 		 9.185238 
+MeanOverSEM 	 989.3741 
+LogMeanOverSEM 	 2.995361 
+
+===  docsize 5000 berid 100 copies 16 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  89 | 14
+  89 | 5556677
+  90 | 02
+
+     docsize 5000 berid 100 copies 16 
+mean 		 8962.545 
+midmean 	 8960.714 
+median 		 8961 
+trimean 	 8961.5 
+stddev 		 29.53765 
+IQR 		 20 
+mad 		 14.826 
+SEM 		 8.905936 
+MeanOverSEM 	 1006.356 
+LogMeanOverSEM 	 3.002752 
+
+===  docsize 5000 berid 100 copies 20 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  870 | 5
+  872 | 030
+  874 | 45
+  876 | 131
+  878 | 8
+  880 | 1
+
+     docsize 5000 berid 100 copies 20 
+mean 		 8751 
+midmean 	 8749.571 
+median 		 8755 
+trimean 	 8750.875 
+stddev 		 29.79933 
+IQR 		 40.5 
+mad 		 37.065 
+SEM 		 8.984836 
+MeanOverSEM 	 973.9744 
+LogMeanOverSEM 	 2.988548 
+
+===  docsize 5000 berid 200 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  914 | 357
+  916 | 735
+  918 | 097
+  920 | 49
+
+     docsize 5000 berid 200 copies 1 
+mean 		 9179.909 
+midmean 	 9176.857 
+median 		 9175 
+trimean 	 9176.25 
+stddev 		 22.74403 
+IQR 		 31 
+mad 		 26.6868 
+SEM 		 6.857583 
+MeanOverSEM 	 1338.651 
+LogMeanOverSEM 	 3.126667 
+
+===  docsize 5000 berid 200 copies 2 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  83 | 8999
+  84 | 02224
+  84 | 59
+
+     docsize 5000 berid 200 copies 2 
+mean 		 8416.455 
+midmean 	 8412.286 
+median 		 8421 
+trimean 	 8415.375 
+stddev 		 32.84315 
+IQR 		 42.5 
+mad 		 40.0302 
+SEM 		 9.902583 
+MeanOverSEM 	 849.9251 
+LogMeanOverSEM 	 2.929381 
+
+===  docsize 5000 berid 200 copies 3 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  76 | 799
+  77 | 011244
+  77 | 69
+
+     docsize 5000 berid 200 copies 3 
+mean 		 7719.545 
+midmean 	 7715.857 
+median 		 7711 
+trimean 	 7714.5 
+stddev 		 34.42779 
+IQR 		 41 
+mad 		 35.5824 
+SEM 		 10.38037 
+MeanOverSEM 	 743.6677 
+LogMeanOverSEM 	 2.871379 
+
+===  docsize 5000 berid 200 copies 4 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  704 | 06
+  706 | 9
+  708 | 1176
+  710 | 4
+  712 | 058
+
+     docsize 5000 berid 200 copies 4 
+mean 		 7092.455 
+midmean 	 7092.571 
+median 		 7087 
+trimean 	 7091.5 
+stddev 		 31.69026 
+IQR 		 42 
+mad 		 40.0302 
+SEM 		 9.554974 
+MeanOverSEM 	 742.2788 
+LogMeanOverSEM 	 2.870567 
+
+===  docsize 5000 berid 200 copies 5 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  63 | 
+  64 | 04
+  64 | 679
+  65 | 033
+  65 | 566
+
+     docsize 5000 berid 200 copies 5 
+mean 		 6498.455 
+midmean 	 6504.714 
+median 		 6496 
+trimean 	 6499.875 
+stddev 		 53.56373 
+IQR 		 77.5 
+mad 		 57.8214 
+SEM 		 16.15007 
+MeanOverSEM 	 402.3793 
+LogMeanOverSEM 	 2.604636 
+
+===  docsize 5000 berid 200 copies 8 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  49 | 5777
+  50 | 122
+  50 | 5689
+
+     docsize 5000 berid 200 copies 8 
+mean 		 5017.636 
+midmean 	 5015 
+median 		 5018 
+trimean 	 5016.5 
+stddev 		 47.23827 
+IQR 		 84 
+mad 		 66.717 
+SEM 		 14.24288 
+MeanOverSEM 	 352.291 
+LogMeanOverSEM 	 2.546902 
+
+===  docsize 5000 berid 200 copies 10 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  41 | 89
+  42 | 2344
+  42 | 579
+  43 | 01
+
+     docsize 5000 berid 200 copies 10 
+mean 		 4247.818 
+midmean 	 4248.571 
+median 		 4240 
+trimean 	 4246.375 
+stddev 		 42.77106 
+IQR 		 54.5 
+mad 		 44.478 
+SEM 		 12.89596 
+MeanOverSEM 	 329.3914 
+LogMeanOverSEM 	 2.517712 
+
+===  docsize 5000 berid 200 copies 14 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  29 | 5899
+  30 | 3444
+  30 | 556
+
+     docsize 5000 berid 200 copies 14 
+mean 		 3020.727 
+midmean 	 3025.429 
+median 		 3038 
+trimean 	 3028 
+stddev 		 36.28523 
+IQR 		 56 
+mad 		 22.239 
+SEM 		 10.94041 
+MeanOverSEM 	 276.1073 
+LogMeanOverSEM 	 2.441078 
+
+===  docsize 5000 berid 200 copies 16 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  24 | 67
+  25 | 0224
+  25 | 55778
+
+     docsize 5000 berid 200 copies 16 
+mean 		 2528.364 
+midmean 	 2534.286 
+median 		 2537 
+trimean 	 2535.625 
+stddev 		 40.02068 
+IQR 		 51.5 
+mad 		 42.9954 
+SEM 		 12.06669 
+MeanOverSEM 	 209.5325 
+LogMeanOverSEM 	 2.321251 
+
+===  docsize 5000 berid 200 copies 20 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  176 | 489
+  178 | 262
+  180 | 895
+  182 | 
+  184 | 21
+
+     docsize 5000 berid 200 copies 20 
+mean 		 1799.636 
+midmean 	 1795.857 
+median 		 1792 
+trimean 	 1794.125 
+stddev 		 28.42278 
+IQR 		 31.5 
+mad 		 25.2042 
+SEM 		 8.569791 
+MeanOverSEM 	 209.9977 
+LogMeanOverSEM 	 2.322215 
+
+===  docsize 5000 berid 300 copies 1 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  80 | 8
+  81 | 01111244
+  81 | 6
+  82 | 0
+
+     docsize 5000 berid 300 copies 1 
+mean 		 8126.182 
+midmean 	 8121 
+median 		 8114 
+trimean 	 8119.5 
+stddev 		 30.75652 
+IQR 		 28 
+mad 		 16.3086 
+SEM 		 9.27344 
+MeanOverSEM 	 876.2856 
+LogMeanOverSEM 	 2.942646 
+
+===  docsize 5000 berid 300 copies 2 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  65 | 44
+  65 | 677789
+  66 | 14
+  66 | 
+  67 | 0
+
+     docsize 5000 berid 300 copies 2 
+mean 		 6587.455 
+midmean 	 6578 
+median 		 6574 
+trimean 	 6577.375 
+stddev 		 46.85801 
+IQR 		 31.5 
+mad 		 19.2738 
+SEM 		 14.12822 
+MeanOverSEM 	 466.2622 
+LogMeanOverSEM 	 2.66863 
+
+===  docsize 5000 berid 300 copies 3 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  52 | 3
+  52 | 58
+  53 | 0334
+  53 | 5569
+
+     docsize 5000 berid 300 copies 3 
+mean 		 5318 
+midmean 	 5323.429 
+median 		 5327 
+trimean 	 5321.875 
+stddev 		 49.86181 
+IQR 		 60.5 
+mad 		 44.478 
+SEM 		 15.0339 
+MeanOverSEM 	 353.7339 
+LogMeanOverSEM 	 2.548677 
+
+===  docsize 5000 berid 300 copies 4 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  42 | 6
+  43 | 22334
+  43 | 5567
+  44 | 0
+
+     docsize 5000 berid 300 copies 4 
+mean 		 4338.818 
+midmean 	 4340.429 
+median 		 4341 
+trimean 	 4340.75 
+stddev 		 35.64497 
+IQR 		 30 
+mad 		 26.6868 
+SEM 		 10.74736 
+MeanOverSEM 	 403.7101 
+LogMeanOverSEM 	 2.60607 
+
+===  docsize 5000 berid 300 copies 5 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  34 | 11
+  34 | 56789
+  35 | 1123
+
+     docsize 5000 berid 300 copies 5 
+mean 		 3475.273 
+midmean 	 3480.143 
+median 		 3481 
+trimean 	 3481.375 
+stddev 		 41.61031 
+IQR 		 54.5 
+mad 		 44.478 
+SEM 		 12.54598 
+MeanOverSEM 	 277.0029 
+LogMeanOverSEM 	 2.442484 
+
+===  docsize 5000 berid 300 copies 8 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  18 | 223
+  18 | 5666778
+  19 | 3
+
+     docsize 5000 berid 300 copies 8 
+mean 		 1858.727 
+midmean 	 1856.429 
+median 		 1859 
+trimean 	 1856.75 
+stddev 		 32.83928 
+IQR 		 30 
+mad 		 17.7912 
+SEM 		 9.901415 
+MeanOverSEM 	 187.7234 
+LogMeanOverSEM 	 2.273518 
+
+===  docsize 5000 berid 300 copies 10 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  11 | 8
+  12 | 0224
+  12 | 555679
+
+     docsize 5000 berid 300 copies 10 
+mean 		 1238.636 
+midmean 	 1241.714 
+median 		 1249 
+trimean 	 1243.375 
+stddev 		 31.99773 
+IQR 		 38.5 
+mad 		 29.652 
+SEM 		 9.647678 
+MeanOverSEM 	 128.387 
+LogMeanOverSEM 	 2.108521 
+
+===  docsize 5000 berid 300 copies 14 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  50 | 706
+  52 | 37823
+  54 | 48
+  56 | 0
+
+     docsize 5000 berid 300 copies 14 
+mean 		 531.6364 
+midmean 	 530.4286 
+median 		 528 
+trimean 	 529.75 
+stddev 		 18.52173 
+IQR 		 24 
+mad 		 17.7912 
+SEM 		 5.584512 
+MeanOverSEM 	 95.19835 
+LogMeanOverSEM 	 1.978629 
+
+===  docsize 5000 berid 300 copies 16 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  32 | 0
+  34 | 4929
+  36 | 69044
+  38 | 5
+
+     docsize 5000 berid 300 copies 16 
+mean 		 361.0909 
+midmean 	 362.7143 
+median 		 366 
+trimean 	 363.625 
+stddev 		 16.00909 
+IQR 		 21.5 
+mad 		 11.8608 
+SEM 		 4.826922 
+MeanOverSEM 	 74.8077 
+LogMeanOverSEM 	 1.873946 
+
+===  docsize 5000 berid 300 copies 20 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  12 | 5
+  13 | 69
+  14 | 228
+  15 | 02337
+
+     docsize 5000 berid 300 copies 20 
+mean 		 145.1818 
+midmean 	 146.5714 
+median 		 148 
+trimean 	 147.25 
+stddev 		 9.432054 
+IQR 		 12 
+mad 		 8.8956 
+SEM 		 2.843871 
+MeanOverSEM 	 51.05077 
+LogMeanOverSEM 	 1.708002 
+
+===  docsize 5000 berid 500 copies 1 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  62 | 78
+  63 | 223
+  63 | 56888
+  64 | 
+  64 | 5
+
+     docsize 5000 berid 500 copies 1 
+mean 		 6346.455 
+midmean 	 6347.571 
+median 		 6348 
+trimean 	 6348.875 
+stddev 		 50.52398 
+IQR 		 60.5 
+mad 		 42.9954 
+SEM 		 15.23355 
+MeanOverSEM 	 416.6102 
+LogMeanOverSEM 	 2.61973 
+
+===  docsize 5000 berid 500 copies 2 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  39 | 3
+  39 | 679
+  40 | 12233
+  40 | 5
+  41 | 0
+
+     docsize 5000 berid 500 copies 2 
+mean 		 4008.909 
+midmean 	 4009.143 
+median 		 4015 
+trimean 	 4010 
+stddev 		 47.61188 
+IQR 		 50 
+mad 		 38.5476 
+SEM 		 14.35552 
+MeanOverSEM 	 279.259 
+LogMeanOverSEM 	 2.446007 
+
+===  docsize 5000 berid 500 copies 3 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  24 | 4
+  24 | 9
+  25 | 0234
+  25 | 5568
+  26 | 2
+
+     docsize 5000 berid 500 copies 3 
+mean 		 2535 
+midmean 	 2536.571 
+median 		 2544 
+trimean 	 2539 
+stddev 		 47.59622 
+IQR 		 49 
+mad 		 41.5128 
+SEM 		 14.3508 
+MeanOverSEM 	 176.6452 
+LogMeanOverSEM 	 2.247102 
+
+===  docsize 5000 berid 500 copies 4 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  156 | 57
+  158 | 1
+  160 | 745
+  162 | 600
+  164 | 23
+
+     docsize 5000 berid 500 copies 4 
+mean 		 1612.727 
+midmean 	 1614.714 
+median 		 1615 
+trimean 	 1613.5 
+stddev 		 28.02174 
+IQR 		 36 
+mad 		 22.239 
+SEM 		 8.448874 
+MeanOverSEM 	 190.8807 
+LogMeanOverSEM 	 2.280762 
+
+===  docsize 5000 berid 500 copies 5 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+   9 | 5579
+  10 | 001114
+  10 | 6
+
+     docsize 5000 berid 500 copies 5 
+mean 		 999.1818 
+midmean 	 997.8571 
+median 		 997 
+trimean 	 996.625 
+stddev 		 33.5017 
+IQR 		 30.5 
+mad 		 22.239 
+SEM 		 10.10114 
+MeanOverSEM 	 98.91771 
+LogMeanOverSEM 	 1.995274 
+
+===  docsize 5000 berid 500 copies 8 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  22 | 5
+  23 | 6
+  24 | 28
+  25 | 123
+  26 | 03
+  27 | 03
+
+     docsize 5000 berid 500 copies 8 
+mean 		 252.0909 
+midmean 	 252.7143 
+median 		 252 
+trimean 	 252.625 
+stddev 		 14.32798 
+IQR 		 16.5 
+mad 		 14.826 
+SEM 		 4.320047 
+MeanOverSEM 	 58.35374 
+LogMeanOverSEM 	 1.766069 
+
+===  docsize 5000 berid 500 copies 10 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+   8 | 45
+   9 | 035
+  10 | 14677
+  11 | 1
+
+     docsize 5000 berid 500 copies 10 
+mean 		 98.45455 
+midmean 	 99.42857 
+median 		 101 
+trimean 	 100 
+stddev 		 9.490665 
+IQR 		 15 
+mad 		 8.8956 
+SEM 		 2.861543 
+MeanOverSEM 	 34.4061 
+LogMeanOverSEM 	 1.536635 
+
+===  docsize 5000 berid 500 copies 14 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  1 | 12344
+  1 | 5667
+  2 | 2
+  2 | 6
+
+     docsize 5000 berid 500 copies 14 
+mean 		 16 
+midmean 	 15 
+median 		 15 
+trimean 	 15 
+stddev 		 4.427189 
+IQR 		 3 
+mad 		 2.9652 
+SEM 		 1.334848 
+MeanOverSEM 	 11.98639 
+LogMeanOverSEM 	 1.078688 
+
+===  docsize 5000 berid 500 copies 16 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 2234
+  0 | 56678
+  1 | 02
+
+     docsize 5000 berid 500 copies 16 
+mean 		 5.909091 
+midmean 	 5.571429 
+median 		 6 
+trimean 	 5.75 
+stddev 		 3.207945 
+IQR 		 4 
+mad 		 2.9652 
+SEM 		 0.9672317 
+MeanOverSEM 	 6.109282 
+LogMeanOverSEM 	 0.7859901 
+
+===  docsize 5000 berid 500 copies 20 
+
+  The decimal point is at the |
+
+  0 | 0000000
+  0 | 
+  1 | 0000
+
+     docsize 5000 berid 500 copies 20 
+mean 		 0.3636364 
+midmean 	 0.2857143 
+median 		 0 
+trimean 	 0.25 
+stddev 		 0.504525 
+IQR 		 1 
+mad 		 0 
+SEM 		 0.15212 
+MeanOverSEM 	 2.390457 
+LogMeanOverSEM 	 0.378481 
+
+===  docsize 5000 berid 1000 copies 1 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  38 | 79
+  39 | 00134
+  39 | 779
+  40 | 
+  40 | 6
+
+     docsize 5000 berid 1000 copies 1 
+mean 		 3937.364 
+midmean 	 3929.571 
+median 		 3928 
+trimean 	 3930.375 
+stddev 		 56.66793 
+IQR 		 66.5 
+mad 		 54.8562 
+SEM 		 17.08602 
+MeanOverSEM 	 230.4435 
+LogMeanOverSEM 	 2.362565 
+
+===  docsize 5000 berid 1000 copies 2 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  14 | 9
+  15 | 24
+  15 | 5667789
+  16 | 0
+
+     docsize 5000 berid 1000 copies 2 
+mean 		 1556.273 
+midmean 	 1560.714 
+median 		 1563 
+trimean 	 1561.125 
+stddev 		 31.25409 
+IQR 		 37.5 
+mad 		 28.1694 
+SEM 		 9.423463 
+MeanOverSEM 	 165.1487 
+LogMeanOverSEM 	 2.217875 
+
+===  docsize 5000 berid 1000 copies 3 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  56 | 6
+  58 | 68
+  60 | 357824
+  62 | 09
+
+     docsize 5000 berid 1000 copies 3 
+mean 		 604.3636 
+midmean 	 605.2857 
+median 		 607 
+trimean 	 605.625 
+stddev 		 15.60303 
+IQR 		 17.5 
+mad 		 10.3782 
+SEM 		 4.704491 
+MeanOverSEM 	 128.4653 
+LogMeanOverSEM 	 2.108786 
+
+===  docsize 5000 berid 1000 copies 4 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  22 | 69
+  23 | 0
+  24 | 06
+  25 | 02349
+  26 | 5
+
+     docsize 5000 berid 1000 copies 4 
+mean 		 245.8182 
+midmean 	 246.4286 
+median 		 250 
+trimean 	 247.125 
+stddev 		 12.94464 
+IQR 		 18.5 
+mad 		 13.3434 
+SEM 		 3.902955 
+MeanOverSEM 	 62.98258 
+LogMeanOverSEM 	 1.79922 
+
+===  docsize 5000 berid 1000 copies 5 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+   7 | 8
+   8 | 789
+   9 | 0148
+  10 | 345
+
+     docsize 5000 berid 1000 copies 5 
+mean 		 93.36364 
+midmean 	 93.28571 
+median 		 91 
+trimean 	 92.75 
+stddev 		 8.393721 
+IQR 		 12 
+mad 		 5.9304 
+SEM 		 2.530802 
+MeanOverSEM 	 36.89093 
+LogMeanOverSEM 	 1.56692 
+
+===  docsize 5000 berid 1000 copies 8 
+
+  The decimal point is at the |
+
+  2 | 0
+  4 | 00000
+  6 | 000
+  8 | 00
+
+     docsize 5000 berid 1000 copies 8 
+mean 		 5.636364 
+midmean 	 5.428571 
+median 		 5 
+trimean 	 5.25 
+stddev 		 1.804036 
+IQR 		 2 
+mad 		 1.4826 
+SEM 		 0.5439373 
+MeanOverSEM 	 10.36216 
+LogMeanOverSEM 	 1.01545 
+
+===  docsize 5000 berid 1000 copies 10 
+
+  The decimal point is at the |
+
+  0 | 000
+  1 | 00000
+  2 | 00
+  3 | 0
+
+     docsize 5000 berid 1000 copies 10 
+mean 		 1.090909 
+midmean 	 1 
+median 		 1 
+trimean 	 1 
+stddev 		 0.9438798 
+IQR 		 1 
+mad 		 1.4826 
+SEM 		 0.2845905 
+MeanOverSEM 	 3.833259 
+LogMeanOverSEM 	 0.5835682 
+
+===  docsize 5000 berid 1000 copies 14 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 5000 berid 1000 copies 14 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 5000 berid 2000 copies 1 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  21 | 8
+  22 | 001112234
+  22 | 9
+
+     docsize 5000 berid 2000 copies 1 
+mean 		 2217.636 
+midmean 	 2213.143 
+median 		 2211 
+trimean 	 2212.5 
+stddev 		 29.90074 
+IQR 		 23 
+mad 		 22.239 
+SEM 		 9.015414 
+MeanOverSEM 	 245.9828 
+LogMeanOverSEM 	 2.390905 
+
+===  docsize 5000 berid 2000 copies 2 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  44 | 6
+  46 | 232
+  48 | 7800
+  50 | 0
+  52 | 4
+  54 | 5
+
+     docsize 5000 berid 2000 copies 2 
+mean 		 488.8182 
+midmean 	 484.2857 
+median 		 488 
+trimean 	 484.625 
+stddev 		 26.96597 
+IQR 		 27.5 
+mad 		 23.7216 
+SEM 		 8.130546 
+MeanOverSEM 	 60.1212 
+LogMeanOverSEM 	 1.779028 
+
+===  docsize 5000 berid 2000 copies 3 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+   9 | 4679
+  10 | 456
+  11 | 278
+  12 | 1
+
+     docsize 5000 berid 2000 copies 3 
+mean 		 106.2727 
+midmean 	 105.7143 
+median 		 105 
+trimean 	 105.625 
+stddev 		 9.508848 
+IQR 		 16.5 
+mad 		 11.8608 
+SEM 		 2.867025 
+MeanOverSEM 	 37.06724 
+LogMeanOverSEM 	 1.56899 
+
+===  docsize 5000 berid 2000 copies 4 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  1 | 7
+  2 | 012344
+  2 | 66
+  3 | 
+  3 | 58
+
+     docsize 5000 berid 2000 copies 4 
+mean 		 25.09091 
+midmean 	 23.71429 
+median 		 24 
+trimean 	 23.875 
+stddev 		 6.252272 
+IQR 		 4.5 
+mad 		 2.9652 
+SEM 		 1.885131 
+MeanOverSEM 	 13.3099 
+LogMeanOverSEM 	 1.124175 
+
+===  docsize 5000 berid 2000 copies 5 
+
+  The decimal point is at the |
+
+  2 | 00
+  4 | 00000
+  6 | 00
+  8 | 00
+
+     docsize 5000 berid 2000 copies 5 
+mean 		 5.545455 
+midmean 	 5.428571 
+median 		 5 
+trimean 	 5.375 
+stddev 		 1.967925 
+IQR 		 2.5 
+mad 		 2.9652 
+SEM 		 0.5933516 
+MeanOverSEM 	 9.345984 
+LogMeanOverSEM 	 0.970625 
+
+===  docsize 5000 berid 2000 copies 8 
+
+  The decimal point is at the |
+
+  0 | 000000000
+  0 | 
+  1 | 00
+
+     docsize 5000 berid 2000 copies 8 
+mean 		 0.1818182 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0.4045199 
+IQR 		 0 
+mad 		 0 
+SEM 		 0.1219673 
+MeanOverSEM 	 1.490712 
+LogMeanOverSEM 	 0.1733937 
+
+===  docsize 5000 berid 3000 copies 1 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  15 | 01224
+  15 | 56889
+  16 | 1
+
+     docsize 5000 berid 3000 copies 1 
+mean 		 1550.455 
+midmean 	 1547.714 
+median 		 1551 
+trimean 	 1548.625 
+stddev 		 35.56786 
+IQR 		 60.5 
+mad 		 51.891 
+SEM 		 10.72411 
+MeanOverSEM 	 144.5765 
+LogMeanOverSEM 	 2.160098 
+
+===  docsize 5000 berid 3000 copies 2 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  23 | 005
+  24 | 024567
+  25 | 
+  26 | 12
+
+     docsize 5000 berid 3000 copies 2 
+mean 		 243.8182 
+midmean 	 242.7143 
+median 		 244 
+trimean 	 243 
+stddev 		 10.58129 
+IQR 		 9 
+mad 		 5.9304 
+SEM 		 3.190378 
+MeanOverSEM 	 76.42297 
+LogMeanOverSEM 	 1.883224 
+
+===  docsize 5000 berid 3000 copies 3 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  2 | 9
+  3 | 23334
+  3 | 7
+  4 | 233
+  4 | 7
+
+     docsize 5000 berid 3000 copies 3 
+mean 		 36.90909 
+midmean 	 36.42857 
+median 		 34 
+trimean 	 35.875 
+stddev 		 5.855844 
+IQR 		 9.5 
+mad 		 4.4478 
+SEM 		 1.765603 
+MeanOverSEM 	 20.90452 
+LogMeanOverSEM 	 1.32024 
+
+===  docsize 5000 berid 3000 copies 4 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 23
+  0 | 5555566
+  1 | 02
+
+     docsize 5000 berid 3000 copies 4 
+mean 		 5.818182 
+midmean 	 5.285714 
+median 		 5 
+trimean 	 5.25 
+stddev 		 2.857208 
+IQR 		 1 
+mad 		 1.4826 
+SEM 		 0.8614806 
+MeanOverSEM 	 6.753701 
+LogMeanOverSEM 	 0.8295418 
+
+===  docsize 5000 berid 3000 copies 5 
+
+  The decimal point is at the |
+
+  0 | 00000
+  0 | 
+  1 | 0000
+  1 | 
+  2 | 00
+
+     docsize 5000 berid 3000 copies 5 
+mean 		 0.7272727 
+midmean 	 0.5714286 
+median 		 1 
+trimean 	 0.75 
+stddev 		 0.7862454 
+IQR 		 1 
+mad 		 1.4826 
+SEM 		 0.2370619 
+MeanOverSEM 	 3.06786 
+LogMeanOverSEM 	 0.4868355 
+
+===  docsize 5000 berid 5000 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+   92 | 27
+   94 | 377
+   96 | 792
+   98 | 56
+  100 | 6
+
+     docsize 5000 berid 5000 copies 1 
+mean 		 963.7273 
+midmean 	 962.8571 
+median 		 967 
+trimean 	 964.375 
+stddev 		 23.06118 
+IQR 		 33.5 
+mad 		 28.1694 
+SEM 		 6.953208 
+MeanOverSEM 	 138.6018 
+LogMeanOverSEM 	 2.141769 
+
+===  docsize 5000 berid 5000 copies 2 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+   8 | 36
+   9 | 13667
+  10 | 05
+  11 | 00
+
+     docsize 5000 berid 5000 copies 2 
+mean 		 97 
+midmean 	 96.85714 
+median 		 96 
+trimean 	 96.625 
+stddev 		 8.843076 
+IQR 		 10.5 
+mad 		 7.413 
+SEM 		 2.666288 
+MeanOverSEM 	 36.38017 
+LogMeanOverSEM 	 1.560865 
+
+===  docsize 5000 berid 5000 copies 3 
+
+  The decimal point is at the |
+
+   6 | 000
+   8 | 000000
+  10 | 00
+
+     docsize 5000 berid 5000 copies 3 
+mean 		 8.363636 
+midmean 	 8.285714 
+median 		 8 
+trimean 	 8.125 
+stddev 		 1.433369 
+IQR 		 1.5 
+mad 		 1.4826 
+SEM 		 0.4321769 
+MeanOverSEM 	 19.35235 
+LogMeanOverSEM 	 1.286734 
+
+===  docsize 5000 berid 5000 copies 4 
+
+  The decimal point is at the |
+
+  0 | 00000
+  0 | 
+  1 | 000000
+
+     docsize 5000 berid 5000 copies 4 
+mean 		 0.5454545 
+midmean 	 0.5714286 
+median 		 1 
+trimean 	 0.75 
+stddev 		 0.522233 
+IQR 		 1 
+mad 		 0 
+SEM 		 0.1574592 
+MeanOverSEM 	 3.464102 
+LogMeanOverSEM 	 0.5395906 
+
+===  docsize 5000 berid 5000 copies 5 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 5000 berid 5000 copies 5 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 5000 berid 10000 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  46 | 5359
+  48 | 7345
+  50 | 6
+  52 | 09
+
+     docsize 5000 berid 10000 copies 1 
+mean 		 492.3636 
+midmean 	 489.8571 
+median 		 493 
+trimean 	 490.875 
+stddev 		 19.83569 
+IQR 		 23.5 
+mad 		 20.7564 
+SEM 		 5.980685 
+MeanOverSEM 	 82.32562 
+LogMeanOverSEM 	 1.915535 
+
+===  docsize 5000 berid 10000 copies 2 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  2 | 2223344
+  2 | 69
+  3 | 12
+
+     docsize 5000 berid 10000 copies 2 
+mean 		 25.27273 
+midmean 	 24.42857 
+median 		 24 
+trimean 	 24.5 
+stddev 		 3.717282 
+IQR 		 5 
+mad 		 2.9652 
+SEM 		 1.120803 
+MeanOverSEM 	 22.54878 
+LogMeanOverSEM 	 1.353123 
+
+===  docsize 5000 berid 10000 copies 3 
+
+  The decimal point is at the |
+
+  0 | 0
+  1 | 00000
+  2 | 0000
+  3 | 0
+
+     docsize 5000 berid 10000 copies 3 
+mean 		 1.454545 
+midmean 	 1.428571 
+median 		 1 
+trimean 	 1.25 
+stddev 		 0.8201995 
+IQR 		 1 
+mad 		 1.4826 
+SEM 		 0.2472995 
+MeanOverSEM 	 5.881717 
+LogMeanOverSEM 	 0.7695041 
+
+===  docsize 5000 berid 10000 copies 4 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 5000 berid 10000 copies 4 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 5000 berid 10000 copies 5 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 5000 berid 10000 copies 5 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
