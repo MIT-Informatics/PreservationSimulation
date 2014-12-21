@@ -71,7 +71,8 @@ class CAudit2(object):
         # so that client audit cycles are not synchronized,
         # like Ethernet collision retry waits. 
         nRandTime = util.makeunif(0,mynCycleInterval/20)
-        yield G.env.timeout(nRandTime)
+# No, not any more.
+#        yield G.env.timeout(nRandTime)
         # And now wait for one segment interval before starting the first segment.
         #  Seems odd, but consider an annual audit in quarterly segments:
         #  you don't want to wait a whole year before starting quarterly audits; 
@@ -111,13 +112,14 @@ class CAudit2(object):
             tSegmentStartTime = G.env.now
             nSegmentInterval = self.mCalcSegmentInterval(mynCycleInterval,mynSegments)
             bLastSegment = (iThisSegment == mynSegments-1)
-            
+
             self.lDocsThisSegment = self.mIdentifySegment(mysCollectionID,mynSegments,iThisSegment)
             eSyncEvent = G.env.event()
             G.env.process(self.mAuditSegment(iThisSegment,self.lDocsThisSegment,mysCollectionID,eSyncEvent))
             # Wait for completion of segment and its allotted time.
             yield eSyncEvent
             tNextSegmentStartTime = tSegmentStartTime + nSegmentInterval
+            TRC.tracef(3,"AUD2","proc AuditCollection1 now|%s| tstart|%s| tnext|%s| tinterval|%s| blastseg|%s|" % (G.env.now,tSegmentStartTime,tNextSegmentStartTime,nSegmentInterval,bLastSegment))
             yield G.env.timeout(tNextSegmentStartTime - G.env.now)
         
         fTimeCycleEnd = G.env.now
@@ -167,6 +169,7 @@ class CAudit2(object):
                     # If not, then record that doc damaged on this server. 
                     fTransferTime = self.mRetrieveDoc(sDocID,sServerID)
                     if fTransferTime:
+                        TRC.tracef(3,"AUD2","proc AuditSegment3 retrieve t|%10.3f| doc|%s| svr|%s| xfrtim|%f|" % (G.env.now,sDocID,sServerID,fTransferTime))
                         yield G.env.timeout(fTransferTime)
                     else:
                         # If copy is missing here, save server in lost-list for doc.
@@ -189,6 +192,10 @@ class CAudit2(object):
             #  greater than two, but one copy remaining out of two is judged 
             #  to be a majority, so a repair from that single remaining copy
             #  is labeled a majority repair.  Seems kinda wrong.  
+            # Would love to split the logic of this routine into separate
+            #  functions; when you're indented seven levels, your logic is,
+            #  um, hard to explain.  But cannot yield from sub-functions, 
+            #  at least not in Python2.  
             nServers = len(cCollection.lServerIDs)
             nMajority = (len(cCollection.lServerIDs)+1) / 2     # int divide truncates
             # foreach doc with any losses
@@ -224,6 +231,7 @@ class CAudit2(object):
                         # Put a copy back on each server where it is missing.  
                         for sServerID in lDocLostOnServers:
                             fTransferTime = self.mRepairDoc(sDocID,sServerID)
+                            TRC.tracef(3,"AUD2","proc AuditSegment4 repair t|%10.3f| doc|%s| svr|%s| xfrtim|%f|" % (G.env.now,sDocID,sServerID,fTransferTime))
                             yield G.env.timeout(fTransferTime)
                             lg.logInfo("AUDIT2","repair doc  t|%10.3f| auditid|%s| cli|%s| coll|%s| svr|%s| doc|%s| from copies|%d|" % (G.env.now,self.ID,self.sClientID,self.sCollectionID,sServerID,sDocID,nCopiesLeft))
 
@@ -553,6 +561,8 @@ class CAudit_Uniform(CAudit):
         cCollection = G.dID2Collection[mysCollectionID]
         lDocIDsRemaining = cCollection.mListDocumentsRemaining()
         nDocsRemaining = len(lDocIDsRemaining)
+        # Beware the case where there are fewer docs remaining alive
+        #  than are normally called for in the segment.  
         nDocsMaybe = min( 
                         self.mCalcSegmentSize(mysCollectionID,mynSegments), 
                         nDocsRemaining
@@ -800,6 +810,9 @@ TODO (x=done):
 #                uniform without replacement.  
 #               One-plus logging around network grab-release to include
 #                segment number.  
+# 20141217  RBL Remove offset time before beginning audit cycles.
+#                Since there is only one client, one collection, 
+#                one audit, it seems superfluous.  
 # 
 
 

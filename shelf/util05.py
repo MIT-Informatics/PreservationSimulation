@@ -66,7 +66,7 @@ def fnnCalcDocSize(mynLevel):
         nPctCum += nPercent
         if nPctRandom <= nPctCum:
             nDocSize = int(makennnorm(nMean,nSdev))
-            TRC.tracef(3,"DOC","proc CalcDocSize rand|%s| cum|%s| pct|%s| mean|%s| sd|%s|" % (nPctRandom,nPctCum,nPercent,nMean,nSdev))
+            TRC.tracef(3,"DOC","proc CalcDocSize rand|%s| cum|%s| pct|%s| mean|%s| sd|%s| siz|%s|" % (nPctRandom,nPctCum,nPercent,nMean,nSdev,nDocSize))
             break
     return nDocSize
 

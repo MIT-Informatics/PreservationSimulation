@@ -123,7 +123,7 @@ def fndCliParse(mysArglist):
 
     cParse.add_argument("--audittype", type=str
                         , dest='sAuditStrategy'
-                        , choices=['SYSTEMATIC','UNIFORM','ZIPF']
+                        , choices=['TOTAL','OFF','SYSTEMATIC','UNIFORM','ZIPF']
 #                        , metavar='sAUDITSTRATEGY'
                         , help='Strategy for auditing, default=SYSTEMATIC.'
                         )

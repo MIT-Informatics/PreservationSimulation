@@ -48,6 +48,7 @@ class ProtoG(object):
     fAuditZipfParam = 1.0   # power param for Zipf distn of docs
     fAuditZipfBins = 5      # into how many bins to classify docs by popularity
     nBandwidthMbps = 10     # vanilla ethernet speed or cheap ISP
+    nBandwidthMbps = 1000   # lots of bandwidth reqd to support 20 copies, wow.
     nAuditCycleLastCompleted = 0    # last complete audit in this run
     
     fSecondsPerHour = float(60.0 * 60.0)    # conversion constant
@@ -94,7 +95,9 @@ class P(object):
     # Document size distribution: multimodel Gaussian, mix percentages and params.
     # { quality : [ pct, mean, sdev ], . . . }
     # where the pct values for a quality level must add up to 100%.
-    dDocParams =    { 1 : [ [ 50, 5, 2 ], [ 50, 5000, 2000 ] ]
+    # NEWS 20141221: change the default for quality 1 to be fixed size 50MB, 
+    #  to avoid the most common pilot error when starting new tests.
+    dDocParams =    { 1 : [ [ 100, 50, 0 ], [ 0, 50, 0 ] ]
                     , 2 : [ [ 50, 5, 2 ], [ 50, 5000, 2000 ] ]
                     , 3 : [ [ 50, 5, 2 ], [ 50, 5000, 2000 ] ]
                     , 4 : [ [ 50, 5, 2 ], [ 50, 5000, 2000 ] ]
@@ -102,7 +105,7 @@ class P(object):
                     }
  
     dParamsParams = { "RANDOMSEED"  : [[ 1 ]]
-                    , "SIMLENGTH"   : [[ 10000 ]]
+                    , "SIMLENGTH"   : [[ 100000 ]]
                     , "LOG_FILE"    : [[ "-" ]]
                     , "LOG_LEVEL"   : [[ "NOTSET" ]]
                     }
