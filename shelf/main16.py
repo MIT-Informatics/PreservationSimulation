@@ -162,6 +162,14 @@ def getParamFiles(mysParamdir):
         P.sLogLevel = P.dParamsParams["LOG_LEVEL"][0][0]
     except KeyError:
         pass
+
+    '''
+    try:
+        P.nBandwidthMbps = fnIntPlease(P.dParamsParams["BANDWIDTH"][0][0])
+    except KeyError:
+        pass
+    '''
+
     '''
     # ---------------------------------------------------------------
     # Process the audit params specially.  Maybe they override defaults.  

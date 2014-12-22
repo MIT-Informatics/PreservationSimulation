@@ -1,7 +1,7 @@
 #!/bin/sh
 # getalllines-new.sh
 
-if [ -z "$1" ]
+if [ -z "$2" ]
 then
     echo "Usage: $0 <directorytree of log files> [instructionsfile]"
     exit 1
@@ -11,18 +11,6 @@ if [ ! -d "$1" ]
 then
     echo "Error: \"$1\" is not a directory."
     exit 1
-fi
-
-if [ -z "$2" ]
-then
-    instructions=q2-extractinstructions.txt
-else
-    instructions=$2
-    if [ ! -e "$instructions" ]
-    then
-        echo "Error: \"$instructions\" file not found."
-        exit 1
-    fi
 fi
 
 export header=1
