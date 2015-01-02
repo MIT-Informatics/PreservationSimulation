@@ -723,6 +723,7 @@ def mainmain():
 # ----------------------------------------------------------
 # If this is the main program, run it now.  
 if __name__ == "__main__":
+    '''
     bAlreadyRan = False
     try:
         sProfileVar = environ["PROFILE"]
@@ -733,6 +734,11 @@ if __name__ == "__main__":
         pass
     if not bAlreadyRan:
         mainmain()
-
+    '''
+    if environ.get("PROFILE","NO") == "YES":
+        TRC.tracef(0,"MAIN","proc PROFILE=YES for this ssslllooowww run " % ())
+        profile.run('mainmain()')
+    else:
+        mainmain()
 
 # END

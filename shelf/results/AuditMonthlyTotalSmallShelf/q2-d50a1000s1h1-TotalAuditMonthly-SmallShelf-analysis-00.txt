@@ -1,0 +1,2169 @@
+Q2 Monthly total audit, 1TB (small) shelf 
+Input data from  ./q2-d50a1000s1h1-output-00.txt 
+
+Question 0 Summary losses (medians)
+   docsize lifem   c1  c2 c3 c4 c5 c8 c10 c14 c16 c20
+1       50     2 9177 593 16  0  0  0   0   0   0   0
+2       50     3 8108 264  5  0  0  0   0   0   0   0
+3       50     5 6312 101  0  0  0  0   0   0   0   0
+4       50    10 3924  22  0  0  0  0   0   0   0   0
+5       50    20 2192   5  0  0  0  0   0   0   0   0
+6       50    30 1525   2  0  0  0  0   0   0   0   0
+7       50    50  950   1  0  0  0  0   0   0   0   0
+8       50   100  488   0  0  0  0  0   0   0   0   0
+9       50   200  253   0  0  0  0  0   0   0   0   0
+10      50   300  166   0  0  0  0  0   0   0   0   0
+11      50   500  105   0  0  0  0  0   0   0   0   0
+12      50  1000   55   0  0  0  0  0   0   0   0   0
+13      50  2000   25   0  0  0  0  0   0   0   0   0
+14      50  3000   17   0  0  0  0  0   0   0   0   0
+15      50  5000   10   0  0  0  0  0   0   0   0   0
+16      50 10000    5   0  0  0  0  0   0   0   0   0
+
+Question 0 Summary losses (trimeans)
+   docsize lifem       c1      c2     c3    c4 c5 c8
+1       50     2 9178.875 591.000 16.125 0.125  0  0
+2       50     3 8112.750 264.750  4.750 0.000  0  0
+3       50     5 6315.500 101.125  0.250 0.000  0  0
+4       50    10 3927.375  22.125  0.000 0.000  0  0
+5       50    20 2188.875   4.750  0.000 0.000  0  0
+6       50    30 1531.500   2.250  0.000 0.000  0  0
+7       50    50  952.500   0.750  0.000 0.000  0  0
+8       50   100  486.500   0.000  0.000 0.000  0  0
+9       50   200  251.625   0.000  0.000 0.000  0  0
+10      50   300  166.000   0.000  0.000 0.000  0  0
+11      50   500  104.875   0.000  0.000 0.000  0  0
+12      50  1000   54.500   0.000  0.000 0.000  0  0
+13      50  2000   25.125   0.000  0.000 0.000  0  0
+14      50  3000   17.125   0.000  0.000 0.000  0  0
+15      50  5000   10.000   0.000  0.000 0.000  0  0
+16      50 10000    4.625   0.000  0.000 0.000  0  0
+   c10 c14 c16 c20
+1    0   0   0   0
+2    0   0   0   0
+3    0   0   0   0
+4    0   0   0   0
+5    0   0   0   0
+6    0   0   0   0
+7    0   0   0   0
+8    0   0   0   0
+9    0   0   0   0
+10   0   0   0   0
+11   0   0   0   0
+12   0   0   0   0
+13   0   0   0   0
+14   0   0   0   0
+15   0   0   0   0
+16   0   0   0   0
+
+===  docsize 50 lifem 2 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  914 | 97
+  916 | 56778
+  918 | 39
+  920 | 90
+
+     docsize 50 lifem 2 copies 1 
+mean 		 9180 
+midmean 	 9179.286 
+median 		 9177 
+trimean 	 9178.875 
+stddev 		 18.39565 
+IQR 		 10.5 
+mad 		 8.8956 
+SEM 		 5.546498 
+MeanOverSEM 	 1655.099 
+LogMeanOverSEM 	 3.218824 
+
+===  docsize 50 lifem 2 copies 2 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  56 | 4773
+  58 | 935
+  60 | 15
+  62 | 2
+  64 | 7
+
+     docsize 50 lifem 2 copies 2 
+mean 		 594.8182 
+midmean 	 590.4286 
+median 		 593 
+trimean 	 591 
+stddev 		 28.39302 
+IQR 		 38 
+mad 		 32.6172 
+SEM 		 8.560818 
+MeanOverSEM 	 69.48147 
+LogMeanOverSEM 	 1.841869 
+
+===  docsize 50 lifem 2 copies 3 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  1 | 44
+  1 | 55666789
+  2 | 
+  2 | 6
+
+     docsize 50 lifem 2 copies 3 
+mean 		 16.90909 
+midmean 	 16.14286 
+median 		 16 
+trimean 	 16.125 
+stddev 		 3.389824 
+IQR 		 2.5 
+mad 		 1.4826 
+SEM 		 1.02207 
+MeanOverSEM 	 16.54396 
+LogMeanOverSEM 	 1.218639 
+
+===  docsize 50 lifem 2 copies 4 
+
+  The decimal point is at the |
+
+  0 | 00000000
+  0 | 
+  1 | 000
+
+     docsize 50 lifem 2 copies 4 
+mean 		 0.2727273 
+midmean 	 0.1428571 
+median 		 0 
+trimean 	 0.125 
+stddev 		 0.4670994 
+IQR 		 0.5 
+mad 		 0 
+SEM 		 0.1408358 
+MeanOverSEM 	 1.936492 
+LogMeanOverSEM 	 0.2870156 
+
+===  docsize 50 lifem 2 copies 5 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 2 copies 5 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 2 copies 8 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 2 copies 8 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 2 copies 10 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 2 copies 10 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 3 copies 1 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  80 | 579
+  81 | 01123
+  81 | 568
+
+     docsize 50 lifem 3 copies 1 
+mean 		 8114.636 
+midmean 	 8114.429 
+median 		 8108 
+trimean 	 8112.75 
+stddev 		 38.23682 
+IQR 		 45 
+mad 		 37.065 
+SEM 		 11.52884 
+MeanOverSEM 	 703.8557 
+LogMeanOverSEM 	 2.847484 
+
+===  docsize 50 lifem 3 copies 2 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  25 | 022
+  26 | 0449
+  27 | 28
+  28 | 12
+
+     docsize 50 lifem 3 copies 2 
+mean 		 265.8182 
+midmean 	 265.5714 
+median 		 264 
+trimean 	 264.75 
+stddev 		 11.66892 
+IQR 		 19 
+mad 		 17.7912 
+SEM 		 3.518311 
+MeanOverSEM 	 75.55278 
+LogMeanOverSEM 	 1.87825 
+
+===  docsize 50 lifem 3 copies 3 
+
+  The decimal point is at the |
+
+  0 | 0
+  2 | 00
+  4 | 00000
+  6 | 0
+  8 | 00
+
+     docsize 50 lifem 3 copies 3 
+mean 		 4.636364 
+midmean 	 4.571429 
+median 		 5 
+trimean 	 4.75 
+stddev 		 2.203303 
+IQR 		 2 
+mad 		 1.4826 
+SEM 		 0.6643209 
+MeanOverSEM 	 6.979102 
+LogMeanOverSEM 	 0.8437995 
+
+===  docsize 50 lifem 3 copies 4 
+
+  The decimal point is at the |
+
+  0 | 0000000000
+  0 | 
+  1 | 0
+
+     docsize 50 lifem 3 copies 4 
+mean 		 0.09090909 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0.3015113 
+IQR 		 0 
+mad 		 0 
+SEM 		 0.09090909 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 0 
+
+===  docsize 50 lifem 3 copies 5 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 3 copies 5 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 3 copies 8 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 3 copies 8 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 3 copies 10 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 3 copies 10 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 5 copies 1 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  62 | 789
+  63 | 01124
+  63 | 557
+
+     docsize 50 lifem 5 copies 1 
+mean 		 6317.182 
+midmean 	 6317.286 
+median 		 6312 
+trimean 	 6315.5 
+stddev 		 32.74086 
+IQR 		 48 
+mad 		 35.5824 
+SEM 		 9.871739 
+MeanOverSEM 	 639.9259 
+LogMeanOverSEM 	 2.80613 
+
+===  docsize 50 lifem 5 copies 2 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+   8 | 9
+   9 | 36
+  10 | 0014458
+  11 | 6
+
+     docsize 50 lifem 5 copies 2 
+mean 		 101.4545 
+midmean 	 101.4286 
+median 		 101 
+trimean 	 101.125 
+stddev 		 7.353416 
+IQR 		 6.5 
+mad 		 5.9304 
+SEM 		 2.217138 
+MeanOverSEM 	 45.75923 
+LogMeanOverSEM 	 1.660479 
+
+===  docsize 50 lifem 5 copies 3 
+
+  The decimal point is at the |
+
+  0 | 000000
+  0 | 
+  1 | 0000
+  1 | 
+  2 | 0
+
+     docsize 50 lifem 5 copies 3 
+mean 		 0.5454545 
+midmean 	 0.4285714 
+median 		 0 
+trimean 	 0.25 
+stddev 		 0.6875517 
+IQR 		 1 
+mad 		 0 
+SEM 		 0.2073046 
+MeanOverSEM 	 2.631174 
+LogMeanOverSEM 	 0.4201496 
+
+===  docsize 50 lifem 5 copies 4 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 5 copies 4 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 5 copies 5 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 5 copies 5 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 5 copies 8 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 5 copies 8 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 5 copies 10 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 5 copies 10 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 10 copies 1 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  38 | 89
+  39 | 0112
+  39 | 5567
+  40 | 
+  40 | 5
+
+     docsize 50 lifem 10 copies 1 
+mean 		 3936.182 
+midmean 	 3929.857 
+median 		 3924 
+trimean 	 3927.375 
+stddev 		 49.319 
+IQR 		 54.5 
+mad 		 44.478 
+SEM 		 14.87024 
+MeanOverSEM 	 264.702 
+LogMeanOverSEM 	 2.422757 
+
+===  docsize 50 lifem 10 copies 2 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  1 | 589
+  2 | 02234
+  2 | 678
+
+     docsize 50 lifem 10 copies 2 
+mean 		 22.18182 
+midmean 	 22.28571 
+median 		 22 
+trimean 	 22.125 
+stddev 		 3.995452 
+IQR 		 5.5 
+mad 		 4.4478 
+SEM 		 1.204674 
+MeanOverSEM 	 18.41313 
+LogMeanOverSEM 	 1.265128 
+
+===  docsize 50 lifem 10 copies 3 
+
+  The decimal point is at the |
+
+  0 | 0000000000
+  0 | 
+  1 | 0
+
+     docsize 50 lifem 10 copies 3 
+mean 		 0.09090909 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0.3015113 
+IQR 		 0 
+mad 		 0 
+SEM 		 0.09090909 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 0 
+
+===  docsize 50 lifem 10 copies 4 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 10 copies 4 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 10 copies 5 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 10 copies 5 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 10 copies 8 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 10 copies 8 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 10 copies 10 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 10 copies 10 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 20 copies 1 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  21 | 2
+  21 | 66789
+  22 | 002
+  22 | 5
+  23 | 1
+
+     docsize 50 lifem 20 copies 1 
+mean 		 2195.636 
+midmean 	 2187.143 
+median 		 2192 
+trimean 	 2188.875 
+stddev 		 49.98054 
+IQR 		 44.5 
+mad 		 37.065 
+SEM 		 15.0697 
+MeanOverSEM 	 145.6987 
+LogMeanOverSEM 	 2.163456 
+
+===  docsize 50 lifem 20 copies 2 
+
+  The decimal point is at the |
+
+  0 | 0
+  2 | 0000
+  4 | 0
+  6 | 0000
+  8 | 0
+
+     docsize 50 lifem 20 copies 2 
+mean 		 4.636364 
+midmean 	 4.571429 
+median 		 5 
+trimean 	 4.75 
+stddev 		 2.579641 
+IQR 		 4 
+mad 		 2.9652 
+SEM 		 0.7777909 
+MeanOverSEM 	 5.960938 
+LogMeanOverSEM 	 0.7753146 
+
+===  docsize 50 lifem 20 copies 3 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 20 copies 3 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 20 copies 4 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 20 copies 4 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 20 copies 5 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 20 copies 5 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 20 copies 8 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 20 copies 8 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 20 copies 10 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 20 copies 10 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 30 copies 1 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  14 | 9
+  15 | 02223
+  15 | 66679
+
+     docsize 50 lifem 30 copies 1 
+mean 		 1536.182 
+midmean 	 1536.143 
+median 		 1525 
+trimean 	 1531.5 
+stddev 		 31.30437 
+IQR 		 41 
+mad 		 44.478 
+SEM 		 9.438623 
+MeanOverSEM 	 162.7549 
+LogMeanOverSEM 	 2.211534 
+
+===  docsize 50 lifem 30 copies 2 
+
+  The decimal point is at the |
+
+  0 | 000
+  2 | 00000
+  4 | 00
+  6 | 0
+
+     docsize 50 lifem 30 copies 2 
+mean 		 2.636364 
+midmean 	 2.285714 
+median 		 2 
+trimean 	 2.25 
+stddev 		 1.68954 
+IQR 		 2 
+mad 		 1.4826 
+SEM 		 0.5094155 
+MeanOverSEM 	 5.175272 
+LogMeanOverSEM 	 0.7139332 
+
+===  docsize 50 lifem 30 copies 3 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 30 copies 3 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 30 copies 4 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 30 copies 4 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 30 copies 5 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 30 copies 5 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 30 copies 8 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 30 copies 8 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 30 copies 10 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 30 copies 10 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 50 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  88 | 8
+  90 | 
+  92 | 299
+  94 | 00
+  96 | 593
+  98 | 64
+
+     docsize 50 lifem 50 copies 1 
+mean 		 952.2727 
+midmean 	 953.5714 
+median 		 950 
+trimean 	 952.5 
+stddev 		 28.49593 
+IQR 		 32 
+mad 		 28.1694 
+SEM 		 8.591847 
+MeanOverSEM 	 110.8345 
+LogMeanOverSEM 	 2.044675 
+
+===  docsize 50 lifem 50 copies 2 
+
+  The decimal point is at the |
+
+  0 | 0000
+  0 | 
+  1 | 00000
+  1 | 
+  2 | 00
+
+     docsize 50 lifem 50 copies 2 
+mean 		 0.8181818 
+midmean 	 0.7142857 
+median 		 1 
+trimean 	 0.75 
+stddev 		 0.7507572 
+IQR 		 1 
+mad 		 1.4826 
+SEM 		 0.2263618 
+MeanOverSEM 	 3.614487 
+LogMeanOverSEM 	 0.5580467 
+
+===  docsize 50 lifem 50 copies 3 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 50 copies 3 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 50 copies 4 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 50 copies 4 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 50 copies 5 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 50 copies 5 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 50 copies 8 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 50 copies 8 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 50 copies 10 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 50 copies 10 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 100 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  46 | 48
+  47 | 449
+  48 | 8
+  49 | 14899
+
+     docsize 50 lifem 100 copies 1 
+mean 		 484.3636 
+midmean 	 485.4286 
+median 		 488 
+trimean 	 486.5 
+stddev 		 13.0021 
+IQR 		 22 
+mad 		 16.3086 
+SEM 		 3.92028 
+MeanOverSEM 	 123.5533 
+LogMeanOverSEM 	 2.091854 
+
+===  docsize 50 lifem 100 copies 2 
+
+  The decimal point is at the |
+
+  0 | 000000000
+  0 | 
+  1 | 00
+
+     docsize 50 lifem 100 copies 2 
+mean 		 0.1818182 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0.4045199 
+IQR 		 0 
+mad 		 0 
+SEM 		 0.1219673 
+MeanOverSEM 	 1.490712 
+LogMeanOverSEM 	 0.1733937 
+
+===  docsize 50 lifem 100 copies 3 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 100 copies 3 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 100 copies 4 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 100 copies 4 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 100 copies 5 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 100 copies 5 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 100 copies 8 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 100 copies 8 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 100 copies 10 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 100 copies 10 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 200 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  22 | 4
+  23 | 
+  24 | 267
+  25 | 233444
+  26 | 5
+
+     docsize 50 lifem 200 copies 1 
+mean 		 249.4545 
+midmean 	 251.2857 
+median 		 253 
+trimean 	 251.625 
+stddev 		 10.27972 
+IQR 		 7.5 
+mad 		 1.4826 
+SEM 		 3.099453 
+MeanOverSEM 	 80.4834 
+LogMeanOverSEM 	 1.905706 
+
+===  docsize 50 lifem 200 copies 2 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 200 copies 2 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 200 copies 3 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 200 copies 3 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 200 copies 4 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 200 copies 4 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 200 copies 5 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 200 copies 5 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 200 copies 8 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 200 copies 8 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 200 copies 10 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 200 copies 10 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 300 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  15 | 1
+  16 | 113569
+  17 | 008
+  18 | 9
+
+     docsize 50 lifem 300 copies 1 
+mean 		 167.5455 
+midmean 	 166.2857 
+median 		 166 
+trimean 	 166 
+stddev 		 9.862694 
+IQR 		 8 
+mad 		 5.9304 
+SEM 		 2.973714 
+MeanOverSEM 	 56.34215 
+LogMeanOverSEM 	 1.750833 
+
+===  docsize 50 lifem 300 copies 2 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 300 copies 2 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 300 copies 3 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 300 copies 3 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 300 copies 4 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 300 copies 4 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 300 copies 5 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 300 copies 5 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 300 copies 8 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 300 copies 8 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 300 copies 10 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 300 copies 10 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 500 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+   9 | 338
+  10 | 1556
+  11 | 002
+  12 | 1
+
+     docsize 50 lifem 500 copies 1 
+mean 		 104.9091 
+midmean 	 105 
+median 		 105 
+trimean 	 104.875 
+stddev 		 8.419674 
+IQR 		 10.5 
+mad 		 7.413 
+SEM 		 2.538627 
+MeanOverSEM 	 41.32513 
+LogMeanOverSEM 	 1.616214 
+
+===  docsize 50 lifem 500 copies 2 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 500 copies 2 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 500 copies 3 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 500 copies 3 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 500 copies 4 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 500 copies 4 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 500 copies 5 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 500 copies 5 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 500 copies 8 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 500 copies 8 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 500 copies 10 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 500 copies 10 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 1000 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  4 | 3
+  4 | 89
+  5 | 1
+  5 | 55579
+  6 | 22
+
+     docsize 50 lifem 1000 copies 1 
+mean 		 54.18182 
+midmean 	 54.42857 
+median 		 55 
+trimean 	 54.5 
+stddev 		 5.963525 
+IQR 		 8 
+mad 		 5.9304 
+SEM 		 1.798071 
+MeanOverSEM 	 30.13331 
+LogMeanOverSEM 	 1.479047 
+
+===  docsize 50 lifem 1000 copies 2 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 1000 copies 2 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 1000 copies 3 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 1000 copies 3 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 1000 copies 4 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 1000 copies 4 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 1000 copies 5 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 1000 copies 5 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 1000 copies 8 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 1000 copies 8 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 1000 copies 10 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 1000 copies 10 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 2000 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  1 | 8
+  2 | 133
+  2 | 55678
+  3 | 13
+
+     docsize 50 lifem 2000 copies 1 
+mean 		 25.45455 
+midmean 	 25.28571 
+median 		 25 
+trimean 	 25.125 
+stddev 		 4.297991 
+IQR 		 4.5 
+mad 		 2.9652 
+SEM 		 1.295893 
+MeanOverSEM 	 19.64247 
+LogMeanOverSEM 	 1.293196 
+
+===  docsize 50 lifem 2000 copies 2 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 2000 copies 2 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 2000 copies 3 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 2000 copies 3 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 2000 copies 4 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 2000 copies 4 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 2000 copies 5 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 2000 copies 5 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 2000 copies 8 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 2000 copies 8 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 2000 copies 10 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 2000 copies 10 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 3000 copies 1 
+
+  The decimal point is at the |
+
+  12 | 0
+  14 | 0000
+  16 | 0
+  18 | 0
+  20 | 0000
+
+     docsize 50 lifem 3000 copies 1 
+mean 		 17.09091 
+midmean 	 17 
+median 		 17 
+trimean 	 17.125 
+stddev 		 3.048099 
+IQR 		 5.5 
+mad 		 4.4478 
+SEM 		 0.9190365 
+MeanOverSEM 	 18.59655 
+LogMeanOverSEM 	 1.269432 
+
+===  docsize 50 lifem 3000 copies 2 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 3000 copies 2 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 3000 copies 3 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 3000 copies 3 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 3000 copies 4 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 3000 copies 4 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 3000 copies 5 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 3000 copies 5 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 3000 copies 8 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 3000 copies 8 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 3000 copies 10 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 3000 copies 10 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 5000 copies 1 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 2
+  0 | 688
+  1 | 002223
+  1 | 5
+
+     docsize 50 lifem 5000 copies 1 
+mean 		 9.818182 
+midmean 	 10.28571 
+median 		 10 
+trimean 	 10 
+stddev 		 3.655631 
+IQR 		 4 
+mad 		 2.9652 
+SEM 		 1.102214 
+MeanOverSEM 	 8.90769 
+LogMeanOverSEM 	 0.9497651 
+
+===  docsize 50 lifem 5000 copies 2 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 5000 copies 2 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 5000 copies 3 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 5000 copies 3 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 5000 copies 4 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 5000 copies 4 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 5000 copies 5 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 5000 copies 5 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 5000 copies 8 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 5000 copies 8 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 5000 copies 10 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 5000 copies 10 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 10000 copies 1 
+
+  The decimal point is at the |
+
+  0 | 0
+  2 | 00
+  4 | 00000
+  6 | 00
+  8 | 0
+
+     docsize 50 lifem 10000 copies 1 
+mean 		 4.454545 
+midmean 	 4.428571 
+median 		 5 
+trimean 	 4.625 
+stddev 		 2.161649 
+IQR 		 2.5 
+mad 		 1.4826 
+SEM 		 0.6517618 
+MeanOverSEM 	 6.834622 
+LogMeanOverSEM 	 0.8347145 
+
+===  docsize 50 lifem 10000 copies 2 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 10000 copies 2 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 10000 copies 3 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 10000 copies 3 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 10000 copies 4 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 10000 copies 4 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 10000 copies 5 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 10000 copies 5 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 10000 copies 8 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 10000 copies 8 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+===  docsize 50 lifem 10000 copies 10 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+     docsize 50 lifem 10000 copies 10 
+mean 		 0 
+midmean 	 0 
+median 		 0 
+trimean 	 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+

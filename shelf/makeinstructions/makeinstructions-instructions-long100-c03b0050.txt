@@ -1,0 +1,71 @@
+=template
+## TESTING LONG RUN 
+## Run  c{copies}b{lifem}  for  {family}/{specific}/
+## Extras: {extra1}; {extra2}; {extra3};
+## Generated file; do not edit.
+# This comment should be removed during processing.
+
+# Command to go at the top of each instruction file.  
+python main.py {{family}} {{specific}} {{length}} {{seed}} --ncopies={{copies}} --lifek={{lifek}} --shortlog=Y {{extra1}} {{extra2}} {{extra3}} >  {{family}}/{{specific}}/logb{{lifem}}/c{{copies}}d50b{{lifem}}s{{seed}}.log  2>&1  &
+
+# Each file will contain the above command line and all these individual instruction lines.  
+# The program that actually executes the test runs will substitute these instructions
+#  into the CLI command above.  
+family,specific,length,seed,copies,lifem,lifek,extra1,extra2,extra3 
+{family},{specific},0,{s1},{copies},{lifem},{lifem}000,{extra1},{extra2},{extra3},
+{family},{specific},0,{s2},{copies},{lifem},{lifem}000,{extra1},{extra2},{extra3},
+{family},{specific},0,{s3},{copies},{lifem},{lifem}000,{extra1},{extra2},{extra3},
+{family},{specific},0,{s4},{copies},{lifem},{lifem}000,{extra1},{extra2},{extra3},
+{family},{specific},0,{s5},{copies},{lifem},{lifem}000,{extra1},{extra2},{extra3},
+{family},{specific},0,{s6},{copies},{lifem},{lifem}000,{extra1},{extra2},{extra3},
+{family},{specific},0,{s7},{copies},{lifem},{lifem}000,{extra1},{extra2},{extra3},
+{family},{specific},0,{s8},{copies},{lifem},{lifem}000,{extra1},{extra2},{extra3},
+{family},{specific},0,{s9},{copies},{lifem},{lifem}000,{extra1},{extra2},{extra3},
+{family},{specific},0,{s10},{copies},{lifem},{lifem}000,{extra1},{extra2},{extra3},
+{family},{specific},0,{s11},{copies},{lifem},{lifem}000,{extra1},{extra2},{extra3},
+{family},{specific},0,{s12},{copies},{lifem},{lifem}000,{extra1},{extra2},{extra3},
+{family},{specific},0,{s13},{copies},{lifem},{lifem}000,{extra1},{extra2},{extra3},
+{family},{specific},0,{s14},{copies},{lifem},{lifem}000,{extra1},{extra2},{extra3},
+{family},{specific},0,{s15},{copies},{lifem},{lifem}000,{extra1},{extra2},{extra3},
+{family},{specific},0,{s16},{copies},{lifem},{lifem}000,{extra1},{extra2},{extra3},
+{family},{specific},0,{s17},{copies},{lifem},{lifem}000,{extra1},{extra2},{extra3},
+{family},{specific},0,{s18},{copies},{lifem},{lifem}000,{extra1},{extra2},{extra3},
+{family},{specific},0,{s19},{copies},{lifem},{lifem}000,{extra1},{extra2},{extra3},
+{family},{specific},0,{s20},{copies},{lifem},{lifem}000,{extra1},{extra2},{extra3},
+{family},{specific},0,{s21},{copies},{lifem},{lifem}000,{extra1},{extra2},{extra3},
+{family},{specific},0,{s22},{copies},{lifem},{lifem}000,{extra1},{extra2},{extra3},
+{family},{specific},0,{s23},{copies},{lifem},{lifem}000,{extra1},{extra2},{extra3},
+{family},{specific},0,{s24},{copies},{lifem},{lifem}000,{extra1},{extra2},{extra3},
+{family},{specific},0,{s25},{copies},{lifem},{lifem}000,{extra1},{extra2},{extra3},
+{family},{specific},0,{s26},{copies},{lifem},{lifem}000,{extra1},{extra2},{extra3},
+{family},{specific},0,{s27},{copies},{lifem},{lifem}000,{extra1},{extra2},{extra3},
+{family},{specific},0,{s28},{copies},{lifem},{lifem}000,{extra1},{extra2},{extra3},
+{family},{specific},0,{s29},{copies},{lifem},{lifem}000,{extra1},{extra2},{extra3},
+{family},{specific},0,{s30},{copies},{lifem},{lifem}000,{extra1},{extra2},{extra3},
+{family},{specific},0,{s31},{copies},{lifem},{lifem}000,{extra1},{extra2},{extra3},
+{family},{specific},0,{s32},{copies},{lifem},{lifem}000,{extra1},{extra2},{extra3},
+{family},{specific},0,{s33},{copies},{lifem},{lifem}000,{extra1},{extra2},{extra3},
+{family},{specific},0,{s34},{copies},{lifem},{lifem}000,{extra1},{extra2},{extra3},
+{family},{specific},0,{s35},{copies},{lifem},{lifem}000,{extra1},{extra2},{extra3},
+{family},{specific},0,{s36},{copies},{lifem},{lifem}000,{extra1},{extra2},{extra3},
+{family},{specific},0,{s37},{copies},{lifem},{lifem}000,{extra1},{extra2},{extra3},
+{family},{specific},0,{s38},{copies},{lifem},{lifem}000,{extra1},{extra2},{extra3},
+{family},{specific},0,{s39},{copies},{lifem},{lifem}000,{extra1},{extra2},{extra3},
+{family},{specific},0,{s40},{copies},{lifem},{lifem}000,{extra1},{extra2},{extra3},
+{family},{specific},0,{s41},{copies},{lifem},{lifem}000,{extra1},{extra2},{extra3},
+{family},{specific},0,{s42},{copies},{lifem},{lifem}000,{extra1},{extra2},{extra3},
+{family},{specific},0,{s43},{copies},{lifem},{lifem}000,{extra1},{extra2},{extra3},
+{family},{specific},0,{s44},{copies},{lifem},{lifem}000,{extra1},{extra2},{extra3},
+{family},{specific},0,{s45},{copies},{lifem},{lifem}000,{extra1},{extra2},{extra3},
+{family},{specific},0,{s46},{copies},{lifem},{lifem}000,{extra1},{extra2},{extra3},
+{family},{specific},0,{s47},{copies},{lifem},{lifem}000,{extra1},{extra2},{extra3},
+{family},{specific},0,{s48},{copies},{lifem},{lifem}000,{extra1},{extra2},{extra3},
+{family},{specific},0,{s49},{copies},{lifem},{lifem}000,{extra1},{extra2},{extra3},
+{family},{specific},0,{s50},{copies},{lifem},{lifem}000,{extra1},{extra2},{extra3},
+{family},{specific},0,{s51},{copies},{lifem},{lifem}000,{extra1},{extra2},{extra3},
+
+# Generates one instruction file for each line of parameters.  
+# Each file contains the entire template with substitutions.  
+=parameters
+filename,copies,lifem,family,specific,extra1,extra2,extra3,s1,s2,s3,s4,s5,s6,s7,s8,s9,s10,s11,s12,s13,s14,s15,s16,s17,s18,s19,s20,s21,s22,s23,s24,s25,s26,s27,s28,s29,s30,s31,s32,s33,s34,s35,s36,s37,s38,s39,s40,s41,s42,s43,s44,s45,s46,s47,s48,s49,s50,s51,
+c03b0050.txt,03,0050,familygoeshere,specificgoeshere,--audit=10000 --auditsegments=1 --audittype=TOTAL,--shelfsize=10,,919028296,103765041,141246882,681028781,117661523,105731136,967561224,420477893,263688301,50746969,533657980,711283608,597296547,664375964,258760793,666549275,376517787,817713633,519606501,715258232,792850679,969331491,656627946,985655050,771297240,488153710,51492881,932031761,229298583,49497595,981995409,731421358,487615299,974358641,619181484,869373100,580369466,981597449,691574937,696282793,364245801,603593284,70757215,764644760,71232281,855242110,835080798,937674136,60400782,65398367,336520112,748542218,

@@ -5,6 +5,7 @@
 # Run shelf sim sequences for various numbers of copies and lifetimes.
 #  This could run for hours or days if there are enough samples.
 
+usencores=3                             # Default if user doesn't specify.
 if [ -z "$2" ] || [ "$1" = "help" ] || [ "$1" = "--help" ] || [ "$1" = "-help" ]
 then
     echo "Usage: $0 <directory> <liferange>"
@@ -16,7 +17,7 @@ then
     echo "  tens                0010, 0020, 0030, 0050"
     echo "  hundreds            0100, 0200, 0300, 0500"
     echo "  thousands           1000, 2000, 3000, 5000, 10000"
-    echo "Envir var NCORES limits number of cores used (default=6)"
+    echo "Envir var NCORES limits number of cores used (default=$usencores)"
     exit 1
 fi
 
@@ -59,11 +60,10 @@ for rootname in  runsequence  ; do
 done
 
 # User specifies number of cores today?
-ncores=6
 if [ -n "$NCORES" ]
 then
-    ncores=$NCORES
-    echo "NCORES set to $ncores"
+    usencores=$NCORES
+    echo "Number of cores set to $usencores"
 fi
 
 # Loop over set of lifetimes.

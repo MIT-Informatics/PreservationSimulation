@@ -3,7 +3,7 @@
 
 if [ -z "$2" ]
 then
-    echo "Usage: $0 <directorytree of log files> [instructionsfile]"
+    echo "Usage: $0 <directorytree of log files> <instructionsfile>"
     exit 1
 fi
 
@@ -12,6 +12,9 @@ then
     echo "Error: \"$1\" is not a directory."
     exit 1
 fi
+
+# Instruction file now mandatory.
+instructions="$2"
 
 export header=1
 for filename in `find $1 -name '*.log' -print`
