@@ -281,14 +281,14 @@ def getCliArgsForEverythingElse():
 
     # Override ncopies if present on the command line.  
     if getattr(G,"lCopies",None):
-        TRC.tracef(3,"MAIN","CliEverythingElse1bef before G.dDistnParams|%s|" % (G.dDistnParams))
+        TRC.tracef(3,"MAIN","proc CliEverythingElse1bef before G.dDistnParams|%s| G.lCopies|%s|" % (G.dDistnParams,G.lCopies))
         for nKey in G.dDistnParams:
             lValue = G.dDistnParams[nKey][0]
             # Substitute the second item in the list, which is the 
             #  number of copies to make.
             if len(G.lCopies) >= nKey:
                 lValue[1] = G.lCopies[nKey - 1]
-        TRC.tracef(3,"MAIN","CliEverythingElse1aft after  G.dDistnParams|%s|" % (G.dDistnParams))
+        TRC.tracef(3,"MAIN"," proc CliEverythingElse1aft after  G.dDistnParams|%s|" % (G.dDistnParams))
 
     # Override lber block err rates if present on the command line.  
     ''' Have to fix the param files and cli to refer to lifetimes

@@ -16,7 +16,7 @@ then
     exit 1
 fi
 
-for copies in 01 02 03 04 05 08 10 14 16 20
+for copies in 01 02 03 04 05 06 07 08 09 10 14 16 20
 do
 
 nfiles=`ls $1/c$copies* | wc -l`

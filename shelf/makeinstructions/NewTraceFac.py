@@ -3,7 +3,7 @@
 # 
 # 
 """
-NewTraceFac09 trace module
+NewTraceFac11 trace module
                                 RBLandau 20080226
                                 updated  20080830
                                 updated  20081003
@@ -13,6 +13,8 @@ NewTraceFac09 trace module
                                 updated  20140209
                                 updated  20140315
                                 updated  20140723
+                                updated  20141020
+                                updated  20150112
                                 
   Copyright (C) 2008,2009,2014 Richard Landau.  All rights reserved.
   
@@ -29,7 +31,7 @@ NewTraceFac09 trace module
   disclaimer in the documentation and/or other materials provided
   with the distribution.
   
-      * Neither the name of the Richard Landau nor the names of its
+      * Neither the name of Richard Landau nor the names of other
   contributors may be used to endorse or promote products derived
   from this software without specific prior written permission.
   
@@ -49,10 +51,10 @@ NewTraceFac09 trace module
   
 """
 
-from time import localtime
-from os import environ
-from re import findall
-
+from time       import localtime, sleep
+from os         import environ
+from re         import findall
+from functools  import wraps
 '''
     RBLandau 20080824
     NewTraceFac tracelog facility for Python.
@@ -204,7 +206,10 @@ class CNewTrace:
             self.trace(1,"DEBUG info level %s targets %s facil %s" \
                 % (self.tracelevel,self.tracetarget,self.tracefacil) )
 
-# t r a c e     trace with no identified facility.
+# n t r a c e     trace with no identified facility.
+
+    def ntrace(self, level, line):
+        self.trace(level, line)
 
     def trace(self, level, line):
         # If we are tracing at a high enough level to include this item, 
@@ -228,11 +233,12 @@ class CNewTrace:
             
             # Or append to trace file.
             if (self.tracetarget & 4):
-                # append to file
-                with open(self.tracefile, "a") as f:
-                    f.write(self.linestart + " " + line + "\n")
+                self.fWriteCarefully(self.tracefile, 'a', self.linestart+" "+line, 5)
 
-# t r a c e f   trace associated with a named facility
+# n t r a c e f   trace associated with a named facility
+
+    def ntracef(self, level, facility, line):
+        self.tracef(level, facility, line)
 
     def tracef(self, level, facility, line):
         # If we are tracing at a high enough level to include this item, 
@@ -271,13 +277,43 @@ class CNewTrace:
                 
                 # Or append to trace file.
                 if (self.tracetarget & 4):
-                    # append to file
-                    with open(self.tracefile, "a") as f:
-                        f.write(self.linestart + " " + line + "\n")
+                    self.fWriteCarefully(self.tracefile, 'a', self.linestart+" "+line, 10)
+
+# f W r i t e C a r e f u l l y         write to file avoiding file-busy errors.
+
+    def fWriteCarefully(self, outfile, mode, outline, retries):
+        # Careful: if the file is still busy with the last write, 
+        #  wait a second and try it again.  A few times.
+        #  Yes, this actually happens disturbingly frequently.
+        for idxErrorCount in range(retries+1):
+            try:
+                with open(outfile, mode) as f:
+                    if idxErrorCount == 0:
+                        f.write(outline + "\n")
+                    else:
+                        outline += " filebusyretries|%s|"%(idxErrorCount)
+                        f.write(outline + "\n")
+                    #f.flush()
+                    #f.close()
+                break                   # Leaves the for loop.
+            except IOError, e:
+                sleep(1)
+        # If we can't write after several retries, tough.  
+
 
 # D e c o r a t o r s 
 
 # Plain decorator, no facility code.  Logs entry and exit.  
+# NEW VERSION @ntrace
+def ntrace(func):
+    @wraps(func)
+    def wrap2(*args,**kwargs):
+        TRC.trace(1,"entr %s args=%s,kw=%s" % (func.__name__,args,kwargs))
+        result = func(*args,**kwargs)
+        TRC.trace(2,"exit %s result|%s|" % (func.func_name,result))
+        return result
+    return wrap2
+# OLD VERSION @trace
 def trace(func):
     def wrap2(*args,**kwargs):
         TRC.trace(1,"entr %s args=%s,kw=%s" % (func.__name__,args,kwargs))
@@ -289,6 +325,26 @@ def trace(func):
 
 # Decorator with facility code and priority level.  
 # Facility code may be left blank to use priority or "self" printing.
+# NEW VERSION @ntracef
+def ntracef(facil="",level=1):
+    def tracefinner(func):
+        @wraps(func)
+        def wrap1(*args,**kwargs):
+            if len(args)>0 and str(type(args[0])).find("class") >= 0:
+                _id = getattr(args[0],"ID","")
+                TRC.tracef(level,facil,"entr %s args=<%s id=|%s|> |%s| kw=%s" % (func.__name__,args[0].__class__.__name__,_id,args[1:],kwargs))
+            else:
+                TRC.tracef(level,facil,"entr %s args=%s,kw=%s" % (func.__name__,args,kwargs))
+            result = func(*args,**kwargs)
+            if len(args)>0 and str(type(args[0])).find("class") >= 0:
+                _id = getattr(args[0],"ID","")
+                TRC.tracef(level,facil,"exit %s <%s id=|%s|> result|%s|" % (func.func_name,args[0].__class__.__name__,_id,result))
+            else:
+                TRC.tracef(level,facil,"exit %s result|%s|" % (func.func_name,result))
+            return result
+        return wrap1
+    return tracefinner
+# OLD VERSION @tracef
 def tracef(facil="",level=1):
     def tracefinner(func):
         def wrap1(*args,**kwargs):
@@ -332,4 +388,25 @@ def tracef(facil="",level=1):
      that one use some other four letter codes in the traced lines, 
      such as "proc".
 '''
+# NEW VERSION NTRC
+NTRC = CNewTrace()
+# OLD VERSION TRC
 TRC = CNewTrace()
+
+# Edit history:
+# 20141020  RBL Add fWriteCarefully routine to minimize problems with 
+#                file-busy contention, which sometimes happens.
+#                CHKNET suffers a lot of this type of error.
+# 20150112  RBL Because of heat from various members of the Python
+#                community about the use of the name "trace", I 
+#                will change the name to "ntrace".  After some 
+#                searching on Google, one finds that the name 
+#                "rtrace" was already used for ray tracing, 
+#                "dtrace" for some sort of debugging, and
+#                "dbtrace" for some database debugging; but 
+#                "ntrace" was relatively unused, appears only as
+#                a variable name in a few places.  Voila!
+#               Begin to add name changes: trace -> ntrace and 
+#                all its relatives, ntrace(), ntracef(), and their
+#                decorators, and TRC instance.  
+#

@@ -198,7 +198,7 @@ def fndParseInput(mysFilename):
     lParams = list()
     with open(mysFilename,"rb") as fhInfile:
         lLines = fhInfile.readlines()
-        # Remove comments.  
+        # Remove comments and blank lines.  
         for sLine in lLines[:]:
             if re.match("^ *#[^#]",sLine) or re.match("^ *$",sLine.rstrip()):
                 lLines.remove(sLine)
@@ -220,17 +220,6 @@ def fndParseInput(mysFilename):
         # Now get the CSV args into a list of dictionaries.
         lRowDicts = csv.DictReader(lLines)
 
-        '''
-        for dRow in lRowDicts:
-            dNewRow = dict()
-            # Sanitize (i.e., re-integerize) the entire row dict, 
-            # keys and values, and use the new version instead.
-            for xKey in dRow:
-                dNewRow[fnIntPlease(xKey)] = fnIntPlease(dRow[xKey])
-            # Put it back into a list, in order.
-            lParams.append(dNewRow)
-            TRC.trace(5,"proc fndParseInput dRow|%s| dNewRow|%s| lParams|%s|" % (dRow,dNewRow,lParams))
-        '''
         # Today, we want strings instead of integers, so skip all that.  
         # Just put all the rest of the lines into the params list.  
         lParams = list()

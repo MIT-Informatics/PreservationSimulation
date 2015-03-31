@@ -198,7 +198,7 @@ def fndParseInput(mysFilename):
     lParams = list()
     with open(mysFilename,"rb") as fhInfile:
         lLines = fhInfile.readlines()
-        # Remove comments.  
+        # Remove comments and blank lines.  
         for sLine in lLines[:]:
             if re.match("^ *#[^#]",sLine) or re.match("^ *$",sLine.rstrip()):
                 lLines.remove(sLine)
@@ -220,17 +220,6 @@ def fndParseInput(mysFilename):
         # Now get the CSV args into a list of dictionaries.
         lRowDicts = csv.DictReader(lLines)
 
-        '''
-        for dRow in lRowDicts:
-            dNewRow = dict()
-            # Sanitize (i.e., re-integerize) the entire row dict, 
-            # keys and values, and use the new version instead.
-            for xKey in dRow:
-                dNewRow[fnIntPlease(xKey)] = fnIntPlease(dRow[xKey])
-            # Put it back into a list, in order.
-            lParams.append(dNewRow)
-            TRC.trace(5,"proc fndParseInput dRow|%s| dNewRow|%s| lParams|%s|" % (dRow,dNewRow,lParams))
-        '''
         # Today, we want strings instead of integers, so skip all that.  
         # Just put all the rest of the lines into the params list.  
         lParams = list()
@@ -303,12 +292,12 @@ def main():
         dParamsFromFile = lParams[idx]
         # Now do backwards substitutions to let CLI override the instructions file.
 #        fnMaybeOverride("family",dCliDict,dParamsFromFile) # can't setattr into a dict, oops
-        if "family" in dCliDict: dParamsFromFile["family"] = dCliDict["family"]
-        if "familyroot" in dCliDict: dParamsFromFile["familyroot"] = dCliDict["familyroot"]
-        if "specific" in dCliDict: dParamsFromFile["specific"] = dCliDict["specific"]
-        if "extra1" in dCliDict: dParamsFromFile["extra1"] = dCliDict["extra1"]
-        if "extra2" in dCliDict: dParamsFromFile["extra2"] = dCliDict["extra2"]
-        if "extra3" in dCliDict: dParamsFromFile["extra3"] = dCliDict["extra3"]
+        if dCliDict.get("family"): dParamsFromFile["family"] = dCliDict["family"]
+        if dCliDict.get("familyroot"): dParamsFromFile["familyroot"] = dCliDict["familyroot"]
+        if dCliDict.get("specific"): dParamsFromFile["specific"] = dCliDict["specific"]
+        if dCliDict.get("extra1"): dParamsFromFile["extra1"] = dCliDict["extra1"]
+        if dCliDict.get("extra2"): dParamsFromFile["extra2"] = dCliDict["extra2"]
+        if dCliDict.get("extra3"): dParamsFromFile["extra3"] = dCliDict["extra3"]
         dParams = dParamsFromFile
  
         # Construct output dir name from family, specific, and lifem from params.

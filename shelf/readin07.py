@@ -7,30 +7,30 @@ Read the parameter files into dictionaries.
 
 import csv
 from globaldata import *
-from NewTraceFac import TRC,trace,tracef
+from NewTraceFac import TRC,ntrace,ntracef
 from util import fnIntPlease
 import re
 
 
-@tracef("READ")
+@ntracef("READ")
 def fdGetClientParams(mysFile):
     lGuide = ["Institution",["Collection","Quality","Count"]]
     dParams = fdGetParams(mysFile,lGuide)
     return dParams
 
-@tracef("READ")
+@ntracef("READ")
 def fdGetServerParams(mysFile):
     lGuide = ["Name",["Quality","ShelfSize"]]
     dParams = fdGetParams(mysFile,lGuide)
     return dParams
 
-@tracef("READ")
+@ntracef("READ")
 def fdGetQualityParams(mysFile):
     lGuide = ["Rating",["SectorErrorMTTF","ShelfFailureMTTF"]]
     dParams = fdGetParams(mysFile,lGuide)
     return dParams
 
-@tracef("READ")
+@ntracef("READ")
 def fdGetParamsParams(mysFile):
     ''' fdGetParamsParams()
         In the dict of params returned from this, the param values
@@ -44,26 +44,26 @@ def fdGetParamsParams(mysFile):
     dParams = fdGetParams(mysFile,lGuide)
     return dParams
 
-@tracef("READ")
+@ntracef("READ")
 def fdGetDistnParams(mysFile):
     lGuide = ["Value",["Quality","Copies"]]
     dDistn = fdGetParams(mysFile,lGuide)
     return dDistn
 
-@tracef("READ")
+@ntracef("READ")
 def fdGetDocParams(mysFile):
     lGuide = ["Level",["Percent","Mean","Sdev"]]
     dParams = fdGetParams(mysFile,lGuide)
     return dParams
 
-@tracef("READ")
+@ntracef("READ")
 def fdGetAuditParams(mysFile):
     lGuide = ["Name",["Value"]]
     dParams = fdGetParams(mysFile,lGuide)
     return dParams
 
 
-@tracef("READ")
+@ntracef("READ")
 def fdGetParams(mysFile,mylGuide):
     ''' fdGetParams()
         Return a dictionary of entries from a CSV file according
@@ -83,7 +83,7 @@ def fdGetParams(mysFile,mylGuide):
         fh = open(mysFile,"r")
         fh.close()
     except (ValueError, IOError):
-        TRC.tracef(3,"READ","proc fdGetParams1 file not found |%s|" % (mysFile))
+        TRC.ntracef(3,"READ","proc fdGetParams1 file not found |%s|" % (mysFile))
         dParams = None
 
     # If there is such a file, then parse it and return its dictionary.
@@ -98,7 +98,7 @@ def fdGetParams(mysFile,mylGuide):
                 if re.match("^ *#",sLine) \
                 or re.match("^ *$",sLine.rstrip()):
                     lLines.remove(sLine)
-                    TRC.tracef(3,"READ","proc fdGetParams3 remove comment or blank line |%s|" % (sLine.strip()))
+                    TRC.ntracef(3,"READ","proc fdGetParams3 remove comment or blank line |%s|" % (sLine.strip()))
             # Now get the CSV args into a list of dictionaries.
             lRowDicts = csv.DictReader(lLines)
             for dRow in lRowDicts:
@@ -115,7 +115,7 @@ def fdGetParams(mysFile,mylGuide):
                     # Many of the values might be ints.
                     lVal.append(dNewRow[sCol])
                 dParams[intKey].append(lVal)
-                TRC.tracef(5,"READ","proc fdGetParams2 mylGuide|%s|dRow|%s|intKey|%s|lVal|%s|dParams|%s|" % (mylGuide,dRow,intKey,lVal,dParams))
+                TRC.ntracef(5,"READ","proc fdGetParams2 mylGuide|%s|dRow|%s|intKey|%s|lVal|%s|dParams|%s|" % (mylGuide,dRow,intKey,lVal,dParams))
     return dParams
 
 # END
