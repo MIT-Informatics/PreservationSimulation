@@ -1,6 +1,9 @@
+asdl;fjalsk;fj
+            RBL 20150425
+
 
 in db:
-  incl 11 seeds or 21
+  incl 11 seeds or 21, separate databases for these
   select by criteria
   dictionary object, one seed per
 
