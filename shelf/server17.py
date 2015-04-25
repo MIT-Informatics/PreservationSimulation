@@ -663,6 +663,9 @@ class CLifetime(object):
     halflife = ln(2) * exponentiallifetime
     exponentiallifetime = halflife / ln(2)
     lifetime = 1 / rate    and v-v    rate = 1 / lifetime
+    E.g., half-life of 1000 causes arrivals at 1443 intervals; 
+    HL 2500 causes arrivals at 3540 intervals.  So
+    HL 693 should cause arrivals at 1000 intervals.  Verified.  
     
     decaylevel = exp(-ln(2) * (timediff / glitchhalflife))
     losspct = impactpct * decaylevel

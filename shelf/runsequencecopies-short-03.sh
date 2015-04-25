@@ -31,8 +31,8 @@ fi
 for copies in 01 02 03 04 05                    # for short runs
 #for copies in 01 02                             # for testing
 do
-    echo "python runsequence.py $1/logb$2/c`echo $copies`b$2.txt --ncores=$ncorestoday"
-    python runsequence.py $1/logb$2/c`echo $copies`b$2.txt --ncores=$ncorestoday
+    echo "python runsequence.py $1/$2/logb$3/c`echo $copies`b$3.txt --ncores=$ncorestoday"
+    python runsequence.py $1/$2/logb$3/c`echo $copies`b$3.txt --ncores=$ncorestoday
 done
 
 #END

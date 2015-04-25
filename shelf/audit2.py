@@ -358,6 +358,7 @@ class CAudit2(object):
         return fTransferTime
 
 # C A u d i t . m R e p o r t A u d i t S t a t s 
+    @tracef("AUD2")
     def mReportAuditStats(self):
         '''\
         Return list of stats.  Yes, you have to know the order.
@@ -367,6 +368,7 @@ class CAudit2(object):
             ,self.nPermanentLosses,self.nRepairsMinority)
 
 # C A u d i t 2 . m d R e p o r t A u d i t S t a t s 
+    @tracef("AUD2")
     def mdReportAuditStats(self):
         '''\
         Return a dictionary of relevant stats.  Not positional anymore.

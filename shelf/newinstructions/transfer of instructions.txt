@@ -1,0 +1,57 @@
+
+in db:
+  incl 11 seeds or 21
+  select by criteria
+  dictionary object, one seed per
+
+broker:
+  foreach selected run
+  format instruction for actor
+    generator for instruction list
+    yield next instruction
+  if no runner, spawn one
+  if no cleaner, spawn one
+
+  get results returned by caller (runner) 
+  (how? do results correspond to last output? no.)
+  (do NOT wait for results before next yield)
+  post results to Results table
+  post _id in Done table
+
+
+runner (one copy):
+  (no mongodb knowledge from here out)
+  is there a core available?
+    pull next instruction from list
+    create run instruction
+    create extract instruction
+    spawn a listactor for command in list, with &
+    return results to broker
+
+
+listactor (NCORES copies):
+  gets list of command strings
+  spawns an actor for each string, in succession
+  maybe just dumb command sequencer, gets list of shell syntax
+  one line, one run
+  all options fleshed out literally, no substitutions
+
+run
+  python main.py . . . .
+  single line instruction
+  no & for asynchrony
+  output redirected to log file
+
+get one liner
+  sh getalllines-new.sh - not needed
+  python extractvalues.py logfile 
+  single line output redirected to file
+
+
+Cleaner (one copy, free running):
+  look for single-line files
+  foreach file
+    parse file into dictionary
+    store in db Results table
+    append to master results file
+

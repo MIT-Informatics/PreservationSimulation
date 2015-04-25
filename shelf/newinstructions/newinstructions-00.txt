@@ -1,0 +1,91 @@
+New instruction creation and brokerage for Digital Document Preservation simulations
+                        RBL 20150412
+
+Create db.
+  Clear all db tables we will use.
+    Pending, Done, Results
+
+Create instructions
+  Make a set of instructions for some subset of the search space.
+    makeinstructions
+
+Insert instructions into db
+  Parse line of instructions.  Form dictionary.
+  Add dict to Pending table in d`b.
+    fnFileToDb(file, separator, collection)
+
+Select instructions from db and run
+  Query Pending records that match criteria sorted by ID.
+    collection.find( various criteria ).sort("_id", 1)
+  Sort Done table by ID.
+    Done.find().sort("_id", 1)
+  Filter out IDs from Done table.
+    (sliding compare of two sorted lists)
+    Nope, just look for "not in" Done table
+    
+Run with instructions
+  Wait for a free core.
+  Launch program with instruction.
+  Wait for program to finish.
+  Extract results from log file, add to db.
+  Add instruction ID to Done table in db.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+WORK DB
+make db of all possible test runs
+may have tags attached
+may be prioritized within tag
+may be prioritized
+
+ANSWER DB
+expanding list of results
+
+BROKER
+accept request from a distributor
+filter work items that match criteria
+iterate list of work items
+  hand top item to distributor
+  wait for response
+
+
+DISTRIBUTOR
+read instructions about categories and other criteria
+monitor free cores 
+  request work from broker
+  format instructions for worker process
+  spawn new process to do work
+  wait for process to finish
+  receive result log file
+  reduce result log file to single line
+  append result line to answer db
+  tell broker that that piece of work is done
+
+
+
+

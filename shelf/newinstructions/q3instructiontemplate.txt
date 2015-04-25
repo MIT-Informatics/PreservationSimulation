@@ -1,0 +1,7 @@
+# Template for Q3 instruction strings
+
+auditfreq auditsegments audittype docsize glitchdecay glitchfreq glitchignorelevel glitchimpact glitchmaxlife lifem ncopies randomseed shelfsize simlen
+
+{auditfreq} {auditsegments} {audittype} {docsize} {glitchdecay} {glitchfreq} {glitchignorelevel} {glitchimpact} {glitchmaxlife} {lifem} {ncopies} {randomseed} {shelfsize} {simlen}
+
+
