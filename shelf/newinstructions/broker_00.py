@@ -1,0 +1,339 @@
+#!/usr/bin/python
+# broker.py
+
+import  argparse
+from    NewTraceFac     import NTRC,ntrace,ntracef
+import  mongolib
+
+
+@ntracef("CLI")
+def fndCliParse(mysArglist):
+    ''' Parse the mandatory and optional positional arguments, and the 
+         many options for this run from the command line.  
+        Return a dictionary of all of them.  
+    '''
+    sVersion = "0.0.1"
+    cParse = argparse.ArgumentParser(description="Digital Library Preservation Simulation Instruction Broker CLI v"+sVersion+"  "+
+        "Enter either a value or a MongoDB dictionary spec " + 
+        "in curly braces for $gt, $lt, etc., for each option.  " + 
+        "Note that special characters such as $ { } must be escaped " +
+        "or single-quoted to protect them from the shell.  " + 
+        "" 
+        ,epilog="Defaults for args as follows: (none)\n"
+        , version=sVersion)
+    
+    # P O S I T I O N A L  arguments
+    #cParse.add_argument('--something', type=, dest='', metavar='', help='')
+
+    cParse.add_argument('sDatabaseName', type=str
+                        , metavar='sDATABASENAME'
+                        , help='Name of MongoDB database that pymongo will find.'
+                        )
+
+    cParse.add_argument('sPendingCollectionName', type=str
+                        , metavar='sPENDINGCOLLECTIONNAME'
+                        , help='Collection name within the database of the instructions to be executed.'
+                        )
+
+    cParse.add_argument('sDoneCollectionName', type=str
+                        , metavar='sDONECOLLECTIONNAME'
+                        , help='Collection name within the database of the instructions that have been completed.'
+                        )
+
+    # - - O P T I O N S
+
+    cParse.add_argument("--ncopies", type=str
+                        , dest='nCopies'
+                        , metavar='nCOPIES'
+                        , nargs='?'
+                        , help='Number of copies in session.'
+                        )
+
+    cParse.add_argument("--lifem", "--lifetimemegahours", type=str
+                        , dest='nLifem'
+                        , metavar='nLIFE_Mhrs'
+                        , nargs='?'
+                        , help='Sector mean lifetime for storage shelf.'
+                        )
+
+    cParse.add_argument("--auditfreq", type=str
+                        , dest='nAuditFreq'
+                        , metavar='nAUDITCYCLEINTERVAL_hrs'
+                        , nargs='?'
+                        , help='Hours between auditing cycles; zero=no auditing.'
+                        )
+
+    cParse.add_argument("--audittype", type=str
+                        , dest='sAuditStrategy'
+                        , choices=['TOTAL','OFF']
+                        , nargs='?'
+                        , help='Strategy for auditing, default=SYSTEMATIC.'
+                        )
+
+    cParse.add_argument("--auditsegments", type=str
+                        , dest='nAuditSegments'
+                        , metavar='nAUDITSEGMENTS'
+                        , nargs='?'
+                        , help='Number of subsamples per audit cycle, default=1.'
+                        )
+
+    cParse.add_argument("--glitchfreq", type=str
+                        , dest='nGlitchFreq'
+                        , metavar='nGLITCHFREQ_hrs'
+                        , nargs='?'
+                        , help='Half-life of intervals between glitches; 0=never happens.'
+                        )
+
+    cParse.add_argument("--glitchimpact", type=str
+                        , dest='nGlitchImpact'
+                        , metavar='nGLITCHIMPACT_pct'
+                        , nargs='?'
+                        , help='Percent reduction in sector lifetime due to glitch; 100%%=fatal to shelf.'
+                        )
+
+    cParse.add_argument("--glitchdecay", type=str
+                        , dest='nGlitchDecay'
+                        , metavar='nGLITCHDECAY_hrs'
+                        , nargs='?'
+                        , help='Half-life of glitch impact exponential decay; zero=infinity.'
+                        )
+
+    cParse.add_argument("--glitchmaxlife", type=str
+                        , dest='nGlitchMaxlife'
+                        , metavar='nGLITCHMAXLIFE_hrs'
+                        , nargs='?'
+                        , help='Maximum duration of glitch impact, which ceases after this interval; zero=infinity.'
+                        )
+
+    cParse.add_argument("--shelfsize", type=str
+                        , dest='nShelfSize'
+                        , metavar='nSHELFSIZE_TB'
+                        , nargs='?'
+                        , help='Size for storage shelf in TB.'
+                        )
+   
+    cParse.add_argument("--docsize", type=str
+                        , dest='nDocSize'
+                        , metavar='nDOCSIZE_MB'
+                        , nargs='?'
+                        , help='Document size in MB.'
+                        )
+   
+
+    if mysArglist:          # If there is a specific string, use it.
+        (xx) = cParse.parse_args(mysArglist)
+    else:                   # If no string, then parse from argv[].
+        (xx) = cParse.parse_args()
+
+    return vars(xx)
+
+# f n M a y b e O v e r r i d e 
+@ntrace
+def fnMaybeOverride(mysCliArg,mydDict,mycClass):
+    ''' Strange function to override a property in a global dictionary
+        if there is a version in the command line dictionary.  
+    '''
+    try:
+        if mydDict[mysCliArg]:
+            setattr( mycClass, mysCliArg, mydDict[mysCliArg] )
+    except KeyError:
+            if not getattr(mycClass,mysCliArg,None):
+                setattr( mycClass, mysCliArg, None )
+    return getattr(mycClass,mysCliArg,"XXXXX")
+
+# class   C G   f o r   g l o b a l   d a t a 
+class CG(object):
+    ''' Global data.
+    '''
+    nCopies = None
+    nLifem = None
+    nAuditCycleInterval = None
+    sAuditStrategy = None
+    nAuditSegments = None
+    nGlitchFreq = None
+    nGlitchImpact = None
+    nGlitchDecay = None
+    nGlitchMaxlife = None
+    nShelfSize = None
+    nDocSize = None
+
+# f n W a i t F o r O p e n i n g 
+@ntrace
+def fnWaitForOpening(mynProcessMax,mysProcessName,mynWaitTime,mynWaitLimit):
+    ''' Wait for a small, civilized number of processes to be running.  
+        If the number is too large, wait a while and look again.  
+        But don't wait forever in case something is stuck.  
+        Args: 
+        - max nr of processes, including maybe this one
+        - process name to look for
+        - wait time between retries
+        - max nr of retries before giving up
+    '''
+    cCmd = CCommand()
+    dParams = dict()
+    dParams['Name'] = mysProcessName
+    for idx in range(mynWaitLimit):
+        sCmd = "ps | grep {Name} | wc -l"
+        sFullCmd = cCmd.makeCmd(sCmd,dParams)
+        sResult = cCmd.doCmdStr(sFullCmd)
+        nResult = int(sResult)
+        NTRC.trace(3,"proc WaitForOpening1 idx|%d| cmd|%s| result|%s|" % (idx,sFullCmd,sResult))
+        if nResult < mynProcessMax + 1 if (mysProcessName.find("python") >= 0) else 0:
+            break
+        NTRC.trace(3,"proc WaitForOpening2 sleep and do again idx|%d| nResult|%d|" % (idx,nResult))
+        sleep(mynWaitTime)
+    return (idx < mynWaitLimit-1)
+
+
+
+@ntrace
+def fndFormatQuery(mydCli):
+    dOut = dict()
+    for sAttrib,sValue in mydCli.items():
+        if sValue is not None:
+            dOut[sAttrib] = sValue
+    del dOut["sDatabaseName"]
+    del dOut["sPendingCollectionName"]
+    del dOut["sDoneCollectionName"]
+    return dOut
+
+@ntrace
+def fnlFormatCommandsForInstructions(myd):
+    pass
+
+@ntrace
+def fnsFormatCommandForActor(myd):
+    pass
+
+
+
+# class   C C o m m a n d
+class CCommand(object):
+    '''
+    class CCommand: Execute a CLI command, parse results
+    using a regular expression supplied by the caller.  
+    '''
+
+    @ntrace
+    def doCmdStr(self,mysCommand):
+        ''' Return concatenated string of result lines with newlines stripped.  
+        '''
+        sResult = ""
+        for sLine in popen(mysCommand):
+            sResult += sLine.strip()
+        return sResult
+        
+    @ntrace
+    def doCmdLst(self,mysCommand):
+        ''' Return list of result lines with newlines stripped.  
+        '''
+        lResult = list()
+        for sLine in popen(mysCommand):
+            lResult.append(sLine.strip())
+        return lResult
+        
+    @ntrace
+    def doParse(self,mysCommand,mysRegex):
+        sOutput = self.doCmd(mysCommand)
+        mCheck = search(mysRegex,sOutput)
+        if mCheck:
+            sResult = mCheck.groups()
+        else:
+            sResult = None
+        return sResult
+
+    @ntrace
+    def makeCmd(self,mysCmd,mydArgs):
+        ''' Substitute arguments into command template string.  
+        '''
+        sCmd = mysCmd.format(**mydArgs)
+        return sCmd
+
+
+'''
+process:
+- for each instruction from database selection, get dict for line
+- using dict args, construct plausible command lines, into file
+- check to see that there aren't too many similar processes running already
+- if too many processes already running, wait a while and look again.
+- launch ListActor process to execute commands
+- wait a while before launching another
+'''
+
+# M A I N 
+@ntrace
+def main():
+    NTRC.ntrace(0,"Begin.")
+    g = CG()                # One instance of the global data.
+    # Get args from CLI and put them into the global data
+    dCliDict = fndCliParse("")
+    # Carefully insert any new CLI values into the Global object.
+    fnMaybeOverride("sDatabaseName", dCliDict, g)
+    fnMaybeOverride("sPendingCollectionName", dCliDict, g)
+    fnMaybeOverride("sDoneCollectionName", dCliDict, g)
+
+    #
+    sQuery = fndFormatQuery(dCliDict)
+    NTRC.trace(0,"proc querydict|%s|" % (str(sQuery)))
+
+    # 
+    oDb = mongolib.fnoOpenDb(g.sDatabaseName)
+    oPendingCollection = oDb[g.sPendingCollectionName]
+    nRecordCount = oPendingCollection.count()
+    NTRC.ntrace(0,"nRecs|{}|".format(nRecordCount))
+    
+    
+    """
+    # Process the instructions one line at a time.
+    for idx in range(len(lParams)):
+        # Wait until at least one core is free.  
+        bContinue = fnWaitForOpening(g.nCores,"python",g.nCoreTimer,g.nStuckLimit)
+        if bContinue:
+            # Substitute params and execute command.
+            dParams = lParams[idx]
+            sFullCmd = cCommand.makeCmd(sCommand,dParams)
+            # Print something to let the user know there is progress.
+            print '-----------------'
+            NTRC.trace(0,sFullCmd)
+            print '-----------------'
+            lResult = cCommand.doCmdLst(sFullCmd)
+            for sResult in lResult:
+                NTRC.trace(0,sResult)
+            print '-----------------'
+            sleep(g.nPoliteTimer)
+        else:
+            NTRC.trace(0,"OOPS, Stuck!  Too many python processes running forever.")
+            break
+    """
+
+#
+# E n t r y   p o i n t . 
+if __name__ == "__main__":
+    main()
+
+#END
+
+'''
+main events in the broker:
+cli
+form request to db
+start stream from db
+foreach item
+  wait for slot
+  if _id is in done tbl continue
+  format instructions into cmds
+  write cmds into file
+  format cmd for listactor
+  start a listactor
+
+cleaner:
+poll every, oh, minute
+foreach log file in some holding dir
+  move log file to its permanent home
+foreach single-line file in holding dir
+  append line to combined results file
+  add _id to done tbl of db
+  delete one-liner
+
+
+'''

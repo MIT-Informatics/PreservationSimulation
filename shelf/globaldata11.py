@@ -62,7 +62,7 @@ class ProtoG(object):
     nGlitchMaxlife = 0      # Max duration of a single glitch impact.  
     fGlitchIgnoreLimit = 0.05   # Level below which a glitch stops.
     nGlitchesTotal = 0      # Count of all glitches on all shelves.
-
+    sMongoId = None         # MongoDB _id of the instruction for this run.
 
 class P(object):
     ''' Parameters r/o for the simulation run. 
