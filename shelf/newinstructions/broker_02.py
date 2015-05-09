@@ -216,8 +216,8 @@ class CG(object):
 
 
     # TEMP TEMP TEMP
-    sShelfRunCmdTemplate = 'pwd'
-    sExtractCmdTemplate = 'python test/fib.py 42'
+    sShelfRunCmdTemplate = 'ps | grep python'
+    sExtractCmdTemplate = 'python test/fib.py 41'
     # END
 
     # The listactor command must redirect all output to a file.
@@ -267,9 +267,9 @@ def fnbWaitForOpening(mynProcessMax,mysProcessName,mynWaitTime,mynWaitLimit):
         nResult = int(sResult)
         NTRC.trace(3,"proc WaitForOpening1 idx|%d| cmd|%s| result|%s|" % (idx,sFullCmd,sResult))
         if mysProcessName.find("python") >= 0:
-            nOtherProcs = nResult - 1
-            nRealProcs = int(nOtherProcs / 2)
-            if nRealProcs < mynProcessMax: break
+            nOtherProcs = nResult - 1               # Processes that are not me.
+            nRealProcs = int(nOtherProcs / 2)       # They come in pairs.
+            if nRealProcs < mynProcessMax: break    # If there's still room, go to it.
         else:
             if nResult < mynProcessMax: break
         NTRC.trace(3,"proc WaitForOpening2 sleep and do again idx|%d| nResult|%d|" % (idx,nResult))
@@ -439,8 +439,8 @@ def main():
     itCurrentSet = oPendingCollection.find(dQuery)
 
     # Allow user to override number of cores to use today.
-    g.nCores = os.getenv("NCORES", CG.nCores)    
-    # And check for short test run.  
+    g.nCores = int(os.getenv("NCORES", CG.nCores))
+    # And check for short test run.
     maxcount = int(g.nTestLimit)
     
     for dInstruction in itCurrentSet: 
