@@ -439,7 +439,10 @@ def main():
     itCurrentSet = oPendingCollection.find(dQuery)
 
     # Allow user to override number of cores to use today.
-    g.nCores = int(os.getenv("NCORES", CG.nCores))
+    try:
+        g.nCores = int(os.getenv("NCORES", CG.nCores))
+    except (ValueError, TypeError):
+        raise TypeError('Environment variable NCORES must be an integer.')
     # And check for short test run.
     maxcount = int(g.nTestLimit)
     
