@@ -272,7 +272,7 @@ def fndGetSyntheticVars():
         % (yr,mo,da,hr,mins,sec)
     dTemp["todaysdatetime"] = sAsciiT
 
-    dTemp["extractorversion"] = "0.4"
+    dTemp["extractorversion"] = "0.5"
 
     return dTemp
 

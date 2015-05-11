@@ -67,6 +67,15 @@ def fndCliParse(mysArglist):
                         , help='Sector mean lifetimes for storage shelf (types from 1 up to 5) in kilo-hours, 0=no change'
                         )
 
+    """
+    cParse.add_argument("--lifem", "--lifetimemegahours", type=int
+                        , dest='lBERm'
+                        , metavar='nLIFE_Mhrs'
+                        , nargs='*'
+                        , help='Sector mean lifetimes for storage shelf (types from 1 up to 5) in mega-hours, 0=no change'
+                        )
+    """
+    
     cParse.add_argument("--shelfsize", type=int
                         , dest='lShelfSize'
                         , metavar='nSHELFSIZE_TB'
