@@ -147,9 +147,10 @@ def fnldParseInput(mysFilename):
         lTemplate = map( lambda sLine: sLine.rstrip().replace("###","").replace("##","#"), lTemplate )
         TRC.tracef(3,"INPT","proc ParseInput template|%s|" % (lTemplate))
 
-        lAllTemplateNames = [lTemplateNamesOneLine for lTemplateLine.split() in lTemplate]
-        lNewTemplate = [ for g.sSeparator.join(lTemplateNamesOneLine) in lAllTemplateNames]
-
+        # Fix the separator in the template according to the user spec.
+        lAllTemplateNames = [lTemplateLine.split() for lTemplateLine in lTemplate]
+        lNewTemplate = [g.sSeparator.join(lTemplateNamesOneLine) \
+            for lTemplateNamesOneLine in lAllTemplateNames]
 
         # Now get the CSV args into a dictionary of dictionaries.
         lVarLines = fnlLinesInRange(lLines,"^=variables","^=thiswillnotbefound")
@@ -159,8 +160,8 @@ def fnldParseInput(mysFilename):
         dParams = dict( map( lambda dRowDict:   \
             (dRowDict["varname"],dRowDict)      \
             , lRowDicts ))
-        
-    return (lTemplate,dParams)
+
+    return (lNewTemplate,dParams)
 
 @tracef("INPT")
 def fnlLinesInRange(mylLines,mysStart,mysStop):
@@ -303,7 +304,9 @@ class CG(object):
 if "__main__" == __name__:
     g = CG()
     #read filename and options from cli
-    fndCliParse("")
+    dCliDict = fndCliParse("")
+    dCliDictClean = {k:v for k,v in dCliDict.items() if v is not None}
+    g.__dict__.update(dCliDictClean)
     timestart = clock()
     main(g.sInstructionsFileName,g.sLogFileName)
     timestop = clock()
