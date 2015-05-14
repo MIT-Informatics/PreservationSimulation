@@ -12,7 +12,7 @@
 # The header line will be output or not, depending on the 
 #  --header CLI option or the "header" environment variable.  
 # Bzzzt: new news: the header spec here is now irrelevant.  The 
-#  header output will be the template with the braces stripped.  
+#  header output will be just the template with the braces stripped.  
 #=header
 #asdf asdf xyzzy qwerty iou jkl mnop 
 

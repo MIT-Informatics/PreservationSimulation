@@ -1,0 +1,1 @@
+timestamp docsize copies lifem simlength seed lost docstotal docsokay docsrepairedmajority docsrepairedminority docslost auditcycles auditfrequency auditsegments auditrepairs auditmajority auditminority auditlost glitchfreq glitchimpact glitchdecay glitchmaxlife nglitches walltime cputime logfilename logfilesize instructionfilename todaysdatetime extractorversion mongoid

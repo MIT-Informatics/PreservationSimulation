@@ -7,7 +7,7 @@ import  re
 import  time
 import  json
 from    NewTraceFac     import NTRC,ntrace,ntracef
-#import  mongolib
+import  mongolib
 import  csv
 
 
@@ -18,10 +18,10 @@ def fndCliParse(mysArglist):
         Return a dictionary of all of them.  
     '''
     sVersion = "0.0.1"
-    cParse = argparse.ArgumentParser(description="Digital Library Preservation Simulation Instruction Broker CLI v"+sVersion+"  "+
-        "Process a file with the (single-line plus header line) results of a .  " + 
+    cParse = argparse.ArgumentParser(description="Digital Library Preservation Simulation DataCleanup, CLI v"+sVersion+"  "+
+        "Process a file with the (single-line plus header line) results of a " + 
         "simulation run.  Add the result to the done collection of the database" +
-        "(if not already done), append the single line to the giant output file," +
+        "(if not already there), append the single line to the giant output file," +
         "and then delete the input file so we don't bother to look at it again." +
         "" 
         , epilog="Defaults for args as follows: separator=blank, \n"
@@ -68,6 +68,12 @@ def fndCliParse(mysArglist):
                         , help='TESTING ONLY: do not delete the input file after processing.'
                         )
     
+    cParse.add_argument("--donotrecord", type=str
+                        , dest='sDoNotRecord'
+                        , choices=['YES','Y','NO','N']
+                        , nargs='?'
+                        , help='TESTING ONLY: do not record the line in the done collection of the database.'
+                        )
 
     if mysArglist:          # If there is a specific string, use it.
         (xx) = cParse.parse_args(mysArglist)
@@ -117,6 +123,7 @@ class CG(object):
     sInputFilename = None
     sGiantOutputFilename = None
     sDoNotDelete = "N"
+    sDoNotRecord = "N"
 
     '''
     Directory structure under the family/specific dir:
@@ -137,10 +144,11 @@ def main():
     Open the file given on the command line.
     Open the database given on the command line.
     Read the two lines from the file.
-    If the mongoid appears in the done collection of the database, 
-     then   end.
+    If the sDoneId(=mongoid) already appears in the done collection 
+     of the database, 
+    Then    end.
     Else    dictionary-ify the data (maybe csvreader already did that for us).
-            add the dict to the done collection.
+            add the dict to the done collection, including the sDoneId field.
             end.
     
     '''
@@ -148,35 +156,55 @@ def main():
     # Get args from CLI and put them into the global data
     dCliDict = fndCliParse("")
     # Carefully insert any new CLI values into the Global object.
-    fnMaybeOverride("sDatabaseName", dCliDict, g)
-    fnMaybeOverride("sDoneCollectionName", dCliDict, g)
-    fnMaybeOverride("sInputFilename", dCliDict, g)
+    dCliDictClean = {k:v for k,v in dCliDict.items() if v is not None}
+    g.__dict__.update(dCliDictClean)
 
-    NTRC.tracef(0,"MAIN","proc querydict|%s|" % ((dQuery)))
-    # Query pending instructions to get subset of work for today.
-    oDb = mongolib.fnoOpenDb(g.sDatabaseName)
-    oDoneCollection = oDb[g.sDoneCollectionName]
-
-    # Construct database query for this invocation.
+    # Get data from the extract file: one line of header, one line of data.
     with open(g.sInputFilename,'r') as fhInput:
         oReader = csv.reader(fhInput, delimiter=g.sSeparator)
         lHeader = oReader.next()
         lValues = oReader.next()
+        NTRC.tracef(3, "MAIN", "proc lHeader|%s|" % (lHeader))
+        NTRC.tracef(3, "MAIN", "proc lValues|%s|" % (lValues))
     dValues = dict(zip(lHeader, lValues))
-    dQuery = {"mongoid" : dValues["mongoid"]}
+    NTRC.tracef(3, "MAIN", "proc dValues|%s|" % (dValues))
 
+    # Construct database query for this invocation.  
+    dQuery = {"sDoneId" : dValues["mongoid"]}
+    NTRC.tracef(0,"MAIN","proc querydict|%s|" % ((dQuery)))
+
+    # Is this extract already stored in the database?
+    #  If so, skip all this work.
+    oDb = mongolib.fnoOpenDb(g.sDatabaseName)
+    oDoneCollection = oDb[g.sDoneCollectionName]
     lMatches = list(oDoneCollection.find(dQuery))
     NTRC.ntracef(0,"MAIN","proc main lMatches|{}|".format(lMatches))
-    if len(lMatches) > 0:
-        oDoneCollection.write(dValues)
-        with open(g.sGiantOutputFile,'a') as fhOutput:
-            fhOutput.write(g.sSeparator.join(lValues))
-        os.remove(g.sInputFilename)
+    if len(lMatches) == 0:
+        
+        # Maybe record the done record in db.
+        if g.sDoNotRecord.startswith("Y"):
+            NTRC.tracef(0, "MAIN", "proc Done not recorded.")
+        else:
+            dValues["sDoneId"] = dValues["mongoid"]
+            oDoneCollection.insert_one(dValues)
+
+        # Always add a line of data to the giant output file.
+        sLineOut = g.sSeparator.join(lValues)
+        NTRC.tracef(0, "MAIN", "proc sLineOut|%s|" % (sLineOut))
+        with open(g.sGiantOutputFilename,'a') as fhOutput:
+            fhOutput.write(sLineOut + "\n")
+            NTRC.tracef(3, "MAIN", "proc wroteline|%s|" % (sLineOut))
+
+        # Maybe delete the extract file.
+        if g.sDoNotDelete.startswith("Y"):
+            NTRC.tracef(0, "MAIN", "proc Input file not deleted.")
+        else:
+            os.remove(g.sInputFilename)
+            NTRC.tracef(3,"MAIN", "proc fileremoved|%s|" % (g.sInputFilename))
 
     NTRC.ntracef(0,"MAIN","End.")
 
 
-#
 # E n t r y   p o i n t . 
 if __name__ == "__main__":
     g = CG()
