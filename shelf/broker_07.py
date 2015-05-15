@@ -211,6 +211,7 @@ class CG(object):
     nCores = 8              # default, overridden by NCORES env var
     nCoreTimer = 10         # wait for a free core,
     nPoliteTimer = 10       # wait between launches.
+    nPoliteTimer =  5       # shorter wait between launches.
     nStuckLimit = 100       # max nr of CoreTimer waits before giving up.
     nTestLimit = 0          # max nr of runs for a test run, 0=infinite
     sTestCommand = "NO"     # should just echo commands instead of executing them?

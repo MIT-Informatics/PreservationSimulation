@@ -35,7 +35,7 @@ python main.py {sFamilyDir} {sSpecificDir} {nSimlen} {nRandomseed} --ncopies={nC
 # Data extraction command.  Header must be forced here so that the 
 #  cleanup program can label the data fields correctly.
 
-python extractvalues.py --header --separator=' ' q3-extractinstructions-01.txt {sFamilyDir}/{sSpecificDir}/log/{sShelfLogFileName}.log  >  {sFamilyDir}/{sSpecificDir}/ext/{sShelfLogFileName}.ext
+python extractvalues.py --header --separator=' ' q3-extractinstructions.txt {sFamilyDir}/{sSpecificDir}/log/{sShelfLogFileName}.log  >  {sFamilyDir}/{sSpecificDir}/ext/{sShelfLogFileName}.ext
 
 # Data cleanup command.  
 

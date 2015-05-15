@@ -1,3 +1,0 @@
-auditfreq auditsegments audittype docsize glitchdecay glitchfreq glitchignorelevel glitchimpact glitchmaxlife lifem ncopies randomseed shelfsize simlen
-0 1 TOTAL 50 0 0 5 10 0 3 1 919028296 10 100000
-0 1 TOTAL 50 0 0 5 10 0 3 1 103765041 10 100000

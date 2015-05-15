@@ -82,29 +82,6 @@ def fndCliParse(mysArglist):
 
     return vars(xx)
 
-# f n M a y b e O v e r r i d e 
-@ntracef("CLI")
-def fnMaybeOverride(mysCliArg,mydDict,mycClass):
-    ''' Strange function to override a property in a global dictionary
-        if there is a version in the command line dictionary.  
-    '''
-    try:
-        if mydDict[mysCliArg]:
-            setattr( mycClass, mysCliArg, mydDict[mysCliArg] )
-    except KeyError:
-            if not getattr(mycClass, mysCliArg, None):
-                setattr(mycClass, mysCliArg, None)
-    return getattr(mycClass, mysCliArg, "XXXXX")
-
-# f n I n t P l e a s e 
-@ntracef("INT",level=5)
-def fnIntPlease(myString):
-    # If it looks like an integer, make it one.
-    try:
-        return int(myString)
-    except ValueError:
-        return myString
-
 
 # class   C G   f o r   g l o b a l   d a t a 
 class CG(object):
