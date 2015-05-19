@@ -16,7 +16,7 @@ def fndCliParse(mysArglist):
          many options for this run from the command line.  
         Return a dictionary of all of them.  
     '''
-    sVersion = "0.0.3"
+    sVersion = "0.0.4"
     cParse = argparse.ArgumentParser(description="Digital Library Preservation Simulation Instruction Broker CLI v"+sVersion+"  "+
         "Enter either a value or a MongoDB dictionary spec " + 
         "that is a valid JSON dictionary string.  \n" + 
@@ -160,7 +160,20 @@ def fndCliParse(mysArglist):
                         , nargs='?'
                         , help='TESTING ONLY: use fako Fibonacci CPU intensive process instead of real stuff.'
                         )
-    
+
+    cParse.add_argument("--listonly", type=str
+                        , dest='sListOnly'
+                        , choices=['YES','Y','NO','N']
+                        , nargs='?'
+                        , help='List all chosen cases to stdout.  Do nothing else.'
+                        )
+
+    cParse.add_argument("--redo", type=str
+                        , dest='sRedo'
+                        , choices=['YES','Y','NO','N']
+                        , nargs='?'
+                        , help='Force these cases to be redone, even if they have been done before.'
+                        )
 
     if mysArglist:          # If there is a specific string, use it.
         (xx) = cParse.parse_args(mysArglist)
@@ -168,29 +181,6 @@ def fndCliParse(mysArglist):
         (xx) = cParse.parse_args()
 
     return vars(xx)
-
-# f n M a y b e O v e r r i d e 
-@ntracef("CLI")
-def fnMaybeOverride(mysCliArg,mydDict,mycClass):
-    ''' Strange function to override a property in a global dictionary
-        if there is a version in the command line dictionary.  
-    '''
-    try:
-        if mydDict[mysCliArg]:
-            setattr( mycClass, mysCliArg, mydDict[mysCliArg] )
-    except KeyError:
-            if not getattr(mycClass, mysCliArg, None):
-                setattr(mycClass, mysCliArg, None)
-    return getattr(mycClass, mysCliArg, "XXXXX")
-
-# f n I n t P l e a s e 
-@ntracef("INT",level=5)
-def fnIntPlease(myString):
-    # If it looks like an integer, make it one.
-    try:
-        return int(myString)
-    except ValueError:
-        return myString
 
 
 # class   C G   f o r   g l o b a l   d a t a 
@@ -210,12 +200,13 @@ class CG(object):
     nDocSize = None
     nCores = 8              # default, overridden by NCORES env var
     nCoreTimer = 10         # wait for a free core,
-    nPoliteTimer = 10       # wait between launches.
     nPoliteTimer =  5       # shorter wait between launches.
-    nStuckLimit = 100       # max nr of CoreTimer waits before giving up.
+    nStuckLimit = 300       # max nr of CoreTimer waits before giving up.
     nTestLimit = 0          # max nr of runs for a test run, 0=infinite
     sTestCommand = "NO"     # should just echo commands instead of executing them?
     sTestFib = "NO"         # should use Fibonacci calc instead of real programs?
+    sListOnly = "NO"        # Just list out all cases matching the stated criteria.  Don't execute.
+    sRedo = "NO"            # Force cases to be redone (recalculated)?
 
     sFamilyDir = '../q3'
     sSpecificDir = '.'
@@ -286,6 +277,15 @@ def fnbDoNotIgnoreLine(mysLine):
     '''
     # Ignore comment and blank lines.
     return (not re.match("^\s*#",mysLine)) and (not re.match("^\s*$",mysLine))
+
+# f n I n t P l e a s e 
+@ntracef("INT",level=5)
+def fnIntPlease(myString):
+    # If it looks like an integer, make it one.
+    try:
+        return int(myString)
+    except ValueError:
+        return myString
 
 # f n W a i t F o r O p e n i n g 
 @ntracef("WAIT")
@@ -482,6 +482,12 @@ class CDatabase(object):
         NTRC.ntracef(3,"DB","proc check donelist id|%s| list|%s|" % (mysInstructionId, lMaybeDone))
         return len(lMaybeDone) > 0
 
+    @ntracef("DB")
+    def fnbDeleteDoneRecord(self,mysInstructionId):
+        dIsItDone = { "sDoneId" : mysInstructionId }
+        result = self.oDoneCollection.remove(dIsItDone)
+        NTRC.ntracef(3,"DB","proc DeleteDone result|%s|" % (result))
+        return result["ok"] != 0
 
 # M A I N 
 @ntracef("MAIN")
@@ -532,45 +538,56 @@ def main():
     for dInstruction in itAllInstructions: 
         NTRC.ntracef(3,"MAIN","proc main instruction\n|%s|" % (dInstruction))
 
-        # If this instruction has already been processed skip it.
         sInstructionId = str(dInstruction["_id"])
+        # If the user insists, redo this case.
+        if g.sRedo.startswith("Y"):
+            NTRC.ntracef(0,"MAIN","proc force redo for item id|%s|" % (sInstructionId))
+            cdb.fnbDeleteDoneRecord(sInstructionId)
+
+        # If this instruction has already been processed skip it.
         bIsItDone = cdb.fnbIsItDone(sInstructionId)
         if bIsItDone: 
             NTRC.ntracef(0,"MAIN","proc skip item already done id|%s|" % (sInstructionId))
             continue
 
-        bContinue = fnbWaitForOpening(g.nCores,"python",g.nCoreTimer,g.nStuckLimit)
-        if bContinue:
-            nRunNumber += 1
-            # Format commands to be executed by actor.
-            g.sShelfLogFileName = cFmt.msGentlyFormat(g.sShelfLogFileTemplate, dInstruction)
-            g.lCommands = []
-            for sTemplate in g.lTemplates:
-                sCmd = cFmt.msGentlyFormat(sTemplate, dInstruction)
-                g.lCommands.append(sCmd)
-
-            # Make instruction file for the actor.
-            g.sActorCmdFileName = cFmt.msGentlyFormat(g.sActorCmdFileTemplate, dInstruction)
-            g.sActorCommand = cFmt.msGentlyFormat(g.sActorCmdTemplate, dInstruction)
-            NTRC.ntracef(0,"MAIN","proc main commands run|%s|\n1|%s|\n2|%s|\n" % (nRunNumber,g.lCommands, g.sActorCommand))
-            with open(g.sActorCmdFileName, 'w') as fhActorCmdFile:
-                fhActorCmdFile.write("# ListActor automatically generated command file; do not edit.\n")
-                for sCommand in g.lCommands:
-                    print >> fhActorCmdFile, cFmt.fnsMaybeTest(sCommand)
-
-            # Launch the actor to perform main runs.  
-            cCmd = CCommand()
-            sResult = cCmd.doCmdStr(g.sActorCommand)
-            time.sleep(g.nPoliteTimer)    
-
-            # If just doing a short test run today, maybe stop now.
-            maxcount -= 1
-            if int(g.nTestLimit) > 0 and maxcount <= 0: break
-
-        else:
-            NTRC.tracef(0,"MAIN","OOPS, Stuck!  Too many python processes running forever.")
-            break
-
+        nRunNumber += 1
+        if g.sListOnly.startswith("Y"):
+            # Testing: Just dump out the instruction dictionary for this item.
+            NTRC.ntracef(0,"MAIN","proc ListOnly, item run|%s| id|%s| ncopies|%s| lifem|%s| dict\n|%s|" % \
+                (nRunNumber, sInstructionId, dInstruction["nCopies"], dInstruction["nLifem"], dInstruction))
+        else:   # Real life: execute the instruction.
+            bContinue = fnbWaitForOpening(g.nCores,"python",g.nCoreTimer,g.nStuckLimit)
+            if bContinue:
+                # Format commands to be executed by actor.
+                g.sShelfLogFileName = cFmt.msGentlyFormat(g.sShelfLogFileTemplate, dInstruction)
+                g.lCommands = []
+                for sTemplate in g.lTemplates:
+                    sCmd = cFmt.msGentlyFormat(sTemplate, dInstruction)
+                    g.lCommands.append(sCmd)
+    
+                # Make instruction file for the actor.
+                g.sActorCmdFileName = cFmt.msGentlyFormat(g.sActorCmdFileTemplate, dInstruction)
+                g.sActorCommand = cFmt.msGentlyFormat(g.sActorCmdTemplate, dInstruction)
+                NTRC.ntracef(0,"MAIN","proc main commands run|%s| ncopies|%s| lifem|%s|\n1-|%s|\n2-|%s|\n" % \
+                    (nRunNumber, dInstruction["nCopies"], dInstruction["nLifem"], g.lCommands, g.sActorCommand))
+                with open(g.sActorCmdFileName, 'w') as fhActorCmdFile:
+                    fhActorCmdFile.write("# ListActor command file, automatically generated by broker.  Do not edit.\n")
+                    for sCommand in g.lCommands:
+                        print >> fhActorCmdFile, cFmt.fnsMaybeTest(sCommand)
+    
+                # Launch the actor to perform main runs.  
+                cCmd = CCommand()
+                sResult = cCmd.doCmdStr(g.sActorCommand)
+                time.sleep(g.nPoliteTimer)    
+    
+                # If just doing a short test run today, maybe stop now.
+                maxcount -= 1
+                if int(g.nTestLimit) > 0 and maxcount <= 0: break
+    
+            else:
+                NTRC.tracef(0,"MAIN","OOPS, Stuck!  Too many python processes running forever.")
+                break
+    
     NTRC.ntracef(0,"MAIN","End.")
 
 

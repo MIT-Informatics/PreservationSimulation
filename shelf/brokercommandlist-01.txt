@@ -32,14 +32,25 @@ python -c 'import sys; print sys.version; print sys.version_info'
 
 python main.py {sFamilyDir} {sSpecificDir} {nSimlen} {nRandomseed} --ncopies={nCopies} --lifek={nLifem}000 --audit={nAuditFreq} --auditsegments={nAuditSegments} --audittype={sAuditType} --glitchfreq={nGlitchFreq} --glitchimpact={nGlitchImpact} --glitchdecay={nGlitchDecay} --glitchmaxlife={nGlitchMaxlife} --shelfsize={nShelfSize} --mongoid=\'{_id}\'  >  {sFamilyDir}/{sSpecificDir}/log/{sShelfLogFileName}.log  2>&1
 
+# Slow things down here to avoid maybe looking at the log file
+#  before it has finished being written to disk.  
+#  With many processes executing in parallel, sometimes the 
+#  execution gets ahead of emptying the buffers.
+
+sleep 30
+
 # Data extraction command.  Header must be forced here so that the 
 #  cleanup program can label the data fields correctly.
 
 python extractvalues.py --header --separator=' ' q3-extractinstructions.txt {sFamilyDir}/{sSpecificDir}/log/{sShelfLogFileName}.log  >  {sFamilyDir}/{sSpecificDir}/ext/{sShelfLogFileName}.ext
 
+# Again, slow the pace a little.
+
+sleep 5
+
 # Data cleanup command.  
 
-python datacleanup.py test_database done {sFamilyDir}/{sSpecificDir}/ext/{sShelfLogFileName}.ext {sFamilyDir}/{sSpecificDir}/dat/GiantOutput_00.txt  --separator=' ' --donotdelete=Y
+python datacleanup.py test_database done {sFamilyDir}/{sSpecificDir}/ext/{sShelfLogFileName}.ext {sFamilyDir}/{sSpecificDir}/dat/GiantOutput_00.txt  --separator=' ' --donotdelete=N
 
 # End time
 date +%Y%m%d_%H%M%S.%3N

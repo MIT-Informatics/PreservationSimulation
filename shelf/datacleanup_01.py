@@ -155,22 +155,22 @@ def main():
     oDb = mongolib.fnoOpenDb(g.sDatabaseName)
     oDoneCollection = oDb[g.sDoneCollectionName]
     lMatches = list(oDoneCollection.find(dQuery))
-    NTRC.ntracef(0,"MAIN","proc main lMatches|{}|".format(lMatches))
+    NTRC.ntracef(0,"MAIN","proc main looking for done lMatches|{}|".format(lMatches))
     if len(lMatches) == 0:
         
-        # Maybe record the done record in db.
-        if g.sDoNotRecord.startswith("Y"):
-            NTRC.tracef(0, "MAIN", "proc Done not recorded.")
-        else:
-            dValues["sDoneId"] = dValues["mongoid"]
-            oDoneCollection.insert_one(dValues)
-
         # Always add a line of data to the giant output file.
         sLineOut = g.sSeparator.join(lValues)
         NTRC.tracef(0, "MAIN", "proc sLineOut|%s|" % (sLineOut))
         with open(g.sGiantOutputFilename,'a') as fhOutput:
             fhOutput.write(sLineOut + "\n")
             NTRC.tracef(3, "MAIN", "proc wroteline|%s|" % (sLineOut))
+
+        # Maybe record the done record in db.
+        if g.sDoNotRecord.startswith("Y"):
+            NTRC.tracef(0, "MAIN", "proc Done not recorded.")
+        else:
+            dValues["sDoneId"] = dValues["mongoid"]
+            oDoneCollection.insert_one(dValues)
 
         # Maybe delete the extract file.
         if g.sDoNotDelete.startswith("Y"):

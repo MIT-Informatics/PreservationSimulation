@@ -4,7 +4,7 @@
 # into the Params.  
 # Recovered, we hope, after commit/delete screw-up.  
 
-sVersion = "0.0.5"
+sVersion = "0.0.6"
 import argparse
 from NewTraceFac import TRC,trace,tracef
 
@@ -171,13 +171,13 @@ def fndCliParse(mysArglist):
     cParse.add_argument("--glitchdecay", type=int
                         , dest='nGlitchDecay'
                         , metavar='nGLITCHDECAY_hrs'
-                        , help='Half-life of glitch impact exponential decay; int(1E9)=infinity.'
+                        , help='Half-life of glitch impact exponential decay; 0=infinity.'
                         )
 
     cParse.add_argument("--glitchmaxlife", type=int
                         , dest='nGlitchMaxlife'
                         , metavar='nGLITCHMAXLIFE_hrs'
-                        , help='Maximum duration of glitch impact, which ceases after this interval; int(1E9)=infinity.'
+                        , help='Maximum duration of glitch impact, which ceases after this interval; 0=infinity.'
                         )
 
     cParse.add_argument("--mongoid", type=str
