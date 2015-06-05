@@ -2,16 +2,20 @@
 
 ## Abstract
 
-Libraries, academic and corporate, have large collections of documents that they with to preserve for long periods.  A common strategy for preserving documents is to make multiple copies and distribute the copies geographically.  Increasingly, library collections come in digital form rather than dead-tree form, which makes them easier to copy and distribute.  
+Libraries, academic and corporate, have large collections of documents that they wish to preserve for long periods.  A common strategy for preserving documents is to make multiple copies and distribute the copies geographically.  Increasingly, library collections come in digital form rather than dead-tree form, which makes them easier to copy and distribute.  
 
-A first question that needs to be answered is how many copies to keep.  For a variety of conditions -- document sizes and types, storage error rates, auditing strategies, etc. -- we need to know how many copies we should keep, how many copies we can afford to keep economically.  We can also deal with various strategies for "auditing" a collection, that is, checking on its status adn repairing damage if necessary.  
+A first question that needs to be answered is how many copies to keep.  For a variety of conditions -- document sizes and types, storage error rates, auditing strategies, etc. -- we need to know how many copies we should keep, how many copies we can afford to keep economically.  We can also deal with various strategies for "auditing" a collection, that is, checking on its status and repairing damage if necessary.  
 
-The purpose of this project is to provide baseline data for librarians and researchers about long-term survival rates of document collections.  We have developed computer simulations to estimate document failure rates over a wide variety of conditions.  
+The purpose of this project is to provide baseline data for librarians and researchers about long-term survival rates of document collections.  We have developed computer simulations to estimate document failure rates over a wide variety of conditions.  The data from these simulations should be useful to stewards of such collections in planning and budgeting for storage and bandwidth needs to protect their collections.  
 
-The simuations are necessarily schematic in that they don't attempt to model the details of real-life situations.  Instead, the simulations are targeted at specific points in a huge sample space, providing bases from which users can extrapolate to approximate their actual environments.  
+The simulations are necessarily schematic in that they don't attempt to model the details of real-life situations.  Instead, the simulations are targeted at specific points in a huge sample space, providing bases from which users can extrapolate to approximate their actual environments.  
 
 
-    “…let us save what remains not by vaults and locks which fence them from the public eye and use in consigning them to the waste of time, but by such a multiplication of copies, as shall place them beyond the reach of accident.”  -Thomas Jefferson, Feb. 18, 1791
+    "…let us save what remains not by vaults and locks which fence them 
+    from the public eye and use in consigning them to the waste of time, 
+    but by such a multiplication of copies, as shall place them 
+    beyond the reach of accident."  
+    --Thomas Jefferson, Feb. 18, 1791
 
 
 ## Overview of Process
@@ -47,7 +51,7 @@ All the code to run the simulations, and the results of simulations, are publish
 -	Bash scripts run many aspects of the processes. All programs, the Python and the scripts, were developed using the Cygwin library on Windows 7 and Windows 8.1.  Some programs and scripts have been tested also on Mac OS/X; Complete testing is still required for OS/X and various versions of Linux.  
 -	Bash scripts and Python programs extract data from log files, using regex-based instruction files to guide the extractions.  
 -	Basic R scripts to organize the data into more easily accessible tables.  
--	Several programs and scripts create instruction sequences for the many cases.  There are two separate mechanisms to construct, extract, and execute instructions, one for simple cases only (up to and including total auditing); and one for all cases, including auditing and glitches of all kinds.  The complex mechanism uses a MongoDB database to store and query the instruction parameters.  
+-	Several programs and scripts create instruction sequences for the many cases.  There are two separate mechanisms to construct, extract, and execute instructions: one for simple cases only (up to and including total auditing); and one for all cases, including auditing and glitches of all kinds.  The complex mechanism uses a MongoDB database to store and query the instruction parameters.  
 -	A number of how-to documents describing, we hope, the detailed process to reproduce the simulations and results.  
 -	The SimPy library v3.0.7 or later is required for the main simulation program.  This library should be obtained from the Python Package Index (PyPI) at python.org, and thus is not included in the github repository for this project.  
 The data results from the many simulation runs is also included in the github repository in a set of zip archives.  
