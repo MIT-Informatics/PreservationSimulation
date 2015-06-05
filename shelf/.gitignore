@@ -1,0 +1,5 @@
+*.pyc
+articles
+test
+tmp
+debug
