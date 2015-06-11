@@ -1,0 +1,24 @@
+TODO
+
+extractvalues.py
+DONE - add optional arg for --separator=','
+DONE - default should still be space
+- if i use comma, then datacleanup can use DictReader.
+- actually, Dialect.delimiter can be set to whatever i want.
+- maybe just use reader with delimiter=' ' and dict(zip()) 
+   the header list and data list together.  
+
+100% glitch impact
+- shelf destroy all documents on shelf.
+- server inform client of shelf failure.
+- server refuse document additions to that shelf, 
+  or maybe shelf just always answers that it's full.
+- server probably should refuse to make a new shelf.  
+- client go shopping for another server to replace dead one.
+- if duration is short, then server may recover before the
+  client even notices; however, all documents still have been lost,
+  so the next audit will find many dead docs.  
+  
+
+
+
