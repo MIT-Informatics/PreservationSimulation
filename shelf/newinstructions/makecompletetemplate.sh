@@ -27,7 +27,7 @@ sh substituteall.sh "$2.04" \
 sh substituteall.sh "$2.05" \
         ins/auditfreq.ins ins/lifem.ins             > "$2.06"
 sh substituteall.sh "$2.06" \
-        ins/ncopies.ins ins/randomseed11.ins        > "$2"
+        ins/ncopies.ins ins/randomseed.ins        > "$2"
 
 exit 0
 #END
@@ -47,4 +47,4 @@ glitchdecay
 auditfreq
 lifem
 ncopies
-randomseed11
+randomseed

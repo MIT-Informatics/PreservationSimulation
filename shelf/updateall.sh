@@ -16,7 +16,7 @@ done
 # b a s h 
 # Get latest version of shell scripts.
 # Do not include all the old-science instruction runners. 
-for ff in getalllines-new
+for ff in run getalllines-new
 do
     echo "cp -v $(ls $ff*.sh | sort | tail -1) $ff.sh"
     cp -v $(ls $ff*.sh | sort | tail -1) $ff.sh
