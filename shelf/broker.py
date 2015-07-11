@@ -396,13 +396,14 @@ class CFormat(object):
         #  no results due to implied AND of all items in query dict.  
         dOutSafe = {k:v for k,v in dOut.items() if k in g.lSearchables}
         dOutNotNone = {k:v for k,v in dOutSafe.items() if v is not None}
-        NTRC.ntracef(3,"FMT","proc dict b4|%s| \nsafe|%s|" % (dOut,dOutSafe))
-        if "sQuery" not in dOutNotNone.keys():
-            return dOutNotNone
-        else:
+        NTRC.ntracef(3,"FMT","proc dict b4|%s| \nsafe|%s|\nclean|%s|" % (dOut,dOutSafe,dOutNotNone))
+        if "sQuery" in dOutNotNone.keys():
             # If the brave user has supplied a full, standalone query string,
-            #  return just that.
-            return dOutNotNone["sQuery"]
+            #  add its contents to the query dict so far.
+            dTmp = dOutNotNone["sQuery"]
+            del dOutNotNone["sQuery"]
+            dOutNotNone.update(dTmp)
+        return dOutNotNone
 
     @ntracef("FMT")
     def fnsMaybeTest(self, mysCommand):
@@ -575,7 +576,7 @@ def main():
         # If this instruction has already been processed skip it.
         bIsItDone = cdb.fnbIsItDone(sInstructionId)
         if bIsItDone: 
-            NTRC.ntracef(0,"MAIN","proc skip item already done id|%s|" % (sInstructionId))
+            NTRC.ntracef(0,"MAIN","proc skip item already done id|%s| copies|%s| lifem|%s|" % (sInstructionId, dInstruction["nCopies"], dInstruction["nLifem"]))
             continue
 
         nRunNumber += 1
