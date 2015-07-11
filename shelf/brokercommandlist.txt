@@ -49,6 +49,8 @@ python main.py {sFamilyDir} {sSpecificDir} {nSimlen} {nRandomseed} --ncopies={nC
 #  of documents at lifek=3000, which is really rusty-garbage-can-lid quality
 #  that no one would ever actually use.  
 
+date +%Y%m%d_%H%M%S.%3N
+
 while true; do if [ -z $(tail -3 {sFamilyDir}/{sSpecificDir}/log/{sShelfLogFileName}.log | grep "End time stats" | wc -l) ]; then sleep 15; else sleep 5; break; fi; done 
 
 # Data extraction command.  Header must be forced here so that the 
