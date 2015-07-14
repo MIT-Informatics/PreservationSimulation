@@ -4,7 +4,7 @@
 # Establish directory structure needed as a familydir for 
 #  simulation runs.  
 
-if [ "$1" == "-h" ]
+if [ "$1" == "-h" -o "$1" == "--help" ]
 then
     echo "Usage: $0 [<familydir> [<specificdir>]]"
     echo "Defaults to ../Q3 and ."
@@ -26,14 +26,33 @@ else
     sSpecificDir="$2"
 fi
 
-mkdir $sFamilyDir
-mkdir $sFamilyDir/$sSpecificDir
+if [ -d "$sFamilyDir" ] 
+then
+    echo "Family Dir $sFamilyDir already exists."
+else
+    echo "Creating dir $sFamilyDir"
+    mkdir $sFamilyDir
+fi
+
+if [ -d "$sFamilyDir/$sSpecificDir" ] 
+then
+    echo "Specific Dir $sFamilyDir/$sSpecificDir already exists."
+else
+    echo "Creating dir $sFamilyDir/$sSpecificDir"
+    mkdir $sFamilyDir/$sSpecificDir
+fi
 
 for dd in act cmd dat ext log 'done'
 do
-    mkdir $sFamilyDir/$sSpecificDir/$dd
+    if [ -d "$sFamilyDir/$sSpecificDir/$dd" ] 
+    then
+        echo "Dir $sFamilyDir/$sSpecificDir/$dd already exists."
+    else
+        echo "Creating dir $sFamilyDir/$sSpecificDir/$dd"
+        mkdir $sFamilyDir/$sSpecificDir/$dd
+    fi
 done
-
+echo "Copying default param files to $sFamilyDir"
 cp ./defaults/* $sFamilyDir/$sSpecificDir
 
 #END
