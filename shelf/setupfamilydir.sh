@@ -1,8 +1,13 @@
 #/bin/sh
 # setupfamilydir.sh
 #
+#                               RBLandau 20150713
+#
 # Establish directory structure needed as a familydir for 
 #  simulation runs.  
+# Creates the family and specific directories and then all the 
+#  subdirs needed by the broker.  Also copies the default CSV 
+#  parameter files into the family dir.
 
 if [ "$1" == "-h" -o "$1" == "--help" ]
 then
