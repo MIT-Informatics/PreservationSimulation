@@ -423,24 +423,25 @@ class CClient(object):
         # set of servers in the select-for-collection routine.
         lServersToUse = lServersForCollection
         ''' If there aren't servers enough at this level, 
-            it's an error.  
-            We *could* go to a higher level, but this is only
-            a simulation, not real life.  
+            the Select method will raise an exception.
         '''
         NTRC.ntracef(3,"CLI","proc mPlaceCollection1 client|%s| place coll|%s| to|%d|servers" % (self.ID,mysCollID,len(lServersToUse)))
 
         # Distribute collection to a set of servers.
-        for (sServerName,sServerID) in lServersToUse:
+        for sServerID in lServersToUse:
             NTRC.ntracef(3,"CLI","proc mPlaceCollection2 client|%s| send coll|%s| to server|%s|" % (self.ID,mysCollID,sServerID))
             NTRC.ntracef(3,"SHOW","proc mPlaceCollection2 client|%s| send coll|%s| to server|%s|" % (self.ID,mysCollID,sServerID))
             
             # Send copy of collection to server.
+            self.mPlaceCollectionOnServer(mysCollID, sServerID)
+            """
             cServer = G.dID2Server[sServerID]
             cServer.mAddCollection(mysCollID,self.ID)
 
             # Record that this server has a copy of this collection.
             cColl.lServerIDs.append(sServerID)
             lg.logInfo("CLIENT","client|%s| placed collection|%s| to server|%s|" % (self.ID,mysCollID,sServerID))
+            """
 
         # Initialize the auditing process for this collection.
         if G.nAuditCycleInterval > 0:
@@ -457,16 +458,34 @@ class CClient(object):
         # Get list of all servers at this quality level.
         # Value level translates to quality required and nr copies.
         (nQuality,nCopies) = G.dDistnParams[mynCollValue][0]
-        lServersAtLevel = G.dQual2Servers[nQuality]
+        lServersAtLevel = [ll[1] for ll in G.dQual2Servers[nQuality]]
         '''
-        ### Old code now inoperative.
-        # Pick a random set of servers.
-        # For questions 0 and 1, this is not relevant, since all servers
-        #  are identical.  Just take the right number of them.
+        # For most questions, all servers are functionally 
+        #  identical.  Just take the right number of them.  We used
+        #  to take a random permutation of the list of servers and 
+        #  choose from those, hence the name "Perm", but don't waste
+        #  the effort any more.  
+        # NEW: return only servers that are not already in use and not broken.
         '''
-        lPermChosenFull = lServersAtLevel
+        lPermChosenAlive = [svr for svr in lServersAtLevel if not G.dID2Server[svr].bDead]
+        lPermChosenFull = [svr for svr in lPermChosenAlive if not G.dID2Server[svr].bInUse]
+        NTRC.ntracef(3,"CLI","proc servers chosen level|%s| alive|%s| full|%s|" % (lServersAtLevel, lPermChosenAlive, lPermChosenFull))
+        # Just make sure there are enough of them to meet the client's needs.
+        if len(lPermChosenAlive) < nCopies:
+            raise IndexError('Not enough servers left alive to satisfy client requirements')
         lPermChosen = lPermChosenFull[0:nCopies]
         return lPermChosen
+
+# C l i e n t . m P l a c e C o l l e c t i o n O n S e r v e r 
+    def mPlaceCollectionOnServer(self, mysCollID, mysServerID):
+        # Send copy of collection to server.
+        cServer = G.dID2Server[mysServerID]
+        cServer.mAddCollection(mysCollID,self.ID)
+        # Record that this server has a copy of this collection.
+        cColl = G.dID2Collection[mysCollID]
+        cColl.lServerIDs.append(mysServerID)
+        lg.logInfo("CLIENT","client|%s| placed collection|%s| to server|%s|" % (self.ID,mysCollID,mysServerID))
+        return
 
 # C l i e n t . m T e s t C l i e n t 
     @ntracef("CLI")
@@ -500,5 +519,42 @@ class CClient(object):
         cDoc = G.dID2Document[mysDocID]
         cDoc.mDestroyCopy(mysServerID)
 
+# C l i e n t . m S e r v e r I s D e a d 
+    @ntracef("CLI")
+    def mServerIsDead(self, mysServerID, mysCollID):
+        ''' Auditor calls us: a server is dead, no longer 
+            accepting documents.  Remove server from active list, 
+            find a new server, populate it.  
+        '''
+        """
+        BZZZT NO, NOT THIS WAY!  deliberate syntax error until coded
+        cColl = G.dID2Collection[mysCollID]
+        nCollValue = cColl.nValue
+        lServersForCollection = self.mSelectServersForCollection(nCollValue)
+        # The distribution params have already limited the 
+        # set of servers in the select-for-collection routine.
+        lServersToUse = lServersForCollection
+        ''' If there aren't servers enough at this level, 
+            the Select method will raise an exception.
+        '''
+        """
+        NTRC.ntrace(0,"CLI","DO NOTHING YET FOR Client.mServerIsDead")
+        
+        NTRC.ntracef(3,"CLI","proc mPlaceCollection1 client|%s| place coll|%s| to|%d|servers" % (self.ID,mysCollID,len(lServersToUse)))
+
+        pass
+        
+
+
+# Edit History (recent, anyway): 
+# 20141121  RBL Original client201.py version.  
+# 20141216  RBL client202 version.  
+# 20150112  RBL client203 version.  
+# 20150711  RBL straight client.py version for git's use.  
+# 20150716  RBL Add code to deal with 100% glitches = server failures.  
+#                Auditor calls in to declare server dead.  
+#                Refactor placing collection onto server.  
+#                Remove dead server from list, get a new one, repopulate.  
+# 
 
 # END

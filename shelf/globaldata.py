@@ -15,7 +15,7 @@ class ProtoG(object):
     env = None
     lAllServers = list()    # object pointers, not IDs
     lAllClients = list()    # object pointers, not IDs
-    dQual2Servers = dict()  # key=quality level; val=[sServerName,sServerID]
+    dQual2Servers = dict()  # key=quality level; val=[[sServerName,sServerID],...]
 
     nDocLastID = None       # scalar
     nCollLastID = None      # scalar

@@ -5,13 +5,13 @@
 '''\
 See commentary at end about actual algorithms. 
 '''
-from globaldata import G
-import itertools
-import util
-import logoutput as lg
-from NewTraceFac import TRC,trace,tracef
-import math
-import collections as cc
+from    globaldata      import  G
+import  itertools
+import  util
+import  logoutput       as lg
+from    NewTraceFac     import  TRC, trace, tracef, NTRC, ntrace, ntracef
+import  math
+import  collections     as cc
 
 
 #===========================================================
@@ -52,13 +52,15 @@ class CAudit2(object):
         self.lDocsRepairedMinority = list()
         self.lDocsPermanentlyLost = list()
         self.dDocsAlreadyLost = dict()
+        
+        # List of 2-tuples of serverID and collectionID for dead servers.
+        self.lDeadServerIDs = list()
 
         # Start the free-running process of audit cycles for 
         # this collection.
         G.env.process(self.mAuditCycle(self.nCycleInterval,self.nSegments))
 
 
-# NEW NEW NEW
 # C A u d i t 2 . m A u d i t C y c l e 
     @tracef("AUD2")
     def mAuditCycle(self,mynCycleInterval,mynSegments):
@@ -71,7 +73,8 @@ class CAudit2(object):
         # so that client audit cycles are not synchronized,
         # like Ethernet collision retry waits. 
         nRandTime = util.makeunif(0,mynCycleInterval/20)
-# No, not any more.
+# Nope, not any more.  No need for the random offset since there is
+#  only one auditor.
 #        yield G.env.timeout(nRandTime)
         # And now wait for one segment interval before starting the first segment.
         #  Seems odd, but consider an annual audit in quarterly segments:
@@ -96,7 +99,6 @@ class CAudit2(object):
             tNextCycleStartTime = tCycleStartTime + mynCycleInterval
             yield G.env.timeout(tNextCycleStartTime - G.env.now)
 
-# NEW NEW NEW 
 # C A u d i t 2 . m A u d i t C o l l e c t i o n 
     @tracef("AUD2")
     def mAuditCollection(self,mynCycleInterval,mynSegments,mysCollectionID,myeCallerSyncEvent):
@@ -128,7 +130,6 @@ class CAudit2(object):
         # Tell the caller that we finished.
         myeCallerSyncEvent.succeed(value=self.nNumberOfCycles)
 
-# NEW NEW NEW 
 # C A u d i t 2 . m A u d i t S e g m e n t 
     @tracef("AUD2")
     def mAuditSegment(self,mynThisSegment,mylDocs,mysCollectionID,myeCallerSyncEvent):
@@ -230,7 +231,31 @@ class CAudit2(object):
                     else:
                         # Put a copy back on each server where it is missing.  
                         for sServerID in lDocLostOnServers:
-                            fTransferTime = self.mRepairDoc(sDocID,sServerID)
+                            if not sServerID in self.lDeadServerIDs:
+                                fTransferTime = self.mRepairDoc(sDocID,sServerID)
+                            
+                                ''' If the repair returns False instead of a time, 
+                                    then that server is no longer accepting documents.
+                                    Remove that server from the list, invalidate all 
+                                    its copies, then find a new server and re-place 
+                                    the entire collection.  
+                                    Should we do this now or at the end of the audit?
+                                    Answer: schedule it to occur at the end of the
+                                    audit cycle or segment to avoid confusing the 
+                                    ongoing evaluation.  Auditor informs client, oops,
+                                    you seem to be missing a server, and client takes
+                                    corrective action at that time.  
+                                    So set a flag here to be interrogated at the end
+                                    of the segment.  Or can we do this with a simpy 
+                                    once-only process?  Nah, still have to know when
+                                    to enable or unblock it.  List of tuples of dead IDs
+                                    resets itself to empty (disarmed) when it's used up.
+                                    Send collectionID and serverID to clientID.
+                                '''
+                                if fTransferTime == False:
+                                    self.lDeadServerIDs.append((sServerID, self.sCollectionID))
+                                    lg.logInfo("AUDIT2","dead server t|%10.3f| auditid|%s| cli|%s| coll|%s| svr|%s| doc|%s|" % (G.env.now,self.ID,self.sClientID,self.sCollectionID,sServerID,sDocID))
+                            
                             TRC.tracef(3,"AUD2","proc AuditSegment4 repair t|%10.3f| doc|%s| svr|%s| xfrtim|%f|" % (G.env.now,sDocID,sServerID,fTransferTime))
                             yield G.env.timeout(fTransferTime)
                             lg.logInfo("AUDIT2","repair doc  t|%10.3f| auditid|%s| cli|%s| coll|%s| svr|%s| doc|%s| from copies|%d|" % (G.env.now,self.ID,self.sClientID,self.sCollectionID,sServerID,sDocID,nCopiesLeft))
@@ -239,6 +264,14 @@ class CAudit2(object):
             # After all that, tell the caller we finished.
             myeCallerSyncEvent.succeed(value=mynThisSegment)
         lg.logInfo("AUDIT2","rls network t|%10.3f| auditid|%s| cli|%s| coll|%s| seg|%s|" % (G.env.now,self.ID,self.sClientID,self.sCollectionID,mynThisSegment))
+        
+        # If we saw any dead servers in this segment, inform the clients.
+        while self.lDeadServerIDs:
+            cCollection = G.dID2Collection[self.sCollectionID]
+            cClient = G.dID2Client[cCollection.sClientID]
+            (sDeadServerID, sDeadCollectionID) = self.lDeadServerIDs.pop(0)
+            NTRC.ntracef(3,"AUD2","proc inform dead server auditid|%s| cli|%s| coll|%s| svr|%s| doc|%s|" % (G.env.now,self.ID,self.sClientID,self.sCollectionID,sServerID,sDocID))
+            cClient.mServerIsDead(sDeadServerID, sDeadCollectionID)
 
 # A u d i t . m M a r k D o c u m e n t L o s t 
     @tracef("AUD2")
@@ -270,14 +303,12 @@ class CAudit2(object):
         cDoc.mMarkMinorityRepair()
         return self.nRepairsMinority
 
-# NEW NEW NEW 
 # C A u d i t . m C a l c S e g m e n t I n t e r v a l  
     @tracef("AUD2")
     def mCalcSegmentInterval(self,mynCycleInterval,mynSegments):
         result = int(math.floor((1.0*mynCycleInterval-1.0)/mynSegments))
         return result
 
-# NEW NEW NEW 
 # C A u d i t 2 . m C a l c S e g m e n t S i z e 
     @tracef("AUD2")
     def mCalcSegmentSize(self,mysCollectionID,mynSegments):
@@ -353,6 +384,12 @@ class CAudit2(object):
         # Re-send the doc to server.
         cServer = G.dID2Server[mysServerID] 
         cServer.mAddDocument(mysDocID,self.sClientID)
+        
+        ''' If the server returns False, then it is broken and cannot 
+            accept any more documents.  Oops, 100% glitch.
+            Return this info to our caller.
+        '''
+        
         self.nRepairsThisCycle += 1
         self.nRepairsTotal += 1
         return fTransferTime
@@ -465,7 +502,7 @@ Zipf.mIdentifySegment(collectionid,nsegments,currentsegment)
 # Subclasses for various auditing strategies.
 
 
-# C l a s s   C A u d i t 
+# c l a s s   C A u d i t 
 # Just a copy of CAudit2 for use by the factory.  
 class CAudit(CAudit2):
     def __init__(self,mysClientID,mysCollectionID,mynInterval):
@@ -473,7 +510,6 @@ class CAudit(CAudit2):
         self.TYPE = "CAudit"
 
 
-# NEW NEW NEW 
 # c l a s s   C A u d i t _ T o t a l 
 class CAudit_Total(CAudit):
     '''\
@@ -484,7 +520,6 @@ class CAudit_Total(CAudit):
         super(CAudit_Total,self).__init__(mysClientID,mysCollectionID,mynInterval)
         self.TYPE = "CAudit_Total"
 
-# NEW NEW NEW 
 # C A u d i t _ T o t a l . m I d e n t i f y S e g m e n t 
     ''' don't need it!
     @tracef("AUD2")
@@ -495,7 +530,7 @@ class CAudit_Total(CAudit):
         return lDocIDs
     '''
     
-# NEW NEW NEW 
+
 # c l a s s   C A u d i t _ S y s t e m a t i c 
 class CAudit_Systematic(CAudit):
     ''' \
@@ -518,7 +553,6 @@ class CAudit_Systematic(CAudit):
         super(CAudit_Systematic,self).__init__(mysClientID,mysCollectionID,mynInterval)
         self.TYPE = "CAudit_Systematic"
 
-# NEW NEW NEW 
 # C A u d i t _ S y s t e m a t i c . m I d e n t i f y S e g m e n t 
     @tracef("AUD2")
     def mIdentifySegment(self,mysCollectionID,mynSegments,iCurrentSegment):
@@ -530,7 +564,7 @@ class CAudit_Systematic(CAudit):
         lDocsThisSegment = lDocIDs[(nDocsMaybe*iCurrentSegment):min(nDocsMaybe*(iCurrentSegment+1),nDocs)]
         return lDocsThisSegment
 
-# NEW NEW NEW 
+
 # c l a s s   C A u d i t _ U n i f o r m 
 class CAudit_Uniform(CAudit):
     '''\
@@ -555,7 +589,6 @@ class CAudit_Uniform(CAudit):
         super(CAudit_Uniform,self).__init__(mysClientID,mysCollectionID,mynInterval)
         self.TYPE = "CAudit_Uniform"
 
-# NEW NEW NEW 
 # C A u d i t _ U n i f o r m . m I d e n t i f y S e g m e n t 
     @tracef("AUD2")
     def mIdentifySegment(self,mysCollectionID,mynSegments,iCurrentSegment):
@@ -587,7 +620,7 @@ class CAudit_Uniform(CAudit):
         lDocsThisSegment = util.fnlSortIDList(list(setDocsThisSegment))
         return lDocsThisSegment
 
-# NEW NEW NEW 
+
 # c l a s s   C A u d i t _ Z i p f 
 class CAudit_Zipf(CAudit):
     '''\
@@ -600,7 +633,6 @@ class CAudit_Zipf(CAudit):
         super(CAudit_Zipf,self).__init__(mysClientID,mysCollectionID,mynInterval)
         self.TYPE = "CAudit_Zipf"
 
-# NEW NEW NEW 
 # C A u d i t _ Z i p f . m C a l c S e g m e n t S i z e 
     @tracef("AUD2")
     def mIdentifySegment(self,mysCollectionID,mynSegments,iCurrentSegment):
@@ -624,7 +656,7 @@ class CAudit_Zipf(CAudit):
         lDocsThisSegment = []
         return lDocsThisSegment
 
-# NEW NEW NEW 
+
 # f A u d i t _ S e l e c t 
 # Stupid factory function to create the right class for this audit strategy.
 @tracef("AUD2")
@@ -815,6 +847,9 @@ TODO (x=done):
 # 20141217  RBL Remove offset time before beginning audit cycles.
 #                Since there is only one client, one collection, 
 #                one audit, it seems superfluous.  
+# 20150716  RBL Check for dead server (i.e., 100% glitch) during repair.
+#                At end of audit segment, notify client that server
+#                is no longer usable.
 # 
 
 

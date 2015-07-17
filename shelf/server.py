@@ -33,6 +33,8 @@ class CServer(object):
         self.lDocIDsComplete = list()   # All docs that were ever in this server.
         G.dID2Server[self.ID] = self
         G.nServerLastID = self.ID
+        self.bInUse = False             # This server not yet used by client.
+        self.bDead = False              # Server has not suffered a 100% glitch.
 
 # S e r v e r . m A d d C o l l e c t i o n
     @tracef("SERV")
@@ -572,6 +574,13 @@ class CLifetime(object):
         lg.logInfo("LIFETIME","glitch    t|%6.0f|  on shelf|%s| num|%s| impactpct|%d| decayhalflife|%d| maxlife|%d|" % (myfNow, self.sShelfID,  self.nGlitches, self.nImpactReductionPct, self.nGlitchDecayHalflife, self.nGlitchMaxlife))
         self.fGlitchBegin = float(G.env.now)
         TRC.tracef(3,"LIFE","proc happens t|%.3f| shelf|%s| num|%s| impact|%d| decayhalflife|%d| maxlife|%d|" % (myfNow, self.sShelfID, self.nGlitches, self.nImpactReductionPct, self.nGlitchDecayHalflife, self.nGlitchMaxlife))
+        ''' For a 100% glitch:
+            - Declare server, not just shelf, to be dead.
+            - Call client to inform that server is dead.  
+            
+            cServer.bDead = True
+            cClient.mServerIsDead(sServerID,sCollID)
+        '''
         self.mInjectError(self.nImpactReductionPct, self.nGlitchDecayHalflife, self.nGlitchMaxlife)
         return (self.nGlitches, self.sShelfID)
 
@@ -723,7 +732,10 @@ def fnlGetGlitchParams(mysShelfID):
 #                for fading.
 #               Add logging glitch events.  
 #               Add stats reporting.  
+# 20150715  RBL Add server mortality for 100% glitches: 
+#               - InUse and Dead flags for servers; 
+#               - Destroy all resident docs on 100% glitch; 
+#               - Refuse to accept more docs on that server.
 # 
-
 
 # END
