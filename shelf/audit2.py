@@ -154,7 +154,7 @@ class CAudit2(object):
             fTimeCycleBegin = G.env.now
             # So much for timekeeping.  Now do some actual work.
 
-            # Phase 1: Check servers for copies of docs, record losses.
+            # P h a s e  1: Check servers for copies of docs, record losses.
             self.dlDocsDamagedOnServers = cc.defaultdict(list)
             cCollection = G.dID2Collection[mysCollectionID]
 
@@ -188,7 +188,7 @@ class CAudit2(object):
                 # end foreach doc
             # end foreach server
 
-            # Phase 2: Record severity of copy losses.
+            # P h a s e  2: Record severity of copy losses.
             # NOTE: This arithmetic seems to be reasonable for all numbers
             #  greater than two, but one copy remaining out of two is judged 
             #  to be a majority, so a repair from that single remaining copy
@@ -223,7 +223,7 @@ class CAudit2(object):
                         self.mMarkDocumentMinorityRepair(sDocID)
                         lg.logInfo("AUDIT2","minority rp t|%10.3f| auditid|%s| cycle|%s| seg|%s| cli|%s| coll|%s| doc|%s|" % (G.env.now,self.ID,self.nNumberOfCycles,mynThisSegment,self.sClientID,self.sCollectionID,sDocID))
     
-                    # Phase 3: Repair doc on servers where lost.
+                    # P h a s e  3: Repair doc on servers where lost.
                     nDocSize = cDoc.nSize
                     if self.mIsDocumentLost(sDocID):
                         # If no copies left, repair impossible.
@@ -255,10 +255,10 @@ class CAudit2(object):
                                 if fTransferTime == False:
                                     self.lDeadServerIDs.append((sServerID, self.sCollectionID))
                                     lg.logInfo("AUDIT2","dead server t|%10.3f| auditid|%s| cli|%s| coll|%s| svr|%s| doc|%s|" % (G.env.now,self.ID,self.sClientID,self.sCollectionID,sServerID,sDocID))
-                            
-                            TRC.tracef(3,"AUD2","proc AuditSegment4 repair t|%10.3f| doc|%s| svr|%s| xfrtim|%f|" % (G.env.now,sDocID,sServerID,fTransferTime))
-                            yield G.env.timeout(fTransferTime)
-                            lg.logInfo("AUDIT2","repair doc  t|%10.3f| auditid|%s| cli|%s| coll|%s| svr|%s| doc|%s| from copies|%d|" % (G.env.now,self.ID,self.sClientID,self.sCollectionID,sServerID,sDocID,nCopiesLeft))
+                                else:
+                                    TRC.tracef(3,"AUD2","proc AuditSegment4 repair t|%10.3f| doc|%s| svr|%s| xfrtim|%f|" % (G.env.now,sDocID,sServerID,fTransferTime))
+                                    yield G.env.timeout(float(fTransferTime))
+                                    lg.logInfo("AUDIT2","repair doc  t|%10.3f| auditid|%s| cli|%s| coll|%s| svr|%s| doc|%s| from copies|%d|" % (G.env.now,self.ID,self.sClientID,self.sCollectionID,sServerID,sDocID,nCopiesLeft))
 
             lg.logInfo("AUDIT2","end   segmt t|%10.3f| auditid|%s| cycle|%s| seg|%s| cli|%s| coll|%s| ndocs|%s|" % (G.env.now,self.ID,self.nNumberOfCycles,mynThisSegment,self.sClientID,self.sCollectionID,len(mylDocs)))
             # After all that, tell the caller we finished.
@@ -271,7 +271,7 @@ class CAudit2(object):
             cClient = G.dID2Client[cCollection.sClientID]
             (sDeadServerID, sDeadCollectionID) = self.lDeadServerIDs.pop(0)
             NTRC.ntracef(3,"AUD2","proc inform dead server auditid|%s| cli|%s| coll|%s| svr|%s| doc|%s|" % (G.env.now,self.ID,self.sClientID,self.sCollectionID,sServerID,sDocID))
-            cClient.mServerIsDead(sDeadServerID, sDeadCollectionID)
+            '''call'''cClient.mServerIsDead(sDeadServerID, sDeadCollectionID)
 
 # A u d i t . m M a r k D o c u m e n t L o s t 
     @tracef("AUD2")
@@ -383,16 +383,15 @@ class CAudit2(object):
         fTransferTime = util.fnfCalcTransferTime(nDocSize,G.nBandwidthMbps)
         # Re-send the doc to server.
         cServer = G.dID2Server[mysServerID] 
-        cServer.mAddDocument(mysDocID,self.sClientID)
-        
-        ''' If the server returns False, then it is broken and cannot 
-            accept any more documents.  Oops, 100% glitch.
-            Return this info to our caller.
-        '''
-        
-        self.nRepairsThisCycle += 1
-        self.nRepairsTotal += 1
-        return fTransferTime
+        result = cServer.mAddDocument(mysDocID,self.sClientID)
+        # If AddDoc returns False, then the server is dead and cannot 
+        #  accept any new docs.
+        if result:
+            self.nRepairsThisCycle += 1
+            self.nRepairsTotal += 1
+            return fTransferTime
+        else:
+            return False
 
 # C A u d i t . m R e p o r t A u d i t S t a t s 
     @tracef("AUD2")

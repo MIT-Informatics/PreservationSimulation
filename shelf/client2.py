@@ -390,19 +390,19 @@ class CClient(object):
         self.ID = "T" + str(self.getID())
         G.dID2Client[self.ID] = self
         G.nClientLastID = self.ID
+        
         self.sName = mysName
+        self.lCollectionIDs = list()
         # Establish a non-shared resource for network bandwidth 
         # to be used during auditing.
         self.NetworkBandwidthResource = simpy.Resource(G.env,capacity=1)
 
         # Create the collections for this client.
-        self.lCollectionIDs = list()
         for lCollectionParams in mylCollections:
             (sCollName,nCollValue,nCollSize) = lCollectionParams
             cColl = CCollection(sCollName,nCollValue,nCollSize, self.ID)
             sCollID = cColl.ID
             self.lCollectionIDs.append(sCollID)
-
             # Put the collection in all the right places.  
             self.mPlaceCollection(sCollID)
 
@@ -434,14 +434,6 @@ class CClient(object):
             
             # Send copy of collection to server.
             self.mPlaceCollectionOnServer(mysCollID, sServerID)
-            """
-            cServer = G.dID2Server[sServerID]
-            cServer.mAddCollection(mysCollID,self.ID)
-
-            # Record that this server has a copy of this collection.
-            cColl.lServerIDs.append(sServerID)
-            lg.logInfo("CLIENT","client|%s| placed collection|%s| to server|%s|" % (self.ID,mysCollID,sServerID))
-            """
 
         # Initialize the auditing process for this collection.
         if G.nAuditCycleInterval > 0:
@@ -526,24 +518,17 @@ class CClient(object):
             accepting documents.  Remove server from active list, 
             find a new server, populate it.  
         '''
-        """
-        BZZZT NO, NOT THIS WAY!  deliberate syntax error until coded
+        NTRC.ntracef(3,"CLI","proc deadserver1 client|%s| place coll|%s| to|%d|servers" % (self.ID,mysCollID,len(lServersToUse)))
+        lg.logInfo("CLIENT", "proc deadserver2 server died cli|%s| removed svr|%s| coll|%s| " % (self.ID, mysServerID, mysCollID))
+
         cColl = G.dID2Collection[mysCollID]
+        cColl.lServerIDs.remove(mysServerID)
         nCollValue = cColl.nValue
         lServersForCollection = self.mSelectServersForCollection(nCollValue)
         # The distribution params have already limited the 
         # set of servers in the select-for-collection routine.
-        lServersToUse = lServersForCollection
-        ''' If there aren't servers enough at this level, 
-            the Select method will raise an exception.
-        '''
-        """
-        NTRC.ntrace(0,"CLI","DO NOTHING YET FOR Client.mServerIsDead")
-        
-        NTRC.ntracef(3,"CLI","proc mPlaceCollection1 client|%s| place coll|%s| to|%d|servers" % (self.ID,mysCollID,len(lServersToUse)))
-
-        pass
-        
+        sServerToUse = lServersForCollection.pop(0)
+        self.mPlaceCollectionOnServer(mysCollID, sServerToUse)
 
 
 # Edit History (recent, anyway): 

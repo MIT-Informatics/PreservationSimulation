@@ -1,14 +1,14 @@
 #!/usr/bin/python
 # server.py
 
-import simpy
-from NewTraceFac import TRC,trace,tracef
-import itertools
-from globaldata import G
-from math import exp, log
-import util
-import copy
-import logoutput as lg
+import  simpy
+from    NewTraceFac     import  TRC, trace, tracef, NTRC, ntrace, ntracef
+import  itertools
+from    globaldata      import  G
+from    math            import  exp, log
+import  util
+import  copy
+import  logoutput       as lg
 
 
 #===========================================================
@@ -34,7 +34,7 @@ class CServer(object):
         G.dID2Server[self.ID] = self
         G.nServerLastID = self.ID
         self.bInUse = False             # This server not yet used by client.
-        self.bDead = False              # Server has not suffered a 100% glitch.
+        self.bDead = False              # Server has not yet suffered a 100% glitch.
 
 # S e r v e r . m A d d C o l l e c t i o n
     @tracef("SERV")
@@ -44,47 +44,51 @@ class CServer(object):
         lTempDocIDs = cCollection.mListDocuments()
         for sDocID in lTempDocIDs:
             self.mAddDocument(sDocID,mysClientID)
+        self.bInUse = True
         return mysCollID
 
 # S e r v e r . m A d d D o c u m e n t 
     @tracef("SERV")
     def mAddDocument(self,mysDocID,mysClientID):
-        ''' mAddDocument(docid)
-            Find a shelf with room for the doc, or create one.
+        ''' Find a shelf with room for the doc, or create one.
             Put the doc on the shelf, decrement the remaining space.
         '''
-        cDoc = G.dID2Document[mysDocID]
-        nSize = cDoc.nSize
-        # Find a shelf with sufficient empty space and place the doc there. 
-        cShelf = None
-        for sShelfID in self.lShelfIDs:
-            cShelf = G.dID2Shelf[sShelfID]
-            
-            bResult = cShelf.mAcceptDocument(mysDocID,nSize,mysClientID)
-            if bResult:
-                break       # True = doc has been stored
-            else:
-                continue    # False = no, try another shelf, if any
-        else:               # If no more shelves, create another and use that one.
-            sNewShelfID = self.mCreateShelf()
-            self.lShelfIDs.append(sNewShelfID)
-            cShelf = G.dID2Shelf[sNewShelfID]
-            sShelfID = cShelf.ID
-            result = cShelf.mAcceptDocument(mysDocID,nSize,mysClientID)
-            
-        # Record that the doc has been stored on this server. 
-        self.lDocIDs.append(mysDocID)
-        self.dDocIDs[mysDocID] = mysClientID
-        self.lDocIDsComplete.append(mysDocID)
-        TRC.tracef(3,"SERV","proc mAddDocument serv|%s| id|%s| docid|%s| size|%s| assigned to shelfid|%s| remaining|%s|" % (self.sName,self.ID,mysDocID,cDoc.nSize,sShelfID,cShelf.nFreeSpace))
-
-        return self.ID+"+"+sShelfID+"+"+mysDocID
+        # If the server is already dead, do not accept any documents.
+        if not self.bDead:
+            NTRC.ntracef(3,"SERV","proc mAddDocument1 dead server|%s|do not add doc|%s| for client|%s|" % (self.ID, mysDocID, mysClientID))
+            cDoc = G.dID2Document[mysDocID]
+            nSize = cDoc.nSize
+            # Find a shelf with sufficient empty space and place the doc there. 
+            cShelf = None
+            for sShelfID in self.lShelfIDs:
+                cShelf = G.dID2Shelf[sShelfID]
+                bResult = cShelf.mAcceptDocument(mysDocID,nSize,mysClientID)
+                if bResult:
+                    break       # True = doc has been stored
+                else:
+                    continue    # False = no, try another shelf, if any
+            else:               # If no more shelves, create another and use that one.
+                sNewShelfID = self.mCreateShelf()
+                self.lShelfIDs.append(sNewShelfID)
+                cShelf = G.dID2Shelf[sNewShelfID]
+                sShelfID = cShelf.ID
+                result = cShelf.mAcceptDocument(mysDocID,nSize,mysClientID)
+                
+            # Record that the doc has been stored on this server. 
+            self.bInUse = True
+            self.lDocIDs.append(mysDocID)
+            self.dDocIDs[mysDocID] = mysClientID
+            self.lDocIDsComplete.append(mysDocID)
+            TRC.tracef(3,"SERV","proc mAddDocument serv|%s| id|%s| docid|%s| size|%s| assigned to shelfid|%s| remaining|%s|" % (self.sName,self.ID,mysDocID,cDoc.nSize,sShelfID,cShelf.nFreeSpace))
+    
+            return self.ID+"+"+sShelfID+"+"+mysDocID
+        else:
+            return False
 
 # S e r v e r . m C r e a t e S h e l f 
     @tracef("SERV")
     def mCreateShelf(self):
-        ''' mCreateShelf()
-            Add a new shelf of the standard size for this Server.
+        ''' Add a new shelf of the standard size for this Server.
             Called as needed when a doc arrives too large for available space.  
         '''
         cShelf = CShelf(self.ID,self.nQual,self.nShelfSize)
@@ -97,8 +101,7 @@ class CServer(object):
 # S e r v e r . m D e s t r o y C o p y 
     @tracef("SERV")
     def mDestroyCopy(self,mysCopyID,mysDocID,mysShelfID):
-        ''' Server.mDestroyCopy()
-            Oops, a doc died, maybe just one or maybe the whole shelf.
+        ''' Oops, a doc died, maybe just one or maybe the whole shelf.
         '''
         TRC.tracef(3,"SERV","proc mDestroyCopy remove copy|%s| doc|%s| from shelf|%s|" % (mysCopyID,mysDocID,mysShelfID))
         # Inform the client that the copy is gonzo.  
@@ -111,6 +114,7 @@ class CServer(object):
         return self.ID + "-" + mysDocID
 
 # S e r v e r . m T e s t D o c u m e n t 
+    @tracef("SERV")
     def mTestDocument(self,mysDocID):
         ''' Do we still have a copy of this document?  Y/N
         '''
@@ -125,6 +129,22 @@ class CServer(object):
             return True
         else:
             return False
+
+# S e r v e r . m S e r v e r D i e s 
+    @tracef("SERV")
+    def mServerDies(self):
+        if not self.bDead:
+            self.bDead = True
+            # Destroy all doc ids so that audit will not find any.
+            TODO: #mark all documents as injured
+            NTRC.ntracef(3,"SERV","proc mServerDies kill ndocs|%s|" % (len(self.lDocIDs)))
+            self.lDocIDs = list()
+            self.dDocIDs = dict()
+            # Shall we destroy all the shelves, too, or will that cause a problem?
+            for sShelfID in self.lShelfIDs:
+                G.dID2Shelf[sShelfID].mDestroyShelf()
+                TODO: #mark all shelves as not bAlive
+        pass
 
 
 #===========================================================
@@ -181,14 +201,14 @@ class CShelf(object):
 # S h e l f . m A c c e p t D o c u m e n t 
     @tracef("SHLF")
     def mAcceptDocument(self,mysDocID,mynDocSize,mysClientID):
-        ''' Shelf.mAcceptDocument
-            If the shelf is still alive and 
+        ''' If the shelf and the server are still alive and 
             there is room on the shelf, then add the document 
             and return True.  
             A shelf, once failed, cannot be reused.
             If not, return False.
         '''
-        if self.bAlive and self.nFreeSpace >= mynDocSize:
+        cServer = G.dID2Server[self.sServerID]
+        if self.bAlive and self.nFreeSpace >= mynDocSize and (not cServer.bDead):
             self.mAddDocument(mysDocID,mysClientID)
             return True
         else:
@@ -197,8 +217,7 @@ class CShelf(object):
 # S h e l f . m A d d D o c u m e n t 
     @tracef("SHLF")
     def mAddDocument(self,mysDocID,mysClientID):
-        ''' mAddDocument(docID)
-            Add a document to this shelf and record some information
+        ''' Add a document to this shelf and record some information
             in the document itself.
         '''
         self.lDocIDs.append(mysDocID)
@@ -256,10 +275,10 @@ class CShelf(object):
             cLifetime = G.dID2Lifetime[self.sSectorLifetimeID]
             fLifetimeNow = cLifetime.mfCalcCurrentSectorLifetime(fNow)
             fSectorLifeInterval = util.makeexpo(fLifetimeNow)
-            TRC.tracef(3,"SHLF","proc mAge_sector time|%d| shelf|%s| next lifetime|%.3f|hr from rate|%.3f|hr" % (G.env.now,self.ID,fSectorLifeInterval,fLifetimeNow))
+            TRC.tracef(3,"SHLF","proc mAge_sector time|%d| shelf|%s| next interval|%.3f|hr from life rate|%.3f|hr" % (G.env.now,self.ID,fSectorLifeInterval,fLifetimeNow))
             yield G.env.timeout(fSectorLifeInterval)
 
-            # S E C T O R  F A I L S 
+            # S E C T O R  E R R O R
             self.nSectorHits += 1
             G.nTimeLastEvent = G.env.now
             TRC.tracef(3,"SHLF","proc mAge_sector time|%d| shelf|%s| Sector_error hits|%d| emptyhits|%d|" % (G.env.now,self.ID,self.nSectorHits,self.nEmptySectorHits))
@@ -274,6 +293,7 @@ class CShelf(object):
             # sparse storage structures, like small docs on large shelf. 
             # Count consecutive misses, and issue one summary line before the 
             # next hit.
+            # CANDIDATE FOR REFACTORING
             if sCopyVictimID:               # Hidden error in victim doc.
                 # Destroy copy on this shelf.
                 cCopy = G.dID2Copy[sCopyVictimID]
@@ -292,18 +312,16 @@ class CShelf(object):
                     lg.logInfo("SERVER","small error t|%6.0f| svr|%s| shelf|%s| hidden failure in copy|%s|" % (G.env.now,self.sServerID,self.ID,sCopyVictimID))
                 self.nConsecutiveMisses += 1
                 TRC.tracef(3,"FAIL","proc t|%d| sector failure server|%s| qual|%d| shelf|%s| copy|%s|" % (G.env.now,self.sServerID,G.dID2Server[self.sServerID].nQual,self.ID,sCopyVictimID))
-
             # Initiate a repair of the dead document.
-            # NYI: currently all such failures are silent, so they are 
+            # BZZZT NYI: currently all such failures are silent, so they are 
             #  not detected by the client until audited (or end of run).  
 
 # S h e l f . m S e l e c t V i c t i m C o p y  
     @tracef("SHLF")
     def mSelectVictimCopy(self,mynErrorSize):
-        ''' mSelectVictimCopy(errorsize)
-            Which doc copy on this shelf, if any, was hit by this error?
+        ''' Which doc copy on this shelf, if any, was hit by this error?
             Throw a uniform dart at all the docs on the shelf, see 
-            which one gets hit.  Doc size counts.  
+            which one gets hit, or dart falls into empty space.  Doc size counts.  
         '''
         nRandomSpot = util.makeunif(1,self.nCapacity + mynErrorSize - 1)
         nLoc = 0
@@ -311,10 +329,10 @@ class CShelf(object):
         # First, check to see if the failure is maybe in an occupied region.  
         if nRandomSpot <= self.nHiWater:
             # Find the document hit by the error.  May have been hit before, too.  
-            # New version, binary search with adjacent checking
-            # on list of all locations assigned on this shelf.
+            # New version, vanilla binary search with adjacent interval checking
+            #  on list of all locations assigned on this shelf.
             # After you find the location, check to see that it 
-            # is still occupied by live copy.  
+            #  is still occupied by live copy.  
             nLen = len(self.lCopyIDsComplete)
             nDist = (nLen + 1) / 2
             nLoc = nDist
@@ -408,15 +426,16 @@ class CShelf(object):
         return self.ID + "-" + sDocID + "-" + mysCopyID
 
 # S h e l f . m A g e _ s h e l f 
+# BZZZT: This isn't used anymore.  We now model server failures with glitches.
     @tracef("SHLF",level=3)
     def mAge_shelf(self,mynLifeParam):
         ''' An entire shelf fails.  Remove all the docs it contained.
             Eventually, this will trigger a repair event and make the 
             collection more vulnerable during the repair.  
         '''
-        nShelfLife = util.makeexpo(mynLifeParam)
-        TRC.tracef(3,"SHLF","proc mAge_shelf  time|%d| shelf|%s| next lifetime|%d|khr" % (G.env.now,self.ID,nShelfLife))
-        yield G.env.timeout(nShelfLife)
+        fShelfLife = util.makeexpo(mynLifeParam)
+        TRC.tracef(3,"SHLF","proc mAge_shelf  time|%d| shelf|%s| next lifetime|%.3f|khr" % (G.env.now,self.ID,fShelfLife))
+        yield G.env.timeout(fShelfLife)
 
         # S H E L F  F A I L S 
         G.nTimeLastEvent = G.env.now
@@ -435,7 +454,6 @@ class CShelf(object):
             G.dID2Server[self.sServerID].mDestroyDocument(sDocID,self.ID)
             self.mReportDocumentLost(sDocID)
         TRC.tracef(3,"FAIL","proc t|%d| shelf failure server|%s| qual|%d| shelf|%s| docs|%d|" % (G.env.now,self.sServerID,G.dID2Server[self.sServerID].nQual,self.ID,len(templCopyIDs)))
-
         # Rescind any pending sector error aging for this shelf.
         # (Only a trivial performance improvement, I think, since the shelf
         # will be destroyed and never reused.)  
@@ -470,6 +488,17 @@ class CShelf(object):
         ''' Return ID,server ID,quality,sector hits,empty sector hits,alive flag
         '''
         return (self.ID,self.sServerID,self.nQual,self.nSectorHits,self.nEmptySectorHits,self.bAlive,self.nHitsAboveHiWater,self.nMultipleHits)
+
+# S h e l f . m D e s t r o y S h e l f 
+    @tracef("SHLF")
+    def mDestroyShelf(self):
+        ''' Nuke all the copies on the shelf.  
+            Can't delete the CShelf object, however.
+        '''
+        for sCopyID in self.lCopyIDs:
+            sDocID = G.dID2Copy[sCopyID].sDocID
+            del G.dID2Document[sDocID]
+            del G.dID2Copy[sCopyID]
 
 
 #===========================================================
@@ -506,9 +535,11 @@ class CCopy(object):
     def mGetDocID(self):
         return self.sDocID
 
+    """
     @tracef("COPY")
     def mDestroyCopy(self):
         pass
+    """
 
 
 #===========================================================
@@ -520,7 +551,7 @@ class CLifetime(object):
     @tracef("LIFE")
     def __init__(self,mysShelfID, myfLifetime, mynGlitchFreq, mynGlitchImpact, mynGlitchHalflife, mynGlitchMaxlife):
         self.fOriginalLifetime = float(myfLifetime)
-        self.fCurrentLifetime = self.fOriginalLifetime
+        self.fCurrentLifetime = float(self.fOriginalLifetime)
         self.sShelfID = mysShelfID
         # Store glitch params. 
         self.nGlitchFreq = mynGlitchFreq
@@ -550,20 +581,22 @@ class CLifetime(object):
         TRC.tracef(3,"LIFE","proc schedule glitch t|%d| shelf|%s| alive|%s|" % (fNow,self.sShelfID,bAlive))
         while bAlive:
             fShelfLife = self.mfCalcCurrentGlitchLifetime(fNow)
-            if fShelfLife > 0:
+            if fShelfLife > 0 and bAlive:
                 fShelfInterval = util.makeexpo(fShelfLife)
-                TRC.tracef(3,"LIFE","proc schedule glitch life|%.3f| interval|%.3f|" % (fShelfLife,fShelfInterval))
-                lg.logInfo("LIFETIME","schedule  t|%6.0f| for shelf|%s| freq|%d| life|%.3f| interval|%.3f|" \
-                % \
-                (fNow,self.sShelfID,self.nGlitchFreq,fShelfLife,fShelfInterval))
+                lg.logInfo("LIFETIME","schedule  t|%6.0f| for shelf|%s| freq|%d| life|%.3f| interval|%.3f|" %                 (fNow,self.sShelfID,self.nGlitchFreq,fShelfLife,fShelfInterval))
+                TRC.tracef(3,"LIFE","proc schedule glitch interval|%.3f| based on life|%.3f| alive|%s| waiting..." % (fShelfInterval, fShelfLife, bAlive))
                 yield G.env.timeout(fShelfInterval)
                 
                 # Glitch has now occurred.
                 fNow = G.env.now
+                NTRC.ntracef(3,"LIFE","proc glitch wait expired t|%6.0f| for shelf|%s| freq|%d| life|%.3f| interval|%.3f|" %                 (fNow,self.sShelfID,self.nGlitchFreq,fShelfLife,fShelfInterval))
                 self.mGlitchHappens(fNow)
-                
             else:
+                NTRC.ntracef(3,"LIFE","proc glitch no freq or not alive, set wait to infinity shelf|%s| freq|%d| life|%.3f| interval|%.3f|" % (self.sShelfID,self.nGlitchFreq,fShelfLife,fShelfInterval))
                 yield G.env.timeout(G.fInfinity)
+        # When not alive anymore, wait forever
+        NTRC.ntracef(3,"LIFE","proc glitch shelf no longer alive, set wait to infinity shelf|%s| freq|%d| life|%.3f| interval|%.3f|" % (self.sShelfID,self.nGlitchFreq,fShelfLife,fShelfInterval))
+        yield G.env.timeout(G.fInfinity)
 
 # L i f e t i m e . m G l i t c h H a p p e n s 
     @tracef("LIFE")
@@ -573,15 +606,24 @@ class CLifetime(object):
         G.nGlitchesTotal += 1
         lg.logInfo("LIFETIME","glitch    t|%6.0f|  on shelf|%s| num|%s| impactpct|%d| decayhalflife|%d| maxlife|%d|" % (myfNow, self.sShelfID,  self.nGlitches, self.nImpactReductionPct, self.nGlitchDecayHalflife, self.nGlitchMaxlife))
         self.fGlitchBegin = float(G.env.now)
-        TRC.tracef(3,"LIFE","proc happens t|%.3f| shelf|%s| num|%s| impact|%d| decayhalflife|%d| maxlife|%d|" % (myfNow, self.sShelfID, self.nGlitches, self.nImpactReductionPct, self.nGlitchDecayHalflife, self.nGlitchMaxlife))
-        ''' For a 100% glitch:
+        TRC.tracef(3,"LIFE","proc happens1 t|%.3f| shelf|%s| num|%s| impact|%d| decayhalflife|%d| maxlife|%d|" % (myfNow, self.sShelfID, self.nGlitches, self.nImpactReductionPct, self.nGlitchDecayHalflife, self.nGlitchMaxlife))
+        ''' If this is a 100% glitch:
             - Declare server, not just shelf, to be dead.
-            - Call client to inform that server is dead.  
-            
-            cServer.bDead = True
-            cClient.mServerIsDead(sServerID,sCollID)
+            - Auditor will eventually discover the problem and 
+               call client to inform that server is dead.  
         '''
-        self.mInjectError(self.nImpactReductionPct, self.nGlitchDecayHalflife, self.nGlitchMaxlife)
+        sServerID = G.dID2Shelf[self.sShelfID].sServerID
+        if G.dID2Server[sServerID].bDead or self.nImpactReductionPct == 100:
+            cShelf = G.dID2Shelf[self.sShelfID]
+            cShelf.bAlive = False
+            sServerID = cShelf.sServerID
+            cServer = G.dID2Server[sServerID]
+            NTRC.ntracef(3,"LIFE","proc happens2 glitch 100pct or server dead id|%s| shelf|%s| svr|%s|" % (self.ID, cShelf.ID, sServerID))
+            cServer.mServerDies()
+            NTRC.ntracef(3,"LIFE","proc happens3 life|%s| killed server |%s|" % (self.ID, sServerID))
+            lg.logInfo("LIFETIME", "100pct glitch on shelf |%s| of server|%s|" % (self.sShelfID, sServerID))
+        else:
+            self.mInjectError(self.nImpactReductionPct, self.nGlitchDecayHalflife, self.nGlitchMaxlife)
         return (self.nGlitches, self.sShelfID)
 
 # L i f e t i m e . m I n j e c t E r r o r 
@@ -736,6 +778,10 @@ def fnlGetGlitchParams(mysShelfID):
 #               - InUse and Dead flags for servers; 
 #               - Destroy all resident docs on 100% glitch; 
 #               - Refuse to accept more docs on that server.
+#               - DO NOT USE % CHARACTER IN ANY OUTPUT STRINGS!
+#                  IF YOU FORGET TO SAY %%, YOU GET A VERY OBSCURE ERROR
+#                  ABOUT FLOAT REQUIRED INSTEAD OF STRING.
+#               - Changed all the 100% references to 100pct.
 # 
 
 # END
