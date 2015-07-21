@@ -271,7 +271,7 @@ class CAudit2(object):
             cClient = G.dID2Client[cCollection.sClientID]
             (sDeadServerID, sDeadCollectionID) = self.lDeadServerIDs.pop(0)
             NTRC.ntracef(3,"AUD2","proc inform dead server auditid|%s| cli|%s| coll|%s| svr|%s| doc|%s|" % (G.env.now,self.ID,self.sClientID,self.sCollectionID,sServerID,sDocID))
-            '''call'''cClient.mServerIsDead(sDeadServerID, sDeadCollectionID)
+            cClient.mServerIsDead(sDeadServerID, sDeadCollectionID)
 
 # A u d i t . m M a r k D o c u m e n t L o s t 
     @tracef("AUD2")

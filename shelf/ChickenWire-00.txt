@@ -25,6 +25,8 @@ Server
 lShelfIDs
 lDocIDs
 dDocIDs
+sClientID
+sCollectionID
 bInUse
 bDead
 

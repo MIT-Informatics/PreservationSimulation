@@ -148,13 +148,14 @@ class CDocument(object):
 
 # D o c u m e n t . m D e s t r o y C o p y 
     @ntracef("DOC")
-    def mDestroyCopy(self,mysServerID):
+    def mDestroyCopy(self,mysServerID,mysCopyID):
         '''\
         Remove Server's Copy of this Document.  
         Actually, just remove Server from the list of Servers with 
         copies of this Document.  
         '''
         self.lServerIDs.remove(mysServerID)
+        self.lCopyIDs.remove(mysCopyID)
 
 # Document.mMergeEvaluation
     @ntracef("DOC")
@@ -502,14 +503,14 @@ class CClient(object):
 
 # C l i e n t . m D e s t r o y C o p y 
     @ntracef("CLI")
-    def mDestroyCopy(self,mysDocID,mysServerID):
+    def mDestroyCopy(self,mysDocID,mysServerID,mysCopyID):
         '''
         The Server says that it no longer has a copy of the doc.
         Tell the Document that the copy was lost.
         The Collection keeps only Server-level, not Doc-level stats.  
         '''
         cDoc = G.dID2Document[mysDocID]
-        cDoc.mDestroyCopy(mysServerID)
+        cDoc.mDestroyCopy(mysServerID,mysCopyID)
 
 # C l i e n t . m S e r v e r I s D e a d 
     @ntracef("CLI")
