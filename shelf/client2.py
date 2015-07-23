@@ -12,6 +12,7 @@ import util
 import math
 import logoutput as lg
 import collections as cc
+from    catchex         import  catchex
 
 
 #===========================================================
@@ -146,7 +147,24 @@ class CDocument(object):
         self.bDocumentOkay = False
         return self.nRepairsMinority
 
+# D o c u m e n t . m D o c R e s c i n d M a j o r i t y R e p a i r 
+    @ntracef("DOC")
+    def mRescindMajorityRepair(self):
+        self.bMajorityRepair = True
+        self.nRepairsMajority -= 1
+        self.bDocumentOkay = False
+        return self.nRepairsMajority
+
+# D o c u m e n t . m D o c R e s c i n d M i n o r i t y R e p a i r
+    @ntracef("DOC")
+    def mRescindMinorityRepair(self):
+        self.bMinorityRepair = True
+        self.nRepairsMinority -= 1
+        self.bDocumentOkay = False
+        return self.nRepairsMinority
+
 # D o c u m e n t . m D e s t r o y C o p y 
+    @catchex
     @ntracef("DOC")
     def mDestroyCopy(self,mysServerID,mysCopyID):
         '''\
@@ -315,6 +333,7 @@ class CCollection(object):
         return nLeftNow
 
 # C o l l e c t i o n . m M a r k D o c L o s t 
+    @catchex
     @ntracef("COLL")
     def mMarkDocLost(self,mysDocID):
         self.nDocsRemaining -= 1
@@ -375,6 +394,7 @@ class CCollection(object):
         dd["nRepairsMajority"]  = self.nDocsMajorityRepair
         dd["nRepairsMinority"]  = self.nDocsMinorityRepair
         dd["nLost"]             = self.nDocsLost
+#        dd["nServerReplacements"]   = self.nServerReplacements
         return dd
 
 
@@ -397,7 +417,8 @@ class CClient(object):
         # Establish a non-shared resource for network bandwidth 
         # to be used during auditing.
         self.NetworkBandwidthResource = simpy.Resource(G.env,capacity=1)
-
+        self.lServersToUse = list()
+        self.nServerReplacements = 0
         # Create the collections for this client.
         for lCollectionParams in mylCollections:
             (sCollName,nCollValue,nCollSize) = lCollectionParams
@@ -422,14 +443,14 @@ class CClient(object):
         lServersForCollection = self.mSelectServersForCollection(nCollValue)
         # The distribution params have already limited the 
         # set of servers in the select-for-collection routine.
-        lServersToUse = lServersForCollection
+        self.lServersToUse = lServersForCollection
         ''' If there aren't servers enough at this level, 
             the Select method will raise an exception.
         '''
-        NTRC.ntracef(3,"CLI","proc mPlaceCollection1 client|%s| place coll|%s| to|%d|servers" % (self.ID,mysCollID,len(lServersToUse)))
+        NTRC.ntracef(3,"CLI","proc mPlaceCollection1 client|%s| place coll|%s| to|%d|servers" % (self.ID,mysCollID,len(self.lServersToUse)))
 
         # Distribute collection to a set of servers.
-        for sServerID in lServersToUse:
+        for sServerID in self.lServersToUse:
             NTRC.ntracef(3,"CLI","proc mPlaceCollection2 client|%s| send coll|%s| to server|%s|" % (self.ID,mysCollID,sServerID))
             NTRC.ntracef(3,"SHOW","proc mPlaceCollection2 client|%s| send coll|%s| to server|%s|" % (self.ID,mysCollID,sServerID))
             
@@ -440,7 +461,7 @@ class CClient(object):
         if G.nAuditCycleInterval > 0:
             self.cAudit = fAudit_Select(G.sAuditStrategy,self.ID,mysCollID,G.nAuditCycleInterval)
 
-        return lServersToUse
+        return self.lServersToUse
 
 # C l i e n t . m S e l e c t S e r v e r s F o r C o l l e c t i o n
     @ntracef("CLI")
@@ -513,14 +534,15 @@ class CClient(object):
         cDoc.mDestroyCopy(mysServerID,mysCopyID)
 
 # C l i e n t . m S e r v e r I s D e a d 
+    @catchex
     @ntracef("CLI")
     def mServerIsDead(self, mysServerID, mysCollID):
         ''' Auditor calls us: a server is dead, no longer 
             accepting documents.  Remove server from active list, 
             find a new server, populate it.  
         '''
-        NTRC.ntracef(3,"CLI","proc deadserver1 client|%s| place coll|%s| to|%d|servers" % (self.ID,mysCollID,len(lServersToUse)))
-        lg.logInfo("CLIENT", "proc deadserver2 server died cli|%s| removed svr|%s| coll|%s| " % (self.ID, mysServerID, mysCollID))
+        NTRC.ntracef(3,"CLI","proc deadserver1 client|%s| place coll|%s| to|%d|servers" % (self.ID,mysCollID,len(self.lServersToUse)))
+        lg.logInfo("CLIENT", "server died cli|%s| removed svr|%s| coll|%s| " % (self.ID, mysServerID, mysCollID))
 
         cColl = G.dID2Collection[mysCollID]
         cColl.lServerIDs.remove(mysServerID)
@@ -529,7 +551,9 @@ class CClient(object):
         # The distribution params have already limited the 
         # set of servers in the select-for-collection routine.
         sServerToUse = lServersForCollection.pop(0)
+        lg.logInfo("CLIENT", "client|%s| assign new server|%s| to replace|%s|" % (self.ID, sServerToUse, mysServerID))
         self.mPlaceCollectionOnServer(mysCollID, sServerToUse)
+        self.nServerReplacements += 1
 
 
 # Edit History (recent, anyway): 

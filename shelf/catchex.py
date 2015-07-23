@@ -20,9 +20,12 @@ def catchex(func):
         except Exception as exc:
             type,value,tb = sys.exc_info()
             exctype = repr(value)[0:repr(value).index('(')]
+            sys.stderr.flush()
             print 'Caught exception: %s: %s' % (exctype, exc)
-            traceback.print_tb(tb)
+            #print "printing print_exc:"
+            traceback.print_exc(file=sys.stdout)
             print ""
+            sys.stdout.flush()
             raise 
         return result
     return wrapper 

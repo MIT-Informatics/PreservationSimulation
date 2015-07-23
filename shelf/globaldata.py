@@ -54,7 +54,7 @@ class ProtoG(object):
     nAuditCycleLastCompleted = 0    # Last complete audit in this run.
     
     fSecondsPerHour = float(60.0 * 60.0)    # conversion constant.
-    fInfinity = float(1E9)  # Infinitely far in the future.
+    fInfinity = float(1.0E12)   # Infinitely far in the future.
 
     nGlitchFreq = 0         # Half-life of glitch-free intervals.
     nGlitchImpact = 0       # Percent reduction in sector lifetime.

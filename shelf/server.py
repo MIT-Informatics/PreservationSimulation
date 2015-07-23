@@ -9,6 +9,7 @@ from    math            import  exp, log
 import  util
 import  copy
 import  logoutput       as lg
+from    catchex         import  catchex
 
 
 #===========================================================
@@ -99,10 +100,8 @@ class CServer(object):
         lg.logInfo("SERVER","server |%s| created storage shelf|%s| quality|%s| size|%s|MB" % (self.ID,cShelf.ID,cShelf.nQual,cShelf.nCapacity))
         return cShelf.ID
 
-# S e r v e r . m R e p l a c e S h e l f 
-# NYI
-
 # S e r v e r . m D e s t r o y C o p y 
+    @catchex
     @tracef("SERV")
     def mDestroyCopy(self,mysCopyID,mysDocID,mysShelfID):
         ''' Oops, a doc died, maybe just one or maybe the whole shelf.
@@ -135,6 +134,7 @@ class CServer(object):
             return False
 
 # S e r v e r . m S e r v e r D i e s 
+    @catchex
     @tracef("SERV")
     def mServerDies(self):
         if not self.bDead:
@@ -142,8 +142,8 @@ class CServer(object):
             # Destroy all doc ids so that audit will not find any.
 #            TODO: #mark all documents as injured
             NTRC.ntracef(3,"SERV","proc mServerDies kill ndocs|%s|" % (len(self.lDocIDs)))
-            self.lDocIDs = list()
-            self.dDocIDs = dict()
+#            self.lDocIDs = list()
+#            self.dDocIDs = dict()
             # Shall we destroy all the shelves, too, or will that cause a problem?
             for sShelfID in self.lShelfIDs:
                 G.dID2Shelf[sShelfID].mDestroyShelf()
@@ -263,6 +263,7 @@ class CShelf(object):
 # F A I L U R E S 
 
 # S h e l f . m A g e _ s e c t o r 
+    @catchex
     @tracef("SHLF")
     def mAge_sector(self):
         ''' A sector in the shelf fails.  This corrupts a document.
@@ -323,6 +324,7 @@ class CShelf(object):
             #  not detected by the client until audited (or end of run).  
 
 # S h e l f . m S e l e c t V i c t i m C o p y  
+    @catchex
     @tracef("SHLF")
     def mSelectVictimCopy(self,mynErrorSize):
         ''' Which doc copy on this shelf, if any, was hit by this error?
@@ -404,6 +406,7 @@ class CShelf(object):
         return sVictimID
 
 # S h e l f . m D e s t r o y C o p y  
+    @catchex
     @tracef("SHLF",level=3)
     def mDestroyCopy(self,mysCopyID):
         try:
@@ -495,16 +498,16 @@ class CShelf(object):
         return (self.ID,self.sServerID,self.nQual,self.nSectorHits,self.nEmptySectorHits,self.bAlive,self.nHitsAboveHiWater,self.nMultipleHits)
 
 # S h e l f . m D e s t r o y S h e l f 
+    @catchex
     @tracef("SHLF")
     def mDestroyShelf(self):
         ''' Nuke all the copies on the shelf.  
             Can't delete the CShelf object, however.
         '''
-        for sCopyID in self.lCopyIDs:
-            sDocID = G.dID2Copy[sCopyID].sDocID
-            del G.dID2Document[sDocID]
-            del G.dID2Copy[sCopyID]
-
+        NTRC.ntracef(3,"SHLF","proc mDestroyShelf1 shelf|%s| has ncopies|%s|" % (self.ID, len(self.lCopyIDs)))
+        lAllCopyIDs = self.lCopyIDs[:]  # DANGER: list modified inside loop, deepcopy
+        for sCopyID in lAllCopyIDs:
+                self.mDestroyCopy(sCopyID)
 
 #===========================================================
 # Class C O P Y  ( of  D o c u m e n t )
@@ -556,12 +559,6 @@ class CCopy(object):
     def mGetDocID(self):
         return self.sDocID
 
-    """
-    @tracef("COPY")
-    def mDestroyCopy(self):
-        pass
-    """
-
 
 #===========================================================
 # C l a s s  L I F E T I M E 
@@ -598,32 +595,42 @@ class CLifetime(object):
         return G.dID2Shelf[self.sShelfID]
 
 # L i f e t i m e . m S c h e d u l e G l i t c h 
+    @catchex
     @tracef("LIFE")
     def mScheduleGlitch(self):
-        #cShelf = G.dID2Shelf[self.sShelfID]
-        bAlive = self.cShelf.mbIsShelfAlive()
+        '''\
+        Wait for a glitch lifetime on this shelf.
+        If the shelf died as a result of the glitch, stop
+        rescheduling.  
+        '''
         fNow = G.env.now
-        TRC.tracef(3,"LIFE","proc schedule glitch t|%d| shelf|%s| alive|%s|" % (fNow,self.sShelfID,bAlive))
-        while bAlive:
-            fShelfLife = self.mfCalcCurrentGlitchLifetime(fNow)
-            if fShelfLife > 0 and bAlive:
-                fShelfInterval = util.makeexpo(fShelfLife)
-                lg.logInfo("LIFETIME","schedule  t|%6.0f| for shelf|%s| freq|%d| life|%.3f| interval|%.3f|" %                 (fNow,self.sShelfID,self.nGlitchFreq,fShelfLife,fShelfInterval))
-                TRC.tracef(3,"LIFE","proc schedule glitch interval|%.3f| based on life|%.3f| alive|%s| waiting..." % (fShelfInterval, fShelfLife, bAlive))
-                yield G.env.timeout(fShelfInterval)
-                
-                # Glitch has now occurred.
-                fNow = G.env.now
-                NTRC.ntracef(3,"LIFE","proc glitch wait expired t|%6.0f| for shelf|%s| freq|%d| life|%.3f| interval|%.3f|" %                 (fNow,self.sShelfID,self.nGlitchFreq,fShelfLife,fShelfInterval))
-                self.mGlitchHappens(fNow)
+        TRC.tracef(3,"LIFE","proc schedule glitch t|%d| shelf|%s| alive|%s|" % (fNow,self.sShelfID,self.cShelf.mbIsShelfAlive()))
+        while 1:
+            bAlive = self.cShelf.mbIsShelfAlive()
+            if bAlive:
+                fShelfLife = self.mfCalcCurrentGlitchLifetime(fNow)
+                if fShelfLife > 0 and bAlive:
+                    fShelfInterval = util.makeexpo(fShelfLife)
+                    lg.logInfo("LIFETIME","schedule  t|%6.0f| for shelf|%s| interval|%.3f| freq|%d| life|%.3f|" %                 (fNow,self.sShelfID,fShelfInterval,self.nGlitchFreq,fShelfLife))
+                    TRC.tracef(3,"LIFE","proc schedule glitch shelf|%s| interval|%.3f| based on life|%.3f| alive|%s| waiting..." % (self.sShelfID, fShelfInterval, fShelfLife, bAlive))
+                    yield G.env.timeout(fShelfInterval)
+                    
+                    # Glitch has now occurred.
+                    fNow = G.env.now
+                    NTRC.ntracef(3,"LIFE","proc glitch wait expired t|%6.0f| for shelf|%s| freq|%d| life|%.3f| interval|%.3f|" %                 (fNow,self.sShelfID,self.nGlitchFreq,fShelfLife,fShelfInterval))
+                    self.mGlitchHappens(fNow)
+                    lg.logInfo("LIFETIME","glitchnow t|%6.0f| for shelf|%s|" %                 (fNow,self.sShelfID))
+                else:
+                    NTRC.ntracef(3,"LIFE","proc glitch no freq or not alive, set wait to infinity shelf|%s| freq|%d| life|%.3f| interval|%.3f|" % (self.sShelfID,self.nGlitchFreq,fShelfLife,fShelfInterval))
+                    yield G.env.timeout(G.fInfinity)
             else:
-                NTRC.ntracef(3,"LIFE","proc glitch no freq or not alive, set wait to infinity shelf|%s| freq|%d| life|%.3f| interval|%.3f|" % (self.sShelfID,self.nGlitchFreq,fShelfLife,fShelfInterval))
-                yield G.env.timeout(G.fInfinity)
-        # When not alive anymore, wait forever
+                break       # Because we have to use fako "while 1".
+        # When shelf is not alive anymore, wait forever
         NTRC.ntracef(3,"LIFE","proc glitch shelf no longer alive, set wait to infinity shelf|%s| freq|%d| life|%.3f| interval|%.3f|" % (self.sShelfID,self.nGlitchFreq,fShelfLife,fShelfInterval))
         yield G.env.timeout(G.fInfinity)
 
 # L i f e t i m e . m G l i t c h H a p p e n s 
+    @catchex
     @tracef("LIFE")
     def mGlitchHappens(self,myfNow):
         self.bGlitchActive = True
@@ -647,12 +654,13 @@ class CLifetime(object):
             NTRC.ntracef(3,"LIFE","proc happens2 glitch 100pct or server dead id|%s| shelf|%s| svr|%s|" % (self.ID, self.cShelf.ID, sServerID))
             cServer.mServerDies()
             NTRC.ntracef(3,"LIFE","proc happens3 life|%s| killed server |%s|" % (self.ID, sServerID))
-            lg.logInfo("LIFETIME", "100pct glitch on shelf |%s| of server|%s|" % (self.sShelfID, sServerID))
+            lg.logInfo("LIFETIME", "100pct glitch on shelf |%s| of server|%s| - all docs lost" % (self.sShelfID, sServerID))
         else:
             self.mInjectError(self.nImpactReductionPct, self.nGlitchDecayHalflife, self.nGlitchMaxlife)
         return (self.nGlitches, self.sShelfID)
 
 # L i f e t i m e . m I n j e c t E r r o r 
+    @catchex
     @tracef("LIFE")
     def mInjectError(self, mynReduction, mynDecayHalflife, myfNow):
         '''\
