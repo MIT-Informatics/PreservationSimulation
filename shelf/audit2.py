@@ -299,7 +299,7 @@ class CAudit2(object):
             cClient.mServerIsDead(sDeadServerID, sDeadCollectionID)
     """
 
-#new version, approx
+# NEW NEW NEW
 # C A u d i t 2 . m A u d i t S e g m e n t 
     @catchex
     @tracef("AUD2")
@@ -397,7 +397,7 @@ class CAudit2(object):
                     # Report permanent loss, one ping only.
                     # Do not double-count docs already lost.  Doc will not
                     #  be put onto damaged list if already lost.
-                    sRepair = "perm"
+                    sRepair = "permloss"
                     lg.logInfo("AUDIT2","perm loss   t|%10.3f| doc|%s| aud|%s-c%s-s%s| cli|%s| coll|%s|" % (G.env.now,sDocID,self.ID,self.nNumberOfCycles,mynThisSegment,self.sClientID,self.sCollectionID))
                     self.mRecordDocumentLost(sDocID)
                 elif nCopiesLeft >= nMajority:          # M A J O R I T Y  remain
@@ -409,7 +409,7 @@ class CAudit2(object):
                 lg.logInfo("AUDIT2","%s rp t|%10.3f| doc|%s| aud|%s-c%s-s%s| cli|%s| coll|%s|" % (sRepair,G.env.now,sDocID,self.ID,self.nNumberOfCycles,mynThisSegment,self.sClientID,self.sCollectionID))
 
                 # P h a s e  3: repair damaged docs, if possible.
-                ###foreach server on which doc was lost
+                ###foreach server on which doc was damaged
                 # Put a copy back on each server where it is missing.  
                 for sServerID in lDocLostOnServers:
                     ###repair
