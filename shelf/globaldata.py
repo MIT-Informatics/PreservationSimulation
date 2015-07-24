@@ -51,6 +51,7 @@ class ProtoG(object):
 
     nBandwidthMbps = 10     # Vanilla ethernet speed or cheap ISP
     nBandwidthMbps = 1000   # Lots of bandwidth reqd to support 20 copies, wow.
+    nBandwidthMbps = 100    # Plausible commercial/residential bandwidth today.
     nAuditCycleLastCompleted = 0    # Last complete audit in this run.
     
     fSecondsPerHour = float(60.0 * 60.0)    # conversion constant.

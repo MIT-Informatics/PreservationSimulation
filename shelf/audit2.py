@@ -55,7 +55,7 @@ class CAudit2(object):
         self.dDocsAlreadyLost = dict()
         
         # List of 2-tuples of serverID and collectionID for dead servers.
-        self.lDeadServerIDs = set()
+        self.stDeadServerIDs = set()
 
         # Start the free-running process of audit cycles for 
         # this collection.
@@ -131,6 +131,7 @@ class CAudit2(object):
         # Tell the caller that we finished.
         myeCallerSyncEvent.succeed(value=self.nNumberOfCycles)
 
+    """
 # C A u d i t 2 . m A u d i t S e g m e n t 
     @catchex
     @tracef("AUD2")
@@ -152,7 +153,7 @@ class CAudit2(object):
         cClient = G.dID2Client[self.sClientID]
         with cClient.NetworkBandwidthResource.request() as reqnetwork:
             fNetworkWaitBegin = G.env.now
-            result = yield reqnetwork
+            result = yield reqnetwork       # Wait for network to be free.
             fNetworkWaitEnd = G.env.now
             fNetworkWaitTime = fNetworkWaitEnd - fNetworkWaitBegin
             # Log event if we had to wait, or not, for the network to be free.  
@@ -191,7 +192,7 @@ class CAudit2(object):
                         else:
                             lg.logInfo("AUDIT2","cpy missing t|%10.3f| doc|%s| svr|%s| aud|%s-c%s-s%s| cli|%s| coll|%s|" % (G.env.now,sDocID,sServerID,self.ID,self.nNumberOfCycles,mynThisSegment,self.sClientID,self.sCollectionID))
 
-                        TRC.tracef(5,"AUD2","proc AuditSegment2 doc|%s| svr|%s| loston|%s|" % (sDocID,sServerID,self.dlDocsDamagedOnServers[sDocID]))
+                        TRC.tracef(5,"AUD2","proc AuditSegment2 doc|%s| svr|%s| lost on|%s|" % (sDocID,sServerID,self.dlDocsDamagedOnServers[sDocID]))
                 # end foreach doc
             # end foreach server
 
@@ -223,20 +224,20 @@ class CAudit2(object):
                             pass        # Do not double-count docs already lost.
                         else:
                             lg.logInfo("AUDIT2","perm loss   t|%10.3f| doc|%s| aud|%s-c%s-s%s| cli|%s| coll|%s|" % (G.env.now,sDocID,self.ID,self.nNumberOfCycles,mynThisSegment,self.sClientID,self.sCollectionID))
-                            self.mMarkDocumentLost(sDocID)
+                            self.mRecordDocumentLost(sDocID)
                     elif nCopiesLeft >= nMajority:          # M A J O R I T Y  remain
                         sRepair = "Majority"
                         if self.mIsDocumentLost(sDocID):
                             pass        # Do not double-count docs already lost.
                         else:
-                            self.mMarkDocumentMajorityRepair(sDocID)
+                            self.mRecordDocumentMajorityRepair(sDocID)
                             lg.logInfo("AUDIT2","majority rp t|%10.3f| doc|%s| aud|%s-c%s-s%s| cli|%s| coll|%s|" % (G.env.now,sDocID,self.ID,self.nNumberOfCycles,mynThisSegment,self.sClientID,self.sCollectionID))
                     else:                                   # M I N O R I T Y  remain
                         sRepair = "Minority"
                         if self.mIsDocumentLost(sDocID):
                             pass        # Do not double-count docs already lost.
                         else:
-                            self.mMarkDocumentMinorityRepair(sDocID)
+                            self.mRecordDocumentMinorityRepair(sDocID)
                             lg.logInfo("AUDIT2","minority rp t|%10.3f| doc|%s| aud|%s-c%s-s%s| cli|%s| coll|%s|" % (G.env.now,sDocID,self.ID,self.nNumberOfCycles,mynThisSegment,self.sClientID,self.sCollectionID))
     
                     # P h a s e  3: Repair doc on servers where lost.
@@ -247,7 +248,7 @@ class CAudit2(object):
                     else:
                         # Put a copy back on each server where it is missing.  
                         for sServerID in lDocLostOnServers:
-                            if not sServerID in self.lDeadServerIDs:
+                            if not sServerID in self.stDeadServerIDs:
                                 fTransferTime = self.mRepairDoc(sDocID,sServerID)
                             
                                 ''' If the repair returns False instead of a time, 
@@ -269,7 +270,7 @@ class CAudit2(object):
                                     Send collectionID and serverID to clientID.
                                 '''
                                 if fTransferTime == False:
-                                    self.lDeadServerIDs.add((sServerID, self.sCollectionID))
+                                    self.stDeadServerIDs.add((sServerID, self.sCollectionID))
                                     lg.logInfo("AUDIT2","dead server t|%10.3f| doc|%s| aud|%s| cli|%s| coll|%s| svr|%s|" % (G.env.now,sDocID,self.ID,self.sClientID,self.sCollectionID,sServerID))
                                     # Oops, cannot actually repair doc on this server,
                                     #  so rescind the attempt (and counters).
@@ -290,16 +291,182 @@ class CAudit2(object):
         lg.logInfo("AUDIT2","rls network t|%10.3f| auditid|%s| cli|%s| coll|%s| seg|%s|" % (G.env.now,self.ID,self.sClientID,self.sCollectionID,mynThisSegment))
         
         # If we saw any dead servers in this segment, inform the clients.
-        while self.lDeadServerIDs:
+        while self.stDeadServerIDs:
             cCollection = G.dID2Collection[self.sCollectionID]
             cClient = G.dID2Client[cCollection.sClientID]
-            (sDeadServerID, sDeadCollectionID) = self.lDeadServerIDs.pop()
+            (sDeadServerID, sDeadCollectionID) = self.stDeadServerIDs.pop()
+            NTRC.ntracef(3,"AUD2","proc t|%10.3f| inform dead server auditid|%s| cli|%s| coll|%s| svr|%s| doc|%s|" % (G.env.now,self.ID,self.sClientID,self.sCollectionID,sServerID,sDocID))
+            cClient.mServerIsDead(sDeadServerID, sDeadCollectionID)
+    """
+
+#new version, approx
+# C A u d i t 2 . m A u d i t S e g m e n t 
+    @catchex
+    @tracef("AUD2")
+    def mAuditSegment(self, mynThisSegment, mylDocs, mysCollectionID, myeCallerSyncEvent):
+        '''\
+        SimPy generator to audit one segment of a collection.
+        This does all the work.  
+        This is the single worst, most confusing, most fragile, and 
+         most awful code in the entire program.  Unfortunately, in 
+         Python 2, one cannot yield from a vanilla function, only
+         from a generator, so all that crap, and its convoluted 
+         conditional logic, is in here.  
+        '''
+
+        lg.logInfo("AUDIT2","begin segmt t|%10.3f| auditid|%s| cycle|%s| seg|%s| cli|%s| coll|%s| ndocs|%s|range %s-%s|" % (G.env.now,self.ID,self.nNumberOfCycles,mynThisSegment,self.sClientID,self.sCollectionID,len(mylDocs),mylDocs[0],mylDocs[-1]))
+    
+        ###seize network resource
+        # Seize the network resource so this audit cycle 
+        # can use it exclusively.
+        # The "with" should take care of releasing it
+        cClient = G.dID2Client[self.sClientID]
+        with cClient.NetworkBandwidthResource.request() as reqnetwork:
+            fNetworkWaitBegin = G.env.now
+
+            ###wait if necessary
+            result = yield reqnetwork       # Wait for network to be free.
+            fNetworkWaitEnd = G.env.now
+            fNetworkWaitTime = fNetworkWaitEnd - fNetworkWaitBegin
+
+            ###log result
+            # Log event if we had to wait, or not, for the network to be free.  
+            lg.logInfo("AUDIT2","grabnetwork t|%10.3f| auditid|%s| cli|%s| coll|%s| seg|%s| delay|%9.3f|" % (G.env.now,self.ID,self.sClientID,self.sCollectionID,mynThisSegment,fNetworkWaitTime))
+            # And restart the duration clock after the unproductive wait.
+            fTimeCycleBegin = G.env.now
+            # So much for timekeeping.  Now do some actual work.
+
+            # P h a s e  1: Check servers for copies of docs, record losses.
+            # Docs already permanently lost will not be put on the damaged list.
+            self.dlDocsDamagedOnServers = cc.defaultdict(list)
+            cCollection = G.dID2Collection[mysCollectionID]
+            # foreach server used for this collection
+            for sServerID in cCollection.lServerIDs:
+                cServer = G.dID2Server[sServerID]
+                ###foreach doc
+                # foreach doc in this segment
+                for sDocID in self.lDocsThisSegment:
+                    cDoc = G.dID2Document[sDocID]
+                    # If the doc is still on the server, retrieve it
+                    #  and spend time doing that.
+                    # If not, then record that doc damaged on this server. 
+                    fTransferTime = self.mRetrieveDoc(sDocID,sServerID)
+    
+                    ###if okay
+                    if fTransferTime:
+                        TRC.tracef(3,"AUD2","proc AuditSegment3 retrieve t|%10.3f| doc|%s| svr|%s| xfrtim|%f|" % (G.env.now,sDocID,sServerID,fTransferTime))
+                        ###yield timeout
+                        yield G.env.timeout(fTransferTime)
+                    else:
+                        if self.mIsDocumentLost(sDocID):
+                            pass    # Do not complain if doc already known to be lost.
+                        else:
+                            # If copy is missing here, save server in lost-list for doc.
+                            self.dlDocsDamagedOnServers[sDocID].append(sServerID)
+                            TRC.tracef(5,"AUD2","proc AuditSegment2 doc|%s| svr|%s| lost on|%s|" % (sDocID,sServerID,self.dlDocsDamagedOnServers[sDocID]))
+                            ###log copy missing on some server
+                            lg.logInfo("AUDIT2","copymissing t|%10.3f| doc|%s| svr|%s| aud|%s-c%s-s%s| cli|%s| coll|%s|" % (G.env.now,sDocID,sServerID,self.ID,self.nNumberOfCycles,mynThisSegment,self.sClientID,self.sCollectionID))
+                # end foreach doc
+            # end foreach server used for collection
+            
+            # P h a s e  2: Record severity (majority/minority/permanent) of copy losses.
+            # NOTE: This arithmetic seems to be reasonable for all numbers
+            #  greater than two, but one copy remaining out of two is judged 
+            #  to be a majority, so a repair from that single remaining copy
+            #  is labeled a majority repair.  Seems kinda wrong.  
+            # Would love to split the logic of this routine into separate
+            #  functions; when you're indented seven levels, your logic is,
+            #  um, hard to explain.  But cannot yield from sub-functions, 
+            #  at least not in Python2.  
+            nServers = len(cCollection.lServerIDs)
+            nMajority = (len(cCollection.lServerIDs)+1) / 2     # int divide truncates
+
+            ###foreach doc on damaged list
+            for sDocID in sorted(self.dlDocsDamagedOnServers.keys(), key=util.fniNumberFromID):
+
+                ###count docs on all servers
+                lDocLostOnServers = self.dlDocsDamagedOnServers[sDocID]
+                nCopiesLost = len(lDocLostOnServers)
+                nCopiesLeft = nServers - nCopiesLost
+                # How many copies left: none, a lot, a few?
+                TRC.tracef(3,"AUD2","proc AuditSegment1 doc|%s| nsvr|%s| loston|%s| nleft|%s|" % (sDocID,nServers,lDocLostOnServers,nCopiesLeft))
+
+                ### if doc not lost
+                ###     assess majority/minority/lost
+                if nCopiesLeft == 0:                    # N O N E  remain
+                    # Report permanent loss, one ping only.
+                    # Do not double-count docs already lost.  Doc will not
+                    #  be put onto damaged list if already lost.
+                    sRepair = "perm"
+                    lg.logInfo("AUDIT2","perm loss   t|%10.3f| doc|%s| aud|%s-c%s-s%s| cli|%s| coll|%s|" % (G.env.now,sDocID,self.ID,self.nNumberOfCycles,mynThisSegment,self.sClientID,self.sCollectionID))
+                    self.mRecordDocumentLost(sDocID)
+                elif nCopiesLeft >= nMajority:          # M A J O R I T Y  remain
+                    sRepair = "majority"
+                else:                                   # M I N O R I T Y  remain
+                    sRepair = "minority"
+
+                ###log repair type for doc
+                lg.logInfo("AUDIT2","%s rp t|%10.3f| doc|%s| aud|%s-c%s-s%s| cli|%s| coll|%s|" % (sRepair,G.env.now,sDocID,self.ID,self.nNumberOfCycles,mynThisSegment,self.sClientID,self.sCollectionID))
+
+                # P h a s e  3: repair damaged docs, if possible.
+                ###foreach server on which doc was lost
+                # Put a copy back on each server where it is missing.  
+                for sServerID in lDocLostOnServers:
+                    ###repair
+                    fTransferTime = self.mRepairDoc(sDocID,sServerID)
+                    '''\
+                    If the repair returns False instead of a time, 
+                    then that server is no longer accepting documents.
+                    Remove that server from the list, invalidate all 
+                    its copies.  Then tell the client to find a new 
+                    server and re-place the entire collection.  
+                    Schedule this to occur at the end of the
+                    audit cycle or segment to avoid confusing the 
+                    ongoing evaluation.  Auditor informs client, oops,
+                    you seem to be missing a server, and client takes
+                    corrective action at that time.  
+                    Send collectionID and serverID to clientID.
+                    '''
+
+                    ###if not okay ie server dead
+                    if fTransferTime == False:
+                        self.stDeadServerIDs.add((sServerID, self.sCollectionID))
+                        lg.logInfo("AUDIT2","dead server t|%10.3f| doc|%s| aud|%s| cli|%s| coll|%s| svr|%s|" % (G.env.now,sDocID,self.ID,self.sClientID,self.sCollectionID,sServerID))
+                    else:
+                        ###log repair effected
+                        TRC.tracef(3,"AUD2","proc AuditSegment4 repair t|%10.3f| doc|%s| svr|%s| xfrtim|%f| type|%s|" % (G.env.now,sDocID,sServerID,fTransferTime,sRepair))
+                        yield G.env.timeout(float(fTransferTime))
+                        lg.logInfo("AUDIT2","repair doc  t|%10.3f| doc|%s| aud|%s| cli|%s| coll|%s| svr|%s| from %s copies|%d|" % (G.env.now,sDocID,self.ID,self.sClientID,self.sCollectionID,sServerID,sRepair,nCopiesLeft))
+
+                        ###count repair as type maj/min for audit and doc
+                        # If repair succeeded, record and count it.
+                        if sRepair == "majority":
+                            self.mRecordDocumentMajorityRepair(sDocID)
+                        else:
+                            self.mRecordDocumentMinorityRepair(sDocID)
+                # end foreach server that lost this doc
+            # end foreach damaged doc
+
+            lg.logInfo("AUDIT2","end   segmt t|%10.3f| auditid|%s| cycle|%s| seg|%s| cli|%s| coll|%s| ndocs|%s|" % (G.env.now,self.ID,self.nNumberOfCycles,mynThisSegment,self.sClientID,self.sCollectionID,len(mylDocs)))
+    
+            # After all that, tell the caller we finished.
+            myeCallerSyncEvent.succeed(value=mynThisSegment)
+            lg.logInfo("AUDIT2","rls network t|%10.3f| auditid|%s| cli|%s| coll|%s| seg|%s|" % (G.env.now,self.ID,self.sClientID,self.sCollectionID,mynThisSegment))
+        # end network resource
+
+        # If we saw any dead servers during this segment, inform the clients.
+        while self.stDeadServerIDs:
+            cCollection = G.dID2Collection[self.sCollectionID]
+            cClient = G.dID2Client[cCollection.sClientID]
+            (sDeadServerID, sDeadCollectionID) = self.stDeadServerIDs.pop()
             NTRC.ntracef(3,"AUD2","proc t|%10.3f| inform dead server auditid|%s| cli|%s| coll|%s| svr|%s| doc|%s|" % (G.env.now,self.ID,self.sClientID,self.sCollectionID,sServerID,sDocID))
             cClient.mServerIsDead(sDeadServerID, sDeadCollectionID)
 
-# A u d i t . m M a r k D o c u m e n t L o s t 
+    # end def
+
+# A u d i t . m R e c o r d D o c u m e n t L o s t 
     @tracef("AUD2")
-    def mMarkDocumentLost(self,mysDocID):
+    def mRecordDocumentLost(self,mysDocID):
         self.nPermanentLosses += 1          # WARNING: not idempotent.
         cDoc = G.dID2Document[mysDocID]
         cDoc.mMarkLost()
@@ -311,17 +478,17 @@ class CAudit2(object):
         cDoc = G.dID2Document[mysDocID]
         return cDoc.mIsLost()
 
-# A u d i t . m M a r k D o c u m e n t M a j o r i t y R e p a i r
+# A u d i t . m R e c o r d D o c u m e n t M a j o r i t y R e p a i r
     @tracef("AUD2")
-    def mMarkDocumentMajorityRepair(self,mysDocID):
+    def mRecordDocumentMajorityRepair(self,mysDocID):
         self.nRepairsMajority += 1          # WARNING: not idempotent.
         cDoc = G.dID2Document[mysDocID]
         cDoc.mMarkMajorityRepair()
         return self.nRepairsMajority
         
-# A u d i t . m M a r k D o c u m e n t M i n o r i t y R e p a i r
+# A u d i t . m R e c o r d D o c u m e n t M i n o r i t y R e p a i r
     @tracef("AUD2")
-    def mMarkDocumentMinorityRepair(self,mysDocID):
+    def mRecordDocumentMinorityRepair(self,mysDocID):
         self.nRepairsMinority += 1          # WARNING: not idempotent.
         cDoc = G.dID2Document[mysDocID]
         cDoc.mMarkMinorityRepair()
