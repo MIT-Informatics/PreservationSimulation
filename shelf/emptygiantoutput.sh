@@ -23,6 +23,6 @@ else
     specificdir="$2"
 fi
 
-cp -v $familydir/$specificdir/GiantOutput_HeaderOnly.txt $familydir/$specificdir/dat/GiantOutput_00.txt
+cp -v ./GiantOutput_HeaderOnly.txt $familydir/$specificdir/dat/GiantOutput_00.txt
 
 #END

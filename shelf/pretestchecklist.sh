@@ -5,7 +5,7 @@
 # 
 
 if [ "$1" == "-h" ]
-then
+then 
     echo "Usage: $0 [<familydir> [<specificdir>]]"
     echo "Defaults to ../Q3 and ."
     echo "Must be run from shelf dir"
