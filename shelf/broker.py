@@ -243,7 +243,7 @@ class CG(object):
     #  of multiple cores.
     sActorCmdFileTemplate = '{sFamilyDir}/{sSpecificDir}/cmd/{sShelfLogFileName}.cmds'
     sActorCmdFileName = None
-    sActorCmdTemplate = 'python listactor.py {sActorCmdFileName} > {sFamilyDir}/{sSpecificDir}/act/{sShelfLogFileName}_actor.log 2>&1 &'
+    sActorCmdTemplate = 'export TRACE_LEVEL=0; export TRACE_FACIL=; python listactor.py {sActorCmdFileName} > {sFamilyDir}/{sSpecificDir}/act/{sShelfLogFileName}_actor.log 2>&1 &'
     sActorCmd = None
 
     # Only field names that appear in items in the database should ever
@@ -460,7 +460,7 @@ class CCommand(object):
         sResult = ""
         for sLine in os.popen(mysCommand):
             sResult += sLine.strip()
-        return sResult + "\n"
+        return sResult
         
     @catchex
     @ntracef("CMD")
