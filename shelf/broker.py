@@ -6,9 +6,10 @@ import  os
 import  re
 import  time
 import  json
-from    NewTraceFac     import NTRC,ntrace,ntracef
+from    NewTraceFac     import  NTRC,ntrace,ntracef
 import  mongolib
 import  sys
+from    catchex         import  catchex
 
 
 @ntracef("CLI")
@@ -264,9 +265,14 @@ class CG(object):
     # Command used to count instances and wait for an open core.  
     # I added the temp files so that we can track certain errors
     #  that seem to occur on AWS Ubuntu, running out of disk space 
-    #  or memory or some other resource.  
-#    sWaitForOpeningCmd = "ps -aux > ps.tmp 2>&1 ; cat ps.tmp | grep {Name} > grep.tmp 2>&1 ; cat grep.tmp | wc -l | tee wc.tmp"
-    sWaitForOpeningCmd = "ps axu 2>&1 | tee ps.tmp | grep {Name} 2>&1 | tee grep.tmp | wc -l | tee wc.tmp"
+    #  or memory or some other resource.  Whatever the cause, the 
+    #  command below returns an empty string, oops.  
+    # NOTE: When we translate this entire application to python3, this 
+    #  command will have to change.  Now it eliminates the python3 something
+    #  that Ubuntu is running in the background.  
+    sWaitForOpeningCmd = "ps axu 2>&1 | tee ps.tmp | grep {Name} 2>&1 | grep -v grep | grep -v python3 | tee grep.tmp | wc -l | tee wc.tmp"
+    nWcLimit = 100          # How many times to try for a number out of the above command.
+    nLinuxScrewupTime = 3   # How long between attempts.
 
     '''
     Directory structure under the family/specific dir:
@@ -307,6 +313,7 @@ def fnIntPlease(myString):
         return myString
 
 # f n W a i t F o r O p e n i n g 
+@catchex
 @ntracef("WAIT")
 def fnbWaitForOpening(mynProcessMax,mysProcessName,mynWaitTime,mynWaitLimit):
     ''' Wait for a small, civilized number of processes to be running.  
@@ -330,10 +337,21 @@ def fnbWaitForOpening(mynProcessMax,mysProcessName,mynWaitTime,mynWaitLimit):
     dParams = dict()
     dParams['Name'] = mysProcessName
     for idx in range(mynWaitLimit):
-        sCmd = g.sWaitForOpeningCmd
-        sFullCmd = cCmd.makeCmd(sCmd,dParams)
-        sResult = cCmd.doCmdStr(sFullCmd)
-        nResult = int(sResult)
+        # Harden the slot detection loop against errors seen.
+        #  If it fails many times in a row, let it really die.  
+        # Ignore (at our peril) the frequent null results from wc on Ubuntu.
+        nWcLimit = g.nWcLimit
+        while nWcLimit:
+            sCmd = g.sWaitForOpeningCmd
+            sFullCmd = cCmd.makeCmd(sCmd,dParams)
+            sResult = cCmd.doCmdStr(sFullCmd)
+            try:
+                nResult = int(sResult)
+                bNotOkay = False
+            except ValueError:
+                nWcLimit -= 1
+                time.sleep(g.nLinuxScrewupTime)
+        #end while waiting for int from wc
         NTRC.tracef(3,"WAIT","proc WaitForOpening1 idx|%d| cmd|%s| result|%s|" % (idx,sFullCmd,nResult))
         if mysProcessName.find("python") >= 0:
             nOtherProcs = nResult - 1               # Processes that are not me.
