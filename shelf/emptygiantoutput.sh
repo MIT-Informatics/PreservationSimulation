@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # emptygiantoutput.sh
 # Must be run from shelf directory.  
 # Defaults to Q3 family and . specific, but can be overridden by args 1 and 2

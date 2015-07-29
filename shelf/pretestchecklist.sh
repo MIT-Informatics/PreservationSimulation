@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # pretestchecklist.sh
 
 # Check that all directories and files are in place for a run.  

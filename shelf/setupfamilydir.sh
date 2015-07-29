@@ -1,4 +1,4 @@
-#/bin/sh
+#/bin/bash
 # setupfamilydir.sh
 #
 #                               RBLandau 20150713

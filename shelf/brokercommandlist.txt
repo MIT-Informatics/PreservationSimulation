@@ -16,7 +16,7 @@
 date +%Y%m%d_%H%M%S.%3N
 
 # Make sure we have the right version of bash and Python.
-sh --version
+bash --version
 python -c 'import sys; print sys.version; print sys.version_info'
 
 # Actual simulation command.
@@ -48,15 +48,28 @@ python main.py {sFamilyDir} {sSpecificDir} {nSimlen} {nRandomseed} --ncopies={nC
 # So far, this has happened only on very CPU-intensive runs, with 2 or 4 copies
 #  of documents at lifek=3000, which is really rusty-garbage-can-lid quality
 #  that no one would ever actually use.  
+# Adjust the time delays so that nothing is a multiple of anything else, easier
+#  to find in the logs.  
+# 
 
 date +%Y%m%d_%H%M%S.%3N
 
-while true; do if [ -z $(tail -3 {sFamilyDir}/{sSpecificDir}/log/{sShelfLogFileName}.log | grep "End time stats" | wc -l) ]; then sleep 15; else sleep 5; break; fi; done 
+while true; do if [ -z $(tail -3 {sFamilyDir}/{sSpecificDir}/log/{sShelfLogFileName}.log | grep "End time stats" | wc -l) ]; then sleep 19; else sleep 7; break; fi; done 
 
 # Data extraction command.  Header must be forced here so that the 
 #  cleanup program can label the data fields correctly.
 
-python extractvalues.py --header --separator=' ' q3-extractinstructions.txt {sFamilyDir}/{sSpecificDir}/log/{sShelfLogFileName}.log  >  {sFamilyDir}/{sSpecificDir}/ext/{sShelfLogFileName}.ext
+python extractvalues.py --header --separator=' ' q3-extractinstructions.txt {sFamilyDir}/{sSpecificDir}/log/{sShelfLogFileName}.log  |  tee  {sFamilyDir}/{sSpecificDir}/ext/{sShelfLogFileName}.ext
+
+date +%Y%m%d_%H%M%S.%3N
+
+# Aaargh!  Again, have to wait for the file to be written by
+#  the extract process.  !@#$%^&*()  File must contain two lines.
+#  Is this a problem in bash that the python terminates but the 
+#  buffers have not yet been written to disk?  Or something?  
+#  Should one always flush() before exiting? 
+
+while true; do if [ 2 -gt $(wc -l {sFamilyDir}/{sSpecificDir}/ext/{sShelfLogFileName}.ext | awk '{print $1}') ]; then sleep 13; else sleep 7; break; fi; done 
 
 # Again, slow the pace a little.
 

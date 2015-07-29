@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # updateall.sh
 # Remove the version number identifiers from various files
 #  (by making copies, of course, not renaming)

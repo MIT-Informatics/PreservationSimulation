@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # getalllines-new.sh
 
 if [ -z "$2" ]

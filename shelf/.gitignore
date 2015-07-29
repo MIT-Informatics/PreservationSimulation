@@ -2,3 +2,4 @@ articles
 test
 tmp
 *.pyc
+*.tmp

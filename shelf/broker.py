@@ -209,14 +209,15 @@ class CG(object):
     nShelfSize = None
     nDocSize = None
     sQuery = None
-    nCores = 8              # default, overridden by NCORES env var
-    nCoreTimer = 10         # wait for a free core,
-    nPoliteTimer =  5       # shorter wait between launches.
-    nStuckLimit = 300       # max nr of CoreTimer waits before giving up.
-    nTestLimit = 0          # max nr of runs for a test run, 0=infinite
-    sTestCommand = "NO"     # should just echo commands instead of executing them?
-    sTestFib = "NO"         # should use Fibonacci calc instead of real programs?
-    sListOnly = "NO"        # Just list out all cases matching the stated criteria.  Don't execute.
+    nCores = 8              # Default, overridden by NCORES env var
+    nCoreTimer = 10         # Wait for a free core,
+    nPoliteTimer =  5       # Shorter wait between sequential launches.
+    nStuckLimit = 300       # Max nr of CoreTimer waits before giving up.
+    nTestLimit = 0          # Max nr of runs executed for a test run, 0=infinite.
+    sTestCommand = "NO"     # Should just echo commands instead of executing them?
+    sTestFib = "NO"         # Should use Fibonacci calc instead of real programs?
+    sListOnly = "NO"        # Just list out all cases matching the stated criteria.  
+                            #  but don't execute them.
     sRedo = "NO"            # Force cases to be redone (recalculated)?
 
     sFamilyDir = '../q3'
@@ -259,6 +260,13 @@ class CG(object):
     sFibCmd2 = 'python fib.py 40'
     sEndTime = 'date +%Y%m%d_%H%M%S.%3N'
     lFibTemplates = [sStartTime, sBashIdCmd, sPythonIdCmd, sFibCmd1, sFibCmd2, sEndTime]
+
+    # Command used to count instances and wait for an open core.  
+    # I added the temp files so that we can track certain errors
+    #  that seem to occur on AWS Ubuntu, running out of disk space 
+    #  or memory or some other resource.  
+#    sWaitForOpeningCmd = "ps -aux > ps.tmp 2>&1 ; cat ps.tmp | grep {Name} > grep.tmp 2>&1 ; cat grep.tmp | wc -l | tee wc.tmp"
+    sWaitForOpeningCmd = "ps axu 2>&1 | tee ps.tmp | grep {Name} 2>&1 | tee grep.tmp | wc -l | tee wc.tmp"
 
     '''
     Directory structure under the family/specific dir:
@@ -311,7 +319,7 @@ def fnbWaitForOpening(mynProcessMax,mysProcessName,mynWaitTime,mynWaitLimit):
         - max nr of retries before giving up
         NEW NEWS: Since the new listactor program is python, and the 
          simulation main is python, there are two programs running 
-         python27 for each simulation run.  Plus this broker program.
+         python for each simulation run.  Plus this broker program.
          So, if we are looking for python processes, the arithmetic ought to be 
          - how many pythons are running
          - subtract one for the broker
@@ -322,7 +330,7 @@ def fnbWaitForOpening(mynProcessMax,mysProcessName,mynWaitTime,mynWaitLimit):
     dParams = dict()
     dParams['Name'] = mysProcessName
     for idx in range(mynWaitLimit):
-        sCmd = "ps | grep {Name} | wc -l"
+        sCmd = g.sWaitForOpeningCmd
         sFullCmd = cCmd.makeCmd(sCmd,dParams)
         sResult = cCmd.doCmdStr(sFullCmd)
         nResult = int(sResult)
@@ -355,7 +363,7 @@ class CFormat(object):
         '''
         # Make a dictionary from the names requested in the string
         #  that just replaces the request '{foo}' with itself.  
-        sReNames = '(:?\{(\w+)\})+'
+        sReNames = '(:?\{([^\}]+)\})+'
         oReNames = re.compile(sReNames)
         lNameTuples = oReNames.findall(mysCmd)
         NTRC.ntracef(3,"FMT","proc gently tuples|%s|" % (lNameTuples))

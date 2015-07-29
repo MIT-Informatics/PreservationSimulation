@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Get NEWS lines from log files.
 

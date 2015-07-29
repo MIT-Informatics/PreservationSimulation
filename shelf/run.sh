@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # run.sh
 # Run shelf sim from the latest versions of files
 #

@@ -1,4 +1,4 @@
-#/bin/sh
+#/bin/bash
 # posttestcheckact.sh
 # Look briefly at the act logs to see if any are very different in size, 
 #  indicating a screwup of some sort during the run.  
