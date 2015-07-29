@@ -12,6 +12,11 @@
 
 #---------------------------------------------
 
+# Turn off any tracing that might have been going on in the broker.
+#  This could poison any python programs by exploding their log files.  
+export TRACE_LEVEL=0
+export TRACE_FACIL=
+
 # For the record, start time.
 date +%Y%m%d_%H%M%S.%3N
 

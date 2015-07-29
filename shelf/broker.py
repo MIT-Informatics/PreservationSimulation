@@ -452,6 +452,7 @@ class CCommand(object):
     Nothing specific here, so should probably be a separate module.  
     '''
 
+    @catchex
     @ntracef("CMD")
     def doCmdStr(self,mysCommand):
         ''' Return concatenated string of result lines with newlines stripped.  
@@ -461,6 +462,7 @@ class CCommand(object):
             sResult += sLine.strip()
         return sResult + "\n"
         
+    @catchex
     @ntracef("CMD")
     def doCmdLst(self,mysCommand):
         ''' Return list of result lines with newlines stripped.  
@@ -470,6 +472,7 @@ class CCommand(object):
             lResult.append(sLine.strip())
         return lResult
         
+    @catchex
     @ntracef("CMD")
     def doParse(self,mysCommand,mysRegex):
         sOutput = self.doCmd(mysCommand)
@@ -480,6 +483,7 @@ class CCommand(object):
             sResult = None
         return sResult
 
+    @catchex
     @ntracef("CMD")
     def makeCmd(self,mysCmd,mydArgs):
         ''' Substitute arguments into command template string.  
@@ -502,6 +506,7 @@ class CDatabase(object):
         nPendingCount = self.oPendingCollection.count()
         NTRC.ntracef(0,"DB","proc main pending nRecs|{}|".format(nPendingCount))
 
+    @catchex
     @ntracef("DB")
     def fnitGetInstructionIterator(self,mydQuery):
         '''
@@ -520,6 +525,7 @@ class CDatabase(object):
         NTRC.ntracef(0,"DB","proc main nInstructionsqueried|{}|".format(len(ldAllInstructions)))
         return ldAllInstructions
 
+    @catchex
     @ntracef("DB")
     def fnbIsItDone(self,mysInstructionId):
         '''
@@ -530,6 +536,7 @@ class CDatabase(object):
         NTRC.ntracef(3,"DB","proc check donelist id|%s| list|%s|" % (mysInstructionId, lMaybeDone))
         return len(lMaybeDone) > 0
 
+    @catchex
     @ntracef("DB")
     def fnbDeleteDoneRecord(self,mysInstructionId):
         dIsItDone = { "sDoneId" : mysInstructionId }
@@ -538,6 +545,7 @@ class CDatabase(object):
         return result["ok"] != 0
 
 # M A I N 
+@catchex
 @ntracef("MAIN")
 def main():
     '''
