@@ -341,13 +341,13 @@ def fnbWaitForOpening(mynProcessMax,mysProcessName,mynWaitTime,mynWaitLimit):
         #  If it fails many times in a row, let it really die.  
         # Ignore (at our peril) the frequent null results from wc on Ubuntu.
         nWcLimit = g.nWcLimit
-        while nWcLimit:
+        while nWcLimit > 0:
             sCmd = g.sWaitForOpeningCmd
             sFullCmd = cCmd.makeCmd(sCmd,dParams)
             sResult = cCmd.doCmdStr(sFullCmd)
             try:
                 nResult = int(sResult)
-                bNotOkay = False
+                nWcLimit = 0
             except ValueError:
                 nWcLimit -= 1
                 time.sleep(g.nLinuxScrewupTime)
