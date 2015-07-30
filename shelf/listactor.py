@@ -14,7 +14,7 @@ spawned with os.popen().
 @author: rblandau
 '''
 import csv
-from sys            import argv
+from sys            import argv, stdout
 from os             import popen
 from time           import localtime, sleep
 import re
@@ -175,6 +175,7 @@ def main():
         for sResult in lResult:
             NTRC.trace(0,"stdout=|%s|" % (sResult))
         print '-----------------'
+        stdout.flush()
 
 # E n t r y   p o i n t . 
 if __name__ == "__main__":
