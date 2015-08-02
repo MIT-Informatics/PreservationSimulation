@@ -270,7 +270,7 @@ class CG(object):
     # NOTE: When we translate this entire application to python3, this 
     #  command will have to change.  Now it eliminates the python3 something
     #  that Ubuntu is running in the background.  
-    sWaitForOpeningCmd = "ps axu 2>&1 | tee ps.tmp | grep {Name} 2>&1 | grep -v grep | grep -v python3 | tee grep.tmp | wc -l | tee wc.tmp"
+    sWaitForOpeningCmd = "ps axu 2>&1 | tee ps.tmp | grep {Name} 2>&1 | grep -v grep | grep -v python3 | grep -v 'sh -c' | grep -v '/sh' | tee grep.tmp | wc -l | tee wc.tmp"
     nWcLimit = 100          # How many times to try for a number out of the above command.
     nLinuxScrewupTime = 3   # How long between attempts.
 
