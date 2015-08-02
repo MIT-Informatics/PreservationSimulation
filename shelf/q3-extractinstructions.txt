@@ -87,7 +87,7 @@ glitchfreq,GLITCH,6,freq.(\d+)
 glitchimpact,GLITCH,7,impact.(\d+)
 glitchdecay,GLITCH,8,decay.(\d+)
 glitchmaxlife,GLITCH,9,maxlife.(\d+)
-nglitches,LIFETIME,7,glitches.(\d+)
+nglitches,"LIFETIME Total glitches",7,glitches.(\d+)
 
 timestamp,"MAIN INFO.*Simulation parameters",1,([1234567890_]+)
 walltime,"MAIN.*End time stats",0,wall. *([0-9\.]+)
