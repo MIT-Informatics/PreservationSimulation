@@ -64,7 +64,7 @@ while true; do if [ -z $(tail -3 {sFamilyDir}/{sSpecificDir}/log/{sShelfLogFileN
 # Data extraction command.  Header must be forced here so that the 
 #  cleanup program can label the data fields correctly.
 
-python extractvalues.py --header --separator=' ' q3-extractinstructions.txt {sFamilyDir}/{sSpecificDir}/log/{sShelfLogFileName}.log  |  tee  {sFamilyDir}/{sSpecificDir}/ext/{sShelfLogFileName}.ext
+python extractvalues2.py --header --separator=' ' q3-extractinstructions.txt {sFamilyDir}/{sSpecificDir}/log/{sShelfLogFileName}.log  |  tee  {sFamilyDir}/{sSpecificDir}/ext/{sShelfLogFileName}.ext
 
 date +%Y%m%d_%H%M%S.%3N
 
