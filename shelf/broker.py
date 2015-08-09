@@ -213,7 +213,7 @@ class CG(object):
     nCores = 8              # Default, overridden by NCORES env var
     nCoreTimer = 10         # Wait for a free core,
     nPoliteTimer =  5       # Shorter wait between sequential launches.
-    nStuckLimit = 300       # Max nr of CoreTimer waits before giving up.
+    nStuckLimit = 600       # Max nr of CoreTimer waits before giving up.
     nTestLimit = 0          # Max nr of runs executed for a test run, 0=infinite.
     sTestCommand = "NO"     # Should just echo commands instead of executing them?
     sTestFib = "NO"         # Should use Fibonacci calc instead of real programs?
@@ -270,7 +270,7 @@ class CG(object):
     # NOTE: When we translate this entire application to python3, this 
     #  command will have to change.  Now it eliminates the python3 something
     #  that Ubuntu is running in the background.  
-    sWaitForOpeningCmd = "ps axu 2>&1 | tee ps.tmp | grep {Name} 2>&1 | grep -v grep | grep -v python3 | grep -v 'sh -c' | grep -v '/sh' | tee grep.tmp | wc -l | tee wc.tmp"
+    sWaitForOpeningCmd = "ps axu 2>&1 | tee ps.tmp | grep {Name} 2>&1 | grep -v grep | grep -v python3 | grep -v 'sh -c' | grep -v '/sh ' | tee grep.tmp | wc -l | tee wc.tmp"
     nWcLimit = 100          # How many times to try for a number out of the above command.
     nLinuxScrewupTime = 3   # How long between attempts.
 
@@ -337,6 +337,7 @@ def fnbWaitForOpening(mynProcessMax,mysProcessName,mynWaitTime,mynWaitLimit):
     dParams = dict()
     dParams['Name'] = mysProcessName
     for idx in range(mynWaitLimit):
+
         # Harden the slot detection loop against errors seen.
         #  If it fails many times in a row, let it really die.  
         # Ignore (at our peril) the frequent null results from wc on Ubuntu.
@@ -352,6 +353,7 @@ def fnbWaitForOpening(mynProcessMax,mysProcessName,mynWaitTime,mynWaitLimit):
                 nWcLimit -= 1
                 time.sleep(g.nLinuxScrewupTime)
         #end while waiting for int from wc
+
         NTRC.tracef(3,"WAIT","proc WaitForOpening1 idx|%d| cmd|%s| result|%s|" % (idx,sFullCmd,nResult))
         if mysProcessName.find("python") >= 0:
             nOtherProcs = nResult - 1               # Processes that are not me.
@@ -361,7 +363,7 @@ def fnbWaitForOpening(mynProcessMax,mysProcessName,mynWaitTime,mynWaitLimit):
             if nResult < mynProcessMax: break
         NTRC.tracef(3,"WAIT","proc WaitForOpening2 sleep and do again idx|%d| nResult|%d|" % (idx,nResult))
         time.sleep(mynWaitTime)
-    return (idx < mynWaitLimit-1)
+    return (idx < mynWaitLimit-1)                   # Return false if we ran out of retries.
 
 
 # c l a s s   C F o r m a t 
