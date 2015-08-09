@@ -7,18 +7,22 @@ DONE - default should still be space
 - actually, Dialect.delimiter can be set to whatever i want.
 - maybe just use reader with delimiter=' ' and dict(zip()) 
    the header list and data list together.  
-
+DONE - recode entirely to force filter first thing, to reduce the size
+    of the internal lists required, and speed things up.  
+   
 100% glitch impact
-- shelf destroy all documents on shelf.
-- server inform client of shelf failure.
-- server refuse document additions to that shelf, 
+DONE - shelf destroy all documents on shelf.
+DONE - server inform client of shelf failure.
+DONE - server refuse document additions to that shelf, 
   or maybe shelf just always answers that it's full.
-- server probably should refuse to make a new shelf.  
-- client go shopping for another server to replace dead one.
-- if duration is short, then server may recover before the
+WRONG - server probably should refuse to make a new shelf.  
+DONE - client go shopping for another server to replace dead one.
+WRONG - if duration is short, then server may recover before the
   client even notices; however, all documents still have been lost,
   so the next audit will find many dead docs.  
   
+brokercommands
+DONE - slow down after extractvalues, too.
 
 
 

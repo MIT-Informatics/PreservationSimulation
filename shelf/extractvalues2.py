@@ -52,7 +52,7 @@ def fndCliParse(mysArglist):
         many options for this run from the command line.  
         Return a dictionary of all of them.   
     '''
-    sVersion = "0.0.1"
+    sVersion = "2.1.1"
     cParse = argparse.ArgumentParser(description="Digital Library Preservation Simulation, Utility to extract values from log files, CLI version %s  "%(sVersion) + \
         "Takes one simulation log file and instruction file.  Produces (to stdout)" + \
         "one line of data, plus optional header line of field names."
@@ -184,56 +184,25 @@ def main(mysInstructionsFileName,mysLogFileName):
     with open(mysLogFileName,"r") as fhLogFile:
 
         '''\
-        get list of tuples: lines that match a lineregex, for which var
-        foreach line, extract value, put in dictionary
-        
-        lvaluetuples = [ fntF1(line) for line in fhLogFile ]
-        ### where's the filtering?
-        foreach lvaluetuples:
-            store into resultdict
-        
-        fntF1(mysline):
-            return [ fntF2(mysline,varname) for varname in dvar.keys() ]
-        fntF2(myline,myvarname):
-            extract value based on valueregex for myvarname
-            return name and value 
-        
-        TRY AGAIN
-        
-        lGoodLines = filter( fnmDoesLineMatchAny(sLine), fhLogFile )
-        
-        fnmDoesLineMatchAny(sLine):
-           filter( , [ fnDoesLineMatchThis(sLine,varname) for varname in dvar.keys() ] )
-            
-        fnmDoesLineMatchThis(sLine,varname):
-            oMatch = re.something(dvar[varname](lineregex),sLine)
-            return (oMatch, var)
-        
-        TRY AGAIN AGAIN
+        get list of tuples: lines that match some lineregex, for which var
 
-        foreach line
-            foreach var in dvars.keys
-                get dvar[key]
-                if match lineregex
-                    store key,line in list
-        for sLine in fhLogFile:
-            lLinesSelectedRaw = filter( lambda sVarname: fntDoesLineMatchThisVar(sLine, sVarname), dVars.keys())
-        NTRC.tracef(3,"MN2","proc lLinesSelectedRaw len|%s| all|%s|" % (len(lLinesSelectedRaw),lLinesSelectedRaw))
-        # Eliminate duplicates.  Should not be any if the lineregexes are good.  
-        lLinesSelected = list(set(lLinesSelectedRaw))
+        foreach line, 
+            if matches any lineregex
+                extract value, 
+                put varname and value in dictionary
 
-
-        TRY AGAIN AGAIN AGAIN
-
+        be careful never to form a list of lines of the input log file, 
+         or of anything that is big-O of that.  filter first.
         '''
 
         # Form list of all lines that match some var.
         nLineNr = 0
         lLinesSelectedRaw = list()
         for sLine in fhLogFile:
-            nLineNr += 1                # Need line nr for debugging.
+            nLineNr += 1                # Need line nr only for debugging.
             for sVarname in g.dVars.keys():
                 tResult = fntDoesLineMatchThisVar(sLine, nLineNr, sVarname)
+                # If line matches any var, save the line and the varname.
                 if tResult[0]: 
                     lLinesSelectedRaw.append(tResult)
         NTRC.tracef(3,"MN2","proc lLinesSelectedRaw len|%s| all|%s|" % (len(lLinesSelectedRaw),lLinesSelectedRaw))
@@ -244,18 +213,24 @@ def main(mysInstructionsFileName,mysLogFileName):
     NTRC.tracef(5,"MN3","proc lLinesSelected len|%s| all|%s|" % (len(lLinesSelected),lLinesSelected))
 
     # Extract variable value from each matching line.
+    # List of lines selected is actually a list of triples.
     lResults = map( lambda (omatch, sLine, sVarname): 
                 fntMatchValue(sLine, g.dVars[sVarname])
                 , lLinesSelected )
+    # Returned list of (name,val) tuples for vars in lines selected.
+    #  Make a dictionary.  
     dValues = dict(lResults)
 
     # In case we did not find the line for a variable, dummy up a value.
-    for sKey in g.dVars: dValues.setdefault(sKey,"nolinefound")
+    for sKey in g.dVars: 
+        dValues.setdefault(sKey,"nolinefound")
+
     # And in case we didn't even find a rule for some variable that
     #  will be used in the template, dummy up a value for it, too.  
-    sTemplateHeader = "\n".join(lTemplate).replace("{","",-1).replace("}","",-1).replace("\n"," ",-1)
+    sTemplateHeader = "\n".join(lTemplate).replace("{","").replace("}","").replace("\n"," ")
     lTemplateVars = sTemplateHeader.split()
-    for sTemplateVar in lTemplateVars: dValues.setdefault(sTemplateVar,"norulefound")
+    for sTemplateVar in lTemplateVars: 
+        dValues.setdefault(sTemplateVar,"norulefound")
 
     # Add the synthetic variables to the value dictionary.
     dSyntho = fndGetSyntheticVars()
@@ -274,11 +249,15 @@ def main(mysInstructionsFileName,mysLogFileName):
         print sHeader
     # Newline already pasted on the end of template; don't add another.
     print sLineout,
-
+    # Done.  
 
 # f n t D o e s L i n e M a t c h T h i s V a r 
 @ntracef("MCHT",level=5)
 def fntDoesLineMatchThisVar(mysLine, mynLineNr, mysVarname):
+    '''\
+    Check line against lineregex of var.
+    Return tuple (matchobject, line, varname).
+    '''
     dVar = g.dVars[mysVarname]
     sLineregex = dVar["lineregex"]
     oMatch = re.search(sLineregex,mysLine)
@@ -286,79 +265,17 @@ def fntDoesLineMatchThisVar(mysLine, mynLineNr, mysVarname):
     if oMatch:
         NTRC.tracef(3,"LINE","proc MatchLine found line|%s|=|%s| var|%s| regex|%s|" % (mynLineNr,mysLine,mysVarname,sLineregex))
     return (oMatch, mysLine, mysVarname)
-        
-
-    """
-        # Double list comprehension to find lines that match.
-        lMatchTuples = [ fntMatchLine(sLine,nLineNr,dVar) \
-            for (sLine,lLines,nLineNr) in fnGetLineAndNumber(fhLogFile,lLines) \
-            for dVar in dVars.values() ]
-        NTRC.tracef(5,"MN2","proc MatchTuples len|%s| first|%s|" % (len(lMatchTuples),lMatchTuples[0]))
-
-        # Filter returns only the lines that matched.
-        lLinesSelected = filter( lambda (var,matchobj,line): matchobj, \
-                                lMatchTuples )
-        # Extract variable value from each matching line.
-        lResults = map( lambda (sVarname,omatch,sLine): \
-            fntMatchValue(sLine,dVars[sVarname])         \
-            , lLinesSelected )
-        dValues = dict(lResults)
-        # In case we did not find the line for a variable, dummy up a value.
-        for sKey in dVars: dValues.setdefault(sKey,"nolinefound")
-        # And in case we didn't even find a rule for some variable that
-        #  will be used in the template, dummy up a value for it, too.  
-        sTemplateHeader = "\n".join(lTemplate).replace("{","",-1).replace("}","",-1).replace("\n"," ",-1)
-        lTemplateVars = sTemplateHeader.split()
-        for sTemplateVar in lTemplateVars: dValues.setdefault(sTemplateVar,"norulefound")
-
-    # Add the synthetic variables to the value dictionary.
-    dSyntho = fndGetSyntheticVars()
-    dValues.update(dSyntho)
-
-    # Fill in the template with values and print.  
-    # Template is allowed to be multiple lines.
-    sTemplate = "\n".join(lTemplate)
-    sLineout = makeCmd(sTemplate,dValues)
-    if g.bHeader or environ.get("header",None):
-        # Header is a single line concatenation of all the substitutions
-        #  in the template.
-        #  If the template is longer than one line, well, you can't read 
-        #  the data with a simple header anyway.  Oops.  
-        sHeader = sTemplateHeader
-        print sHeader
-    # Newline already pasted on the end of template; don't add another.
-    print sLineout,
-
-
-# f n G e t L i n e A n d N u m b e r 
-@ntracef("GETL")
-def fnGetLineAndNumber(myfh,mylLines):
-    for sLine in myfh:
-        NTRC.tracef(3,"GETL","proc GetLine nr|%s| line|%s|" % (len(mylLines)+1,sLine))
-        yield (sLine,mylLines.append(sLine),len(mylLines))
-
-
-# f n M a t c h L i n e 
-@ntracef("MCHL")
-def fntMatchLine(mysLine,mynLineNr,mydVar):
-    sVarname = mydVar["varname"]
-    sLineregex = mydVar["lineregex"]
-    # Check line against regex from dict.  
-    oMatch = re.search(sLineregex,mysLine)
-    NTRC.tracef(5,"MTLN","proc MatchLine try regex|%s| nr|%s| line|%s| match|%s|" % (sLineregex,mynLineNr,mysLine,oMatch))
-    if oMatch:
-        NTRC.tracef(3,"LINE","proc MatchLine found line|%s|=|%s| var|%s| regex|%s|" % (mynLineNr,mysLine,sVarname,sLineregex))
-    return (sVarname,oMatch,mysLine)
-
-    """
-
 
 # f n M a t c h V a l u e 
 @ntracef("MCHV")
 def fntMatchValue(mysLine,mydVar):
-    # Get the right word from the line.
-    #  If asked for word zero, use the whole line.  
-    #  Makes the extraction harder, but sometimes necessary.
+    '''\
+    Extract value from line according to valueregex for var.
+     If no value found, supply suitably disappointing string.  
+    Get the right word from the line.
+     If asked for word zero, use the whole line.  
+     Makes the extraction harder, but sometimes necessary.
+    '''
     sWordnumber = mydVar["wordnumber"]
     nWordnumber = int(sWordnumber)
     lWords = mysLine.split()
@@ -411,8 +328,8 @@ class CG(object):
 
 # M a i n   l i n e 
 if "__main__" == __name__:
-    g = CG()
-    #read filename and options from cli
+    g = CG()                # Global dict for options.
+    # Read filename and options from cli
     dCliDict = fndCliParse("")
     dCliDictClean = {k:v for k,v in dCliDict.items() if v is not None}
     g.__dict__.update(dCliDictClean)
@@ -430,5 +347,10 @@ if "__main__" == __name__:
 #                Couldn't find a reasonable way to do this with all functional
 #                forms without that giant list again.  
 #
+# 20150809  RBL Minor cleanup revisions.
+#               Added a few comments, docstrings.  
+#               After testing, this is about 2x faster than the original 
+#                version, and uses an almost fixed <10MB of memory.  
+# 
 
 #END
