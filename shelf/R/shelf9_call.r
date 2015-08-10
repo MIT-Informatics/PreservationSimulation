@@ -1,7 +1,6 @@
 # Edit me and run me.  (Select all, then ctrl-Enter.)
 
-sInputFilename  <- "./GiantOutput_log_doc50_shlf10_af10000s1tTOTAL_gf10000icombinedd0m1000-output-00.txt"
-sOutputFilename <- "./q3-af10000s1-gf10000icombinedd0m1000-AnnualAudit-AnnualGlitchCombinedRates-analysis.txt"
-sTitle <- "Q3 Glitch Annual Combined Rates 1000hr max, no decay, Audit Annual TOTAL"
-source("./ShelfAnalyze-glitchimpact-04.r")
-
+sInputFilename  <- "./GiantOutput_doc50copvarshlf1lifvar_af2500s1tTOTAL_gf30000i100d0m0_seed21-NAfixed-output-00.txt"
+sOutputFilename <- "./q3-af2500s1tTOTAL_gf30000i100d0m0-AnnualAudit_3yrGlitch-analysis-00.txt"
+sTitle <- "Q3 copies=var Glitch random 3yr 100% impact 0hr max, 0hr decay, Annual Audit TOTAL, seed21"
+source("./ShelfAnalyze-glitchimpact-05.r")
