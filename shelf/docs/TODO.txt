@@ -1,14 +1,16 @@
 TODO
 
+
 extractvalues.py
 DONE - add optional arg for --separator=','
 DONE - default should still be space
-- if i use comma, then datacleanup can use DictReader.
+- if i use comma, then datacleanup can use DictReader.  not a big deal.
 - actually, Dialect.delimiter can be set to whatever i want.
 - maybe just use reader with delimiter=' ' and dict(zip()) 
    the header list and data list together.  
 DONE - recode entirely to force filter first thing, to reduce the size
     of the internal lists required, and speed things up.  
+
    
 100% glitch impact
 DONE - shelf destroy all documents on shelf.
@@ -23,6 +25,11 @@ WRONG - if duration is short, then server may recover before the
   
 brokercommands
 DONE - slow down after extractvalues, too.
+
+
+broker.py
+DONE - increase the stuck timer a lot.
+- protect against grep failure, linux vs windows.
 
 
 

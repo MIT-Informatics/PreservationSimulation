@@ -1,15 +1,15 @@
-#!/bin/sh 
-# 20150727.1700
-
-# Get python packages
-sudo apt-get install python-pip
-sudo apt-get update
-sudo apt-get install python-pip
-sudo pip install --upgrade pip
-sudo pip install virtualenv
-sudo pip install simpy
-sudo pip install pymongo
-sudo apt-get install build-essential python-dev
+    #!/bin/sh 
+    # 20150727.1700
+    
+    # Get python packages
+    sudo apt-get install python-pip
+    sudo apt-get update
+    sudo apt-get install python-pip
+    sudo pip install --upgrade pip
+    sudo pip install virtualenv
+    sudo pip install simpy
+    sudo pip install pymongo
+    sudo apt-get install build-essential python-dev
 
 # Get Git.
 sudo apt-get update
