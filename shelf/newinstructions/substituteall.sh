@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # substituteall.sh
 #                       RBLandau 20150417
 
@@ -16,11 +16,11 @@ then
 fi
 
 # Get latest version of python program(s) needed.
-for file in "expandtemplate"
-do
-    #cp -v `ls $file*.py | sort | tail -1` $file.py
-    cp  `ls $file*.py | sort | tail -1` $file.py
-done
+#for file in "expandtemplate"
+#do
+#    #cp -v `ls $file*.py | sort | tail -1` $file.py
+#    cp  `ls $file*.py | sort | tail -1` $file.py
+#done
 
 # Check template file.
 tmpfile=$1

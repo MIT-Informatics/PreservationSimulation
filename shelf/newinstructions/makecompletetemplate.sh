@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # expandtemplate.sh 
 
 if [ -z "$2" ]
@@ -8,11 +8,11 @@ then
     exit 1
 fi
 
-for ff in "substituteall"
-do
-    #cp $(ls $ff*.sh | sort | tail -1) $ff.sh
-    cp $(ls $ff*.sh | sort | tail -1) $ff.sh
-done
+#for ff in "substituteall"
+#do
+#    #cp $(ls $ff*.sh | sort | tail -1) $ff.sh
+#    cp $(ls $ff*.sh | sort | tail -1) $ff.sh
+#done
 
 sh substituteall.sh "$1" \
         ins/simlen.ins ins/glitchignorelevel.ins    > "$2.01"
