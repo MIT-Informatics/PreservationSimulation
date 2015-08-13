@@ -12,6 +12,7 @@ import  sys
 from    catchex         import  catchex
 
 
+#=================================================
 @ntracef("CLI")
 def fndCliParse(mysArglist):
     ''' Parse the mandatory and optional positional arguments, and the 
@@ -194,6 +195,7 @@ def fndCliParse(mysArglist):
     return vars(xx)
 
 
+#=================================================
 # class   C G   f o r   g l o b a l   d a t a 
 class CG(object):
     ''' Global data.
@@ -284,6 +286,7 @@ class CG(object):
           redundant headers)
     '''
 
+#=================================================
 @ntrace
 def fnGetCommandTemplates(mysCommandFilename):
     '''
@@ -312,6 +315,7 @@ def fnIntPlease(myString):
     except ValueError:
         return myString
 
+#=================================================
 # f n W a i t F o r O p e n i n g 
 @catchex
 @ntracef("WAIT")
@@ -366,6 +370,7 @@ def fnbWaitForOpening(mynProcessMax,mysProcessName,mynWaitTime,mynWaitLimit):
     return (idx < mynWaitLimit-1)                   # Return false if we ran out of retries.
 
 
+#=================================================
 # c l a s s   C F o r m a t 
 class CFormat(object):
 
@@ -446,6 +451,7 @@ class CFormat(object):
         return sCommand
 
 
+#=================================================
 # class   C C o m m a n d
 class CCommand(object):
     '''
@@ -494,6 +500,7 @@ class CCommand(object):
         return sCmd
 
 
+#=================================================
 # c l a s s   C D a t a b a s e 
 class CDatabase(object):
     '''
@@ -546,6 +553,7 @@ class CDatabase(object):
         NTRC.ntracef(3,"DB","proc DeleteDone result|%s|" % (result))
         return result["ok"] != 0
 
+#=================================================
 # M A I N 
 @catchex
 @ntracef("MAIN")
@@ -656,6 +664,7 @@ def main():
     NTRC.ntracef(0,"MAIN","End.")
 
 
+#=================================================
 #
 # E n t r y   p o i n t . 
 if __name__ == "__main__":
@@ -684,3 +693,21 @@ foreach single-line file in holding dir
   delete one-liner
 
 '''
+
+Edit history:
+# 20150501  RBL Original version, very crude but workable.  
+# 20150512  RBL Version that could actually test parallelism.  
+# 20150519  RBL Add testing, redo.
+# 20150619  RBL Up to broker-10.py.
+# 20150719  RBL Improve and correct brokercommandlist.
+# 20150801  RBL Fix the wait-for grep command string to work on Linux
+#                for AWS Ubuntu.
+# 20150809  RBL Re-fix wait-for grep command string to work on CygWin.
+#               Increase stuck timer because AWS single stream is 
+#                reeeaaalllyyy ssslllooowww.  
+# 20150813  RBL Cosmetic changes in anticipation of adding flat-file db.
+#
+
+#     
+
+
