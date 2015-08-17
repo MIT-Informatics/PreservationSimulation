@@ -694,7 +694,7 @@ foreach single-line file in holding dir
 
 '''
 
-Edit history:
+# Edit history:
 # 20150501  RBL Original version, very crude but workable.  
 # 20150512  RBL Version that could actually test parallelism.  
 # 20150519  RBL Add testing, redo.
