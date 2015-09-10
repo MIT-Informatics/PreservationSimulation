@@ -32,4 +32,57 @@ DONE - increase the stuck timer a lot.
 - protect against grep failure, linux vs windows.
 
 
+newinstructions
+- write filter for instructions as they are being generated flat
+  hierarchical: a field named action for permit/deny
+- write rules for the filter
+  rules in a list of json dictionaries
+  first rule is permit *, then list of denies maybe slightly countermanded
+- integrate into last stage of flat instruction generation
+
+newnewinstructions
+- custom flat db or maybe tiny or buzhug
+- facade or adapter: same interface as current mongolib
+- new load, list, and clear utilities that use flatlib
+- eventually, web app to generate smallish sets of instructions
+
+packaging
+DONE - do Docker basic tutorials
+DONE - construct vm platforms for docker learning on both systems
+- transcribe crummy bash script to dockerfile
+
+
+AWS
+DONE - deploy shelf on AWS free tier system
+DONE - automate deployment to AWS systems
+DONE - run shelf on free tier system
+DONE - get access to 8 core system
+DONE - deploy to 8 core system
+DONE - run shelf on 8 core system
+- deploy to 36 core system
+- run on 36 core system: how fast?
+
+
+nonmonotonicity testing
+- do runs in the sensitive areas, limited to 3-4 lifetimes and few copies
+- runs with 100 or more seeds?
+- many runs with 20ish seeds to assess variability?
+- jacknife the existing numbers?
+
+
+outline for September presentation
+- how long is it?
+DONE - draft slide sequence
+- get approval of slide sequence
+- who is going to talk?
+DONE - propose what pictures we need
+- get list of specific graphs to be done
+
+runs for September presentation
+- what graphics needed?
+- what numbers to compute?
+
+
+
+
 
