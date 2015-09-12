@@ -33,7 +33,7 @@ DONE - increase the stuck timer a lot.
 
 
 newinstructions
-- write filter for instructions as they are being generated flat
+DONE - write filter for instructions as they are being generated flat
   hierarchical: a field named action for permit/deny
 - write rules for the filter
   rules in a list of json dictionaries
@@ -82,7 +82,10 @@ runs for September presentation
 - what graphics needed?
 - what numbers to compute?
 
-
+rationalize time constants so that people can understand them
+- change sector lifetime to half-life
+  (this will change ALL the existing numbers; recompute everything)
+DONE - change glitch frequency to half-life (oops, already is)
 
 
 
