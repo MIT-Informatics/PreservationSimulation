@@ -30,9 +30,15 @@ DONE - slow down after extractvalues, too.
 broker.py
 DONE - increase the stuck timer a lot.
 - protect against grep failure, linux vs windows.
+- add a cleanstart shell script to empty the dirs that need to 
+  be empty, set a clean GiantOutput file, and rescue any data
+  that was left over in a previous GiantOutput file into
+  the done dir.  
 
 
 newinstructions
+- Add a squash function to reduce blank sequences to single blanks
+  in flat files, in case someone created instructions in fixed columns.
 DONE - write filter for instructions as they are being generated flat
   hierarchical: a field named action for permit/deny
 - write rules for the filter
@@ -50,6 +56,14 @@ packaging
 DONE - do Docker basic tutorials
 DONE - construct vm platforms for docker learning on both systems
 - transcribe crummy bash script to dockerfile
+
+Docker scheduling
+- after container install, get sources from github
+- after container install, run first simple test
+- after container install, build tinytestdb
+- after container install, start mongod
+- after container install, run broker tests
+
 
 
 AWS
