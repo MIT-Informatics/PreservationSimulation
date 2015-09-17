@@ -74,12 +74,14 @@ A copy of a document can be lost in several ways.  Note that all document failur
     Temporary increases in error rates are not distinguishable from overall increases in the error rate for the duration of an inter-audit interval.  The client cannot tell if the error rate was lumpy during the period or just slightly higher.  
 
 1.  An institution can fail and lose all the documents it contains, 
+
 -   through natural catastrophe such as fire, flood, or earthquake; 
 -   through man-made catastrophe such as war, attack, or vandalism; 
--   through financial failure such as bankruptcy or broken credit arrangements; 
+-   through financial failure such as bankruptcy or broken credit arrangements;
 -   or simply through changes in an institution's goals and purpose.  
 
     In this case, the institutional failure loses all the documents in the collection, and the client must find and provision a new server to take its place.  The risk to the client is that, between the time the institution failed and the time the failure was discovered in the next audit, the actual number of copies of all documents was reduced, and thus the risk of permanent document loss is increased for that period.  
+
     If more than one institution were to fail during a short interval, say, due to regional problems or widespread severe economic downturn, then the number of copies actually present would be further reduced and the risk of permanent loss further sharply increased.  
 
 ## Ten-Cent Tour of Conclusions
