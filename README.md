@@ -40,9 +40,9 @@ This study attempts to provide some baseline data that can be used to assess the
 
 1.	No auditing: store multiple copies on servers, and examine document losses after some period.  Examine various numbers of copies and a range of error rates.  
 
-2.	Regularly scheduled auditing: at regular intervals, examine the health of some or all documents on all servers.  If documents have been lost on one or more servers, effect repairs where necessary and possible.  Examine several intervals for auditing and various strategies for choosing the documents to be audited at each interval.  
+1.	Regularly scheduled auditing: at regular intervals, examine the health of some or all documents on all servers.  If documents have been lost on one or more servers, effect repairs where necessary and possible.  Examine several intervals for auditing and various strategies for choosing the documents to be audited at each interval.  
 
-3.	Correlated server errors: at random intervals, errors of some magnitude and duration impact the error rate of a storage structure, possibly causing a higher loss rate on that server, or even a total loss on a server.  Examine ranges of frequencies, severities, and durations.  
+1.	Correlated server errors: at random intervals, errors of some magnitude and duration impact the error rate of a storage structure, possibly causing a higher loss rate on that server, or even a total loss on a server.  Examine ranges of frequencies, severities, and durations.  
 
 ## The Programs
 
@@ -59,16 +59,39 @@ The data results from the many simulation runs is also included in the github re
 ## Simulation Data Output
 
 The output of a single simulation run is a long log file listing details of the run: parameters, storage assignments, errors, document losses, auditing cycles, and final results.  These log files range from a few hundred KB to many MB.  A program is used to extract the few critical data items from the log file, according to specific instructions given, and reduce that data to a single (long) line of data.  
+
 For a given question, the set of single-line summary results are collected into a single file, with a header line, that can then be read by any common statistical packages, such as R.  The repository includes sample R scripts to process the one-dimensional data into two-dimensional tables that may be easier to understand.  
 
 
+## Different Kinds of Document Failures
+
+A copy of a document can be lost in several ways.  Note that all document failures are silent; that is, the client is not actively informed of the failure.  The client learns about the absence of a document, or of all the documents in a server, only when the client tries to retrieve a document from the server, presumably during an audit.  
+
+1.  A single copy of a document dies on a single server.  Maybe a cosmic ray hits a disk, maybe there's a bus corruption in the RAID controller, whatever.  The loss of a single copy will be found in auditing (if performed) and can be repaired if any other copies remain intact on other servers.  
+
+1.  A "glitch" of some sort impacts the storage at a server site.  This causes the error rate (for errors of the first type, above) to increase by some factor for some amount of time.  Such problems exist for a while and either fade away or are ameliorated.  Examples could be a problem in environmental controls such as temperature and humidity for a server farm; noisy electrical systems; seasonal dust, dirt, and pollens getting through air filters; and so forth.  
+    
+    Temporary increases in error rates are not distinguishable from overall increases in the error rate for the duration of an inter-audit interval.  The client cannot tell if the error rate was lumpy during the period or just slightly higher.  
+
+1.  An institution can fail and lose all the documents it contains, 
+-   through natural catastrophe such as fire, flood, or earthquake; 
+-   through man-made catastrophe such as war, attack, or vandalism; 
+-   through financial failure such as bankruptcy or broken credit arrangements; 
+-   or simply through changes in an institution's goals and purpose.  
+
+    In this case, the institutional failure loses all the documents in the collection, and the client must find and provision a new server to take its place.  The risk to the client is that, between the time the institution failed and the time the failure was discovered in the next audit, the actual number of copies of all documents was reduced, and thus the risk of permanent document loss is increased for that period.  
+    If more than one institution were to fail during a short interval, say, due to regional problems or widespread severe economic downturn, then the number of copies actually present would be further reduced and the risk of permanent loss further sharply increased.  
+
 ## Ten-Cent Tour of Conclusions
 
--	Across a wide range of error rates, maintaining multiple copies of documents improves the survival rate of documents much as expected.  
+-	Across a wide range of error rates, maintaining multiple copies of documents improves the survival rate of documents, much as expected.  
 -	For moderate storage error rates, in the range that one would expect from commercial products, small numbers of copies suffice to minimize or eliminate document losses.  
 -	Auditing document collections dramatically improves the survival rate of documents using substantially fewer copies (than required without auditing).
--	Auditing is expensive in bandwidth, but does not need to be performed very frequently.  
--	Glitches increase document loss more or less in proportion to their frequency and impact.  
--	(Don't know yet about 100%-impact glitches yet.  Several models possible.)  
+-	Auditing is expensive in bandwidth.  We should work on (cryptographic) methods of auditing that do not require retrieving the entire document.  
+-   Auditing does not need to be performed very frequently.  
+-	Glitches increase document loss more or less in proportion to their frequency and impact.  They cannot be distinguished from overall increases in error rate.  
+-   Institutional failures are dangerous in that they remove entire collections and expose client collections to higher risks of permanent document loss.  
+-   Correlated failures of institutions could be particularly dangerous in this regard by removing more than one copy from the set of copies for long periods.  
+-   We need more information on plausible ranges of document error rates and on institutional failure rates.  
 
 
