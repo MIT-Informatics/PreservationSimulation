@@ -133,6 +133,7 @@ class CInstructionFilter(object):
             raise ValueError('Invalid JSON in rule input file.')
         return ldRules
 
+    @ntrace
     def fnSetRules(self,mysRuleFilename):
         self.ldRules = self.fnldGetRules(mysRuleFilename)
 
