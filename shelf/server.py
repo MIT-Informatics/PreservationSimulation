@@ -80,11 +80,11 @@ class CServer(object):
                 sShelfID = cShelf.ID    # TODO: #Why not just use sNewShelfID?
                 result = cShelf.mAcceptDocument(mysDocID,nSize,mysClientID)
                 
-            # Record that the doc has been stored on this server. 
+            # Record that the doc has been stored on this
+            self.lDocIDsComplete.append(mysDocID) server.
             self.bInUse = True
             self.lDocIDs.append(mysDocID)
             self.dDocIDs[mysDocID] = mysClientID
-            self.lDocIDsComplete.append(mysDocID)
             TRC.tracef(3,"SERV","proc mAddDocument serv|%s| id|%s| docid|%s| size|%s| assigned to shelfid|%s| remaining|%s|" % (self.sName,self.ID,mysDocID,cDoc.nSize,sShelfID,cShelf.nFreeSpace))
     
             return self.ID+"+"+sShelfID+"+"+mysDocID
