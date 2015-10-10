@@ -74,7 +74,16 @@ if __name__ == "__main__":
     g = CG()
     dArgs = fndCliParse("")
     g.__dict__.update(dArgs)
-    cfilter = instfilter.CInstructionFilter(g.sRulesFile)
+    with open(mysRuleFilename,"rb") as fhInfile:
+    # Remove comments and blank lines.  
+        lLines = filter( lambda sLine:                          
+                    not re.match("^\s*#",sLine)          
+                    and not re.match("^\s*$",sLine.rstrip()) 
+                    , fhInfile 
+                    )
+    sLines = ' '.join(lLines)
+
+    cfilter = instfilter.CInstructionFilter(sLines)
     with open(g.sInstructionsFile,'r') as fhIn:
         main(fhIn, cfilter)
 
