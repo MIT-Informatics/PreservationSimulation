@@ -58,7 +58,7 @@ class CG(object):
 def main(fhIn, cfilter):
     '''First line of file is the header with field names.
         All others get dictionary-ified and tested.'''
-    header = fhIn.next()
+    header = fhIn.next().strip()
     cfilter.fnSaveHeaderLine(header)
     print header
     for sLine in fhIn:
