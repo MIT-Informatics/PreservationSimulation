@@ -11,30 +11,54 @@ import  abc
 
 '''
 Problem: the complete cross-product of possible instruction values is too large.
-Many of the combinations are nonsensical.  Let's filter some of them out.  
+ Many of the combinations are nonsensical.  Let's filter some of them out.  
 
 Dict list external as json or text (see example).
 
 Additional things in the dict beyond attributes:
 - action : permit or deny
-    no default
+    no default.
 - reverse : true or false
-    like grep -v, do action for whatever doesn't match
-    default = false if absent
-- need wildcard value, e.g., *, to permit any value?
-    or maybe just not mentioned in dict?
+    like grep -v: do the action for whatever doesn't match.
+    default = false if absent.
+- need wildcard value, e.g., *, to permit any value?  no. 
+    just don't mention the condition in dict for that rule.
 
 
 List of rules, processed all the way to the end
-- permit everything (lines all pass by default)
+- permit everything (lines all pass by default, rules state exceptions)
 - deny some broad stuff
 - permit some specifics
 - deny
 - permit
 
-Examples:
 
-permit  copies>0                        # permits everything
+Syntax rules for rules (ABNF):
+- instructionruleline = verb 1*(WSP condition) [CR] LF / commentline
+- verb = permit / deny
+- condition = fieldname *1(operator)value
+            # if no conditional operator present, 
+            #  then comparison will be "==" with 
+            #  possible integer conversion.
+- operator = "=" / "!=" / "<" / "<=" / ">" / ">="
+- value = DIGIT *DIGIT / ALPHA *(ALPHA / DIGIT)
+- fieldname = ALPHA *(ALPHA / DIGIT)
+            # fieldname must appear in the line to be matched, 
+            #  that is, it must appear in the header of the 
+            #  file of instruction lines.  
+- commentline = "#" *(WSP / VCHAR) [CR] LF
+- WSP = SP / HTAB
+- SP = %x20
+- HTAB = %x09
+- VCHAR = %x21-7E
+            # visible (printing) characters
+- CR = %x0D
+- LF = %x0A
+
+
+Examples (but with bad field names):
+
+# Remember: everything permitted by default.
 deny    glitchfreq=30000 impact=100 
 permit  impact=100 decay=0 life=0
 deny    glitchfreq=0
@@ -58,19 +82,22 @@ which is done by the subclasses.
 '''
 # c l a s s   C I n s t r u c t i o n F i l t e r 
 class CInstructionFilter(object):
-    __metaclass__ = abc.ABCMeta
+    __metaclass__ = abc.ABCMeta     
+                    # Contains an abstract method for subclasses to implement.
 
     @ntracef("FILT")
     def __init__(self):
         '''Absorb rules json file now, if given.'''
         self.ldRules = []
 
+# f n S a v e H e a d e r L i n e 
     @ntracef("FILT")
     def fnSaveHeaderLine(self, mysLine):
         '''Store header line for all instruction lines.
             Usually comes from the first line of the file.'''
         self.sHeaderLine = mysLine.strip()
 
+# f n d M a k e L i n e D i c t 
     @ntracef("FILT")
     def fndMakeLineDict(self, mysLine):
         '''Turn a single line into a dictionary of fields and values.
@@ -82,6 +109,7 @@ class CInstructionFilter(object):
         lRowDicts = list(csv.DictReader(lVarLines, dialect='blankdelim'))
         return lRowDicts[0]
 
+# f n b D o e s L i n e P a s s A l l R u l e s 
     @ntracef("FILT")
     def fnbDoesLinePassAllRules(self,mydLine):
         bEval = True                    # Lines pass by default.
@@ -101,14 +129,16 @@ class CInstructionFilter(object):
         return all([self.fnbDoesLineMatchOneRule(mydLine, dRule) 
             for dRule in self.ldRules])
 
+# f n s G e t V a l u e 
     @ntracef("FILT")
     def fnsGetValue(self,opandval):
-        oMatch = re.match(r'[<>!=]+\s*(\S+)', opandval)
+        oMatch = re.match(r'[<>!=]+(\S+)', opandval)
         if oMatch:
-            return oMatch.group(1)
+            return oMatch.groups()[0]
         else:
             return opandval
 
+# f n b D o e s L i n e M a t c h O n e R u l e 
     @ntracef("FILT")
     def fnbDoesLineMatchOneRule(self, mydLine, mydRule):
         for key, val in mydRule.items():
@@ -116,19 +146,26 @@ class CInstructionFilter(object):
                 try:
                     linevalue = mydLine[key]
                 except KeyError:
-                    raise KeyError('Bad key in rule, not found in instruction line: |%s|' % (key))
-                if str(val).startswith('>'):
+                    raise KeyError('Bad field name in rule, not found in instruction line: |%s|' % (key))
+                if str(val).startswith('='):
+                    bResult = fnIntPlease(linevalue) == fnIntPlease(self.fnsGetValue(val))
+                elif str(val).startswith('>='):
+                    bResult = int(linevalue) >= int(self.fnsGetValue(val))
+                elif str(val).startswith('<='):
+                    bResult = int(linevalue) <= int(self.fnsGetValue(val))
+                elif str(val).startswith('>'):
                     bResult = int(linevalue) > int(self.fnsGetValue(val))
                 elif str(val).startswith('<'):
                     bResult = int(linevalue) < int(self.fnsGetValue(val))
                 elif str(val).startswith('!='):
                     bResult = linevalue != self.fnsGetValue(val)
                 else:
-                    bResult = linevalue == val
+                    bResult = fnIntPlease(linevalue) == fnIntPlease(val)
                 if not bResult:
                     break
         return bResult if not mydRule.get('reverse', False) else not bResult
-        
+
+# f n l d R e a d R u l e s  ( a b s t r a c t  m e t h o d )
     @abc.abstractmethod
     @ntracef("FILT")
     def fnldReadRules(self, mysRules):
@@ -141,8 +178,21 @@ class CInstructionFilter(object):
         return self.ldRules
 
 
+# f n I n t P l e a s e 
+def fnIntPlease(value):
+    try:
+        result = int(value)
+    except ValueError:
+        result = value
+    return result
+
+
 # c l a s s   C I n s t r u c t i o n F i l t e r _ J s o n 
 class CInstructionFilter_Json(CInstructionFilter):
+    '''\
+    Read rule list from JSON input.
+     Just read and store.
+    '''
 
     @ntracef("FLTJ") 
     def __init__(self,mysRules): 
@@ -159,6 +209,10 @@ class CInstructionFilter_Json(CInstructionFilter):
 
 # c l a s s   C I n s t r u c t i o n F i l t e r _ T e x t 
 class CInstructionFilter_Text(CInstructionFilter):
+    '''\
+    Carefully read and compile rules in text form to make suitable
+     dictionary for processing.
+    '''
 
     @ntracef("FLTT") 
     def __init__(self,mysRules):
@@ -169,15 +223,16 @@ class CInstructionFilter_Text(CInstructionFilter):
         
         @ntracef("FLTT") 
         def fndRuleLine2Dict(mysLine):
-            oMatch = re.match("(permit|deny)\s+(.+)", mysLine)
+            oMatch = re.match("(permit|deny)\s+(.+)", mysLine.strip())
             if not oMatch:
                 raise ValueError('Ill-formed line in rule input file: |%s|.' % (mysLine))
-            sAction = oMatch.group(1)
+            sAction, sRest = oMatch.groups()
             dResult = {"action" : sAction}
-            sRest = oMatch.group(2)
-            lRest = re.split("\s+", sRest)
-            for s in lRest:
-                oMatch = re.match("(\w+)(=|<|>|<=|>=)(\w+)", s)
+            lRest = sRest.split()
+            for sWord in lRest:
+                oMatch = re.match("(\w+)(=|<|>|<=|>=|!=)(\w+)", sWord)
+                if not oMatch:
+                    raise ValueError('Ill-formed condition in rule input line: |%s|' % sWord)
                 sName, sOper, sVal = oMatch.groups()
                 dResult[sName] = "%s%s" % (sOper, sVal)
             return dResult
@@ -187,3 +242,4 @@ class CInstructionFilter_Text(CInstructionFilter):
         return lResult
 
 
+#END
