@@ -1,0 +1,39 @@
+# Real rules for instruction filtering
+
+deny    nGlitchImpact=100 
+permit  nGlitchImpact=100 nGlitchDecay=0 nGlitchMaxlife=0
+
+deny    nGlitchFreq=0
+permit  nGlitchFreq=0 nGlitchImpact=100 nGlitchDecay=0 nLifem=0
+
+deny    nGlitchFreq>=30000 
+
+permit  nAuditFreq=0
+deny    nAuditFreq<2500
+
+deny    nAuditFreq=10000
+permit  nAuditFreq=10000 nAuditSegments=1 sAuditType=TOTAL
+
+deny    nAuditFreq=20000
+permit  nAuditFreq=20000 nAuditSegments=1 sAuditType=TOTAL
+
+deny    nAuditFreq=5000
+permit  nAuditFreq=5000 nAuditSegments=1 sAuditType=TOTAL
+
+deny    nAuditFreq=2500
+permit  nAuditFreq=2500 nAuditSegments=1 sAuditType=TOTAL
+
+deny    nLifem<10
+deny    nLifem>1000
+
+deny    nCopies>=10
+
+# 1 nAuditFreq 
+# 2 nAuditSegments 
+# 3 sAuditType 
+# 5 nGlitchDecay 
+# 6 nGlitchFreq 
+# 8 nGlitchImpact 
+# 9 nGlitchMaxlife 
+#10 nLifem 
+#11 nCopies 
