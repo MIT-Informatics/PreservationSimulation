@@ -70,20 +70,35 @@ def main(fhIn, cfilter):
             if bAnswer:
                 print sLine.strip()
 
+def fnsSanitizeFileString(mysContents):
+    '''\
+    Remove blank lines and comments from a string concatenated 
+    from multiple lines of a file.
+    '''
+    lLinesRaw = mysContents.split("\n")
+    lLinesReal = filter( lambda sLine:                          
+            not re.match("^\s*#",sLine.lstrip())
+            and not re.match("^\s*$",sLine.rstrip()) 
+            , lLinesRaw
+            )
+    lLines = [line.strip() for line in lLinesReal]
+    sLines = '\n'.join(lLines)
+    return sLines
+
+
 if __name__ == "__main__":
     g = CG()
     dArgs = fndCliParse("")
     g.__dict__.update(dArgs)
-    with open(mysRuleFilename,"rb") as fhInfile:
-    # Remove comments and blank lines.  
-        lLines = filter( lambda sLine:                          
-                    not re.match("^\s*#",sLine)          
-                    and not re.match("^\s*$",sLine.rstrip()) 
-                    , fhInfile 
-                    )
-    sLines = ' '.join(lLines)
+    
+    with open(g.sRulesFile,'r') as fhR:
+        sRulesRaw = fhR.read()
+    sRules = fnsSanitizeFileString(sRulesRaw)
+    if g.sRulesFile.find("json") >= 0:
+        cfilter = instfilter.CInstructionFilter_Json(sRules)
+    else:
+        cfilter = instfilter.CInstructionFilter_Text(sRules)
 
-    cfilter = instfilter.CInstructionFilter(sLines)
     with open(g.sInstructionsFile,'r') as fhIn:
         main(fhIn, cfilter)
 
