@@ -1,4 +1,4 @@
-#sizelife-00.r
+# dsplots-01.r  size-life comparisons
 # RBLandau 20151016
 # Using the basic R plotting functions, do a few graphs
 #  
