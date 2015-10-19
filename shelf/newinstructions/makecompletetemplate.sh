@@ -1,11 +1,19 @@
 #!/bin/bash
-# expandtemplate.sh 
+# makecompletetemplate.sh 
 
 if [ -z "$2" ]
 then
-    echo "Usage $0 <templatefile> <outputfile>"
+    echo "Usage $0 <templatefile> <outputfile> ['filter']"
     echo "All the insertion files will be applied, in order from small to large."
+    echo "If filter requested, uses realrulestext.txt file."
     exit 1
+fi
+
+if [ "$3" = "filter" ]
+then
+    filter=ON
+else
+    filter=OFF
 fi
 
 #for ff in "substituteall"
@@ -28,8 +36,13 @@ sh substituteall.sh "$2.05" \
         ins/auditfreq.ins ins/lifem.ins             > "$2.06"
 sh substituteall.sh "$2.06" \
         ins/ncopies.ins                             > "$2.07"
-python useinstfilter.py "$2.07" \
-        tinytestrulestext.txt                           > "$2.08"
+if [ "$filter" = "ON" ]
+then
+    python useinstfilter.py "$2.07" \
+            realrulestext.txt                       > "$2.08"
+else
+    cp "$2.07" "$2.08"
+fi
 sh substituteall.sh "$2.08" \
         ins/randomseed.ins                          > "$2"
 
