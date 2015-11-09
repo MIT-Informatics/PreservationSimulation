@@ -1,7 +1,14 @@
 #!/bin/bash 
+# AWS_shelf_installscript.sh
+#               RBLandau 20151109
+#
+# Until we succeed in docker-izing this application, it must
+#  be installed semi-automatically on an Ubuntu server.
+#  Takes only a couple minutes on AWS Ubuntu.
+#
 # 20150727.1700
 # 20150829.1530
-
+#
 
 echo "**************************************** Get Python packages"
 # Get python packages
