@@ -10,9 +10,9 @@
 # 20150829.1530
 # 20151113.1700 Add alias sh=bash to avoid problems with if-test
 #                in scripts.  Grumble.  
+# 20151113.1725 Nope, that doesn't work.  Change every sh foo
+#                to bash foo.  Two grumbles.  
 #
-
-alias sh=bash
 
 echo "**************************************** Get Python packages"
 # Get python packages
@@ -39,9 +39,9 @@ git pull https://github.com/MIT-Informatics/PreservationSimulation.git
 echo "**************************************** Quick setup and test"
 # Quick setup and test. 
 cd shelf
-sh setupfamilydir.sh ../Q3 . 
-sh emptygiantoutput.sh
-sh pretestchecklist.sh
+bash setupfamilydir.sh ../Q3 . 
+bash emptygiantoutput.sh
+bash pretestchecklist.sh
 python main.py ../Q3 . 0 1 --ncopies=1 --lifek=1000000 --audit=0
 # answer should be   BAD NEWS: Total documents lost by client |T1| in all servers |49|
 
