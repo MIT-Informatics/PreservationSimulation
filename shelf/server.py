@@ -80,8 +80,8 @@ class CServer(object):
                 sShelfID = cShelf.ID    # TODO: #Why not just use sNewShelfID?
                 result = cShelf.mAcceptDocument(mysDocID,nSize,mysClientID)
                 
-            # Record that the doc has been stored on this
-            self.lDocIDsComplete.append(mysDocID) server.
+            # Record that the doc has been stored on this server.
+            self.lDocIDsComplete.append(mysDocID)
             self.bInUse = True
             self.lDocIDs.append(mysDocID)
             self.dDocIDs[mysDocID] = mysClientID

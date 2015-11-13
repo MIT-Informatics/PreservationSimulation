@@ -8,7 +8,11 @@
 #
 # 20150727.1700
 # 20150829.1530
+# 20151113.1700 Add alias sh=bash to avoid problems with if-test
+#                in scripts.  Grumble.  
 #
+
+alias sh=bash
 
 echo "**************************************** Get Python packages"
 # Get python packages
