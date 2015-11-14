@@ -11,24 +11,26 @@
 # 20151113.1700 Add alias sh=bash to avoid problems with if-test
 #                in scripts.  Grumble.  
 # 20151113.1725 Nope, that doesn't work.  Change every sh foo
-#                to bash foo.  Two grumbles.  
+#                to bash foo.  Two grumbles.
+# 20151114.0900 Add --yes options to the several apt-get installs
+#                to avoid interactive prompts during the installation.  
 #
 
 echo "**************************************** Get Python packages"
 # Get python packages
-sudo apt-get install python-pip
+sudo apt-get --yes install python-pip
 sudo apt-get update
-sudo apt-get install python-pip
+sudo apt-get --yes install python-pip
 sudo pip install --upgrade pip
 sudo pip install virtualenv
 sudo pip install simpy
 sudo pip install pymongo
-sudo apt-get install build-essential python-dev
+sudo apt-get --yes install build-essential python-dev
 
 echo "**************************************** Install git and pull source code"
 # Get Git.
 sudo apt-get update
-sudo apt-get install git
+sudo apt-get --yes install git
 
 # Setup working directory with files from github.
 mkdir working
@@ -55,10 +57,10 @@ sudo apt-get install -y mongodb-org
 # The MongoDB instance stores its data files in /var/lib/mongodb and its log files in /var/log/mongodb by default, and runs using the mongodb user account. 
 
 echo "**************************************** Installing zip and perf tools"
-sudo apt-get install unzip 
-sudo apt-get install zip
-sudo apt-get install htop
-sudo apt-get install sysstat
+sudo apt-get --yes install unzip 
+sudo apt-get --yes install zip
+sudo apt-get --yes install htop
+sudo apt-get --yes install sysstat
 
 
 echo "**************************************** END INSTALLS"
@@ -79,7 +81,9 @@ echo "**************************************** Test broker"
 export NCORES=2
 python broker.py newdb20150724glitch100 pending done --familydir=../Q3 --specificdir=. --auditfreq=2500 --glitchfreq=50000 --glitchimpact=100 --glitchdecay=0 --glitchmaxlife=0 --lifem='{"$gte":10,"$lte":1000}' --testlimit=4 --listonly=N
 
-# If everything looks okay, remove the --testlimit and let 'er rip.  
+# If everything looks okay, remove or raise the --testlimit, 
+#  raise the NCORES limit, and probably lower the NPOLITE interval,
+#  and let 'er rip.  
 #python broker.py newdb20150724glitch100 pending done --familydir=../Q3 --specificdir=. --auditfreq=2500 --glitchfreq=50000 --glitchimpact=100 --glitchdecay=0 --glitchmaxlife=0 --lifem='{"$gte":10,"$lte":1000}' --listonly=N
 
 echo "**************************************** Done initial tests"
