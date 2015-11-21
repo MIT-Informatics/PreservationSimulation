@@ -14,6 +14,11 @@
 #                to bash foo.  Two grumbles.
 # 20151114.0900 Add --yes options to the several apt-get installs
 #                to avoid interactive prompts during the installation.  
+# 20151121.1200 Add correctness test for initial simple simulation
+#                test.  
+#               Reorder some sections that were mistakenly 
+#                in the wrong order, e.g., load db before 
+#                initial test and possible exit.  
 #
 
 echo "**************************************** Get Python packages"
@@ -38,15 +43,6 @@ cd working
 git init
 git pull https://github.com/MIT-Informatics/PreservationSimulation.git
 
-echo "**************************************** Quick setup and test"
-# Quick setup and test. 
-cd shelf
-bash setupfamilydir.sh ../Q3 . 
-bash emptygiantoutput.sh
-bash pretestchecklist.sh
-python main.py ../Q3 . 0 1 --ncopies=1 --lifek=1000000 --audit=0
-# answer should be   BAD NEWS: Total documents lost by client |T1| in all servers |49|
-
 echo "**************************************** Installing MongoDB"
 # Installing mongodb is a little tricky.
 # Google "install mongodb on ubuntu" and read it.
@@ -62,14 +58,35 @@ sudo apt-get --yes install zip
 sudo apt-get --yes install htop
 sudo apt-get --yes install sysstat
 
-
 echo "**************************************** END INSTALLS"
 
 echo "**************************************** Make new instructions db"
 cd newinstructions
 unzip newdblists.zip 
+# This next step will take ten or fifteen minutes.  No kidding.  
+#  Go get coffee.
 python loadintodb.py newdb20150724glitch100 pending newdb20150724glitch100.txt
-# Wait ten or fifteen minutes.  
+
+echo "**************************************** Quick setup and test"
+# Quick setup and test of directories.
+cd shelf
+bash setupfamilydir.sh ../Q3 . 
+bash emptygiantoutput.sh
+bash pretestchecklist.sh
+# Run one simple test of the simulation, and check the answer.
+mkdir tmp
+python main.py ../Q3 . 0 1 --ncopies=1 --lifek=1000000 --audit=0 >tmp/initialtest.log 2>&1
+# The correct answer should be   "BAD NEWS: Total documents lost by client |T1| in all servers |49|"
+nTestLost=$(grep NEWS tmp/initialtest.log |awk '{print $16}' |sed 's/|//g')
+if [ "$nTestLost" -eq 49 ]
+then
+    echo "SUCCESS: Initial test okay!"
+    echo "Proceeding..."
+else
+    echo "ERROR: Initial test failed!"
+    echo "STOPPING here."
+    exit 1
+fi
 
 echo "**************************************** Test instructions db"
 cd ..
@@ -77,7 +94,8 @@ python broker.py newdb20150724glitch100 pending done --familydir=../Q3 --specifi
 # Should be 1134 cases to run.
 
 echo "**************************************** Test broker"
-# Until we expand to larger quarters, don't run too many at once.  Xeon isn't *that* fast.
+# Until we expand to larger quarters, don't run too many at once.  
+#  Xeon isn't *that* fast.
 export NCORES=2
 python broker.py newdb20150724glitch100 pending done --familydir=../Q3 --specificdir=. --auditfreq=2500 --glitchfreq=50000 --glitchimpact=100 --glitchdecay=0 --glitchmaxlife=0 --lifem='{"$gte":10,"$lte":1000}' --testlimit=4 --listonly=N
 
@@ -88,3 +106,4 @@ python broker.py newdb20150724glitch100 pending done --familydir=../Q3 --specifi
 
 echo "**************************************** Done initial tests"
 
+#END
