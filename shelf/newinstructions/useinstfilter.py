@@ -54,6 +54,7 @@ class CG(object):
     sRulesFile = "rules.txt"
 
 
+# m a i n 
 @ntrace
 def main(fhIn, cfilter):
     '''First line of file is the header with field names.
@@ -61,6 +62,7 @@ def main(fhIn, cfilter):
     header = fhIn.next().strip()
     cfilter.fnSaveHeaderLine(header)
     print header
+    # Check all lines against the set of rules.
     for sLine in fhIn:
         if not re.match('^\s*$', sLine):
             dLine = cfilter.fndMakeLineDict(sLine)
@@ -70,10 +72,11 @@ def main(fhIn, cfilter):
             if bAnswer:
                 print sLine.strip()
 
+# f n s S a n i t i z e F i l e S t r i n g 
 def fnsSanitizeFileString(mysContents):
     '''\
     Remove blank lines and comments from a string concatenated 
-    from multiple lines of a file.
+    from multiple lines of a file.  And regularize line endings.  
     '''
     lLinesRaw = mysContents.split("\n")
     lLinesReal = filter( lambda sLine:                          
@@ -86,6 +89,7 @@ def fnsSanitizeFileString(mysContents):
     return sLines
 
 
+# M A I N   L I N E 
 if __name__ == "__main__":
     g = CG()
     dArgs = fndCliParse("")
