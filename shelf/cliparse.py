@@ -60,21 +60,19 @@ def fndCliParse(mysArglist):
                         , help='Number of copies to make (for value types from 1 up to 5), 0=no change'
                         )
 
-    cParse.add_argument("--lifek", "--lifetimekhours", type=int
+    cParse.add_argument("--lifek", "--halflifekhours", type=int
                         , dest='lBER'
-                        , metavar='nLIFE_Khrs'
+                        , metavar='nHALFLIFE_Khrs'
                         , nargs='*'
-                        , help='Sector mean lifetimes for storage shelf (types from 1 up to 5) in kilo-hours, 0=no change'
+                        , help='Sector half-lives for storage shelf (types from 1 up to 5) in kilo-hours, 0=no change'
                         )
 
-    """
-    cParse.add_argument("--lifem", "--lifetimemegahours", type=int
+    cParse.add_argument("--lifem", "--halflifemegahours", type=int
                         , dest='lBERm'
-                        , metavar='nLIFE_Mhrs'
+                        , metavar='nHALFLIFE_Mhrs'
                         , nargs='*'
-                        , help='Sector mean lifetimes for storage shelf (types from 1 up to 5) in mega-hours, 0=no change'
+                        , help='Sector half-lives for storage shelf (types from 1 up to 5) in mega-hours, 0=no change'
                         )
-    """
     
     cParse.add_argument("--shelfsize", type=int
                         , dest='lShelfSize'
