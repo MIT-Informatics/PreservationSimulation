@@ -8,8 +8,8 @@ permit  nGlitchFreq=0 nGlitchImpact=100 nGlitchDecay=0 nLifem=0
 
 deny    nGlitchFreq>=30000 
 
-permit  nAuditFreq=0
 deny    nAuditFreq<2500
+permit  nAuditFreq=0
 
 deny    nAuditFreq=10000
 permit  nAuditFreq=10000 nAuditSegments=1 sAuditType=TOTAL
