@@ -101,6 +101,7 @@ Implemented in the short term:
 import simpy
 import random
 from NewTraceFac import TRC,trace,tracef
+from NewTraceFac import NTRC,ntrace,ntracef
 from sys import argv
 from globaldata import G,P
 from client2 import CClient
@@ -126,7 +127,7 @@ def getParamFiles(mysParamdir):
     dResult =   readin.fdGetServerParams("%s/servers.csv"%(mysParamdir))
     if dResult: P.dServerParams = dResult
         
-    dResult =    readin.fdGetQualityParams("%s/quality.csv"%(mysParamdir))
+    dResult =   readin.fdGetQualityParams("%s/quality.csv"%(mysParamdir))
     if dResult: P.dShelfParams = dResult
         
     dResult =   readin.fdGetParamsParams("%s/params.csv"%(mysParamdir))
@@ -356,6 +357,7 @@ def getCliArgsForEverythingElse():
 def fnMaybeOverride(mysArg,mydDict,mycClass):
     ''' Strange function to override a property in G if there is a 
         version in the command line (or other) dictionary.  
+        TODO: simplify this a lot
     '''
     try:
         if mydDict[mysArg]:

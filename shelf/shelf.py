@@ -51,9 +51,10 @@ class CShelf(object):
         self.nConsecutiveMisses = 0     # How many misses in a row?
 
         # Get error rate params 
+        self.fLn2 = log(2)
         (self.nSectorLife, self.nShelfLife) = G.dShelfParams[self.nQual][0]
         (self.nGlitchFreq, self.nGlitchImpact, self.nGlitchHalflife, self.nGlitchMaxlife) = fnlGetGlitchParams(self.ID)
-        self.fLifeParam = util.fnfCalcBlockLifetime(self.nSectorLife*1000, self.nCapacity)
+        self.fLifeParam = util.fnfCalcBlockLifetime(self.nSectorLife*1000/self.fLn2, self.nCapacity)
         cLifetime = CLifetime(self.ID,self.fLifeParam, self.nGlitchFreq, self.nGlitchImpact, self.nGlitchHalflife, self.nGlitchMaxlife)
         self.sSectorLifetimeID = cLifetime.ID
         G.dID2Lifetime[self.sSectorLifetimeID] = cLifetime

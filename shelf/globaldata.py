@@ -90,6 +90,9 @@ class P(object):
     # Shelf has an MTTF for each quality level.
     # quality : [ sector error rate, shelf error rate ] 
     # Rates are stored in kilohours here, scaled up to hours when used in servers.
+    #  Note that most of the UI is in megahours to save typing.  
+    # Rates used to be expressed as exponential mean lifetimes, 
+    #  but are now to be changed to half-lives.
     dShelfParams =      { 1 : [ 10, 100 ]
                         , 2 : [ 20, 200 ]
                         }
