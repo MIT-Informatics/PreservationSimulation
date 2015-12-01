@@ -1,0 +1,355 @@
+20151130_194340 MAIN INFO - Simulation parameters
+20151130_194340 MAIN INFO - Command line|['../Q3', '.', '0', '1', '--lifek=693147', '--ncopies=1', '--audit=0']|
+20151130_194340 PARAMS INFO - familydir|../Q3| specificdir|.|
+20151130_194340 PARAMS INFO - begin simulation seed|1| timelimit|100000|hr=|11|yr
+20151130_194340 PARAMS INFO - logfile|-| loglevel|INFO|
+20151130_194340 PARAMS INFO - CLIENT client|MIT| collection|Mags| quality|1| ndocs|10000|
+20151130_194340 PARAMS INFO - SERVER server|AWS Euro  Super Duper| quality|1| shelfsize|10|TB
+20151130_194340 PARAMS INFO - SERVER server|AWS Euro  Platinum| quality|1| shelfsize|10|TB
+20151130_194340 PARAMS INFO - SERVER server|Desperate Backup 07| quality|1| shelfsize|10|TB
+20151130_194340 PARAMS INFO - SERVER server|AWS Euro  Premium| quality|1| shelfsize|10|TB
+20151130_194340 PARAMS INFO - SERVER server|Amazon East Platinum| quality|1| shelfsize|10|TB
+20151130_194340 PARAMS INFO - SERVER server|Amazon East Premium| quality|1| shelfsize|10|TB
+20151130_194340 PARAMS INFO - SERVER server|Amazon West Plus| quality|1| shelfsize|10|TB
+20151130_194340 PARAMS INFO - SERVER server|AWS Euro  Plus| quality|1| shelfsize|10|TB
+20151130_194340 PARAMS INFO - SERVER server|OneDrive  Super Duper| quality|1| shelfsize|10|TB
+20151130_194340 PARAMS INFO - SERVER server|Amazon East Plus| quality|1| shelfsize|10|TB
+20151130_194340 PARAMS INFO - SERVER server|Google Drive Plus| quality|1| shelfsize|10|TB
+20151130_194340 PARAMS INFO - SERVER server|Amazon West Platinum| quality|1| shelfsize|10|TB
+20151130_194340 PARAMS INFO - SERVER server|Yet Another 4| quality|1| shelfsize|10|TB
+20151130_194340 PARAMS INFO - SERVER server|AWS Euro Vanilla| quality|1| shelfsize|10|TB
+20151130_194340 PARAMS INFO - SERVER server|Yet Another 2| quality|1| shelfsize|10|TB
+20151130_194340 PARAMS INFO - SERVER server|Yet Another 3| quality|1| shelfsize|10|TB
+20151130_194340 PARAMS INFO - SERVER server|Yet Another 1| quality|1| shelfsize|10|TB
+20151130_194340 PARAMS INFO - SERVER server|Amazon West| quality|1| shelfsize|10|TB
+20151130_194340 PARAMS INFO - SERVER server|Desperate Backup 06| quality|1| shelfsize|10|TB
+20151130_194340 PARAMS INFO - SERVER server|OneDrive Vanilla| quality|1| shelfsize|10|TB
+20151130_194340 PARAMS INFO - SERVER server|Desperate Backup 04| quality|1| shelfsize|10|TB
+20151130_194340 PARAMS INFO - SERVER server|Desperate Backup 05| quality|1| shelfsize|10|TB
+20151130_194340 PARAMS INFO - SERVER server|Desperate Backup 02| quality|1| shelfsize|10|TB
+20151130_194340 PARAMS INFO - SERVER server|Desperate Backup 03| quality|1| shelfsize|10|TB
+20151130_194340 PARAMS INFO - SERVER server|OneDrive  Platinum| quality|1| shelfsize|10|TB
+20151130_194340 PARAMS INFO - SERVER server|Desperate Backup 01| quality|1| shelfsize|10|TB
+20151130_194340 PARAMS INFO - SERVER server|Google Drive| quality|1| shelfsize|10|TB
+20151130_194340 PARAMS INFO - SERVER server|OneDrive  Plus| quality|1| shelfsize|10|TB
+20151130_194340 PARAMS INFO - SERVER server|Amazon West Premium| quality|1| shelfsize|10|TB
+20151130_194340 PARAMS INFO - SERVER server|OneDrive  Premium| quality|1| shelfsize|10|TB
+20151130_194340 PARAMS INFO - SERVER server|Desperate Backup 09| quality|1| shelfsize|10|TB
+20151130_194340 PARAMS INFO - SERVER server|Amazon East| quality|1| shelfsize|10|TB
+20151130_194340 PARAMS INFO - SERVER server|Google Drive Super Duper| quality|1| shelfsize|10|TB
+20151130_194340 PARAMS INFO - SERVER server|Desperate Backup 10| quality|1| shelfsize|10|TB
+20151130_194340 PARAMS INFO - SERVER server|Amazon East Super Duper| quality|1| shelfsize|10|TB
+20151130_194340 PARAMS INFO - SERVER server|Google Drive Premium| quality|1| shelfsize|10|TB
+20151130_194340 PARAMS INFO - SERVER server|Google Drive Platinum| quality|1| shelfsize|10|TB
+20151130_194340 PARAMS INFO - SERVER server|Yet Another 5| quality|1| shelfsize|10|TB
+20151130_194340 PARAMS INFO - SERVER server|Amazon West Super Duper| quality|1| shelfsize|10|TB
+20151130_194340 PARAMS INFO - SERVER server|Desperate Backup 08| quality|1| shelfsize|10|TB
+20151130_194340 PARAMS INFO - SHELF quality|1| smallfailrate|693147|Khr=|79072|yr shelffailrate|100000000|Khr=|11407711|yr
+20151130_194340 PARAMS INFO - SHELF quality|2| smallfailrate|1000|Khr=|114|yr shelffailrate|200000000|Khr=|22815423|yr
+20151130_194340 PARAMS INFO - SHELF quality|3| smallfailrate|2000|Khr=|228|yr shelffailrate|400000000|Khr=|45630846|yr
+20151130_194340 PARAMS INFO - SHELF quality|4| smallfailrate|3000|Khr=|342|yr shelffailrate|800000000|Khr=|91261692|yr
+20151130_194340 PARAMS INFO - SHELF quality|5| smallfailrate|5000|Khr=|570|yr shelffailrate|1600000000|Khr=|182523385|yr
+20151130_194340 PARAMS INFO - DISTRIBUTION value|1| quality|1| copies|1|
+20151130_194340 PARAMS INFO - DISTRIBUTION value|2| quality|2| copies|4|
+20151130_194340 PARAMS INFO - DISTRIBUTION value|3| quality|3| copies|3|
+20151130_194340 PARAMS INFO - DISTRIBUTION value|4| quality|4| copies|2|
+20151130_194340 PARAMS INFO - DISTRIBUTION value|5| quality|5| copies|1|
+20151130_194340 PARAMS INFO - DOCUMENT value|1| percent|100| meanMB|50| sd|0|
+20151130_194340 PARAMS INFO - DOCUMENT value|1| percent|0| meanMB|5000| sd|2000|
+20151130_194340 PARAMS INFO - AUDIT interval hours|0| segments|1| type|OFF| bandwidth Mbps|100|
+20151130_194340 PARAMS INFO - GLITCH freq|0| impact|0| decay|0| maxlife|0| ignorelimit|0.050|
+20151130_194340 MAIN INFO - created server|V1| quality|1| shelfsize|10|TB name|AWS Euro  Super Duper|
+20151130_194340 MAIN INFO - created server|V2| quality|1| shelfsize|10|TB name|AWS Euro  Platinum|
+20151130_194340 MAIN INFO - created server|V3| quality|1| shelfsize|10|TB name|Desperate Backup 07|
+20151130_194340 MAIN INFO - created server|V4| quality|1| shelfsize|10|TB name|AWS Euro  Premium|
+20151130_194340 MAIN INFO - created server|V5| quality|1| shelfsize|10|TB name|Amazon East Platinum|
+20151130_194340 MAIN INFO - created server|V6| quality|1| shelfsize|10|TB name|Amazon East Premium|
+20151130_194340 MAIN INFO - created server|V7| quality|1| shelfsize|10|TB name|Amazon West Plus|
+20151130_194340 MAIN INFO - created server|V8| quality|1| shelfsize|10|TB name|AWS Euro  Plus|
+20151130_194340 MAIN INFO - created server|V9| quality|1| shelfsize|10|TB name|OneDrive  Super Duper|
+20151130_194340 MAIN INFO - created server|V10| quality|1| shelfsize|10|TB name|Amazon East Plus|
+20151130_194340 MAIN INFO - created server|V11| quality|1| shelfsize|10|TB name|Google Drive Plus|
+20151130_194340 MAIN INFO - created server|V12| quality|1| shelfsize|10|TB name|Amazon West Platinum|
+20151130_194340 MAIN INFO - created server|V13| quality|1| shelfsize|10|TB name|Yet Another 4|
+20151130_194340 MAIN INFO - created server|V14| quality|1| shelfsize|10|TB name|AWS Euro Vanilla|
+20151130_194340 MAIN INFO - created server|V15| quality|1| shelfsize|10|TB name|Yet Another 2|
+20151130_194340 MAIN INFO - created server|V16| quality|1| shelfsize|10|TB name|Yet Another 3|
+20151130_194340 MAIN INFO - created server|V17| quality|1| shelfsize|10|TB name|Yet Another 1|
+20151130_194340 MAIN INFO - created server|V18| quality|1| shelfsize|10|TB name|Amazon West|
+20151130_194340 MAIN INFO - created server|V19| quality|1| shelfsize|10|TB name|Desperate Backup 06|
+20151130_194340 MAIN INFO - created server|V20| quality|1| shelfsize|10|TB name|OneDrive Vanilla|
+20151130_194340 MAIN INFO - created server|V21| quality|1| shelfsize|10|TB name|Desperate Backup 04|
+20151130_194340 MAIN INFO - created server|V22| quality|1| shelfsize|10|TB name|Desperate Backup 05|
+20151130_194340 MAIN INFO - created server|V23| quality|1| shelfsize|10|TB name|Desperate Backup 02|
+20151130_194340 MAIN INFO - created server|V24| quality|1| shelfsize|10|TB name|Desperate Backup 03|
+20151130_194340 MAIN INFO - created server|V25| quality|1| shelfsize|10|TB name|OneDrive  Platinum|
+20151130_194340 MAIN INFO - created server|V26| quality|1| shelfsize|10|TB name|Desperate Backup 01|
+20151130_194340 MAIN INFO - created server|V27| quality|1| shelfsize|10|TB name|Google Drive|
+20151130_194340 MAIN INFO - created server|V28| quality|1| shelfsize|10|TB name|OneDrive  Plus|
+20151130_194340 MAIN INFO - created server|V29| quality|1| shelfsize|10|TB name|Amazon West Premium|
+20151130_194340 MAIN INFO - created server|V30| quality|1| shelfsize|10|TB name|OneDrive  Premium|
+20151130_194340 MAIN INFO - created server|V31| quality|1| shelfsize|10|TB name|Desperate Backup 09|
+20151130_194340 MAIN INFO - created server|V32| quality|1| shelfsize|10|TB name|Amazon East|
+20151130_194340 MAIN INFO - created server|V33| quality|1| shelfsize|10|TB name|Google Drive Super Duper|
+20151130_194340 MAIN INFO - created server|V34| quality|1| shelfsize|10|TB name|Desperate Backup 10|
+20151130_194340 MAIN INFO - created server|V35| quality|1| shelfsize|10|TB name|Amazon East Super Duper|
+20151130_194340 MAIN INFO - created server|V36| quality|1| shelfsize|10|TB name|Google Drive Premium|
+20151130_194340 MAIN INFO - created server|V37| quality|1| shelfsize|10|TB name|Google Drive Platinum|
+20151130_194340 MAIN INFO - created server|V38| quality|1| shelfsize|10|TB name|Yet Another 5|
+20151130_194340 MAIN INFO - created server|V39| quality|1| shelfsize|10|TB name|Amazon West Super Duper|
+20151130_194340 MAIN INFO - created server|V40| quality|1| shelfsize|10|TB name|Desperate Backup 08|
+20151130_194340 SERVER INFO - server |V1| created storage shelf|H01| quality|1| size|10000000|MB
+20151130_194341 CLIENT INFO - client|T1| placed collection|C1| to server|V1|
+20151130_194341 MAIN INFO - created client|T1|
+20151130_194341 MAIN INFO - SERVERUSE shelf|V1-H01| qual|1| size|10000000| hiwater|500001| currentuse|500000| full%|5|
+20151130_194341 MAIN INFO - begin run
+20151130_194341 SERVER INFO - small error t|    67| svr|V1| shelf|H01| hidden failure in copy|None|
+20151130_194341 SERVER INFO - small error t|  2419| svr|V1| shelf|H01| consecutive misses|20|
+20151130_194341 SERVER INFO - small error t|  2419| svr|V1| shelf|H01| hidden failure in copy|X5837| doc|D5837|
+20151130_194341 SERVER INFO - small error t|  2454| svr|V1| shelf|H01| hidden failure in copy|None|
+20151130_194341 SERVER INFO - small error t|  5142| svr|V1| shelf|H01| consecutive misses|33|
+20151130_194341 SERVER INFO - small error t|  5142| svr|V1| shelf|H01| hidden failure in copy|X5485| doc|D5485|
+20151130_194341 SERVER INFO - small error t|  5183| svr|V1| shelf|H01| hidden failure in copy|None|
+20151130_194341 SERVER INFO - small error t|  5497| svr|V1| shelf|H01| consecutive misses|3|
+20151130_194341 SERVER INFO - small error t|  5497| svr|V1| shelf|H01| hidden failure in copy|X89| doc|D89|
+20151130_194341 SERVER INFO - small error t|  5607| svr|V1| shelf|H01| hidden failure in copy|None|
+20151130_194341 SERVER INFO - small error t|  5666| svr|V1| shelf|H01| consecutive misses|1|
+20151130_194341 SERVER INFO - small error t|  5666| svr|V1| shelf|H01| hidden failure in copy|X783| doc|D783|
+20151130_194341 SERVER INFO - small error t|  5897| svr|V1| shelf|H01| hidden failure in copy|X5285| doc|D5285|
+20151130_194341 SERVER INFO - small error t|  5978| svr|V1| shelf|H01| hidden failure in copy|X9696| doc|D9696|
+20151130_194341 SERVER INFO - small error t|  6073| svr|V1| shelf|H01| hidden failure in copy|None|
+20151130_194341 SERVER INFO - small error t|  6184| svr|V1| shelf|H01| consecutive misses|2|
+20151130_194341 SERVER INFO - small error t|  6184| svr|V1| shelf|H01| hidden failure in copy|X3387| doc|D3387|
+20151130_194341 SERVER INFO - small error t|  6489| svr|V1| shelf|H01| hidden failure in copy|X6231| doc|D6231|
+20151130_194341 SERVER INFO - small error t|  6633| svr|V1| shelf|H01| hidden failure in copy|None|
+20151130_194341 SERVER INFO - small error t|  9689| svr|V1| shelf|H01| consecutive misses|23|
+20151130_194341 SERVER INFO - small error t|  9689| svr|V1| shelf|H01| hidden failure in copy|X2392| doc|D2392|
+20151130_194341 SERVER INFO - small error t|  9904| svr|V1| shelf|H01| hidden failure in copy|X7503| doc|D7503|
+20151130_194341 SERVER INFO - small error t| 10290| svr|V1| shelf|H01| hidden failure in copy|None|
+20151130_194341 SERVER INFO - small error t| 13163| svr|V1| shelf|H01| consecutive misses|21|
+20151130_194341 SERVER INFO - small error t| 13163| svr|V1| shelf|H01| hidden failure in copy|X623| doc|D623|
+20151130_194341 SERVER INFO - small error t| 13444| svr|V1| shelf|H01| hidden failure in copy|None|
+20151130_194341 SERVER INFO - small error t| 13767| svr|V1| shelf|H01| consecutive misses|4|
+20151130_194341 SERVER INFO - small error t| 13767| svr|V1| shelf|H01| hidden failure in copy|X9762| doc|D9762|
+20151130_194341 SERVER INFO - small error t| 13837| svr|V1| shelf|H01| hidden failure in copy|None|
+20151130_194341 SERVER INFO - small error t| 14681| svr|V1| shelf|H01| consecutive misses|11|
+20151130_194341 SERVER INFO - small error t| 14681| svr|V1| shelf|H01| hidden failure in copy|X8895| doc|D8895|
+20151130_194341 SERVER INFO - small error t| 14761| svr|V1| shelf|H01| hidden failure in copy|X2799| doc|D2799|
+20151130_194341 SERVER INFO - small error t| 14777| svr|V1| shelf|H01| hidden failure in copy|None|
+20151130_194341 SERVER INFO - small error t| 14876| svr|V1| shelf|H01| consecutive misses|1|
+20151130_194341 SERVER INFO - small error t| 14876| svr|V1| shelf|H01| hidden failure in copy|X288| doc|D288|
+20151130_194341 SERVER INFO - small error t| 14942| svr|V1| shelf|H01| hidden failure in copy|None|
+20151130_194341 SERVER INFO - small error t| 17134| svr|V1| shelf|H01| consecutive misses|13|
+20151130_194341 SERVER INFO - small error t| 17134| svr|V1| shelf|H01| hidden failure in copy|X5131| doc|D5131|
+20151130_194341 SERVER INFO - small error t| 17176| svr|V1| shelf|H01| hidden failure in copy|None|
+20151130_194341 SERVER INFO - small error t| 20952| svr|V1| shelf|H01| consecutive misses|40|
+20151130_194341 SERVER INFO - small error t| 20952| svr|V1| shelf|H01| hidden failure in copy|X8190| doc|D8190|
+20151130_194341 SERVER INFO - small error t| 21092| svr|V1| shelf|H01| hidden failure in copy|None|
+20151130_194341 SERVER INFO - small error t| 21496| svr|V1| shelf|H01| consecutive misses|9|
+20151130_194341 SERVER INFO - small error t| 21496| svr|V1| shelf|H01| hidden failure in copy|X7462| doc|D7462|
+20151130_194341 SERVER INFO - small error t| 21504| svr|V1| shelf|H01| hidden failure in copy|None|
+20151130_194341 SERVER INFO - small error t| 25270| svr|V1| shelf|H01| consecutive misses|39|
+20151130_194341 SERVER INFO - small error t| 25270| svr|V1| shelf|H01| hidden failure in copy|X9107| doc|D9107|
+20151130_194341 SERVER INFO - small error t| 25318| svr|V1| shelf|H01| hidden failure in copy|None|
+20151130_194341 SERVER INFO - small error t| 26976| svr|V1| shelf|H01| consecutive misses|14|
+20151130_194341 SERVER INFO - small error t| 26976| svr|V1| shelf|H01| hidden failure in copy|X5007| doc|D5007|
+20151130_194341 SERVER INFO - small error t| 26986| svr|V1| shelf|H01| hidden failure in copy|None|
+20151130_194341 SERVER INFO - small error t| 28587| svr|V1| shelf|H01| consecutive misses|13|
+20151130_194341 SERVER INFO - small error t| 28587| svr|V1| shelf|H01| hidden failure in copy|X6521| doc|D6521|
+20151130_194341 SERVER INFO - small error t| 28608| svr|V1| shelf|H01| hidden failure in copy|None|
+20151130_194341 SERVER INFO - small error t| 29900| svr|V1| shelf|H01| consecutive misses|20|
+20151130_194341 SERVER INFO - small error t| 29900| svr|V1| shelf|H01| hidden failure in copy|X1318| doc|D1318|
+20151130_194341 SERVER INFO - small error t| 30273| svr|V1| shelf|H01| hidden failure in copy|None|
+20151130_194341 SERVER INFO - small error t| 32673| svr|V1| shelf|H01| consecutive misses|23|
+20151130_194341 SERVER INFO - small error t| 32673| svr|V1| shelf|H01| hidden failure in copy|X6200| doc|D6200|
+20151130_194341 SERVER INFO - small error t| 32709| svr|V1| shelf|H01| hidden failure in copy|None|
+20151130_194341 SERVER INFO - small error t| 34122| svr|V1| shelf|H01| consecutive misses|17|
+20151130_194341 SERVER INFO - small error t| 34122| svr|V1| shelf|H01| hidden failure in copy|X657| doc|D657|
+20151130_194341 SERVER INFO - small error t| 34167| svr|V1| shelf|H01| hidden failure in copy|None|
+20151130_194341 SERVER INFO - small error t| 35839| svr|V1| shelf|H01| consecutive misses|16|
+20151130_194341 SERVER INFO - small error t| 35839| svr|V1| shelf|H01| hidden failure in copy|X4050| doc|D4050|
+20151130_194341 SERVER INFO - small error t| 35871| svr|V1| shelf|H01| hidden failure in copy|None|
+20151130_194341 SERVER INFO - small error t| 36206| svr|V1| shelf|H01| consecutive misses|9|
+20151130_194341 SERVER INFO - small error t| 36206| svr|V1| shelf|H01| hidden failure in copy|X9059| doc|D9059|
+20151130_194341 SERVER INFO - small error t| 36248| svr|V1| shelf|H01| hidden failure in copy|None|
+20151130_194341 SERVER INFO - small error t| 37995| svr|V1| shelf|H01| consecutive misses|15|
+20151130_194341 SERVER INFO - small error t| 37995| svr|V1| shelf|H01| hidden failure in copy|X982| doc|D982|
+20151130_194341 SERVER INFO - small error t| 38003| svr|V1| shelf|H01| hidden failure in copy|None|
+20151130_194341 SERVER INFO - small error t| 38155| svr|V1| shelf|H01| consecutive misses|3|
+20151130_194341 SERVER INFO - small error t| 38155| svr|V1| shelf|H01| hidden failure in copy|X7569| doc|D7569|
+20151130_194341 SERVER INFO - small error t| 38177| svr|V1| shelf|H01| hidden failure in copy|None|
+20151130_194341 SERVER INFO - small error t| 41643| svr|V1| shelf|H01| consecutive misses|35|
+20151130_194341 SERVER INFO - small error t| 41643| svr|V1| shelf|H01| hidden failure in copy|X2347| doc|D2347|
+20151130_194341 SERVER INFO - small error t| 41718| svr|V1| shelf|H01| hidden failure in copy|None|
+20151130_194341 SERVER INFO - small error t| 42042| svr|V1| shelf|H01| consecutive misses|1|
+20151130_194341 SERVER INFO - small error t| 42042| svr|V1| shelf|H01| hidden failure in copy|X8879| doc|D8879|
+20151130_194341 SERVER INFO - small error t| 42120| svr|V1| shelf|H01| hidden failure in copy|None|
+20151130_194341 SERVER INFO - small error t| 43682| svr|V1| shelf|H01| consecutive misses|15|
+20151130_194341 SERVER INFO - small error t| 43682| svr|V1| shelf|H01| hidden failure in copy|X9136| doc|D9136|
+20151130_194341 SERVER INFO - small error t| 43717| svr|V1| shelf|H01| hidden failure in copy|None|
+20151130_194341 SERVER INFO - small error t| 43776| svr|V1| shelf|H01| consecutive misses|1|
+20151130_194341 SERVER INFO - small error t| 43776| svr|V1| shelf|H01| hidden failure in copy|X1218| doc|D1218|
+20151130_194341 SERVER INFO - small error t| 43938| svr|V1| shelf|H01| hidden failure in copy|None|
+20151130_194341 SERVER INFO - small error t| 49434| svr|V1| shelf|H01| consecutive misses|45|
+20151130_194341 SERVER INFO - small error t| 49434| svr|V1| shelf|H01| hidden failure in copy|X3926| doc|D3926|
+20151130_194341 SERVER INFO - small error t| 49619| svr|V1| shelf|H01| hidden failure in copy|None|
+20151130_194341 SERVER INFO - small error t| 55889| svr|V1| shelf|H01| consecutive misses|57|
+20151130_194341 SERVER INFO - small error t| 55889| svr|V1| shelf|H01| hidden failure in copy|X8066| doc|D8066|
+20151130_194341 SERVER INFO - small error t| 55932| svr|V1| shelf|H01| hidden failure in copy|None|
+20151130_194341 SERVER INFO - small error t| 55975| svr|V1| shelf|H01| consecutive misses|1|
+20151130_194341 SERVER INFO - small error t| 55975| svr|V1| shelf|H01| hidden failure in copy|X8412| doc|D8412|
+20151130_194341 SERVER INFO - small error t| 56059| svr|V1| shelf|H01| hidden failure in copy|None|
+20151130_194341 SERVER INFO - small error t| 57981| svr|V1| shelf|H01| consecutive misses|23|
+20151130_194341 SERVER INFO - small error t| 57981| svr|V1| shelf|H01| hidden failure in copy|X5803| doc|D5803|
+20151130_194341 SERVER INFO - small error t| 58168| svr|V1| shelf|H01| hidden failure in copy|None|
+20151130_194341 SERVER INFO - small error t| 58870| svr|V1| shelf|H01| consecutive misses|9|
+20151130_194341 SERVER INFO - small error t| 58870| svr|V1| shelf|H01| hidden failure in copy|X2355| doc|D2355|
+20151130_194341 SERVER INFO - small error t| 58874| svr|V1| shelf|H01| hidden failure in copy|None|
+20151130_194341 SERVER INFO - small error t| 66831| svr|V1| shelf|H01| consecutive misses|83|
+20151130_194341 SERVER INFO - small error t| 66831| svr|V1| shelf|H01| hidden failure in copy|X8055| doc|D8055|
+20151130_194341 SERVER INFO - small error t| 66865| svr|V1| shelf|H01| hidden failure in copy|None|
+20151130_194341 SERVER INFO - small error t| 70140| svr|V1| shelf|H01| consecutive misses|42|
+20151130_194341 SERVER INFO - small error t| 70140| svr|V1| shelf|H01| hidden failure in copy|X8448| doc|D8448|
+20151130_194341 SERVER INFO - small error t| 70492| svr|V1| shelf|H01| hidden failure in copy|None|
+20151130_194341 SERVER INFO - small error t| 71084| svr|V1| shelf|H01| consecutive misses|7|
+20151130_194341 SERVER INFO - small error t| 71084| svr|V1| shelf|H01| hidden failure in copy|X1902| doc|D1902|
+20151130_194341 SERVER INFO - small error t| 71117| svr|V1| shelf|H01| hidden failure in copy|None|
+20151130_194341 SERVER INFO - small error t| 72602| svr|V1| shelf|H01| consecutive misses|14|
+20151130_194341 SERVER INFO - small error t| 72602| svr|V1| shelf|H01| hidden failure in copy|X4654| doc|D4654|
+20151130_194341 SERVER INFO - small error t| 72688| svr|V1| shelf|H01| hidden failure in copy|None|
+20151130_194341 SERVER INFO - small error t| 74582| svr|V1| shelf|H01| consecutive misses|13|
+20151130_194341 SERVER INFO - small error t| 74582| svr|V1| shelf|H01| hidden failure in copy|X575| doc|D575|
+20151130_194341 SERVER INFO - small error t| 74723| svr|V1| shelf|H01| hidden failure in copy|None|
+20151130_194341 SERVER INFO - small error t| 77823| svr|V1| shelf|H01| consecutive misses|19|
+20151130_194341 SERVER INFO - small error t| 77823| svr|V1| shelf|H01| hidden failure in copy|X4832| doc|D4832|
+20151130_194341 SERVER INFO - small error t| 78145| svr|V1| shelf|H01| hidden failure in copy|None|
+20151130_194341 SERVER INFO - small error t| 81265| svr|V1| shelf|H01| consecutive misses|35|
+20151130_194341 SERVER INFO - small error t| 81265| svr|V1| shelf|H01| hidden failure in copy|X7360| doc|D7360|
+20151130_194341 SERVER INFO - small error t| 81398| svr|V1| shelf|H01| hidden failure in copy|X8473| doc|D8473|
+20151130_194341 SERVER INFO - small error t| 81500| svr|V1| shelf|H01| hidden failure in copy|None|
+20151130_194341 SERVER INFO - small error t| 87767| svr|V1| shelf|H01| consecutive misses|55|
+20151130_194341 SERVER INFO - small error t| 87767| svr|V1| shelf|H01| hidden failure in copy|X9565| doc|D9565|
+20151130_194341 SERVER INFO - small error t| 87862| svr|V1| shelf|H01| hidden failure in copy|None|
+20151130_194341 SERVER INFO - small error t| 92133| svr|V1| shelf|H01| consecutive misses|46|
+20151130_194341 SERVER INFO - small error t| 92133| svr|V1| shelf|H01| hidden failure in copy|X9892| doc|D9892|
+20151130_194341 SERVER INFO - small error t| 92212| svr|V1| shelf|H01| hidden failure in copy|None|
+20151130_194341 SERVER INFO - small error t| 98654| svr|V1| shelf|H01| consecutive misses|68|
+20151130_194341 SERVER INFO - small error t| 98654| svr|V1| shelf|H01| hidden failure in copy|X106| doc|D106|
+20151130_194341 SERVER INFO - small error t| 98699| svr|V1| shelf|H01| hidden failure in copy|None|
+20151130_194341 SERVER INFO - small error t| 99169| svr|V1| shelf|H01| consecutive misses|7|
+20151130_194341 SERVER INFO - small error t| 99169| svr|V1| shelf|H01| hidden failure in copy|X3293| doc|D3293|
+20151130_194341 SERVER INFO - small error t| 99270| svr|V1| shelf|H01| hidden failure in copy|None|
+20151130_194341 MAIN INFO - end run, simulated time|100000|
+20151130_194341 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D89| majority|False|0| minority|False|0| lost|True|
+20151130_194341 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D106| majority|False|0| minority|False|0| lost|True|
+20151130_194341 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D288| majority|False|0| minority|False|0| lost|True|
+20151130_194341 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D575| majority|False|0| minority|False|0| lost|True|
+20151130_194341 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D623| majority|False|0| minority|False|0| lost|True|
+20151130_194341 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D657| majority|False|0| minority|False|0| lost|True|
+20151130_194341 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D783| majority|False|0| minority|False|0| lost|True|
+20151130_194341 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D982| majority|False|0| minority|False|0| lost|True|
+20151130_194341 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D1218| majority|False|0| minority|False|0| lost|True|
+20151130_194341 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D1318| majority|False|0| minority|False|0| lost|True|
+20151130_194341 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D1902| majority|False|0| minority|False|0| lost|True|
+20151130_194341 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D2347| majority|False|0| minority|False|0| lost|True|
+20151130_194341 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D2355| majority|False|0| minority|False|0| lost|True|
+20151130_194341 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D2392| majority|False|0| minority|False|0| lost|True|
+20151130_194341 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D2799| majority|False|0| minority|False|0| lost|True|
+20151130_194341 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D3293| majority|False|0| minority|False|0| lost|True|
+20151130_194341 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D3387| majority|False|0| minority|False|0| lost|True|
+20151130_194341 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D3926| majority|False|0| minority|False|0| lost|True|
+20151130_194341 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D4050| majority|False|0| minority|False|0| lost|True|
+20151130_194341 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D4654| majority|False|0| minority|False|0| lost|True|
+20151130_194341 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D4832| majority|False|0| minority|False|0| lost|True|
+20151130_194341 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D5007| majority|False|0| minority|False|0| lost|True|
+20151130_194341 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D5131| majority|False|0| minority|False|0| lost|True|
+20151130_194341 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D5285| majority|False|0| minority|False|0| lost|True|
+20151130_194341 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D5485| majority|False|0| minority|False|0| lost|True|
+20151130_194341 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D5803| majority|False|0| minority|False|0| lost|True|
+20151130_194341 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D5837| majority|False|0| minority|False|0| lost|True|
+20151130_194341 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D6200| majority|False|0| minority|False|0| lost|True|
+20151130_194341 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D6231| majority|False|0| minority|False|0| lost|True|
+20151130_194341 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D6521| majority|False|0| minority|False|0| lost|True|
+20151130_194341 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D7360| majority|False|0| minority|False|0| lost|True|
+20151130_194341 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D7462| majority|False|0| minority|False|0| lost|True|
+20151130_194341 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D7503| majority|False|0| minority|False|0| lost|True|
+20151130_194341 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D7569| majority|False|0| minority|False|0| lost|True|
+20151130_194341 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D8055| majority|False|0| minority|False|0| lost|True|
+20151130_194341 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D8066| majority|False|0| minority|False|0| lost|True|
+20151130_194342 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D8190| majority|False|0| minority|False|0| lost|True|
+20151130_194342 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D8412| majority|False|0| minority|False|0| lost|True|
+20151130_194342 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D8448| majority|False|0| minority|False|0| lost|True|
+20151130_194342 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D8473| majority|False|0| minority|False|0| lost|True|
+20151130_194342 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D8879| majority|False|0| minority|False|0| lost|True|
+20151130_194342 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D8895| majority|False|0| minority|False|0| lost|True|
+20151130_194342 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D9059| majority|False|0| minority|False|0| lost|True|
+20151130_194342 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D9107| majority|False|0| minority|False|0| lost|True|
+20151130_194342 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D9136| majority|False|0| minority|False|0| lost|True|
+20151130_194342 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D9565| majority|False|0| minority|False|0| lost|True|
+20151130_194342 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D9696| majority|False|0| minority|False|0| lost|True|
+20151130_194342 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D9762| majority|False|0| minority|False|0| lost|True|
+20151130_194342 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D9892| majority|False|0| minority|False|0| lost|True|
+20151130_194342 MAIN INFO - client |T1| lost doc|D89| size|50|
+20151130_194342 MAIN INFO - client |T1| lost doc|D106| size|50|
+20151130_194342 MAIN INFO - client |T1| lost doc|D288| size|50|
+20151130_194342 MAIN INFO - client |T1| lost doc|D575| size|50|
+20151130_194342 MAIN INFO - client |T1| lost doc|D623| size|50|
+20151130_194342 MAIN INFO - client |T1| lost doc|D657| size|50|
+20151130_194342 MAIN INFO - client |T1| lost doc|D783| size|50|
+20151130_194342 MAIN INFO - client |T1| lost doc|D982| size|50|
+20151130_194342 MAIN INFO - client |T1| lost doc|D1218| size|50|
+20151130_194342 MAIN INFO - client |T1| lost doc|D1318| size|50|
+20151130_194342 MAIN INFO - client |T1| lost doc|D1902| size|50|
+20151130_194342 MAIN INFO - client |T1| lost doc|D2347| size|50|
+20151130_194342 MAIN INFO - client |T1| lost doc|D2355| size|50|
+20151130_194342 MAIN INFO - client |T1| lost doc|D2392| size|50|
+20151130_194342 MAIN INFO - client |T1| lost doc|D2799| size|50|
+20151130_194342 MAIN INFO - client |T1| lost doc|D3293| size|50|
+20151130_194342 MAIN INFO - client |T1| lost doc|D3387| size|50|
+20151130_194342 MAIN INFO - client |T1| lost doc|D3926| size|50|
+20151130_194342 MAIN INFO - client |T1| lost doc|D4050| size|50|
+20151130_194342 MAIN INFO - client |T1| lost doc|D4654| size|50|
+20151130_194342 MAIN INFO - client |T1| lost doc|D4832| size|50|
+20151130_194342 MAIN INFO - client |T1| lost doc|D5007| size|50|
+20151130_194342 MAIN INFO - client |T1| lost doc|D5131| size|50|
+20151130_194342 MAIN INFO - client |T1| lost doc|D5285| size|50|
+20151130_194342 MAIN INFO - client |T1| lost doc|D5485| size|50|
+20151130_194342 MAIN INFO - client |T1| lost doc|D5803| size|50|
+20151130_194342 MAIN INFO - client |T1| lost doc|D5837| size|50|
+20151130_194342 MAIN INFO - client |T1| lost doc|D6200| size|50|
+20151130_194342 MAIN INFO - client |T1| lost doc|D6231| size|50|
+20151130_194342 MAIN INFO - client |T1| lost doc|D6521| size|50|
+20151130_194342 MAIN INFO - client |T1| lost doc|D7360| size|50|
+20151130_194342 MAIN INFO - client |T1| lost doc|D7462| size|50|
+20151130_194342 MAIN INFO - client |T1| lost doc|D7503| size|50|
+20151130_194342 MAIN INFO - client |T1| lost doc|D7569| size|50|
+20151130_194342 MAIN INFO - client |T1| lost doc|D8055| size|50|
+20151130_194342 MAIN INFO - client |T1| lost doc|D8066| size|50|
+20151130_194342 MAIN INFO - client |T1| lost doc|D8190| size|50|
+20151130_194342 MAIN INFO - client |T1| lost doc|D8412| size|50|
+20151130_194342 MAIN INFO - client |T1| lost doc|D8448| size|50|
+20151130_194342 MAIN INFO - client |T1| lost doc|D8473| size|50|
+20151130_194342 MAIN INFO - client |T1| lost doc|D8879| size|50|
+20151130_194342 MAIN INFO - client |T1| lost doc|D8895| size|50|
+20151130_194342 MAIN INFO - client |T1| lost doc|D9059| size|50|
+20151130_194342 MAIN INFO - client |T1| lost doc|D9107| size|50|
+20151130_194342 MAIN INFO - client |T1| lost doc|D9136| size|50|
+20151130_194342 MAIN INFO - client |T1| lost doc|D9565| size|50|
+20151130_194342 MAIN INFO - client |T1| lost doc|D9696| size|50|
+20151130_194342 MAIN INFO - client |T1| lost doc|D9762| size|50|
+20151130_194342 MAIN INFO - client |T1| lost doc|D9892| size|50|
+20151130_194342 MAIN INFO - BAD NEWS: Total documents lost by client |T1| in all servers |49|
+20151130_194342 MAIN INFO - COLLECTIONTOTALS client|T1| collection|C1| nservers|1| ndocs|10000| nokay|9951| nmajority|0| nminority|0| nlost|49| 
+20151130_194342 MAIN INFO - SERVERUSE shelf|V1-H01| qual|1| size|10000000| hiwater|500001| currentuse|500000| full%|5|
+20151130_194342 MAIN INFO - SERVERERR1 shelf|V1-H01| qual|1| totalhits|986| nonempty|49| empty|937| alive|True|
+20151130_194342 MAIN INFO - SERVERERR2 shelf|V1-H01| qual|1| totalhits|986| abovehiwater|937| multiples|0|
+20151130_194342 MAIN INFO - SERVERERRTOTALS totalhits|986| abovehiwater|937| nonempty|49| empty|937| multiples|0|
+20151130_194342 MAIN INFO - AUDITTOTALS ncycles|0| nfrequency|0| nsegments|0| nrepairs|0| nmajority|0| nminority|0| nlost|0| 
+20151130_194342 MAIN INFO - LIFETIME shelf|H01| lifetime|LIFE-H01| freq|0| impact|0| decay|1e+12| maxlife|1e+12| count|0| time|0.000|
+20151130_194342 MAIN INFO - LIFETIME Total glitches|0|
+20151130_194340 0 MAIN  proc Document Preservation simulation 
+20151130_194341 0 MAIN  proc Begin run time|0|
+20151130_194341 0 MAIN  proc End simulation1 timenow|100000| cpusecs|0.063| lastevent|99964| 
+20151130_194341 0 MAIN  proc End simulation2 hidoc|D10000| hicoll|C1| hishelf|H01|
+20151130_194341 0 MAIN  proc End simulation3 hiserver|V40| hiclient|T1| hicopy|X10000|
+20151130_194342 0 MAIN  proc End time stats: wall|   1.588| cpu|0.063|
