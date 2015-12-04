@@ -19,6 +19,8 @@
 #               Reorder some sections that were mistakenly 
 #                in the wrong order, e.g., load db before 
 #                initial test and possible exit.  
+# 20151203.1800 Change single-run test to reflect re-scaling from 
+#                mean exponential lifetime to half-life of sectors.
 #
 
 echo "**************************************** Get Python packages"
@@ -75,8 +77,10 @@ bash emptygiantoutput.sh
 bash pretestchecklist.sh
 # Run one simple test of the simulation, and check the answer.
 mkdir tmp
-python main.py ../Q3 . 0 1 --ncopies=1 --lifek=1000000 --audit=0 >tmp/initialtest.log 2>&1
+python main.py ../Q3 . 0 1 --ncopies=1 --lifek=693147 --audit=0 >tmp/initialtest.log 2>&1
 # The correct answer should be   "BAD NEWS: Total documents lost by client |T1| in all servers |49|"
+# (The crazy half-life number in the command is 1,000,000 * ln(2), which is 
+#  the half-life that corresponds to 1 million khour mean lifetime.)
 nTestLost=$(grep NEWS tmp/initialtest.log |awk '{print $16}' |sed 's/|//g')
 if [ "$nTestLost" -eq 49 ]
 then
