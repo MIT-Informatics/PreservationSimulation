@@ -131,8 +131,6 @@ class CAudit2(object):
         # Tell the caller that we finished.
         myeCallerSyncEvent.succeed(value=self.nNumberOfCycles)
 
-
-# NEW NEW NEW
 # C A u d i t 2 . m A u d i t S e g m e n t 
     @catchex
     @tracef("AUD2")
@@ -145,6 +143,7 @@ class CAudit2(object):
          Python 2, one cannot yield from a vanilla function, only
          from a generator, so all that crap, and its convoluted 
          conditional logic, is in here.  
+         This is the meanest, nastiest, ugliest father-raper of them all.
         '''
 
         lg.logInfo("AUDIT2","begin segmt t|%10.3f| auditid|%s| cycle|%s| seg|%s| cli|%s| coll|%s| ndocs|%s|range %s-%s|" % (G.env.now,self.ID,self.nNumberOfCycles,mynThisSegment,self.sClientID,self.sCollectionID,len(mylDocs),mylDocs[0],mylDocs[-1]))
@@ -201,7 +200,13 @@ class CAudit2(object):
                             lg.logInfo("AUDIT2","copymissing t|%10.3f| doc|%s| svr|%s| aud|%s-c%s-s%s| cli|%s| coll|%s|" % (G.env.now,sDocID,sServerID,self.ID,self.nNumberOfCycles,mynThisSegment,self.sClientID,self.sCollectionID))
                 # end foreach doc
             # end foreach server used for collection
-            
+
+            '''NOTE: Phase 2 here can be factored out of this function entirely
+                because it does not yield or otherwise molest the clock.
+                But refactoring must be done carefully because it consumes
+                and supplies data from phases 1 and 3.  
+            '''
+
             # P h a s e  2: Record severity (majority/minority/permanent) of copy losses.
             # NOTE: This arithmetic seems to be reasonable for all numbers
             #  greater than two, but one copy remaining out of two is judged 
@@ -209,7 +214,7 @@ class CAudit2(object):
             #  is labeled a majority repair.  Seems kinda wrong.  
             # Would love to split the logic of this routine into separate
             #  functions; when you're indented seven levels, your logic is,
-            #  um, hard to explain.  But cannot yield from sub-functions, 
+            #  um, hard to explain.  But we cannot yield from sub-functions, 
             #  at least not in Python2.  
             nServers = len(cCollection.lServerIDs)
             nMajority = (len(cCollection.lServerIDs)+1) / 2     # int divide truncates
@@ -224,8 +229,8 @@ class CAudit2(object):
                 # How many copies left: none, a lot, a few?
                 TRC.tracef(3,"AUD2","proc AuditSegment1 doc|%s| nsvr|%s| loston|%s| nleft|%s|" % (sDocID,nServers,lDocLostOnServers,nCopiesLeft))
 
-                ### if doc not lost
-                ###     assess majority/minority/lost
+                ###if doc not lost
+                ###    assess majority/minority/lost
                 if nCopiesLeft == 0:                    # N O N E  remain
                     # Report permanent loss, one ping only.
                     # Do not double-count docs already lost.  Doc will not
@@ -233,50 +238,52 @@ class CAudit2(object):
                     sRepair = "permloss"
                     lg.logInfo("AUDIT2","perm loss   t|%10.3f| doc|%s| aud|%s-c%s-s%s| cli|%s| coll|%s|" % (G.env.now,sDocID,self.ID,self.nNumberOfCycles,mynThisSegment,self.sClientID,self.sCollectionID))
                     self.mRecordDocumentLost(sDocID)
-                elif nCopiesLeft >= nMajority:          # M A J O R I T Y  remain
-                    sRepair = "majority"
-                else:                                   # M I N O R I T Y  remain
-                    sRepair = "minority"
-
-                ###log repair type for doc
-                lg.logInfo("AUDIT2","%s rp t|%10.3f| doc|%s| aud|%s-c%s-s%s| cli|%s| coll|%s|" % (sRepair,G.env.now,sDocID,self.ID,self.nNumberOfCycles,mynThisSegment,self.sClientID,self.sCollectionID))
+                else:
+                    ###doc is repairable; determine majority/minority
+                    if nCopiesLeft >= nMajority:          # M A J O R I T Y  remain
+                        sRepair = "majority"
+                    else:                                   # M I N O R I T Y  remain
+                        sRepair = "minority"
+                    ###log repair type for doc
+                    lg.logInfo("AUDIT2","%s rp t|%10.3f| doc|%s| aud|%s-c%s-s%s| cli|%s| coll|%s|" % (sRepair,G.env.now,sDocID,self.ID,self.nNumberOfCycles,mynThisSegment,self.sClientID,self.sCollectionID))
 
                 # P h a s e  3: repair damaged docs, if possible.
                 ###foreach server on which doc was damaged
                 # Put a copy back on each server where it is missing.  
                 for sServerID in lDocLostOnServers:
-                    ###repair
-                    fTransferTime = self.mRepairDoc(sDocID,sServerID)
-                    '''\
-                    If the repair returns False instead of a time, 
-                    then that server is no longer accepting documents.
-                    Remove that server from the list, invalidate all 
-                    its copies.  Then tell the client to find a new 
-                    server and re-place the entire collection.  
-                    Schedule this to occur at the end of the
-                    audit cycle or segment to avoid confusing the 
-                    ongoing evaluation.  Auditor informs client, oops,
-                    you seem to be missing a server, and client takes
-                    corrective action at that time.  
-                    Send collectionID and serverID to clientID.
-                    '''
-
-                    ###if not okay ie server dead
-                    if fTransferTime == False:
-                        self.stDeadServerIDs.add((sServerID, self.sCollectionID))
-                        lg.logInfo("AUDIT2","dead server t|%10.3f| doc|%s| aud|%s| cli|%s| coll|%s| svr|%s|" % (G.env.now,sDocID,self.ID,self.sClientID,self.sCollectionID,sServerID))
-                    else:
-                        ###log repair effected
-                        TRC.tracef(3,"AUD2","proc AuditSegment4 repair t|%10.3f| doc|%s| svr|%s| xfrtim|%f| type|%s|" % (G.env.now,sDocID,sServerID,fTransferTime,sRepair))
-                        yield G.env.timeout(float(fTransferTime))
-                        lg.logInfo("AUDIT2","repair doc  t|%10.3f| doc|%s| aud|%s| cli|%s| coll|%s| svr|%s| from %s copies|%d|" % (G.env.now,sDocID,self.ID,self.sClientID,self.sCollectionID,sServerID,sRepair,nCopiesLeft))
-
-                        ###count repair as type maj/min for audit and doc
-                        # If repair succeeded, record and count it.
-                        if sRepair == "majority":
-                            self.mRecordDocumentMajorityRepair(sDocID)
+                    if nCopiesLeft > 0:
+                        ###repair
+                        fTransferTime = self.mRepairDoc(sDocID,sServerID)
+                        '''\
+                        If the repair returns False instead of a time, 
+                        then that server is no longer accepting documents.
+                        Remove that server from the list, invalidate all 
+                        its copies.  Then tell the client to find a new 
+                        server and re-place the entire collection.  
+                        Schedule this notification to occur at the end of the
+                        audit cycle or segment to avoid confusing the 
+                        ongoing evaluation.  Auditor informs client: oops,
+                        you seem to be missing a server; and client takes
+                        corrective action at that time.  
+                        Send collectionID and serverID to clientID.
+                        '''
+    
+                        ###if not okay ie server dead
+                        if fTransferTime == False:
+                            self.stDeadServerIDs.add((sServerID, self.sCollectionID))
+                            lg.logInfo("AUDIT2","dead server t|%10.3f| doc|%s| aud|%s| cli|%s| coll|%s| svr|%s|" % (G.env.now,sDocID,self.ID,self.sClientID,self.sCollectionID,sServerID))
                         else:
-                            self.mRecordDocumentMinorityRepair(sDocID)
+                            ###log repair effected
+                            TRC.tracef(3,"AUD2","proc AuditSegment4 repair t|%10.3f| doc|%s| svr|%s| xfrtim|%f| type|%s|" % (G.env.now,sDocID,sServerID,fTransferTime,sRepair))
+                            yield G.env.timeout(float(fTransferTime))
+                            lg.logInfo("AUDIT2","repair doc  t|%10.3f| doc|%s| aud|%s| cli|%s| coll|%s| svr|%s| from %s copies|%d|" % (G.env.now,sDocID,self.ID,self.sClientID,self.sCollectionID,sServerID,sRepair,nCopiesLeft))
+    
+                            ###count repair as type maj/min for audit and doc
+                            # If repair succeeded, record and count it.
+                            if sRepair == "majority":
+                                self.mRecordDocumentMajorityRepair(sDocID)
+                            else:
+                                self.mRecordDocumentMinorityRepair(sDocID)
                 # end foreach server that lost this doc
             # end foreach damaged doc
 
@@ -288,12 +295,12 @@ class CAudit2(object):
         # end network resource
 
         # If we saw any dead servers during this segment, inform the clients.
-        while self.stDeadServerIDs:
+        for (sDeadServerID, sDeadCollectionID) in self.stDeadServerIDs:
             cCollection = G.dID2Collection[self.sCollectionID]
             cClient = G.dID2Client[cCollection.sClientID]
-            (sDeadServerID, sDeadCollectionID) = self.stDeadServerIDs.pop()
             NTRC.ntracef(3,"AUD2","proc t|%10.3f| inform dead server auditid|%s| cli|%s| coll|%s| svr|%s| doc|%s|" % (G.env.now,self.ID,self.sClientID,self.sCollectionID,sServerID,sDocID))
             cClient.mServerIsDead(sDeadServerID, sDeadCollectionID)
+        self.stDeadServerIDs = set()
 
     # end def
 
@@ -890,7 +897,14 @@ TODO (x=done):
 #                At end of audit segment, notify client that server
 #                is no longer usable.
 # 20150812  RBL Remove old AuditSegment code, which was commented out anyway.
+# 20151207  RBL Fix old, old bug that attempted to repair doc even if
+#                no copies remain.  This allocated space for a new copy, 
+#                raised the high-water mark, and permitted the new phantom
+#                copy to be damaged anew, biasing the loss count, yikes.
+#                Unfortunately, this makes audit-segment even meaner, nastier,
+#                and uglier than its previous pathetic state.
+#               Improve slightly loop that informs clients of dead servers.
+#               Also, consider factoring out Phase 2 of AuditSegment.
 # 
-
 
 #END
