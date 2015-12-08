@@ -46,6 +46,8 @@ DONE - write filter for instructions as they are being generated flat
 DONE - write rules for the filter
   rules in a list of json dictionaries
   first rule is permit *, then list of denies maybe slightly countermanded
+- rewrite rules to filter lots more, particularly nonsense cases
+  with glitch freq, impact, decay, and life.  
 DONE - integrate into last stage of flat instruction generation
 - write documentation on how to generate instructions flat file 
   and database.  
@@ -77,14 +79,14 @@ TODO: Docker scheduling
 
 
 TODO: AWS deployment
-DONE - deploy shelf on AWS free tier system
-DONE - automate deployment to AWS systems
-DONE - run shelf on free tier system
-DONE - get access to 8 core system
-DONE - deploy to 8 core system
-DONE - run shelf on 8 core system
-- deploy to 36 core system
-- run on 36 core system: how fast?
+DONE - deploy shelf on AWS free tier system.
+DONE - automate deployment to AWS systems.
+DONE - run shelf on free tier system.
+DONE - get access to 8 core system.
+DONE - deploy to 8 core system.
+DONE - run shelf on 8 core system.
+DONE - deploy to 32 core system c3.8xlarge.
+- run on 32 core system: how fast?
 DONE - clean up and document the AWS-Ubuntu install script
 - test docker deployment on 8 core system
 - test docker deployment on 36 core system
@@ -115,9 +117,15 @@ DONE - write slides for Micah to use, update from September's
 
 
 TODO: rationalize time constants so that people can understand them
-- change sector lifetime to half-life
+DONE - change sector lifetime to half-life.
   (this will change ALL the existing numbers; recompute everything)
-DONE - change glitch frequency to half-life (oops, already is)
+- update the AWS install script single-run test for the new half-life 
+  results.
+DONE - change glitch frequency to half-life (oops, already is)ce2
+- update the main.py CLI help to reflect half-life instead of lifetime.
+- update the main.py CLI to accept both --lifek and --lifem.  
+- update the broker.py CLI help to reflect half-life instead of lifetime.
+- update other docs to reflect half-life instead of lifetime.  
 
 
 TODO: lifetimes: correlated institutional failures
