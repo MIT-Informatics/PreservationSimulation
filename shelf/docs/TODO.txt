@@ -36,6 +36,9 @@ DONE - increase the stuck timer a lot.
   be empty, set a clean GiantOutput file, and rescue any data
   that was left over in a previous GiantOutput file into
   the done dir.  
+DONE - fix y/n switch options to get rid of the need for a value.
+- fix the broker invocation in the AWSinstallscript to match the
+  revised y/n options.
 
 
 TODO: newinstructions
@@ -53,7 +56,7 @@ DONE - integrate into last stage of flat instruction generation
   and database.  
 
 
-TODO: newnewinstructions
+TODO: newnewinstructions, flatlib or new db
 - custom flat db or maybe tiny or buzhug
 - facade or adapter: same interface as current mongolib
 - new load, list, and clear utilities that use flatlib
@@ -117,12 +120,12 @@ DONE - write slides for Micah to use, update from September's
 
 
 TODO: rationalize time constants so that people can understand them
-DONE - change sector lifetime to half-life.
+DONE - change main.py sector lifetime to half-life.
   (this will change ALL the existing numbers; recompute everything)
-- update the AWS install script single-run test for the new half-life 
+DONE - update the AWS install script single-run test for the new half-life 
   results.
 DONE - change glitch frequency to half-life (oops, already is)ce2
-- update the main.py CLI help to reflect half-life instead of lifetime.
+DONE - update the main.py CLI help to reflect half-life instead of lifetime.
 - update the main.py CLI to accept both --lifek and --lifem.  
 - update the broker.py CLI help to reflect half-life instead of lifetime.
 - update other docs to reflect half-life instead of lifetime.  

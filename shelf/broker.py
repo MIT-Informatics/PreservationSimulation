@@ -19,7 +19,7 @@ def fndCliParse(mysArglist):
          many options for this run from the command line.  
         Return a dictionary of all of them.  
     '''
-    sVersion = "0.0.4"
+    sVersion = "0.0.5"
     cParse = argparse.ArgumentParser(description="Digital Library Preservation Simulation Instruction Broker CLI v"+sVersion+"  "+
         "For each selection variable, enter either a value or a MongoDB dictionary spec " + 
         "that is a valid JSON dictionary string.  \n" + 
@@ -159,31 +159,27 @@ def fndCliParse(mysArglist):
                         , help='TESTING ONLY: limit on number of runs to execute.'
                         )
     
-    cParse.add_argument("--testcommand", type=str
-                        , dest='sTestCommand'
-                        , choices=['YES','Y','NO','N']
-                        , nargs='?'
+    cParse.add_argument("--testcommand"
+                        , action='store_true'
+                        , dest='bTestCommand'
                         , help='TESTING ONLY: echo formatted commands only, not execute.'
                         )
     
-    cParse.add_argument("--testfib", type=str
-                        , dest='sTestFib'
-                        , choices=['YES','Y','NO','N']
-                        , nargs='?'
+    cParse.add_argument("--testfib"
+                        , action='store_true'
+                        , dest='bTestFib'
                         , help='TESTING ONLY: use fako Fibonacci CPU intensive process instead of real stuff.'
                         )
 
-    cParse.add_argument("--listonly", type=str
-                        , dest='sListOnly'
-                        , choices=['YES','Y','NO','N']
-                        , nargs='?'
+    cParse.add_argument("--listonly"
+                        , action='store_true'
+                        , dest='bListOnly'
                         , help='List all chosen cases to stdout.  Do nothing else.'
                         )
 
-    cParse.add_argument("--redo", type=str
-                        , dest='sRedo'
-                        , choices=['YES','Y','NO','N']
-                        , nargs='?'
+    cParse.add_argument("--redo"
+                        , action='store_true'
+                        , dest='bRedo'
                         , help='Force these cases to be redone, even if they have been done before.'
                         )
 
@@ -217,11 +213,11 @@ class CG(object):
     nPoliteTimer =  5       # Shorter wait between sequential launches.
     nStuckLimit = 600       # Max nr of CoreTimer waits before giving up.
     nTestLimit = 0          # Max nr of runs executed for a test run, 0=infinite.
-    sTestCommand = "NO"     # Should just echo commands instead of executing them?
-    sTestFib = "NO"         # Should use Fibonacci calc instead of real programs?
-    sListOnly = "NO"        # Just list out all cases matching the stated criteria.  
+    bTestCommand = False    # Should just echo commands instead of executing them?
+    bTestFib = False        # Should use Fibonacci calc instead of real programs?
+    bListOnly = False       # Just list out all cases matching the stated criteria.  
                             #  but don't execute them.
-    sRedo = "NO"            # Force cases to be redone (recalculated)?
+    bRedo = "NO"            # Force cases to be redone (recalculated)?
 
     sFamilyDir = '../q3'
     sSpecificDir = '.'
@@ -441,10 +437,10 @@ class CFormat(object):
     @ntracef("FMT")
     def fnsMaybeTest(self, mysCommand):
         '''
-        If TestCommand option says YES, then change the command line to a line
+        If TestCommand option is present, then change the command line to a line
          that just echos the command line instead of actually doing it.
         '''
-        if g.sTestCommand.startswith('Y'):
+        if g.bTestCommand:
             sCommand = 'echo "{}"'.format(mysCommand)
         else:
             sCommand = mysCommand
@@ -604,7 +600,7 @@ def main():
     # And check for short test run.
     maxcount = int(g.nTestLimit)
     # Or a completely fake test run.
-    if g.sTestFib.startswith("Y"):
+    if g.bTestFib:
         g.lTemplates = g.lFibTemplates
 
     # Process each instruction.
@@ -613,7 +609,7 @@ def main():
 
         sInstructionId = str(dInstruction["_id"])
         # If the user insists, redo this case.
-        if g.sRedo.startswith("Y"):
+        if g.bRedo:
             NTRC.ntracef(0,"MAIN","proc force redo for item id|%s|" % (sInstructionId))
             cdb.fnbDeleteDoneRecord(sInstructionId)
 
@@ -624,7 +620,7 @@ def main():
             continue
 
         nRunNumber += 1
-        if g.sListOnly.startswith("Y"):
+        if g.bListOnly:
             # Testing: Just dump out the instruction dictionary for this item.
             NTRC.ntracef(0,"MAIN","proc ListOnly, item run|%s| id|%s| ncopies|%s| lifem|%s| dict\n|%s|" % \
                 (nRunNumber, sInstructionId, dInstruction["nCopies"], dInstruction["nLifem"], dInstruction))
