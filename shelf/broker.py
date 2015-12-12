@@ -160,26 +160,26 @@ def fndCliParse(mysArglist):
                         )
     
     cParse.add_argument("--testcommand"
-                        , action='store_true'
-                        , dest='bTestCommand'
+                        , action='store_const', const="Y"
+                        , dest='sTestCommand'
                         , help='TESTING ONLY: echo formatted commands only, not execute.'
                         )
     
     cParse.add_argument("--testfib"
-                        , action='store_true'
-                        , dest='bTestFib'
+                        , action='store_const', const="Y"
+                        , dest='sTestFib'
                         , help='TESTING ONLY: use fako Fibonacci CPU intensive process instead of real stuff.'
                         )
 
     cParse.add_argument("--listonly"
-                        , action='store_true'
-                        , dest='bListOnly'
+                        , action='store_const', const="Y"
+                        , dest='sListOnly'
                         , help='List all chosen cases to stdout.  Do nothing else.'
                         )
 
     cParse.add_argument("--redo"
-                        , action='store_true'
-                        , dest='bRedo'
+                        , action='store_const', const="Y"
+                        , dest='sRedo'
                         , help='Force these cases to be redone, even if they have been done before.'
                         )
 
@@ -213,11 +213,11 @@ class CG(object):
     nPoliteTimer =  5       # Shorter wait between sequential launches.
     nStuckLimit = 600       # Max nr of CoreTimer waits before giving up.
     nTestLimit = 0          # Max nr of runs executed for a test run, 0=infinite.
-    bTestCommand = False    # Should just echo commands instead of executing them?
-    bTestFib = False        # Should use Fibonacci calc instead of real programs?
-    bListOnly = False       # Just list out all cases matching the stated criteria.  
+    sTestCommand = "N"      # Should just echo commands instead of executing them?
+    sTestFib = "N"          # Should use Fibonacci calc instead of real programs?
+    sListOnly = "N"         # Just list out all cases matching the stated criteria.  
                             #  but don't execute them.
-    bRedo = "NO"            # Force cases to be redone (recalculated)?
+    sRedo = "N"             # Force cases to be redone (recalculated)?
 
     sFamilyDir = '../q3'
     sSpecificDir = '.'
@@ -410,6 +410,7 @@ class CFormat(object):
         for sAttrib,sValue in mydCli.items():
             result = None
             if sValue is not None:
+                
                 try:
                     result = json.loads(sValue)
                 except ValueError:
@@ -440,7 +441,7 @@ class CFormat(object):
         If TestCommand option is present, then change the command line to a line
          that just echos the command line instead of actually doing it.
         '''
-        if g.bTestCommand:
+        if g.sTestCommand.startswith("Y"):
             sCommand = 'echo "{}"'.format(mysCommand)
         else:
             sCommand = mysCommand
@@ -600,7 +601,7 @@ def main():
     # And check for short test run.
     maxcount = int(g.nTestLimit)
     # Or a completely fake test run.
-    if g.bTestFib:
+    if g.sTestFib.startswith("Y"):
         g.lTemplates = g.lFibTemplates
 
     # Process each instruction.
@@ -609,7 +610,7 @@ def main():
 
         sInstructionId = str(dInstruction["_id"])
         # If the user insists, redo this case.
-        if g.bRedo:
+        if g.sRedo.startswith("Y"):
             NTRC.ntracef(0,"MAIN","proc force redo for item id|%s|" % (sInstructionId))
             cdb.fnbDeleteDoneRecord(sInstructionId)
 
@@ -620,7 +621,7 @@ def main():
             continue
 
         nRunNumber += 1
-        if g.bListOnly:
+        if g.sListOnly.startswith("Y"):
             # Testing: Just dump out the instruction dictionary for this item.
             NTRC.ntracef(0,"MAIN","proc ListOnly, item run|%s| id|%s| ncopies|%s| lifem|%s| dict\n|%s|" % \
                 (nRunNumber, sInstructionId, dInstruction["nCopies"], dInstruction["nLifem"], dInstruction))
@@ -702,8 +703,10 @@ foreach single-line file in holding dir
 #               Increase stuck timer because AWS single stream is 
 #                reeeaaalllyyy ssslllooowww.  
 # 20150813  RBL Cosmetic changes in anticipation of adding flat-file db.
-#
-
+# 20151211  RBL Get rid of required values for essentially boolean 
+#                test options.
+# 20151212  RBL Correct the previous edit because JSON requires strings, 
+#                not True-False values.  Put back 90% of the code I changed.
 #     
 
 
