@@ -7,6 +7,7 @@ import  json
 import  csv
 from    NewTraceFac     import  NTRC, ntrace, ntracef
 import  abc
+from    memoize         import memoize
 
 
 '''
@@ -112,14 +113,26 @@ class CInstructionFilter(object):
 # f n b D o e s L i n e P a s s A l l R u l e s 
     @ntracef("FILT")
     def fnbDoesLinePassAllRules(self,mydLine):
-        bEval = True                    # Lines pass by default.
+        bEval = True            # Lines pass by default.
+        self.g.nRule = 0
+        self.g.nRuleDenyTrue = 0
+        self.g.sRuleDenyTrue = ""
         for dRule in self.ldRules:
+            # Save rule data for debugging.  
+            if self.ID == "text":
+                self.g.sRule = self.g.lRules[self.g.nRule]
+            else:
+                self.g.sRule = str(dRule)   # Best we can do for json.
+            self.g.nRule += 1
+            # Check line and permit or deny if it matches.
             bMatch = self.fnbDoesLineMatchOneRule(mydLine, dRule)
             if bMatch:
                 if dRule['action'] == 'permit':
                     bEval = True
                 elif dRule['action'] == 'deny':
                     bEval = False
+                    self.g.sRuleDenyTrue = self.g.sRule
+                    self.g.nRuleDenyTrue = self.g.nRule
                 else:
                     raise ValueError('Invalid rule action: "%s"'%(dRule['action']))
         return bEval
@@ -147,23 +160,44 @@ class CInstructionFilter(object):
                     linevalue = mydLine[key]
                 except KeyError:
                     raise KeyError('Bad field name in rule, not found in instruction line: |%s|' % (key))
-                if str(val).startswith('='):
-                    bResult = fnIntPlease(linevalue) == fnIntPlease(self.fnsGetValue(val))
-                elif str(val).startswith('>='):
-                    bResult = int(linevalue) >= int(self.fnsGetValue(val))
-                elif str(val).startswith('<='):
-                    bResult = int(linevalue) <= int(self.fnsGetValue(val))
-                elif str(val).startswith('>'):
-                    bResult = int(linevalue) > int(self.fnsGetValue(val))
-                elif str(val).startswith('<'):
-                    bResult = int(linevalue) < int(self.fnsGetValue(val))
-                elif str(val).startswith('!='):
-                    bResult = linevalue != self.fnsGetValue(val)
-                else:
-                    bResult = fnIntPlease(linevalue) == fnIntPlease(val)
+                # Try to match a single criterion in the rule.
+                # Stop on first negative result (implicit and).
+                # Action included for debug info.
+                sAction = mydRule["action"]
+                bResult = self.fnbDoesLineMatchOneCriterion(key, val, linevalue, sAction)
                 if not bResult:
                     break
+
         return bResult if not mydRule.get('reverse', False) else not bResult
+
+    @memoize
+    @ntracef("FILT")
+    def fnbDoesLineMatchOneCriterion(self, mysRuleKey, mysRuleRight, mysLineVal, mysAction):
+        # Get value from rule expression, and its maybe-integer form.
+        sRuleValue = self.fnsGetValue(mysRuleRight)
+        sRuleValueInt = fnIntPlease(sRuleValue)
+        sLineValueInt = fnIntPlease(mysLineVal)
+
+        if str(mysRuleRight).startswith('='):
+            bResult = sLineValueInt == sRuleValueInt
+        elif str(mysRuleRight).startswith('>='):
+            bResult = int(mysLineVal) >= int(sRuleValue)
+        elif str(mysRuleRight).startswith('<='):
+            bResult = int(mysLineVal) <= int(sRuleValue)
+        elif str(mysRuleRight).startswith('>'):
+            bResult = int(mysLineVal) > int(sRuleValue)
+        elif str(mysRuleRight).startswith('<'):
+            bResult = int(mysLineVal) < int(sRuleValue)
+        elif str(mysRuleRight).startswith('!='):
+            bResult = sLineValueInt != sRuleValueInt
+        else:
+            bResult = sLineValueInt == fnIntPlease(mysRuleRight)
+
+        if not bResult:
+            NTRC.tracef(2,"FILT","proc FailCriterion rule|%s%s| val|%s| action|%s|" 
+                % (mysRuleKey, mysRuleRight, mysLineVal, mysAction))
+
+        return bResult
 
 # f n l d R e a d R u l e s  ( a b s t r a c t  m e t h o d )
     @abc.abstractmethod
@@ -171,8 +205,10 @@ class CInstructionFilter(object):
     def fnldReadRules(self, mysRules):
         pass
 
+# f n S e t R u l e s 
     @ntracef("FILT")
     def fnSetRules(self,mysRules):
+        ''' Calls the (abstract) ReadRules routine to parse file.'''
         ldRulesx = self.fnldReadRules(mysRules)
         self.ldRules = ldRulesx
         return self.ldRules
@@ -193,9 +229,11 @@ class CInstructionFilter_Json(CInstructionFilter):
     Read rule list from JSON input.
      Just read and store.
     '''
+    ID = "json"
 
     @ntracef("FLTJ") 
-    def __init__(self,mysRules): 
+    def __init__(self, mysRules, myGlob): 
+        self.g = myGlob
         self.ldRules = self.fnSetRules(mysRules)
 
     @ntracef("FLTJ") 
@@ -213,9 +251,11 @@ class CInstructionFilter_Text(CInstructionFilter):
     Carefully read and compile rules in text form to make suitable
      dictionary for processing.
     '''
+    ID = "text"
 
     @ntracef("FLTT") 
-    def __init__(self,mysRules):
+    def __init__(self, mysRules, myGlob):
+        self.g = myGlob
         self.ldRules = self.fnSetRules(mysRules)
 
     @ntracef("FLTT") 
@@ -223,7 +263,9 @@ class CInstructionFilter_Text(CInstructionFilter):
         
         @ntracef("FLTT") 
         def fndRuleLine2Dict(mysLine):
-            oMatch = re.match("(permit|deny)\s+(.+)", mysLine.strip())
+            sLine = mysLine.strip()
+            self.g.lRules.append(sLine)
+            oMatch = re.match("(permit|deny)\s+(.+)", sLine)
             if not oMatch:
                 raise ValueError('Ill-formed line in rule input file: |%s|.' % (mysLine))
             sAction, sRest = oMatch.groups()
