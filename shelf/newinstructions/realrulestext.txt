@@ -10,18 +10,8 @@ permit  nGlitchImpact=100 nGlitchDecay=0 nGlitchMaxlife=0
 
 deny    nAuditFreq<2500
 permit  nAuditFreq=0
-
-deny    nAuditFreq=10000
-permit  nAuditFreq=10000 nAuditSegments=1 sAuditType=TOTAL
-
-deny    nAuditFreq=20000
-permit  nAuditFreq=20000 nAuditSegments=1 sAuditType=TOTAL
-
-deny    nAuditFreq=5000
-permit  nAuditFreq=5000 nAuditSegments=1 sAuditType=TOTAL
-
-deny    nAuditFreq=2500
-permit  nAuditFreq=2500 nAuditSegments=1 sAuditType=TOTAL
+deny    nAuditSegments!=1
+deny    sAuditType!=TOTAL
 
 #deny    nLifem<10
 deny    nLifem<2

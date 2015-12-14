@@ -38,8 +38,8 @@ sh substituteall.sh "$2.06" \
         ins/ncopies.ins                             > "$2.07"
 if [ "$filter" = "ON" ]
 then
-    python useinstfilter.py "$2.07" \
-            realrulestext.txt                       > "$2.08"
+    python useinstfilter.py realrulestext.txt \
+        "$2.07"                                     > "$2.08"
 else
     cp "$2.07" "$2.08"
 fi
