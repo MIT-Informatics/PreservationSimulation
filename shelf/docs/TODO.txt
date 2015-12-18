@@ -1,13 +1,14 @@
-TODO list
+TODO list for PreservationSimulation SHELF project
 
 
 TODO: extractvalues.py
 DONE - add optional arg for --separator=','
 DONE - default should still be space
-DONE - if i use comma, then datacleanup can use DictReader.  not a big deal.
+DONE - if i use comma, then datacleanup can use DictReader.  
+    not a big deal.
 DONE - actually, Dialect.delimiter can be set to whatever i want.
 DONE - maybe just use reader with delimiter=' ' and dict(zip()) 
-   the header list and data list together.  
+    the header list and data list together.  
 DONE - recode entirely to force filter first thing, to reduce the size
     of the internal lists required, and speed things up.  
     dramatic improvement.  
@@ -37,7 +38,7 @@ DONE - increase the stuck timer a lot.
   that was left over in a previous GiantOutput file into
   the done dir.  
 DONE - fix y/n switch options to get rid of the need for a value.
-- fix the broker invocation in the AWSinstallscript to match the
+DONE - fix the broker invocation in the AWSinstallscript to match the
   revised y/n options.
 
 
@@ -49,11 +50,15 @@ DONE - write filter for instructions as they are being generated flat
 DONE - write rules for the filter
   rules in a list of json dictionaries
   first rule is permit *, then list of denies maybe slightly countermanded
-- rewrite rules to filter lots more, particularly nonsense cases
+DONE - rewrite rules to filter lots more, particularly nonsense cases
   with glitch freq, impact, decay, and life.  
-DONE - integrate into last stage of flat instruction generation
+DONE - integrate filter into last stage of flat instruction 
+  generation
 - write documentation on how to generate instructions flat file 
   and database.  
+DONE - fix order of args to filter program, data file last.
+DONE - fix shell script that makes complete instruction list to
+  reflect change in argument order.
 
 
 TODO: newnewinstructions, flatlib or new db
@@ -78,7 +83,6 @@ TODO: Docker scheduling
 - after container install, build tinytestdb
 - after container install, start mongod
 - after container install, run broker tests
-
 
 
 TODO: AWS deployment
