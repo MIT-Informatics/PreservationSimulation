@@ -21,7 +21,9 @@
 #                initial test and possible exit.  
 # 20151203.1800 Change single-run test to reflect re-scaling from 
 #                mean exponential lifetime to half-life of sectors.
-#
+# 20151215.1700 Fix broker invocation commands to reflect new
+#                y/n debug options.
+# 
 
 echo "**************************************** Get Python packages"
 # Get python packages
@@ -78,9 +80,11 @@ bash pretestchecklist.sh
 # Run one simple test of the simulation, and check the answer.
 mkdir tmp
 python main.py ../Q3 . 0 1 --ncopies=1 --lifek=693147 --audit=0 >tmp/initialtest.log 2>&1
-# The correct answer should be   "BAD NEWS: Total documents lost by client |T1| in all servers |49|"
-# (The crazy half-life number in the command is 1,000,000 * ln(2), which is 
-#  the half-life that corresponds to 1 million khour mean lifetime.)
+# The correct answer should be   "BAD NEWS: Total documents lost by 
+#  client |T1| in all servers |49|".
+# (The crazy half-life number in the command is 1,000,000 * ln(2), 
+#  which is the half-life that corresponds to 1 million khour 
+#  mean lifetime.)
 nTestLost=$(grep NEWS tmp/initialtest.log |awk '{print $16}' |sed 's/|//g')
 if [ "$nTestLost" -eq 49 ]
 then
@@ -94,19 +98,19 @@ fi
 
 echo "**************************************** Test instructions db"
 cd ..
-python broker.py newdb20150724glitch100 pending done --familydir=../Q3 --specificdir=. --auditfreq=2500 --glitchfreq=50000 --glitchimpact=100 --glitchdecay=0 --glitchmaxlife=0 --lifem='{"$gte":10,"$lte":1000}' --testlimit=2 --listonly=Y
+python broker.py newdb20150724glitch100 pending done --familydir=../Q3 --specificdir=. --auditfreq=2500 --glitchfreq=50000 --glitchimpact=100 --glitchdecay=0 --glitchmaxlife=0 --lifem='{"$gte":10,"$lte":1000}' --testlimit=2 --listonly
 # Should be 1134 cases to run.
 
 echo "**************************************** Test broker"
 # Until we expand to larger quarters, don't run too many at once.  
 #  Xeon isn't *that* fast.
 export NCORES=2
-python broker.py newdb20150724glitch100 pending done --familydir=../Q3 --specificdir=. --auditfreq=2500 --glitchfreq=50000 --glitchimpact=100 --glitchdecay=0 --glitchmaxlife=0 --lifem='{"$gte":10,"$lte":1000}' --testlimit=4 --listonly=N
+python broker.py newdb20150724glitch100 pending done --familydir=../Q3 --specificdir=. --auditfreq=2500 --glitchfreq=50000 --glitchimpact=100 --glitchdecay=0 --glitchmaxlife=0 --lifem='{"$gte":10,"$lte":1000}' --testlimit=4 
 
 # If everything looks okay, remove or raise the --testlimit, 
 #  raise the NCORES limit, and probably lower the NPOLITE interval,
 #  and let 'er rip.  
-#python broker.py newdb20150724glitch100 pending done --familydir=../Q3 --specificdir=. --auditfreq=2500 --glitchfreq=50000 --glitchimpact=100 --glitchdecay=0 --glitchmaxlife=0 --lifem='{"$gte":10,"$lte":1000}' --listonly=N
+#python broker.py newdb20150724glitch100 pending done --familydir=../Q3 --specificdir=. --auditfreq=2500 --glitchfreq=50000 --glitchimpact=100 --glitchdecay=0 --glitchmaxlife=0 --lifem='{"$gte":10,"$lte":1000}' 
 
 echo "**************************************** Done initial tests"
 
