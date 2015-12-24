@@ -49,7 +49,13 @@ class CServer(object):
     @catchex
     @ntracef("SERV")
     def mDelistServer(self):
-        del G.dID2Server[self.ID]
+        if self.ID in G.dID2Server: del G.dID2Server[self.ID]
+
+# S e r v e r . m K i l l S e r v e r
+    @catchex
+    @ntracef("SERV")
+    def mKillServer(self):
+        self.bDead = True
 
 # S e r v e r . m b I s S e r v e r D e a d 
     @catchex
@@ -208,7 +214,7 @@ class CServer(object):
 #                their own files.  
 # 20151223  RBL Add tiny methods to keep track of live servers using the 
 #                same old global data structures:
-#                mListServer, mDelistServer, mbIsServerDead, 
+#                mListServer, mDelistServer, mKillServer, mbIsServerDead, 
 #                mlListLiveServerIDs.  
 # 
 
