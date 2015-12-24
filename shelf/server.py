@@ -21,8 +21,8 @@ class CServer(object):
     # of this class.  
     getID = itertools.count(1).next
 
-    @tracef("SHOW")
-    @tracef("SERV")
+    @ntracef("SHOW")
+    @ntracef("SERV")
     def __init__(self,mysName,mynQual,mynShelfSize):
         self.sName = mysName
         self.nQual = mynQual
@@ -32,16 +32,43 @@ class CServer(object):
         self.lDocIDs = list()           # Docs that still live in this server.
         self.dDocIDs = dict()           # Dictionary version of alive doc IDs, for fast checking.
         self.lDocIDsComplete = list()   # All docs that were ever in this server.
-        G.dID2Server[self.ID] = self
+        self.mListServer()
         G.nServerLastID = self.ID
         self.sClientID = None
         self.sCollectionID = None
         self.bInUse = False             # This server not yet used by client.
         self.bDead = False              # Server has not yet suffered a 100% glitch.
 
+# S e r v e r . m L i s t S e r v e r 
+    @catchex
+    @ntracef("SERV")
+    def mListServer(self):
+        G.dID2Server[selfID] = self
+
+# S e r v e r . m D e l i s t S e r v e r 
+    @catchex
+    @ntracef("SERV")
+    def mDelistServer(self):
+        del G.dID2Server[self.ID]
+
+# S e r v e r . m b I s S e r v e r D e a d 
+    @catchex
+    @ntracef("SERV")
+    def mbIsServerDead(self):
+        ''' DO NOT MEMOIZE THIS FUNCTION!
+        '''
+        return self.bDead
+
+# S e r v e r . m l L i s t L i v e S e r v e r I D s 
+    @catchex
+    @ntracef("SERV")
+    def mlListLiveServerIDs(self):
+        lLiveOnes = [sid for sid,csrv in G.dID2Servers.items() if not csrv.mbIsServerDead()]
+        return lLiveOnes
+
 # S e r v e r . m A d d C o l l e c t i o n
     @catchex
-    @tracef("SERV")
+    @ntracef("SERV")
     def mAddCollection(self,mysCollID,mysClientID):
         self.sClientId = mysClientID
         self.sCollectionID = mysCollID
@@ -55,7 +82,7 @@ class CServer(object):
 
 # S e r v e r . m A d d D o c u m e n t 
     @catchex
-    @tracef("SERV")
+    @ntracef("SERV")
     def mAddDocument(self,mysDocID,mysClientID):
         ''' Find a shelf with room for the doc, or create one.
             Put the doc on the shelf, decrement the remaining space.
@@ -94,7 +121,7 @@ class CServer(object):
 
 # S e r v e r . m C r e a t e S h e l f 
     @catchex
-    @tracef("SERV")
+    @ntracef("SERV")
     def mCreateShelf(self):
         ''' Add a new shelf of the standard size for this Server.
             Called as needed when a doc arrives too large for available space.  
@@ -105,7 +132,7 @@ class CServer(object):
 
 # S e r v e r . m D e s t r o y C o p y 
     @catchex
-    @tracef("SERV")
+    @ntracef("SERV")
     def mDestroyCopy(self,mysCopyID,mysDocID,mysShelfID):
         ''' Oops, a doc died, maybe just one or maybe the whole shelf.
         '''
@@ -121,9 +148,10 @@ class CServer(object):
 
 # S e r v e r . m T e s t D o c u m e n t 
     @catchex
-    @tracef("SERV")
+    @ntracef("SERV")
     def mTestDocument(self,mysDocID):
         ''' Do we still have a copy of this document?  Y/N
+            DO NOT MEMOIZE THIS FUNCTION!
         '''
         #bResult = mysDocID in self.lDocIDs
         # Oops, item-in-list is incredibly slow, linear search.
@@ -139,7 +167,7 @@ class CServer(object):
 
 # S e r v e r . m S e r v e r D i e s 
     @catchex
-    @tracef("SERV")
+    @ntracef("SERV")
     def mServerDies(self):
         if not self.bDead:
             self.bDead = True
@@ -174,8 +202,14 @@ class CServer(object):
 #                  IF YOU FORGET TO SAY %%, YOU GET A VERY OBSCURE ERROR
 #                  ABOUT FLOAT REQUIRED INSTEAD OF STRING.
 #               - Changed all the 100% references to 100pct.
-#               Add r/o properties for instance objects looked up from self.sxxxIDs.
-# 20150812  RBL Remove CShelf, CCopy, and CLifetime classes into their own files.  
+#               Add r/o properties for instance objects looked up from 
+#                self.sxxxIDs.
+# 20150812  RBL Remove CShelf, CCopy, and CLifetime classes into 
+#                their own files.  
+# 20151223  RBL Add tiny methods to keep track of live servers using the 
+#                same old global data structures:
+#                mListServer, mDelistServer, mbIsServerDead, 
+#                mlListLiveServerIDs.  
 # 
 
 # END
