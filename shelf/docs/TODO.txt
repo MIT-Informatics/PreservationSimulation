@@ -12,6 +12,7 @@ DONE - maybe just use reader with delimiter=' ' and dict(zip())
 DONE - recode entirely to force filter first thing, to reduce the size
     of the internal lists required, and speed things up.  
     dramatic improvement.  
+- Is there some place here where memoizing can help further?
 
 
 TODO: 100% glitch impact
@@ -24,7 +25,15 @@ DONE - client go shopping for another server to replace dead one.
 WRONG - if duration is short, then server may recover before the
   client even notices; however, all documents still have been lost,
   so the next audit will find many dead docs.  
-
+- BUG, NEEDS FIXING: when client provisions a new server, it must 
+  check that at least one copy of a document still exists before
+  putting a copy on the new server.  if a document is already lost
+  on all servers, we can't invent a new copy for the new server.  
+  this might be just a nit for most failures, but for 200% or 300% 
+  correlated failures, this is a real concern.  
+- QUESTION: when provisioning a new server to replace a failed one, 
+  should the client mark the re-provisioning as majority or minority 
+  repairs?
 
 TODO: brokercommands
 DONE - slow down after extractvalues, too.
@@ -133,7 +142,13 @@ DONE - update the main.py CLI help to reflect half-life instead of lifetime.
 - update the main.py CLI to accept both --lifek and --lifem.  
 DONE - update the broker.py CLI help to reflect half-life instead of lifetime.
 - update other docs to reflect half-life instead of lifetime.  
-
+- updata main.py to accept either lifek or lifem but not both.
+- BUG: fix main.py arg parsing to make all the positional params mandatory.  
+  and bump the CLI version number.  
+- BUG: fix main.py default values in G so that is doesn't fail if there are
+  no param files in the familydir or specificdir; always fails for the list
+  items, such as ncopies, I think because the list items in the dictionaries
+  should be one level deeper.  
 
 TODO: lifetimes: correlated institutional failures
 - at some interval, economic glitch dramatically increases the 

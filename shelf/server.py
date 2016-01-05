@@ -43,7 +43,7 @@ class CServer(object):
     @catchex
     @ntracef("SERV")
     def mListServer(self):
-        G.dID2Server[selfID] = self
+        G.dID2Server[self.ID] = self
 
 # S e r v e r . m D e l i s t S e r v e r 
     @catchex
