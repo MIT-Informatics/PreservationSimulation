@@ -57,6 +57,8 @@ class ProtoG(object):
     fSecondsPerHour = float(60.0 * 60.0)    # conversion constant.
     fInfinity = float(1.0E12)   # Infinitely far in the future.
 
+    nLifek = 0              # False lifek value in case lifem specified.  
+
     nGlitchFreq = 0         # Half-life of glitch-free intervals.
     nGlitchImpact = 0       # Percent reduction in sector lifetime.
     nGlitchDecay = 0        # Half-life of glitch duration, decays exponentially.

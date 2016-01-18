@@ -1,6 +1,5 @@
 #!/usr/bin/python
 # main.py
-# Recovered after commit/delete screw-up.  
 
 ''' ToDo:
 - Eliminate all the onesy MaybeOverride calls with a 
@@ -266,8 +265,13 @@ def getCliArgsForEverythingElse():
     fnMaybeOverride("nDocSmallPct",dCliDict,G)
     fnMaybeOverride("nDocPctSdev",dCliDict,G)
     
-    fnMaybeOverride("lBER",dCliDict,G)
-    fnMaybeOverride("lBERm",dCliDict,G)
+#    fnMaybeOverride("lBER",dCliDict,G)
+#    fnMaybeOverride("lBERm",dCliDict,G)
+    fnMaybeOverride("nLifek",dCliDict,G)
+    fnMaybeOverride("nLifem",dCliDict,G)
+    # Hack: convert m to k if k does not exist.
+    if not getattr(G,"nLifek",0) and hasattr(G,"nLifem"):
+        G.nLifek = G.nLifem * 1000
     
     fnMaybeOverride("lCopies",dCliDict,G)
     
@@ -427,8 +431,8 @@ def dumpServerUseStats():
     for sKey in sorted(G.dID2Shelf.keys()):
         cShelf = G.dID2Shelf[sKey]
         # Get vector of stats.
-        (sID,sServerID,nQual,nCapacity,nHiWater,nCurrentUse) = cShelf.mReportUseStats()
-        lg.logInfo("MAIN","SERVERUSE shelf|%s-%s| qual|%d| size|%d| hiwater|%d| currentuse|%d| full%%|%d|" % (sServerID,sID,nQual,nCapacity,nHiWater,nCurrentUse,100*nCurrentUse/nCapacity))
+        (sID,sServerID,nQual,fExpolife,nCapacity,nHiWater,nCurrentUse) = cShelf.mReportUseStats()
+        lg.logInfo("MAIN","SERVERUSE shelf|%s-%s| qual|%d| expolife|%s| size|%d| hiwater|%d| currentuse|%d| full%%|%d|" % (sServerID,sID,nQual,fExpolife,nCapacity,nHiWater,nCurrentUse,100*nCurrentUse/nCapacity))
     return sServerID+"+"+sID
 
 # d u m p S e r v e r E r r o r S t a t s 
@@ -780,5 +784,15 @@ if __name__ == "__main__":
         profile.run('mainmain()')
     else:
         mainmain()
+
+
+# Edit History:
+# 2014-2015 RBL Many changes but no explicit history, except 
+#                what can be found in the old numbered versions
+#                of this file and the git history.  Sorry about that.  
+# 20160115  RBL Eliminate lBER references in favor of (scalars) lifek
+#                and lifem.  Make lifek dominant if both are present.  
+#
+
 
 # END

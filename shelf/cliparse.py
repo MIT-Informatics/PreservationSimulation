@@ -4,7 +4,7 @@
 # into the Params.  
 # Recovered, we hope, after commit/delete screw-up.  
 
-sVersion = "0.0.6"
+sVersion = "0.0.7"
 import argparse
 from NewTraceFac import TRC,trace,tracef
 
@@ -61,17 +61,17 @@ def fndCliParse(mysArglist):
                         )
 
     cParse.add_argument("--lifek", "--halflifekhours", type=int
-                        , dest='lBER'
+                        , dest='nLifek'
                         , metavar='nHALFLIFE_Khrs'
-                        , nargs='*'
-                        , help='Sector half-lives for storage shelf (types from 1 up to 5) in kilo-hours, 0=no change'
+                        , nargs='?'
+                        , help='Sector half-life for storage shelf in kilo-hours.  If both lifek and lifem are given, lifek takes precedence.  '
                         )
 
     cParse.add_argument("--lifem", "--halflifemegahours", type=int
-                        , dest='lBERm'
+                        , dest='nLifem'
                         , metavar='nHALFLIFE_Mhrs'
-                        , nargs='*'
-                        , help='Sector half-lives for storage shelf (types from 1 up to 5) in mega-hours, 0=no change'
+                        , nargs='?'
+                        , help='Sector half-life for storage shelf in mega-hours.  May be overridden by lifek.'
                         )
     
     cParse.add_argument("--shelfsize", type=int
@@ -194,5 +194,14 @@ def fndCliParse(mysArglist):
 
 # Moved all the data overwriting back to main.  Just return dictionary of 
 # params found on command line.  
+
+# Edit History:
+# 2014-1015 RBL Many changes from original version, some of them even 
+#                visible in the git history.  Sorry about that.  
+# 20160115  RBL Change lifek and lifem to accept only a single value.  
+#                The business of seach quality type with a separate 
+#                parameter is no longer operative.  
+
+
 
 # END

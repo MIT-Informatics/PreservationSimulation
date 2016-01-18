@@ -3,8 +3,8 @@
 # Recovered, we hope, after commit/delete screw-up.  
 
 import random
-from NewTraceFac import TRC,trace,tracef
-from math import sqrt
+from NewTraceFac import TRC,trace,tracef,NTRC,ntrace,ntracef
+from math import sqrt, log
 import itertools
 from globaldata import *
 
@@ -100,6 +100,15 @@ def fnfCalcBlockLifetime(mynSectorLife,mynCapacity):
     '''
     fLife = float(mynSectorLife) / float(mynCapacity)
     return fLife            # returns float
+
+# f n f H a l f l i f e 2 E x p o n e n t i a l l i f e 
+@tracef("UTIL",level=5)
+def fnfHalflife2Exponentiallife(myfHalflife):
+    ''' Convert half-life number to mean exponential lifetime
+        for use by makeexpo().
+        '''
+    fExplife = float(myfHalflife) / log(2.0)
+    return fExplife
 
 # f n f C a l c T r a n s f e r T i m e 
 @tracef("UTIL",level=5)

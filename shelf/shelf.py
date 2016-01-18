@@ -52,9 +52,12 @@ class CShelf(object):
 
         # Get error rate params 
         self.fLn2 = log(2)
-        (self.nSectorLife, self.nShelfLife) = G.dShelfParams[self.nQual][0]
+        (self.nSectorHalflife, self.nShelfLife) = G.dShelfParams[self.nQual][0]
+        # Sector life now determined by scalar nLifek.
+        self.nSectorHalflife = G.nLifek
         (self.nGlitchFreq, self.nGlitchImpact, self.nGlitchHalflife, self.nGlitchMaxlife) = fnlGetGlitchParams(self.ID)
-        self.fLifeParam = util.fnfCalcBlockLifetime(self.nSectorLife*1000/self.fLn2, self.nCapacity)
+        self.fSectorExponentiallife = util.fnfHalflife2Exponentiallife(self.nSectorHalflife)
+        self.fLifeParam = util.fnfCalcBlockLifetime(self.fSectorExponentiallife*1000, self.nCapacity)
         cLifetime = CLifetime(self.ID,self.fLifeParam, self.nGlitchFreq, self.nGlitchImpact, self.nGlitchHalflife, self.nGlitchMaxlife)
         self.sSectorLifetimeID = cLifetime.ID
         G.dID2Lifetime[self.sSectorLifetimeID] = cLifetime
@@ -357,7 +360,7 @@ class CShelf(object):
     def mReportUseStats(self):
         ''' Return ID,server ID,quality,capacity,high water mark,currently used
         '''
-        return (self.ID,self.sServerID,self.nQual,self.nCapacity,self.nHiWater+1,self.nCapacity-self.nFreeSpace)
+        return (self.ID,self.sServerID,self.nQual,self.fSectorExponentiallife,self.nCapacity,self.nHiWater+1,self.nCapacity-self.nFreeSpace)
 
 # S h e l f . m R e p o r t E r r o r S t a t s 
     @catchex
@@ -381,6 +384,8 @@ class CShelf(object):
 
 # Edit history:
 # 20150812  RBL Move CShelf from server.py to its own file.  
+# 20160115  RBL Use util's calculation from halflife to exponentiallife.
+#               Add exponentiallife to use stats report.
 # 
 
 #END
