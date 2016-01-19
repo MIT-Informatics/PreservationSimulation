@@ -30,7 +30,8 @@
 #               Force unzip to overwrite any leftovers.  
 #               (If one uses sudo too much, some dirs end up owned 
 #                by user=root and therefore cannot be used by user=ubuntu, oops.)
-#
+#               Don't use pushd, which doesn't exist in the bash shell, 
+#                which, btw, is not the default.  More grumbling.
 #
 
 echo "**************************************** Get Python packages"
@@ -73,12 +74,13 @@ sudo apt-get --yes install sysstat
 echo "**************************************** END INSTALLS"
 
 echo "**************************************** Make new instructions db"
-pushd shelf/newinstructions
+olddir=$(pwd)
+cd shelf/newinstructions
 unzip -o newdblists.zip 
 # This next step will take ten or fifteen minutes.  No kidding.  
 #  Go get coffee.
 python loadintodb.py newdb20150724glitch100 pending newdb20150724glitch100.txt
-popd
+cd "$olddir"
 
 echo "**************************************** Quick setup and test"
 # Quick setup and test of directories.
