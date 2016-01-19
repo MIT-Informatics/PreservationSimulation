@@ -272,6 +272,10 @@ def getCliArgsForEverythingElse():
     # Hack: convert m to k if k does not exist.
     if not getattr(G,"nLifek",0) and hasattr(G,"nLifem"):
         G.nLifek = G.nLifem * 1000
+    # And propagate this scalar life value to all the server quality entries.
+    #  And get rid of this insane data structure someday soon.  
+    for k,v in G.dShelfParams.items():
+        G.dShelfParams[k][0][0] = G.nLifek
     
     fnMaybeOverride("lCopies",dCliDict,G)
     
@@ -792,6 +796,8 @@ if __name__ == "__main__":
 #                of this file and the git history.  Sorry about that.  
 # 20160115  RBL Eliminate lBER references in favor of (scalars) lifek
 #                and lifem.  Make lifek dominant if both are present.  
+# 20160119  RBL Propagate lifek value into all quality values of 
+#                the old quality (shelf params) data structure.
 #
 
 

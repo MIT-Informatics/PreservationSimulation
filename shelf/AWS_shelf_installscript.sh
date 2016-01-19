@@ -23,7 +23,15 @@
 #                mean exponential lifetime to half-life of sectors.
 # 20151215.1700 Fix broker invocation commands to reflect new
 #                y/n debug options.
-# 
+# 20160119.1005 Fix changing to newinstructions dir and back.
+#               Empty, if necessary, and rebuild output dir (../Q3 .).
+#               Fix setup, empty, and pretest commands for new non-defaults.
+#               Remove restriction on number of cores.
+#               Force unzip to overwrite any leftovers.  
+#               (If one uses sudo too much, some dirs end up owned 
+#                by user=root and therefore cannot be used by user=ubuntu, oops.)
+#
+#
 
 echo "**************************************** Get Python packages"
 # Get python packages
@@ -65,18 +73,21 @@ sudo apt-get --yes install sysstat
 echo "**************************************** END INSTALLS"
 
 echo "**************************************** Make new instructions db"
-cd newinstructions
-unzip newdblists.zip 
+pushd shelf/newinstructions
+unzip -o newdblists.zip 
 # This next step will take ten or fifteen minutes.  No kidding.  
 #  Go get coffee.
 python loadintodb.py newdb20150724glitch100 pending newdb20150724glitch100.txt
+popd
 
 echo "**************************************** Quick setup and test"
 # Quick setup and test of directories.
 cd shelf
+# Remove any leftovers from possible previous deployment.
+sudo rm --force --recursive ../Q3
 bash setupfamilydir.sh ../Q3 . 
-bash emptygiantoutput.sh
-bash pretestchecklist.sh
+bash emptygiantoutput.sh  ../Q3 .
+bash pretestchecklist.sh ../Q3 . 
 # Run one simple test of the simulation, and check the answer.
 mkdir tmp
 python main.py ../Q3 . 0 1 --ncopies=1 --lifek=693147 --audit=0 >tmp/initialtest.log 2>&1
@@ -97,14 +108,13 @@ else
 fi
 
 echo "**************************************** Test instructions db"
-cd ..
 python broker.py newdb20150724glitch100 pending done --familydir=../Q3 --specificdir=. --auditfreq=2500 --glitchfreq=50000 --glitchimpact=100 --glitchdecay=0 --glitchmaxlife=0 --lifem='{"$gte":10,"$lte":1000}' --testlimit=2 --listonly
 # Should be 1134 cases to run.
 
 echo "**************************************** Test broker"
 # Until we expand to larger quarters, don't run too many at once.  
-#  Xeon isn't *that* fast.
-export NCORES=2
+#  Xeon isn't *that* fast.  Adjust as needed.  
+#export NCORES=2
 python broker.py newdb20150724glitch100 pending done --familydir=../Q3 --specificdir=. --auditfreq=2500 --glitchfreq=50000 --glitchimpact=100 --glitchdecay=0 --glitchmaxlife=0 --lifem='{"$gte":10,"$lte":1000}' --testlimit=4 
 
 # If everything looks okay, remove or raise the --testlimit, 
