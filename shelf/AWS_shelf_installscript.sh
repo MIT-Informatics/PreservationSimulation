@@ -32,11 +32,12 @@
 #                by user=root and therefore cannot be used by user=ubuntu, oops.)
 #               Don't use pushd, which doesn't exist in the bash shell, 
 #                which, btw, is not the default.  More grumbling.
+# 20160121  RBL Update apt-get before installing pip.  
+# 
 #
 
 echo "**************************************** Get Python packages"
 # Get python packages
-sudo apt-get --yes install python-pip
 sudo apt-get update
 sudo apt-get --yes install python-pip
 sudo pip install --upgrade pip
