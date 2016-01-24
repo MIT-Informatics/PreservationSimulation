@@ -4,10 +4,10 @@
 #
 # Until we succeed in docker-izing this application, it must
 #  be installed semi-automatically on an Ubuntu server.
-#  Takes only a couple minutes on AWS Ubuntu.
+#  Takes only a couple minutes on AWS Ubuntu Server 14.04 LTS.
 #
-# 20150727.1700
-# 20150829.1530
+# 20150727.1700 First draft.
+# 20150829.1530 Reorganize and comment.
 # 20151113.1700 Add alias sh=bash to avoid problems with if-test
 #                in scripts.  Grumble.  
 # 20151113.1725 Nope, that doesn't work.  Change every sh foo
@@ -33,24 +33,30 @@
 #               Don't use pushd, which doesn't exist in the bash shell, 
 #                which, btw, is not the default.  More grumbling.
 # 20160121  RBL Update apt-get before installing pip.  
+# 20160123  RBL Reorganize to operate with lower privilege; remove as many
+#                sudo calls as possible. Install everything (that can be) 
+#                into a virtualenv.
+#               Change "source" back to "." because vanilla sh doesn't 
+#                have that verb.  Even more grumbling.  
 # 
 #
 
 echo "**************************************** Get Python packages"
 # Get python packages
 sudo apt-get update
+sudo apt-get --yes install build-essential python-dev
 sudo apt-get --yes install python-pip
 sudo pip install --upgrade pip
-sudo pip install virtualenv
-sudo pip install simpy
-sudo pip install pymongo
-sudo apt-get --yes install build-essential python-dev
+sudo apt-get install python-virtualenv
+# Restrict python packages to this user, to operate with lower privilege.
+virtualenv shelfenv
+. shelfenv/bin/activate
+pip install simpy
+pip install pymongo
 
 echo "**************************************** Install git and pull source code"
 # Get Git.
-sudo apt-get update
 sudo apt-get --yes install git
-
 # Setup working directory with files from github.
 mkdir working
 cd working
