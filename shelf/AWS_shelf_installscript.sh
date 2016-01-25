@@ -83,10 +83,12 @@ echo "**************************************** END INSTALLS"
 echo "**************************************** Make new instructions db"
 olddir=$(pwd)
 cd shelf/newinstructions
+cp newdblists.RENAMETOzip newdblists.zip
 unzip -o newdblists.zip 
-# This next step will take ten or fifteen minutes.  No kidding.  
+# This next step might take several minutes.  No kidding.  
 #  Go get coffee.
-python loadintodb.py newdb20150724glitch100 pending newdb20150724glitch100.txt
+cp newdb20160124.big newdb20160124.txt
+python loadintodb.py newdb20160124 pending newdb20160124.txt
 cd "$olddir"
 
 echo "**************************************** Quick setup and test"
@@ -98,6 +100,7 @@ bash setupfamilydir.sh ../Q3 .
 bash emptygiantoutput.sh  ../Q3 .
 bash pretestchecklist.sh ../Q3 . 
 # Run one simple test of the simulation, and check the answer.
+sudo rm --force --recursive tmp
 mkdir tmp
 python main.py ../Q3 . 0 1 --ncopies=1 --lifek=693147 --audit=0 >tmp/initialtest.log 2>&1
 # The correct answer should be   "BAD NEWS: Total documents lost by 
@@ -117,18 +120,29 @@ else
 fi
 
 echo "**************************************** Test instructions db"
-python broker.py newdb20150724glitch100 pending done --familydir=../Q3 --specificdir=. --auditfreq=2500 --glitchfreq=50000 --glitchimpact=100 --glitchdecay=0 --glitchmaxlife=0 --lifem='{"$gte":10,"$lte":1000}' --testlimit=2 --listonly
-# Should be 1134 cases to run.
+# Broker should find test cases to run.
+python broker.py newdb20160124 pending done --glitchfreq=30000 --auditfreq=10000   --listonly >tmp/brokertest.log 2>&1
+nTestCases=$(grep "run|" tmp/brokertest.log | tail -1 | sed 's/.*run|//' | sed 's/|.*//')
+if [ "$nTestCases" -eq 1512 ]
+then
+    echo "SUCCESS: broker and instruction db look okay!"
+    echo "Proceeding..."
+else
+    echo "ERROR: broker and instruction db test failed!"
+    echo "STOPPING here."
+    exit 1
+fi
 
 echo "**************************************** Test broker"
-# Until we expand to larger quarters, don't run too many at once.  
+# Until we expand to larger quarters, don't run too many cores at once.  
 #  Xeon isn't *that* fast.  Adjust as needed.  
-#export NCORES=2
-python broker.py newdb20150724glitch100 pending done --familydir=../Q3 --specificdir=. --auditfreq=2500 --glitchfreq=50000 --glitchimpact=100 --glitchdecay=0 --glitchmaxlife=0 --lifem='{"$gte":10,"$lte":1000}' --testlimit=4 
+#export NCORES=2        # Adjust this number, or remove for default.
+python broker.py newdb20160124 pending done --familydir=../Q3 --specificdir=. --auditfreq=2500 --glitchfreq=30000 --glitchimpact=100 --glitchdecay=0 --glitchmaxlife=0 --lifem='{"$gte":10,"$lte":1000}' --testlimit=4 
 
 # If everything looks okay, remove or raise the --testlimit, 
 #  raise the NCORES limit, and probably lower the NPOLITE interval,
 #  and let 'er rip.  
+#export NCORES=32       # Max 32 cores on Amazon.  
 #python broker.py newdb20150724glitch100 pending done --familydir=../Q3 --specificdir=. --auditfreq=2500 --glitchfreq=50000 --glitchimpact=100 --glitchdecay=0 --glitchmaxlife=0 --lifem='{"$gte":10,"$lte":1000}' 
 
 echo "**************************************** Done initial tests"
