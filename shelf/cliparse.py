@@ -4,7 +4,7 @@
 # into the Params.  
 # Recovered, we hope, after commit/delete screw-up.  
 
-sVersion = "0.0.7"
+sVersion = "0.0.8"
 import argparse
 from NewTraceFac import TRC,trace,tracef
 
@@ -34,19 +34,19 @@ def fndCliParse(mysArglist):
                         )
 
     cParse.add_argument('sSpecificdir', type=str
-                        , nargs="?"
+                        #, nargs="?"
                         , metavar='sSPECIFICDIR'
                         , help='Specific dir below Family dir for overriding parameter files, "." for none'
                         )
 
     cParse.add_argument("nSimLength", type=int
-                        , nargs="?"
+                        #, nargs="?"
                         , metavar='nSIMLENGTH'
                         , help="Length of simulation in kilo-hours"
                         )
 
     cParse.add_argument("nRandomSeed",type=int
-                        , nargs="?"
+                        #, nargs="?"
                         , metavar='nRANDOMSEED'
                         , help='Seed for random number generator, 0=use system clock'
                         )
@@ -93,9 +93,9 @@ def fndCliParse(mysArglist):
                         , help='Log file for output; - or absent for stdout'
                         )
 
-    cParse.add_argument('--shortlog', type=str
+    cParse.add_argument('--shortlog'
+                        , action='store_const', const="Y"
                         , dest='sShortLogStr'
-                        , choices=['Y','N']
                         , help='Log no detailed info for this run, params and results only.'
                         )
 
@@ -201,7 +201,9 @@ def fndCliParse(mysArglist):
 # 20160115  RBL Change lifek and lifem to accept only a single value.  
 #                The business of seach quality type with a separate 
 #                parameter is no longer operative.  
-
-
+# 20160126  RBL Make all positional arguments mandatory.  
+#               Remove value requirement (Y,N) from --shortlog.
+# 
+# 
 
 # END

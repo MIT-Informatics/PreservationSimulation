@@ -269,8 +269,8 @@ def getCliArgsForEverythingElse():
 #    fnMaybeOverride("lBERm",dCliDict,G)
     fnMaybeOverride("nLifek",dCliDict,G)
     fnMaybeOverride("nLifem",dCliDict,G)
-    # Hack: convert m to k if k does not exist.
-    if not getattr(G,"nLifek",0) and hasattr(G,"nLifem"):
+    # Hack: convert m to k if k does not exist but m does.
+    if (not getattr(G,"nLifek",0)) and (getattr(G,"nLifem",0)):
         G.nLifek = G.nLifem * 1000
     # And propagate this scalar life value to all the server quality entries.
     #  And get rid of this insane data structure someday soon.  
@@ -798,7 +798,8 @@ if __name__ == "__main__":
 #                and lifem.  Make lifek dominant if both are present.  
 # 20160119  RBL Propagate lifek value into all quality values of 
 #                the old quality (shelf params) data structure.
-#
-
+# 20160126  RBL Fix lifek-lifem calc to avoid hasattr().
+# 
+# 
 
 # END
