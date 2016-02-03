@@ -7,6 +7,7 @@ permit  nGlitchFreq=0 nGlitchImpact=100 nGlitchDecay=0 nGlitchMaxlife=0
 
 deny    nGlitchImpact>0
 permit  nGlitchImpact=100 nGlitchDecay=0 nGlitchMaxlife=0
+permit  nGlitchImpact>0 nGlitchMaxlife>0
 
 deny    nAuditFreq<2500
 permit  nAuditFreq=0
