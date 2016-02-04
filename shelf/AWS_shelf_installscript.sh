@@ -91,7 +91,7 @@ cp newdb20160124.big newdb20160124.txt
 python loadintodb.py newdb20160124 pending newdb20160124.txt
 cd "$olddir"
 
-echo "**************************************** Quick setup and test"
+echo "**************************************** Quick setup and simple test"
 # Quick setup and test of directories.
 cd shelf
 # Remove any leftovers from possible previous deployment.
@@ -142,9 +142,21 @@ python broker.py newdb20160124 pending done --familydir=../Q3 --specificdir=. --
 # If everything looks okay, remove or raise the --testlimit, 
 #  raise the NCORES limit, and probably lower the NPOLITE interval,
 #  and let 'er rip.  
-#export NCORES=32       # Max 32 cores on Amazon.  
+#export NCORES=32       # Max 32 cores on Amazon.
+#export NPOLITE=2       # Wait 2 seconds between process end and start another.  
 #python broker.py newdb20150724glitch100 pending done --familydir=../Q3 --specificdir=. --auditfreq=2500 --glitchfreq=50000 --glitchimpact=100 --glitchdecay=0 --glitchmaxlife=0 --lifem='{"$gte":10,"$lte":1000}' 
 
 echo "**************************************** Done initial tests"
+echo "**************************************** Build latest instruction database"
+cd newinstructions
+bash makecompletetemplate.sh q3instructiontemplate.txt latestinstructions.big filter
+python loadintodb.py latest pending latestinstructions.big
+cd ..
+
+echo "**************************************** Instruction db 'latest' available for use"
+# Leave the user in the shelf directory with shelfenv activated.  
+pwd
+
+echo "**************************************** DONE!"
 
 #END
