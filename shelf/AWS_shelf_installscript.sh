@@ -4,7 +4,7 @@
 #
 # Until we succeed in docker-izing this application, it must
 #  be installed semi-automatically on an Ubuntu server.
-#  Takes only a couple minutes on AWS Ubuntu Server 14.04 LTS.
+#  Takes only a couple minutes on AWS Ubuntu Server 14.04.3 LTS.
 #
 # 20150727.1700 First draft.
 # 20150829.1530 Reorganize and comment.
@@ -29,7 +29,8 @@
 #               Remove restriction on number of cores.
 #               Force unzip to overwrite any leftovers.  
 #               (If one uses sudo too much, some dirs end up owned 
-#                by user=root and therefore cannot be used by user=ubuntu, oops.)
+#                by user=root and therefore cannot be used by 
+#                user=ubuntu, oops.)
 #               Don't use pushd, which doesn't exist in the bash shell, 
 #                which, btw, is not the default.  More grumbling.
 # 20160121  RBL Update apt-get before installing pip.  
@@ -38,7 +39,10 @@
 #                into a virtualenv.
 #               Change "source" back to "." because vanilla sh doesn't 
 #                have that verb.  Even more grumbling.  
-# 
+# 20160204  RBL Add to end: build latest instruction db based on files
+#                we just got from github.
+# 20160205  RBL Add to end: create little shell script for users to 
+#                begin work: activate shelfenv and goto shelf dir.
 #
 
 echo "**************************************** Get Python packages"
@@ -154,9 +158,34 @@ python loadintodb.py latest pending latestinstructions.big
 cd ..
 
 echo "**************************************** Instruction db 'latest' available for use"
-# Leave the user in the shelf directory with shelfenv activated.  
-pwd
 
+echo "**************************************** Create startup.sh script"
+cd ~
+cat >startup.sh <<EOF
+. shelfenv/bin/activate
+cd working/shelf
+echo ""
+echo "*** Ready to run 'shelf' simulations.                ***"
+echo "*** The shelfenv virtualenv should be activated,     ***"
+echo "*** and the correct directory should be set.         ***" 
+echo "*** Try   python main.py -h                          ***"
+echo "*** or    python broker.py -h                        ***" 
+echo "*** for help.                                        ***"
+echo "*** HowTo info can be found in the 'docs' directory. ***"
+echo ""
+EOF
+
+echo "**************************************** "
+echo "*** To begin the shelf simulations,  *** "
+echo "*** enter the command:               *** "
+echo "***      . startup.sh                *** "
+echo "*** (Yes, that is                    *** "
+echo "***     dot space startup.sh )       *** "
+echo "***                                  *** "
+echo "*** Happy hunting!                   *** "
+echo "***                                  *** "
+echo "**************************************** "
+echo ""
 echo "**************************************** DONE!"
 
 #END
