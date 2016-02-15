@@ -35,7 +35,7 @@ sh substituteall.sh "$2.04" \
 sh substituteall.sh "$2.05" \
         ins/auditfreq.ins ins/lifem.ins             > "$2.06"
 sh substituteall.sh "$2.06" \
-        ins/ncopies.ins                             > "$2.07"
+        ins/glitchspan.ins ins/ncopies.ins          > "$2.07"
 if [ "$filter" = "ON" ]
 then
     python useinstfilter.py realrulestext.txt \
@@ -63,5 +63,7 @@ glitchdecay
 
 auditfreq
 lifem
+glitchspan
 ncopies
-randomseed
+<filter applied in here, if requested>
+randomseed      # really want this to be last because of its size
