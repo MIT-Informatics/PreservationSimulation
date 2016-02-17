@@ -293,6 +293,7 @@ def getCliArgsForEverythingElse():
     fnMaybeOverride("nGlitchImpact",dCliDict,G)
     fnMaybeOverride("nGlitchDecay",dCliDict,G)
     fnMaybeOverride("nGlitchMaxlife",dCliDict,G)
+    fnMaybeOverride("nGlitchSpan", dCliDict, G)
 
     fnMaybeOverride("sMongoId",dCliDict,G)
 
@@ -426,7 +427,7 @@ def dumpParamsIntoLog():
     lg.logInfo("PARAMS","AUDIT interval hours|%s| segments|%s| type|%s| bandwidth Mbps|%s|" % (G.nAuditCycleInterval,G.nAuditSegments,G.sAuditStrategy,G.nBandwidthMbps)) 
 
     # G l i t c h  params.
-    lg.logInfo("PARAMS","GLITCH freq|%d| impact|%d| decay|%d| maxlife|%d| ignorelimit|%.3f|" % (G.nGlitchFreq, G.nGlitchImpact, G.nGlitchDecay, G.nGlitchMaxlife, G.fGlitchIgnoreLimit))
+    lg.logInfo("PARAMS","GLITCH freq|%d| impact|%d| decay|%d| maxlife|%d| span|%d| ignorelimit|%.3f|" % (G.nGlitchFreq, G.nGlitchImpact, G.nGlitchDecay, G.nGlitchMaxlife, G.nGlitchSpan, G.fGlitchIgnoreLimit))
 
 
 # d u m p S e r v e r U s e S t a t s 
@@ -501,12 +502,12 @@ def dumpGlitchStats():
     for sKey in sorted(G.dID2Lifetime.keys()):
         cLifetime = G.dID2Lifetime[sKey]
         dStats = cLifetime.mReportGlitchStats()
-        lg.logInfo("MAIN","LIFETIME shelf|%s| lifetime|%s| freq|%s| impact|%s| decay|%s| maxlife|%s| count|%s| time|%.3f|" 
+        lg.logInfo("MAIN","LIFETIME shelf|%s| lifetime|%s| freq|%s| impact|%s| decay|%s| maxlife|%s| span|%s| count|%s| time|%.3f|" 
         % 
         (dStats["sShelfID"], dStats["sLifetimeID"], 
         dStats["nGlitchFreq"], dStats["nImpactReductionPct"], 
         dStats["nGlitchDecayHalflife"], dStats["nGlitchMaxlife"], 
-        dStats["nGlitches"], dStats["fGlitchTime"]))
+        dStats["nGlitchSpan"], dStats["nGlitches"], dStats["fGlitchTime"]))
         
     lg.logInfo("MAIN","LIFETIME Total glitches|%d|" % (G.nGlitchesTotal))
 
@@ -799,7 +800,8 @@ if __name__ == "__main__":
 # 20160119  RBL Propagate lifek value into all quality values of 
 #                the old quality (shelf params) data structure.
 # 20160126  RBL Fix lifek-lifem calc to avoid hasattr().
-# 
+# 20160216  RBL Add glitchspan to params and stats listings. 
+#
 # 
 
 # END

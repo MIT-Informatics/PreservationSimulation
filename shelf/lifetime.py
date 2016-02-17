@@ -18,15 +18,18 @@ from    catchex         import  catchex
 class CLifetime(object):
 
     @tracef("LIFE")
-    def __init__(self,mysShelfID, myfLifetime, mynGlitchFreq, mynGlitchImpact, mynGlitchHalflife, mynGlitchMaxlife):
+    def __init__(self,mysShelfID, myfLifetime, mynGlitchFreq, mynGlitchImpact, mynGlitchHalflife, mynGlitchMaxlife, mynGlitchSpan):
         self.fOriginalLifetime = float(myfLifetime)
         self.fCurrentLifetime = float(self.fOriginalLifetime)
         self.sShelfID = mysShelfID
+        
         # Store glitch params. 
         self.nGlitchFreq = mynGlitchFreq
         self.nImpactReductionPct = mynGlitchImpact
         self.nGlitchDecayHalflife = mynGlitchHalflife if mynGlitchHalflife > 0 else G.fInfinity
         self.nGlitchMaxlife = mynGlitchMaxlife if mynGlitchMaxlife > 0 else G.fInfinity
+        self.nGlitchSpan = mynGlitchSpan if mynGlitchSpan > 1 else 1
+        
         # Glitch currently running?
         self.bGlitchActive = False
         self.fGlitchBegin = 0           # Not yet.
@@ -228,6 +231,7 @@ class CLifetime(object):
         dd["nImpactReductionPct"] = self.nImpactReductionPct
         dd["nGlitchDecayHalflife"] = self.nGlitchDecayHalflife
         dd["nGlitchMaxlife"] = self.nGlitchMaxlife
+        dd["nGlitchSpan"] = self.nGlitchSpan
         dd["nGlitches"] = self.nGlitches
         dd["fGlitchTime"] = self.fGlitchTime
         return dd
@@ -243,7 +247,8 @@ def fnlGetGlitchParams(mysShelfID):
     impact = G.nGlitchImpact
     halflife = G.nGlitchDecay
     maxlife = G.nGlitchMaxlife
-    return [freq,impact,halflife,maxlife]
+    span = G.nGlitchSpan
+    return [freq, impact, halflife, maxlife, span]
 
 
 ''' TODO

@@ -46,8 +46,8 @@ class ProtoG(object):
                             #  one = full audit
     bAuditWithReplacement = False   # For uniform random sample audits, 
                                     #  sample docs without or with replacement
-    fAuditZipfParam = 1.0   # Power param for Zipf distn of docs
-    fAuditZipfBins = 5      # Into how many bins to classify docs by popularity
+#    fAuditZipfParam = 1.0   # Power param for Zipf distn of docs
+#    fAuditZipfBins = 5      # Into how many bins to classify docs by popularity
 
     nBandwidthMbps = 10     # Vanilla ethernet speed or cheap ISP
     nBandwidthMbps = 1000   # Lots of bandwidth reqd to support 20 copies, wow.
@@ -65,6 +65,7 @@ class ProtoG(object):
     nGlitchMaxlife = 0      # Max duration of a single glitch impact.  
     fGlitchIgnoreLimit = 0.05   # Level below which a glitch stops.
     nGlitchesTotal = 0      # Count of all glitches on all shelves.
+    nGlitchSpan = 1         # Number of servers affected by glitch.
     sMongoId = None         # MongoDB _id of the instruction for this run.
 
 class P(object):
@@ -79,11 +80,15 @@ class P(object):
     '''
     # Client has a name and a list of collections.
     # Collection has a name, a value, and a target size.
+    # TODO: fix these default values, which are not sufficiently
+    #  deeply nested.  Or something.  
     dClientParams =     { "MIT":[ ["Mags",1,10], ["Books",2,5] ]
                         , "Harvard":[ ["Cheap",1,20], ["Rare",3,10] ]
                         }
     # Server has a name, a quality rating, and a shelf size.
     # Shelf size is stored here in Terabytes, scaled up to MB when used in servers.  
+    # TODO: fix these default values, which are not sufficiently
+    #  deeply nested.  Or something.  
     dServerParams =    { "Amazon East":[1,20]
                         , "Amazon West":[1,30]
                         , "Google Drive":[2,40]
@@ -95,12 +100,16 @@ class P(object):
     #  Note that most of the UI is in megahours to save typing.  
     # Rates used to be expressed as exponential mean lifetimes, 
     #  but are now to be changed to half-lives.
+    # TODO: fix these default values, which are not sufficiently
+    #  deeply nested.  Or something.  
     dShelfParams =      { 1 : [ 10, 100 ]
                         , 2 : [ 20, 200 ]
                         }
 
     # Distribution parameters: how many copies to make of what value doc.
     #   { collectionvaluelevel : [ serverqualitylevel, numberofcopies ] , ... }
+    # TODO: fix these default values, which are not sufficiently
+    #  deeply nested.  Or something.  
     dDistnParams =      { 1 : [ 1, 5 ]
                         , 2 : [ 2, 4 ]
                         , 3 : [ 3, 3 ] 
@@ -113,6 +122,8 @@ class P(object):
     # where the pct values for a quality level must add up to 100%.
     # NEWS 20141221: change the default for quality 1 to be fixed size 50MB, 
     #  to avoid the most common pilot error when starting new tests.
+    # TODO: fix these default values, which are not sufficiently
+    #  deeply nested.  Or something.  
     dDocParams =    { 1 : [ [ 100, 50, 0 ], [ 0, 50, 0 ] ]
                     , 2 : [ [ 50, 5, 2 ], [ 50, 5000, 2000 ] ]
                     , 3 : [ [ 50, 5, 2 ], [ 50, 5000, 2000 ] ]

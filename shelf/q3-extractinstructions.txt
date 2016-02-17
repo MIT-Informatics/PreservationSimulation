@@ -1,5 +1,5 @@
 # extract instruction file for extractvalues.py
-# RBLandau 20141125, revised 20141130, revised 20150609.
+# RBLandau 20141125, revised 20141130, revised 20150609, revised 20160216.
 
 # In the template line, all the variable names must be extracted (successfully)
 #  by a line in the variables section below.  
@@ -7,7 +7,7 @@
 #  can use a different separator if the user wishes.  
 
 =template
-{timestamp} {docsize} {shelfsize} {copies} {lifem} {simlength} {seed} {lost} {docstotal} {docsokay} {docsrepairedmajority} {docsrepairedminority} {docslost} {auditcycles} {auditfrequency} {auditsegments} {auditrepairs} {auditmajority} {auditminority} {auditlost} {glitchfreq} {glitchimpact} {glitchdecay} {glitchmaxlife} {nglitches} {walltime} {cputime} {logfilename} {logfilesize} {instructionfilename} {todaysdatetime} {extractorversion} {mongoid}
+{timestamp} {docsize} {shelfsize} {copies} {lifem} {simlength} {seed} {lost} {docstotal} {docsokay} {docsrepairedmajority} {docsrepairedminority} {docslost} {auditcycles} {auditfrequency} {auditsegments} {auditrepairs} {auditmajority} {auditminority} {auditlost} {glitchfreq} {glitchimpact} {glitchdecay} {glitchmaxlife} {glitchspan} {nglitches} {walltime} {cputime} {logfilename} {logfilesize} {instructionfilename} {todaysdatetime} {extractorversion} {mongoid}
 
 # The header line will be output or not, depending on the 
 #  --header CLI option or the "header" environment variable.  
@@ -17,8 +17,12 @@
 #asdf asdf xyzzy qwerty iou jkl mnop 
 
 # Be very careful constructing the regular expressions for this file.
-# The lineregexes must match only the single line you want.  
-#  re.search is used, so the regex does not have to begin at the beginning.
+# The lineregexes must match ONLY THE SINGLE LINE you want.  Take care
+#  (1) to construct the output lines so that it is possible to identify
+#  them uniquely with simple regexes; and (2) to keep the lineregexes 
+#  really simple.  
+#  Note that re.search is used to match lines, so the regex does not 
+#  have to begin at the beginning of the line.
 #  They may be enclosed in double quotes BUT NOT in single quotes.
 #  If they contain any vertical bars, these must be escaped with backslash
 #  so that they do not look like alternative choices.
@@ -87,6 +91,7 @@ glitchfreq,GLITCH,6,freq.(\d+)
 glitchimpact,GLITCH,7,impact.(\d+)
 glitchdecay,GLITCH,8,decay.(\d+)
 glitchmaxlife,GLITCH,9,maxlife.(\d+)
+glitchspan,GLITCH,10,span.(\d+)
 nglitches,"LIFETIME Total glitches",7,glitches.(\d+)
 
 timestamp,"MAIN INFO.*Simulation parameters",1,([1234567890_]+)
