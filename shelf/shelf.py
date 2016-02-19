@@ -55,10 +55,11 @@ class CShelf(object):
         (self.nSectorHalflife, self.nShelfLife) = G.dShelfParams[self.nQual][0]
         # Sector life now determined by scalar nLifek.
         self.nSectorHalflife = G.nLifek
-        (self.nGlitchFreq, self.nGlitchImpact, self.nGlitchHalflife, self.nGlitchMaxlife) = fnlGetGlitchParams(self.ID)
+        (self.nGlitchFreq, self.nGlitchImpact, self.nGlitchHalflife, 
+            self.nGlitchMaxlife, self.nGlitchSpan) = fnlGetGlitchParams(self.ID)
         self.fSectorExponentiallife = util.fnfHalflife2Exponentiallife(self.nSectorHalflife)
         self.fLifeParam = util.fnfCalcBlockLifetime(self.fSectorExponentiallife*1000, self.nCapacity)
-        cLifetime = CLifetime(self.ID,self.fLifeParam, self.nGlitchFreq, self.nGlitchImpact, self.nGlitchHalflife, self.nGlitchMaxlife)
+        cLifetime = CLifetime(self.ID,self.fLifeParam, self.nGlitchFreq, self.nGlitchImpact, self.nGlitchHalflife, self.nGlitchMaxlife, self.nGlitchSpan)
         self.sSectorLifetimeID = cLifetime.ID
         G.dID2Lifetime[self.sSectorLifetimeID] = cLifetime
 

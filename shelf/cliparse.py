@@ -4,7 +4,7 @@
 # into the Params.  
 # Recovered, we hope, after commit/delete screw-up.  
 
-sVersion = "0.0.8"
+sVersion = "0.0.9"
 import argparse
 from NewTraceFac import TRC,trace,tracef
 
@@ -17,12 +17,16 @@ def fndCliParse(mysArglist):
         not necessary, since most of them have already been decanted
         into the P params object.  
     '''
-    cParse = argparse.ArgumentParser(description="Digital Library Preservation Simulation CLI v"+sVersion,epilog="Defaults for args as follows:\n\
-        simlen=100 Khrs,\n\
-        seed=1, \
-        shortlog=N, loglevel=NOTSET, \
-        audit=0 (off), bandwidth=10Mbps \
-        logfile=stdout, glitchfreq=0 (never)" \
+    cParse = argparse.ArgumentParser(
+    description="Digital Library Preservation Simulation CLI "
+    "v"+sVersion,
+    epilog="Defaults for args as follows:\n"
+        "simlen=100 Khrs,\n"
+        "seed=1, "
+        "shortlog=N, loglevel=NOTSET, "
+        "audit=0 (off), bandwidth=10Mbps "
+        "logfile=stdout, glitchfreq=0 (never), \n"
+        "glitchspan=1" 
         , version=sVersion)
     
     # P O S I T I O N A L  arguments
@@ -142,11 +146,13 @@ def fndCliParse(mysArglist):
                         , help='Number of subsamples per audit cycle, default=1.'
                         )
 
+    """
     cParse.add_argument("--auditbins", type=int
                         , dest='nAuditZipfBins' 
                         , metavar='nAUDITZIPFBINS'
                         , help='Number of doc bins for Zipf frequency-based audits, default=5.'
                         )
+    """
 
     cParse.add_argument("--bandwidth", type=int
                         , dest='nBandwidthMbps'
@@ -178,6 +184,13 @@ def fndCliParse(mysArglist):
                         , help='Maximum duration of glitch impact, which ceases after this interval; 0=infinity.'
                         )
 
+    cParse.add_argument("--glitchspan", type=int
+                        , dest='nGlitchSpan'
+                        , metavar='nGLITCHSPAN_nservers'
+                        , help='Number of servers affected by '
+                         'glitch.  0 = default = 1.'
+                        )
+
     cParse.add_argument("--mongoid", type=str
                         , dest='sMongoId'
                         , metavar='sMONGOID'
@@ -203,7 +216,8 @@ def fndCliParse(mysArglist):
 #                parameter is no longer operative.  
 # 20160126  RBL Make all positional arguments mandatory.  
 #               Remove value requirement (Y,N) from --shortlog.
-# 
+# 20160216  RBL Add glitchspan option. 
+#               Remove auditzipfbins option, never used. 
 # 
 
 # END

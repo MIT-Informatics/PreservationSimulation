@@ -65,12 +65,32 @@ class CServer(object):
         '''
         return self.bDead
 
-# S e r v e r . m l L i s t L i v e S e r v e r I D s 
+# C S e r v e r . m l L i s t L i v e S e r v e r I D s 
+    @classmethod
     @catchex
     @ntracef("SERV")
-    def mlListLiveServerIDs(self):
-        lLiveOnes = [sid for sid,csrv in G.dID2Servers.items() if not csrv.mbIsServerDead()]
+    def mlListLiveServerIDs(cls):
+        """Class method: return list of IDs for 
+            all servers that are still alive."""
+        lLiveOnes = [sid for sid,csrv in G.dID2Servers.items() 
+            if not csrv.mbIsServerDead()]
         return lLiveOnes
+
+# CServer.mlSelectServerVictims
+    @classmethod
+    @catchex
+    @ntracef("SERV")
+    def mlSelectServerVictims(cls, mynHowManyVictims):
+        """Class method: return list of N servers to kill."""
+        lPossibleVictims = CServer.mlListLiveServerIDs()
+        return lPossibleVictims[0,mynHowManyVictims-1]
+
+# S e r v e r . m l L i s t S h e l v e s 
+    @catchex
+    @ntracef("SERV")
+    def mlListShelves(self):
+        """Return list all current shelves for this server."""
+        return self.lShelfIDs
 
 # S e r v e r . m A d d C o l l e c t i o n
     @catchex
@@ -215,7 +235,7 @@ class CServer(object):
 # 20151223  RBL Add tiny methods to keep track of live servers using the 
 #                same old global data structures:
 #                mListServer, mDelistServer, mKillServer, mbIsServerDead, 
-#                mlListLiveServerIDs.  
+#                mlListLiveServerIDs, mlSelectServerVictims.  
 # 
 
 # END
