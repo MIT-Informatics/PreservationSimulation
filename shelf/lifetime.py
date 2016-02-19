@@ -44,6 +44,9 @@ class CLifetime(object):
         if self.nGlitchFreq > 0:
             G.env.process(self.mScheduleGlitch())
 
+# BTW, after using this property for a while, I find that I don't like
+#  the appearance that it gives in the code.  Yes, it hides the translation, 
+#  but it makes it appear that there is actually a static class property.  
     @property
     def cShelf(self):
         return G.dID2Shelf[self.sShelfID]
@@ -90,27 +93,33 @@ class CLifetime(object):
         self.bGlitchActive = True
         self.nGlitches += 1
         G.nGlitchesTotal += 1
-        lg.logInfo("LIFETIME","glitch    t|%6.0f|  on shelf|%s| num|%s| impactpct|%d| decayhalflife|%d| maxlife|%d|" % (myfNow, self.sShelfID,  self.nGlitches, self.nImpactReductionPct, self.nGlitchDecayHalflife, self.nGlitchMaxlife))
+        lg.logInfo("LIFETIME","glitch    t|%6.0f|  on shelf|%s| num|%s| "
+            "impactpct|%d| decayhalflife|%d| span|%d| maxlife|%d|" % (myfNow, 
+            self.sShelfID,  self.nGlitches, self.nImpactReductionPct, 
+            self.nGlitchDecayHalflife, self.nGlitchSpan, self.nGlitchMaxlife))
         self.fGlitchBegin = float(G.env.now)
-        TRC.tracef(3,"LIFE","proc happens1 t|%.3f| shelf|%s| num|%s| impact|%d| decayhalflife|%d| maxlife|%d|" % (myfNow, self.sShelfID, self.nGlitches, self.nImpactReductionPct, self.nGlitchDecayHalflife, self.nGlitchMaxlife))
+        TRC.tracef(3,"LIFE","proc happens1 t|%.3f| shelf|%s| num|%s| impact|%d| "
+            "decayhalflife|%d| span|%d| maxlife|%d|" % (myfNow, 
+            self.sShelfID, self.nGlitches, self.nImpactReductionPct, 
+            self.nGlitchDecayHalflife, self.nGlitchSpan, self.nGlitchMaxlife))
         ''' If this is a 100% glitch:
             - Declare server, not just shelf, to be dead.
             - Auditor will eventually discover the problem and 
                call client to inform that server is dead.  
         '''
-        #sServerID = G.dID2Shelf[self.sShelfID].sServerID
         sServerID = self.cShelf.sServerID
         if G.dID2Server[sServerID].bDead or self.nImpactReductionPct == 100:
-            #cShelf = G.dID2Shelf[self.sShelfID]
             self.cShelf.bAlive = False
-            sServerID = self.cShelf.sServerID
+            #sServerID = self.cShelf.sServerID
             cServer = G.dID2Server[sServerID]
             NTRC.ntracef(3,"LIFE","proc happens2 glitch 100pct or server dead id|%s| shelf|%s| svr|%s|" % (self.ID, self.cShelf.ID, sServerID))
             cServer.mServerDies()
             NTRC.ntracef(3,"LIFE","proc happens3 life|%s| killed server |%s|" % (self.ID, sServerID))
             lg.logInfo("LIFETIME", "100pct glitch on shelf |%s| of server|%s| - all docs lost" % (self.sShelfID, sServerID))
         else:
-            self.mInjectError(self.nImpactReductionPct, self.nGlitchDecayHalflife, self.nGlitchMaxlife)
+            self.mInjectError(self.nImpactReductionPct, 
+                self.nGlitchDecayHalflife, 
+                self.nGlitchMaxlife)
         return (self.nGlitches, self.sShelfID)
 
 # L i f e t i m e . m I n j e c t E r r o r 
@@ -260,6 +269,11 @@ def fnlGetGlitchParams(mysShelfID):
 
 # Edit history:
 # 20150812  RBL Move CLifetime from server.py to its own file.  
+# 20160216  RBL Add span to glitch stats.
+# 20160219  RBL Add possibility of correlated failures when glitch occurs.
+#                Because this is initiated from a shelf on a single server 
+#                but affects multiple servers, this code is a bit of a swamp 
+#                to avoid recursion.  
 # 
 
 #END
