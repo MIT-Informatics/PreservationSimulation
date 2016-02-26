@@ -18,7 +18,7 @@ deny    sAuditType!=TOTAL
 deny    nLifem<2
 deny    nLifem>1000
 
-deny    nCopies>=10
+deny    nCopies>10
 
 deny    sAuditType!=TOTAL
 
@@ -31,5 +31,6 @@ deny    sAuditType!=TOTAL
 # 7 nGlitchIgnoreLevel
 # 8 nGlitchImpact 
 # 9 nGlitchMaxlife 
-#10 nLifem 
-#11 nCopies 
+#10 nGlitchSpan
+#11 nLifem 
+#12 nCopies 
