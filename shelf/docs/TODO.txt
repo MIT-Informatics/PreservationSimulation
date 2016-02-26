@@ -34,6 +34,9 @@ DONE - BUG, NEEDS FIXING: when client provisions a new server, it must
 - QUESTION: when provisioning a new server to replace a failed one, 
   should the client mark the re-provisioning as majority or minority 
   repairs?
+- optimize auditing: when it finds a dead server, don't bother checking 
+  any more documents on that particular server, and don't attempt any
+  repairs to that server.  should speed up auditing considerably.  
 
 
 TODO: brokercommands
