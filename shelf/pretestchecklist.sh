@@ -49,7 +49,9 @@ fi
 
 # Do we have all the instruction files?
 sTargetDir="$sInstructionDir"
-for needfile in makecompletetemplate.sh substituteall.sh expandtemplate.py mongolib.py NewTraceFac.py q3instructiontemplate.txt 
+for needfile in makecompletetemplate.sh substituteall.sh expandtemplate.py \
+    mongolib.py NewTraceFac.py hlinstructiontemplate.txt \
+    useinstfilter.py instfilter.py realrulestext.txt memoize.py loadintodb.py 
 do
     if [ ! -f "$sTargetDir/$needfile" ]
     then
@@ -58,7 +60,7 @@ do
     fi
 done
 sTargetDir="$sInstructionDir/ins"
-for needfile in simlen.ins glitchignorelevel.ins audittype.ins auditsegments.ins docsize.ins shelfsize.ins glitchmaxlife.ins glitchimpact.ins glitchfreq.ins glitchdecay.ins auditfreq.ins lifem.ins ncopies.ins randomseed.ins 
+for needfile in simlen.ins glitchignorelevel.ins audittype.ins auditsegments.ins docsize.ins shelfsize.ins glitchmaxlife.ins glitchimpact.ins glitchfreq.ins glitchdecay.ins glitchspan.ins auditfreq.ins lifem.ins ncopies.ins randomseed.ins 
 do
     if [ ! -f "$sTargetDir/$needfile" ]
     then
@@ -81,7 +83,7 @@ done
 
 # Do we have all the execution files?
 sTargetDir="$sShelfDir"
-for needfile in broker.py NewTraceFac.py brokercommandlist.txt mongolib.py main.py fib.py extractvalues.py q3-extractinstructions.txt datacleanup.py NewTraceFac.py 
+for needfile in broker.py NewTraceFac.py brokercommandlist.txt mongolib.py main.py fib.py extractvalues2.py hl-extractinstructions.txt datacleanup.py NewTraceFac.py 
 do
     if [ ! -f "$sTargetDir/$needfile" ]
     then

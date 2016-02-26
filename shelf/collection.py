@@ -70,20 +70,24 @@ class CCollection(object):
         NTRC.ntracef(5,"COLL","proc mListDocuments self|%s| returning |%s|" % (self,self.lDocIDs))
         return (self.lDocIDsRemaining)
 
-# NEW NEW NEW replacement
 # C o l l e c t i o n . m T e s t C o l l e c t i o n
     @ntracef("COLL")
     def mTestCollection(self):
         ''' Return a list, maybe empty, of documents declared missing
             from this collection.  
         '''
+        bOldLogState = G.bDoNotLogInfo
+        if G.bShortLog: G.bDoNotLogInfo = True
         lDeadDocIDs = list()
         for sDocID in self.lDocIDs:
             cDoc = G.dID2Document[sDocID]
             (bOkay,bInjured,bForensics,bLost) = cDoc.mTestCopies()
-            NTRC.ntracef(3,"COLL","proc TestColl1 coll|%s| tests doc|%s| okay|%s| injured|%s| forensics|%s| lost|%s|" % (self.ID,sDocID,bOkay,bInjured,bForensics,bLost))
+            NTRC.ntracef(3,"COLL","proc TestColl1 coll|%s| tests doc|%s| "
+                "okay|%s| injured|%s| forensics|%s| lost|%s|" % 
+                (self.ID,sDocID,bOkay,bInjured,bForensics,bLost))
             # Merge new info with old info from audits.
-            (bOkay,bInjured,bForensics,bLost) = cDoc.mMergeEvaluation(bOkay,bInjured,bForensics,bLost)
+            (bOkay,bInjured,bForensics,bLost) = \
+                cDoc.mMergeEvaluation(bOkay,bInjured,bForensics,bLost)
             # Update stats of document statuses.  
             self.nDocsOkay += 1 if bOkay else 0
             self.nDocsMajorityRepair += 1 if bInjured else 0
@@ -92,13 +96,19 @@ class CCollection(object):
             # Update lost list.
             if bLost:
                 lDeadDocIDs.append(sDocID)
-                NTRC.ntracef(3,"COLL","proc TestColl2 dead doc|%s| in coll|%s| " % (sDocID,self.ID))
-            NTRC.ntracef(3,"COLL","proc TestColl3 coll|%s| doc|%s| okay|%s| majority|%s| minority|%s| lost|%s|" % (self.ID,sDocID,bOkay,bInjured,bForensics,bLost))
+                NTRC.ntracef(3,"COLL","proc TestColl2 dead doc|%s| in coll|%s| "
+                    % (sDocID,self.ID))
+            NTRC.ntracef(3,"COLL","proc TestColl3 coll|%s| doc|%s| okay|%s| "
+                "majority|%s| minority|%s| lost|%s|" % 
+                (self.ID,sDocID,bOkay,bInjured,bForensics,bLost))
             if not bOkay:
                 (nMajority,nMinority) = cDoc.mGetRepairCounts()
-                lg.logInfo("DOCUMENT","doc injured cli|%s| coll|%s| doc|%s| majority|%s|%s| minority|%s|%s| lost|%s|" % (self.sClientID,self.ID,sDocID,bInjured,nMajority,bForensics,nMinority,bLost))
+                lg.logInfo("DOCUMENT","doc injured cli|%s| coll|%s| doc|%s| "
+                    "majority|%s|%s| minority|%s|%s| lost|%s|" % 
+                    (self.sClientID, self.ID,sDocID, bInjured, nMajority, 
+                    bForensics, nMinority, bLost))
+        G.bDoNotLogInfo = bOldLogState
         return lDeadDocIDs
-
 
 # C C o l l e c t i o n . m H o w M a n y C o p i e s L e f t 
     @ntracef("COLL")
@@ -206,6 +216,8 @@ class CCollection(object):
 
 # Edit history:
 # 20150812  RBL Moved from client.py to its own file.  
+# 20160226  RBL Remove "doc injured" messages from shortlog.  
+# 
 # 
 
 #END
