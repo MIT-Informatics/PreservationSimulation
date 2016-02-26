@@ -236,8 +236,8 @@ class CG(object):
                         #  but don't execute them.
     sRedo = "N"         # Force cases to be redone (recalculated)?
 
-    sFamilyDir = '../q3'
-    sSpecificDir = '.'
+    sFamilyDir = '../hl'
+    sSpecificDir = 'a0'
 
     sDatabaseName = None
     sPendingCollectionName = None
