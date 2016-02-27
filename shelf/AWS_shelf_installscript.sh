@@ -43,7 +43,9 @@
 #                we just got from github.
 # 20160205  RBL Add to end: create little shell script for users to 
 #                begin work: activate shelfenv and goto shelf dir.
-#
+# 20160227  RBL Use hlinstructiontemplate.txt to build latest instr db
+#                instead of q3... because of added param glitchspan.
+# 
 
 echo "**************************************** Get Python packages"
 # Get python packages
@@ -153,7 +155,7 @@ python broker.py newdb20160124 pending done --familydir=../Q3 --specificdir=. --
 echo "**************************************** Done initial tests"
 echo "**************************************** Build latest instruction database"
 cd newinstructions
-bash makecompletetemplate.sh q3instructiontemplate.txt latestinstructions.big filter
+bash makecompletetemplate.sh hlinstructiontemplate.txt latestinstructions.big filter
 python loadintodb.py latest pending latestinstructions.big
 cd ..
 
@@ -165,6 +167,7 @@ cat >startup.sh <<EOF
 . shelfenv/bin/activate
 cd working/shelf
 echo ""
+echo "********************************************************"
 echo "*** Ready to run 'shelf' simulations.                ***"
 echo "*** The shelfenv virtualenv should be activated,     ***"
 echo "*** and the correct directory should be set.         ***" 
@@ -172,6 +175,7 @@ echo "*** Try   python main.py -h                          ***"
 echo "*** or    python broker.py -h                        ***" 
 echo "*** for help.                                        ***"
 echo "*** HowTo info can be found in the 'docs' directory. ***"
+echo "********************************************************"
 echo ""
 EOF
 
