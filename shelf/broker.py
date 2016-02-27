@@ -640,7 +640,7 @@ def main():
 
         if g.sListOnly.startswith("Y"):
             # Testing: Just dump out the instruction dictionary for this item.
-            NTRC.ntracef(0,"MAIN","proc ListOnly, item run|%s| id|%s| ncopies|%s| lifem|%s| dict\n|%s|" % \
+            NTRC.ntracef(0,"MAIN","proc ListOnly, item run|%s| id|%s| ncopies|%s| lifem|%s| dict|%s|" % \
                 (nRunNumber, sInstructionId, dInstruction["nCopies"], dInstruction["nLifem"], dInstruction))
         else:   # Real life: execute the instruction.
             bContinue = fnbWaitForOpening(g.nCores,"python",g.nCoreTimer,g.nStuckLimit)

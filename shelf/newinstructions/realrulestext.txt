@@ -18,7 +18,7 @@ deny    sAuditType!=TOTAL
 deny    nLifem<2
 deny    nLifem>1000
 
-deny    nCopies>10
+#deny    nCopies>10
 
 deny    sAuditType!=TOTAL
 

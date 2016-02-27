@@ -45,6 +45,7 @@
 #                begin work: activate shelfenv and goto shelf dir.
 # 20160227  RBL Use hlinstructiontemplate.txt to build latest instr db
 #                instead of q3... because of added param glitchspan.
+#               In startup.sh, remind user about changing NCORES and NPOLITE.
 # 
 
 echo "**************************************** Get Python packages"
@@ -169,11 +170,21 @@ cd working/shelf
 echo ""
 echo "********************************************************"
 echo "*** Ready to run 'shelf' simulations.                ***"
-echo "*** The shelfenv virtualenv should be activated,     ***"
-echo "*** and the correct directory should be set.         ***" 
+echo "***  The shelfenv virtualenv should be activated,    ***"
+echo "***  and the correct directory should be set.        ***" 
+echo "***                                                  ***" 
+echo "*** REMEMBER to change NCORES and NPOLITE for        ***" 
+echo "***  this server\'s capabilities.  E.g.,              ***" 
+echo "***      export NCORES=8                             ***" 
+echo "***      export NPOLITE=2                            ***" 
+echo "***  or similar, appropriate values.                 ***" 
+echo "***  (Currently, the number of cores is not sensed   ***" 
+echo "***   automatically.)                                ***" 
+echo "***                                                  ***" 
 echo "*** Try   python main.py -h                          ***"
 echo "*** or    python broker.py -h                        ***" 
 echo "*** for help.                                        ***"
+echo "***                                                  ***" 
 echo "*** HowTo info can be found in the 'docs' directory. ***"
 echo "********************************************************"
 echo ""
