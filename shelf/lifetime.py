@@ -135,9 +135,10 @@ class CLifetime(object):
         self.nGlitches += 1
         G.nGlitchesTotal += 1
         lg.logInfo("LIFETIME","glitch    t|%6.0f|  on shelf|%s| num|%s| "
-            "impactpct|%d| decayhalflife|%d| span|%d| maxlife|%d|" % (myfNow, 
-            self.sShelfID,  self.nGlitches, self.nImpactReductionPct, 
-            self.nGlitchDecayHalflife, self.nGlitchSpan, self.nGlitchMaxlife))
+            "impactpct|%d| decayhalflife|%d| span|%d| maxlife|%d| gtotal|%s|" 
+            % (myfNow, self.sShelfID,  self.nGlitches, 
+            self.nImpactReductionPct, self.nGlitchDecayHalflife, 
+            self.nGlitchSpan, self.nGlitchMaxlife, G.nGlitchesTotal))
         self.fGlitchBegin = float(G.env.now)
         TRC.tracef(3,"LIFE","proc happens1 t|%.3f| shelf|%s| num|%s| impact|%d| "
             "decayhalflife|%d| span|%d| maxlife|%d|" % (myfNow, 
