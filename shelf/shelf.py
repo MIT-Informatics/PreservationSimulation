@@ -28,45 +28,48 @@ class CShelf(object):
         G.dID2Shelf[self.ID] = self
 
         # Parallel lists.        
-        self.lDocIDs = list()           # Docs currently alive, copied onto this shelf.
-        self.lCopyIDs = list()          # Copies currently alive on this shelf.
-        self.lDocIDsComplete = list()   # Docs, all ever put onto this shelf.
-        self.lCopyIDsComplete = list()  # Copies, all ever put onto this shelf.  
-        self.lCopyTops = [0]            # BlkEnd for each doc ever placed here, for searching.
-        self.lClientIDs = list()        # From what client did we get this doc (all docs).
+        self.lDocIDs = list()       # Docs currently alive, copied onto this shelf.
+        self.lCopyIDs = list()      # Copies currently alive on this shelf.
+        self.lDocIDsComplete = list() # Docs, all ever put onto this shelf.
+        self.lCopyIDsComplete = list() # Copies, all ever put onto this shelf.  
+        self.lCopyTops = [0]        # BlkEnd for each doc ever placed here, for searching.
+        self.lClientIDs = list()    # From what client did we get this doc (all docs).
 
         self.nCapacity = mynCapacity
         self.nFreeSpace = mynCapacity
-        self.sServerID = mysServerID   # Server instance we belong to.
+        self.sServerID = mysServerID # Server instance we belong to.
         self.nQual = mynQual
         self.birthdate = G.env.now
-        self.bAlive = True              # Shelf failed = False.
-        self.nHiWater = 0               # Highest sector used, inclusive.
+        self.bAlive = True          # Shelf failed = False.
+        self.nHiWater = 0           # Highest sector used, inclusive.
 
-        self.nSectorHits = 0            # How many sector errors.
-        self.nEmptySectorHits = 0       # How many sector errors.
-        self.nHitsAboveHiWater = 0      # How many hits out of the occupied region.
-        self.nMultipleHits = 0          # How many document slots hit more than once.
-        self.bContig = True             # Is the document region still contiguous?
-        self.nConsecutiveMisses = 0     # How many misses in a row?
+        self.nSectorHits = 0        # How many sector errors.
+        self.nEmptySectorHits = 0   # How many sector errors.
+        self.nHitsAboveHiWater = 0  # How many hits out of the occupied region.
+        self.nMultipleHits = 0      # How many document slots hit more than once.
+        self.bContig = True         # Is the document region still contiguous?
+        self.nConsecutiveMisses = 0 # How many misses in a row?
 
         # Get error rate params 
         self.fLn2 = log(2)
         (self.nSectorHalflife, self.nShelfLife) = G.dShelfParams[self.nQual][0]
-        # Sector life now determined by scalar nLifek.
+        # Sector life now determined by scalar nLifek for all servers.
         self.nSectorHalflife = G.nLifek
-        (self.nGlitchFreq, self.nGlitchImpact, self.nGlitchHalflife, self.nGlitchMaxlife) = fnlGetGlitchParams(self.ID)
-        self.fSectorExponentiallife = util.fnfHalflife2Exponentiallife(self.nSectorHalflife)
-        self.fLifeParam = util.fnfCalcBlockLifetime(self.fSectorExponentiallife*1000, self.nCapacity)
-        cLifetime = CLifetime(self.ID,self.fLifeParam, self.nGlitchFreq, self.nGlitchImpact, self.nGlitchHalflife, self.nGlitchMaxlife)
+        (self.nGlitchFreq, self.nGlitchImpact, self.nGlitchHalflife, 
+            self.nGlitchMaxlife, self.nGlitchSpan) = fnlGetGlitchParams(self.ID)
+        self.fSectorExponentiallife = util.fnfHalflife2Exponentiallife(
+            self.nSectorHalflife)
+        self.fLifeParam = util.fnfCalcBlockLifetime(
+            self.fSectorExponentiallife*1000, self.nCapacity)
+
+        # Add a CLifetime object, which will schedule glitches if necessary.
+        cLifetime = CLifetime(self.ID,self.fLifeParam, self.nGlitchFreq, self.nGlitchImpact, self.nGlitchHalflife, self.nGlitchMaxlife, self.nGlitchSpan)
         self.sSectorLifetimeID = cLifetime.ID
         G.dID2Lifetime[self.sSectorLifetimeID] = cLifetime
 
         # Start aging processes
         G.env.process(self.mAge_shelf(self.nShelfLife*1000))
         G.env.process(self.mAge_sector())
-# if glitches
-#   start glitch process cLifetime.mInjectError(reduction, decay, now?) at some freq
 
     @property
     def cServer(self):
@@ -111,6 +114,7 @@ class CShelf(object):
         # BZZZT: Never reuse space.  Any empty space in the area that 
         # *used* to be occupied by documents has already been damaged
         # and destroyed a document.  Do not reuse the space.  
+        # Yeah, I know it's all just hypothetical, but why not.  
         nBlkBegin = self.nHiWater + 1
         self.nFreeSpace -= nSize
         nBlkEnd = nBlkBegin + nSize - 1
@@ -382,11 +386,21 @@ class CShelf(object):
         for sCopyID in lAllCopyIDs:
                 self.mDestroyCopy(sCopyID)
 
+# Shelf.mCorrFailHappensToMe
+    @catchex
+    @tracef("SHLF")
+    def mCorrFailHappensToMe(self):
+        cLifetime = G.dID2Lifetime[self.sSectorLifetimeID]
+        cLifetime.mCorrFailHappensToMe()
+        pass
+
 # Edit history:
 # 20150812  RBL Move CShelf from server.py to its own file.  
 # 20160115  RBL Use util's calculation from halflife to exponentiallife.
 #               Add exponentiallife to use stats report.
-# 
+# 20160223  RBL Correct some old, possibly misleading, comments.
+# 20160224  RBL Add routines to catch correlated failures.
+#
 
 #END
 

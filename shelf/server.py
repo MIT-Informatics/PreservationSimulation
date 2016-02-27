@@ -65,12 +65,51 @@ class CServer(object):
         '''
         return self.bDead
 
-# S e r v e r . m l L i s t L i v e S e r v e r I D s 
+# f n C o r r F a i l H a p p e n s T o A l l 
+    @classmethod
     @catchex
     @ntracef("SERV")
-    def mlListLiveServerIDs(self):
-        lLiveOnes = [sid for sid,csrv in G.dID2Servers.items() if not csrv.mbIsServerDead()]
+    def fnCorrFailHappensToAll(cls, mynGlitchSpan):
+        lVictims = cls.fnlSelectServerVictims(mynGlitchSpan)
+        for sVictim in lVictims:
+            cServer = G.dID2Server[sVictim] 
+            cServer.mCorrFailHappensToMe()
+
+# C S e r v e r . f n l L i s t L i v e S e r v e r I D s 
+    @classmethod
+    @catchex
+    @ntracef("SERV")
+    def fnlListLiveServerIDs(cls):
+        """Class method: return list of IDs for 
+            all servers that are still alive
+            and being used."""
+        lLiveOnes = [sid for sid,csrv in G.dID2Server.items() 
+            if (not csrv.mbIsServerDead()) and csrv.bInUse]
         return lLiveOnes
+
+# C S e r v e r . f n l S e l e c t S e r v e r V i c t i m s 
+    @classmethod
+    @catchex
+    @ntracef("SERV")
+    def fnlSelectServerVictims(cls, mynHowManyVictims):
+        """Class method: return list of N servers to kill."""
+        lPossibleVictims = CServer.fnlListLiveServerIDs()
+        return lPossibleVictims[0: mynHowManyVictims]
+
+# m C o r r F a i l H a p p e n s T o M e
+    @catchex
+    @ntracef("SERV")
+    def mCorrFailHappensToMe(self):
+        for sShelfID in self.lShelfIDs:
+            cShelf = G.dID2Shelf[sShelfID]
+            cShelf.mCorrFailHappensToMe()
+
+# S e r v e r . m l L i s t S h e l v e s 
+    @catchex
+    @ntracef("SERV")
+    def mlListShelves(self):
+        """Return list all current shelves for this server."""
+        return self.lShelfIDs
 
 # S e r v e r . m A d d C o l l e c t i o n
     @catchex
@@ -215,7 +254,12 @@ class CServer(object):
 # 20151223  RBL Add tiny methods to keep track of live servers using the 
 #                same old global data structures:
 #                mListServer, mDelistServer, mKillServer, mbIsServerDead, 
-#                mlListLiveServerIDs.  
+#                mlListLiveServerIDs, mlSelectServerVictims.  
+# 20160224  RBL Add correlated failure propagation routines: 
+#                (class)fnCorrFailHappensToAll, mCorrFailHappensToMe.
+#               Change names of all classmethods to begin with fn instead of m.
+#                Yes, they could be static methods or completely external.  
+# 
 # 
 
 # END

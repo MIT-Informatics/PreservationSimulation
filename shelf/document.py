@@ -5,7 +5,6 @@ import simpy
 from NewTraceFac import NTRC,ntrace,ntracef
 import itertools
 from globaldata import G
-from server import CServer
 from audit2 import fAudit_Select
 from repair import CRepair
 import util
@@ -220,6 +219,8 @@ class CDocument(object):
 
 # Edit history:
 # 20150812  RBL Remove class from client.py into its own file. 
+# 20160224  RBL Remove spurious import of CServer.
+# 
 # 
 
 #END

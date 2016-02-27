@@ -19,13 +19,17 @@ def fndCliParse(mysArglist):
          many options for this run from the command line.  
         Return a dictionary of all of them.  
     '''
-    sVersion = "0.0.5"
-    cParse = argparse.ArgumentParser(description="Digital Library Preservation Simulation Instruction Broker CLI v"+sVersion+"  "+
-        "For each selection variable, enter either a value or a MongoDB dictionary spec " + 
-        "that is a valid JSON dictionary string.  \n" + 
-        "Note that special characters such as $ { } must be escaped " +
-        "or single-quoted to protect them from the shell.  " + 
-        "" +
+    sVersion = "0.0.6"
+    cParse = argparse.ArgumentParser(
+        description="Digital Library Preservation Simulation "
+        "Instruction Broker CLI "
+        "v"+sVersion+"  "
+        "For each selection variable, enter either a value "
+        "or a MongoDB dictionary spec " 
+        "that is a valid JSON dictionary string.  \n" 
+        "Note that special characters such as $ { } must be escaped "
+        "or single-quoted to protect them from the shell.  " 
+        "" 
         ""
         ,epilog="Defaults for args as follows: (none)\n"
         , version=sVersion)
@@ -113,6 +117,13 @@ def fndCliParse(mysArglist):
                         , help='Maximum duration of glitch impact, which ceases after this interval; zero=infinity.'
                         )
 
+    cParse.add_argument("--glitchspan", type=str
+                        , dest='nGlitchSpan'
+                        , metavar='nGLITCHSPAN_nservers'
+                        , nargs='?'
+                        , help='Number of servers affected by glitch.'
+                        )
+
     cParse.add_argument("--shelfsize", type=str
                         , dest='nShelfSize'
                         , metavar='nSHELFSIZE_TB'
@@ -196,6 +207,11 @@ def fndCliParse(mysArglist):
 class CG(object):
     ''' Global data.
     '''
+    # All the interesting options should be None here, so that 
+    #  they are removed from the selection dictionary before
+    #  it is handed to MongoDB.
+    #  If the user doesn't specify it on the command line, 
+    #  then it is not a selection criterion.
     nCopies = None
     nLifem = None
     nAuditFreq = None
@@ -205,29 +221,30 @@ class CG(object):
     nGlitchImpact = None
     nGlitchDecay = None
     nGlitchMaxlife = None
+    nGlitchSpan = None
     nShelfSize = None
     nDocSize = None
     sQuery = None
-    nCores = 8              # Default, overridden by NCORES env var
-    nCoreTimer = 10         # Wait for a free core,
-    nPoliteTimer =  5       # Shorter wait between sequential launches.
-    nStuckLimit = 600       # Max nr of CoreTimer waits before giving up.
-    nTestLimit = 0          # Max nr of runs executed for a test run, 0=infinite.
-    sTestCommand = "N"      # Should just echo commands instead of executing them?
-    sTestFib = "N"          # Should use Fibonacci calc instead of real programs?
-    sListOnly = "N"         # Just list out all cases matching the stated criteria.  
-                            #  but don't execute them.
-    sRedo = "N"             # Force cases to be redone (recalculated)?
+    nCores = 8          # Default, overridden by NCORES env var
+    nCoreTimer = 10     # Wait for a free core,
+    nPoliteTimer =  5   # Shorter wait between sequential launches.
+    nStuckLimit = 600   # Max nr of CoreTimer waits before giving up.
+    nTestLimit = 0      # Max nr of runs executed for a test run, 0=infinite.
+    sTestCommand = "N"  # Should just echo commands instead of executing them?
+    sTestFib = "N"      # Should use Fibonacci calc instead of real programs?
+    sListOnly = "N"     # Just list out all cases matching the stated criteria.  
+                        #  but don't execute them.
+    sRedo = "N"         # Force cases to be redone (recalculated)?
 
-    sFamilyDir = '../q3'
-    sSpecificDir = '.'
+    sFamilyDir = '../hl'
+    sSpecificDir = 'a0'
 
     sDatabaseName = None
     sPendingCollectionName = None
     sDoneCollectionName = None
 
     # Command template components.
-    sShelfLogFileTemplate = 'doc{nDocSize}cop{nCopies}shlf{nShelfSize}lif{nLifem}_af{nAuditFreq}s{nAuditSegments}t{sAuditType}_gf{nGlitchFreq}i{nGlitchImpact}d{nGlitchDecay}m{nGlitchMaxlife}_seed{nRandomseed}'
+    sShelfLogFileTemplate = 'doc{nDocSize}cop{nCopies}shlf{nShelfSize}lif{nLifem}_af{nAuditFreq}s{nAuditSegments}t{sAuditType}_gf{nGlitchFreq}i{nGlitchImpact}d{nGlitchDecay}m{nGlitchMaxlife}s{nGlitchSpan}_seed{nRandomseed}'
     sShelfLogFileName = None
 
     # Templates to be obtained from instruction file, and commands to be 
@@ -247,7 +264,7 @@ class CG(object):
     # Only field names that appear in items in the database should ever
     #  be in the query dictionary.  Otherwise, no item in the database 
     #  can ever satisfy such a query, i.e., no results.  
-    lSearchables = "nAuditFreq nAuditSegments sAuditType nDocSize nGlitchDecay nGlitchFreq nGlitchIgnorelevel nGlitchImpact nGlitchMaxlife nLifem nCopies nRandomseed nShelfSize nSimlen sQuery".split()
+    lSearchables = "nAuditFreq nAuditSegments sAuditType nDocSize nGlitchDecay nGlitchFreq nGlitchIgnorelevel nGlitchImpact nGlitchMaxlife nGlitchSpan nLifem nCopies nRandomseed nShelfSize nSimlen sQuery".split()
 
     # Special fake CPU-bound commands to test for proper parallel execution.  
     # These take about a minute (75s) and a third of a minute (22s) on a 3Gi7.
@@ -614,13 +631,13 @@ def main():
             NTRC.ntracef(0,"MAIN","proc force redo for item id|%s|" % (sInstructionId))
             cdb.fnbDeleteDoneRecord(sInstructionId)
 
+        nRunNumber += 1
         # If this instruction has already been processed skip it.
         bIsItDone = cdb.fnbIsItDone(sInstructionId)
         if bIsItDone: 
             NTRC.ntracef(0,"MAIN","proc skip item already done id|%s| copies|%s| lifem|%s|" % (sInstructionId, dInstruction["nCopies"], dInstruction["nLifem"]))
             continue
 
-        nRunNumber += 1
         if g.sListOnly.startswith("Y"):
             # Testing: Just dump out the instruction dictionary for this item.
             NTRC.ntracef(0,"MAIN","proc ListOnly, item run|%s| id|%s| ncopies|%s| lifem|%s| dict\n|%s|" % \
@@ -650,14 +667,14 @@ def main():
                 sResult = cCmd.doCmdStr(g.sActorCommand)
                 time.sleep(g.nPoliteTimer)    
     
-                # If just doing a short test run today, maybe stop now.
-                maxcount -= 1
-                if int(g.nTestLimit) > 0 and maxcount <= 0: break
-    
             else:
                 NTRC.tracef(0,"MAIN","OOPS, Stuck!  Too many python processes running forever.")
                 break
     
+        # If just doing a short test run today, maybe stop now.
+        maxcount -= 1
+        if int(g.nTestLimit) > 0 and maxcount <= 0: break
+
     NTRC.ntracef(0,"MAIN","End.")
 
 
@@ -707,6 +724,9 @@ foreach single-line file in holding dir
 #                test options.
 # 20151212  RBL Correct the previous edit because JSON requires strings, 
 #                not True-False values.  Put back 90% of the code I changed.
-#     
+# 20160216  RBL Add --glitchspan option.
+#               Incr run counter before checking for already done.
+#
+# 
 
 
