@@ -46,8 +46,13 @@
 # 20160227  RBL Use hlinstructiontemplate.txt to build latest instr db
 #                instead of q3... because of added param glitchspan.
 #               In startup.sh, remind user about changing NCORES and NPOLITE.
+# 20160228  RBL Harden a couple shell-if tests against empty strings.
+#               Remove now-redundant emptygiantoutput call after setup.
+# 
 # 
 
+echo "**************************************** Beginning installation"
+echo ""
 echo "**************************************** Get Python packages"
 # Get python packages
 sudo apt-get update
@@ -86,7 +91,7 @@ sudo apt-get --yes install htop
 sudo apt-get --yes install sysstat
 
 echo "**************************************** END INSTALLS"
-
+echo ""
 echo "**************************************** Make new instructions db"
 olddir=$(pwd)
 cd shelf/newinstructions
@@ -104,7 +109,6 @@ cd shelf
 # Remove any leftovers from possible previous deployment.
 sudo rm --force --recursive ../Q3
 bash setupfamilydir.sh ../Q3 . 
-bash emptygiantoutput.sh  ../Q3 .
 bash pretestchecklist.sh ../Q3 . 
 # Run one simple test of the simulation, and check the answer.
 sudo rm --force --recursive tmp
@@ -116,7 +120,7 @@ python main.py ../Q3 . 0 1 --ncopies=1 --lifek=693147 --audit=0 >tmp/initialtest
 #  which is the half-life that corresponds to 1 million khour 
 #  mean lifetime.)
 nTestLost=$(grep NEWS tmp/initialtest.log |awk '{print $16}' |sed 's/|//g')
-if [ "$nTestLost" -eq 49 ]
+if [ -n "$nTestLost" -a "$nTestLost" -eq 49 ]
 then
     echo "SUCCESS: Initial test okay!"
     echo "Proceeding..."
@@ -130,7 +134,7 @@ echo "**************************************** Test instructions db"
 # Broker should find test cases to run.
 python broker.py newdb20160124 pending done --glitchfreq=30000 --auditfreq=10000   --listonly >tmp/brokertest.log 2>&1
 nTestCases=$(grep "run|" tmp/brokertest.log | tail -1 | sed 's/.*run|//' | sed 's/|.*//')
-if [ "$nTestCases" -eq 1512 ]
+if [ -n "$nTestCases" -a "$nTestCases" -eq 1512 ]
 then
     echo "SUCCESS: broker and instruction db look okay!"
     echo "Proceeding..."
@@ -193,7 +197,9 @@ EOF
 echo "**************************************** "
 echo "*** To begin the shelf simulations,  *** "
 echo "*** enter the command:               *** "
+echo "***                                  *** "
 echo "***      . startup.sh                *** "
+echo "***                                  *** "
 echo "*** (Yes, that is                    *** "
 echo "***     dot space startup.sh )       *** "
 echo "***                                  *** "
