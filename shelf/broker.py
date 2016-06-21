@@ -19,7 +19,7 @@ def fndCliParse(mysArglist):
          many options for this run from the command line.  
         Return a dictionary of all of them.  
     '''
-    sVersion = "0.0.6"
+    sVersion = "0.0.7"
     cParse = argparse.ArgumentParser(
         description="Digital Library Preservation Simulation "
         "Instruction Broker CLI "
@@ -44,12 +44,14 @@ def fndCliParse(mysArglist):
 
     cParse.add_argument('sPendingCollectionName', type=str
                         , metavar='sPENDINGCOLLECTIONNAME'
-                        , help='Collection name within the database of the instructions to be executed.'
+                        , help='Collection name within the database '
+                        'of the instructions to be executed.'
                         )
 
     cParse.add_argument('sDoneCollectionName', type=str
                         , metavar='sDONECOLLECTIONNAME'
-                        , help='Collection name within the database of the instructions that have been completed.'
+                        , help='Collection name within the database '
+                        'of the instructions that have been completed.'
                         )
 
     # - - O P T I O N S
@@ -93,35 +95,55 @@ def fndCliParse(mysArglist):
                         , dest='nGlitchFreq'
                         , metavar='nGLITCHFREQ_hrs'
                         , nargs='?'
-                        , help='Half-life of intervals between glitches; 0=never happens.'
+                        , help='Half-life of intervals between glitches; '
+                        '0=never happens.'
                         )
 
     cParse.add_argument("--glitchimpact", type=str
                         , dest='nGlitchImpact'
                         , metavar='nGLITCHIMPACT_pct'
                         , nargs='?'
-                        , help='Percent reduction in sector lifetime due to glitch; 100%%=fatal to shelf.'
+                        , help='Percent reduction in sector lifetime due to '
+                        'glitch; 100%%=fatal to shelf.'
                         )
 
     cParse.add_argument("--glitchdecay", type=str
                         , dest='nGlitchDecay'
                         , metavar='nGLITCHDECAY_hrs'
                         , nargs='?'
-                        , help='Half-life of glitch impact exponential decay; zero=infinity.'
+                        , help='Half-life of glitch impact exponential decay; '
+                        'zero=infinity.'
                         )
 
     cParse.add_argument("--glitchmaxlife", type=str
                         , dest='nGlitchMaxlife'
                         , metavar='nGLITCHMAXLIFE_hrs'
                         , nargs='?'
-                        , help='Maximum duration of glitch impact, which ceases after this interval; zero=infinity.'
+                        , help='Maximum duration of glitch impact, '
+                        'which ceases after this interval; zero=infinity.'
                         )
 
-    cParse.add_argument("--glitchspan", type=str
-                        , dest='nGlitchSpan'
-                        , metavar='nGLITCHSPAN_nservers'
+    cParse.add_argument("--shockfreq", type=str
+                        , dest='nShockFreq'
+                        , metavar='nSHOCKFREQ_hrs'
                         , nargs='?'
-                        , help='Number of servers affected by glitch.'
+                        , help='Half-life of intervals between economic '
+                        'slumps; 0=never happens.'
+                        )
+
+    cParse.add_argument("--shockimpact", type=str
+                        , dest='nShockImpact'
+                        , metavar='nSHOCKIMPACT_pct'
+                        , nargs='?'
+                        , help='Percent reduction in sector lifetime due to '
+                        'slump; 100%%=fatal to shelf.'
+                        )
+
+    cParse.add_argument("--shockspan", type=str
+                        , dest='nShockSpan'
+                        , metavar='nSHOCKSPAN_nservers'
+                        , nargs='?'
+                        , help='Number of servers affected by slump.'
                         )
 
     cParse.add_argument("--shelfsize", type=str
@@ -142,9 +164,10 @@ def fndCliParse(mysArglist):
                         , dest='sQuery'
                         , metavar='sMONGODB_JSON_QUERYSTRING'
                         , nargs='?'
-                        , help='For the brave and foolhardy, a full JSON-ized query string for MongoDB.  This cannot be combined with any other selector options.'
+                        , help='For the brave and foolhardy, a full '
+                        'JSON-ized query string for MongoDB.  This '
+                        'cannot be combined with any other selector options.'
                         )
-
     
     
 # Other options that are not used for selection, but for overrides or testing.
@@ -173,25 +196,29 @@ def fndCliParse(mysArglist):
     cParse.add_argument("--testcommand"
                         , action='store_const', const="Y"
                         , dest='sTestCommand'
-                        , help='TESTING ONLY: echo formatted commands only, not execute.'
+                        , help='TESTING ONLY: echo formatted commands only, '
+                        'not execute.'
                         )
     
     cParse.add_argument("--testfib"
                         , action='store_const', const="Y"
                         , dest='sTestFib'
-                        , help='TESTING ONLY: use fako Fibonacci CPU intensive process instead of real stuff.'
+                        , help='TESTING ONLY: use fako Fibonacci '
+                        'CPU intensive process instead of real stuff.'
                         )
 
     cParse.add_argument("--listonly"
                         , action='store_const', const="Y"
                         , dest='sListOnly'
-                        , help='List all chosen cases to stdout.  Do nothing else.'
+                        , help='List all chosen cases to stdout.  '
+                        'Do nothing else.'
                         )
 
     cParse.add_argument("--redo"
                         , action='store_const', const="Y"
                         , dest='sRedo'
-                        , help='Force these cases to be redone, even if they have been done before.'
+                        , help='Force these cases to be redone, even if '
+                        'they have been done before.'
                         )
 
     if mysArglist:          # If there is a specific string, use it.
@@ -222,6 +249,11 @@ class CG(object):
     nGlitchDecay = None
     nGlitchMaxlife = None
     nGlitchSpan = None
+
+    nShockFreq = None
+    nShockImpact = None
+    nShockSpan = None
+
     nShelfSize = None
     nDocSize = None
     sQuery = None
@@ -244,7 +276,11 @@ class CG(object):
     sDoneCollectionName = None
 
     # Command template components.
-    sShelfLogFileTemplate = 'doc{nDocSize}cop{nCopies}shlf{nShelfSize}lif{nLifem}_af{nAuditFreq}s{nAuditSegments}t{sAuditType}_gf{nGlitchFreq}i{nGlitchImpact}d{nGlitchDecay}m{nGlitchMaxlife}s{nGlitchSpan}_seed{nRandomseed}'
+    sShelfLogFileTemplate = 'doc{nDocSize}cop{nCopies}shlf{nShelfSize}lif{nLifem}_'
+    'af{nAuditFreq}s{nAuditSegments}t{sAuditType}_'
+    'gf{nGlitchFreq}i{nGlitchImpact}d{nGlitchDecay}m{nGlitchMaxlife}_'
+    'sh{nShockFreq}i{nShockImpact}s{nShockSpan}_'
+    'seed{nRandomseed}'
     sShelfLogFileName = None
 
     # Templates to be obtained from instruction file, and commands to be 
@@ -264,7 +300,7 @@ class CG(object):
     # Only field names that appear in items in the database should ever
     #  be in the query dictionary.  Otherwise, no item in the database 
     #  can ever satisfy such a query, i.e., no results.  
-    lSearchables = "nAuditFreq nAuditSegments sAuditType nDocSize nGlitchDecay nGlitchFreq nGlitchIgnorelevel nGlitchImpact nGlitchMaxlife nGlitchSpan nLifem nCopies nRandomseed nShelfSize nSimlen sQuery".split()
+    lSearchables = "nAuditFreq nAuditSegments sAuditType nDocSize nGlitchDecay nGlitchFreq nGlitchIgnorelevel nGlitchImpact nGlitchMaxlife nGlitchSpan nShockFreq nShockImpact nShockSpan nLifem nCopies nRandomseed nShelfSize nSimlen sQuery".split()
 
     # Special fake CPU-bound commands to test for proper parallel execution.  
     # These take about a minute (75s) and a third of a minute (22s) on a 3Gi7.
@@ -685,7 +721,6 @@ if __name__ == "__main__":
     g = CG()
     main()
 
-#END
 
 '''
 main events in the broker:
@@ -726,7 +761,11 @@ foreach single-line file in holding dir
 #                not True-False values.  Put back 90% of the code I changed.
 # 20160216  RBL Add --glitchspan option.
 #               Incr run counter before checking for already done.
-#
+# 20160617  RBL Remove glitchspan option.
+#               Add SHOCK options for economic (or political) shocks:
+#                frequency, impact, span.  
+#               Clean up some of the 80-character-ness for PEP8.  
 # 
 
+#END
 

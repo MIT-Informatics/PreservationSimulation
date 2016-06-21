@@ -427,9 +427,15 @@ def dumpParamsIntoLog():
     lg.logInfo("PARAMS","AUDIT interval hours|%s| segments|%s| type|%s| bandwidth Mbps|%s|" % (G.nAuditCycleInterval,G.nAuditSegments,G.sAuditStrategy,G.nBandwidthMbps)) 
 
     # G l i t c h  params.
-    lg.logInfo("PARAMS","GLITCH freq|%d| impact|%d| decay|%d| maxlife|%d| span|%d| ignorelimit|%.3f|" % (G.nGlitchFreq, G.nGlitchImpact, G.nGlitchDecay, G.nGlitchMaxlife, G.nGlitchSpan, G.fGlitchIgnoreLimit))
+    lg.logInfo("PARAMS","GLITCH freq|%d| impact|%d| decay|%d| maxlife|%d| ignorelimit|%.3f|" 
+        % (G.nGlitchFreq, G.nGlitchImpact, G.nGlitchDecay, G.nGlitchMaxlife, 
+        G.fGlitchIgnoreLimit))
 
+    # S h o c k   params.
+    lg.logInfo("PARAMS","SHOCKS freq|%d| impact|%d| span|%d| " 
+        % (G.nShockFreq, G.nShockImpact, G.nShockSpan ))
 
+    
 # d u m p S e r v e r U s e S t a t s 
 @tracef("MAIN")
 def dumpServerUseStats():
@@ -502,15 +508,20 @@ def dumpGlitchStats():
     for sKey in sorted(G.dID2Lifetime.keys()):
         cLifetime = G.dID2Lifetime[sKey]
         dStats = cLifetime.mReportGlitchStats()
-        lg.logInfo("MAIN","LIFETIME shelf|%s| lifetime|%s| freq|%s| impact|%s| decay|%s| maxlife|%s| span|%s| count|%s| time|%.3f|" 
+        lg.logInfo("MAIN","LIFETIME shelf|%s| lifetime|%s| freq|%s| impact|%s| decay|%s| maxlife|%s| count|%s| time|%.3f|" 
         % 
         (dStats["sShelfID"], dStats["sLifetimeID"], 
         dStats["nGlitchFreq"], dStats["nImpactReductionPct"], 
         dStats["nGlitchDecayHalflife"], dStats["nGlitchMaxlife"], 
-        dStats["nGlitchSpan"], dStats["nGlitches"], dStats["fGlitchTime"]))
+        dStats["nGlitches"], dStats["fGlitchTime"]))
         
     lg.logInfo("MAIN","LIFETIME Total glitches|%d|" % (G.nGlitchesTotal))
 
+# d u m p S h o c k S t a t s 
+def dumpShockStats():
+    pass
+    pass
+    lg.logInfo("MAIN","SHOCKS Total shocks|%d|" % (G.nShocksTotal))
 
 # d u m p C o l l e c t i o n S t a t s 
 def dumpCollectionStats(mysCollID):
@@ -761,6 +772,7 @@ def mainmain():
     dumpServerErrorStats()
     dumpAuditStats()
     dumpGlitchStats()
+    dumpShockStats()
 
     # Make one instance of the global data.  Have to singleton this in globaldata.
     # G = CG()
@@ -801,7 +813,10 @@ if __name__ == "__main__":
 #                the old quality (shelf params) data structure.
 # 20160126  RBL Fix lifek-lifem calc to avoid hasattr().
 # 20160216  RBL Add glitchspan to params and stats listings. 
-#
+# 20160617  RBL Remove glitchspan.
+#               Add shocks to params and stats listings.
+#               Gratuitously fix a few 80-character-ness things.
+# 
 # 
 
 # END
