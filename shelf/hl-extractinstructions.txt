@@ -60,7 +60,7 @@ shelfsize,"created server.V1. quality",0,shelfsize.(\d+)
 #  (Also note that this is exponential expected lifetime, which 
 #  differs from half-life by a factor of sqrt(2).)
 lifek,"PARAMS INFO.*SHELF.*quality.1",7,smallfailrate.(\d+)
-lifem,"PARAMS INFO.*SHELF.*quality.1",7,smallfailrate.(\d+)000
+lifem,"PARAMS INFO.*SHELF.*quality.1",7,smallfailrate.(\d+)\d{3}
 simlength,"PARAMS INFO.*timelimit",8,timelimit.(\d+)
 
 # Include the seed so that we can recover the original log filename if needed.
@@ -93,10 +93,10 @@ glitchdecay,GLITCH,8,decay.(\d+)
 glitchmaxlife,GLITCH,9,maxlife.(\d+)
 nglitches,"LIFETIME Total glitches",7,glitches.(\d+)
 
-shockfreq,SHOCK,6,freq.(\d+)
-shockimpact,SHOCK,7,impact.(\d+)
-shockspan,SHOCK,8,span.(\d+)
-nshocks,"SHOCKS Total shocks",7,shocks.(\d+)
+shockfreq,"PARAMS INFO - SHOCKS",6,freq.(\d+)
+shockimpact,"PARAMS INFO - SHOCKS",7,impact.(\d+)
+shockspan,"PARAMS INFO - SHOCKS",8,span.(\d+)
+nshocks,"MAIN INFO - SHOCKS Total shocks",7,shocks.(\d+)
 
 timestamp,"MAIN INFO.*Simulation parameters",1,([1234567890_]+)
 walltime,"MAIN.*End time stats",0,wall. *([0-9\.]+)
