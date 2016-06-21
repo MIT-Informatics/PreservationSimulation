@@ -519,8 +519,6 @@ def dumpGlitchStats():
 
 # d u m p S h o c k S t a t s 
 def dumpShockStats():
-    pass
-    pass
     lg.logInfo("MAIN","SHOCKS Total shocks|%d|" % (G.nShocksTotal))
 
 # d u m p C o l l e c t i o n S t a t s 
