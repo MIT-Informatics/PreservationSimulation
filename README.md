@@ -11,7 +11,7 @@ The purpose of this project is to provide baseline data for librarians and resea
 The simulations are necessarily schematic in that they don't attempt to model the details of real-life situations.  Instead, the simulations are targeted at specific points in a huge sample space, providing bases from which users can extrapolate to approximate their actual environments.  
 
 
-    "…let us save what remains not by vaults and locks which fence them 
+    ". . . let us save what remains not by vaults and locks which fence them 
     from the public eye and use in consigning them to the waste of time, 
     but by such a multiplication of copies, as shall place them 
     beyond the reach of accident."  

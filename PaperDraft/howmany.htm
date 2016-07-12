@@ -1,0 +1,298 @@
+<h1 id="title" class="unnumbered">How Many Copies Is Enough?</h1>
+<p><strong>Assessing Long-term Durability of Collections Through A Flexible, Replicable Simulation</strong></p>
+<blockquote>
+<p><strong>Abstract</strong></p>
+</blockquote>
+<blockquote>
+<ul>
+<li>How to protect a large, valuable, digital document collection</li>
+<li>How many copies do you need to keep it safe?</li>
+<li>Where to put the copies?</li>
+<li>Are you sure they're still there?</li>
+<li>Whether to use compression, encryption, ... ?</li>
+<li>Not much hard data on which to base policy decisions</li>
+<li>We developed a flexible, replicable simulation framework</li>
+<li>We aim to provide some guidance, based on some common, but not universal, calibration points.</li>
+</ul>
+</blockquote>
+<h1 id="motivation">Motivation</h1>
+<h1 id="fifty-thousand-foot-view">Fifty-Thousand Foot View</h1>
+<h2 id="problem-definition">Problem Definition</h2>
+<ul>
+<li>Maintain large digital collections over time</li>
+<li>Risks to collections</li>
+</ul>
+<div class="figure">
+<img src="threats.jpg" title="Various Threat Types (in quotes after the link addr)" alt="Various Threats to Library Collections (in the square brackets)" />
+<p class="caption">Various Threats to Library Collections (in the square brackets)</p>
+</div>
+<!-- -->
+<pre><code>1.  Document rot on disk.
+2.  Environmental failures that accelerate document rot.
+3.  Server failures that destroy sets of documents.
+4.  Lack of independence of servers.
+5.  Attack on collection, institution, subject matter.
+6.  Et alia.</code></pre>
+<h2 id="core-assumptions">Core Assumptions</h2>
+<ul>
+<li>Documents usually fail individually, but sometimes in large batches.</li>
+<li>Document failures occur randomly, independently, at predictable rates.</li>
+<li>But the rates are not constant across storage servers.</li>
+<li>Nor are the rates constant through time.</li>
+</ul>
+<h2 id="core-motivating-problem">Core Motivating Problem</h2>
+<ul>
+<li>Number of choices: formatting, auditing, quality, number of copies ...</li>
+<li>Keeping risk of object loss fixed -- what choices minimize $?</li>
+<li>&quot;Dual problem&quot; -- Keeping $ fixed, what choices minimize risk?</li>
+</ul>
+<h2 id="basic-model-framework">Basic Model Framework</h2>
+<ul>
+<li>One client, one collection, many documents.</li>
+<li>Client asks some number of external servers to store a copy of the collection of documents.</li>
+<li>Documents may fail on the servers. The client does not see the document failure until it tries to access the document.<br />
+</li>
+<li>Client may audit the external servers to test the validity of each copy of each document. If a document is found to have failed, the client refreshes the copy on the server (provided that an intact copy remains on any other server).<br />
+</li>
+<li>At the end of some time period, assess how many documents have been permanently lost.</li>
+</ul>
+<h2 id="illustration">Illustration</h2>
+<h1 id="simple-case----independent-failures">Simple Case -- Independent Failures</h1>
+<p>How many copies do you need if ...</p>
+<h2 id="just-make-copies----no-auditing-too-many">Just make copies -- no auditing? TOO MANY</h2>
+<ul>
+<li>Long term -- bit rot o Show results from long term simulation o [TABLE] (how long for 1% loss, based on number of copies) o Interaction -- fragility of big documents o [FIGURE] (how long for 1% loss, based on increasing size) o Cite to Rosenthal previous results on this</li>
+<li>Medium term -- if storage error rates are uncertain o Storage error rates are difficult to verify o [FIGURE] How long for failure of 1% as error rate increases? o How to interpret claimed storage error rates - What are the limitations of how MTBF is measured? - Given an MTBF, what is the possible bounded range of half-lives?</li>
+</ul>
+<h2 id="auditing-and-independent-failures-five">Auditing and independent failures? FIVE</h2>
+<ul>
+<li>Key conditions for this solution</li>
+<li>entirely independent</li>
+<li>(no correlated failures, no intelligent adversaries, no institutional failures)</li>
+<li>Robust to storage quality</li>
+<li>[FIGURE]</li>
+<li>Auditing is systematic
+<ol style="list-style-type: decimal">
+<li>(compare to random, usage base)</li>
+<li>Random auditing, with replacement, is less effective.<br />
+</li>
+<li>Systematic auditing, periodically and without replacement, is most effective.
+<ol style="list-style-type: lower-alpha">
+<li>Auditing and egress charges -- piecemeal is ok</li>
+<li>Auditing charges would be reduced by cryptographic affordances on cloud-server side ...</li>
+</ol></li>
+<li>Robust to audit frequency
+<ol style="list-style-type: lower-alpha">
+<li>The impact of the rate of auditing is surprisingly less influential than the auditing strategy. Auditing more frequently than annually has little impact on losses, across a wide spectrum of error rates.</li>
+<li>Systematic auditing in a small number of segments, e.g., auditing one quarter of the collection every calendar quarter, is slightly more effective than one large, annual audit, and eases bandwidth requirements.<br />
+</li>
+</ol></li>
+</ol></li>
+<li>[FIGURE]</li>
+</ul>
+<h1 id="how-many-more-copies-...-associated-failures">How many more copies ... ? Associated Failures</h1>
+<h2 id="type-of-threats">Type of Threats</h2>
+<ul>
+<li>Server-side Billing Failure<br />
+</li>
+<li>Server-side Financial Failure<br />
+</li>
+<li>Unsophisticated adversary outsider attacker<br />
+</li>
+<li>HVAC Failure/anticipated environmental problem<br />
+</li>
+<li>Unanticipated Environmental Catastrophe (including local war)<br />
+</li>
+<li>Local software failure<br />
+</li>
+<li>Admin failure<br />
+</li>
+<li>Hardware batch quality<br />
+</li>
+<li>Formal Government Action<br />
+</li>
+<li>Powerful External Adversary<br />
+</li>
+<li>Economic Recession<br />
+</li>
+<li>Limited Internal Adversary<br />
+</li>
+<li>Curatorial Failure/Client error<br />
+</li>
+<li>Common software failure</li>
+</ul>
+<h2 id="modeling-associated-failures">Modeling Associated Failures</h2>
+<p>Sources of failures are modeled as a stochastic processes, in a hierarchical model</p>
+<table style="width:71%;">
+<colgroup>
+<col width="8%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Logical Block</th>
+<th>Server (Provider) Glitch</th>
+<th>Global Shock</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Represents</td>
+<td>failure of logical block within physically raided storage</td>
+<td>event affecting reliability of single provider</td>
+<td>event affecting reliability of multiple providers</td>
+</tr>
+<tr class="even">
+<td>Distribution</td>
+<td>Poisson IID</td>
+<td>Poisson IID</td>
+<td>Poisson IID</td>
+</tr>
+<tr class="odd">
+<td>Duration</td>
+<td>Instantaneous and permanent</td>
+<td>Bounded Duration %GLITCH_MAX_LIFE%, Exponential Decay</td>
+<td>instantaneous</td>
+</tr>
+<tr class="even">
+<td>Effect</td>
+<td>loss of single block of single copy of document</td>
+<td>Increases logical block failure rate</td>
+<td>(Immediately) inject glitch in k servers</td>
+</tr>
+<tr class="odd">
+<td>Detection</td>
+<td>Loss is detected on audit</td>
+<td>Server error itself detected on audit iff. block error rate &gt; %CLIENT_SENSITIVITY</td>
+<td>Invisible (detected only through effects on block failure and server glitch)</td>
+</tr>
+<tr class="even">
+<td>Notes</td>
+<td>Failure rate is not known precisely to client</td>
+<td>Induces additional block failures, correlations among block failures.</td>
+<td>Induces server glitches, and correlations among server</td>
+</tr>
+</tbody>
+</table>
+<p>A number of sources are not modeled, but are assumed to be addressed through storage practices:</p>
+<ul>
+<li>Bathtub curve, accelerate start and end-of-life failures. The model is conditioned on good systems administration practice is in place, including equipment burn-in and scheduled replacement within the expected service life. Thus the error rate observed during the service life of the equipment should not be subject to these failure.</li>
+<li>Raid configuration characteristics, internal raid errors. Standard storage practice may include low-level physical redundancy. Thus the reliability of a logical block will be better than that of an underlying physical storage. When using the model, one should calibrate error rates based on the implied or observed failure rates of logical blocks -- each of which may be represented by redundant physical storage.</li>
+<li>Media format obsolence -- we assume good practice -- migration to new media bewfore end of life.</li>
+<li>Unmanaged File Format obsolescence.
+<ul>
+<li>Management can mitigate file format obsolescence where documents are stored in multiple formats (or multiple indepent readers) and tested for format characteristics at audit. Failures occur at the level an entire document, but the threat of loss could be modeled as with a block error rate implying a certain document failure rate for fixed size documents, where the number of servers represents the number of independent formats stored.</li>
+<li>Unmanaged format obsolescence cannot be addressed through redundancy, etc. -- will not show on audits</li>
+</ul></li>
+</ul>
+<p>What are are not modeling - Sophisticated adversaries that attack the auditing mechanism - Cascading failure/contagion - Environmental glitch that directly affect background rate of server glitch - Server characteristics are in a steady -state equlibrium -- characteristic of servers remain the same over time.</p>
+<p>A wide range of real-world threats may be modeled through varying the parameterization of the model</p>
+<h2 id="threat-matrix">Threat Matrix</h2>
+<p>A wide range of real-world threats may be modeled through varying the parameterization of the model</p>
+<p>[table] Model Level Real World Threat Source Used to predict .. Use to derive ... Logical Block - loss due to media failure loss due to raid/internal replication characteristics and failure Document loss rate as a function of {number of replicas, auditing strategy, auditing frequency, block error rate} Document loss as a function of - document size - format fragility - file compression - managed format obsolescence</p>
+<p>Server - Server-side Billing Failure - Server-side Financial Failure - Unsophisticated adversary outsider attacker - HVAC Failure/anticipated environmental problem - Unanticipated Environmental Catastrophe (including local war) - Local software failure - Admin failure - Hardware batch quality Document loss rate rate as a function of server error characteristics, given a fixed choice of {replicas, auditing, block error} Increased redundancy needed to maintain fixed loss rate in presence of server errors, given recommended auditing and repair strategy Global - Formal Government Action - Powerful External Adversary - Economic Recession - Limited Internal Adversary - Curatorial Failure/Client error - Common software failure Document loss rate rate as a function of global error characteristics, given a fixed choice of {replicas, auditing, block error} Increased redundancy needed to maintain fixed loss rate in presence of global errors</p>
+<p>Effects of encryption key escrow policies</p>
+<p>Tradeoff between regional diversification and adding servers.</p>
+<p>Server Error Parameterizations</p>
+<p>Type frequency Impact lifetime Notes Server Billing Medium High ((&gt; sensitivity rate) Permanent loss of content Loss of entire collection on server Financial Low High Permanent -&gt; simulation period Bankruptcy - loss of collection Low Resource External Adversary Low Medium Medium Assume that adversary does not subvert audit HVAC high small medium<br />
+Unanticipated Environmental Catastrophe low high short<br />
+Local Software medium medium long<br />
+Administrator Error medium small short<br />
+Hardware batch quality Medium Medium Long</p>
+<h2 id="how-many-more-for">How Many More for</h2>
+<ul>
+<li>Environmental</li>
+<li>Institutional Final Failure</li>
+<li>Recession</li>
+</ul>
+<h1 id="generalizations">Generalizations</h1>
+<h2 id="overview">Overview</h2>
+<h2 id="large-vs-small-documents">Large vs Small documents</h2>
+<h2 id="large-vs-small-collections">Large vs Small collections</h2>
+<h2 id="compression">Compression</h2>
+<ul>
+<li>Documents are fragile Compressed, encrypted: small failure makes document unreadable Variation: Repairable documents Small failure damages only one segment Model this as a set of smaller docs</li>
+<li></li>
+</ul>
+<h2 id="encryption">Encryption</h2>
+<p>Deriving encryption key loss:</p>
+<ul>
+<li>Assume that your expected collection loss with N_S servers is L% , without encryption</li>
+<li>Assume N_K copies of keys with</li>
+<li>Assume loss of all keys yields 100% loss of collection</li>
+<li><p>Assume availability and integrity of key is verified on audit</p>
+<p>For example:</p></li>
+</ul>
+<p>Suppose there are only 2 copies of keys. Is the expected document rate due to encryption key loss is equivalent to the expected document loss in the following scenario? - there are two servers - logical block failure is 0 - audits are annual - servers are subject to glitches of the <em>financial failure</em> form -- permanent, total loss - What is L*= E(L|KL,N_K) - Can this be derived from failure rate of N_S servers with a rate of KL financial failures ## Format Obsolescence</p>
+<h1 id="replication-and-extension">Replication And Extension</h1>
+<h2 id="value-of-replicability">Value of replicability</h2>
+<h2 id="calibration-with-real-world-data----how-to-calibrate">Calibration with real world data -- how to calibrate</h2>
+<h2 id="extension-and-parameterization">Extension and parameterization</h2>
+<h1 id="recommendation">Recommendation</h1>
+<h2 id="for-collection-owner">For collection owner</h2>
+<ul>
+<li>Use at least 5 copies</li>
+<li>Use systematic annual auditing</li>
+<li>Do not trust MTBF and other similar measures</li>
+<li>Use compression, with known algorithms</li>
+</ul>
+<h2 id="for-digital-preservation-commons">For digital preservation commons</h2>
+<ul>
+<li>Develop standards
+<ol style="list-style-type: decimal">
+<li>with cloud vendors for cryptographic auditing that does not require data egress</li>
+<li>Reporting of failure rates</li>
+</ol></li>
+<li>Sharing reliability of cloud vendors</li>
+<li>Sharing information on correlated failures? ## Recommendations for research</li>
+<li>Detailed cost models</li>
+<li>Strong adversaries</li>
+<li>Erasure codes...</li>
+</ul>
+<h1 id="references">References</h1>
+<h1 id="supplementary-materials----hideous-details">Supplementary Materials -- Hideous Details</h1>
+<h2 id="statistical-modeling-detail">Statistical Modeling Detail</h2>
+<h2 id="simplifying-assumptions-and-scaling">Simplifying assumptions and scaling</h2>
+<ul>
+<li>One client</li>
+<li>Fixed number of docs</li>
+<li>Fixed length of simulation; metric years, quarters, months</li>
+<li>Identical servers</li>
+<li>Simple document failures: bad sector = dead</li>
+<li>Doc size, sector size, shelf size</li>
+<li>Scaling of doc size and error rate
+<ol style="list-style-type: decimal">
+<li>Implications for compression</li>
+</ol></li>
+<li>Logarithmic scaling of error rates and number of copies for efficiency and easy comparisons</li>
+<li>Everything arrives Poisson, rates are exponential, rates stated as half-lives
+<ol style="list-style-type: decimal">
+<li>Sector errors, server failures</li>
+<li>Glitches that impact error rate on a server</li>
+<li>Shocks that impact life expectancy of servers</li>
+</ol></li>
+</ul>
+<h2 id="simulation-runs">Simulation Runs</h2>
+<ul>
+<li>Random number generation, fixed seeds</li>
+<li>Small-ish to medium repetitions with seed sequences for repeatability</li>
+<li>Statistics extracted: median, midmean, trimean</li>
+</ul>
+<h2 id="software-architecture-details">Software Architecture Details</h2>
+<ul>
+<li>Main program for a single run, produces detailed log file</li>
+<li>Broker program, and associated shell scripts, to schedule many runs across available compute cores</li>
+<li>Extraction program to pull important data from log files</li>
+<li>R scripts to summarize data into tables</li>
+<li>R scripts to produce graphs</li>
+<li>All programs CLI-based, run on Linux (Ubuntu server and Cygwin on Windows)</li>
+<li>How-to documentation</li>
+</ul>
+<h2 id="instructions-for-installation-and-software-execution">Instructions for Installation and Software Execution</h2>
+<ul>
+<li>How to Install on Amazon Web Services</li>
+</ul>
+<h2 id="how-to-model-various-scenario">How to Model Various Scenario</h2>

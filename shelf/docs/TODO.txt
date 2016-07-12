@@ -31,10 +31,10 @@ DONE - BUG, NEEDS FIXING: when client provisions a new server, it must
   on all servers, we can't invent a new copy for the new server.  
   this might be just a nit for most failures, but for 200% or 300% 
   correlated failures, this is a real concern.  
-- QUESTION: when provisioning a new server to replace a failed one, 
+FIXME - QUESTION: when provisioning a new server to replace a failed one, 
   should the client mark the re-provisioning as majority or minority 
   repairs?
-- optimize auditing: when it finds a dead server, don't bother checking 
+FIXME - optimize auditing: when it finds a dead server, don't bother checking 
   any more documents on that particular server, and don't attempt any
   repairs to that server.  should speed up auditing considerably.  
 
@@ -46,19 +46,19 @@ DONE - slow down after extractvalues, too.
 TODO: broker.py
 DONE - increase the stuck timer a lot.
 DUNNO - protect against grep failure, linux vs windows.
-- add a cleanstart shell script to empty the dirs that need to 
+FIXME - add a cleanstart shell script to empty the dirs that need to 
   be empty, set a clean GiantOutput file, and rescue any data
   that was left over in a previous GiantOutput file into
   the done dir.  
 DONE - fix y/n switch options to get rid of the need for a value.
 DONE - fix the broker invocation in the AWSinstallscript to match the
   revised y/n options.
-- start the run count from 1 even for cases that have already been done, 
+FIXME - start the run count from 1 even for cases that have already been done, 
   so that the run number reflects progress toward the total number.  
 
 
 TODO: newinstructions
-- Add a squash function to reduce blank sequences to single blanks
+FIXME - Add a squash function to reduce blank sequences to single blanks
   in flat files, in case someone created instructions in fixed columns.
 DONE - write filter for instructions as they are being generated flat
   hierarchical: a field named action for permit/deny
@@ -69,7 +69,7 @@ DONE - rewrite rules to filter lots more, particularly nonsense cases
   with glitch freq, impact, decay, and life.  
 DONE - integrate filter into last stage of flat instruction 
   generation
-- write documentation on how to generate instructions flat file 
+FIXME - write documentation on how to generate instructions flat file 
   and database.  
 DONE - fix order of args to filter program, data file last.
 DONE - fix shell script that makes complete instruction list to
@@ -77,27 +77,27 @@ DONE - fix shell script that makes complete instruction list to
 
 
 TODO: newnewinstructions, flatlib or new db
-- custom flat db or maybe tiny or buzhug
-- facade or adapter: same interface as current mongolib
-- new load, list, and clear utilities that use flatlib
-- eventually, web app to generate smallish sets of instructions
+FIXME - custom flat db or maybe tiny or buzhug
+FIXME - facade or adapter: same interface as current mongolib
+FIXME - new load, list, and clear utilities that use flatlib
+FIXME - eventually, web app to generate smallish sets of instructions
 
 
 TODO: packaging into Docker
 DONE - do Docker basic tutorials
 DONE - construct vm platforms for docker learning on both systems
 DONE - transcribe crummy bash script to dockerfile.
-- write docker shim to feed instructions from outside to inside.
-- add shim to docker image
-- use docker logs to watch progress of log files
+FIXME - write docker shim to feed instructions from outside to inside.
+FIXME - add shim to docker image
+FIXME - use docker logs to watch progress of log files
 
 
 TODO: Docker scheduling
-- after container install, get sources from github
-- after container install, run first simple test
-- after container install, build tinytestdb
-- after container install, start mongod
-- after container install, run broker tests
+FIXME - after container install, get sources from github
+FIXME - after container install, run first simple test
+FIXME - after container install, build tinytestdb
+FIXME - after container install, start mongod
+FIXME - after container install, run broker tests
 
 
 TODO: AWS deployment
@@ -113,16 +113,16 @@ DONE - clean up and document the AWS-Ubuntu install script.
 DONE - test docker deployment on 8 core system.
 DONE - test docker deployment on 32 core system.
 DONE - change newinstructions db to something smaller and more useful.
-- change newinstructions section of script to create flat instructions 
+FIXME - change newinstructions section of script to create flat instructions 
   and database from the ins files pulled.  
 
 
 TODO: nonmonotonicity testing
-- find where the sensitive areas once were; seem to have lost them.
-- do runs in the sensitive areas, limited to 3-4 lifetimes and few copies
-- runs with 100 or more seeds?
-- many runs with 20ish seeds to assess variability?
-- jacknife the existing numbers?
+FIXME - find where the sensitive areas once were; seem to have lost them.
+FIXME - do runs in the sensitive areas, limited to 3-4 lifetimes and few copies
+FIXME - runs with 100 or more seeds?
+FIXME - many runs with 20ish seeds to assess variability?
+FIXME - jacknife the existing numbers?
 
 
 TODO: outline for September presentation
@@ -152,34 +152,34 @@ DONE - change glitch frequency to half-life (oops, already is)
 DONE - update the main.py CLI help to reflect half-life instead of lifetime.
 DONE - update the main.py CLI to accept both --lifek and --lifem.  
 DONE - update the broker.py CLI help to reflect half-life instead of lifetime.
-- update other docs to reflect half-life instead of lifetime.  
+FIXME - update other docs to reflect half-life instead of lifetime.  
 WRONG - update main.py to accept either lifek or lifem but not both.
 DONE - update main.py to accept both lifek and lifem, where lifek takes
   precedence because it is more accurate.  
 DONE - BUG: fix main.py arg parsing to make all the positional params mandatory.  
   and bump the CLI version number.  
 DONE - remove the requirement for a Y/N value from --shortlog.
-- BUG: fix main.py default values in G so that is doesn't fail if there are
+FIXME - BUG: fix main.py default values in G so that is doesn't fail if there are
   no param files in the familydir or specificdir; always fails for the list
   items, such as ncopies, I think because the list items in the dictionaries
   should be one level deeper.  
 
 
 TODO: lifetimes: correlated institutional failures
-- at some interval, economic glitch dramatically increases the 
+FIXME - at some interval, economic glitch dramatically increases the 
   institutional 100% failure rate for >= 1 server.
   Note trickiness: this is cross-server, needs access to several
   server instances at once.
-- add external parameters to set number of servers affected,
+FIXME - add external parameters to set number of servers affected,
   the decrease in institution lifetime, and the rate of economic
   recession/depression.  
 
 
 TODO: web interface to select instructions for broker run
-- learn kivy and remi, decide which to use.
-- build static web interface to permit choosing instructions for 
+FIXME - learn kivy and remi, decide which to use.
+FIXME - build static web interface to permit choosing instructions for 
   a single run, or subset instructions for group run.
-- build backend for interface that generates broker.py command.
+FIXME - build backend for interface that generates broker.py command.
 
 
 TODO: newinstructions
@@ -192,23 +192,23 @@ DONE - integrate into last stage of flat instruction generation.
 
 
 TODO: newnewinstructions
-- custom flat db or maybe tiny or buzhug
-- facade or adapter: same interface as current mongolib
-- new load, list, and clear utilities that use flatlib
-- eventually, web app to generate smallish sets of instructions
+FIXME - custom flat db or maybe tiny or buzhug
+FIXME - facade or adapter: same interface as current mongolib
+FIXME - new load, list, and clear utilities that use flatlib
+FIXME - eventually, web app to generate smallish sets of instructions
 
 
 TODO: packaging
 DONE - do Docker basic tutorials
 DONE - construct vm platforms for docker learning on both systems
-- transcribe crummy bash script to dockerfile
+FIXME - transcribe crummy bash script to dockerfile
 
 
 DEFER nonmonotonicity testing
-- do runs in the sensitive areas, limited to 3-4 lifetimes and few copies
-- runs with 100 or more seeds?
-- many runs with 20ish seeds to assess variability?
-- jacknife the existing numbers?
+FIXME - do runs in the sensitive areas, limited to 3-4 lifetimes and few copies
+FIXME - runs with 100 or more seeds?
+FIXME - many runs with 20ish seeds to assess variability?
+FIXME - jacknife the existing numbers?
 
 
 
