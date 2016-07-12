@@ -84,8 +84,9 @@ How many copies do you need if ...
     1.	(compare to random, usage base)
     2.	Random auditing, with replacement, is less effective.  
     3.	Systematic auditing, periodically and without replacement, is most effective.
-        a.	Auditing and egress charges -- piecemeal is ok
-        b.	Auditing charges would be reduced by cryptographic affordances on cloud-server side ...
+        a. Auditing may be performed in segments, e.g., an annual audit can be broken into halves, one half the collection every half year, either systematically selected or randomly selected without replacement; or one quarter of the collection every quarter, and so forth.  
+        a. Auditing and egress charges -- piecemeal is ok
+        b. Auditing charges would be reduced by cryptographic affordances on cloud-server side ...
     4.	Robust to audit frequency
         a. The impact of the rate of auditing is surprisingly less influential than the auditing strategy.  Auditing more frequently than annually has little impact on losses, across a wide spectrum of error rates.
         b. Systematic auditing in a small number of segments, e.g., auditing one quarter of the collection every calendar quarter, is slightly more effective than one large, annual audit, and eases bandwidth requirements.   
@@ -116,12 +117,12 @@ Sources of failures are modeled as a stochastic processes, in a hierarchical  mo
 
 |  |	Logical Block |	Server (Provider) Glitch |	Global Shock |
 |-----|--------------|--------------|--------------|
-| Represents	| failure of logical block within physically raided storage |	event affecting reliability of single provider |	event affecting reliability of multiple providers |
-| Distribution |	Poisson IID |	Poisson IID	| Poisson IID |
-| Duration	| Instantaneous and permanent	| Bounded Duration %GLITCH_MAX_LIFE%, Exponential Decay 	| instantaneous| 
-|Effect |	loss of single block of single copy of document	| Increases logical block failure rate |	(Immediately) inject  glitch in k servers |
-| Detection |	Loss is detected on audit	| Server error itself detected on audit iff. block error rate > %CLIENT_SENSITIVITY |	Invisible (detected only through effects on block failure and server glitch) |
-| Notes	| Failure rate is not known precisely to client	| Induces additional block failures, correlations among block failures. 	| Induces server glitches, and correlations among server |
+| Represents | failure of logical block within physically raided storage | event affecting reliability of single provider | event affecting reliability of multiple providers |
+| Distribution | Poisson IID | Poisson IID	| Poisson IID |
+| Duration	| Instantaneous and permanent | Bounded Duration %GLITCH_MAX_LIFE%, Exponential Decay | instantaneous| 
+|Effect | loss of single block of single copy of document | Increases logical block failure rate | (Immediately) inject  glitch in k servers |
+| Detection | Loss is detected on audit	| Server error itself detected on audit iff. block error rate > %CLIENT_SENSITIVITY | Invisible (detected only through effects on block failure and server glitch) |
+| Notes	| Failure rate is not known precisely to client	| Induces additional block failures, correlations among block failures.  | Induces server glitches, and correlations among server |
 
 A number of sources are not modeled, but are assumed to be addressed through storage practices:
 
@@ -143,30 +144,32 @@ A wide range of real-world threats may be modeled through varying the parameteri
 ## Threat Matrix
 A wide range of real-world threats may be modeled through varying the parameterization of the model
 
-[table]
-Model Level	Real World Threat Source	Used to predict ..	Use to derive ... 
-Logical Block	- loss due to media failure
-loss due to raid/internal replication characteristics and failure	Document loss rate as a function of 
-{number of replicas, auditing strategy, auditing frequency, block error rate}	Document loss as a function of
-- document size
-- format fragility 
-- file compression
-- managed format obsolescence
+[Well, I'm fairly convinced that pandoc markdown can't do complex lists inside tables, so we will have to render this sort of table in raw HTML.]
 
-Server	- Server-side Billing Failure
+
+| Model Level | Real World Threat Source | Used to predict ... | Use to derive ... |
+|------|-------------------------|--------------------------|------------------------|
+
+| Logical Block	| <ul><li>loss due to media failure</li><li>loss due to raid/internal replication characteristics and failure</li></ul> | Document loss rate as a function of \{number of replicas, auditing strategy, auditing frequency, block error rate\} | Document loss as a function of 
+    * document size
+    * format fragility
+- file compression
+- managed format obsolescence |
+| Server | - Server-side Billing Failure
 - Server-side Financial Failure
 - Unsophisticated adversary outsider attacker
 - HVAC Failure/anticipated environmental problem
 - Unanticipated Environmental Catastrophe (including local war)
 - Local software failure
 - Admin failure
-- Hardware batch quality	Document loss rate rate as a function of server error characteristics, given a fixed choice of {replicas, auditing, block error}	Increased redundancy needed to maintain fixed loss rate in presence of server errors, given recommended auditing and repair strategy
-Global	- Formal Government Action
+- Hardware batch quality | Document loss rate rate as a function of server error characteristics, given a fixed choice of {replicas, auditing, block error}	Increased redundancy needed to maintain fixed loss rate in presence of server errors, given recommended auditing and repair strategy |
+
+| Global	|- Formal Government Action
 - Powerful External Adversary 
 - Economic Recession
 - Limited Internal Adversary
 - Curatorial Failure/Client error
-- Common software failure	Document loss rate rate as a function of global error characteristics, given a fixed choice of {replicas, auditing, block error}	Increased redundancy needed to maintain fixed loss rate in presence of global errors
+- Common software failure | Document loss rate rate as a function of global error characteristics, given a fixed choice of {replicas, auditing, block error} | Increased redundancy needed to maintain fixed loss rate in presence of global errors |
 
 Effects of encryption key escrow policies
 
@@ -175,16 +178,16 @@ Tradeoff between regional diversification and adding servers.
 
 Server Error Parameterizations
 
-Type	frequency	Impact	lifetime	Notes
-Server Billing	Medium	High ((> sensitivity rate)	Permanent loss  of content	Loss of entire collection on server
-Financial	Low	High	Permanent -> simulation period	Bankruptcy
-- loss of collection
-Low Resource External Adversary	Low	Medium	Medium	Assume that adversary does not subvert audit
-HVAC	high	small	medium	
-Unanticipated Environmental Catastrophe	low	high 	short	
-Local Software	medium	medium	long	
-Administrator Error	medium	small	short	
-Hardware batch quality	Medium 	Medium	Long
+| Type	| frequency	| Impact	| lifetime	| Notes |
+|----------|-------------|------------|------------|------------|
+| Server Billing	| Medium	| High ((> sensitivity rate)	| Permanent loss  of content	| Loss of entire collection on server |
+| Financial	| Low | High	| Permanent -> simulation period	| Bankruptcy - loss of collection |
+|Low Resource External Adversary	| Low	| Medium	| Medium	| Assume that adversary does not subvert audit |
+| HVAC	| high	| small	| medium	| |
+|Unanticipated Environmental Catastrophe	| low	| high 	| short	| |
+| Local Software	| medium	| medium	| long	| |
+|Administrator Error	| medium	| small	| short	| |
+| Hardware batch quality	| Medium 	| Medium	| Long | |
 	
 
 ## How Many More for 
@@ -203,12 +206,13 @@ Hardware batch quality	Medium 	Medium	Long
 ## Large vs Small collections
 
 ## Compression
+
 - Documents are fragile
-Compressed, encrypted: small failure makes document unreadable
-Variation: Repairable documents
-Small failure damages only one segment
-Model this as a set of smaller docs
-- 
+    - Compressed, encrypted: small failure makes document unreadable
+    - Variation: Repairable documents
+    - Small failure damages only one segment
+- Model this as a set of smaller docs
+
 
 
 ## Encryption

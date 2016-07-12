@@ -78,6 +78,8 @@
 </li>
 <li>Systematic auditing, periodically and without replacement, is most effective.
 <ol style="list-style-type: lower-alpha">
+<li>Auditing may be performed in segments, e.g., an annual audit can be broken into halves, one half the collection every half year, either systematically selected or randomly selected without replacement; or one quarter of the collection every quarter, and so forth.<br />
+</li>
 <li>Auditing and egress charges -- piecemeal is ok</li>
 <li>Auditing charges would be reduced by cryptographic affordances on cloud-server side ...</li>
 </ol></li>
@@ -192,16 +194,109 @@
 <p>A wide range of real-world threats may be modeled through varying the parameterization of the model</p>
 <h2 id="threat-matrix">Threat Matrix</h2>
 <p>A wide range of real-world threats may be modeled through varying the parameterization of the model</p>
-<p>[table] Model Level Real World Threat Source Used to predict .. Use to derive ... Logical Block - loss due to media failure loss due to raid/internal replication characteristics and failure Document loss rate as a function of {number of replicas, auditing strategy, auditing frequency, block error rate} Document loss as a function of - document size - format fragility - file compression - managed format obsolescence</p>
-<p>Server - Server-side Billing Failure - Server-side Financial Failure - Unsophisticated adversary outsider attacker - HVAC Failure/anticipated environmental problem - Unanticipated Environmental Catastrophe (including local war) - Local software failure - Admin failure - Hardware batch quality Document loss rate rate as a function of server error characteristics, given a fixed choice of {replicas, auditing, block error} Increased redundancy needed to maintain fixed loss rate in presence of server errors, given recommended auditing and repair strategy Global - Formal Government Action - Powerful External Adversary - Economic Recession - Limited Internal Adversary - Curatorial Failure/Client error - Common software failure Document loss rate rate as a function of global error characteristics, given a fixed choice of {replicas, auditing, block error} Increased redundancy needed to maintain fixed loss rate in presence of global errors</p>
+<p>[Well, I'm fairly convinced that pandoc markdown can't do complex lists inside tables, so we will have to render this sort of table in raw HTML.]</p>
+<table>
+<thead>
+<tr class="header">
+<th>Model Level</th>
+<th>Real World Threat Source</th>
+<th>Used to predict ...</th>
+<th>Use to derive ...</th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+| Logical Block |
+<ul>
+<li>
+loss due to media failure
+</li>
+<li>
+loss due to raid/internal replication characteristics and failure
+</li>
+</ul>
+<p>| Document loss rate as a function of {number of replicas, auditing strategy, auditing frequency, block error rate} | Document loss as a function of * document size * format fragility - file compression - managed format obsolescence | | Server | - Server-side Billing Failure - Server-side Financial Failure - Unsophisticated adversary outsider attacker - HVAC Failure/anticipated environmental problem - Unanticipated Environmental Catastrophe (including local war) - Local software failure - Admin failure - Hardware batch quality | Document loss rate rate as a function of server error characteristics, given a fixed choice of {replicas, auditing, block error} Increased redundancy needed to maintain fixed loss rate in presence of server errors, given recommended auditing and repair strategy |</p>
+<p>| Global |- Formal Government Action - Powerful External Adversary - Economic Recession - Limited Internal Adversary - Curatorial Failure/Client error - Common software failure | Document loss rate rate as a function of global error characteristics, given a fixed choice of {replicas, auditing, block error} | Increased redundancy needed to maintain fixed loss rate in presence of global errors |</p>
 <p>Effects of encryption key escrow policies</p>
 <p>Tradeoff between regional diversification and adding servers.</p>
 <p>Server Error Parameterizations</p>
-<p>Type frequency Impact lifetime Notes Server Billing Medium High ((&gt; sensitivity rate) Permanent loss of content Loss of entire collection on server Financial Low High Permanent -&gt; simulation period Bankruptcy - loss of collection Low Resource External Adversary Low Medium Medium Assume that adversary does not subvert audit HVAC high small medium<br />
-Unanticipated Environmental Catastrophe low high short<br />
-Local Software medium medium long<br />
-Administrator Error medium small short<br />
-Hardware batch quality Medium Medium Long</p>
+<table style="width:89%;">
+<colgroup>
+<col width="15%" />
+<col width="19%" />
+<col width="18%" />
+<col width="18%" />
+<col width="18%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Type</th>
+<th>frequency</th>
+<th>Impact</th>
+<th>lifetime</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Server Billing</td>
+<td>Medium</td>
+<td>High ((&gt; sensitivity rate)</td>
+<td>Permanent loss of content</td>
+<td>Loss of entire collection on server</td>
+</tr>
+<tr class="even">
+<td>Financial</td>
+<td>Low</td>
+<td>High</td>
+<td>Permanent -&gt; simulation period</td>
+<td>Bankruptcy - loss of collection</td>
+</tr>
+<tr class="odd">
+<td>Low Resource External Adversary</td>
+<td>Low</td>
+<td>Medium</td>
+<td>Medium</td>
+<td>Assume that adversary does not subvert audit</td>
+</tr>
+<tr class="even">
+<td>HVAC</td>
+<td>high</td>
+<td>small</td>
+<td>medium</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Unanticipated Environmental Catastrophe</td>
+<td>low</td>
+<td>high</td>
+<td>short</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Local Software</td>
+<td>medium</td>
+<td>medium</td>
+<td>long</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Administrator Error</td>
+<td>medium</td>
+<td>small</td>
+<td>short</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Hardware batch quality</td>
+<td>Medium</td>
+<td>Medium</td>
+<td>Long</td>
+<td></td>
+</tr>
+</tbody>
+</table>
 <h2 id="how-many-more-for">How Many More for</h2>
 <ul>
 <li>Environmental</li>
@@ -214,8 +309,13 @@ Hardware batch quality Medium Medium Long</p>
 <h2 id="large-vs-small-collections">Large vs Small collections</h2>
 <h2 id="compression">Compression</h2>
 <ul>
-<li>Documents are fragile Compressed, encrypted: small failure makes document unreadable Variation: Repairable documents Small failure damages only one segment Model this as a set of smaller docs</li>
-<li></li>
+<li>Documents are fragile
+<ul>
+<li>Compressed, encrypted: small failure makes document unreadable</li>
+<li>Variation: Repairable documents</li>
+<li>Small failure damages only one segment</li>
+</ul></li>
+<li>Model this as a set of smaller docs</li>
 </ul>
 <h2 id="encryption">Encryption</h2>
 <p>Deriving encryption key loss:</p>
