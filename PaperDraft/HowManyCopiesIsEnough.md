@@ -1,3 +1,19 @@
+<head>
+<style>
+th {
+background-color: yellow;
+font-family: sans-serif;
+}
+td {
+border: 1px solid black;
+}
+table {
+width: 80%;
+border-collapse: collapse;
+}
+</style>
+</head>
+
 % How Many Copies Is Enough?
 % Micah Altman; Richard Landau
 % 2016-07-11
