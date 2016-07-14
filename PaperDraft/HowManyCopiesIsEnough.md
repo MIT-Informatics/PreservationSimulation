@@ -39,25 +39,29 @@ border-collapse: collapse;
 
 # Fifty-Thousand Foot View
 
+<!-- START:TODO:MICAH--> 
 ## Problem Definition
 - Maintain large digital collections over time
 - Risks to collections 
 
 ![Various Threats to Library Collections (in the square brackets)](threats.jpg "Various Threat Types (in quotes after the link addr)")
 
-<!-- -->
     1.	Document rot on disk.
     2.	Environmental failures that accelerate document rot.
     3.	Server failures that destroy sets of documents.
     4.	Lack of independence of servers.
     5.	Attack on collection, institution, subject matter.
     6.	Et alia.
+<!-- END:TODO:MICAH--> 
 
+<!-- START:TODO:MICAH--> 
 ## Core Assumptions
 - Documents usually fail individually, but sometimes in large batches.
 - Document failures occur randomly, independently, at predictable rates.
 - But the rates are not constant across storage servers.
 - Nor are the rates constant through time.
+<!-- END:TODO:MICAH--> 
+
 
 ## Core Motivating Problem
 - Number of choices: formatting, auditing, quality, number of copies ...
