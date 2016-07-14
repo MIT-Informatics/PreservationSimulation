@@ -73,7 +73,7 @@ border-collapse: collapse;
 
 ## Illustration
  
-# Simple Case -- Independent Failures
+# Simple Case -- Independent Failures & Just Plain Copies
 How many copies do you need if ...
 
 ## Just make copies -- no auditing? TOO MANY
@@ -90,11 +90,11 @@ How many copies do you need if ...
         - What are the limitations of how MTBF is measured? 
         - Given an MTBF, what is the possible bounded range of half-lives?
 
-## Auditing and independent failures?  FIVE
+#  What if you add good auditing strategies...   FIVE
+- What's good auditing?'
 - Key conditions for this solution
 - entirely independent
 - (no correlated failures, no intelligent adversaries, no institutional failures) 
-- Robust to storage quality
 - [FIGURE]
 - Auditing is systematic 
     1.	(compare to random, usage base)
@@ -103,9 +103,13 @@ How many copies do you need if ...
         a. Auditing may be performed in segments, e.g., an annual audit can be broken into halves, one half the collection every half year, either systematically selected or randomly selected without replacement; or one quarter of the collection every quarter, and so forth.  
         a. Auditing and egress charges -- piecemeal is ok
         b. Auditing charges would be reduced by cryptographic affordances on cloud-server side ...
-    4.	Robust to audit frequency
+- Robustness 
+     1,
+        Robust to audit frequency
         a. The impact of the rate of auditing is surprisingly less influential than the auditing strategy.  Auditing more frequently than annually has little impact on losses, across a wide spectrum of error rates.
-        b. Systematic auditing in a small number of segments, e.g., auditing one quarter of the collection every calendar quarter, is slightly more effective than one large, annual audit, and eases bandwidth requirements.   
+        b. Systematic auditing in a small number of segments, e.g., auditing one quarter of the collection every calendar quarter, is slightly more effective than one large, annual audit, and eases bandwidth requirements. 
+     2. Robust to storage quality, storage quality variations over time
+     3. NOT robust to  failures associated across servers... 
 - [FIGURE]
 
 # How many more copies ... ? Associated Failures
