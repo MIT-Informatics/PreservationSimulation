@@ -54,13 +54,18 @@ border-collapse: collapse;
     6.	Et alia.
 <!-- END:TODO:MICAH--> 
 
-<!-- START:TODO:MICAH--> 
+<!-- DONE! START:TODO:RICK--> 
 ## Core Assumptions
-- Documents usually fail individually, but sometimes in large batches.
-- Document failures occur randomly, independently, at predictable rates.
-- But the rates are not constant across storage servers.
-- Nor are the rates constant through time.
-<!-- END:TODO:MICAH--> 
+
+- Documents are stored on storage servers, on (currently) rotating disk memories.  
+- Documents may be lost by becoming unreadable from storage.  Such individual document failures are independent of one another.  
+- A storage server may fail and cause all the data stored on that server to be lost.  Such failures are random and occur at some rate.  The rate may vary due to exogenous circumstances.  Major storage failures are very rare events compared with individual document failures.  
+- Storage servers are independent of each other.  Each server has a characteristic rate of failures of stored data.  Different storage servers may have different associated failure rates.  
+- It is possible that the failure rate within a server is not constant over time.  However, over suitably short intervals, a changing rate can be approximated  by some mean value in the interval.  
+- Failures of disk data occur in small regions, e.g., blocks of data or small groups of blocks of data.  These data failures within a storage service occur randomly and independently among the disk resources of the storage server.  
+- Documents may occupy more or less storage depending on their size.  Since failures of blocks of storage are random and independent, a failure is more likely to be located within a large document than within a small one.  
+
+<!-- DONE! END:TODO:RICK--> 
 
 
 ## Core Motivating Problem
@@ -68,12 +73,20 @@ border-collapse: collapse;
 - Keeping risk of object loss fixed -- what choices minimize $?
 - "Dual problem" --  Keeping $ fixed,  what choices minimize risk?
 
+<!-- DONE! START:TODO:RICK--> 
 ## Basic Model Framework
-- One client, one collection, many documents.
-- Client asks some number of external servers to store a copy of the collection of documents.
-- Documents may fail on the servers.  The client does not see the document failure until it tries to access the document.  
-- Client may audit the external servers to test the validity of each copy of each document.  If a document is found to have failed, the client refreshes the copy on the server (provided that an intact copy remains on any other server).  
-- At the end of some time period, assess how many documents have been permanently lost.  
+
+- The model employs one client library with one collection that contains a large number of documents.  Results for multiple clients, for clients with multiple collections, or for varying number of documents can be extrapolated from this simple case.  
+- The client assigns some number of external servers to store a copy of the collection of documents.  Each server is supposed to maintain, and be able to retrieve on demand, an authentic copy of any of the documents in the collection.  
+- Documents may fail on the servers.  When a document fails on a server, the failure is silent.  The client is not immediately informed of the failure.  Indeed, the server might not be able to sense that the failure has occurred until it tries to retrieve the document on a request from the client.  
+- The model does not consider the costs of storage or bandwidth.  These factors vary widely and change rapidly.  Any conclusions based on specific numbers would become obsolete very quickly.  However, some possibilities for minimizing or smoothing bandwidth consumption are considered.  
+- From time to time, the client may test the copies of documents on servers to ensure that they can still be read and are still valid copies.  The model supports this process of auditing the collection.  Audits can be scheduled and performed using a variety of schedules and strategies.  
+- If in the process of auditing the collection, a document is found to have failed on a server, the client tests all other copies of the document on all other servers.  If an intact copy remains on any other server, the client will refresh the failed copy and continue.  If no other intact copy remains, the document is considered to be permanently lost.  
+- At the end of the simulation time period, the model assesses all copies of documents on all servers to determine how many documents have been permanently lost.  
+- This entire simulation cycle is repeated a number of times using different values to seed the (pseudo-)random number generator that drives the simulation.  The numbers from all runs are collected and presented in tabular form and in graphical summaries in the supplemental material.  
+
+<!-- DONE! END:TODO:RICK--> 
+ 
 
 ## Illustration
  
