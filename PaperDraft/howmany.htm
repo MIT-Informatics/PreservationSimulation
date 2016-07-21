@@ -33,6 +33,7 @@ border-collapse: collapse;
 </blockquote>
 <h1 id="motivation">Motivation</h1>
 <h1 id="fifty-thousand-foot-view">Fifty-Thousand Foot View</h1>
+<!-- START:TODO:MICAH-->
 <h2 id="problem-definition">Problem Definition</h2>
 <ul>
 <li>Maintain large digital collections over time</li>
@@ -42,50 +43,71 @@ border-collapse: collapse;
 <img src="threats.jpg" title="Various Threat Types (in quotes after the link addr)" alt="Various Threats to Library Collections (in the square brackets)" />
 <p class="caption">Various Threats to Library Collections (in the square brackets)</p>
 </div>
-<!-- -->
 <pre><code>1.  Document rot on disk.
 2.  Environmental failures that accelerate document rot.
 3.  Server failures that destroy sets of documents.
 4.  Lack of independence of servers.
 5.  Attack on collection, institution, subject matter.
 6.  Et alia.</code></pre>
+<!-- END:TODO:MICAH-->
+<!-- DONE! START:TODO:RICK-->
 <h2 id="core-assumptions">Core Assumptions</h2>
 <ul>
-<li>Documents usually fail individually, but sometimes in large batches.</li>
-<li>Document failures occur randomly, independently, at predictable rates.</li>
-<li>But the rates are not constant across storage servers.</li>
-<li>Nor are the rates constant through time.</li>
+<li>Documents are stored on storage servers, on (currently) rotating disk memories.<br />
+</li>
+<li>Documents may be lost by becoming unreadable from storage. Such individual document failures are independent of one another.<br />
+</li>
+<li>A storage server may fail and cause all the data stored on that server to be lost. Such failures are random and occur at some rate. The rate may vary due to exogenous circumstances. Major storage failures are very rare events compared with individual document failures.<br />
+</li>
+<li>Storage servers are independent of each other. Each server has a characteristic rate of failures of stored data. Different storage servers may have different associated failure rates.<br />
+</li>
+<li>It is possible that the failure rate within a server is not constant over time. However, over suitably short intervals, a changing rate can be approximated by some mean value in the interval.<br />
+</li>
+<li>Failures of disk data occur in small regions, e.g., blocks of data or small groups of blocks of data. These data failures within a storage service occur randomly and independently among the disk resources of the storage server.<br />
+</li>
+<li>Documents may occupy more or less storage depending on their size. Since failures of blocks of storage are random and independent, a failure is more likely to be located within a large document than within a small one.</li>
 </ul>
+<!-- DONE! END:TODO:RICK-->
 <h2 id="core-motivating-problem">Core Motivating Problem</h2>
 <ul>
 <li>Number of choices: formatting, auditing, quality, number of copies ...</li>
 <li>Keeping risk of object loss fixed -- what choices minimize $?</li>
 <li>&quot;Dual problem&quot; -- Keeping $ fixed, what choices minimize risk?</li>
 </ul>
+<!-- DONE! START:TODO:RICK-->
 <h2 id="basic-model-framework">Basic Model Framework</h2>
 <ul>
-<li>One client, one collection, many documents.</li>
-<li>Client asks some number of external servers to store a copy of the collection of documents.</li>
-<li>Documents may fail on the servers. The client does not see the document failure until it tries to access the document.<br />
+<li>The model employs one client library with one collection that contains a large number of documents. Results for multiple clients, for clients with multiple collections, or for varying number of documents can be extrapolated from this simple case.<br />
 </li>
-<li>Client may audit the external servers to test the validity of each copy of each document. If a document is found to have failed, the client refreshes the copy on the server (provided that an intact copy remains on any other server).<br />
+<li>The client assigns some number of external servers to store a copy of the collection of documents. Each server is supposed to maintain, and be able to retrieve on demand, an authentic copy of any of the documents in the collection.<br />
 </li>
-<li>At the end of some time period, assess how many documents have been permanently lost.</li>
+<li>Documents may fail on the servers. When a document fails on a server, the failure is silent. The client is not immediately informed of the failure. Indeed, the server might not be able to sense that the failure has occurred until it tries to retrieve the document on a request from the client.<br />
+</li>
+<li>The model does not consider the costs of storage or bandwidth. These factors vary widely and change rapidly. Any conclusions based on specific numbers would become obsolete very quickly. However, some possibilities for minimizing or smoothing bandwidth consumption are considered.<br />
+</li>
+<li>From time to time, the client may test the copies of documents on servers to ensure that they can still be read and are still valid copies. The model supports this process of auditing the collection. Audits can be scheduled and performed using a variety of schedules and strategies.<br />
+</li>
+<li>If in the process of auditing the collection, a document is found to have failed on a server, the client tests all other copies of the document on all other servers. If an intact copy remains on any other server, the client will refresh the failed copy and continue. If no other intact copy remains, the document is considered to be permanently lost.<br />
+</li>
+<li>At the end of the simulation time period, the model assesses all copies of documents on all servers to determine how many documents have been permanently lost.<br />
+</li>
+<li>This entire simulation cycle is repeated a number of times using different values to seed the (pseudo-)random number generator that drives the simulation. The numbers from all runs are collected and presented in tabular form and in graphical summaries in the supplemental material.</li>
 </ul>
+<!-- DONE! END:TODO:RICK-->
 <h2 id="illustration">Illustration</h2>
-<h1 id="simple-case----independent-failures">Simple Case -- Independent Failures</h1>
+<h1 id="simple-case----independent-failures-just-plain-copies">Simple Case -- Independent Failures &amp; Just Plain Copies</h1>
 <p>How many copies do you need if ...</p>
 <h2 id="just-make-copies----no-auditing-too-many">Just make copies -- no auditing? TOO MANY</h2>
 <ul>
 <li>Long term -- bit rot o Show results from long term simulation o [TABLE] (how long for 1% loss, based on number of copies) o Interaction -- fragility of big documents o [FIGURE] (how long for 1% loss, based on increasing size) o Cite to Rosenthal previous results on this</li>
 <li>Medium term -- if storage error rates are uncertain o Storage error rates are difficult to verify o [FIGURE] How long for failure of 1% as error rate increases? o How to interpret claimed storage error rates - What are the limitations of how MTBF is measured? - Given an MTBF, what is the possible bounded range of half-lives?</li>
 </ul>
-<h2 id="auditing-and-independent-failures-five">Auditing and independent failures? FIVE</h2>
+<h1 id="what-if-you-add-good-auditing-strategies...-five">What if you add good auditing strategies... FIVE</h1>
 <ul>
+<li>What's good auditing?'</li>
 <li>Key conditions for this solution</li>
 <li>entirely independent</li>
 <li>(no correlated failures, no intelligent adversaries, no institutional failures)</li>
-<li>Robust to storage quality</li>
 <li>[FIGURE]</li>
 <li>Auditing is systematic
 <ol style="list-style-type: decimal">
@@ -99,12 +121,11 @@ border-collapse: collapse;
 <li>Auditing and egress charges -- piecemeal is ok</li>
 <li>Auditing charges would be reduced by cryptographic affordances on cloud-server side ...</li>
 </ol></li>
-<li>Robust to audit frequency
-<ol style="list-style-type: lower-alpha">
-<li>The impact of the rate of auditing is surprisingly less influential than the auditing strategy. Auditing more frequently than annually has little impact on losses, across a wide spectrum of error rates.</li>
-<li>Systematic auditing in a small number of segments, e.g., auditing one quarter of the collection every calendar quarter, is slightly more effective than one large, annual audit, and eases bandwidth requirements.<br />
-</li>
 </ol></li>
+<li>Robustness 1, Robust to audit frequency a. The impact of the rate of auditing is surprisingly less influential than the auditing strategy. Auditing more frequently than annually has little impact on losses, across a wide spectrum of error rates. b. Systematic auditing in a small number of segments, e.g., auditing one quarter of the collection every calendar quarter, is slightly more effective than one large, annual audit, and eases bandwidth requirements.
+<ol start="2" style="list-style-type: decimal">
+<li>Robust to storage quality, storage quality variations over time</li>
+<li>NOT robust to failures associated across servers...</li>
 </ol></li>
 <li>[FIGURE]</li>
 </ul>
