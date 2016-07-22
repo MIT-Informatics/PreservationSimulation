@@ -60,7 +60,7 @@ border-collapse: collapse;
 - Documents are stored on storage servers, on (currently) rotating disk memories.  
 - Documents may be lost by becoming unreadable from storage.  Such individual document failures are independent of one another.  
 - A storage server may fail and cause all the data stored on that server to be lost.  Such failures are random and occur at some rate.  The rate may vary due to exogenous circumstances.  Major storage failures are very rare events compared with individual document failures.  
-- Storage servers are independent of each other.  Each server has a characteristic rate of failures of stored data.  Different storage servers may have different associated failure rates.  
+- Storage servers are independent of each other.  Each server has a characteristic rate of failures of blocks of stored data.  Different storage servers may have different failure rates.  
 - It is possible that the failure rate within a server is not constant over time.  However, over suitably short intervals, a changing rate can be approximated  by some mean value in the interval.  
 - Failures of disk data occur in small regions, e.g., blocks of data or small groups of blocks of data.  These data failures within a storage service occur randomly and independently among the disk resources of the storage server.  
 - Documents may occupy more or less storage depending on their size.  Since failures of blocks of storage are random and independent, a failure is more likely to be located within a large document than within a small one.  
@@ -81,7 +81,7 @@ border-collapse: collapse;
 - Documents may fail on the servers.  When a document fails on a server, the failure is silent.  The client is not immediately informed of the failure.  Indeed, the server might not be able to sense that the failure has occurred until it tries to retrieve the document on a request from the client.  
 - The model does not consider the costs of storage or bandwidth.  These factors vary widely and change rapidly.  Any conclusions based on specific numbers would become obsolete very quickly.  However, some possibilities for minimizing or smoothing bandwidth consumption are considered.  
 - From time to time, the client may test the copies of documents on servers to ensure that they can still be read and are still valid copies.  The model supports this process of auditing the collection.  Audits can be scheduled and performed using a variety of schedules and strategies.  
-- If in the process of auditing the collection, a document is found to have failed on a server, the client tests all other copies of the document on all other servers.  If an intact copy remains on any other server, the client will refresh the failed copy and continue.  If no other intact copy remains, the document is considered to be permanently lost.  
+- If in the process of auditing the collection, a document is found to have failed on a server, the client will refresh the failed copy if an intact copy remains on any other server.  If no other intact copy remains, the document is considered to be permanently lost.  
 - At the end of the simulation time period, the model assesses all copies of documents on all servers to determine how many documents have been permanently lost.  
 - This entire simulation cycle is repeated a number of times using different values to seed the (pseudo-)random number generator that drives the simulation.  The numbers from all runs are collected and presented in tabular form and in graphical summaries in the supplemental material.  
 
@@ -94,6 +94,18 @@ border-collapse: collapse;
 How many copies do you need if ...
 
 ## Just make copies -- no auditing? TOO MANY
+
+<!-- START:TODO:RICK -->
+Need guidance about the relationship of so-called MTBF and the half-life that we use.
+Why did we choose this spectrum, which goes from rusty garbage-can lids to immortal disks.  
+- We chose a region where *something* is going on, some errors but not too many, something that matches experience.  Disks do fail, but not too often.  
+- Something related to the Backblaze and Google published numbers.
+- Relate drive failures to block failures somehow.  
+- Failure rates much lower for RAID, but still silent.  
+- Need strategy that works for somewhere on the spectrum, because one never knows where one is on that spectrum, and it changes anyway due to glitches, bad disks, and such.  
+Can we calculate backwards from audit results to apparent error rates?  Still wouldn't help with knowing why we are in the spectrum at all, but might be sort of a pleasing confirmation.  
+<!-- END:TODO:RICK -->
+
 - Long term -- bit rot
     o	Show results from long term simulation 
     o	[TABLE] (how long for 1% loss, based on number of copies) 
@@ -107,6 +119,7 @@ How many copies do you need if ...
         - What are the limitations of how MTBF is measured? 
         - Given an MTBF, what is the possible bounded range of half-lives?
 
+<!-- START:TODO:RICK -->
 #  What if you add good auditing strategies...   FIVE
 - What's good auditing?'
 - Key conditions for this solution
@@ -128,6 +141,8 @@ How many copies do you need if ...
      2. Robust to storage quality, storage quality variations over time
      3. NOT robust to  failures associated across servers... 
 - [FIGURE]
+<!-- END:TODO:RICK -->
+
 
 # How many more copies ... ? Associated Failures
 
