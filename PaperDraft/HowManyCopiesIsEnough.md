@@ -46,12 +46,12 @@ border-collapse: collapse;
 
 ![Various Threats to Library Collections (in the square brackets)](threats.jpg "Various Threat Types (in quotes after the link addr)")
 
-    1.	Document rot on disk.
-    2.	Environmental failures that accelerate document rot.
-    3.	Server failures that destroy sets of documents.
-    4.	Lack of independence of servers.
-    5.	Attack on collection, institution, subject matter.
-    6.	Et alia.
+1.	Document rot on disk.
+2.	Environmental failures that accelerate document rot.
+3.	Server failures that destroy sets of documents.
+4.	Lack of independence of servers.
+5.	Attack on collection, institution, subject matter.
+6.	Et alia.
 <!-- END:TODO:MICAH--> 
 
 <!-- DONE! START:TODO:RICK--> 
@@ -96,32 +96,38 @@ How many copies do you need if ...
 ## Just make copies -- no auditing? TOO MANY
 
 <!-- START:TODO:RICK -->
-Need guidance about the relationship of so-called MTBF and the half-life that we use.
+TODO: Need guidance about the relationship of so-called MTBF and the half-life that we use.
 Why did we choose this spectrum, which goes from rusty garbage-can lids to immortal disks.  
+
 - We chose a region where *something* is going on, some errors but not too many, something that matches experience.  Disks do fail, but not too often.  
 - Something related to the Backblaze and Google published numbers.
 - Relate drive failures to block failures somehow.  
 - Failure rates much lower for RAID, but still silent.  
 - Need strategy that works for somewhere on the spectrum, because one never knows where one is on that spectrum, and it changes anyway due to glitches, bad disks, and such.  
+
 Can we calculate backwards from audit results to apparent error rates?  Still wouldn't help with knowing why we are in the spectrum at all, but might be sort of a pleasing confirmation.  
 <!-- END:TODO:RICK -->
 
 - Long term -- bit rot
+
     o	Show results from long term simulation 
     o	[TABLE] (how long for 1% loss, based on number of copies) 
     o	Interaction  -- fragility of big documents 
     o	[FIGURE] (how long for 1% loss, based on increasing size)
     o	Cite to Rosenthal previous results on this
+    
 - Medium term -- if storage error rates are uncertain
+
     o	Storage error rates are difficult to verify
     o	[FIGURE] How long for failure of 1% as error rate increases?
     o	How to interpret claimed storage error rates
         - What are the limitations of how MTBF is measured? 
         - Given an MTBF, what is the possible bounded range of half-lives?
 
-<!-- START:TODO:RICK -->
+<!-- DONE! START:TODO:RICK -->
 #  What if you add good auditing strategies...   FIVE
-- What's good auditing?'
+<!--
+- What's "good auditing?"
 - Key conditions for this solution
 - entirely independent
 - (no correlated failures, no intelligent adversaries, no institutional failures) 
@@ -141,7 +147,42 @@ Can we calculate backwards from audit results to apparent error rates?  Still wo
      2. Robust to storage quality, storage quality variations over time
      3. NOT robust to  failures associated across servers... 
 - [FIGURE]
-<!-- END:TODO:RICK -->
+-->
+
+Auditing the collection, that is, testing the validity of remote copies of documents, can greatly reduce permanent document losses over time.  A number of strategies for auditing are possible, and some are measurably better than others.  
+
+In all cases, when a document copy is found to be absent (or corrupted), the auditing process attempts to replace the missing copy with a fresh copy obtained from another server.  If there is an intact copy on another server, then the missing document is repaired and the process continues.  
+
+Common auditing strategies: 
+
+- Total auditing: test all copies of all documents in the collection.  This auditing cycle is usually done systematically, at regular intervals, such as annually, quarterly, monthly, etc.  
+- (Systematic) segmented auditing: divide the collection into several segments, and test one segment at each interval.  For example, the collection may be divided into four segments; if each segment in turn is audited at quarterly intervals, then the entire collection will have been audited at the end of a yearly auditing cycle.  
+
+    Note that segments need not be fixed portions of the collection.  Each segment of the collection might be selected at random when its turn comes, so long as the random selection is made *without* replacement over the audit cycle.  This ensures that every document in the collection will be audited exactly once during the complete cycle.  
+
+- Random auditing: at some interval, audit a random subset of documents chosen from the collection.  This often is expressed as, for instance, "audit ten percent of the documents every month."  The difference between this random strategy and segmented auditing is that the random selection is chosen *with* replacement.  Thus it is likely that some documents will escape auditing entirely for long periods.  
+- Auditing by popularity: divide the collection into segments that represent varying levels of document usage, e.g., small segments for the documents most frequently accessed, segments for documents of intermediate popularity, and large segments for documents rarely accessed.  
+
+Our simulations include tests of many auditing strategies, including total, segmented, and random.  Tests differed in cycle frequency and in the parts of the collection are audited during each segment or cycle.  
+
+- All tests occurred on regular schedules.  
+- Auditing cycles varied from monthly to biennially.  
+- Segment counts were either one, two, four, or ten.  
+- Segments were chosen either systematically (the first quarter of the collection, the second quarter of the collection, etc.) or by uniform random selection.  
+
+Some features of the results are apparent.
+
+- Total auditing of the collection is highly effective at reducing document losses.  
+- Auditing in multiple segments is very slightly more effective than auditing the entire collection as one segment; e.g., auditing a quarter of the collection each quarter is slightly more effective than a single annual audit of the whole collection.  
+
+    We note also that auditing in a number of segments has the additional advantage of spreading the bandwidth requirements for auditing throughout the audit cycle.  
+
+- Random auditing, where segment contents are selected with replacement, is less effective than total auditing or, equivalently, segmented auditing without replacement.  
+- Across a wide range of document error rates, increasing auditing frequency beyond a certain point shows little improvement.  
+- The effectiveness of auditing is robust across a wide spectrum of storage quality (i.e., document error rates) and short term variations in storage quality.  
+- However, auditing strategies are not robust to associated failures that compromise multiple servers over short periods.
+
+<!-- DONE! END:TODO:RICK -->
 
 
 # How many more copies ... ? Associated Failures
