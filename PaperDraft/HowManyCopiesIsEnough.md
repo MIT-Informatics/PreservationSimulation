@@ -99,6 +99,8 @@ How many copies do you need if ...
 TODO: Need guidance about the relationship of so-called MTBF and the half-life that we use.
 Why did we choose this spectrum, which goes from rusty garbage-can lids to immortal disks.  
 
+<!-- outline area
+
 - We chose a region where *something* is going on, some errors but not too many, something that matches experience.  Disks do fail, but not too often.  
 - Something related to the Backblaze and Google published numbers.
 - Relate drive failures to block failures somehow.  
@@ -106,6 +108,70 @@ Why did we choose this spectrum, which goes from rusty garbage-can lids to immor
 - Need strategy that works for somewhere on the spectrum, because one never knows where one is on that spectrum, and it changes anyway due to glitches, bad disks, and such.  
 
 Can we calculate backwards from audit results to apparent error rates?  Still wouldn't help with knowing why we are in the spectrum at all, but might be sort of a pleasing confirmation.  
+
+disk failure rates
+google
+backblaze
+how does mtbf relate to observed age failures?
+should use mttf for some calcs
+ignore bathtub infant failures, observe "useful life" failures and senescence/wearout
+
+disk block error rates
+supposed swag for consumer grade sata disks
+drive-level bad block replacement rates?  anyone have data?
+raid soft error rates?  anyone have data?
+raid file migration?  anyone do this?  hard to imagine
+
+document failure rates with raid or error replacement?  
+no clue
+
+end of outline area -->
+
+(MUCH HAND-WAVING FOLLOWS)
+
+## A Few Words About Error Rates
+
+One basic question should be answered before embarking on such simulations: what is the failure rate of stored documents?  This is a difficult question due to a lack of real data.  
+
+- There is data on the failure rate of individual disk drives over time.  Thanks to Backblaze, Google, and others, there is some published empirical data on failure rates of disk drives of recent technology vintages.  These figures refer to replacements of entire disk drives during the useful life and wear-out periods of device use.  That is, they exclude infant failures but include mid-life and senescence.  Unfortunately, we do not get information on the rates of sector failures, bad block replacements, and so forth.  
+- There is an estimate of unrecoverable failures on consumer-grade SATA drives that is often mentioned in the industry: Pr{a bit fails during a year} = 1E-14.  This looks like a small number until one calculates that a 4TB drive, very common today, contains about 4E13 bits of data, plus essential metadata.
+- We have not encountered data on the performance of disk drives or blocks in RAID and erasure coding configurations, the effect of pre-emptive data scrubbing, etc.  
+- Data errors are always assumed to be silent to the client that owns the document.  Active searching for and correction of errors is necessary to ensure continuing data integrity.  Note that the multiple-copy storage and auditing procedure explored in this paper is analogous to RAID storage with data scrubbing, but done at a document level rather than a block level.  
+
+<!-- continuing with outline
+
+how to choose a spectrum of error rates?
+where something is going on
+some error but not too many
+between rusty garbage can lid and perfection, between fruit fly and immortality
+exponential lifetimes are not consistent with most human experience
+somehow relates to our common experience: there are errors but not many
+amazon, google, others ever quote rates?  
+five nines is absurdly low; nine nines is still way low based on simulations
+
+we have used mean exponential lifetime, which is precisely mtbf or mttf
+changed to half-life because it's easier for people to understand
+who knows lifetime = 63% of units failed (1-1/e); half-life easier to explain
+also, we generally prefer medians as measure of length when distributions are so skewed
+
+-->
+
+## The Representation and Scale of Error Rates
+
+The likelihood of an error in a disk bit or sector, or even the failure of an entire disk, is a very small number with many zeroes before the first significant digit.  We choose to invert the error rate into a function of lifetime of that bit (or sector).  Thus a probability of a bit failing in a year of 1E-14 becomes a mean lifetime of 1E14 years.  Expressed that way, the figure seems excessively optimistic.  Data on such a disk would be effectively immortal, and that does not correlate with experience.  We have to agree with Rosenthal (2010) and others that such estimates are merely marketing projections that are not based on empirical data.  Using simulations to investigate such nearly immortal disks would be expensive and fruitless.  If there are no errors, then no protective strategy is needed.  This does not correlate well with practical experience.  
+
+Where, then, to search for information about the effectiveness of replication and auditing of large collections of data?  We choose to investigate a region that more nearly matches the experience of computer users, where disks and disk files have lifetimes somewhere between the fruit fly and the universe.  
+
+- There are *some* errors rather than none.  
+- Larger data is likely to encounter more errors.  But
+- error rates are not so high as to be crippling to normal usage.  
+
+The region of error rates that we investigate generates enough errors to evaluate the impact of storing multiple copies and the impact of various auditing strategies.  Our conclusions describe storage and auditing strategies that are robust over very wide ranges of error rates (and the corresponding ranges of bit/block/disk lifetimes), spanning approximately four orders of magnitude.  
+
+The inverse of error rate is usually expressed in terms of MTBF or MTTF, and, initially, we expressed all parameters as mean exponential lifetime.  But MTBF and MTTF are hard for most non-experts to grasp.  "By the end of an MTTF period, approximately 63% of the units will have failed" is not easily understood by most non-statisticians.  (If we assume Poisson arrivals, the probability of failure in one average lifetime is (1-1/e).)  We have chosen for all simulations and tables of results to express lifetime instead as half-life.  "By the end of a half-life period, approximately half of the units will have failed" is easier to understand, and should be familiar to most people from examples of radioactive decay.  
+
+(END OF HAND-WAVING, AT LEAST ON THIS TOPIC)
+
 <!-- END:TODO:RICK -->
 
 - Long term -- bit rot
@@ -149,7 +215,7 @@ Can we calculate backwards from audit results to apparent error rates?  Still wo
 - [FIGURE]
 -->
 
-Auditing the collection, that is, testing the validity of remote copies of documents, can greatly reduce permanent document losses over time.  A number of strategies for auditing are possible, and some are measurably better than others.  
+Auditing the collection, that is, testing the validity of remote copies of documents, can greatly reduce permanent document losses over time.  The auditing process actively searches for errors before they cause permanent document losses, and corrects them whenever possible.  A number of strategies for auditing are possible, and some are measurably better than others.  
 
 In all cases, when a document copy is found to be absent (or corrupted), the auditing process attempts to replace the missing copy with a fresh copy obtained from another server.  If there is an intact copy on another server, then the missing document is repaired and the process continues.  
 
