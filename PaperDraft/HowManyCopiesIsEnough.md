@@ -36,29 +36,46 @@ border-collapse: collapse;
 
 
 # Motivation
+- Information production is rapidly increasing
+- Digital store changes the goal of preservation -- from maintaining  constant optimal environment, to continual curation to maintain understanding
+- Information systems designed for immediate use, not long term access and understanding. Much information at risk.
+- Changing economics of digital production makes it difficult for any one institution to safeguard everything it uses.
+- Changing economics also provides opportunities for preservation -- replication, cloud services, auditing, variety of storage options
+- Curators are faced with a set of choices -- storage media, replication, cloud vendors, auditing strategy, encryption, compression ... no systematic guidance, or quantitative models
 
 # Fifty-Thousand Foot View
 
 <!-- START:TODO:MICAH--> 
 ## Problem Definition
-- Maintain large digital collections over time
-- Risks to collections 
+- Maintain understanding of large digital collections over time
+- Choose strategy for collection storage quality, replication, auditing, repair, formatting  ...
+- Risks to collections come from a variety of threat types
+- Problem: Keeping risk of object loss fixed -- what choices minimize $ in storage, network, etc.
+- "Dual problem" --  Keeping $ fixed,  what choices minimize risk?
+
+
+## Core Risks
+
 
 ![Various Threats to Library Collections (in the square brackets)](threats.jpg "Various Threat Types (in quotes after the link addr)")
 
 1.	Document rot on disk.
 2.	Environmental failures that accelerate document rot.
 3.	Server failures that destroy sets of documents.
-4.	Lack of independence of servers.
+4.	Lack of independence of servers. 
+    >1 Business failures. 
+    >2 Economic failures
 5.	Attack on collection, institution, subject matter.
-6.	Et alia.
 <!-- END:TODO:MICAH--> 
 
 <!-- DONE! START:TODO:RICK--> 
 ## Core Assumptions
 
-- Documents are stored on storage servers, on (currently) rotating disk memories.  
-- Documents may be lost by becoming unreadable from storage.  Such individual document failures are independent of one another.  
+- Coherent aggregation of information are represented as documents.  A set of documents forms a collection. 
+- Documents are stored on storage servers, on (currently) largely rotating disk memories.  
+- Errors in storage may cause documents or some portion to become unreadable. If all copies of a document are unreadable, the document is permanently lost. 
+- (Format obsolecense is not a inherent part of this model, but forms of it may be modelled through extensions involving associated failure ... see below)
+- Errors in in individual document failures are independent of one another.  
 - A storage server may fail and cause all the data stored on that server to be lost.  Such failures are random and occur at some rate.  The rate may vary due to exogenous circumstances.  Major storage failures are very rare events compared with individual document failures.  
 - Storage servers are independent of each other.  Each server has a characteristic rate of failures of blocks of stored data.  Different storage servers may have different failure rates.  
 - It is possible that the failure rate within a server is not constant over time.  However, over suitably short intervals, a changing rate can be approximated  by some mean value in the interval.  
@@ -68,10 +85,6 @@ border-collapse: collapse;
 <!-- DONE! END:TODO:RICK--> 
 
 
-## Core Motivating Problem
-- Number of choices: formatting, auditing, quality, number of copies ...
-- Keeping risk of object loss fixed -- what choices minimize $?
-- "Dual problem" --  Keeping $ fixed,  what choices minimize risk?
 
 <!-- DONE! START:TODO:RICK--> 
 ## Basic Model Framework
@@ -393,6 +406,20 @@ Suppose there are only 2 copies of keys. Is the expected document rate due to en
 - What is L*= E(L|KL,N_K)
 - Can this be derived from failure rate of N_S servers with a rate of KL financial failures
 ## Format Obsolescence
+
+- can be simulated using repraremterize correlated surver failure model
+    - represent
+        - each format as server
+        - associated failures represent major technology shifts that affect groups of formats (web 4.0) 
+        - audit period represents time between format reviews -- review of a format for obsolence 
+    - collections are lost to format failure if all servers fail between audits
+- assumptions 
+    - need to have a an estmate of failure rate
+    - audit period is fixed
+    - NOT assuming that all documents in a format are actually stored on one server
+- excludes interaction between format and document failure rate
+    - if a particular format is extremely fragile, or extremely large
+
 
 # Replication And Extension
 
