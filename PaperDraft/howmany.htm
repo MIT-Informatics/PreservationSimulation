@@ -13,7 +13,7 @@ border-collapse: collapse;
 }
 </style>
 </head>
-<p>% How Many Copies Is Enough? % Micah Altman; Richard Landau % 2016-07-11</p>
+<p>% How Many Copies Is Enough? % Micah Altman; Richard Landau % 2016-08-15</p>
 <h1 id="title" class="unnumbered">How Many Copies Is Enough?</h1>
 <p><strong>Assessing Long-term Durability of Collections Through A Flexible, Replicable Simulation</strong></p>
 <blockquote>
@@ -32,13 +32,25 @@ border-collapse: collapse;
 </ul>
 </blockquote>
 <h1 id="motivation">Motivation</h1>
+<ul>
+<li>Information production is rapidly increasing</li>
+<li>Digital store changes the goal of preservation, from maintaining a constant optimal environment to continual curation in order to maintain understanding.</li>
+<li>Information systems designed for immediate use, not long term access and understanding. Much information at risk.</li>
+<li>Changing economics of digital production makes it difficult for any one institution to safeguard everything it uses.</li>
+<li>Changing economics also provides opportunities for preservation: replication, cloud services, auditing, and a variety of storage options.</li>
+<li>Curators are faced with a set of choices: storage media, replication, cloud vendors, auditing strategy, encryption, compression. There is currently no systematic guidance, based on quantitative models.</li>
+</ul>
 <h1 id="fifty-thousand-foot-view">Fifty-Thousand Foot View</h1>
 <!-- START:TODO:MICAH-->
 <h2 id="problem-definition">Problem Definition</h2>
 <ul>
-<li>Maintain large digital collections over time</li>
-<li>Risks to collections</li>
+<li>Maintain understanding of large digital collections over time.</li>
+<li>Choose strategy for collection storage quality, replication, auditing, repair, formatting.</li>
+<li>Risks to collections come from a variety of threat types.</li>
+<li>Problem: Keeping risk of object loss fixed: what choices minimize $ in storage, network, etc.</li>
+<li>&quot;Dual&quot; problem: Keeping $ fixed, what choices minimize risk?</li>
 </ul>
+<h2 id="core-risks">Core Risks</h2>
 <div class="figure">
 <img src="threats.jpg" title="Various Threat Types (in quotes after the link addr)" alt="Various Threats to Library Collections (in the square brackets)" />
 <p class="caption">Various Threats to Library Collections (in the square brackets)</p>
@@ -47,16 +59,22 @@ border-collapse: collapse;
 <li>Document rot on disk.</li>
 <li>Environmental failures that accelerate document rot.</li>
 <li>Server failures that destroy sets of documents.</li>
-<li>Lack of independence of servers.</li>
-<li>Attack on collection, institution, subject matter.</li>
-<li>Et alia. <!-- END:TODO:MICAH--></li>
+<li>Lack of independence of servers.
+<ol style="list-style-type: decimal">
+<li>Business failures: a single business failure may affect more than one server, due, e.g., to consolidation or cross-financing. That is, servers that appeared to be independent may not be financially independent in practice.<br />
+</li>
+<li>Economic failures.</li>
+</ol></li>
+<li>Attack on collection, institution, subject matter. <!-- END:TODO:MICAH--></li>
 </ol>
-<!-- DONE! START:TODO:RICK-->
 <h2 id="core-assumptions">Core Assumptions</h2>
 <ul>
-<li>Documents are stored on storage servers, on (currently) rotating disk memories.<br />
+<li>Coherent aggregationw of information are represented as documents. A set of documents forms a collection.</li>
+<li>Documents are stored on storage servers, which currently reside largely on rotating disk memories.<br />
 </li>
-<li>Documents may be lost by becoming unreadable from storage. Such individual document failures are independent of one another.<br />
+<li>An error in storage may cause a document or some portion of it to become unreadable. If all copies of a document are unreadable, then the document is permanently lost.</li>
+<li>(Format obsolescence is not an inherent part of this model, but forms of it may be modeled through extensions involving associated failure. See below.)</li>
+<li>Errors causing individual document failures are independent of one another.<br />
 </li>
 <li>A storage server may fail and cause all the data stored on that server to be lost. Such failures are random and occur at some rate. The rate may vary due to exogenous circumstances. Major storage failures are very rare events compared with individual document failures.<br />
 </li>
@@ -68,14 +86,6 @@ border-collapse: collapse;
 </li>
 <li>Documents may occupy more or less storage depending on their size. Since failures of blocks of storage are random and independent, a failure is more likely to be located within a large document than within a small one.</li>
 </ul>
-<!-- DONE! END:TODO:RICK-->
-<h2 id="core-motivating-problem">Core Motivating Problem</h2>
-<ul>
-<li>Number of choices: formatting, auditing, quality, number of copies ...</li>
-<li>Keeping risk of object loss fixed -- what choices minimize $?</li>
-<li>&quot;Dual problem&quot; -- Keeping $ fixed, what choices minimize risk?</li>
-</ul>
-<!-- DONE! START:TODO:RICK-->
 <h2 id="basic-model-framework">Basic Model Framework</h2>
 <ul>
 <li>The model employs one client library with one collection that contains a large number of documents. Results for multiple clients, for clients with multiple collections, or for varying number of documents can be extrapolated from this simple case.<br />
@@ -94,12 +104,10 @@ border-collapse: collapse;
 </li>
 <li>This entire simulation cycle is repeated a number of times using different values to seed the (pseudo-)random number generator that drives the simulation. The numbers from all runs are collected and presented in tabular form and in graphical summaries in the supplemental material.</li>
 </ul>
-<!-- DONE! END:TODO:RICK-->
 <h2 id="illustration">Illustration</h2>
 <h1 id="simple-case----independent-failures-just-plain-copies">Simple Case -- Independent Failures &amp; Just Plain Copies</h1>
 <p>How many copies do you need if ...</p>
 <h2 id="just-make-copies----no-auditing-too-many">Just make copies -- no auditing? TOO MANY</h2>
-<!-- DONE! START:TODO:RICK -->
 <p>TODO: Need guidance about the relationship of so-called MTBF and the half-life that we use. Why did we choose this spectrum, which goes from rusty garbage-can lids to immortal disks.</p>
 <!-- outline area
 
@@ -168,14 +176,12 @@ also, we generally prefer medians as measure of length when distributions are so
 <p>The region of error rates that we investigate generates enough errors to evaluate the impact of storing multiple copies and the impact of various auditing strategies. Our conclusions describe storage and auditing strategies that are robust over very wide ranges of error rates (and the corresponding ranges of bit/block/disk lifetimes), spanning approximately four orders of magnitude.</p>
 <p>The inverse of error rate is usually expressed in terms of MTBF or MTTF, and, initially, we expressed all parameters as mean exponential lifetime. But MTBF and MTTF are hard for most non-experts to grasp. &quot;By the end of an MTTF period, approximately 63% of the units will have failed&quot; is not easily understood by most non-statisticians. (If we assume Poisson arrivals, the probability of failure in one average lifetime is (1-1/e).) We have chosen for all simulations and tables of results to express lifetime instead as half-life. &quot;By the end of a half-life period, approximately half of the units will have failed&quot; is easier to understand, and should be familiar to most people from examples of radioactive decay.</p>
 <p>(END OF HAND-WAVING, AT LEAST ON THIS TOPIC)</p>
-<!-- DONE! END:TODO:RICK -->
 <ul>
 <li><p>Long term -- bit rot</p>
 <p>o Show results from long term simulation o [TABLE] (how long for 1% loss, based on number of copies) o Interaction -- fragility of big documents o [FIGURE] (how long for 1% loss, based on increasing size) o Cite to Rosenthal previous results on this</p></li>
 <li><p>Medium term -- if storage error rates are uncertain</p>
 <p>o Storage error rates are difficult to verify o [FIGURE] How long for failure of 1% as error rate increases? o How to interpret claimed storage error rates - What are the limitations of how MTBF is measured? - Given an MTBF, what is the possible bounded range of half-lives?</p></li>
 </ul>
-<!-- DONE! START:TODO:RICK -->
 <h1 id="what-if-you-add-good-auditing-strategies...-five">What if you add good auditing strategies... FIVE</h1>
 <!--
 - What's "good auditing?"
@@ -199,7 +205,7 @@ also, we generally prefer medians as measure of length when distributions are so
      3. NOT robust to  failures associated across servers... 
 - [FIGURE]
 -->
-<p>Auditing the collection, that is, testing the validity of remote copies of documents, can greatly reduce permanent document losses over time. The auditing process actively searches for errors before they cause permanent document losses, and corrects them whenever possible. A number of strategies for auditing are possible, and some are measurably better than others.</p>
+<p>Auditing the collection, that is, testing the validity of remote copies of documents, can greatly reduce permanent document losses over time. The auditing process actively patrols for errors before they cause permanent document losses, and corrects them whenever possible. A number of strategies for auditing are possible, and some are measurably better than others.</p>
 <p>In all cases, when a document copy is found to be absent (or corrupted), the auditing process attempts to replace the missing copy with a fresh copy obtained from another server. If there is an intact copy on another server, then the missing document is repaired and the process continues.</p>
 <p>Common auditing strategies:</p>
 <ul>
@@ -235,7 +241,6 @@ also, we generally prefer medians as measure of length when distributions are so
 </li>
 <li><p>However, auditing strategies are not robust to associated failures that compromise multiple servers over short periods.</p></li>
 </ul>
-<!-- DONE! END:TODO:RICK -->
 <h1 id="how-many-more-copies-...-associated-failures">How many more copies ... ? Associated Failures</h1>
 <h2 id="type-of-threats">Type of Threats</h2>
 <ul>
@@ -330,8 +335,8 @@ also, we generally prefer medians as measure of length when distributions are so
 <li>Media format obsolence -- we assume good practice -- migration to new media bewfore end of life.</li>
 <li>Unmanaged File Format obsolescence.
 <ul>
-<li>Management can mitigate file format obsolescence where documents are stored in multiple formats (or multiple indepent readers) and tested for format characteristics at audit. Failures occur at the level an entire document, but the threat of loss could be modeled as with a block error rate implying a certain document failure rate for fixed size documents, where the number of servers represents the number of independent formats stored.</li>
-<li>Unmanaged format obsolescence cannot be addressed through redundancy, etc. -- will not show on audits</li>
+<li>Management can mitigate file format obsolescence where documents are stored in multiple formats (or multiple indepent readers) and tested for format characteristics at audit. Failures occur at the level of an entire document, but the threat of loss could be modeled as with a block error rate implying a certain document failure rate for fixed size documents, where the number of servers represents the number of independent formats stored.</li>
+<li>Unmanaged format obsolescence cannot be addressed through redundancy, etc., and will not show on audits.</li>
 </ul></li>
 </ul>
 <p>What are are not modeling - Sophisticated adversaries that attack the auditing mechanism - Cascading failure/contagion - Environmental glitch that directly affect background rate of server glitch - Server characteristics are in a steady -state equlibrium -- characteristic of servers remain the same over time.</p>
@@ -471,6 +476,28 @@ loss due to raid/internal replication characteristics and failure
 <p>For example:</p></li>
 </ul>
 <p>Suppose there are only 2 copies of keys. Is the expected document rate due to encryption key loss is equivalent to the expected document loss in the following scenario? - there are two servers - logical block failure is 0 - audits are annual - servers are subject to glitches of the <em>financial failure</em> form -- permanent, total loss - What is L*= E(L|KL,N_K) - Can this be derived from failure rate of N_S servers with a rate of KL financial failures ## Format Obsolescence</p>
+<ul>
+<li>can be simulated using reparameterized correlated surver failure model
+<ul>
+<li>represent
+<ul>
+<li>each format as server</li>
+<li>associated failures represent major technology shifts that affect groups of formats (web 4.0)</li>
+<li>audit period represents time between format reviews -- review of a format for obsolence</li>
+</ul></li>
+<li>collections are lost to format failure if all servers fail between audits</li>
+</ul></li>
+<li>assumptions
+<ul>
+<li>We have an estmate of failure rate.</li>
+<li>The audit period is fixed.</li>
+<li>DO NOT assume that all documents in a format are actually stored on one server.</li>
+</ul></li>
+<li>excludes interaction between format and document failure rate
+<ul>
+<li>e.g., if a particular format is extremely fragile, or extremely large</li>
+</ul></li>
+</ul>
 <h1 id="replication-and-extension">Replication And Extension</h1>
 <h2 id="value-of-replicability">Value of replicability</h2>
 <h2 id="calibration-with-real-world-data----how-to-calibrate">Calibration with real world data -- how to calibrate</h2>
@@ -518,35 +545,34 @@ loss due to raid/internal replication characteristics and failure
 end outline -->
 <p>A number of simplifying assumptions were required to reduce the sample space for simulations to manageable size. In many cases, we simply chose arbitrary but convenient sizes and frequencies for the model elements. In such cases, we tested a range of each parameter to verify that scaling relationships were maintained as expected.</p>
 <ul>
-<li><strong>Collections</strong> We chose to model a single library collection at one time. If multiple collections need to be modeled, each collection can be modeled separately and the results combined.</li>
-<li><strong>Collection Documents</strong> The collection contains a fixed number of documents, 10,000 (ten thousand). This is a very modest number for most real-world collections, but, again, the results can be scaled up to any size required. Since the size of the collection does not alter its statistical behavior, such as <em>rate</em> of error or loss, error and loss <em>numbers</em> should scale directly with collection size. Alternatively, one can change the simulation parameter for collection size.<br />
+<li><strong>Collections:</strong> We chose to model a single library collection at one time. If multiple collections need to be modeled, each collection can be modeled separately and the results combined.</li>
+<li><strong>Collection Documents:</strong> The collection contains a fixed number of documents, 10,000 (ten thousand). This is a very modest number for most real-world collections, but, again, the results can be scaled up to any size required. Since the size of the collection does not alter its statistical behavior, such as <em>rate</em> of error or loss, error and loss <em>numbers</em> should scale directly with collection size. Alternatively, one can change the simulation parameter for collection size.<br />
 </li>
-<li><strong>Simulated Duration</strong> The simulation models documents aging for approximately ten years. If a longer or shorter period is desired, one can change the simulation parameter for duration.<br />
+<li><strong>Simulated Duration:</strong> The simulation models documents aging for approximately ten years. If a longer or shorter period is desired, one can change the simulation parameter for duration.<br />
 </li>
-<li><strong>&quot;Metric&quot; Years</strong> To simplify many calculations, we use a nominal &quot;metric&quot; year of 10,000 (ten thousand) hours, instead of approximately 8760 in a calendar year. Similarly, a metric quarter is 2,500 (two thousand five hundred) hours, and a metric month 1,000 (one thousand) hours.<br />
+<li><strong>&quot;Metric&quot; Years:</strong> To simplify many calculations, we use a nominal &quot;metric&quot; year of 10,000 (ten thousand) hours, instead of approximately 8760 in a calendar year. Similarly, a metric quarter is 2,500 (two thousand five hundred) hours, and a metric month 1,000 (one thousand) hours.<br />
 </li>
-<li><strong>Server Error Rates</strong> We assume that all servers used by a client for a single collection begin with identical error characteristics. The error rate within a server may change over time due to random &quot;glitches&quot; which may be injected into the server to model, e.g., HVAC failures, different batches of disks, and so forth.<br />
+<li><strong>Server Error Rates:</strong> We assume that all servers used by a client for a single collection have, initially, identical error characteristics. The error rate within a server may change over time due to random &quot;glitches&quot; which may be injected into the server to model, e.g., HVAC failures, different batches of disks, and so forth.<br />
 </li>
-<li><strong>Server Failure Rates</strong> Also, the likelihood of failure of a server is randomly chosen to start, and that likelihood may be changed during the simulation due to economic or environmental &quot;shock&quot; conditions that increase the likelihood of associated failures.<br />
+<li><strong>Server Failure Rates:</strong> It is possible for a server to fail completely and lose all of the document copies it contains. The likelihood of failure of a server is randomly chosen to start, and that likelihood may be changed during the simulation due to economic or environmental &quot;shock&quot; conditions that increase the likelihood of associated failures.<br />
 </li>
-<li><strong>Poisson IID Sector Errors</strong> We chose to model &quot;sector&quot; errors in documents. Such errors arrive as a Poisson process over all the sectors of a storage structure.<br />
+<li><strong>Poisson IID Sector Errors:</strong> We chose to model &quot;sector&quot; errors in documents. Such errors arrive as a Poisson process over all the sectors of a storage structure, and the arrivals of errors are independent and identically distributed.<br />
 </li>
-<li><strong>Fragile Documents</strong> Documents are considered fragile. If a document copy suffers a single sector error, we consider the document copy to be lost. This is probably too conservative for some types of documents, e.g., uncompressed text, but plausible for others, e.g., compressed and encrypted documents.<br />
+<li><strong>Fragile Documents:</strong> Documents are considered fragile. If a document copy suffers a single sector error, we consider the document copy to be lost. This is probably too conservative for some types of documents, e.g., uncompressed text, but plausible for others, e.g., compressed and encrypted documents.<br />
 </li>
-<li><strong>Sector Lifetimes</strong> Sector errors are exponentially distributed according to specified simulation parameters. Sector error rate parameters are expressed as the inverse, that is, sector lifetimes, in mega-hours (Mh), and then the lifetimes are expressed as half-lives rather than mean exponential lifetime.<br />
+<li><strong>Sector Lifetimes:</strong> Intervals between sector errors are exponentially distributed according to specified simulation parameters. Sector error rate parameters are expressed as the inverse, that is, sector lifetimes, in mega-hours (Mh), and then the lifetimes are expressed as half-lives rather than mean exponential lifetime. (Error rates are very small numbers with many leading zeros, hard to understand and judge. Lifetimes, the inverse of error rates, are more easily grasped. Continuing in the same vein, half-life is more easily understood than mean exponential lifetime.)</li>
+<li><strong>Range of Sector Half-lives:</strong> We model a wide range of half-lives from 1 to 10,000 mega-hours. The specific values chosen are in groups of 1-2-3-5-10 to permit both 1-3-10 and 1-2-5-10 logarithmic assessments.<br />
 </li>
-<li><strong>Range of Sector Half-lives</strong> We model a wide range of half-lives from 1 to 10,000 mega-hours. The specific values chosen are in groups of 1-2-3-5-10 to permit both 1-3-10 and 1-2-5-10 logarithmic assessments.<br />
+<li><strong>Document Size vs Error Rate:</strong> There is a clear relationship between document size and error rate: for a fixed error rate, a larger document represents a larger target for errors and therefore is hit more frequently. For most of the simulations, we chose 5 MB (five megabytes) as the document size. Testing with 50 MB, 500 MB, and 5000 MB documents revealed the expected linear relationships between document size, error rate, and the accumulated number of errors.<br />
 </li>
-<li><strong>Document Size vs Error Rate</strong> There is a clear relationship between document size and error rate: for a fixed error rate, a larger document represents a larger target for errors and therefore is hit more frequently. For most of the simulations, we chose 5 MB (five megabytes) as the document size. Testing with 50 MB, 500 MB, and 5000 MB documents revealed the expected linear relationships between document size, error rate, and the accumulated number of errors.<br />
+<li><strong>Storage Structure Size:</strong> We chose a fixed size of 1 TB (one terabyte) for a storage structure (&quot;shelf&quot;) on which documents are stored. We tested 10 TB structures as well, and found that the results scaled linearly with size. Given the modest number of documents in a collection, larger storage structures are less fully occupied and have more available empty space. Sector errors occur in empty sectors at the same rate as in document sectors, but errors in empty (non-document) space waste time and resources in the simulations.<br />
 </li>
-<li><strong>Storage Structure Size</strong> We chose a fixed size of 1 TB (one terabyte) for a storage structure (&quot;shelf&quot;) on which documents are stored. We tested 10 TB structures as well, and found that the results scaled linearly with size. Given the modest number of documents in a collection, larger storage structures are less fully occupied and have more available empty space. Sector errors occur in empty sectors at the same rate as in document sectors, but errors in empty (non-document) space waste time and resources in the simulations.<br />
+<li><strong>Storage Sector Size:</strong> For most simulations, we chose 1 MB (one megabyte) as the size of a &quot;sector&quot; of a document on disk. Given the assumption that a single error destroys a document copy, we wanted to reduce the number of items considered in the simulations. We also note that disk sector size has been enlarged recently and may change again in the future.<br />
 </li>
-<li><strong>Storage Sector Size</strong> For most simulations, we chose 1 MB (one megabyte) as the size of a &quot;sector&quot; of a document on disk. Given the assumption that a single error destroys a document copy, we wanted to reduce the number of items considered in the simulations. We also note that disk sector size has been enlarged recently and may change again in the future.<br />
+<li><strong>Linear Relationships:</strong> We found all these relationships among document size, error rate, and storage extent to be as nearly linear as could be expected from any random process.<br />
 </li>
-<li><strong>Linear Relationships</strong> We found all these relationships among document size, error rate, and storage extent to be as nearly linear as could be expected from any random process.<br />
-</li>
-<li><strong>Impact of Compression</strong> For documents that might not be fatally corrupted by a single sector error, compression of the document involves a clear trade-off. A smaller document is a smaller target, but a highly compressed document is more fragile. A small error in an audio or video file may not be fatal to the content of the document, but a highly compressed text document (or an encrypted document) might be lost.</li>
-<li><p><strong>Logarithmic Intervals</strong> The simulations model collections that keep a number of copies on separate servers for redundancy. The numbers of copies modeled are 1, 2, 3, 4, 5 ,8, 10, 14, 16, and 20. The numbers were chosen to permit comparisons of logarithmic ranges 1-2-4-8-16, 1-2-5-10-20, 1-3-10, etc. In all cases, if the document losses were all zero for some error rate and number of copies, then we did not run simulations with higher numbers of copies.</p></li>
+<li><strong>Impact of Compression:</strong> For documents that might not be fatally corrupted by a single sector error, compression of the document involves a clear trade-off. A smaller document is a smaller target, but a highly compressed document is more fragile. A small error in an audio or video file may not be fatal to the content of the document, but a highly compressed text document (or an encrypted document) might be lost.</li>
+<li><p><strong>Logarithmic Intervals:</strong> The simulations model collections that keep a number of copies on separate servers for redundancy. The numbers of copies modeled are 1, 2, 3, 4, 5 ,8, 10, 14, 16, and 20. The numbers were chosen to permit comparisons of logarithmic ranges 1-2-4-8-16, 1-2-5-10-20, 1-3-10, etc. In all cases, if the document losses were all zero for some error rate and number of copies, then we did not run simulations with higher numbers of copies.</p></li>
 <li>Poisson and exponential everything....
 <ol style="list-style-type: decimal">
 <li>Sector errors, server failures</li>
