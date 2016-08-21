@@ -57,6 +57,10 @@ FIXME - start the run count from 1 even for cases that have already been done,
   so that the run number reflects progress toward the total number.  
 
 
+TODO: audit
+FIXME - log stats at end of each audit cycle: lost, minority repairs, majority repairs.  These are all cross-server figures; don't know if we need per-server figures.
+
+
 TODO: newinstructions
 FIXME - Add a squash function to reduce blank sequences to single blanks
   in flat files, in case someone created instructions in fixed columns.
@@ -74,13 +78,6 @@ FIXME - write documentation on how to generate instructions flat file
 DONE - fix order of args to filter program, data file last.
 DONE - fix shell script that makes complete instruction list to
   reflect change in argument order.
-
-
-TODO: newnewinstructions, flatlib or new db
-FIXME - custom flat db or maybe tiny or buzhug
-FIXME - facade or adapter: same interface as current mongolib
-FIXME - new load, list, and clear utilities that use flatlib
-FIXME - eventually, web app to generate smallish sets of instructions
 
 
 TODO: packaging into Docker
@@ -117,8 +114,64 @@ FIXME - change newinstructions section of script to create flat instructions
   and database from the ins files pulled.  
 
 
-TODO: nonmonotonicity testing
-FIXME - find where the sensitive areas once were; seem to have lost them.
+TODO: rationalize time constants so that people can understand them
+DONE - change main.py sector lifetime to half-life.
+  (this will change ALL the existing numbers; recompute everything)
+DONE - update the AWS install script single-run test for the new half-life 
+  results.
+DONE - change glitch frequency to half-life (oops, already is)
+DONE - update the main.py CLI help to reflect half-life instead of lifetime.
+DONE - update the main.py CLI to accept both --lifek and --lifem.  
+DONE - update the broker.py CLI help to reflect half-life instead of lifetime.
+FIXME - update other docs to reflect half-life instead of lifetime.  
+WRONG - update main.py to accept either lifek or lifem but not both.
+DONE - update main.py to accept both lifek and lifem, where lifek takes
+  precedence because it is more accurate.  
+DONE - BUG: fix main.py arg parsing to make all the positional params mandatory.  
+  and bump the CLI version number.  
+DONE - remove the requirement for a Y/N value from --shortlog.
+FIXME - BUG: fix main.py default values in G so that is doesn't fail if there are
+  no param files in the familydir or specificdir; always fails for the list
+  items, such as ncopies, I think because the list items in the dictionaries
+  should be one level deeper.  
+FIXME - Update SERVERUSE log lines and some other lines, too, at end to state half-life and exponential lifetime with few or no decimal places.
+
+
+TODO: calibration
+FIXME: do spreadsheet of a0 numbers compared with simple Poisson theoretical results.  
+
+
+TODO: lifetimes: correlated institutional failures
+FIXME - at some interval, economic glitch dramatically increases the 
+  institutional 100% failure rate for >= 1 server.
+  Note trickiness: this is cross-server, needs access to several
+  server instances at once.
+FIXME - add external parameters to set number of servers affected,
+  the decrease in institution lifetime, and the rate of economic
+  recession/depression.  
+
+
+DEFER: web interface to select instructions for broker run
+FIXME - learn kivy and remi, decide which to use.
+FIXME - build static web interface to permit choosing instructions for 
+  a single run, or subset instructions for group run.
+FIXME - build backend for interface that generates broker.py command.
+
+
+DEFER: newnewinstructions
+FIXME - custom flat db or maybe tiny or buzhug
+FIXME - facade or adapter: same interface as current mongolib
+FIXME - new load, list, and clear utilities that use flatlib
+FIXME - eventually, web app to generate smallish sets of instructions
+
+
+DEFER: packaging
+DONE - do Docker basic tutorials
+DONE - construct vm platforms for docker learning on both systems
+FIXME - transcribe crummy bash script to dockerfile
+
+
+DEFER nonmonotonicity testing
 FIXME - do runs in the sensitive areas, limited to 3-4 lifetimes and few copies
 FIXME - runs with 100 or more seeds?
 FIXME - many runs with 20ish seeds to assess variability?
@@ -141,74 +194,6 @@ DONE - what numbers to compute?
 
 TODO: same for November presentation to iPRES at UNC
 DONE - write slides for Micah to use, update from September's.
-
-
-TODO: rationalize time constants so that people can understand them
-DONE - change main.py sector lifetime to half-life.
-  (this will change ALL the existing numbers; recompute everything)
-DONE - update the AWS install script single-run test for the new half-life 
-  results.
-DONE - change glitch frequency to half-life (oops, already is)
-DONE - update the main.py CLI help to reflect half-life instead of lifetime.
-DONE - update the main.py CLI to accept both --lifek and --lifem.  
-DONE - update the broker.py CLI help to reflect half-life instead of lifetime.
-FIXME - update other docs to reflect half-life instead of lifetime.  
-WRONG - update main.py to accept either lifek or lifem but not both.
-DONE - update main.py to accept both lifek and lifem, where lifek takes
-  precedence because it is more accurate.  
-DONE - BUG: fix main.py arg parsing to make all the positional params mandatory.  
-  and bump the CLI version number.  
-DONE - remove the requirement for a Y/N value from --shortlog.
-FIXME - BUG: fix main.py default values in G so that is doesn't fail if there are
-  no param files in the familydir or specificdir; always fails for the list
-  items, such as ncopies, I think because the list items in the dictionaries
-  should be one level deeper.  
-
-
-TODO: lifetimes: correlated institutional failures
-FIXME - at some interval, economic glitch dramatically increases the 
-  institutional 100% failure rate for >= 1 server.
-  Note trickiness: this is cross-server, needs access to several
-  server instances at once.
-FIXME - add external parameters to set number of servers affected,
-  the decrease in institution lifetime, and the rate of economic
-  recession/depression.  
-
-
-TODO: web interface to select instructions for broker run
-FIXME - learn kivy and remi, decide which to use.
-FIXME - build static web interface to permit choosing instructions for 
-  a single run, or subset instructions for group run.
-FIXME - build backend for interface that generates broker.py command.
-
-
-TODO: newinstructions
-DONE - write filter for instructions as they are being generated flat; 
-  hierarchical: a field named action for permit/deny.
-DONE - write rules for the filter;
-  rules in a list of json dictionaries;
-  first rule is permit *, then list of denies maybe slightly countermanded.
-DONE - integrate into last stage of flat instruction generation.
-
-
-TODO: newnewinstructions
-FIXME - custom flat db or maybe tiny or buzhug
-FIXME - facade or adapter: same interface as current mongolib
-FIXME - new load, list, and clear utilities that use flatlib
-FIXME - eventually, web app to generate smallish sets of instructions
-
-
-TODO: packaging
-DONE - do Docker basic tutorials
-DONE - construct vm platforms for docker learning on both systems
-FIXME - transcribe crummy bash script to dockerfile
-
-
-DEFER nonmonotonicity testing
-FIXME - do runs in the sensitive areas, limited to 3-4 lifetimes and few copies
-FIXME - runs with 100 or more seeds?
-FIXME - many runs with 20ish seeds to assess variability?
-FIXME - jacknife the existing numbers?
 
 
 
