@@ -100,7 +100,12 @@ border-collapse: collapse;
 ## Illustration
  
 # Simple Case -- Independent Failures & Just Plain Copies
+<!-- START:TODO:RICK--> 
+
 How many copies do you need if ...
+
+<!-- END:TODO:RICK--> 
+
 
 ## Just make copies -- no auditing? TOO MANY
 
@@ -259,7 +264,7 @@ Some features of the results are apparent.
 # How many more copies ... ? Associated Failures
 
 ## Type of Threats
-
+<!-- START:TODO:MICAH--> 
 - Server-side Billing Failure  
 - Server-side Financial Failure  
 - Unsophisticated adversary outsider attacker  
@@ -274,6 +279,8 @@ Some features of the results are apparent.
 - Limited Internal Adversary  
 - Curatorial Failure/Client error  
 - Common software failure  
+<!-- END:TODO:MICAH--> 
+
 
 ## Modeling Associated Failures
 Sources of failures are modeled as a stochastic processes, in a hierarchical  model
@@ -355,9 +362,12 @@ Server Error Parameterizations
 	
 
 ## How Many More for 
+<!-- START:TODO:RICK--> 
 - Environmental
 - Institutional Final Failure
 - Recession
+<!-- END:TODO:RICK--> 
+
 
  
 # Generalizations
@@ -365,9 +375,12 @@ Server Error Parameterizations
 ## Overview
 
 ## Large vs Small documents
-
+<!-- START:TODO:RICK--> 
+<!-- END:TODO:RICK--> 
  
 ## Large vs Small collections
+<!-- START:TODO:RICK--> 
+<!-- END:TODO:RICK--> 
 
 ## Compression
 
@@ -418,6 +431,8 @@ Suppose there are only 2 copies of keys. Is the expected document rate due to en
 ## Value of replicability
 
 ## Calibration with real world data -- how to calibrate
+<!-- START:TODO:RICK--> 
+<!-- END:TODO:RICK--> 
 
 ## Extension and parameterization
 
@@ -428,6 +443,10 @@ Suppose there are only 2 copies of keys. Is the expected document rate due to en
 - Use systematic annual auditing
 - Do not trust MTBF and other similar measures
 - Use compression, with known algorithms
+- What can we say about document size?
+- What can we say about collection size? (E.g. twitter corpus) Error rates matter either if collection is big or long-term? 
+- What can we say about encryption?
+- What can we say about increasing replicas in the face of particular correlated threats?
  
 ## For digital preservation commons
 - Develop standards 
@@ -435,10 +454,13 @@ Suppose there are only 2 copies of keys. Is the expected document rate due to en
     2.	Reporting  of failure rates
 - Sharing reliability of cloud vendors
 - Sharing information on correlated failures?
+- Parralel between strategy of less-reliability + more auditing with original RAID (inexpensive disks); RAM error correction; FAST array of Wimpy Nodes; Google hardware-failure tolerant hadoop  architecture
+
 ## Recommendations for research
 - Detailed cost models
 - Strong adversaries
 - Erasure codes...
+- Auditing with lower bandwidth -- with cryptographic primitives
 
 # References
 
@@ -508,3 +530,5 @@ A number of simplifying assumptions were required to reduce the sample space for
 - How to Install on Amazon Web Services
 
 ## How to Model Various Scenario
+<!-- START:TODO:RICK--> 
+<!-- END:TODO:RICK--> 
