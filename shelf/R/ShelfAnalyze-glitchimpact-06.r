@@ -4,11 +4,11 @@
 # revised 20150701 to group by glitch impact (outside).
 # revised 20150810 to ignore missing data (NA) values in most calcs.
 # revised 20150918 to include more data in datn.
-#
+# revised 20160827 to include better header info in file.
 
 # REQUIRES:
 # - sInputFilename
-# - sOutputFilemane
+# - sOutputFilename
 # - sTitle
 
 # I N P U T 
@@ -18,10 +18,16 @@ dat <- data.frame(read.table(sInputFilename, header=TRUE))
 datn = data.frame(dat$docsize,dat$lifem,dat$glitchimpact,dat$copies,dat$lost)
 
 #sink()
-cat("Input data from ",sInputFilename,"\n")
-cat("Output analysis into ",sOutputFilename,"\n\n")
-cat(sTitle,"\n")
-cat("\n")
+fnHeadingInfo <- function() 
+{
+    cat(sTitle,"\n")
+    cat("\n")
+    cat("Input data from ",sInputFilename,"\n")
+    cat("Output analysis into ",sOutputFilename,"\n\n")
+    cat("analysis by ","ShelfAnalyze-glitchimpact-06.r","\n")
+    cat(" at ",format(Sys.time(),"%Y%m%d_%H%M%S %Z"),"\n")
+    cat("\n")
+}
 
 # F U N C T I O N S 
 
@@ -88,6 +94,10 @@ summarize <- function(myframe,mysummaryout,mysummaryfunction)
 
 
 # T A B L E S 
+
+# Put out headings immediately to reassure the R user
+fnHeadingInfo()
+
 # Summary table with medians.
 summ <- data.frame(rbind(numeric(13)))
 colnames(summ) <- c("docsize","lifem","glitchimpact","c1","c2","c3","c4","c5","c8","c10","c14","c16","c20")
@@ -117,10 +127,8 @@ summid <- summarize(datn,summid,midmean)
 
 # Send output to a file so we can read it later. 
 sink(sOutputFilename)
-cat(sTitle,"\n")
-cat("Input data from ",sInputFilename,"\n")
-cat("Output analysis into ",sOutputFilename,"\n\n")
-
+# Include heading info in file
+fnHeadingInfo()
 # Show results.
 cat("Question 3 Summary losses (medians)\n")
 print(summ)
