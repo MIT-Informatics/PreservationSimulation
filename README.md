@@ -4,7 +4,7 @@
 
 Libraries, academic and corporate, have large collections of documents that they wish to preserve for long periods.  A common strategy for preserving documents is to make multiple copies of the documents and to distribute the copies geographically.  Increasingly, library collections come in digital form rather than dead-tree form, which makes them easier to copy and distribute.  
 
-A first question that needs to be answered is how many copies to keep.  For a variety of conditions -- document sizes and types, storage error rates, auditing strategies, etc. -- we need to know how many copies we should keep, how many copies we can afford to keep economically.  We can also deal with various strategies for "auditing" a collection, that is, checking on its status and repairing damage if necessary.  
+A first question that needs to be answered is how many copies to keep.  For a variety of conditions -- document sizes and types, storage error rates, auditing strategies, etc. -- librarians need to know how many copies they should keep, how many copies they can afford to keep economically.  We also need to examine various strategies for "auditing" a collection, that is, checking on its status and repairing damage if necessary.  
 
 The purpose of this project is to provide baseline data for librarians and researchers about long-term survival rates of document collections.  We have developed computer simulations to estimate document failure rates over a wide variety of conditions.  The data from these simulations should be useful to stewards of such collections in planning and budgeting for storage and bandwidth needs to protect their collections.  
 
@@ -37,13 +37,13 @@ The basic process of a simulation is as follows:
 
 This study attempts to provide some baseline data that can be used to assess the risks of preserving digital document collections, and the efficacy of storing multiple copies on servers with known or assumed error rates.  These are the basic questions to be asked related to storage of multiple copies of documents under varying conditions.
 
-1. No auditing: store multiple copies on servers, and examine document losses after some period.  Examine various numbers of copies and a range of error rates.  
+1. Document loss rates with no auditing?  Store multiple copies on servers, and examine document losses after some period.  Examine various numbers of copies and a range of error rates.  
 
-1. Regularly scheduled auditing: at regular intervals, examine the health of some or all documents on all servers.  If a document has been lost on one or more servers, effect repairs where possible.  Examine several intervals for auditing and various strategies for choosing the documents to be audited at each interval.  
+1. Loss rates with regularly scheduled auditing?  At regular intervals, examine the health of some or all documents on all servers.  If a document has been lost on one or more servers, effect repairs where possible.  Examine several intervals for auditing and various strategies for choosing the documents to be audited at each interval.  
 
-1. Increases in server error rates: at random intervals, errors of some magnitude and duration impact the error rate of a storage structure, possibly causing a higher loss rate on that server, or even a total loss on a server.  Examine ranges of frequencies, severities, and durations.  
+1. Loss rates with increases in server error rates?  At random intervals, errors of some magnitude and duration impact the error rate of a storage structure, possibly causing a higher loss rate on that server, or even a total loss on a server.  Examine ranges of frequencies, severities, and durations.  
 
-1. Correlated server failures: at random intervals, major shocks increase the likelihood of total failure of one or more servers.  Examine ranges of frequency of shock and span of the impact of a shock.
+1. Loss rates with correlated server failures?  At random intervals, major shocks increase the likelihood of total failure of one or more servers.  Examine ranges of frequency of shock and span of the impact of a shock.
 
 
 ## The Programs
