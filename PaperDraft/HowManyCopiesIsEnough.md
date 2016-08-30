@@ -358,7 +358,7 @@ A wide range of real-world threats may be modeled through varying the parameteri
 - Hardware batch quality | Document loss rate rate as a function of server error characteristics, given a fixed choice of {replicas, auditing, block error}	Increased redundancy needed to maintain fixed loss rate in presence of server errors, given recommended auditing and repair strategy |
 
 | Global	|- Formal Government Action
-- Powerful External Adversary 
+- Legal action
 - Economic Recession
 - Limited Internal Adversary
 - Curatorial Failure/Client error
@@ -396,17 +396,30 @@ Server Error Parameterizations
 
 
  
-# Generalizations
+# Extensions
 
 ## Overview
+- In this section we discuss extensions of the simulation reults to document size, collection size, use of compression, managing multiple encryption keys, diversification against format failure risk, and protection against clandestine adversaries
+- In each of these areas, the current simulation framework provides leverage under well-specified constraints
+- Where these constraints may be violated in realistic scenarios, we discuss potential area research 
+
+## Large vs Small collections
+<!-- START:TODO:RICK--> 
+- Assumptions: No additional assumptions needed. Percentage of failure is independent of number of documents in collection. However, given a low percentage expected document loss, the probability that at least one document will be lost depends on the number of douments in the collection: [formula]
+- Additional Simulation: Formulation may be checked using simulations.
+- Implications: For collections with huge numbers of documents, and where the absolute integrity of the collection neeeds to be maintained (for example, legal evidence) very low loss rates are desired
+- Generalizations: docuement size
+<!-- END:TODO:RICK--> 
 
 ## Large vs Small documents
 <!-- START:TODO:RICK--> 
+- Assumptions: Without any additional assumptions needed, the relationship between document size and failure rate can derived, and follows the  formula : [equation]
+- Additional simulation: No additional simulation is needed, however this formulation may be checked using simulations: [figure]
+- Implications: You can mitgate the risk of increasing size by a factor of [X] by adding [Y] additional copies.
+- Generalizations: The model assumes a single failure within a document destroys it. Documents may be redundant -- such that multiple hits are needed to completely destroy them.
 <!-- END:TODO:RICK--> 
  
-## Large vs Small collections
-<!-- START:TODO:RICK--> 
-<!-- END:TODO:RICK--> 
+
 
 ## Compression
 
@@ -414,7 +427,7 @@ Server Error Parameterizations
     - Compressed, encrypted: small failure makes document unreadable
     - Variation: Repairable documents
     - Small failure damages only one segment
-- Model this as a set of smaller docs
+- Model this as a collection of smaller docs
 
 
 
@@ -450,6 +463,17 @@ Suppose there are only 2 copies of keys. Is the expected document rate due to en
     - DO NOT assume that all documents in a format are actually stored on one server.
 - excludes interaction between format and document failure rate
     - e.g., if a particular format is extremely fragile, or extremely large
+
+## Adversaries
+- Assumptions: 
+    - Weak adversary
+- Simulations:
+- Implications:
+    - Weak adversary -> add [x] copies
+    - Open government adversary using legal takedowns -> add [y] coopiespies
+    - Clandestine strong adversary, subverting auditing system. Must use distributed auditing. [z] c
+- Generalizations: formal crypto models -- see [cite]
+
 
 
 # Replication And Extension
