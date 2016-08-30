@@ -116,9 +116,16 @@ Note that all the figures stated here for times and lifetimes are based on arbit
 
 Auditing, even at relatively low rates, changes the picture entirely.  With a reasonable amount of auditing, five copies of a collection suffice to protect the collection from loss across a very wide range of error rates, starting with sector half-lives greater than 3E6 hours.  
 
+[FIGURE: FIVE COPIES ARE ENOUGH]
+
+
 Auditing cycle rates may vary from quarterly (four times per year) to biennial (once every two years).  Auditing more frequently than annually does not seem to confer much additional protective benefit.  This depends, of course, on the number of copies of the collection that are placed on independent servers.  Please consult the tables in the supplementary material for details.  
 
+
 It is important that, during each audit cycle, every document copy be examined.  Auditing strategies that examine random subsets of the collection sampled with replacement, are not so effective at protecting the collection.  For example, a strategy sometimes suggested of auditing a random ten percent of the collection every month, where the random selection is made with replacement, is slightly less effective than a single, total audit once a year.  
+
+[FIGURE: ANNUAL AUDITING IS ENOUGH]
+
 
 <!-- END:TODO:RICK--> 
 
@@ -199,6 +206,23 @@ The region of error rates that we investigate generates enough errors to evaluat
 The inverse of error rate is usually expressed in terms of MTBF or MTTF, and, initially, we expressed all parameters as mean exponential lifetime.  But MTBF and MTTF are hard even for most experts to grasp, and uninformative or misleading for non-experts.  "By the end of an MTTF period, approximately 63% of the units will have failed" is not easily understood by most non-statisticians.  (If we assume Poisson arrivals, the probability of failure in one average lifetime is (1-1/e).)  We have chosen for all simulations and tables of results to express lifetime instead as half-life.  "By the end of a half-life period, approximately half of the units will have failed" is easier to understand, and should be familiar to most people from examples of radioactive decay.  
 
 (END OF HAND-WAVING, AT LEAST ON THIS TOPIC)
+
+##  Why you shouldn't trust MTBF    
+
+- Four was of measuring
+    - a guess based on engineering characteristics 
+    - collection of failure data from returned drives during service-period
+    - accelerated life testing
+    - observed failures in a large collection (such as backblaze)
+- Limitations
+    - formulas unreliable [cite]
+    - accelerated failure uncertain by X fold [cite]
+    - observed returns undercount [cite]
+    - observed failure varies by batch [cite]   
+    - all of these methods presume failure rate within service period, or replacement cycle -- not outside of expected service period
+    - all of these methods also undercount document failures that fail as a results of blocks failures without the entire drive. 
+- What do we learn from the best information available
+    - If observed failure rate in large collections of disk are boundid in X% , y%...  what is a reasonable lower / upper bound for half-life of block
 
 
 - Long term -- bit rot
@@ -492,8 +516,8 @@ Suppose there are only 2 copies of keys. Is the expected document rate due to en
 # Recommendation
 
 ## For collection owner
-- Use at least 5 copies
-- Use systematic annual auditing
+- Use at least 5 copies (section ## How many copies do you need if ...)
+- Use systematic quarterly auditing (section ## How many copies do you need if ..., section ## correlated failures)
 - Do not trust MTBF and other similar measures
 - Use compression, with known algorithms
 - What can we say about document size?
