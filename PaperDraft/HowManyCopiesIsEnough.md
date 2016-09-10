@@ -76,7 +76,7 @@ Our model includes a few very simple objects.
 - A coherent aggregation of information is represented as a document.  A document may be of any size.  
 - A set of documents forms a collection. A collection may include any number of documents.  All documents in a single collection are treated equally by the owner of the collection and the service storing a copy of the collection.  
 - A collection belongs to a client, e.g., a library, that wishes to preserve it for the long term.  
-- The client takes Pres. Jefferson's advice to prefer duplication over reliability of storage, i.e., to make many copies of the documents in order to preserve them.  The client therefore contracts with multiple storage services to maintain copies of the collection.  
+- The client has two strategies available to preserve the collection: to keep a small number of copies of the documents on very high quality storage, or to make many copies of the documents using available commercial storage facilities.  *Very* high quality storage may be very expensive or actually unobtainable; multiple copies on commercial storage may also be expensive, but are available commodities.  
 - Documents are stored on storage servers, which currently reside largely on rotating disk memories.  Storage servers attempt to make their storage more reliable by themselves using a variety of techniques, including duplication, mirroring, RAID, error correction coding, erasure coding, and other technologies that may become available. 
 - An error in storage may cause a document or some portion of it to become unreadable. If all copies of a document are unreadable, then the document is permanently lost. 
 - (Format obsolescence is not an inherent part of this model, but forms of it may be modeled through extensions involving associated failure. See below.)
@@ -94,8 +94,9 @@ The model permits great variety in the structuring of the simulations.  Not all 
 
 - The model employs one client library with one collection that contains a large number of documents.  Results for multiple clients, for clients with multiple collections, or for varying number of documents can be extrapolated from this simple case.  
 - The client assigns some number of external servers to store a copy of the collection of documents.  Each server is supposed to maintain, and be able to retrieve on demand, an authentic copy of any of the documents in the collection.  
+- The model permits both a range of multiple copies of documents, and a wide range of reliability properties of storage servers.  
 - Documents may fail on the servers.  When a document fails on a server, the failure is silent.  The client is not immediately informed of the failure.  Indeed, the server might not be able to sense that the failure has occurred until it tries to retrieve the document on a request from the client.  
-- The model does not consider the costs of storage or bandwidth.  These factors vary widely and change rapidly.  Any conclusions based on specific numbers would become obsolete very quickly.  However, some possibilities for minimizing or smoothing bandwidth consumption are considered.  
+- The model does not consider directly the costs of storage or bandwidth.  These factors vary widely and change rapidly.  Any conclusions based on specific numbers would become obsolete very quickly.  However, some possibilities for minimizing or smoothing bandwidth consumption are considered.  
 - From time to time, the client may test the copies of documents on servers to ensure that they can still be read and are still valid copies.  The model supports this process of auditing the collection.  Audits can be scheduled and performed using a variety of schedules and strategies.  
 - If in the process of auditing the collection, a document is found to have failed on a server, the client will refresh the failed copy if an intact copy remains on any other server.  If no other intact copy remains, the document is considered to be permanently lost.  
 - At the end of the simulation time period, the model assesses all copies of documents on all servers to determine how many documents have been permanently lost.  
@@ -203,13 +204,23 @@ Where, then, to search for information about the effectiveness of replication an
 
 The region of error rates that we investigate generates enough errors to evaluate the impact of storing multiple copies and the impact of various auditing strategies.  Our conclusions describe storage and auditing strategies that are robust over very wide ranges of error rates (and the corresponding ranges of bit/block/disk lifetimes), spanning approximately four orders of magnitude.  
 
-The inverse of error rate is usually expressed in terms of MTBF or MTTF, and, initially, we expressed all parameters as mean exponential lifetime.  But MTBF and MTTF are hard even for most experts to grasp, and uninformative or misleading for non-experts.  "By the end of an MTTF period, approximately 63% of the units will have failed" is not easily understood by most non-statisticians.  (If we assume Poisson arrivals, the probability of failure in one average lifetime is (1-1/e).)  We have chosen for all simulations and tables of results to express lifetime instead as half-life.  "By the end of a half-life period, approximately half of the units will have failed" is easier to understand, and should be familiar to most people from examples of radioactive decay.  
+The inverse of error rate is usually expressed in terms of MTBF or MTTF, and, initially, we expressed all parameters as mean exponential lifetime.  But MTBF and MTTF are hard even for most experts to grasp, and uninformative or misleading for non-experts.  
+
+The disk manufacturing industry tends to express the device lifetime as MTBF or MTTF.  This is an expected (mean) exponential lifetime for the *device*, but that does not give much information about the lifetime of data in individual files, blocks, or bits on the disk.  There are several layers of error detection and correction in storage systems that tend to mask small errors in disk data and obscure the relationship between small data errors and drive failures.
+
+1. Block error correction on the disk.  Disk data is written with error correcting coding that repairs small errors when reading data sectors.  
+1. Bad block remapping in disk controllers.  Smart disk controllers can take unreliable sectors out of service, replacing them with more reliable sectors from a pool of spares.  
+1. RAID and similar redundant recording of sector data.  Sector data may be recorded redundantly in mirror sets, or recorded partially in multiple versions using parity techniques, and so forth.  
+
+The use of any or all of these techniques makes it very difficult to assess the relationship between drive failure statistics and block level errors.  
+
+Also, we have chosen to use the half-life of objects (sectors, servers) rather than the more common mean exponential lifetime used in most statistical forumalas.  Mean lifetime is a good statistical measure, but not intuitive to the non-expert.  "By the end of an MTTF period, approximately 63% of the units will have failed" is not easily understood by most non-statisticians.  (If we assume Poisson arrivals, the probability of failure in one average lifetime is (1-1/e).)  We have chosen for all simulations and tables of results to express lifetime instead as half-life.  "By the end of a half-life period, approximately half of the units will have failed" is easier to understand, and should be familiar to most people from examples of radioactive decay.  
 
 (END OF HAND-WAVING, AT LEAST ON THIS TOPIC)
 
 ##  Why you shouldn't trust MTBF    
 
-- Four was of measuring
+- Four ways of measuring
     - a guess based on engineering characteristics 
     - collection of failure data from returned drives during service-period
     - accelerated life testing
