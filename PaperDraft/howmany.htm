@@ -188,6 +188,8 @@ also, we generally prefer medians as measure of length when distributions are so
 <li>Error rates are not so high as to be crippling to normal usage.</li>
 </ul>
 <p>The region of error rates that we investigate generates enough errors to evaluate the impact of storing multiple copies and the impact of various auditing strategies. Our conclusions describe storage and auditing strategies that are robust over very wide ranges of error rates (and the corresponding ranges of bit/block/disk lifetimes), spanning approximately four orders of magnitude.</p>
+<p>The supplementary material includes comparisons of theoretical and empirically observed loss rates for a wide range of error rates. The theoretical figures are based on simple independent Poisson arrivals of document failures, based on sector lifetime, sector size, document size, and simulation length. Empirical numbers are derived from repeated runs of simulations with the stated parameters, with simple document aging and no auditing. Even with very small samples (twenty runs) the empirical numbers agree very well with the theoretical predictions.</p>
+<h3 id="error-rates-expressed-as-mtbf-mttf">Error Rates Expressed as MTBF, MTTF</h3>
 <p>The inverse of error rate is usually expressed in terms of MTBF or MTTF, and, initially, we expressed all parameters as mean exponential lifetime. But MTBF and MTTF are hard even for most experts to grasp, and uninformative or misleading for non-experts.</p>
 <p>The disk manufacturing industry tends to express the device lifetime as MTBF or MTTF. This is an expected (mean) exponential lifetime for the <em>device</em>, but that does not give much information about the lifetime of data in individual files, blocks, or bits on the disk. There are several layers of error detection and correction in storage systems that tend to mask small errors in disk data and obscure the relationship between small data errors and drive failures.</p>
 <ol style="list-style-type: decimal">
@@ -198,9 +200,21 @@ also, we generally prefer medians as measure of length when distributions are so
 <li>RAID and similar redundant recording of sector data. Sector data may be recorded redundantly in mirror sets, or recorded partially in multiple versions using parity techniques, and so forth.</li>
 </ol>
 <p>The use of any or all of these techniques makes it very difficult to assess the relationship between drive failure statistics and block level errors.</p>
+<h3 id="lifetime-expressed-as-half-life">Lifetime Expressed as Half-Life</h3>
 <p>Also, we have chosen to use the half-life of objects (sectors, servers) rather than the more common mean exponential lifetime used in most statistical forumalas. Mean lifetime is a good statistical measure, but not intuitive to the non-expert. &quot;By the end of an MTTF period, approximately 63% of the units will have failed&quot; is not easily understood by most non-statisticians. (If we assume Poisson arrivals, the probability of failure in one average lifetime is (1-1/e).) We have chosen for all simulations and tables of results to express lifetime instead as half-life. &quot;By the end of a half-life period, approximately half of the units will have failed&quot; is easier to understand, and should be familiar to most people from examples of radioactive decay.</p>
 <p>(END OF HAND-WAVING, AT LEAST ON THIS TOPIC)</p>
-<h2 id="why-you-shouldnt-trust-mtbf">Why you shouldn't trust MTBF</h2>
+<h2 id="what-is-mtbf-really">What is MTBF, Really?</h2>
+<p>MTBF, Mean Time Between Failures, is a slippery notion, much touted by marketing departments and viewed warily by users. If the object in question is removed from service after only one failure, as is the case here with documents, it is perhaps more appropriate to speak of MTTF, Mean Time To Failure. MTTF is intended to be equivalent to the mean lifetime (before failure) of the object, and, if one assumes that failures are a Poisson process, then MTTF is the mean <em>exponential</em> lifetime of the object.</p>
+<p>How is MTTF calculated before it is published? Several methods might be used, including at least the following.</p>
+<ol style="list-style-type: decimal">
+<li>A predicted value based on engineering characteristics of the mechanism, component parts, expected wear patterns, and so forth. Depending on the complexity of the device and the manufacturer's understanding of its components and usage patterns, this can be a very complex and, frankly, questionable estimation.<br />
+</li>
+<li>Failure data from life testing, often of large numbers of devices over long periods. Such testing may be done by the manufacturer in-house, or in field testing of early deployments, or by consumers who use large numbers of devices and track failures carefully.</li>
+<li>Failure data from accelerated life testing. It is often assumed that operation under high temperature or thermal cycling or high speeds or other stress conditions will cause devices to fail predictably prematurely. For some classes of devices, accelerated life testing has proved to be useful and accurate.<br />
+</li>
+<li>Failure data from warranty failures returned during a service period. This may be assessed by the manufacturer or by users of large numbers of devices.</li>
+</ol>
+<p>(CONTINUING MTBF OUTLINE)</p>
 <ul>
 <li>Four ways of measuring
 <ul>
@@ -228,6 +242,8 @@ also, we generally prefer medians as measure of length when distributions are so
 <li><p>Medium term -- if storage error rates are uncertain</p>
 <p>o Storage error rates are difficult to verify o [FIGURE] How long for failure of 1% as error rate increases? o How to interpret claimed storage error rates - What are the limitations of how MTBF is measured? - Given an MTBF, what is the possible bounded range of half-lives?</p></li>
 </ul>
+<p>(END OF MTBF OUTLINE)</p>
+<p>(AUDITING OUTLINE)</p>
 <h1 id="what-if-you-add-good-auditing-strategies...-five">What if you add good auditing strategies... FIVE</h1>
 <!--
 - What's "good auditing?"
@@ -251,6 +267,7 @@ also, we generally prefer medians as measure of length when distributions are so
      3. NOT robust to  failures associated across servers... 
 - [FIGURE]
 -->
+<p>(END OF AUDITING OUTLINE)</p>
 <p>Auditing the collection, that is, testing the validity of remote copies of documents, can greatly reduce permanent document losses over time. The auditing process actively patrols for errors before they cause permanent document losses, and corrects them whenever possible. A number of strategies for auditing are possible, and some are measurably better than others.</p>
 <p>In all cases, when a document copy is found to be absent (or corrupted), the auditing process attempts to replace the missing copy with a fresh copy obtained from another server. If there is an intact copy on another server, then the missing document is repaired and the process continues.</p>
 <p>Common auditing strategies:</p>
@@ -277,7 +294,7 @@ also, we generally prefer medians as measure of length when distributions are so
 <li><p>Auditing in multiple segments is very slightly more effective than auditing the entire collection as one segment; e.g., auditing a quarter of the collection each quarter is slightly more effective than a single annual audit of the whole collection.</p>
 We note also that auditing in a number of segments has two additional advantages:
 <ol style="list-style-type: decimal">
-<li>It spreads the bandwidth requirements for auditing throughout the audit cycle. This can reduce egress charges for large audits.</li>
+<li>It spreads the bandwidth requirements for auditing throughout the audit cycle. This can reduce recurring (monthly, quarterly) egress charges for large audits.</li>
 <li>It can find a dead server more quickly. A dead server can be detected only during auditing when a document repair fails. Since all servers are examined quarterly, for instance, rather than annually, documents are exposed less to permanent loss.</li>
 </ol></li>
 <li><p>Random auditing, where segment contents are selected with replacement, is less effective than total auditing or, equivalently, segmented auditing without replacement.</p></li>
