@@ -162,21 +162,6 @@ end of outline area -->
 <p>There is an estimate of unrecoverable failures on consumer-grade SATA drives that is often mentioned in the industry: Pr{a bit fails during a year} = 10E-15. This looks like a small number until one calculates that a single 4TB drive, very commonly deployed today, contains about 40E12 bits of data, plus essential metadata. [Have to find the reference for this number, and have to check the accuracy, too.] Even ignoring the magnitude of the storage involved, it is hard to grasp that the average lifetime of a bit is a thousand times longer than the age of the universe.</p>
 <p>We have not encountered data on the performance of disk drives or blocks in RAID and erasure coding configurations, the effect of pre-emptive data scrubbing, etc.</p>
 <p>Data errors are always assumed to be silent to the client that owns the document. Active searching for and correction of errors is necessary to ensure continuing data integrity. Note that the multiple-copy storage and auditing procedure explored in this paper is analogous to RAID storage with data scrubbing, but done at a document level rather than a block level.</p>
-<!-- continuing with outline
-how to choose a spectrum of error rates?
-where something is going on
-some error but not too many
-between rusty garbage can lid and perfection, between fruit fly and immortality
-exponential lifetimes are not consistent with most human experience
-somehow relates to our common experience: there are errors but not many
-amazon, google, others ever quote rates?  
-five nines is absurdly low; nine nines is still way low based on simulations; and, btw, nine nines of what events per how often?
-
-we have used mean exponential lifetime, which is precisely mtbf or mttf
-changed to half-life because it's easier for people to understand
-who knows lifetime = 63% of units failed (1-1/e); half-life easier to explain
-also, we generally prefer medians as measure of length when distributions are so skewed
--->
 <h2 id="the-representation-and-scale-of-error-rates">The Representation and Scale of Error Rates</h2>
 <p>The likelihood of an error in a disk bit or sector, or even the failure of an entire disk, is a very small number with many zeroes before the first significant digit. We choose to invert the error rate into a function of lifetime of that bit (or sector containing many bits). Thus a probability of a bit failing in a year of 10E-15 becomes a mean lifetime of 100E12 years. Expressed that way, the figure seems excessively optimistic. (The age of the universe is currently estimated to be 14E9 years.) Data on such a disk would be effectively immortal, and that does not correlate with experience. We agree with Rosenthal (2010) and others that such estimates are merely marketing projections that are not based on empirical data. Using simulations to investigate such nearly immortal disks would be expensive and fruitless. If there are no errors, then no protective strategy is needed. However, the statement &quot;no errors&quot; does not correlate well with practical experience.</p>
 <p>Where, then, to search for information about the effectiveness of replication and auditing of large collections of data? We choose to investigate a region that more nearly matches the experience of computer users, where disks and disk files have lifetimes somewhere between the fruit fly and the universe.</p>
@@ -214,16 +199,20 @@ also, we generally prefer medians as measure of length when distributions are so
 </li>
 <li>Failure data from warranty failures returned during a service period. This may be assessed by the manufacturer or by users of large numbers of devices.</li>
 </ol>
+<p>Even if we understood the source and accuracy of stated MTTF estimates for disk drives, we would still not have information about individual sector failures within a drive that cause document failures, nor the relative frequencies of sector failures versus drive failures.</p>
 <p>(CONTINUING MTBF OUTLINE)</p>
 <ul>
-<li>Four ways of measuring
+<li><p>Four ways of measuring</p>
 <ul>
 <li>a guess based on engineering characteristics</li>
 <li>collection of failure data from returned drives during service-period</li>
 <li>accelerated life testing</li>
 <li>observed failures in a large collection (such as backblaze)</li>
 </ul></li>
-<li>Limitations
+</ul>
+<p>(RBL: I don't feel comfortable writing any of the next several sections.)</p>
+<ul>
+<li><p>Limitations</p>
 <ul>
 <li>formulas unreliable [cite]</li>
 <li>accelerated failure uncertain by X fold [cite]</li>
@@ -233,14 +222,22 @@ also, we generally prefer medians as measure of length when distributions are so
 <li>all of these methods presume failure rate within service period, or replacement cycle -- not outside of expected service period</li>
 <li>all of these methods also undercount document failures that fail as a results of blocks failures without the entire drive.</li>
 </ul></li>
-<li>What do we learn from the best information available
+<li><p>What do we learn from the best information available</p>
 <ul>
 <li>If observed failure rate in large collections of disk are boundid in X% , y%... what is a reasonable lower / upper bound for half-life of block</li>
 </ul></li>
 <li><p>Long term -- bit rot</p>
-<p>o Show results from long term simulation o [TABLE] (how long for 1% loss, based on number of copies) o Interaction -- fragility of big documents o [FIGURE] (how long for 1% loss, based on increasing size) o Cite to Rosenthal previous results on this</p></li>
+<p>o Show results from long term simulation</p>
+<p>o [TABLE] (how long for 1% loss, based on number of copies) (TODO:RBL: Q: Do you intend a table of error rate (V) by number of copies (H), the data being hours before loss exceeds 1%? This is part of the response surface that we have not yet investigated.)</p>
+<p>o Interaction -- fragility of big documents</p>
+<p>o [FIGURE] (how long for 1% loss, based on increasing size) (TODO:RBL: Q: Again, do you intend a table of document size (H) by error rate (V), the data again being hours before loss exceeds 1%? Again, a part of the response surface untouched by silicon hands.)</p>
+<p>o Cite to Rosenthal previous results on this</p></li>
 <li><p>Medium term -- if storage error rates are uncertain</p>
-<p>o Storage error rates are difficult to verify o [FIGURE] How long for failure of 1% as error rate increases? o How to interpret claimed storage error rates - What are the limitations of how MTBF is measured? - Given an MTBF, what is the possible bounded range of half-lives?</p></li>
+<p>o Storage error rates are difficult to verify</p>
+<p>o [FIGURE] How long for failure of 1% as error rate increases? (TODO:RBL: Q: Sounds like a one-way table, for fixed document size, IV = error rate, DV = hours before loss exceeds 1%.)</p>
+<p>o How to interpret claimed storage error rates</p>
+<pre><code>- What are the limitations of how MTBF is measured? 
+- Given an MTBF, what is the possible bounded range of half-lives?</code></pre></li>
 </ul>
 <p>(END OF MTBF OUTLINE)</p>
 <p>(AUDITING OUTLINE)</p>
@@ -259,8 +256,7 @@ also, we generally prefer medians as measure of length when distributions are so
         a. Auditing and egress charges -- piecemeal is ok
         b. Auditing charges would be reduced by cryptographic affordances on cloud-server side ...
 - Robustness 
-     1,
-        Robust to audit frequency
+     1. Robust to audit frequency
         a. The impact of the rate of auditing is surprisingly less influential than the auditing strategy.  Auditing more frequently than annually has little impact on losses, across a wide spectrum of error rates.
         b. Systematic auditing in a small number of segments, e.g., auditing one quarter of the collection every calendar quarter, is slightly more effective than one large, annual audit, and eases bandwidth requirements. 
      2. Robust to storage quality, storage quality variations over time
@@ -272,11 +268,11 @@ also, we generally prefer medians as measure of length when distributions are so
 <p>In all cases, when a document copy is found to be absent (or corrupted), the auditing process attempts to replace the missing copy with a fresh copy obtained from another server. If there is an intact copy on another server, then the missing document is repaired and the process continues.</p>
 <p>Common auditing strategies:</p>
 <ul>
-<li><p>Total auditing: test all copies of all documents in the collection. This auditing cycle is usually done systematically, at regular intervals, such as annually, quarterly, monthly, etc.</p></li>
-<li><p>(Systematic) segmented auditing: divide the collection into several segments, and test one segment at each interval. For example, the collection may be divided into four segments; if each segment in turn is audited at quarterly intervals, then the entire collection will have been audited at the end of a yearly auditing cycle.</p>
+<li><p><strong>Total auditing</strong>: test all copies of all documents in the collection. This auditing cycle is usually done systematically, at regular intervals, such as annually, quarterly, monthly, etc.</p></li>
+<li><p><strong>(Systematic) segmented auditing</strong>: divide the collection into several segments, and test one segment at each interval. For example, the collection may be divided into four segments; if each segment in turn is audited at quarterly intervals, then the entire collection will have been audited at the end of a yearly auditing cycle.</p>
 <p>Note that segments need not be fixed portions of the collection. Each segment of the collection might be selected at random when its turn comes, so long as the random selection is made <em>without</em> replacement over the audit cycle. This ensures that every document in the collection will be audited exactly once during the complete cycle.</p></li>
-<li><p>Random auditing: at some interval, audit a random subset of documents chosen from the collection. This often is expressed as, for instance, &quot;audit ten percent of the documents every month.&quot; The difference between this random strategy and segmented auditing is that the random selection is chosen <em>with</em> replacement. Thus it is likely that some documents will escape auditing entirely for long periods.</p></li>
-<li><p>Auditing by popularity: divide the collection into segments that represent varying levels of document usage, e.g., small segments for the documents most frequently accessed, segments for documents of intermediate popularity, and large segments for documents rarely accessed. Permanent losses in the popular segments would have much greater negative impact on the customer base. To reduce the likelihood of such expensive losses, the more popular (small) segments of the collection can be audited more frequently than the others with little increased cost in bandwidth and time.</p></li>
+<li><p><strong>Random auditing</strong>: at some interval, audit a random subset of documents chosen from the collection. This often is expressed as, for instance, &quot;audit ten percent of the documents every month.&quot; The difference between this random strategy and segmented auditing is that the random selection is chosen <em>with</em> replacement. Thus it is likely that some documents will escape auditing entirely for long periods.</p></li>
+<li><p><strong>Auditing by popularity</strong>: divide the collection into segments that represent varying levels of document usage, e.g., small segments for the documents most frequently accessed, segments for documents of intermediate popularity, and large segments for documents rarely accessed. Permanent losses in the popular segments would have much greater negative impact on the customer base. To reduce the likelihood of such expensive losses, the more popular (small) segments of the collection can be audited more frequently than the others with little increased cost in bandwidth and time.</p></li>
 </ul>
 <p>Our simulations include tests of many auditing strategies, including total, segmented, and random. Tests differed in cycle frequency and in the parts of the collection audited during each segment or cycle.</p>
 <ul>
@@ -297,7 +293,7 @@ We note also that auditing in a number of segments has two additional advantages
 <li>It spreads the bandwidth requirements for auditing throughout the audit cycle. This can reduce recurring (monthly, quarterly) egress charges for large audits.</li>
 <li>It can find a dead server more quickly. A dead server can be detected only during auditing when a document repair fails. Since all servers are examined quarterly, for instance, rather than annually, documents are exposed less to permanent loss.</li>
 </ol></li>
-<li><p>Random auditing, where segment contents are selected with replacement, is less effective than total auditing or, equivalently, segmented auditing without replacement.</p></li>
+<li><p>Random auditing, where segment contents are selected with replacement, is less effective than total auditing or, equivalently, segmented auditing <em>without</em> replacement.</p></li>
 <li><p>Across a wide range of document error rates, increasing auditing frequency beyond a certain point shows little improvement.</p></li>
 <li><p>The effectiveness of auditing is robust across a wide spectrum of storage quality (i.e., document error rates) and short term variations in storage quality.</p></li>
 <li><p>However, auditing strategies are not robust to associated failures that compromise multiple servers over short periods.</p></li>
@@ -406,7 +402,7 @@ We note also that auditing in a number of segments has two additional advantages
 <p>A wide range of real-world threats may be modeled through varying the parameterization of the model</p>
 <h2 id="threat-matrix">Threat Matrix</h2>
 <p>A wide range of real-world threats may be modeled through varying the parameterization of the model</p>
-<p>[Well, I'm fairly convinced that pandoc markdown can't do complex lists inside tables, so we will have to render this sort of table in raw HTML.]</p>
+<p>[Well, I'm fairly convinced that pandoc markdown cannot do complex lists inside tables, so we will have to render this sort of table in raw HTML.]</p>
 <table>
 <thead>
 <tr class="header">
@@ -530,15 +526,15 @@ loss due to raid/internal replication characteristics and failure
 <li>Assumptions: No additional assumptions needed. Percentage of failure is independent of number of documents in collection. However, given a low percentage expected document loss, the probability that at least one document will be lost depends on the number of douments in the collection: [formula]</li>
 <li>Additional Simulation: Formulation may be checked using simulations.</li>
 <li>Implications: For collections with huge numbers of documents, and where the absolute integrity of the collection neeeds to be maintained (for example, legal evidence) very low loss rates are desired</li>
-<li>Generalizations: docuement size <!-- END:TODO:RICK--></li>
+<li>Generalizations: document size <!-- END:TODO:RICK--></li>
 </ul>
 <h2 id="large-vs-small-documents">Large vs Small documents</h2>
 <!-- START:TODO:RICK-->
 <ul>
-<li>Assumptions: Without any additional assumptions needed, the relationship between document size and failure rate can derived, and follows the formula : [equation]</li>
-<li>Additional simulation: No additional simulation is needed, however this formulation may be checked using simulations: [figure]</li>
-<li>Implications: You can mitgate the risk of increasing size by a factor of [X] by adding [Y] additional copies.</li>
-<li>Generalizations: The model assumes a single failure within a document destroys it. Documents may be redundant -- such that multiple hits are needed to completely destroy them. <!-- END:TODO:RICK--></li>
+<li>Assumptions: Without any additional assumptions needed, the relationship between document size and failure rate can derived, and follows the formula : [equation] (TODO:RBL: Q: Simple Poisson with clear list of parameters?)</li>
+<li>Additional simulation: No additional simulation is needed, however this formulation may be checked using simulations: [figure] (TODO:RBL: Q: Or a table, given that the errors are so small?)</li>
+<li>Implications: You can mitgate the risk of increasing size by a factor of [X] by adding [Y] additional copies. (TODO:RBL: Not a closed form calculation, requires actual tests.)</li>
+<li>Generalizations: The model assumes a single failure within a document destroys it. Documents may be redundant -- such that multiple hits are needed to completely destroy them. (TODO:RBL: Q: If we want to present real numbers for this case, we will need some new code.) <!-- END:TODO:RICK--></li>
 </ul>
 <h2 id="compression">Compression</h2>
 <ul>
@@ -601,6 +597,8 @@ loss due to raid/internal replication characteristics and failure
 <h2 id="value-of-replicability">Value of replicability</h2>
 <h2 id="calibration-with-real-world-data----how-to-calibrate">Calibration with real world data -- how to calibrate</h2>
 <!-- START:TODO:RICK-->
+<p>(TODO:RBL Q: Does something like the spreadsheet I wrote suffice for this, with some words to explain its workings? The calculation is straightforward enough if you've done it recently, but not if you haven't spent much time doing it since grad school.<br />
+Also, I will redo the numbers for copies=1 for the entire range of lifetimes (4 or 5 orders of magnitude) and 101 runs instead of 21 just to get a tighter grip on the small loss numbers for long lifetimes.)</p>
 <!-- END:TODO:RICK-->
 <h2 id="extension-and-parameterization">Extension and parameterization</h2>
 <h1 id="recommendation">Recommendation</h1>
@@ -665,7 +663,7 @@ end outline -->
 </li>
 <li><strong>Server Failure Rates:</strong> It is possible for a server to fail completely and lose all of the document copies it contains. The likelihood of failure of a server is randomly chosen at the beginning of a simulation run, and that likelihood may be changed during the simulation due to economic or environmental &quot;shock&quot; conditions that increase the likelihood of associated failures.<br />
 </li>
-<li><strong>Poisson IID Sector Errors:</strong> We chose to model &quot;sector&quot; errors in documents. Such errors arrive as a Poisson process over all the sectors of a storage structure, and the arrivals of errors are independent and identically distributed.<br />
+<li><strong>Poisson IID Sector Errors:</strong> We chose to model &quot;sector&quot; errors in documents. Such errors arrive as a Poisson process over all the sectors of a storage structure, and the arrivals of errors are independent and identically distributed. Some errors strike sections of the storage that are occupied by documents, and some strike unoccupied areas.<br />
 </li>
 <li><strong>Fragile Documents:</strong> Documents are considered fragile. If a document copy suffers a single sector error, we consider the document copy to be lost. This is probably too conservative for some types of documents, e.g., uncompressed text, but plausible for others, e.g., compressed and encrypted documents.<br />
 </li>
@@ -714,23 +712,23 @@ end outline -->
 <h2 id="how-to-model-various-scenarios">How to Model Various Scenarios</h2>
 <!-- START:TODO:RICK-->
 <ul>
-<li>simplest: one collection, one document size, servers all same quality = sector lifetime</li>
-<li>several collections of varying quality and preservation requirements</li>
-<li>servers of varying quality = sector lifetimes</li>
-<li>varying collection size</li>
-<li>varying document size</li>
-<li>varying duration of simulated time</li>
-<li>varying server quality</li>
-<li>several document sizes</li>
-<li>one collection but several servers of different quality</li>
-<li>no auditing</li>
-<li>simple annual total auditing</li>
-<li>annual total auditing segmented semiannually, quarterly, monthly</li>
-<li>quarterly total auditing</li>
-<li>random auditing in several segments with replacement</li>
-<li>non-fatal glitches of varying frequency, impact, and duration in servers</li>
-<li>fatal glitches of varying frequency in servers</li>
-<li>varying expected server lifetime</li>
-<li>shock to servers of some frequency and span</li>
+<li><p>The simplest case: one collection of documents, one document size, servers all same quality, where &quot;quality&quot; is mean sector lifetime.</p></li>
+<li><p>Several collections of varying preservation requirements.</p></li>
+<li><p>Using a number of servers of varying quality, where quality is mean sector lifetime.</p></li>
+<li><p>Varying collection size</p></li>
+<li><p>Varying document size</p></li>
+<li><p>Varying the duration of simulated time</p></li>
+<li><p>Varying server quality</p></li>
+<li><p>Collections with several document sizes</p></li>
+<li><p>One collection stored on several servers of different quality</p></li>
+<li><p>No auditing</p></li>
+<li><p>Simple annual total auditing</p></li>
+<li><p>Annual total auditing segmented semiannually, quarterly, monthly</p></li>
+<li><p>Quarterly total auditing</p></li>
+<li><p>Random auditing in several segments with replacement</p></li>
+<li><p>Non-fatal glitches of varying frequency, impact, and duration in servers</p></li>
+<li><p>Fatal glitches of varying frequency in servers</p></li>
+<li><p>Varying expected server lifetime</p></li>
+<li><p>Shock to servers of some frequency and span</p></li>
 </ul>
 <!-- END:TODO:RICK-->
