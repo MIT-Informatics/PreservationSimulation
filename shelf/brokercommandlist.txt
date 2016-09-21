@@ -30,7 +30,7 @@ python -c 'import sys; print sys.version; print sys.version_info'
 #  to eliminate any irrelevant instructions.  
 #  For instance, stating  --glitchfreq=0  is NOT enough to force no 
 #  glitch instructions to be expanded.  You must also include
-#  --glitchimpact=100 --glitchdecay=0 --glitchmaxlife=0 --glitchspan=1
+#  --glitchimpact=100 --glitchdecay=0 --glitchmaxlife=0 
 #  Otherwise redundant instructions will be fetched and time will be wasted.  
 # Singletons such as docsize and audittype can be ignored at one's risk.  
 #  But will they always remain singletons?
