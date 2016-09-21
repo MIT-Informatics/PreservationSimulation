@@ -220,14 +220,6 @@ How is MTTF calculated before it is published?  Several methods might be used, i
 
 Even if we understood the source and accuracy of stated MTTF estimates for disk drives, we would still not have information about individual sector failures within a drive that cause document failures, nor the relative frequencies of sector failures versus drive failures.  
 
-(CONTINUING MTBF OUTLINE)
-
-- Four ways of measuring
-
-    - a guess based on engineering characteristics 
-    - collection of failure data from returned drives during service-period
-    - accelerated life testing
-    - observed failures in a large collection (such as backblaze)
 
 (RBL: I don't feel comfortable writing any of the next several sections.)
 
