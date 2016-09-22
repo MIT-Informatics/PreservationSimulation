@@ -147,6 +147,10 @@ class P(object):
                     , "nBandwidthMbps"      :   [[10]]
                     }
 
+    dShockParams =  { "nShockFreq"      :   [[nShockFreq]]
+                    , "nShockImpact"    :   [[nShockImpact]]
+                    , "nShockSpan"      :   [[nShockSpan]]
+                    }
 
     # Directory where the parameter files for the run are to be found. 
     sWorkingDir = "." 

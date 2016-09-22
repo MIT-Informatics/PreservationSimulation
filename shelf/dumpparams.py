@@ -68,4 +68,9 @@ def dumpParamsIntoLog():
     lg.logInfo("PARAMS","SHOCKS freq|%d| impact|%d| span|%d| " 
         % (G.nShockFreq, G.nShockImpact, G.nShockSpan ))
 
+# Edit History:
+# 20160920  RBL Move these routines out of main.py.
+# 
+# 
+
 #END

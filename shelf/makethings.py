@@ -35,7 +35,7 @@ def makeServers(mydServers):
 # m a k e C l i e n t s 
 # Create all clients; give them their params for the simulation.
 @ntracef("MAKE")
-@ntracef("CLI")
+@ntracef("CLIS")
 def makeClients(mydClients):
     for sClientName in mydClients:
         cClient = client.CClient(sClientName,mydClients[sClientName])
@@ -45,7 +45,7 @@ def makeClients(mydClients):
 
 # t e s t A l l C l i e n t s 
 @ntracef("MAKE")
-@ntracef("CLI")
+@ntracef("CLIS")
 def testAllClients(mylClients):
     for cClient in mylClients:
         lDeadDocIDs = cClient.mTestClient()
@@ -66,5 +66,18 @@ def testAllClients(mylClients):
         for sCollID in lCollectionIDs:
             dumpuse.dumpCollectionStats(sCollID)
 
+#-----------------------------------------------------------
+# m a k e S h o c k
+@ntracef("MAKE")
+@ntracef("SHOK")
+def makeShock(dunnoyet):
+    pass
+
+
+# Edit History:
+# 20160920  RBL Move these routines out of main.py.
+# 
+# 
+# 
 
 #END
