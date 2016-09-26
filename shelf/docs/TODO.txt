@@ -13,6 +13,7 @@ DONE - recode entirely to force filter first thing, to reduce the size
     of the internal lists required, and speed things up.  
     dramatic improvement.  
 DEFER - Is there some place here where memoizing can help further?
+FIXME - Extract and include at the right end of the data the loss statistics for all individual servers.  Yes, this will make the total dataset potentially non-rectangular for high-failure cases where different numbers of servers may be used for different seeds, yikes, and therefore it will complicate some post-processing. 
 
 
 TODO: 100% glitch impact
@@ -139,6 +140,14 @@ FIXME - Update SERVERUSE log lines and some other lines, too, at end to state ha
 
 TODO: calibration
 FIXME: do spreadsheet of a0 numbers compared with simple Poisson theoretical results.  
+
+
+TODO: log file reporting
+FIXME - Include in log file output error numbers for each server individually, hits, losses, redundant hits.  To be used someday to assess the distribution of increased losses due to glitches.  
+
+
+TODO: R reporting
+FIXME - state tables both as loss numbers and as percentage losses of collection.
 
 
 TODO: lifetimes: correlated institutional failures
