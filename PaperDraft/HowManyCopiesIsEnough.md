@@ -37,7 +37,8 @@ border-collapse: collapse;
 
 
 # Motivation
-- Information production is rapidly increasing
+- Information production is rapidly increasing.
+- The vast majority of the world's data is stored on rotating disks, 90% in 2007 and not changing very rapidly.
 - Digital store changes the goal of preservation, from maintaining a constant optimal environment to continual curation in order to maintain understanding.
 - Information systems designed for immediate use, not long term access and understanding. Much information at risk.
 - Changing economics of digital production makes it difficult for any one institution to safeguard everything it uses.
@@ -189,17 +190,21 @@ The region of error rates that we investigate generates enough errors to evaluat
 
 The supplementary material includes comparisons of theoretical and empirically observed loss rates for a wide range of error rates.  The theoretical figures are based on simple independent Poisson arrivals of document failures, based on sector lifetime, sector size, document size, and simulation length.  Empirical numbers are derived from repeated runs of simulations with the stated parameters, with simple document aging and no auditing.  Even with very small samples (twenty runs) the empirical numbers agree very well with the theoretical predictions.  
 
-### Error Rates Expressed as MTBF, MTTF
+### Relationship of MTBF/MTTF to Block Error Rates
 
 The inverse of error rate is usually expressed in terms of MTBF or MTTF, and, initially, we expressed all parameters as mean exponential lifetime.  But MTBF and MTTF are hard even for most experts to grasp, and uninformative or misleading for non-experts.  
 
 The disk manufacturing industry tends to express the device lifetime as MTBF or MTTF.  This is an expected (mean) exponential lifetime for the *device*, but that does not give much information about the lifetime of data in individual files, blocks, or bits on the disk.  There are several layers of error detection and correction in storage systems that tend to mask small errors in disk data and obscure the relationship between small data errors and drive failures.
 
-1. Block error correction on the disk.  Disk data is written with error correcting coding that repairs small errors when reading data sectors.  
-1. Bad block remapping in disk controllers.  Smart disk controllers can take unreliable sectors out of service, replacing them with more reliable sectors from a pool of spares.  
+1. Block error correction on the disk.  Disk data is written with error correcting coding that can repair small errors when reading data sectors.  
+1. Bad block remapping in disk controllers.  Smart disk controllers can take unreliable sectors out of service, replacing them with more reliable sectors from a pool of spares.  Such remapping is usually transparent to most software.  
 1. RAID and similar redundant recording of sector data.  Sector data may be recorded redundantly in mirror sets, or recorded partially in multiple versions using parity techniques, and so forth.  
 
-The use of any or all of these techniques makes it very difficult to assess the relationship between drive failure statistics and block level errors.  
+The use of any or all of these techniques makes it very difficult to assess the relationship between drive failure statistics and block level errors.  Small correlations have been found between S.M.A.R.T. error reporting statistics and subsequent drive failures, but there is no clear causal connection.  [cite Wikipedia article on S.M.A.R.T.]
+
+It must be stressed at this point that RAID and similar techniques protect only against *drive* failure; they do not protect against bad bits, blocks, or tracks when reading from a drive.  If a disk drive fails completely, RAID and erasure code techniques can rebuild the data on that drive from redundant data stored on other drives.  However, while a drive is still in operation, individual bad blocks on a drive will still read as bad blocks until the drive is removed from service and its data recovered, if possible, from the remaining drives in the redundancy set.  The data on a disk drive, even in a redundancy set, can deteriorate incrementally over time and cause documents (in our case documents, but files in general) to be altered badly.  If deteriorated data cannot be repaired by block error correction techniques in the disk controller, then the data of the file or document may be permanently lost or corrupted.
+
+The rate of deterioration of data is not directly related to the lifetime of the disk drive itself.  Drive failure may result from failures in the mechanisms of moving parts, the controller electronics, circuit boards, connectors, etc.  Data errors may result from surface wear, chemistry, radiation, lubrication, magnetic interference, and so forth, none of which seems very clearly related to the major causes of drive failure.  (Physical contamination from airborne dust, chemicals, or humidity may be an exception.)  
 
 ### Lifetime Expressed as Half-Life
 
@@ -638,23 +643,35 @@ A number of simplifying assumptions were required to reduce the sample space for
 ## How to Model Various Scenarios
 <!-- START:TODO:RICK--> 
 
-- The simplest case: one collection of documents, one document size, servers all same quality, where "quality" is mean sector lifetime.
+Most of the following scenarios may be accomplished by changing some of the easily available simulation parameters and regenerating the instruction database for the set of runs.  In some cases, multiple simulation runs will be necessary to generate data for hybrid situations, such as protecting multiple collections with different retention or preservation requirements, e.g., ephemera versus important historical records; or the use of multiple storage services with different quality guarantees, i.e., different error rates.
 
-- Several collections of varying preservation requirements.  
+For example, if I have a small collection that requires high safety and a large collection that does not, I can do separate runs with higher or lower lifetime values and more or fewer copies, and combine the results later in tables or graphics.  
 
-- Using a number of servers of varying quality, where quality is mean sector lifetime.
 
-- Varying collection size
+- The simplest case: one collection of documents, one document size, servers all same quality, where "quality" is mean sector lifetime.  Generate instructions from the distributed *.ins files and select the run parameters you wish in the broker's CLI interface.  
 
-- Varying document size
+- Several collections of varying preservation requirements.  This scenario requires a combination of runs using different server lifetime values.  See the section on varying server quality.  
 
-- Varying the duration of simulated time
+- Varying collection size: Change the parameter count in the clients.csv file.  This parameter is not settable in the specific instructions for a run, but applies to all runs in a specific set.  
 
-- Varying server quality
+>NOTE WELL: The size of a collection is not often relevant to the simulation results.  In almost all cases, we are interested in the *proportion* of failures of documents, and the size of the collection is used only to probe significant digits for very small numbers of failures.  That is, the proportion of document losses is the same in a collection of 1,000 and a collection of 1,000,000; however, the results for the larger collection should give more insight into small numbers of losses in the areas of long lifetimes (=low error rates).
 
-- Collections with several document sizes
+>NOTE: The CSV files for the simulations hold global parameters for the ru
+ns.  Most, but not all, of the parameters in the CSV files can be overridden in the instruction database for the broker.  It is possible to have two CSV files for a simulation run, one in the so-called "familydir" and one in the "specificdir".  The file in the specificdir, if present, overrides the file in the familydir, which in turn overrides the compiled-in default values for various parameters.  If possible, make run-specific changes in the specificdir copy of the CSV file.
+
+>Also note that varying collection size may be combined with varying preservation requirements and varying server quality.  
+
+- Varying document size: Change the parameter nDocSize in the file docsize.ins.  Currently the only value not commented out is 50 MB.  For most purposes, it is best to use only one document size in a set of simulation runs, so only one un-commented-out value should be present in this file.  
+
+- Varying the duration of simulated time: Change the parameter nSimlen in the file simlen.ins.  The current value is 100,000, which is ten metric years.  
+
+- Varying server quality: Change the values in the nLifem parameter list in the lifem.ins file.  The list includes a wide range of values to be placed in the instruction database.  The value or values used for a simulation run is specified in the --lifem option of the broker CLI.  A single run may specify one particular value or a range of values to be chosen from the list.  
+
+- Collections with several document sizes: 
 
 - One collection stored on several servers of different quality
+
+- Varying numbers of copies made:
 
 - No auditing
 
