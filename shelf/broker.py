@@ -152,14 +152,16 @@ def fndCliParse(mysArglist):
     cParse.add_argument("--familydir", type=str
                         , dest='sFamilyDir'
                         , metavar='sFAMILYDIR'
-                        #, nargs='?'
+                        , nargs='?'
+                        , required=True
                         , help='Family directory for param and log files.'
                         )
     
     cParse.add_argument("--specificdir", type=str
                         , dest='sSpecificDir'
                         , metavar='sSPECIFICDIR'
-                        #, nargs='?'
+                        , nargs='?'
+                        , required=True
                         , help='Specific directory for param and log files.'
                         )
     
@@ -642,8 +644,9 @@ def main():
 
         if g.sListOnly.startswith("Y"):
             # Testing: Just dump out the instruction dictionary for this item.
-            NTRC.ntracef(0,"MAIN","proc ListOnly, item run|%s| id|%s| ncopies|%s| lifem|%s| dict|%s|" % \
-                (nRunNumber, sInstructionId, dInstruction["nCopies"], dInstruction["nLifem"], dInstruction))
+            NTRC.ntracef(0,"MAIN","proc ListOnly, item run|%s| ncopies|%s| lifem|%s| id|%s| dict|%s|" % 
+                (nRunNumber, dInstruction["nCopies"], dInstruction["nLifem"],
+                sInstructionId, dInstruction))
         else:   # Real life: execute the instruction.
             bContinue = fnbWaitForOpening(g.nCores,"python",g.nCoreTimer,g.nStuckLimit)
             if bContinue:
@@ -731,6 +734,9 @@ foreach single-line file in holding dir
 # 20160216  RBL Add --glitchspan option.
 #               Incr run counter before checking for already done.
 # 20161006  RBL Make familydir and specificdir mandatory options.
+#                BEWARE: if you say nargs=1 instead of nargs='?', 
+#                the value returned is a list containing the string, 
+#                not just the scalar string.  Yikes.  
 #               Add audit info to run line.
 #               Add run number to already-done line.
 #               Reduce default number of cores so it doesn't kill laptop.

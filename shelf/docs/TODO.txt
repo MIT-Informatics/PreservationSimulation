@@ -13,7 +13,12 @@ DONE - recode entirely to force filter first thing, to reduce the size
     of the internal lists required, and speed things up.  
     dramatic improvement.  
 DEFER - Is there some place here where memoizing can help further?
-FIXME - Extract and include at the right end of the data the loss statistics for all individual servers.  Yes, this will make the total dataset potentially non-rectangular for high-failure cases where different numbers of servers may be used for different seeds, yikes, and therefore it will complicate some post-processing. 
+FIXME - Extract and include at the right end of the data the 
+  loss statistics for all individual servers.  Yes, this will make 
+  the total dataset potentially non-rectangular for high-failure 
+  cases where different numbers of servers may be used for 
+  different seeds, yikes, and therefore it will complicate some 
+  post-processing. 
 
 
 TODO: 100% glitch impact
@@ -54,24 +59,28 @@ FIXME - add a cleanstart shell script to empty the dirs that need to
 DONE - fix y/n switch options to get rid of the need for a value.
 DONE - fix the broker invocation in the AWSinstallscript to match the
   revised y/n options.
-FIXME - start the run count from 1 even for cases that have already been done, 
+DONE - start the run count from 1 even for cases that have already been done, 
   so that the run number reflects progress toward the total number, and print 
   the run number in the already-done line.  
 FIXME - log all broker commands into some file.
-FIXME - add auditfreq and segs to the intro run-n lines.  
-FIXME - make familydir and specificdir required options (fun oxymoron).
+DONE - add auditfreq and segs to the intro run-n lines.  
+DONE - make familydir and specificdir required options (fun oxymoron).
 
 
 TODO: broker docs
 FIXME - add examples of obscure mongodb syntax in the --query command (and others?) 
   to howto broker doc.
-FIXME - Add a help file about using mongoshell to examine database of instructions, in case you think anything is funny about the database.  
+FIXME - Add a help file about using mongoshell to examine database 
+  of instructions, in case you think anything is funny about the database.  
 MAYBE - add a script to dump out some sample stats from a mongo db, such as names of
   all dbs, number of elements and varnames for each, like that.  
 
 
 TODO: audit
-FIXME - log stats at end of each audit cycle: lost, minority repairs, majority repairs.  These are all cross-server figures.  We need to add per-server figures, too.
+FIXME - log stats at end of each audit cycle: lost, minority repairs, 
+  majority repairs.  These are all cross-server figures.  We need to 
+  add per-server figures, too.  Goal is to see if the user could 
+  possibly detect server glitch less than fatal.  
 FIXME - log per-server total losses and hits at end of run.  
 
 
