@@ -229,7 +229,7 @@ class CG(object):
     sQuery = None
     nCores = 4          # Default, overridden by NCORES env var
     nCoreTimer = 10     # Wait for a free core,
-    nPoliteTimer = 3    # Shorter wait between sequential launches.
+    nPoliteTimer = 2    # Shorter wait between sequential launches.
     nStuckLimit = 600   # Max nr of CoreTimer waits before giving up.
     nTestLimit = 0      # Max nr of runs executed for a test run, 0=infinite.
     sTestCommand = "N"  # Should just echo commands instead of executing them?
@@ -740,7 +740,8 @@ foreach single-line file in holding dir
 #               Add audit info to run line.
 #               Add run number to already-done line.
 #               Reduce default number of cores so it doesn't kill laptop.
-#               Reduce polite interval timer slightly.
+#               Reduce polite interval timer slightly to 3 sec.
+# 20161009  RBL Reduce polite interval timer to 2 sec.
 # 
 # 
 
