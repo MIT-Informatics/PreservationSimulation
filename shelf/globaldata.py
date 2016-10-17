@@ -1,6 +1,5 @@
 #!/usr/bin/python
 # globaldata.py
-# Recovered, we hope, after commit/delete screw-up.  
 
 # G L O B A L  D A T A 
 #---------------------
@@ -65,7 +64,12 @@ class ProtoG(object):
     nGlitchMaxlife = 0      # Max duration of a single glitch impact.  
     fGlitchIgnoreLimit = 0.05   # Level below which a glitch stops.
     nGlitchesTotal = 0      # Count of all glitches on all shelves.
-    nGlitchSpan = 1         # Number of servers affected by glitch.
+    
+    nShockFreq = 0          # Half-life of economic slump-free intervals. 
+    nShockImpact = 0        # Percent reduction in server lifetime.
+    nShockSpan = 1          # Number of servers affected by slump.  
+    nShocksTotal = 0        # Count of shocks this run. 
+
     sMongoId = None         # MongoDB _id of the instruction for this run.
 
 class P(object):
@@ -89,10 +93,10 @@ class P(object):
     # Shelf size is stored here in Terabytes, scaled up to MB when used in servers.  
     # TODO: fix these default values, which are not sufficiently
     #  deeply nested.  Or something.  
-    dServerParams =    { "Amazon East":[1,20]
-                        , "Amazon West":[1,30]
-                        , "Google Drive":[2,40]
-                        , "AWS Euro Premium":[3,20]
+    dServerParams =    { "Amazon East":[ [1,20] ]
+                        , "Amazon West":[ [1,30] ]
+                        , "Google Drive":[ [2,40] ]
+                        , "AWS Euro Premium":[ [3,20] ]
                         }
     # Shelf has an MTTF for each quality level.
     # quality : [ sector error rate, shelf error rate ] 
@@ -102,19 +106,19 @@ class P(object):
     #  but are now to be changed to half-lives.
     # TODO: fix these default values, which are not sufficiently
     #  deeply nested.  Or something.  
-    dShelfParams =      { 1 : [ 10, 100 ]
-                        , 2 : [ 20, 200 ]
+    dShelfParams =      { 1 : [ [ 10, 100 ] ]
+                        , 2 : [ [ 20, 200 ] ]
                         }
 
     # Distribution parameters: how many copies to make of what value doc.
     #   { collectionvaluelevel : [ serverqualitylevel, numberofcopies ] , ... }
     # TODO: fix these default values, which are not sufficiently
     #  deeply nested.  Or something.  
-    dDistnParams =      { 1 : [ 1, 5 ]
-                        , 2 : [ 2, 4 ]
-                        , 3 : [ 3, 3 ] 
-                        , 4 : [ 4, 2 ] 
-                        , 5 : [ 5, 1 ] 
+    dDistnParams =      { 1 : [ [ 1, 5 ] ]
+                        , 2 : [ [ 2, 4 ] ]
+                        , 3 : [ [ 3, 3 ] ]
+                        , 4 : [ [ 4, 2 ] ]
+                        , 5 : [ [ 5, 1 ] ]
                         }
 
     # Document size distribution: multimodel Gaussian, mix percentages and params.
@@ -143,6 +147,10 @@ class P(object):
                     , "nBandwidthMbps"      :   [[10]]
                     }
 
+    dShockParams =  { "nShockFreq"      :   [[nShockFreq]]
+                    , "nShockImpact"    :   [[nShockImpact]]
+                    , "nShockSpan"      :   [[nShockSpan]]
+                    }
 
     # Directory where the parameter files for the run are to be found. 
     sWorkingDir = "." 

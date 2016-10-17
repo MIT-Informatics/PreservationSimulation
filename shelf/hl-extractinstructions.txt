@@ -7,7 +7,7 @@
 #  can use a different separator if the user wishes.  
 
 =template
-{timestamp} {docsize} {shelfsize} {copies} {lifem} {simlength} {seed} {lost} {docstotal} {docsokay} {docsrepairedmajority} {docsrepairedminority} {docslost} {auditcycles} {auditfrequency} {auditsegments} {auditrepairs} {auditmajority} {auditminority} {auditlost} {glitchfreq} {glitchimpact} {glitchdecay} {glitchmaxlife} {glitchspan} {nglitches} {walltime} {cputime} {logfilename} {logfilesize} {instructionfilename} {todaysdatetime} {extractorversion} {mongoid}
+{timestamp} {docsize} {shelfsize} {copies} {lifem} {simlength} {seed} {lost} {docstotal} {docsokay} {docsrepairedmajority} {docsrepairedminority} {docslost} {auditcycles} {auditfrequency} {auditsegments} {auditrepairs} {auditmajority} {auditminority} {auditlost} {glitchfreq} {glitchimpact} {glitchdecay} {glitchmaxlife} {nglitches} {shockfreq} {shockimpact} {shockspan} {nshocks} {walltime} {cputime} {logfilename} {logfilesize} {instructionfilename} {todaysdatetime} {extractorversion} {mongoid}
 
 # The header line will be output or not, depending on the 
 #  --header CLI option or the "header" environment variable.  
@@ -60,7 +60,7 @@ shelfsize,"created server.V1. quality",0,shelfsize.(\d+)
 #  (Also note that this is exponential expected lifetime, which 
 #  differs from half-life by a factor of sqrt(2).)
 lifek,"PARAMS INFO.*SHELF.*quality.1",7,smallfailrate.(\d+)
-lifem,"PARAMS INFO.*SHELF.*quality.1",7,smallfailrate.(\d+)000
+lifem,"PARAMS INFO.*SHELF.*quality.1",7,smallfailrate.(\d+)\d{3}
 simlength,"PARAMS INFO.*timelimit",8,timelimit.(\d+)
 
 # Include the seed so that we can recover the original log filename if needed.
@@ -91,8 +91,12 @@ glitchfreq,GLITCH,6,freq.(\d+)
 glitchimpact,GLITCH,7,impact.(\d+)
 glitchdecay,GLITCH,8,decay.(\d+)
 glitchmaxlife,GLITCH,9,maxlife.(\d+)
-glitchspan,GLITCH,10,span.(\d+)
 nglitches,"LIFETIME Total glitches",7,glitches.(\d+)
+
+shockfreq,"PARAMS INFO - SHOCKS",6,freq.(\d+)
+shockimpact,"PARAMS INFO - SHOCKS",7,impact.(\d+)
+shockspan,"PARAMS INFO - SHOCKS",8,span.(\d+)
+nshocks,"MAIN INFO - SHOCKS Total shocks",7,shocks.(\d+)
 
 timestamp,"MAIN INFO.*Simulation parameters",1,([1234567890_]+)
 walltime,"MAIN.*End time stats",0,wall. *([0-9\.]+)
