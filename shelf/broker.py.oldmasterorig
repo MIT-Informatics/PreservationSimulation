@@ -640,6 +640,10 @@ def main():
             NTRC.ntracef(0,"MAIN","proc skip item already done run|%s| id|%s| copies|%s| lifem|%s|" %
                 (nRunNumber, sInstructionId, dInstruction["nCopies"],
                 dInstruction["nLifem"]))
+<<<<<<< HEAD
+=======
+
+>>>>>>> shock
             continue
 
         if g.sListOnly.startswith("Y"):
@@ -733,6 +737,10 @@ foreach single-line file in holding dir
 #                not True-False values.  Put back 90% of the code I changed.
 # 20160216  RBL Add --glitchspan option.
 #               Incr run counter before checking for already done.
+<<<<<<< HEAD
+=======
+
+>>>>>>> shock
 # 20161006  RBL Make familydir and specificdir mandatory options.
 #                BEWARE: if you say nargs=1 instead of nargs='?', 
 #                the value returned is a list containing the string, 
@@ -742,8 +750,16 @@ foreach single-line file in holding dir
 #               Reduce default number of cores so it doesn't kill laptop.
 #               Reduce polite interval timer slightly to 3 sec.
 # 20161009  RBL Reduce polite interval timer to 2 sec.
+<<<<<<< HEAD
 # 
 # 
 
+=======
+# 
+
+
+
+#END
+>>>>>>> shock
 
 #END
