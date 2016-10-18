@@ -185,8 +185,10 @@ FIXME - Add comments somewhere about the hits and losses numbers reported at the
   at t=80026.  So there.  
 FIXME - QUESTION: the last audit cycle is always left open. Is this problem?  Some 
   arithmetic could cause it to be completed before the end of simulated time.  
-  However, we used to have a random offset for the beginning of audits and
-  we dropped that for some reason lost in history. The open, unaudited period
+  However, we used to have a random offset for the beginning of audits to prevent
+  multiple clients from having synchronized audits and clogging the network.  
+  However, now, there is only one client and therefore one audit, so the 
+  random offset is no longer necessary.  The open, unaudited period
   at the end of the simulation would seem to add a touch of reality to it: 
   losses may occur at any time in the auditing cycle, and you never know when
   you will need access to a particular document.  

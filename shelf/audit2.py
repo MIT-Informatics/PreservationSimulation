@@ -28,7 +28,7 @@ class CAudit2(object):
     getID = itertools.count(1).next
 
     @tracef("AUD2")
-    def __init__(self,mysClientID,mysCollectionID,mynInterval=G.nAuditCycleInterval):
+    def __init__(self,mysClientID, mysCollectionID, mynInterval=G.nAuditCycleInterval):
         self.ID = "A" + str(self.getID())
         G.dID2Audit[self.ID] = self
         self.TYPE = "CAudit2"
@@ -86,17 +86,22 @@ class CAudit2(object):
         yield G.env.timeout(nSegmentInterval)
         
         while True:
-            lg.logInfo("AUDIT2","begin cycle t|%10.3f| auditid|%s| type|%s| cycle|%s| cli|%s| coll|%s| interval|%s| nsegments|%s|" % (G.env.now,self.ID,self.TYPE,self.nNumberOfCycles,self.sClientID,self.sCollectionID,mynCycleInterval,mynSegments))
+            lg.logInfo("AUDIT2", "begin cycle t|%10.3f| auditid|%s| type|%s| "
+                "cycle|%s| cli|%s| coll|%s| interval|%s| nsegments|%s|" % \
+                (G.env.now, self.ID, self.TYPE, self.nNumberOfCycles, 
+                self.sClientID, self.sCollectionID, mynCycleInterval, 
+                mynSegments))
             
             # Start the collection audit and wait for it to finish.
             tCycleStartTime = G.env.now
             self.nRepairsThisCycle = 0
             self.nLossesThisCycle = 0
             eSyncEvent = G.env.event()
-            G.env.process(self.mAuditCollection(mynCycleInterval,G.nAuditSegments,self.sCollectionID,eSyncEvent))
+            G.env.process(self.mAuditCollection(mynCycleInterval, 
+                G.nAuditSegments,self.sCollectionID,eSyncEvent))
             yield eSyncEvent
 
-            lg.logInfo("AUDIT2","end cycle   t|%10.3f| auditid|%s| cycle|%s| "
+            lg.logInfo("AUDIT2", "end cycle   t|%10.3f| auditid|%s| cycle|%s| "
                 "cli|%s| coll|%s| losses|%d| repairs|%d| total|%d| perms|%d| "
                 "majority|%s| minority|%d|" % (G.env.now, self.ID, 
                 self.nNumberOfCycles, self.sClientID, self.sCollectionID, 
@@ -117,25 +122,40 @@ class CAudit2(object):
         for each segment in turn.
         '''
         fTimeCycleBegin = G.env.now
-        lg.logInfo("AUDIT2","begin colln t|%10.3f| auditid|%s| cycle|%s| cli|%s| coll|%s|" % (G.env.now,self.ID,self.nNumberOfCycles,self.sClientID,self.sCollectionID))
+        lg.logInfo("AUDIT2", "begin colln t|%10.3f| auditid|%s| cycle|%s| "
+            "cli|%s| coll|%s|" % \
+            (G.env.now, self.ID, self.nNumberOfCycles, self.sClientID, 
+            self.sCollectionID))
 
         for iThisSegment in range(mynSegments):
             tSegmentStartTime = G.env.now
-            nSegmentInterval = self.mCalcSegmentInterval(mynCycleInterval,mynSegments)
+            nSegmentInterval = (
+                self.mCalcSegmentInterval(mynCycleInterval, mynSegments))
             bLastSegment = (iThisSegment == mynSegments-1)
 
-            self.lDocsThisSegment = self.mIdentifySegment(mysCollectionID,mynSegments,iThisSegment)
+            self.lDocsThisSegment = self.mIdentifySegment(mysCollectionID, 
+                mynSegments, iThisSegment)
             eSyncEvent = G.env.event()
-            G.env.process(self.mAuditSegment(iThisSegment,self.lDocsThisSegment,mysCollectionID,eSyncEvent))
+            G.env.process(self.mAuditSegment(iThisSegment, 
+                self.lDocsThisSegment,mysCollectionID,eSyncEvent))
             # Wait for completion of segment and its allotted time.
             yield eSyncEvent
             tNextSegmentStartTime = tSegmentStartTime + nSegmentInterval
-            TRC.tracef(3,"AUD2","proc AuditCollection1 now|%s| tstart|%s| tnext|%s| tinterval|%s| blastseg|%s|" % (G.env.now,tSegmentStartTime,tNextSegmentStartTime,nSegmentInterval,bLastSegment))
+            TRC.tracef(3, "AUD2", "proc AuditCollection1 now|%s| tstart|%s| "
+                "tnext|%s| tinterval|%s| blastseg|%s|" % \
+                (G.env.now, tSegmentStartTime, tNextSegmentStartTime, 
+                nSegmentInterval, bLastSegment))
             yield G.env.timeout(tNextSegmentStartTime - G.env.now)
         
         fTimeCycleEnd = G.env.now
         self.fTimeCycleLength = fTimeCycleEnd - fTimeCycleBegin
-        lg.logInfo("AUDIT2","end colln   t|%10.3f| auditid|%s| cycle|%s| cli|%s| coll|%s| repairs|%d| total|%d| perms|%d| majority|%s| minority|%d| duration|%9.3f|" % (G.env.now, self.ID, self.nNumberOfCycles, self.sClientID, self.sCollectionID, self.nRepairsThisCycle, self.nRepairsTotal, self.nPermanentLosses, self.nRepairsMajority, self.nRepairsMinority, self.fTimeCycleLength))
+        lg.logInfo("AUDIT2", "end colln   t|%10.3f| auditid|%s| cycle|%s| "
+            "cli|%s| coll|%s| repairs|%d| total|%d| perms|%d| majority|%s| "
+            "minority|%d| duration|%9.3f|" % \
+            (G.env.now, self.ID, self.nNumberOfCycles, self.sClientID, 
+            self.sCollectionID, self.nRepairsThisCycle, self.nRepairsTotal, 
+            self.nPermanentLosses, self.nRepairsMajority, 
+            self.nRepairsMinority, self.fTimeCycleLength))
         # Tell the caller that we finished.
         myeCallerSyncEvent.succeed(value=self.nNumberOfCycles)
 
@@ -146,15 +166,20 @@ class CAudit2(object):
         '''\
         SimPy generator to audit one segment of a collection.
         This does all the work.  
+         
         This is the single worst, most confusing, most fragile, and 
-         most awful code in the entire program.  Unfortunately, in 
-         Python 2, one cannot yield from a vanilla function, only
-         from a generator, so all that crap, and its convoluted 
-         conditional logic, is in here.  
-         This is the meanest, nastiest, ugliest father-raper of them all.
+        most awful code in the entire program.  Unfortunately, in 
+        Python 2, one cannot yield from a vanilla function, only
+        from a generator, so all that crap, and its convoluted 
+        conditional logic, is in here.  
+        This is the meanest, nastiest, ugliest father-raper of them all.
         '''
 
-        lg.logInfo("AUDIT2","begin segmt t|%10.3f| auditid|%s| cycle|%s| seg|%s| cli|%s| coll|%s| ndocs|%s|range %s-%s|" % (G.env.now,self.ID,self.nNumberOfCycles,mynThisSegment,self.sClientID,self.sCollectionID,len(mylDocs),mylDocs[0],mylDocs[-1]))
+        lg.logInfo("AUDIT2", "begin segmt t|%10.3f| auditid|%s| cycle|%s| "
+            "seg|%s| cli|%s| coll|%s| ndocs|%s|range %s-%s|" % \
+            (G.env.now, self.ID, self.nNumberOfCycles, mynThisSegment, 
+            self.sClientID, self.sCollectionID, len(mylDocs), 
+            mylDocs[0], mylDocs[-1]))
     
         ###seize network resource
         # Seize the network resource so this audit cycle 
@@ -171,7 +196,10 @@ class CAudit2(object):
 
             ###log result
             # Log event if we had to wait, or not, for the network to be free.  
-            lg.logInfo("AUDIT2","grabnetwork t|%10.3f| auditid|%s| cli|%s| coll|%s| seg|%s| delay|%9.3f|" % (G.env.now,self.ID,self.sClientID,self.sCollectionID,mynThisSegment,fNetworkWaitTime))
+            lg.logInfo("AUDIT2", "grabnetwork t|%10.3f| auditid|%s| cli|%s| "
+                "coll|%s| seg|%s| delay|%9.3f|" % \
+                (G.env.now, self.ID, self.sClientID, self.sCollectionID, 
+                mynThisSegment, fNetworkWaitTime))
             # And restart the duration clock after the unproductive wait.
             fTimeCycleBegin = G.env.now
             # So much for timekeeping.  Now do some actual work.
@@ -194,7 +222,9 @@ class CAudit2(object):
     
                     ###if okay
                     if fTransferTime:
-                        TRC.tracef(3,"AUD2","proc AuditSegment3 retrieve t|%10.3f| doc|%s| svr|%s| xfrtim|%f|" % (G.env.now,sDocID,sServerID,fTransferTime))
+                        TRC.tracef(3, "AUD2", "proc AuditSegment3 retrieve "
+                            "t|%10.3f| doc|%s| svr|%s| xfrtim|%f|" % \
+                            (G.env.now,sDocID,sServerID,fTransferTime))
                         ###yield timeout
                         yield G.env.timeout(fTransferTime)
                     else:
@@ -203,9 +233,17 @@ class CAudit2(object):
                         else:
                             # If copy is missing here, save server in lost-list for doc.
                             self.dlDocsDamagedOnServers[sDocID].append(sServerID)
-                            TRC.tracef(5,"AUD2","proc AuditSegment2 doc|%s| svr|%s| lost on|%s|" % (sDocID,sServerID,self.dlDocsDamagedOnServers[sDocID]))
+                            TRC.tracef(5, "AUD2", "proc AuditSegment2 "
+                                "doc|%s| svr|%s| lost on|%s|" % \
+                                (sDocID, sServerID, 
+                                self.dlDocsDamagedOnServers[sDocID]))
                             ###log copy missing on some server
-                            lg.logInfo("AUDIT2","copymissing t|%10.3f| doc|%s| svr|%s| aud|%s-c%s-s%s| cli|%s| coll|%s|" % (G.env.now,sDocID,sServerID,self.ID,self.nNumberOfCycles,mynThisSegment,self.sClientID,self.sCollectionID))
+                            lg.logInfo("AUDIT2", "copymissing t|%10.3f| "
+                                "doc|%s| svr|%s| aud|%s-c%s-s%s| cli|%s| "
+                                "coll|%s|" % \
+                                (G.env.now, sDocID, sServerID, self.ID, 
+                                self.nNumberOfCycles, mynThisSegment, 
+                                self.sClientID, self.sCollectionID))
                 # end foreach doc
             # end foreach server used for collection
 
@@ -228,14 +266,17 @@ class CAudit2(object):
             nMajority = (len(cCollection.lServerIDs)+1) / 2     # int divide truncates
 
             ###foreach doc on damaged list
-            for sDocID in sorted(self.dlDocsDamagedOnServers.keys(), key=util.fniNumberFromID):
+            for sDocID in sorted(self.dlDocsDamagedOnServers.keys(), 
+                key=util.fniNumberFromID):
 
                 ###count docs on all servers
                 lDocLostOnServers = self.dlDocsDamagedOnServers[sDocID]
                 nCopiesLost = len(lDocLostOnServers)
                 nCopiesLeft = nServers - nCopiesLost
                 # How many copies left: none, a lot, a few?
-                TRC.tracef(3,"AUD2","proc AuditSegment1 doc|%s| nsvr|%s| loston|%s| nleft|%s|" % (sDocID,nServers,lDocLostOnServers,nCopiesLeft))
+                TRC.tracef(3, "AUD2", "proc AuditSegment1 doc|%s| nsvr|%s| "
+                    "loston|%s| nleft|%s|" % \
+                    (sDocID,nServers,lDocLostOnServers,nCopiesLeft))
 
                 ###if doc not lost
                 ###    assess majority/minority/lost
@@ -244,7 +285,10 @@ class CAudit2(object):
                     # Do not double-count docs already lost.  Doc will not
                     #  be put onto damaged list if already lost.
                     sRepair = "permloss"
-                    lg.logInfo("AUDIT2","perm loss   t|%10.3f| doc|%s| aud|%s-c%s-s%s| cli|%s| coll|%s|" % (G.env.now,sDocID,self.ID,self.nNumberOfCycles,mynThisSegment,self.sClientID,self.sCollectionID))
+                    lg.logInfo("AUDIT2", "perm loss   t|%10.3f| doc|%s| "
+                        "aud|%s-c%s-s%s| cli|%s| coll|%s|" % \
+                        (G.env.now, sDocID, self.ID, self.nNumberOfCycles, 
+                        mynThisSegment, self.sClientID, self.sCollectionID))
                     self.mRecordDocumentLost(sDocID)
                 else:
                     ###doc is repairable; determine majority/minority
@@ -253,7 +297,11 @@ class CAudit2(object):
                     else:                                   # M I N O R I T Y  remain
                         sRepair = "minority"
                     ###log repair type for doc
-                    lg.logInfo("AUDIT2","%s rp t|%10.3f| doc|%s| aud|%s-c%s-s%s| cli|%s| coll|%s|" % (sRepair,G.env.now,sDocID,self.ID,self.nNumberOfCycles,mynThisSegment,self.sClientID,self.sCollectionID))
+                    lg.logInfo("AUDIT2", "%s rp t|%10.3f| doc|%s| "
+                        "aud|%s-c%s-s%s| cli|%s| coll|%s|" % \
+                        (sRepair, G.env.now, sDocID, self.ID, 
+                        self.nNumberOfCycles, mynThisSegment, 
+                        self.sClientID, self.sCollectionID))
 
                 # P h a s e  3: repair damaged docs, if possible.
                 ###foreach server on which doc was damaged
@@ -279,12 +327,24 @@ class CAudit2(object):
                         ###if not okay ie server dead
                         if fTransferTime == False:
                             self.stDeadServerIDs.add((sServerID, self.sCollectionID))
-                            lg.logInfo("AUDIT2","dead server t|%10.3f| doc|%s| aud|%s| cli|%s| coll|%s| svr|%s|" % (G.env.now,sDocID,self.ID,self.sClientID,self.sCollectionID,sServerID))
+                            lg.logInfo("AUDIT2", "dead server t|%10.3f| "
+                                "doc|%s| aud|%s| cli|%s| coll|%s| svr|%s|" % \
+                                (G.env.now, sDocID, self.ID, self.sClientID, 
+                                self.sCollectionID, sServerID))
                         else:
                             ###log repair effected
-                            TRC.tracef(3,"AUD2","proc AuditSegment4 repair t|%10.3f| doc|%s| svr|%s| xfrtim|%f| type|%s|" % (G.env.now,sDocID,sServerID,fTransferTime,sRepair))
+                            TRC.tracef(3 ,"AUD2", "proc AuditSegment4 repair "
+                                "t|%10.3f| doc|%s| svr|%s| xfrtim|%f| "
+                                "type|%s|" % \
+                                (G.env.now, sDocID, sServerID, 
+                                fTransferTime, sRepair))
                             yield G.env.timeout(float(fTransferTime))
-                            lg.logInfo("AUDIT2","repair doc  t|%10.3f| doc|%s| aud|%s| cli|%s| coll|%s| svr|%s| from %s copies|%d|" % (G.env.now,sDocID,self.ID,self.sClientID,self.sCollectionID,sServerID,sRepair,nCopiesLeft))
+                            lg.logInfo("AUDIT2", "repair doc  t|%10.3f| "
+                                "doc|%s| aud|%s| cli|%s| coll|%s| svr|%s| "
+                                "from %s copies|%d|" % \
+                                (G.env.now, sDocID, self.ID, self.sClientID, 
+                                self.sCollectionID, sServerID, sRepair, 
+                                nCopiesLeft))
     
                             ###count repair as type maj/min for audit and doc
                             # If repair succeeded, record and count it.
@@ -295,18 +355,27 @@ class CAudit2(object):
                 # end foreach server that lost this doc
             # end foreach damaged doc
 
-            lg.logInfo("AUDIT2","end   segmt t|%10.3f| auditid|%s| cycle|%s| seg|%s| cli|%s| coll|%s| ndocs|%s|" % (G.env.now,self.ID,self.nNumberOfCycles,mynThisSegment,self.sClientID,self.sCollectionID,len(mylDocs)))
+            lg.logInfo("AUDIT2", "end   segmt t|%10.3f| auditid|%s| "
+                "cycle|%s| seg|%s| cli|%s| coll|%s| ndocs|%s|" % \
+                (G.env.now, self.ID, self.nNumberOfCycles, mynThisSegment, 
+                self.sClientID, self.sCollectionID, len(mylDocs)))
     
             # After all that, tell the caller we finished.
             myeCallerSyncEvent.succeed(value=mynThisSegment)
-            lg.logInfo("AUDIT2","rls network t|%10.3f| auditid|%s| cli|%s| coll|%s| seg|%s|" % (G.env.now,self.ID,self.sClientID,self.sCollectionID,mynThisSegment))
+            lg.logInfo("AUDIT2", "rls network t|%10.3f| auditid|%s| cli|%s| "
+                "coll|%s| seg|%s|" % \
+                (G.env.now, self.ID, self.sClientID, self.sCollectionID, 
+                mynThisSegment))
         # end network resource
 
         # If we saw any dead servers during this segment, inform the clients.
         for (sDeadServerID, sDeadCollectionID) in self.stDeadServerIDs:
             cCollection = G.dID2Collection[self.sCollectionID]
             cClient = G.dID2Client[cCollection.sClientID]
-            NTRC.ntracef(3,"AUD2","proc t|%10.3f| inform dead server auditid|%s| cli|%s| coll|%s| svr|%s| doc|%s|" % (G.env.now,self.ID,self.sClientID,self.sCollectionID,sServerID,sDocID))
+            NTRC.ntracef(3, "AUD2", "proc t|%10.3f| inform dead server "
+                "auditid|%s| cli|%s| coll|%s| svr|%s| doc|%s|" % \
+                (G.env.now, self.ID, self.sClientID, self.sCollectionID, 
+                sServerID, sDocID))
             cClient.mServerIsDead(sDeadServerID, sDeadCollectionID)
         self.stDeadServerIDs = set()
 
@@ -314,7 +383,7 @@ class CAudit2(object):
 
 # A u d i t . m R e c o r d D o c u m e n t L o s t 
     @tracef("AUD2")
-    def mRecordDocumentLost(self,mysDocID):
+    def mRecordDocumentLost(self, mysDocID):
         self.nPermanentLosses += 1          # WARNING: not idempotent.
         self.nLossesThisCycle += 1          # WARNING: not idempotent.
         cDoc = G.dID2Document[mysDocID]
@@ -323,13 +392,13 @@ class CAudit2(object):
 
 # A u d i t . m I s D o c u m e n t L o s t 
     @tracef("AUD2",level=5)
-    def mIsDocumentLost(self,mysDocID):
+    def mIsDocumentLost(self, mysDocID):
         cDoc = G.dID2Document[mysDocID]
         return cDoc.mIsLost()
 
 # A u d i t . m R e c o r d D o c u m e n t M a j o r i t y R e p a i r
     @tracef("AUD2")
-    def mRecordDocumentMajorityRepair(self,mysDocID):
+    def mRecordDocumentMajorityRepair(self, mysDocID):
         self.nRepairsMajority += 1          # WARNING: not idempotent.
         cDoc = G.dID2Document[mysDocID]
         cDoc.mMarkMajorityRepair()
@@ -337,7 +406,7 @@ class CAudit2(object):
         
 # A u d i t . m R e c o r d D o c u m e n t M i n o r i t y R e p a i r
     @tracef("AUD2")
-    def mRecordDocumentMinorityRepair(self,mysDocID):
+    def mRecordDocumentMinorityRepair(self, mysDocID):
         self.nRepairsMinority += 1          # WARNING: not idempotent.
         cDoc = G.dID2Document[mysDocID]
         cDoc.mMarkMinorityRepair()
@@ -345,7 +414,7 @@ class CAudit2(object):
 
 # A u d i t . m R e s c i n d D o c u m e n t M a j o r i t y R e p a i r 
     @tracef("AUD2")
-    def mRescindDocumentMajorityRepair(self,mysDocID):
+    def mRescindDocumentMajorityRepair(self, mysDocID):
         self.nRepairsMajority -= 1          # WARNING: not idempotent.
         cDoc = G.dID2Document[mysDocID]
         cDoc.mRescindMajorityRepair()
@@ -353,7 +422,7 @@ class CAudit2(object):
         
 # A u d i t . m R e s c i n d D o c u m e n t M i n o r i t y R e p a i r 
     @tracef("AUD2")
-    def mRescindDocumentMinorityRepair(self,mysDocID):
+    def mRescindDocumentMinorityRepair(self, mysDocID):
         self.nRepairsMinority -= 1          # WARNING: not idempotent.
         cDoc = G.dID2Document[mysDocID]
         cDoc.mRescindMinorityRepair()
@@ -361,13 +430,13 @@ class CAudit2(object):
 
 # C A u d i t . m C a l c S e g m e n t I n t e r v a l  
     @tracef("AUD2")
-    def mCalcSegmentInterval(self,mynCycleInterval,mynSegments):
+    def mCalcSegmentInterval(self, mynCycleInterval, mynSegments):
         result = int(math.floor((1.0*mynCycleInterval-0.0)/mynSegments))
         return result
 
 # C A u d i t 2 . m C a l c S e g m e n t S i z e 
     @tracef("AUD2")
-    def mCalcSegmentSize(self,mysCollectionID,mynSegments):
+    def mCalcSegmentSize(self, mysCollectionID, mynSegments):
         cCollection = G.dID2Collection[mysCollectionID]
         nCollectionLength = len(cCollection.lDocIDs)
         result = int(math.ceil((1.0*nCollectionLength)/mynSegments))
@@ -375,7 +444,7 @@ class CAudit2(object):
 
 # C A u d i t 2 . m I d e n t i f y S e g m e n t 
     @tracef("AUD2")
-    def mIdentifySegment(self,mysCollectionID,nSegments,nCurrentSegment):
+    def mIdentifySegment(self, mysCollectionID, nSegments, nCurrentSegment):
         '''\
         Return list of document IDs in the collection.
         '''
@@ -386,7 +455,7 @@ class CAudit2(object):
 
 # C A u d i t . m R e t r i e v e D o c 
     @tracef("AUD2")
-    def mRetrieveDoc(self,mysDocID,mysServerID):
+    def mRetrieveDoc(self, mysDocID, mysServerID):
         '''\
         Get (copy of) doc back from server, if possible.
         Return the time required to transmit the doc.
@@ -401,7 +470,7 @@ class CAudit2(object):
         if not cServer.mbIsServerDead():
             cDoc = G.dID2Document[mysDocID]
             nDocSize = cDoc.nSize
-            fTransferTime = util.fnfCalcTransferTime(nDocSize,G.nBandwidthMbps)
+            fTransferTime = util.fnfCalcTransferTime(nDocSize, G.nBandwidthMbps)
             # Now that we know how long it would take to transfer,
             # test if the document is still there. 
             bResult = cServer.mTestDocument(mysDocID)
@@ -414,7 +483,7 @@ class CAudit2(object):
         
 # C A u d i t . m R e p a i r D o c 
     @tracef("AUD2")
-    def mRepairDoc(self,mysDocID,mysServerID):
+    def mRepairDoc(self, mysDocID, mysServerID):
         ''' \
         Repair by sending new copy of original doc
         to the server.  Re-send the doc to the server
@@ -425,15 +494,15 @@ class CAudit2(object):
         # How long will it take to transfer?
         cDoc = G.dID2Document[mysDocID]
         nDocSize = cDoc.nSize
-        fTransferTime = util.fnfCalcTransferTime(nDocSize,G.nBandwidthMbps)
+        fTransferTime = util.fnfCalcTransferTime(nDocSize, G.nBandwidthMbps)
         # Re-send the doc to server.
         cServer = G.dID2Server[mysServerID] 
-        result = cServer.mAddDocument(mysDocID,self.sClientID)
+        result = cServer.mAddDocument(mysDocID, self.sClientID)
         # If AddDoc returns False, then the server is dead and cannot 
         #  accept any new docs.
         if result:
-            self.nRepairsThisCycle += 1
-            self.nRepairsTotal += 1
+            self.nRepairsThisCycle += 1         # WARNING: not idempotent.
+            self.nRepairsTotal += 1             # WARNING: not idempotent.
             return fTransferTime
         else:
             return False
@@ -444,9 +513,9 @@ class CAudit2(object):
         '''\
         Return list of stats.  Yes, you have to know the order.
         '''
-        return(self.ID,self.sClientID,self.sCollectionID,"*"
-            ,self.nNumberOfCycles,self.nRepairsTotal
-            ,self.nPermanentLosses,self.nRepairsMinority)
+        return(self.ID, self.sClientID, self.sCollectionID, "*"
+            ,self.nNumberOfCycles, self.nRepairsTotal
+            ,self.nPermanentLosses, self.nRepairsMinority)
 
 # C A u d i t 2 . m d R e p o r t A u d i t S t a t s 
     @tracef("AUD2")
@@ -550,8 +619,8 @@ Zipf.mIdentifySegment(collectionid,nsegments,currentsegment)
 # c l a s s   C A u d i t 
 # Just a copy of CAudit2 for use by the factory.  
 class CAudit(CAudit2):
-    def __init__(self,mysClientID,mysCollectionID,mynInterval):
-        super(CAudit,self).__init__(mysClientID,mysCollectionID,mynInterval)
+    def __init__(self, mysClientID, mysCollectionID, mynInterval):
+        super(CAudit, self).__init__(mysClientID, mysCollectionID, mynInterval)
         self.TYPE = "CAudit"
 
 
@@ -561,8 +630,8 @@ class CAudit_Total(CAudit):
     Class CAudit contains all the procedures for CAudit_Total.
     Do not override anything in here.
     '''
-    def __init__(self,mysClientID,mysCollectionID,mynInterval):
-        super(CAudit_Total,self).__init__(mysClientID,mysCollectionID,mynInterval)
+    def __init__(self, mysClientID, mysCollectionID, mynInterval):
+        super(CAudit_Total, self).__init__(mysClientID, mysCollectionID, mynInterval)
         self.TYPE = "CAudit_Total"
 
 # C A u d i t _ T o t a l . m I d e n t i f y S e g m e n t 
@@ -594,19 +663,20 @@ class CAudit_Systematic(CAudit):
     - bump cycle number
     - wait for next cycle
     '''
-    def __init__(self,mysClientID,mysCollectionID,mynInterval):
-        super(CAudit_Systematic,self).__init__(mysClientID,mysCollectionID,mynInterval)
+    def __init__(self, mysClientID, mysCollectionID, mynInterval):
+        super(CAudit_Systematic, self).__init__(mysClientID, mysCollectionID, mynInterval)
         self.TYPE = "CAudit_Systematic"
 
 # C A u d i t _ S y s t e m a t i c . m I d e n t i f y S e g m e n t 
     @tracef("AUD2")
-    def mIdentifySegment(self,mysCollectionID,mynSegments,iCurrentSegment):
+    def mIdentifySegment(self, mysCollectionID, mynSegments, iCurrentSegment):
         # Get list of document IDs in the collection
         cCollection = G.dID2Collection[mysCollectionID]
         lDocIDs = cCollection.mListDocuments()
         nDocs = len(lDocIDs)
-        nDocsMaybe = self.mCalcSegmentSize(mysCollectionID,mynSegments)
-        lDocsThisSegment = lDocIDs[(nDocsMaybe*iCurrentSegment):min(nDocsMaybe*(iCurrentSegment+1),nDocs)]
+        nDocsMaybe = self.mCalcSegmentSize(mysCollectionID, mynSegments)
+        lDocsThisSegment = lDocIDs[(nDocsMaybe*iCurrentSegment) : 
+            min(nDocsMaybe*(iCurrentSegment+1), nDocs)]
         return lDocsThisSegment
 
 
@@ -630,13 +700,13 @@ class CAudit_Uniform(CAudit):
     Note that this is almost identical to systematic, except for how 
     the subset is formed.  
     '''
-    def __init__(self,mysClientID,mysCollectionID,mynInterval):
-        super(CAudit_Uniform,self).__init__(mysClientID,mysCollectionID,mynInterval)
+    def __init__(self, mysClientID, mysCollectionID, mynInterval):
+        super(CAudit_Uniform, self).__init__(mysClientID, mysCollectionID, mynInterval)
         self.TYPE = "CAudit_Uniform"
 
 # C A u d i t _ U n i f o r m . m I d e n t i f y S e g m e n t 
     @tracef("AUD2")
-    def mIdentifySegment(self,mysCollectionID,mynSegments,iCurrentSegment):
+    def mIdentifySegment(self, mysCollectionID, mynSegments, iCurrentSegment):
         # Get list of document IDs in the collection
         cCollection = G.dID2Collection[mysCollectionID]
         lDocIDsRemaining = cCollection.mListDocumentsRemaining()
@@ -644,7 +714,7 @@ class CAudit_Uniform(CAudit):
         # Beware the case where there are fewer docs remaining alive
         #  than are normally called for in the segment.  
         nDocsMaybe = min( 
-                        self.mCalcSegmentSize(mysCollectionID,mynSegments), 
+                        self.mCalcSegmentSize(mysCollectionID, mynSegments), 
                         nDocsRemaining
                         )
         # Use set() to ensure that a doc is not sampled twice in a segment.
@@ -656,7 +726,7 @@ class CAudit_Uniform(CAudit):
         #  Carefully return an empty list.
         setDocsThisSegment = set()
         while nDocsMaybe > 0 and len(setDocsThisSegment) < nDocsMaybe:
-            idxChoose = int(util.makeunif(0,nDocsRemaining))
+            idxChoose = int(util.makeunif(0, nDocsRemaining))
             sDocID = lDocIDsRemaining[idxChoose]
             cDoc = G.dID2Document[sDocID]
             # If the doc is not already permanently kaput, check it.
@@ -674,30 +744,31 @@ class CAudit_Zipf(CAudit):
     - i think
     - still need to work out details of this type
     '''
-    def __init__(self,mysClientID,mysCollectionID,mynInterval):
-        super(CAudit_Zipf,self).__init__(mysClientID,mysCollectionID,mynInterval)
+    def __init__(self, mysClientID, mysCollectionID, mynInterval):
+        super(CAudit_Zipf, self).__init__(mysClientID, mysCollectionID, mynInterval)
         self.TYPE = "CAudit_Zipf"
 
 # C A u d i t _ Z i p f . m C a l c S e g m e n t S i z e 
     @tracef("AUD2")
-    def mIdentifySegment(self,mysCollectionID,mynSegments,iCurrentSegment):
+    def mIdentifySegment(self, mysCollectionID, mynSegments, iCurrentSegment):
         # Get list of document IDs in the collection
         cCollection = G.dID2Collection[mysCollectionID]
         lDocIDs = cCollection.mListDocuments()
         nDocs = len(lDocIDs)
         
         # Dunno what to do here yet.
-        
+        # NYI
+                
         return 0
 
 # C A u d i t _ Z i p f . m I d e n t i f y S e g m e n t 
     @tracef("AUD2")
-    def mIdentifySegment(self,mysCollectionID,mynSegments,iCurrentSegment):
+    def mIdentifySegment(self, mysCollectionID, mynSegments, iCurrentSegment):
         # Get list of document IDs in the collection
         cCollection = G.dID2Collection[mysCollectionID]
         lDocIDs = cCollection.mListDocuments()
         nDocs = len(lDocIDs)
-        nDocsMaybe = self.mCalcSegmentSize(mysCollectionID,mynSegments)
+        nDocsMaybe = self.mCalcSegmentSize(mysCollectionID, mynSegments)
         lDocsThisSegment = []
         return lDocsThisSegment
 
@@ -705,18 +776,18 @@ class CAudit_Zipf(CAudit):
 # f A u d i t _ S e l e c t 
 # Stupid factory function to create the right class for this audit strategy.
 @tracef("AUD2")
-def fAudit_Select(mysStrategy,mysClientID,mysCollectionID,mynCycleInterval):
+def fAudit_Select(mysStrategy, mysClientID, mysCollectionID, mynCycleInterval):
     if mysStrategy == "TOTAL" or mysStrategy == "OFF":
-        thing = CAudit_Total(mysClientID,mysCollectionID,mynCycleInterval)
+        thing = CAudit_Total(mysClientID, mysCollectionID, mynCycleInterval)
     elif mysStrategy == "SYSTEMATIC":
-        thing = CAudit_Systematic(mysClientID,mysCollectionID,mynCycleInterval)
+        thing = CAudit_Systematic(mysClientID, mysCollectionID, mynCycleInterval)
     elif mysStrategy == "UNIFORM":
-        thing = CAudit_Uniform(mysClientID,mysCollectionID,mynCycleInterval)
+        thing = CAudit_Uniform(mysClientID, mysCollectionID, mynCycleInterval)
     elif mysStrategy == "ZIPF":
-        thing = CAudit_Zipf(mysClientID,mysCollectionID,mynCycleInterval)
+        thing = CAudit_Zipf(mysClientID, mysCollectionID, mynCycleInterval)
     else:
         # Forgiving version:
-        thing = CAudit(mysClientID,mysCollectionID,mynCycleInterval)
+        thing = CAudit(mysClientID, mysCollectionID, mynCycleInterval)
         # Tight-ass version:`
         raise ValueError, "Unknown Audit strategy: %s" % (mysStrategy)
     return thing
@@ -909,6 +980,7 @@ TODO (x=done):
 #               Remove the one-hour-early offset for the beginning of 
 #                audit cycles.
 #               Add losses per this cycle to end of cycle reporting.  
+#               And fix all the non-PEP8 long lines and lists.
 # 
 
 #END
