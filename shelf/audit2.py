@@ -40,6 +40,7 @@ class CAudit2(object):
         # Per-audit data
         self.nNumberOfCycles = 0
         self.nRepairsThisCycle = 0
+        self.nLossesThisCycle = 0
 
         self.nRepairsTotal = 0
         self.nPermanentLosses = 0
@@ -90,11 +91,18 @@ class CAudit2(object):
             # Start the collection audit and wait for it to finish.
             tCycleStartTime = G.env.now
             self.nRepairsThisCycle = 0
+            self.nLossesThisCycle = 0
             eSyncEvent = G.env.event()
             G.env.process(self.mAuditCollection(mynCycleInterval,G.nAuditSegments,self.sCollectionID,eSyncEvent))
             yield eSyncEvent
 
-            lg.logInfo("AUDIT2","end cycle   t|%10.3f| auditid|%s| cycle|%s| cli|%s| coll|%s| repairs|%d| total|%d| perms|%d| majority|%s| minority|%d|" % (G.env.now,self.ID,self.nNumberOfCycles,self.sClientID,self.sCollectionID,self.nRepairsThisCycle,self.nRepairsTotal,self.nPermanentLosses,self.nRepairsMajority,self.nRepairsMinority))
+            lg.logInfo("AUDIT2","end cycle   t|%10.3f| auditid|%s| cycle|%s| "
+                "cli|%s| coll|%s| losses|%d| repairs|%d| total|%d| perms|%d| "
+                "majority|%s| minority|%d|" % (G.env.now, self.ID, 
+                self.nNumberOfCycles, self.sClientID, self.sCollectionID, 
+                self.nLossesThisCycle, self.nRepairsThisCycle, 
+                self.nRepairsTotal, self.nPermanentLosses, 
+                self.nRepairsMajority, self.nRepairsMinority))
 
             self.nNumberOfCycles += 1
             tNextCycleStartTime = tCycleStartTime + mynCycleInterval
@@ -308,6 +316,7 @@ class CAudit2(object):
     @tracef("AUD2")
     def mRecordDocumentLost(self,mysDocID):
         self.nPermanentLosses += 1          # WARNING: not idempotent.
+        self.nLossesThisCycle += 1          # WARNING: not idempotent.
         cDoc = G.dID2Document[mysDocID]
         cDoc.mMarkLost()
         return self.nPermanentLosses
@@ -353,7 +362,7 @@ class CAudit2(object):
 # C A u d i t . m C a l c S e g m e n t I n t e r v a l  
     @tracef("AUD2")
     def mCalcSegmentInterval(self,mynCycleInterval,mynSegments):
-        result = int(math.floor((1.0*mynCycleInterval-1.0)/mynSegments))
+        result = int(math.floor((1.0*mynCycleInterval-0.0)/mynSegments))
         return result
 
 # C A u d i t 2 . m C a l c S e g m e n t S i z e 
@@ -451,6 +460,7 @@ class CAudit2(object):
         dd["sCollectionID"]     = self.sCollectionID
         dd["nNumberOfCycles"]   = self.nNumberOfCycles
         dd["nRepairsThisCycle"] = self.nRepairsThisCycle
+        dd["nLossesThisCycle"]  = self.nLossesThisCycle
         dd["nRepairsTotal"]     = self.nRepairsTotal
         dd["nPermanentLosses"]  = self.nPermanentLosses
         dd["nRepairsMajority"]  = self.nRepairsMajority
@@ -896,6 +906,9 @@ TODO (x=done):
 #               Also, consider factoring out Phase 2 of AuditSegment.
 # 20161018  RBL If server is already dead, don't bother to check for a 
 #                doc copy on that server.
+#               Remove the one-hour-early offset for the beginning of 
+#                audit cycles.
+#               Add losses per this cycle to end of cycle reporting.  
 # 
 
 #END

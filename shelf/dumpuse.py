@@ -22,6 +22,7 @@ def dumpServerUseStats():
             nHiWater, nCurrentUse, 100*nCurrentUse/nCapacity))
     return sServerID+"+"+sID
 
+#-----------------------------------------------------------
 # d u m p S e r v e r E r r o r S t a t s 
 @ntracef("DMPU")
 def dumpServerErrorStats():
@@ -39,6 +40,7 @@ def dumpServerErrorStats():
     lg.logInfo("MAIN","SERVERERRTOTALS totalhits|%d| abovehiwater|%d| nonempty|%d| empty|%d| multiples|%d|" % (TnHits,TnAboveHiWater,(TnHits-TnEmptyHits),TnEmptyHits,TnMultipleHits))
     return sServerID+"+"+sID
 
+#-----------------------------------------------------------
 # d u m p A u d i t S t a t s 
 @ntracef("DMPU")
 def dumpAuditStats():
@@ -77,6 +79,7 @@ def dumpAuditStats():
     lg.logInfo("MAIN","AUDITTOTALS ncycles|%s| nfrequency|%s| nsegments|%s| nrepairs|%s| nmajority|%s| nminority|%s| nlost|%s| " % (TnNumberOfCycles,TnFrequency,TnSegments,TnRepairsTotal,TnRepairsMajority,TnRepairsMinority,TnPermanentLosses))
     return 
 
+#-----------------------------------------------------------
 # d u m p G l i t c h S t a t s 
 @ntracef("DMPU")
 def dumpGlitchStats():
@@ -93,10 +96,12 @@ def dumpGlitchStats():
         
     lg.logInfo("MAIN","LIFETIME Total glitches|%d|" % (G.nGlitchesTotal))
 
+#-----------------------------------------------------------
 # d u m p S h o c k S t a t s 
 def dumpShockStats():
     lg.logInfo("MAIN","SHOCKS Total shocks|%d|" % (G.nShocksTotal))
 
+#-----------------------------------------------------------
 # d u m p C o l l e c t i o n S t a t s 
 def dumpCollectionStats(mysCollID):
     cColl = G.dID2Collection[mysCollID]
@@ -107,6 +112,7 @@ def dumpCollectionStats(mysCollID):
     lg.logInfo("MAIN","COLLECTIONTOTALS client|%s| collection|%s| nservers|%s| ndocs|%s| nokay|%s| nmajority|%s| nminority|%s| nlost|%s| " \
         % (sClientIDx,sCollIDx,nServers,nDocs, nDocsOkay,nDocsInjured,nDocsForensics,nDocsLost))
 
+#-----------------------------------------------------------
 # Edit History:
 # 20160920  RBL Move these routines out of main.py.
 # 

@@ -89,7 +89,7 @@ FIXME - log stats at end of each audit cycle: lost, minority repairs,
   majority repairs.  These are all cross-server figures.  We need to 
   add per-server figures, too.  Goal is to see if the user could 
   possibly detect server glitch less than fatal.  
-FIXME - log per-server total losses and hits at end of run.  
+DONE - log per-server total losses and hits at end of run.  
 
 
 TODO: newinstructions
@@ -176,6 +176,20 @@ DONE - do spreadsheet of a0 numbers compared with simple Poisson theoretical res
 
 TODO: log file reporting
 DONE - Include in log file output error numbers for each server individually, hits, losses, redundant hits.  To be used someday to assess the distribution of increased losses due to glitches.  
+FIXME - Add comments somewhere about the hits and losses numbers reported at the
+  end of run include events *after* the last audit cycle completed, and therefore
+  some of the numbers may not appear to add up quite, but they really do.  I checked. 
+  Example: "ncopies=2 lifem=100 audit=20000 0 1" yields 
+  nonemptyhits=758 but repairs=587; the difference is 171 missing nonempty hits.
+  Well, there were 171 nonempty hits in the log after the last audit finished 
+  at t=80026.  So there.  
+FIXME - QUESTION: the last audit cycle is always left open. Is this problem?  Some 
+  arithmetic could cause it to be completed before the end of simulated time.  
+  However, we used to have a random offset for the beginning of audits and
+  we dropped that for some reason lost in history. The open, unaudited period
+  at the end of the simulation would seem to add a touch of reality to it: 
+  losses may occur at any time in the auditing cycle, and you never know when
+  you will need access to a particular document.  
 
 
 TODO: R reporting
@@ -212,7 +226,7 @@ DONE - construct vm platforms for docker learning on both systems
 FIXME - transcribe crummy bash script to dockerfile
 
 
-DEFER nonmonotonicity testing
+DEFER: nonmonotonicity testing
 FIXME - do runs in the sensitive areas, limited to 3-4 lifetimes and few copies
 FIXME - runs with 100 or more seeds?
 FIXME - many runs with 20ish seeds to assess variability?
@@ -235,12 +249,6 @@ DONE - what numbers to compute?
 
 TODO: same for November presentation to iPRES at UNC
 DONE - write slides for Micah to use, update from September's.
-
-
-
-
-
-
 
 
 
