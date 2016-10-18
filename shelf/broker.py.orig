@@ -259,7 +259,7 @@ class CG(object):
     nShelfSize = None
     nDocSize = None
     sQuery = None
-    nCores = 8          # Default, overridden by NCORES env var
+    nCores = 4          # Default, overridden by NCORES env var
     nCoreTimer = 10     # Wait for a free core,
     nPoliteTimer = 2    # Shorter wait between sequential launches.
     nStuckLimit = 600   # Max nr of CoreTimer waits before giving up.
@@ -676,7 +676,6 @@ def main():
             NTRC.ntracef(0,"MAIN","proc skip item already done run|%s| id|%s| copies|%s| lifem|%s|" %
                 (nRunNumber, sInstructionId, dInstruction["nCopies"],
                 dInstruction["nLifem"]))
-
             continue
 
         if g.sListOnly.startswith("Y"):
@@ -769,7 +768,7 @@ foreach single-line file in holding dir
 #                not True-False values.  Put back 90% of the code I changed.
 # 20160216  RBL Add --glitchspan option.
 #               Incr run counter before checking for already done.
-
+<<<<<<< .merge_file_a09016
 # 20161006  RBL Make familydir and specificdir mandatory options.
 #                BEWARE: if you say nargs=1 instead of nargs='?', 
 #                the value returned is a list containing the string, 
@@ -780,8 +779,14 @@ foreach single-line file in holding dir
 #               Reduce polite interval timer slightly to 3 sec.
 # 20161009  RBL Reduce polite interval timer to 2 sec.
 # 
-
-
+=======
+# 20160617  RBL Remove glitchspan option.
+#               Add SHOCK options for economic (or political) shocks:
+#                frequency, impact, span.  
+#               Clean up some of the 80-character-ness for PEP8.  
+>>>>>>> .merge_file_a10344
+# 
 
 #END
 
+#END
