@@ -35,6 +35,17 @@ The voice of experience, from the instruction file:
 #  with regex context than to count reliably past five.  
 
 '''
+'''
+Basically, this is a teensy subset of awk, which I would have used
+except that no one left on earth except a few dinosaurs like me still
+speak the language.  
+The lineregex is the line selector expression for awk, except that it
+is limited to a single regex, not a range, so I have to be careful 
+to use unique codes on the lines to be selected.
+Problem: to assess the impact of glitches, I have to add some programming
+ability within the line selected to capture server id as well as the 
+relevant data item.  Well, oops.  
+'''
 
 import  re
 import  os
@@ -346,11 +357,11 @@ if "__main__" == __name__:
 #                lineregex, then you can take your time.  
 #                Couldn't find a reasonable way to do this with all functional
 #                forms without that giant list again.  
-#
 # 20150809  RBL Minor cleanup revisions.
 #               Added a few comments, docstrings.  
 #               After testing, this is about 2x faster than the original 
 #                version, and uses an almost fixed <10MB of memory.  
+# 20161018  RBL Add comments about future extension needed.  
 # 
 
 #END

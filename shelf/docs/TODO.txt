@@ -19,6 +19,14 @@ FIXME - Extract and include at the right end of the data the
   cases where different numbers of servers may be used for 
   different seeds, yikes, and therefore it will complicate some 
   post-processing. 
+FIXME - add ability to store server-specific values for audit and 
+  error stats.  Today, all the lines use the same error code and the 
+  server id is in a data item.  Don't know how to store this in dict
+  yet; either the item name or the value will have to be tuples, or both.
+DONE - add commentary about how this should have been done with 
+  awk in the first place; reproducing this trivial subset of awk
+  in Python was not a good idea because it constantly needs
+  functional extensions.
 
 
 TODO: 100% glitch impact
@@ -40,7 +48,7 @@ DONE - BUG, NEEDS FIXING: when client provisions a new server, it must
 FIXME - QUESTION: when provisioning a new server to replace a failed one, 
   should the client mark the re-provisioning as majority or minority 
   repairs?
-FIXME - optimize auditing: when it finds a dead server, don't bother checking 
+DONE - optimize auditing: when it finds a dead server, don't bother checking 
   any more documents on that particular server, and don't attempt any
   repairs to that server.  should speed up auditing considerably.  
 
@@ -157,15 +165,17 @@ FIXME - BUG: fix main.py default values in G so that is doesn't fail if there ar
   no param files in the familydir or specificdir; always fails for the list
   items, such as ncopies, I think because the list items in the dictionaries
   should be one level deeper.  
-FIXME - Update SERVERUSE log lines and some other lines, too, at end to state half-life and exponential lifetime with few or no decimal places.
+
+DONE - Update SERVERUSE log lines and some other lines, too, at end to state half-life and exponential lifetime with few or no decimal places.
 
 
 TODO: calibration
-FIXME: do spreadsheet of a0 numbers compared with simple Poisson theoretical results.  
+DONE - do spreadsheet of a0 numbers compared with simple Poisson theoretical results.  
+  Completed for samples of 21 and 101.  
 
 
 TODO: log file reporting
-FIXME - Include in log file output error numbers for each server individually, hits, losses, redundant hits.  To be used someday to assess the distribution of increased losses due to glitches.  
+DONE - Include in log file output error numbers for each server individually, hits, losses, redundant hits.  To be used someday to assess the distribution of increased losses due to glitches.  
 
 
 TODO: R reporting
@@ -174,12 +184,12 @@ FIXME - state tables both as loss numbers and as percentage losses of collection
 
 TODO: lifetimes: correlated institutional failures
 FIXME - at some interval, economic glitch dramatically increases the 
-  institutional 100% failure rate for >= 1 server.
+  institutional up to 100% failure rate for >= 1 server.
   Note trickiness: this is cross-server, needs access to several
   server instances at once.
-FIXME - add external parameters to set number of servers affected,
+DONE - add external parameters to set number of servers affected,
   the decrease in institution lifetime, and the rate of economic
-  recession/depression.  
+  recession/depression.  Named shockfreq, shockimpact, shockspan.  
 
 
 DEFER: web interface to select instructions for broker run

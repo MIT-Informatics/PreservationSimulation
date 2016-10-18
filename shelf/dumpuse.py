@@ -17,7 +17,9 @@ def dumpServerUseStats():
         cShelf = G.dID2Shelf[sKey]
         # Get vector of stats.
         (sID,sServerID,nQual,fExpolife,nCapacity,nHiWater,nCurrentUse) = cShelf.mReportUseStats()
-        lg.logInfo("MAIN","SERVERUSE shelf|%s-%s| qual|%d| expolife|%s| size|%d| hiwater|%d| currentuse|%d| full%%|%d|" % (sServerID,sID,nQual,fExpolife,nCapacity,nHiWater,nCurrentUse,100*nCurrentUse/nCapacity))
+        lg.logInfo("MAIN","SERVERUSE shelf|%s-%s| qual|%d| halflife|%.0f| "
+        "expolife|%.0f| size|%d| hiwater|%d| currentuse|%d| full%%|%d|" % (sServerID,sID,nQual,fExpolife*G.fLn2, fExpolife, nCapacity, 
+            nHiWater, nCurrentUse, 100*nCurrentUse/nCapacity))
     return sServerID+"+"+sID
 
 # d u m p S e r v e r E r r o r S t a t s 

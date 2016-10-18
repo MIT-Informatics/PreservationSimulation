@@ -384,35 +384,24 @@ class CAudit2(object):
         Ideally, would wait for transmission time, 
         but the waiting has to occur in the 
         parent loop.  
+        Minor optimization: if the server is already
+        dead from glitch or shock, then don't bother
+        to check the doc.
         '''
-        """
-        cDoc = G.dID2Document[mysDocID]
-        if cDoc.bDocumentLost:
-            return None
-        else:
+        cServer = G.dID2Server[mysServerID] 
+        if not cServer.mbIsServerDead():
+            cDoc = G.dID2Document[mysDocID]
             nDocSize = cDoc.nSize
             fTransferTime = util.fnfCalcTransferTime(nDocSize,G.nBandwidthMbps)
             # Now that we know how long it would take to transfer,
             # test if the document is still there. 
-            cServer = G.dID2Server[mysServerID] 
             bResult = cServer.mTestDocument(mysDocID)
             if bResult:
                 return fTransferTime
             else:
                 return None
-        """
-        cDoc = G.dID2Document[mysDocID]
-        nDocSize = cDoc.nSize
-        fTransferTime = util.fnfCalcTransferTime(nDocSize,G.nBandwidthMbps)
-        # Now that we know how long it would take to transfer,
-        # test if the document is still there. 
-        cServer = G.dID2Server[mysServerID] 
-        bResult = cServer.mTestDocument(mysDocID)
-        if bResult:
-            return fTransferTime
         else:
             return None
-
         
 # C A u d i t . m R e p a i r D o c 
     @tracef("AUD2")
@@ -905,6 +894,8 @@ TODO (x=done):
 #                and uglier than its previous pathetic state.
 #               Improve slightly loop that informs clients of dead servers.
 #               Also, consider factoring out Phase 2 of AuditSegment.
+# 20161018  RBL If server is already dead, don't bother to check for a 
+#                doc copy on that server.
 # 
 
 #END

@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # globaldata.py
 
+import math
+
 # G L O B A L  D A T A 
 #---------------------
 
@@ -55,6 +57,7 @@ class ProtoG(object):
     
     fSecondsPerHour = float(60.0 * 60.0)    # conversion constant.
     fInfinity = float(1.0E12)   # Infinitely far in the future.
+    fLn2 = math.log(2.0)
 
     nLifek = 0              # False lifek value in case lifem specified.  
 
@@ -147,9 +150,9 @@ class P(object):
                     , "nBandwidthMbps"      :   [[10]]
                     }
 
-    dShockParams =  { "nShockFreq"      :   [[nShockFreq]]
-                    , "nShockImpact"    :   [[nShockImpact]]
-                    , "nShockSpan"      :   [[nShockSpan]]
+    dShockParams =  { "nShockFreq"      :   [[ProtoG.nShockFreq]]
+                    , "nShockImpact"    :   [[ProtoG.nShockImpact]]
+                    , "nShockSpan"      :   [[ProtoG.nShockSpan]]
                     }
 
     # Directory where the parameter files for the run are to be found. 
