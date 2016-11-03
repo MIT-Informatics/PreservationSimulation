@@ -68,7 +68,7 @@ delay       Current delay value.  This is changed with setdelay().
 # c l a s s   C R e s e t t a b l e T i m e r 
 class CResettableTimer(object):
 
-    @ntrace
+    @ntracef("RTIM")
     def __init__(self, env, delay, callbackfn, interruptfn, context):
         '''
         Store params for timer but don't start one yet.
@@ -87,7 +87,7 @@ class CResettableTimer(object):
         self._oldevent  = None
         self.ID         = context       # special for debug traces
 
-    @ntrace
+    @ntracef("RTIM")
     def _wait(self):
         """
         Calls a callback function after time has elapsed. 
@@ -103,15 +103,16 @@ class CResettableTimer(object):
                 self.callbackfn(self, self._context)
             self.running  = False
         except simpy.Interrupt as i:
-            NTRC.trace(3,"Interrupted %s at %s!" % (self.__repr__, self.env.now))
+            NTRC.ntracef(3,"RTIM","Interrupted %s at %s!" 
+                % (self, self.env.now))
             if self.interruptfn:
                 self.interruptfn(self, self._context)
             self.canceled = True
             self.running  = False
-        NTRC.trace(3,"proc exit _wait action|%s| running|%s| canceled|%s| t=%s" 
+        NTRC.ntracef(3,"RTIM","proc exit _wait action|%s| running|%s| canceled|%s| t=%s" 
             % (self.action, self.running, self.canceled, self.env.now))
 
-    @ntrace
+    @ntracef("RTIM")
     def start(self):
         """
         Starts the timer using the stored delay interval. 
@@ -128,7 +129,7 @@ class CResettableTimer(object):
             self._proxyevent = self.env.event()
         return (self.action, self.running, self.canceled)
 
-    @ntrace
+    @ntracef("RTIM")
     def stop(self):
         """
         Stops the timer using SimPy's interrupt() function.
@@ -143,7 +144,7 @@ class CResettableTimer(object):
             self.env.step()
         return (self.action, self.running, self.canceled)
 
-    @ntrace
+    @ntracef("RTIM")
     def reset(self):
         """
         Interrupts the current timer and re-starts it with the same delay. 
@@ -152,7 +153,7 @@ class CResettableTimer(object):
         self.start()
         return (self.action, self.running, self.canceled)
 
-    @ntrace
+    @ntracef("RTIM")
     def setdelay(self, newdelay):
         """
         Changes the delay interval to be used for future start()s. 
@@ -163,7 +164,7 @@ class CResettableTimer(object):
             raise ValueError("bad new delay|%s| for %s %s" % (newdelay, self, self.context))
         return self
 
-    @ntrace
+    @ntracef("RTIM")
     def setevent(self, value=None):
         """
         Turn on the proxy event so that anyone waiting for it (yield-ing it)
@@ -193,7 +194,8 @@ class CResettableTimer(object):
 
     def __str__(self):
         '''Return a sensible printable string for this object'''
-        return '<%s object ID=%s at 0x%x>' % (self._desc(), self.context, id(self))
+        return ('<%s object ID=%s at 0x%x>' 
+            % (self._desc(), self.context, id(self)))
 
     def _desc(self):
         '''Return class name'''
@@ -313,4 +315,9 @@ $ python resettabletimer.py 2>&1
 #                (Otherwise, the caller would have to do everything
 #                inside the callback function, which would be icky.)
 #               Add readable __str__ for timer class.
+# 20161102  RBL Add oldevent saved so that user can cancel a timer
+#                for which some generator is already waiting with yield.
+#                Have to cancel the old event and then wait for the new one.
 # 
+
+#END

@@ -147,6 +147,9 @@ class P(object):
                     , "nBandwidthMbps"      :   [[10]]
                     }
 
+    nShockFreq = 0          # Half-life of economic slump-free intervals. 
+    nShockImpact = 0        # Percent reduction in server lifetime.
+    nShockSpan = 1          # Number of servers affected by slump.  
     dShockParams =  { "nShockFreq"      :   [[nShockFreq]]
                     , "nShockImpact"    :   [[nShockImpact]]
                     , "nShockSpan"      :   [[nShockSpan]]
