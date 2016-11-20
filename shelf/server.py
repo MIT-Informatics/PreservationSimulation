@@ -10,6 +10,7 @@ import  util
 import  logoutput       as lg
 from    catchex         import  catchex
 from    shelf           import  CShelf
+import  resettabletimer as rt
 
 
 #===========================================================
@@ -38,6 +39,10 @@ class CServer(object):
         self.sCollectionID = None
         self.bInUse = False             # This server not yet used by client.
         self.bDead = False              # Server has not yet suffered a 100% glitch.
+        self.oTimer = rt.CResettableTimer(G.env, G.fServerDefaultLife, 
+                        fnTimerCall, fnTimerInt, (self, self.ID))
+                                        # Max server lifetime, initially.
+                                        # Context contains server instance and id.
 
 # S e r v e r . m L i s t S e r v e r 
     @catchex
@@ -122,7 +127,8 @@ class CServer(object):
         lTempDocIDs = cCollection.mListDocuments()
         for sDocID in lTempDocIDs:
             self.mAddDocument(sDocID,mysClientID)
-        self.bInUse = True
+        self.bInUse = True          # Server now in use
+        self.oTimer.start()         #  and alive, can die.
         return mysCollID
 
 # S e r v e r . m A d d D o c u m e n t 
@@ -172,7 +178,8 @@ class CServer(object):
             Called as needed when a doc arrives too large for available space.  
         '''
         cShelf = CShelf(self.ID,self.nQual,self.nShelfSize)
-        lg.logInfo("SERVER","server |%s| created storage shelf|%s| quality|%s| size|%s|MB" % (self.ID,cShelf.ID,cShelf.nQual,cShelf.nCapacity))
+        lg.logInfo("SERVER","server |%s| created storage shelf|%s| quality|%s| size|%s|MB" 
+            % (self.ID,cShelf.ID,cShelf.nQual,cShelf.nCapacity))
         return cShelf.ID
 
 # S e r v e r . m D e s t r o y C o p y 
@@ -203,7 +210,7 @@ class CServer(object):
         # It doesn't know that the list is sorted.
         # Try dictionary lookup, which is lots faster.  
         # (The dictionary is maintained by Add and Destroy.)
-        bResult = mysDocID in self.dDocIDs
+        bResult = mysDocID in self.dDocIDs and not self.mbIsServerDead()
         # Might someday want to do something other than just return T/F.
         if bResult:
             return True
@@ -226,6 +233,40 @@ class CServer(object):
                 G.dID2Shelf[sShelfID].mDestroyShelf()
 #                TODO: #mark all shelves as not bAlive
         pass
+
+# S e r v e r . f n T i m e r C a l l 
+@catchex
+@ntracef("SERV")
+def fnTimerCall(objTimer,xContext):
+    '''\
+    Server life-span timer has completed, and the server must die.
+    Set the timer event to release any process waiting for it.
+    Declare the server to be el croako.  
+    '''
+    NTRC.trace(3,"callback %s delay %s called from %s at %s." 
+        % (xContext, objTimer.delay, objTimer, G.env.now))
+    objTimer.setevent()
+    cServer = xContext[0]
+    cServer.mKillServer
+    lg.logInfo("SERVER","timercalled t|%6.0f| context|%s| delay|%s|" 
+        % (G.env.now, xContext, objTimer.delay))
+    return (objTimer, xContext)
+
+# S e r v e r . f n T i m e r I n t 
+@catchex
+@ntracef("SERV")
+def fnTimerInt(objTimer,xContext):
+    '''\
+    Server life-span timer was interrupted to reschedule it, 
+    probably by a shock, and presumably to a shorter life.
+    But the server is still alive.
+    '''
+    NTRC.trace(3,"interrupt %s delay %s called from %s at %s." 
+        % (xContext, objTimer.delay, objTimer, G.env.now))
+    lg.logInfo("SERVER","interrupted t|%6.0f| context|%s| delay|%s|" 
+        % (G.env.now, xContext, objTimer.delay))
+    return (objTimer, xContext)
+
 
 
 # Edit History:
@@ -259,7 +300,11 @@ class CServer(object):
 #                (class)fnCorrFailHappensToAll, mCorrFailHappensToMe.
 #               Change names of all classmethods to begin with fn instead of m.
 #                Yes, they could be static methods or completely external.  
+# 20161118  RBL Add ResettableTimer set for infinite life to start with.
+#               Start timer when collection is placed, and kill server 
+#                when timer expires.
+#               And ensure that all documents report lost if server dead.  
 # 
 # 
 
-# END
+#END
