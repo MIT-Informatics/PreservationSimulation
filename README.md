@@ -2,9 +2,9 @@
 
 ## Abstract
 
-Libraries, academic and corporate, have large collections of documents that they wish to preserve for long periods.  A common strategy for preserving documents is to make multiple copies of the documents and to distribute the copies geographically.  Increasingly, library collections come in digital form rather than dead-tree form, which makes them easier to copy and distribute.  
+Libraries, academic and corporate, have large collections of documents that they wish to preserve for long periods.  A common strategy for preserving documents of any kind is to make multiple copies and distribute the copies geographically.  Increasingly, library collections come in digital form rather than dead-tree form, which makes them easier to copy and distribute.  But digital documents are relatively fragile: small errors in storage can corrupt or destroy a document.  To balance this risk, we record and distribute multiple copies of digital documents.  
 
-A first question that needs to be answered is how many copies to keep.  For a variety of conditions -- document sizes and types, storage error rates, auditing strategies, etc. -- librarians need to know how many copies they should keep, how many copies they can afford to keep economically.  We also need to examine various strategies for "auditing" a collection, that is, checking on its status and repairing damage if necessary.  
+A first question that needs to be answered is how many copies to keep.  For a variety of conditions -- document sizes and types, storage error rates, auditing strategies, etc. -- we need to know how many copies we should keep, how many copies we can afford to keep economically.  We can also deal with various strategies for "auditing" a collection, that is, checking on its status, verifying the validity of document copies, and repairing damaged copies if necessary.  
 
 The purpose of this project is to provide baseline data for librarians and researchers about long-term survival rates of document collections.  We have developed computer simulations to estimate document failure rates over a wide variety of conditions.  The data from these simulations should be useful to stewards of such collections in planning and budgeting for storage and bandwidth needs to protect their collections.  
 
@@ -50,9 +50,9 @@ This study attempts to provide some baseline data that can be used to assess the
 
 All the code to run the simulations, and the results of simulations, are published on github at github.com/MIT-Informatics/PreservationSimulation and are accessible to the public under the MIT license.  The code consists of several parts.
 
-- Python programs using Python v2.7 run the actual simulations and collect the result data.  The main program comprises sixteen modules currently.  Six additional modules decode the instructions for a series of simulations and run computations in parallel to take advantage of multiple cores available in a computer.  The programs have been tested on 2-, 4-, 8-, and 32-core systems.  Additional modules are used to create databases of instructions to guide the simulations.  
+- Python programs using Python v2.7 run the actual simulations and collect the result data.  The main program comprises twenty-four modules currently.  Six additional modules decode the instructions for a series of simulations and run computations in parallel to take advantage of multiple cores available in a computer.  The programs have been tested on 2-, 4-, 8-, and 32-core systems.  Additional modules are used to create databases of instructions to guide the simulations.  
 
-- Bash scripts run many aspects of the processes.  All programs, the Python and the scripts, were developed using the Cygwin library on Windows 7, 8.1, and 10.  Some programs and scripts have been tested also on Mac OS/X.  
+- Bash scripts run many aspects of the processes.  All programs, the Python and the scripts, were developed using the Cygwin library on Windows 7, 8.1, and 10.  Some programs and scripts have been tested also on various versions of Linux and on Mac OS/X.  
 
 - An installation procedure (bash script) can install the simulation programs on an Ubuntu Linux server, intended primarily for use on Amazon's AWS EC2 web services.  This has been used to generate many of the results on large, multi-core machines.  Complete testing is still required for OS/X and other versions of Linux.  
 
