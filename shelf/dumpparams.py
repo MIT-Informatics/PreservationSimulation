@@ -35,7 +35,10 @@ def dumpParamsIntoLog():
     NTRC.ntracef(3,"MAIN","server params dict|%s|" % (G.dServerParams))
     for sServer in G.dServerParams:
         (nQuality,nShelfSize) = G.dServerParams[sServer][0]
-        lg.logInfo("PARAMS","SERVER server|%s| quality|%d| shelfsize|%d|TB" % (sServer,nQuality,nShelfSize))
+        lg.logInfo("PARAMS","SERVER server|%s| quality|%d| shelfsize|%d|TB" 
+            % (sServer,nQuality,nShelfSize))
+    lg.logInfo("PARAMS","SERVERDefaultHalflife |%s|" 
+        % (G.fServerDefaultHalflife))
 
     # S h e l f  params
     NTRC.ntracef(3,"MAIN","shelf params dict|%s|" % (G.dShelfParams))

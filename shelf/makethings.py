@@ -9,6 +9,7 @@ import logoutput as lg
 import client2 as client
 import server
 import dumpuse
+import shock
 
 
 #-----------------------------------------------------------
@@ -71,12 +72,13 @@ def testAllClients(mylClients):
 @ntracef("MAKE")
 @ntracef("SHOK")
 def makeShock(dunnoyet):
+    G.oShock = shock.CShock(dunnoyet)
     pass
 
 
 # Edit History:
 # 20160920  RBL Move these routines out of main.py.
-# 
+# 20161121  RBL Import shock so we can someday call it.
 # 
 # 
 

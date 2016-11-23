@@ -57,9 +57,9 @@ class ProtoG(object):
     fInfinity = float(1.0E12)   # Infinitely far in the future.
 
     nLifek = 0              # False lifek value in case lifem specified.  
-    fServerDefaultLife = fInfinity
+    fServerDefaultHalflife = 1.0E6
 ############################################TESTING###########################
-    #fServerDefaultLife = 33333.0
+    #fServerDefaultHalflife = 33333.0
 ########################################END TESTING###########################
                             # How long do servers life if unmolested?
 

@@ -104,6 +104,10 @@ def getCliArgsForEverythingElse():
     fnMaybeOverride("nGlitchDecay",dCliDict,G)
     fnMaybeOverride("nGlitchMaxlife",dCliDict,G)
     fnMaybeOverride("nGlitchSpan", dCliDict, G)
+    
+    fnMaybeOverride("nShockFreq", dCliDict, G)
+    fnMaybeOverride("nShockImpact", dCliDict, G)
+    fnMaybeOverride("nShockSpan", dCliDict, G)
 
     fnMaybeOverride("sMongoId",dCliDict,G)
 

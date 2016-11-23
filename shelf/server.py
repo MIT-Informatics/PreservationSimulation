@@ -39,10 +39,16 @@ class CServer(object):
         self.sCollectionID = None
         self.bInUse = False             # This server not yet used by client.
         self.bDead = False              # Server has not yet suffered a 100% glitch.
-        self.oTimer = rt.CResettableTimer(G.env, G.fServerDefaultLife, 
+        self.fCurrentLifespan = G.fServerDefaultHalflife 
+                                        # Keep current lifespan value here so that 
+                                        #  shock can find it and reduce it.
+        self.oTimer = rt.CResettableTimer(G.env, self.fCurrentLifespan, 
                         fnTimerCall, fnTimerInt, (self, self.ID))
                                         # Max server lifetime, initially.
                                         # Context contains server instance and id.
+                                        # TODO: the param is a halflife; need to 
+                                        #  generate a random expo life from that
+                                        #  rather than using a fixed number.
 
 # S e r v e r . m L i s t S e r v e r 
     @catchex
@@ -70,11 +76,16 @@ class CServer(object):
         '''
         return self.bDead
 
-# f n C o r r F a i l H a p p e n s T o A l l 
+# C S e r v e r . f n C o r r F a i l H a p p e n s T o A l l 
     @classmethod
     @catchex
     @ntracef("SERV")
     def fnCorrFailHappensToAll(cls, mynGlitchSpan):
+        """Class method: kill a specified number of servers.
+        BZZZT: I don't think we will use this routine here.  
+        It is better if the management logic for killing a 
+        subset of servers is in the shock module.
+        """
         lVictims = cls.fnlSelectServerVictims(mynGlitchSpan)
         for sVictim in lVictims:
             cServer = G.dID2Server[sVictim] 
@@ -97,17 +108,29 @@ class CServer(object):
     @catchex
     @ntracef("SERV")
     def fnlSelectServerVictims(cls, mynHowManyVictims):
-        """Class method: return list of N servers to kill."""
+        """Class method: return list of N servers to kill.
+        In the case of a shock, they are probably just rescheduled
+        with shorter lifespans.
+        """
         lPossibleVictims = CServer.fnlListLiveServerIDs()
-        return lPossibleVictims[0: mynHowManyVictims]
+        return lPossibleVictims[0: min(mynHowManyVictims, len(lPossibleVictims)-1)]
 
-# m C o r r F a i l H a p p e n s T o M e
+# S e r v e r . m C o r r F a i l H a p p e n s T o M e
     @catchex
     @ntracef("SERV")
     def mCorrFailHappensToMe(self):
-        for sShelfID in self.lShelfIDs:
+        for sShelfID in self.mListShelves():
             cShelf = G.dID2Shelf[sShelfID]
             cShelf.mCorrFailHappensToMe()
+        self.oTimer.stop()
+
+# S e r v e r . m R e s c h e d u l e M y L i f e 
+    @catchex
+    @ntracef("SERV")
+    def nRescheduleMyLife(self,mynNewLife):
+        self.oTimer.setdelay(mynNewLife).start()
+        # or something like that
+        pass
 
 # S e r v e r . m l L i s t S h e l v e s 
     @catchex
@@ -163,11 +186,13 @@ class CServer(object):
             self.bInUse = True
             self.lDocIDs.append(mysDocID)
             self.dDocIDs[mysDocID] = mysClientID
-            TRC.tracef(3,"SERV","proc mAddDocument serv|%s| id|%s| docid|%s| size|%s| assigned to shelfid|%s| remaining|%s|" % (self.sName,self.ID,mysDocID,cDoc.nSize,sShelfID,cShelf.nFreeSpace))
+            TRC.tracef(3,"SERV","proc mAddDocument serv|%s| id|%s| docid|%s| size|%s| assigned to shelfid|%s| remaining|%s|" 
+                % (self.sName,self.ID,mysDocID,cDoc.nSize,sShelfID,cShelf.nFreeSpace))
     
             return self.ID+"+"+sShelfID+"+"+mysDocID
         else:
-            NTRC.ntracef(3,"SERV","proc mAddDocument1 dead server|%s| do not add doc|%s| for client|%s|" % (self.ID, mysDocID, mysClientID))
+            NTRC.ntracef(3,"SERV","proc mAddDocument1 dead server|%s| do not add doc|%s| for client|%s|" 
+                % (self.ID, mysDocID, mysClientID))
             return False
 
 # S e r v e r . m C r e a t e S h e l f 
@@ -188,7 +213,8 @@ class CServer(object):
     def mDestroyCopy(self,mysCopyID,mysDocID,mysShelfID):
         ''' Oops, a doc died, maybe just one or maybe the whole shelf.
         '''
-        TRC.tracef(3,"SERV","proc mDestroyCopy remove copy|%s| doc|%s| from shelf|%s|" % (mysCopyID,mysDocID,mysShelfID))
+        TRC.tracef(3,"SERV","proc mDestroyCopy remove copy|%s| doc|%s| from shelf|%s|" 
+            % (mysCopyID,mysDocID,mysShelfID))
         # Inform the client that the copy is gonzo.  
         cClient = G.dID2Client[self.dDocIDs[mysDocID]]
         cClient.mDestroyCopy(mysDocID,self.ID,mysCopyID)
@@ -225,7 +251,8 @@ class CServer(object):
             self.bDead = True
             # Destroy all doc ids so that audit will not find any.
 #            TODO: #mark all documents as injured
-            NTRC.ntracef(3,"SERV","proc mServerDies kill ndocs|%s|" % (len(self.lDocIDs)))
+            NTRC.ntracef(3,"SERV","proc mServerDies kill ndocs|%s|" 
+                % (len(self.lDocIDs)))
 #            self.lDocIDs = list()
 #            self.dDocIDs = dict()
             # Shall we destroy all the shelves, too, or will that cause a problem?
