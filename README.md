@@ -27,7 +27,7 @@ The basic process of a simulation is as follows:
 
 - Documents age, and they may be damaged by storage errors in the servers.  (This simulation does not attempt to look at the error rates of individual disks.)
 
-- The client may or may not audit the collection copies on the several servers.  If the client finds that a document on a server has been damaged, the client will replace that copy on the server with new data from another extant copy, if there is one.  
+- The client may audit the collection copies on the several servers.  If the client finds that a document on a server has been damaged, the client will replace that copy on the server with new data from another extant copy, if there is one.  
 
 - At the end of the simulation time, the client looks at all copies of all documents on all servers and determines if any documents have been permanently lost, and how many.  
 
@@ -43,7 +43,7 @@ This study attempts to provide some baseline data that can be used to assess the
 
 1. Loss rates with increases in server error rates?  At random intervals, errors of some magnitude and duration impact the error rate of a storage structure, possibly causing a higher loss rate on that server, or even a total loss on a server.  Examine ranges of frequencies, severities, and durations.  
 
-1. Loss rates with correlated server failures?  At random intervals, major shocks increase the likelihood of total failure of one or more servers.  Examine ranges of frequency of shock and span of the impact of a shock.
+1. Loss rates with correlated server failures?  At random intervals, major exogenous shocks increase the likelihood of total failure of one or more servers.  Examine ranges of frequency of shock and span of the impact of a shock.
 
 
 ## The Programs
@@ -58,9 +58,9 @@ All the code to run the simulations, and the results of simulations, are publish
 
 - Bash scripts and Python programs extract data from large log files, using regex-based instruction files to guide the extractions.  
 
-- Basic R scripts to organize the data into more easily accessible tables.  
+- Basic R scripts are used to organize the data into more easily accessible tables.  
 
-- Several programs and scripts create instruction sequences for the many cases to be examined.  There are two separate mechanisms to construct, extract, and execute instructions: one for simple cases only (up to and including total auditing); and one for all cases, including auditing and glitches of all kinds.  The complex mechanism uses a MongoDB database to store and query the instruction parameters.  
+- Several programs and scripts create instruction sequences for the many cases to be examined.  There are two separate mechanisms to construct, extract, and execute instructions: one for simple cases only (up to and including total auditing); and one for all cases, including auditing and glitches and shocks of all kinds.  The complex mechanism uses a MongoDB database to store and query the instruction parameters.  
 
 - A number of how-to documents describe, we hope, the detailed process to reproduce the simulations and results.  
 
@@ -107,9 +107,10 @@ A copy of a document can be lost in several ways.  Note that all document failur
 
 - For moderate storage error rates, in the range that one would expect from commercial products, small numbers of copies suffice to minimize or eliminate document losses.  
 
-- Auditing document collections dramatically improves the survival rate of documents using substantially fewer copies (than required without auditing).
+- Auditing document collections dramatically improves the survival rate of documents using substantially fewer copies (than are required without auditing).
 
-- Auditing is expensive in bandwidth.  As an interested group, we should work on (cryptographic) methods of auditing that do not require retrieving the entire document. 
+- Auditing is expensive in bandwidth.  As an interested group, we should work on (cryptographic) methods of auditing that do not require retrieving the entire document from a server. 
+
 - Auditing does not need to be performed very frequently.  
 
 - Glitches increase document loss more or less in proportion to their frequency and impact.  They cannot readily be distinguished from overall increases in error rate.  
