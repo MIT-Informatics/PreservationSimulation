@@ -106,4 +106,10 @@ def getEnvironmentParams():
     except KeyError:
         pass
 
+# Edit History:
+# 20160920  RBL Move these routines out of main.py.
+# 
+# 
+# 
+
 #END

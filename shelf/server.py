@@ -10,6 +10,7 @@ import  util
 import  logoutput       as lg
 from    catchex         import  catchex
 from    shelf           import  CShelf
+import  resettabletimer as rt
 
 
 #===========================================================
@@ -38,6 +39,16 @@ class CServer(object):
         self.sCollectionID = None
         self.bInUse = False             # This server not yet used by client.
         self.bDead = False              # Server has not yet suffered a 100% glitch.
+        self.fCurrentLifespan = G.fServerDefaultHalflife 
+                                        # Keep current lifespan value here so that 
+                                        #  shock can find it and reduce it.
+        self.oTimer = rt.CResettableTimer(G.env, self.fCurrentLifespan, 
+                        fnTimerCall, fnTimerInt, (self, self.ID))
+                                        # Max server lifetime, initially.
+                                        # Context contains server instance and id.
+                                        # TODO: the param is a halflife; need to 
+                                        #  generate a random expo life from that
+                                        #  rather than using a fixed number.
 
 # S e r v e r . m L i s t S e r v e r 
     @catchex
@@ -65,11 +76,16 @@ class CServer(object):
         '''
         return self.bDead
 
-# f n C o r r F a i l H a p p e n s T o A l l 
+# C S e r v e r . f n C o r r F a i l H a p p e n s T o A l l 
     @classmethod
     @catchex
     @ntracef("SERV")
     def fnCorrFailHappensToAll(cls, mynGlitchSpan):
+        """Class method: kill a specified number of servers.
+        BZZZT: I don't think we will use this routine here.  
+        It is better if the management logic for killing a 
+        subset of servers is in the shock module.
+        """
         lVictims = cls.fnlSelectServerVictims(mynGlitchSpan)
         for sVictim in lVictims:
             cServer = G.dID2Server[sVictim] 
@@ -92,17 +108,29 @@ class CServer(object):
     @catchex
     @ntracef("SERV")
     def fnlSelectServerVictims(cls, mynHowManyVictims):
-        """Class method: return list of N servers to kill."""
+        """Class method: return list of N servers to kill.
+        In the case of a shock, they are probably just rescheduled
+        with shorter lifespans.
+        """
         lPossibleVictims = CServer.fnlListLiveServerIDs()
-        return lPossibleVictims[0: mynHowManyVictims]
+        return lPossibleVictims[0: min(mynHowManyVictims, len(lPossibleVictims)-1)]
 
-# m C o r r F a i l H a p p e n s T o M e
+# S e r v e r . m C o r r F a i l H a p p e n s T o M e
     @catchex
     @ntracef("SERV")
     def mCorrFailHappensToMe(self):
-        for sShelfID in self.lShelfIDs:
+        for sShelfID in self.mListShelves():
             cShelf = G.dID2Shelf[sShelfID]
             cShelf.mCorrFailHappensToMe()
+        self.oTimer.stop()
+
+# S e r v e r . m R e s c h e d u l e M y L i f e 
+    @catchex
+    @ntracef("SERV")
+    def nRescheduleMyLife(self,mynNewLife):
+        self.oTimer.setdelay(mynNewLife).start()
+        # or something like that
+        pass
 
 # S e r v e r . m l L i s t S h e l v e s 
     @catchex
@@ -122,7 +150,8 @@ class CServer(object):
         lTempDocIDs = cCollection.mListDocuments()
         for sDocID in lTempDocIDs:
             self.mAddDocument(sDocID,mysClientID)
-        self.bInUse = True
+        self.bInUse = True          # Server now in use
+        self.oTimer.start()         #  and alive, can die.
         return mysCollID
 
 # S e r v e r . m A d d D o c u m e n t 
@@ -157,11 +186,13 @@ class CServer(object):
             self.bInUse = True
             self.lDocIDs.append(mysDocID)
             self.dDocIDs[mysDocID] = mysClientID
-            TRC.tracef(3,"SERV","proc mAddDocument serv|%s| id|%s| docid|%s| size|%s| assigned to shelfid|%s| remaining|%s|" % (self.sName,self.ID,mysDocID,cDoc.nSize,sShelfID,cShelf.nFreeSpace))
+            TRC.tracef(3,"SERV","proc mAddDocument serv|%s| id|%s| docid|%s| size|%s| assigned to shelfid|%s| remaining|%s|" 
+                % (self.sName,self.ID,mysDocID,cDoc.nSize,sShelfID,cShelf.nFreeSpace))
     
             return self.ID+"+"+sShelfID+"+"+mysDocID
         else:
-            NTRC.ntracef(3,"SERV","proc mAddDocument1 dead server|%s| do not add doc|%s| for client|%s|" % (self.ID, mysDocID, mysClientID))
+            NTRC.ntracef(3,"SERV","proc mAddDocument1 dead server|%s| do not add doc|%s| for client|%s|" 
+                % (self.ID, mysDocID, mysClientID))
             return False
 
 # S e r v e r . m C r e a t e S h e l f 
@@ -172,7 +203,8 @@ class CServer(object):
             Called as needed when a doc arrives too large for available space.  
         '''
         cShelf = CShelf(self.ID,self.nQual,self.nShelfSize)
-        lg.logInfo("SERVER","server |%s| created storage shelf|%s| quality|%s| size|%s|MB" % (self.ID,cShelf.ID,cShelf.nQual,cShelf.nCapacity))
+        lg.logInfo("SERVER","server |%s| created storage shelf|%s| quality|%s| size|%s|MB" 
+            % (self.ID,cShelf.ID,cShelf.nQual,cShelf.nCapacity))
         return cShelf.ID
 
 # S e r v e r . m D e s t r o y C o p y 
@@ -181,7 +213,8 @@ class CServer(object):
     def mDestroyCopy(self,mysCopyID,mysDocID,mysShelfID):
         ''' Oops, a doc died, maybe just one or maybe the whole shelf.
         '''
-        TRC.tracef(3,"SERV","proc mDestroyCopy remove copy|%s| doc|%s| from shelf|%s|" % (mysCopyID,mysDocID,mysShelfID))
+        TRC.tracef(3,"SERV","proc mDestroyCopy remove copy|%s| doc|%s| from shelf|%s|" 
+            % (mysCopyID,mysDocID,mysShelfID))
         # Inform the client that the copy is gonzo.  
         cClient = G.dID2Client[self.dDocIDs[mysDocID]]
         cClient.mDestroyCopy(mysDocID,self.ID,mysCopyID)
@@ -203,7 +236,7 @@ class CServer(object):
         # It doesn't know that the list is sorted.
         # Try dictionary lookup, which is lots faster.  
         # (The dictionary is maintained by Add and Destroy.)
-        bResult = mysDocID in self.dDocIDs
+        bResult = mysDocID in self.dDocIDs and not self.mbIsServerDead()
         # Might someday want to do something other than just return T/F.
         if bResult:
             return True
@@ -218,7 +251,8 @@ class CServer(object):
             self.bDead = True
             # Destroy all doc ids so that audit will not find any.
 #            TODO: #mark all documents as injured
-            NTRC.ntracef(3,"SERV","proc mServerDies kill ndocs|%s|" % (len(self.lDocIDs)))
+            NTRC.ntracef(3,"SERV","proc mServerDies kill ndocs|%s|" 
+                % (len(self.lDocIDs)))
 #            self.lDocIDs = list()
 #            self.dDocIDs = dict()
             # Shall we destroy all the shelves, too, or will that cause a problem?
@@ -226,6 +260,40 @@ class CServer(object):
                 G.dID2Shelf[sShelfID].mDestroyShelf()
 #                TODO: #mark all shelves as not bAlive
         pass
+
+# S e r v e r . f n T i m e r C a l l 
+@catchex
+@ntracef("SERV")
+def fnTimerCall(objTimer,xContext):
+    '''\
+    Server life-span timer has completed, and the server must die.
+    Set the timer event to release any process waiting for it.
+    Declare the server to be el croako.  
+    '''
+    NTRC.trace(3,"callback %s delay %s called from %s at %s." 
+        % (xContext, objTimer.delay, objTimer, G.env.now))
+    objTimer.setevent()
+    cServer = xContext[0]
+    cServer.mKillServer
+    lg.logInfo("SERVER","timercalled t|%6.0f| context|%s| delay|%s|" 
+        % (G.env.now, xContext, objTimer.delay))
+    return (objTimer, xContext)
+
+# S e r v e r . f n T i m e r I n t 
+@catchex
+@ntracef("SERV")
+def fnTimerInt(objTimer,xContext):
+    '''\
+    Server life-span timer was interrupted to reschedule it, 
+    probably by a shock, and presumably to a shorter life.
+    But the server is still alive.
+    '''
+    NTRC.trace(3,"interrupt %s delay %s called from %s at %s." 
+        % (xContext, objTimer.delay, objTimer, G.env.now))
+    lg.logInfo("SERVER","interrupted t|%6.0f| context|%s| delay|%s|" 
+        % (G.env.now, xContext, objTimer.delay))
+    return (objTimer, xContext)
+
 
 
 # Edit History:
@@ -259,7 +327,11 @@ class CServer(object):
 #                (class)fnCorrFailHappensToAll, mCorrFailHappensToMe.
 #               Change names of all classmethods to begin with fn instead of m.
 #                Yes, they could be static methods or completely external.  
+# 20161118  RBL Add ResettableTimer set for infinite life to start with.
+#               Start timer when collection is placed, and kill server 
+#                when timer expires.
+#               And ensure that all documents report lost if server dead.  
 # 
 # 
 
-# END
+#END

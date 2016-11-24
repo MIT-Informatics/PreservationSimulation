@@ -104,6 +104,10 @@ def getCliArgsForEverythingElse():
     fnMaybeOverride("nGlitchDecay",dCliDict,G)
     fnMaybeOverride("nGlitchMaxlife",dCliDict,G)
     fnMaybeOverride("nGlitchSpan", dCliDict, G)
+    
+    fnMaybeOverride("nShockFreq", dCliDict, G)
+    fnMaybeOverride("nShockImpact", dCliDict, G)
+    fnMaybeOverride("nShockSpan", dCliDict, G)
 
     fnMaybeOverride("sMongoId",dCliDict,G)
 
@@ -187,5 +191,11 @@ def fnMaybeOverride(mysArg,mydDict,mycClass):
                 setattr( mycClass, mysArg, None )
     return getattr(mycClass,mysArg,"XXXXX")
 
+
+# Edit History:
+# 20160920  RBL Move these routines out of main.py.
+# 
+# 
+# 
 
 #END

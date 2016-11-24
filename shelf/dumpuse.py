@@ -105,4 +105,10 @@ def dumpCollectionStats(mysCollID):
     lg.logInfo("MAIN","COLLECTIONTOTALS client|%s| collection|%s| nservers|%s| ndocs|%s| nokay|%s| nmajority|%s| nminority|%s| nlost|%s| " \
         % (sClientIDx,sCollIDx,nServers,nDocs, nDocsOkay,nDocsInjured,nDocsForensics,nDocsLost))
 
+# Edit History:
+# 20160920  RBL Move these routines out of main.py.
+# 
+# 
+# 
+
 #END

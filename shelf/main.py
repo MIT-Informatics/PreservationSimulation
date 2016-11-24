@@ -255,6 +255,7 @@ def main():
     # Populate servers, clients, collections of documents.
     makethings.makeServers(G.dServerParams)
     makethings.makeClients(G.dClientParams)
+    makethings.makeShock(G.nShockFreq)
     dumpuse.dumpServerUseStats()
 
     # ---------------------------------------------------------------
