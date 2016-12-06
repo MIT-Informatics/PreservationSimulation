@@ -19,7 +19,7 @@ border-collapse: collapse;
 % Micah Altman; Richard Landau
 % 2016-08-15
 
-# How Many Copies Is Enough?   {#title .unnumbered}
+# Information Integrity Over the Long Term -- How Many Copies Is Enough?   {#title .unnumbered}
 
 **Assessing Long-term Durability of Collections Through A Flexible, Replicable Simulation**
 
@@ -28,15 +28,24 @@ border-collapse: collapse;
 
 > How to protect a large, valuable, digital document collection?
 
->* How many copies do you need to keep it safe?
-* Where to put the copies?
-* Later, are you sure they're still there? 
-* Whether to use compression, encryption, ... ?
-* There is not much hard data on which to base policy decisions.
-* We developed a flexible, replicable simulation framework to test configurations.
-* We aim to provide some guidance, based on some common, but not universal, calibration points.
+This article addresses the problem of ensuring information integrity over long periods, and against a diverse range of real-world legal, organizational, technical, and economic threats. Rapid advances information technology have shifted the economics of information production, transmission, and storage -- resulting in a vast amount of information that is increasing stored online or near-line. This shift in information storage changes both the profile of threat to integrity, and the set of feasible methods for mitigating these threats. We develop a general event-based simulation framework that can be used to flexibly and reproducibly simulate the effectiveness of various methods of storage, replication, auditing, and transformation against a diverse portfolio of threats to data loss. We then apply this framework to a range of scenarios that are representative of common baseline threats and current storage technology. From this we derive general guidance for the use of replication, platform diversification, fixity metadata, integrity auditing, compression, and encryption where long-term integrity is desired. 
+
+<!-- START:TODO--> 
+<!-- Add a summary of specific recommendations. -->
+<!-- END:TODO--> 
+![Various Threats to Library Collections (in the square brackets)](threats.jpg "Various Threat Types (in quotes after the link addr)")
+
+1.	Document rot (bit rot) on disk.
+2.	Environmental failures that accelerate document rot.
+3.	Server failures that destroy sets of documents.
+4.	Lack of independence of servers. 
+1. Business failures: a single business failure may affect more than one server, due, e.g., to consolidation or cross-financing.  That is, servers that appeared to be independent may not be financially independent in practice.  
+2. Economic failures.
+5.	Attack on collection, institution, subject matter.
+<!-- END:TODO:MICAH--> 
 
 
+e
 # Motivation
 - Information production is rapidly increasing.
 - The vast majority of the world's data is stored on rotating disks, 90% in 2007 and not changing very rapidly.
