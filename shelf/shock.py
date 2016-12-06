@@ -18,15 +18,40 @@ import  server
 #---------------------
 
 class CShock(object):
-    @ntracef("SHCK")
-    def __init__(self,dunnoyet):
-        pass
-
 #
     @ntracef("SHCK")
     def foo(bar):
         pass
 
+    @ntracef("SHCK")
+    def __init__(self, mynShockHalflife, mynShockSpan, mynShockImpact):
+        self.nLife = mynShockHalflife
+        self.nSpan = mynShockSpan
+        self.nImpact = mynShockImpact
+        self.ID = "Z99"
+        
+        # If there is to be any shockin' 'round here, start it.  
+        #  Otherwise, nothing.
+        if self.nLife:
+            G.env.process(self.mWaitForShock(mynShockHalflife))
+
+    def mWaitForShock(self, mynHalflife):
+        lg.logInfo("SHOCK", "waiting for shock at |%s|" 
+            % (mynHalflife))
+        G.env.timeout(mynHalflife)
+        # Shock has happened.
+        lg.logInfo("SHOCK", "t|%6.0f| shock happens" 
+            % (G.env.now))
+        lServersToShock = server.CServer.fnlSelectServerVictims(self.nSpan)
+        fReduction = self.nImpact * 1.0 / 100.0 
+        for sServerID in lServersToShock:
+            cServer = G.dId2Server[sServerID]
+            fCurrentLife = cServer.mfGetyLife()
+            fNewLife = fReduction * fCurrentLife
+            NTRC.ntracef(3, "SHOK", "proc shock at t|%8.0f| server|%s| new life|%s|" 
+                % (G.env.now, sServerID, fNewLife))
+            cServer.mRescheduleMyLife(fNewLife)
+            
 
 
 
@@ -54,11 +79,14 @@ Details
         -- server instance method interrupt timer: cServer.mCorrFailHappensToMe()
     - generate new random short death time.
         - calculate new halflife using shockimpact.
-        -- util something random.
+            -- util something random.
     - change the server's timer deadline and restart the timer.
         -- instance method reschedule and start: cServer.mRescheduleMyLife(nNewLife)
 
 When Server Lifetime expires, server loses all docs as usual.
+
+
+
 
 
 """
