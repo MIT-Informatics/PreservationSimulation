@@ -67,6 +67,7 @@ class ProtoG(object):
     nGlitchImpact = 0       # Percent reduction in sector lifetime.
     nGlitchDecay = 0        # Half-life of glitch duration, decays exponentially.
     nGlitchMaxlife = 0      # Max duration of a single glitch impact.  
+    nGlitchSpan = 0         # Number of servers affected by a glitch.  
     fGlitchIgnoreLimit = 0.05   # Level below which a glitch stops.
     nGlitchesTotal = 0      # Count of all glitches on all shelves.
     

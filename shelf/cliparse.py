@@ -199,6 +199,12 @@ def fndCliParse(mysArglist):
                         'ceases after this interval; 0=infinity.'
                         )
 
+    cParse.add_argument("--glitchspan", type=int
+                        , dest='nGlitchSpan'
+                        , metavar='nGLITCHSPAN'
+                        , help='Number of servers affected by a glitch.'
+                        )
+
     cParse.add_argument("--shockfreq", type=int
                         , dest='nShockFreq'
                         , metavar='nSHOCKFREQ_hrs'
