@@ -124,10 +124,16 @@ class CServer(object):
             cShelf.mCorrFailHappensToMe()
         self.oTimer.stop()
 
+# S e r v e r . m f G e t M y L i f e
+    @catchex
+    @ntracef("SERV")
+    def mfGetMyLife(self):
+        return fCurrentLifespan
+
 # S e r v e r . m R e s c h e d u l e M y L i f e 
     @catchex
     @ntracef("SERV")
-    def nRescheduleMyLife(self,mynNewLife):
+    def mRescheduleMyLife(self,mynNewLife):
         self.oTimer.setdelay(mynNewLife).start()
         # or something like that
         pass
@@ -331,6 +337,7 @@ def fnTimerInt(objTimer,xContext):
 #               Start timer when collection is placed, and kill server 
 #                when timer expires.
 #               And ensure that all documents report lost if server dead.  
+# 20161205  RBL Add getter routine for lifetime.  
 # 
 # 
 

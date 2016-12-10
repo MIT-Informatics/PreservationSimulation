@@ -72,13 +72,13 @@ def testAllClients(mylClients):
 @ntracef("MAKE")
 @ntracef("SHOK")
 def makeShock(dunnoyet):
-    G.oShock = shock.CShock(dunnoyet)
-    pass
+    G.oShock = shock.CShock(G.nShockFreq, G.nShockSpan, G.nShockImpact)
 
 
 # Edit History:
 # 20160920  RBL Move these routines out of main.py.
 # 20161121  RBL Import shock so we can someday call it.
+# 20161205  RBL Call CShock with real args.  
 # 
 # 
 

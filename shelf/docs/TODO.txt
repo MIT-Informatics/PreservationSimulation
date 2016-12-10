@@ -1,6 +1,16 @@
 TODO list for PreservationSimulation SHELF project
 
 
+TODO: shock
+TODO: add server default lifespan to param files.
+MAYBE: server default lifespan is random, not fixed, right?  just expo?
+MAYBE: add server default lifespan to main CLI and even broker.
+TODO: code shock methods for real not just pseudocode.
+TODO: test shock rescheduling server death.  
+TODO: server death after shock is after now, not absolute, right?
+TODO: select reasonable ranges of shock impacts.
+
+
 TODO: extractvalues.py
 DONE - add optional arg for --separator=','
 DONE - default should still be space
