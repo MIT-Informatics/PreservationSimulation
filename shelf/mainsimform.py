@@ -69,11 +69,13 @@ def mainsim_post():
                 msg=msg
                 )
 
-    # Adjust lifem and lifek.
-    if dVals["nLifem"] == "none" or dVals["nLifek"] != "":
-       dVals["nLifek"] = str(dVals["nLifek"])
-    else:
+    # Adjust lifem and lifek.  lifek is the only option used, so 
+    #  scale up lifem value if there is no lifek given by user. 
+    if dVals["nLifek"] == "":
         dVals["nLifek"] = str(dVals["nLifem"])+"000"
+
+    # If the user asks for a shortlog, add the option to the command.
+    dVals["xshortlog"] = "--shortlog" if bShortLog else ""
 
     # Do something with the form data
 #    print("<br/>Working...")   # How do we put this out into the HTML stream async?
@@ -82,19 +84,27 @@ def mainsim_post():
 #    sActualCli = cCmd.mGentlyFormat(sMainCommandStringWithLog, dVals)
 #    sActualCli = cCmd.mGentlyFormat(sMainCommandStringTestOnly, dVals)
 #    sActualCli = cCmd.mGentlyFormat(sMainCommandStringDumbTest, dVals)
-    lResult = cCmd.mDoCmdLst(sActualCli)
-    sOutput = '<font face="Courier">\n'
-    sOutput += sActualCli+"<br />\n"
-    for line in lResult:
-        sOutput += "<br />"+line.expandtabs(4)+"\n"
-    sOutput += "</font>\n"
+    sPrefix = '''<html><body>
+        <font face="Courier">\n
+    '''
+    sPrefix += '<br />Working. . . \n'
+    sPrefix += "<br />" + sActualCli + "<br />\n"
+    sSuffix = '''
+        </font>
+        </body></html>
+    '''
+    sLinePrefix = '<br />'
+    sLineSuffix = ''
+
 #    return dVals         # TEMP: return dict for visual inspection.
-    return sOutput      # TEMP: See if the test command even works.
+    
+    return cCmd.mDoCmdGen(sPrefix, sSuffix, sLinePrefix, sLineSuffix, 
+            sActualCli)
 
 # CLI commands to run the main program.
-sMainCommandStringWithLog = '''python main.py {sFamilyDir} {sSpecificDir} {nSimLength} {nRandomSeed} --ncopies={nCopies} --lifek={nLifek} --audit={nAuditFreq} --auditsegments={nAuditSegments} --audittype={sAuditType} --glitchfreq={nGlitchFreq} --glitchimpact={nGlitchImpact} --glitchdecay={nGlitchDecay} --glitchmaxlife={nGlitchMaxlife} --glitchspan={nGlitchSpan} --shelfsize={nShelfSize} --smalldoc={nSmallDoc} --largedoc={nLargeDoc} --pctsmall={nSmallDocPct} --mongoid={mongoid}  >  {sFamilyDir}/{sSpecificDir}/log/{sLogFile}.log  2>&1
+sMainCommandStringWithLog = '''python main.py {sFamilyDir} {sSpecificDir} {nSimLength} {nRandomSeed} --ncopies={nCopies} --lifek={nLifek} --audit={nAuditFreq} --auditsegments={nAuditSegments} --audittype={sAuditType} --glitchfreq={nGlitchFreq} --glitchimpact={nGlitchImpact} --glitchdecay={nGlitchDecay} --glitchmaxlife={nGlitchMaxlife} --glitchspan={nGlitchSpan} --shelfsize={nShelfSize} --smalldoc={nSmallDoc} --largedoc={nLargeDoc} --pctsmall={nSmallDocPct} {xshortlog} --mongoid={mongoid}  >  {sFamilyDir}/{sSpecificDir}/log/{sLogFile}.log  2>&1
 '''
-sMainCommandStringToStdout = '''python main.py {sFamilyDir} {sSpecificDir} {nSimLength} {nRandomSeed} --ncopies={nCopies} --lifek={nLifek} --audit={nAuditFreq} --auditsegments={nAuditSegments} --audittype={sAuditType} --glitchfreq={nGlitchFreq} --glitchimpact={nGlitchImpact} --glitchdecay={nGlitchDecay} --glitchmaxlife={nGlitchMaxlife} --glitchspan={nGlitchSpan} --shelfsize={nShelfSize} --smalldoc={nSmallDoc} --largedoc={nLargeDoc} --pctsmall={nSmallDocPct} --mongoid={mongoid}   2>&1
+sMainCommandStringToStdout = '''python main.py {sFamilyDir} {sSpecificDir} {nSimLength} {nRandomSeed} --ncopies={nCopies} --lifek={nLifek} --audit={nAuditFreq} --auditsegments={nAuditSegments} --audittype={sAuditType} --glitchfreq={nGlitchFreq} --glitchimpact={nGlitchImpact} --glitchdecay={nGlitchDecay} --glitchmaxlife={nGlitchMaxlife} --glitchspan={nGlitchSpan} --shelfsize={nShelfSize} --smalldoc={nSmallDoc} --largedoc={nLargeDoc} --pctsmall={nSmallDocPct} {xshortlog} --mongoid={mongoid}   2>&1
 '''
 sMainCommandStringTestOnly = '''python main.py -h
 '''
@@ -131,6 +141,23 @@ class CCommand(object):
         for sLine in os.popen(mysCommand):
             lResult.append(sLine.rstrip())
         return lResult
+
+# m D o C m d G e n ( ) 
+    @catchex
+    @ntracef("CMD")
+    def mDoCmdGen(self, mysPrefix, mysSuffix, 
+        mysLinePrefix, mysLineSuffix, mysCommand):
+        ''' 
+        Generator that returns lines with newlines intact.  
+        Adds prefix before and suffix after the entire block of lines
+         obtained by executing the command.
+        Add lineprefix and linesuffix to each line in turn.  
+        (All this so we can output HTML and not just plaintext.)
+        '''
+        yield mysPrefix
+        for sLine in os.popen(mysCommand):
+            yield mysLinePrefix + sLine + mysLineSuffix
+        yield mysSuffix
 
 # m D o P a r s e ( )         
     @catchex

@@ -1,6 +1,8 @@
+<html>
+<body>
 <form action="mainsim" method="post">
     <font size="+1">
-        <title>PreservationSimulation single run</title>
+        <title>PreservationSimulation main.py single run</title>
         <h1>MIT Library Preservation Simulation Project</h1>
         <p><h3>Choose options for single simulation run</h3></p>
 
@@ -20,8 +22,7 @@
         <td>Random seed: <br />
             <input type="text" name="nRandomSeed" value="1" /></td>
     </tr>
-    
-    <tr bgcolor="#ffffbb">
+        <tr bgcolor="#ffffbb">
         <td>Number of copies: <br />
              <br />
             <select name="nCopies">
@@ -215,18 +216,18 @@
         </td>
     </tr>
 
-    <tr bgcolor="#eeeeee">
+    <tr bgcolor="#cccccc">
         <td colspan="3">
             <b>Logging: detail, where</b>
         </td>
     </tr>
 
-    <tr bgcolor="#eeeeee">
+    <tr bgcolor="#cccccc">
         <td>
             Short log: <br/>
             (includes only params and stats,<br/>
              no details of sector errors) <br/>
-            <input type="checkbox" name="bShortLog">
+            <input type="checkbox" name="bShortLog" value="true">
         </td>
         <td>
             Log filename: <br/>
@@ -243,12 +244,12 @@
         </td>
     </tr>
 
-    <tr bgcolor="#dddddd">
+    <tr bgcolor="#999999">
         <td colspan="5">
             <b>Document size and shelf size (and doc size mixture, if any)</b>
     </tr>
 
-    <tr bgcolor="#dddddd">
+    <tr bgcolor="#999999">
         <td>
             Size of storage shelf: <br/>
             (terabytes) <br/>
@@ -291,13 +292,13 @@
         </td>
     </tr>
 
-    <tr bgcolor="#cccccc">
+    <tr bgcolor="#666666">
         <td colspan="2">
         <b>General params</b>
         </td>
     </tr>
 
-    <tr bgcolor="#cccccc">
+    <tr bgcolor="#666666">
         <td>
             Length of simulated time: <br/>
             (10,000 hours = 1 year)<br/>
@@ -323,3 +324,5 @@
     </p>
     </font>
 </form>
+</body>
+</html>
