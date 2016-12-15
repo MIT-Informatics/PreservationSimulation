@@ -60,6 +60,7 @@ class ProtoG(object):
     fServerDefaultHalflife = 1.0E6
 ############################################TESTING###########################
     #fServerDefaultHalflife = 33333.0
+    fServerDefaultHalflife = 0     
 ########################################END TESTING###########################
                             # How long do servers life if unmolested?
 

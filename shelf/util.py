@@ -12,6 +12,9 @@ from globaldata import *
 # U t i l i t i e s 
 #------------------
 
+# Functions to generate random deviates for several distributions.
+
+# m a k e e x p o 
 @tracef("UTIL",level=4)
 def makeexpo(mean):
     ''' fn makeexpo(mean)
@@ -21,6 +24,7 @@ def makeexpo(mean):
     interval = (random.expovariate(1.0/abs(mean)))
     return interval
 
+# m a k e u n i f 
 @tracef("UTIL",level=4)
 def makeunif(lo,hi):
     ''' fn makeinfo(lo,hi)
@@ -29,19 +33,70 @@ def makeunif(lo,hi):
     interval = int(random.uniform(lo,hi))
     return interval
     
+# m a k e n n n o r m 
 @tracef("UTIL",level=4)
 def makennnorm(mean,sdev=0):
     ''' makennnorm(mean)
         Return non-neg gaussian with mean and sd sqrt(mean)
-        not because there's any science in that, just because.  
-        If sd arg os zerp. then the result is always the mean.  
+         not because there's any science in that, just because.  
+        If sd arg is zero. then the result is always the mean. 
+        If you think that the folding at zero gives extra weight
+         to the lower tail, then change it to, maybe, truncate
+         the tail.  
     '''
-    if sdev == 0: 
-        x = mean
-    else:
-        x = random.gauss(mean,sdev)
-    return abs(x)
+    return abs(random.gauss(mean, sdev) if sdev > 0 else mean)
 
+# Functions to random deviates for various event streams:
+#  sector, server, glitch, and shock lifetimes.  
+
+# m a k e s o m e r a n d 
+@tracef("UTIL",level=4)
+def makesomerand(mysDistn, myParam1, myParam2=0):
+    '''
+    Make a random number of some kind, specified by first arg.
+    '''
+    if mysDistn == "exponential":
+        return makeexpo(myParam1)
+    elif mysDistn == "normal":
+        return makenorm(myParam1,myParam2)
+    elif mysDistn == "uniform":
+        return makeunif(myParam1,myParam2)
+    else:
+        raise ValueError, "Unknown distribution type |%s|" % mysDistn
+            
+# m a k e s e r v e r l i f e 
+@tracef("UTIL",level=4)
+def makeserverlife(mynHalf, myParam=0):
+    '''
+    Today, server lifetimes are exponential.
+    '''
+    return makesomerand("exponential", fnfHalflife2Exponentiallife(mynHalf))
+
+# m a k e s e c t o r l i f e 
+@tracef("UTIL",level=4)
+def makesectorlife(mynHalf, myParam=0):
+    '''
+    Today, sector lifetimes are exponential.
+    '''
+    return makesomerand("exponential", fnfHalflife2Exponentiallife(mynHalf))
+
+# m a k e g l i t c h l i f e 
+@tracef("UTIL",level=4)
+def makeglitchlife(mynHalf, myParam=0):
+    '''
+    Today, glitch lifetimes are exponential.
+    '''
+    return makesomerand("exponential", fnfHalflife2Exponentiallife(mynHalf))
+
+# m a k e s h o c k l i f e 
+@tracef("UTIL",level=4)
+def makeshocklife(mynHalf, myParam=0):
+    '''
+    Today, shock lifetimes are exponential.
+    '''
+    return makesomerand("exponential", fnfHalflife2Exponentiallife(mynHalf))
+
+# General calculations.
 
 # f n I n t P l e a s e 
 @tracef("UTIL",level=5)
@@ -147,8 +202,10 @@ def fniNumberFromID(sSomeID):
     '''\
     All IDs are one letter followed by an integer.
     Remove the first letter, convert the rest to int.  
-    Intended to be used as the key function in .sort()
-    or sorted().
+     Intended to be used as the key function in .sort()
+     or sorted().
+    Value returned as an int so it doesn't matter if I
+     remembered to put in the leading zeros.  
     '''
     return int(sSomeID[1:])
 

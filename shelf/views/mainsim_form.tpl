@@ -60,6 +60,8 @@
         </select></td>
         <td>Sector half-life in kiloHours: <br />(Use only if megaHours is "none")<br />
             <input type="text" name="nLifek" value="" size="8" /></td>
+        <td>Server default half-life: <br />(megaHours) (zero=infinite)<br />
+            <input type="text" name="nServerDefaultLifetime" value="0" size="8" /></td>
     </tr>
     
     <tr bgcolor="#ccffbb">
@@ -175,7 +177,7 @@
             Shock frequency: <br/>
             (hours) <br />
             <select name="nShockFreq">
-                <option value="0" selected>0</option>
+                <option value="0" selected>0 (disabled)</option>
                 <option value="2500">2500 (quarterly)</option>
                 <option value="10000">10000 (annually)</option>
                 <option value="20000">20000 (every two years)</option>

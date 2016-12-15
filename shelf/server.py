@@ -39,7 +39,11 @@ class CServer(object):
         self.sCollectionID = None
         self.bInUse = False             # This server not yet used by client.
         self.bDead = False              # Server has not yet suffered a 100% glitch.
-        self.fCurrentLifespan = G.fServerDefaultHalflife 
+        self.fOriginalLifespan = (util.makeserverlife(G.fServerDefaultHalflife)
+                                    if G.fServerDefaultHalflife > 0 else 0)
+                                        # Server gets a random lifetime if there
+                                        #  is supposed to be one today.
+        self.fCurrentLifespan = self.fOriginalLifespan
                                         # Keep current lifespan value here so that 
                                         #  shock can find it and reduce it.
         self.oTimer = rt.CResettableTimer(G.env, self.fCurrentLifespan, 
@@ -103,6 +107,17 @@ class CServer(object):
             if (not csrv.mbIsServerDead()) and csrv.bInUse]
         return lLiveOnes
 
+# C S e r v e r . f n l L i s t A l l S e r v e r I D s 
+    @classmethod
+    @catchex
+    @ntracef("SERV")
+    def fnlListAllServerIDs(cls):
+        """Class method: return list of IDs for 
+            all servers."""
+        lAllServers = [sid for sid,csrv in G.dID2Server.items() 
+            if csrv.bInUse]
+        return lAllServers
+
 # C S e r v e r . f n l S e l e c t S e r v e r V i c t i m s 
     @classmethod
     @catchex
@@ -128,13 +143,16 @@ class CServer(object):
     @catchex
     @ntracef("SERV")
     def mfGetMyLife(self):
+        ''' Return current lifespan number. '''
         return fCurrentLifespan
 
 # S e r v e r . m R e s c h e d u l e M y L i f e 
     @catchex
     @ntracef("SERV")
     def mRescheduleMyLife(self,mynNewLife):
-        self.oTimer.setdelay(mynNewLife).start()
+        ''' Store new lifespan number. '''
+        self.fCurrentLife = mynNewLife
+        #self.oTimer.setdelay(mynNewLife).start()
         # or something like that
         pass
 

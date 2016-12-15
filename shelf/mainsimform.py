@@ -26,6 +26,7 @@ def mainsim_post():
 
     nLifem = request.forms.get("nLifem")
     nLifek = request.forms.get("nLifek")
+    nServerDefaultLifetime = request.forms.nServerDefaultLifetime
 
     nAuditFreq = request.forms.get("nAuditFreq")
     nAuditSegments = request.forms.get("nAuditSegments")
@@ -65,7 +66,8 @@ def mainsim_post():
                 nShelfSize=nShelfSize, nSmallDoc=nSmallDoc, nLargeDoc=nLargeDoc, 
                 nSmallDocPct=nSmallDocPct, nPctDocVar=nPctDocVar, 
                 nSimLength=nSimLength, nBandwidthMbps=nBandwidthMbps, 
-
+                nServerDefaultLifetime=nServerDefaultLifetime, 
+                
                 msg=msg
                 )
 
