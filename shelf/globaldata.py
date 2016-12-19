@@ -60,7 +60,7 @@ class ProtoG(object):
     fServerDefaultHalflife = 1.0E6
 ############################################TESTING###########################
     #fServerDefaultHalflife = 33333.0
-    fServerDefaultHalflife = 0     
+    fServerDefaultHalflife = 50000     
 ########################################END TESTING###########################
                             # How long do servers life if unmolested?
 
@@ -73,8 +73,9 @@ class ProtoG(object):
     nGlitchesTotal = 0      # Count of all glitches on all shelves.
     
     nShockFreq = 0          # Half-life of economic slump-free intervals. 
-    nShockImpact = 0        # Percent reduction in server lifetime.
-    nShockSpan = 1          # Number of servers affected by slump.  
+    nShockImpact = 33       # Percent reduction in server lifetime.
+    nShockSpan = 1          # Number of servers affected by slump. 
+    nShockMaxlife = 10000   # Duration of shock (hours), fixed not random. 
     nShocksTotal = 0        # Count of shocks this run. 
 
     sMongoId = None         # MongoDB _id of the instruction for this run.

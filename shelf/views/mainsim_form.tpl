@@ -188,22 +188,23 @@
             Shock impact percentage: <br/>
             (reduction of server lifetime)<br/>
             <select name="nShockImpact">
-                <option value="100" selected>100 (fatal to server)</option>
-                <option value="90">90 (10-fold increase in errors)</option>
-                <option value="80">80 (5-fold increase)</option>
-                <option value="67">67 (triple error rate)</option>
-                <option value="50">50 (double error rate)</option>
+                <option value="100">100 (fatal to server)</option>
+                <option value="90">90 (10% normal lifespan)</option>
+                <option value="80">80 (20% normal lifespan)</option>
+                <option value="67">67 (1/3 normal lifespan)</option>
+                <option value="50" selected>50 (1/2 normal lifespan)</option>
+                <option value="33">33 (2/3 normal lifespan)</option>
             </select>
         </td>
         <td>
             Shock maximum life: <br/>
             (hours) <br />
             <select name="nShockMaxlife">
-                <option value="0" selected>0 (forever)</option>
-                <option value="250">250 (week)</option>
-                <option value="1000">1000 (month)</option>
+                <option value="0">0 (forever)</option>
                 <option value="2500">2500 (quarter)</option>
-                <option value="10000">10000 (year)</option>
+                <option value="5000">5000 (half year)</option>
+                <option value="10000" selected>10000 (one year)</option>
+                <option value="20000">20000 (two years)</option>
             </select>
         </td>
         <td>

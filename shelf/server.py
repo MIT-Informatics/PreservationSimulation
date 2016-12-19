@@ -128,7 +128,7 @@ class CServer(object):
         with shorter lifespans.
         """
         lPossibleVictims = CServer.fnlListLiveServerIDs()
-        return lPossibleVictims[0: min(mynHowManyVictims, len(lPossibleVictims)-1)]
+        return lPossibleVictims[0: min(mynHowManyVictims, len(lPossibleVictims))]
 
 # S e r v e r . m C o r r F a i l H a p p e n s T o M e
     @catchex
@@ -144,17 +144,14 @@ class CServer(object):
     @ntracef("SERV")
     def mfGetMyLife(self):
         ''' Return current lifespan number. '''
-        return fCurrentLifespan
+        return self.fCurrentLifespan
 
 # S e r v e r . m R e s c h e d u l e M y L i f e 
     @catchex
     @ntracef("SERV")
     def mRescheduleMyLife(self,mynNewLife):
         ''' Store new lifespan number. '''
-        self.fCurrentLife = mynNewLife
-        #self.oTimer.setdelay(mynNewLife).start()
-        # or something like that
-        pass
+        self.fCurrentLifespan = mynNewLife
 
 # S e r v e r . m l L i s t S h e l v e s 
     @catchex

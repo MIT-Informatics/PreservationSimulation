@@ -21,10 +21,11 @@ class CShock(object):
 
     @catchex
     @ntracef("SHOK")
-    def __init__(self, mynShockHalflife, mynShockSpan, mynShockImpact):
+    def __init__(self, mynShockHalflife, mynShockSpan, mynShockImpact, mynShockMaxlife):
         self.nLife = mynShockHalflife
         self.nSpan = mynShockSpan
         self.nImpact = mynShockImpact
+        self.nMaxlife = mynShockMaxlife
         self.ID = "Z99"
         self.lServersShocked = []
         
@@ -33,20 +34,26 @@ class CShock(object):
         if self.nLife:
             G.env.process(self.mWaitForShockToHappen(self.nLife))
 
+# m W a i t F o r S h o c k T o H a p p e n 
     @catchex
     @ntracef("SHOK")
     def mWaitForShockToHappen(self, mynHalflife):
         ''' Generator that waits Wait for shock event. '''
-        fNewLife = util.makeshocklife(mynHalflife)
-        lg.logInfo("SHOCK", "waiting for shock at |%s|" 
-            % (fNewLife))
-        # Suspend action until shock happens.
-        G.env.timeout(fNewLife)
-        # Shock has happened.
-        lg.logInfo("SHOCK", "t|%6.0f| shock happens" 
-            % (G.env.now))
-        self.mShockHappens()
+        while True:
+            # Schocks happen every so often, not just once.  
+            fNewLife = util.makeshocklife(mynHalflife)
+            lg.logInfo("SHOCK", "t|%6.0f| waiting for shock in|%6.0f| from hl|%s|" 
+                % (G.env.now, fNewLife, mynHalflife))
+            # Suspend action until shock happens.
+            yield G.env.timeout(fNewLife)
+            # Shock has happened.
+            lg.logInfo("SHOCK", "t|%6.0f| shock happens now" 
+                % (G.env.now))
+            self.mShockHappens()
+            NTRC.ntracef(3, "SHOK", "proc t|%6.0f| done shock |%s|, do another" 
+                % (G.env.now, G.nShocksTotal))
 
+# m S h o c k H a p p e n s 
     @catchex
     @ntracef("SHOK")
     def mShockHappens(self):
@@ -54,47 +61,62 @@ class CShock(object):
         Shock has happened.  Shorten server lives and schedule the 
         end of the shock cycle.
         '''
-        self.mReduceSomeServerLifetimes()
-        # TODO: schedule the expiration of the shick
-        G.env.process(self.mWaitForShockToExpire(s))
+        G.nShocksTotal += 1
+        lg.logInfo("SHOCK", "t|%6.0f| start to reduce life of |%s| servers by pct|%s|" 
+            % (G.env.now, self.nSpan, self.nImpact))
+        self.mReduceSomeServerLifetimes(self.nSpan, self.nImpact)
+        # TODO: schedule the expiration of the shock
+        G.env.process(self.mWaitForShockToExpire(self.nMaxlife))
+        return G.env.now
 
+# m R e d u c e S o m e S e r v e r L i f e t i m e s 
     @catchex
     @ntracef("SHOK")
-    def mReduceSomeServerLifetimes(self):
+    def mReduceSomeServerLifetimes(self, mynSpan, mynImpact):
         ''' 
         Find a shockspan-wide subset of servers and reduce their
         expected lifetimes by the stated reduction percentage.
         '''
-        lServersToShock = server.CServer.fnlSelectServerVictims(self.nSpan)
-        fReduction = self.nImpact * 1.0 / 100.0 
-        NTRC.ntracef(3, "SHOK", "proc reduce servers|%s| by pct|%s|" 
+        lServersToShock = server.CServer.fnlSelectServerVictims(mynSpan)
+        fReduction = mynImpact * 1.0 / 100.0 
+        NTRC.ntracef(3, "SHOK", "proc reduce servers|%s| by|%s|" 
             % (lServersToShock, fReduction))
         for sServerID in lServersToShock:
+            lg.logInfo("SHOCK", "t|%6.0f| reduce server|%s| life by pct|%s|" 
+                % (G.env.now, sServerID, self.nImpact))
             self.mReduceSingleServerLifetime(sServerID, fReduction)
+            self.lServersShocked.append(sServerID)
 
+# m R e d u c e S i n g l e S e r v e r L i f e t i m e 
     @catchex
     @ntracef("SHOK")
     def mReduceSingleServerLifetime(self, mysServerID, myfReduction):
         ''' Reduce the lifetime of a single server. '''
-        cServer = G.dId2Server[mysServerID]
+        cServer = G.dID2Server[mysServerID]
         fCurrentLife = cServer.mfGetMyLife()
-        fNewLife = myfReduction * fCurrentLife
+        fNewLife = (1.0 - myfReduction) * fCurrentLife
         NTRC.ntracef(3, "SHOK", "proc shock at t|%8.0f| server|%s| new life|%s|" 
-            % (G.env.now, sServerID, fNewLife))
+            % (G.env.now, mysServerID, fNewLife))
+        lg.logInfo("SHOCK", "t|%6.0f| reducing server|%s| life by|%s| to |%s|" 
+            % (G.env.now, mysServerID, myfReduction, fNewLife))
         cServer.mRescheduleMyLife(fNewLife)
 
+# m W a i t F o r S h o c k T o E x p i r e 
     @catchex
     @ntracef("SHOK")
-    def mWaitForShockToExpire(self):
-        ''' Generator that waits Wait for when the shock cycle expires. '''
-        if self.nSpan:
-            lg.logInfo("SHOCK", "waiting for shock to expire after |%s|" 
-                % (self.nSpan))
-            G.env.timeout(self.nSpan)
-            lg.logInfo("SHOCK", "t|%6.0f| shock expires" 
+    def mWaitForShockToExpire(self, mynMaxlife):
+        ''' Generator that waits Wait for when the shock cycle expires. 
+            If maxlife=0 never expires.
+        '''
+        if mynMaxlife:
+            lg.logInfo("SHOCK", "t|%6.0f| waiting for shock to expire after |%s|" 
+                % (mynMaxlife))
+            yield G.env.timeout(mynMaxlife)
+            lg.logInfo("SHOCK", "t|%6.0f| shock expires now" 
                 % (G.env.now))
             self.mShockExpires()
 
+# m S h o c k E x p i r e s 
     @catchex
     @ntracef("SHOK")
     def mShockExpires(self):
@@ -104,18 +126,23 @@ class CShock(object):
         '''
         pass
 
+# m R e s t o r e S o m e S e r v e r L i f e t i m e s 
     @catchex
     @ntracef("SHOK")
     def mRestoreSomeServerLifetimes(self):
         ''' For all the servers injured by the shock, restore life. '''
+        for sServerID in self.lServersShocked:
+            self.mRestoreSingleServerLifetime(sServerID)
         pass
 
+# m R e s t o r e S i n g l e S e r v e r L i f e t i m e 
     @catchex
     @ntracef("SHOK")
-    def mRestoreSingleServerLifetime(self):
+    def mRestoreSingleServerLifetime(self, mysServerID):
         ''' Restore normal lifetime to a single server. '''
         pass
 
+# m B e f o r e A u d i t 
     @catchex
     @ntracef("SHOK")
     def mBeforeAudit(self):
@@ -125,6 +152,7 @@ class CShock(object):
         '''
         pass
 
+# m A t E n d O f R u n 
     @catchex
     @ntracef("SHOK")
     def mAtEndOfRun(self):
@@ -137,30 +165,21 @@ class CShock(object):
 
 """
 Every server begins with lifetime generated from some overall halflife.
- This is not currently parameterized, hmmm.  It may be acceptable to have
- a param for it in the csv param-param file and not in the CLI.
 After all servers instantiated, main or makethings allocates a Shock with 
  shockfreq param halflife.
 When Shock fires, 
     - choose a subset of servers according to shockspan.
-    - cancel their lifetimes and restart lifetimes of those servers using
-       smaller halflife reduced by shock.
+    - reduce their lifetimes.
 
 Details
 - get shockfreq from globaldata; if zero, skip all this falderal.
 - generate an expo using shockfreq as halflife.
 - wait for that timeout; shock fires.
 - get a subset of servers to schedule death for.
-    -- server classmethod nominate subset: 
+    -- server classmethod to nominate subset: 
         CServer.fnlSelectServerVictims(nHowManyVictims)
 - for each server in the list:
-    - interrupt server's timer. 
-        -- server instance method interrupt timer: cServer.mCorrFailHappensToMe()
-    - generate new random short death time.
-        - calculate new halflife using shockimpact.
-            -- util something random.
-    - change the server's timer deadline and restart the timer.
-        -- instance method reschedule and start: cServer.mRescheduleMyLife(nNewLife)
+    - XXXXXX all the stuff that was here has been superseded.  
 
 When Server Lifetime expires, server loses all docs as usual.
 
@@ -200,12 +219,12 @@ the next audit time, because the death will be noticed then.
 """
 
 
-
-
 # Edit history:
 # 20160411  RBL Begin.
 # 20161121  RBL Describe plan in comments.  Real code to follow.
-# 
+# 20161205  RBL Insert stubs.
+# 21061212  RBL Flesh out most of the stubs.
+# 20161218  RBL Debug, and revise GUI.  Still need to fix CLI->G.
 # 
 
 #END

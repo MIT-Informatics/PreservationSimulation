@@ -58,7 +58,7 @@ def makesomerand(mysDistn, myParam1, myParam2=0):
     if mysDistn == "exponential":
         return makeexpo(myParam1)
     elif mysDistn == "normal":
-        return makenorm(myParam1,myParam2)
+        return makennnorm(myParam1,myParam2)
     elif mysDistn == "uniform":
         return makeunif(myParam1,myParam2)
     else:
