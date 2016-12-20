@@ -519,6 +519,9 @@ Suppose there are only 2 copies of keys. Is the expected document rate due to en
 - servers are subject to glitches of the *financial failure* form -- permanent, total loss
 - What is L*= E(L|KL,N_K)
 - Can this be derived from failure rate of N_S servers with a rate of KL financial failures
+- Also affects repairability
+
+
 ## Format Obsolescence
 
 - can be simulated using reparameterized correlated surver failure model
