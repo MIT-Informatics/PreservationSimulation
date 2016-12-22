@@ -275,6 +275,8 @@ def fndCliParse(mysArglist):
 #               Add economic slump with half-life, impact level, and span.
 #               Fix up some 80-character-ness.
 # 20161215  RBL Add maxlife to shock.  
+#               Add defaultlife to server.
+# 
 # 
 
 # END

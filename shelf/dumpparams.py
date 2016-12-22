@@ -37,7 +37,7 @@ def dumpParamsIntoLog():
         (nQuality,nShelfSize) = G.dServerParams[sServer][0]
         lg.logInfo("PARAMS","SERVER server|%s| quality|%d| shelfsize|%d|TB" 
             % (sServer,nQuality,nShelfSize))
-    lg.logInfo("PARAMS","SERVERDefaultHalflife |%s|" 
+    lg.logInfo("PARAMS","SERVER DefaultHalflife |%s|" 
         % (G.fServerDefaultHalflife))
 
     # S h e l f  params

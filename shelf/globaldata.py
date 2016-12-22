@@ -57,12 +57,12 @@ class ProtoG(object):
     fInfinity = float(1.0E12)   # Infinitely far in the future.
 
     nLifek = 0              # False lifek value in case lifem specified.  
-    fServerDefaultHalflife = 1.0E6
+
+    fServerDefaultHalflife = 0  # How long do servers life if unmolested?
 ############################################TESTING###########################
     #fServerDefaultHalflife = 33333.0
-    fServerDefaultHalflife = 50000     
+    #fServerDefaultHalflife = 50000     
 ########################################END TESTING###########################
-                            # How long do servers life if unmolested?
 
     nGlitchFreq = 0         # Half-life of glitch-free intervals.
     nGlitchImpact = 0       # Percent reduction in sector lifetime.
@@ -180,6 +180,7 @@ class P(object):
     # Length of simulation, in hours.  Default = one year.
     #SIMLENGTH = 100000
     nSimLength = 100000
+    nSimLengthDefault = 100000
 
 
 # To start the gradual transition from using the class object G to 

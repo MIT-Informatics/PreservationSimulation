@@ -172,7 +172,8 @@ class CServer(object):
         for sDocID in lTempDocIDs:
             self.mAddDocument(sDocID,mysClientID)
         self.bInUse = True          # Server now in use
-        self.oTimer.start()         #  and alive, can die.
+        # BZZZT: new mechanism for declaring server death; don't do this. 
+        #self.oTimer.start()         #  and alive, can die.
         return mysCollID
 
 # S e r v e r . m A d d D o c u m e n t 
@@ -224,8 +225,10 @@ class CServer(object):
             Called as needed when a doc arrives too large for available space.  
         '''
         cShelf = CShelf(self.ID,self.nQual,self.nShelfSize)
-        lg.logInfo("SERVER","server |%s| created storage shelf|%s| quality|%s| size|%s|MB" 
-            % (self.ID,cShelf.ID,cShelf.nQual,cShelf.nCapacity))
+        lg.logInfo("SERVER","server |%s| created storage shelf|%s| "
+            "quality|%s| size|%s|MB svrlife|%.0f|" 
+            % (self.ID, cShelf.ID, cShelf.nQual, cShelf.nCapacity, 
+            self.mfGetMyLife()))
         return cShelf.ID
 
 # S e r v e r . m D e s t r o y C o p y 
