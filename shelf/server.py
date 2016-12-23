@@ -139,12 +139,26 @@ class CServer(object):
             cShelf.mCorrFailHappensToMe()
         self.oTimer.stop()
 
+# S e r v e r . m f G e t O r i g i n a l M y L i f e
+    @catchex
+    @ntracef("SERV")
+    def mfGetMyOriginalLife(self):
+        ''' Return original lifespan number. '''
+        return self.fOriginalLifespan
+
+# S e r v e r . m f G e t M y C u r r e n t L i f e
+    @catchex
+    @ntracef("SERV")
+    def mfGetMyCurrentLife(self):
+        ''' Return current lifespan number. '''
+        return self.fCurrentLifespan
+
 # S e r v e r . m f G e t M y L i f e
     @catchex
     @ntracef("SERV")
     def mfGetMyLife(self):
         ''' Return current lifespan number. '''
-        return self.fCurrentLifespan
+        return self.mfGetMyCurrentLife()
 
 # S e r v e r . m R e s c h e d u l e M y L i f e 
     @catchex
@@ -356,6 +370,7 @@ def fnTimerInt(objTimer,xContext):
 #                when timer expires.
 #               And ensure that all documents report lost if server dead.  
 # 20161205  RBL Add getter routine for lifetime.  
+# 20161222  RBL Add routines to get current and original lifetimes.  
 # 
 # 
 

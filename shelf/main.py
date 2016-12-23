@@ -312,6 +312,8 @@ def mainmain():
     G.tWallLen = tWallEnd - tWallBegin
     NTRC.ntracef(0,"MAIN","proc End time stats: wall|%8.3f| cpu|%s|" 
         % (G.tWallLen,G.tSimCpuLen))
+    NTRC.ntracef(0,"MAIN","ENDENDEND" 
+        % ())
 
 # ----------------------------------------------------------
 # If this is the main program, run it now.  

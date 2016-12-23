@@ -27,7 +27,7 @@ class CShock(object):
         self.nImpact = mynShockImpact
         self.nMaxlife = mynShockMaxlife
         self.ID = "Z99"
-        self.lServersShocked = []
+        self.lsServersShocked = []
         
         # If there is to be any shockin' 'round here, start it.  
         #  Otherwise, nothing.
@@ -47,11 +47,19 @@ class CShock(object):
             # Suspend action until shock happens.
             yield G.env.timeout(fNewLife)
             # Shock has happened.
-            lg.logInfo("SHOCK", "t|%6.0f| shock happens now" 
-                % (G.env.now))
+            lg.logInfo("SHOCK", "t|%6.0f| shock happens now, maxlife|%s|" 
+                % (G.env.now, self.nMaxlife))
             self.mShockHappens()
-            NTRC.ntracef(3, "SHOK", "proc t|%6.0f| done shock |%s|, do another" 
-                % (G.env.now, G.nShocksTotal))
+            # If maxlife nonzero, then wait and expire shock;
+            #  else, never expires, so wait forever and don't 
+            #  start another shock cycle.
+            if self.nMaxlife > 0:
+                lg.logInfo("SHOCK", "t|%6.0f| waiting for shock to expire in|%6.0f|" 
+                    % (G.env.now, self.nMaxlife))
+                yield G.env.timeout(self.nMaxlife)
+                self.mShockExpires()
+            else:
+                yield G.env.timeout(G.fInfinity)
 
 # m S h o c k H a p p e n s 
     @catchex
@@ -65,8 +73,6 @@ class CShock(object):
         lg.logInfo("SHOCK", "t|%6.0f| start to reduce life of |%s| servers by pct|%s|" 
             % (G.env.now, self.nSpan, self.nImpact))
         self.mReduceSomeServerLifetimes(self.nSpan, self.nImpact)
-        # TODO: schedule the expiration of the shock
-        G.env.process(self.mWaitForShockToExpire(self.nMaxlife))
         return G.env.now
 
 # m R e d u c e S o m e S e r v e r L i f e t i m e s 
@@ -85,7 +91,7 @@ class CShock(object):
             lg.logInfo("SHOCK", "t|%6.0f| reduce server|%s| life by pct|%s|" 
                 % (G.env.now, sServerID, self.nImpact))
             self.mReduceSingleServerLifetime(sServerID, fReduction)
-            self.lServersShocked.append(sServerID)
+            self.lsServersShocked.append(sServerID)
 
 # m R e d u c e S i n g l e S e r v e r L i f e t i m e 
     @catchex
@@ -93,28 +99,13 @@ class CShock(object):
     def mReduceSingleServerLifetime(self, mysServerID, myfReduction):
         ''' Reduce the lifetime of a single server. '''
         cServer = G.dID2Server[mysServerID]
-        fCurrentLife = cServer.mfGetMyLife()
+        fCurrentLife = cServer.mfGetMyCurrentLife()
         fNewLife = (1.0 - myfReduction) * fCurrentLife
         NTRC.ntracef(3, "SHOK", "proc shock at t|%8.0f| server|%s| new life|%s|" 
             % (G.env.now, mysServerID, fNewLife))
         lg.logInfo("SHOCK", "t|%6.0f| reducing server|%s| life by|%s| to |%s|" 
             % (G.env.now, mysServerID, myfReduction, fNewLife))
         cServer.mRescheduleMyLife(fNewLife)
-
-# m W a i t F o r S h o c k T o E x p i r e 
-    @catchex
-    @ntracef("SHOK")
-    def mWaitForShockToExpire(self, mynMaxlife):
-        ''' Generator that waits Wait for when the shock cycle expires. 
-            If maxlife=0 never expires.
-        '''
-        if mynMaxlife:
-            lg.logInfo("SHOCK", "t|%6.0f| waiting for shock to expire after |%s|" 
-                % (mynMaxlife))
-            yield G.env.timeout(mynMaxlife)
-            lg.logInfo("SHOCK", "t|%6.0f| shock expires now" 
-                % (G.env.now))
-            self.mShockExpires()
 
 # m S h o c k E x p i r e s 
     @catchex
@@ -124,23 +115,27 @@ class CShock(object):
         The shock has expired.  Restore normal lifetimes for
         all the servers that were injured by the shock.
         '''
-        pass
+        self.mRestoreSomeServerLifetimes()
 
 # m R e s t o r e S o m e S e r v e r L i f e t i m e s 
     @catchex
     @ntracef("SHOK")
     def mRestoreSomeServerLifetimes(self):
         ''' For all the servers injured by the shock, restore life. '''
-        for sServerID in self.lServersShocked:
+        for sServerID in self.lsServersShocked:
             self.mRestoreSingleServerLifetime(sServerID)
-        pass
+        self.lsServersShocked = []
 
 # m R e s t o r e S i n g l e S e r v e r L i f e t i m e 
     @catchex
     @ntracef("SHOK")
     def mRestoreSingleServerLifetime(self, mysServerID):
         ''' Restore normal lifetime to a single server. '''
-        pass
+        cServer = G.dID2Server[mysServerID]
+        fOriginalLifespan = cServer.mfGetMyOriginalLife()
+        lg.logInfo("SHOCK", "t|%6.0f| restoring server|%s| life to |%s|" 
+            % (G.env.now, mysServerID, fOriginalLifespan))
+        cServer.mRescheduleMyLife(fOriginalLifespan)
 
 # m B e f o r e A u d i t 
     @catchex
@@ -148,7 +143,7 @@ class CShock(object):
     def mBeforeAudit(self):
         '''
         Before each audit cycle, check to see if any servers
-        have exceeded their lifetimes.
+         have exceeded their lifetimes.
         '''
         pass
 
@@ -158,7 +153,9 @@ class CShock(object):
     def mAtEndOfRun(self):
         '''
         At end of run, check to see if any servers have exceeded
-        their lifetimes.  
+         their lifetimes.  It is possible for servers to die from
+         shocks even if there is no auditing, and that counts
+         because we evaluate every doc at the end of run.
         '''
         pass
 
@@ -225,6 +222,12 @@ the next audit time, because the death will be noticed then.
 # 20161205  RBL Insert stubs.
 # 21061212  RBL Flesh out most of the stubs.
 # 20161218  RBL Debug, and revise GUI.  Still need to fix CLI->G.
+# 20161222  RBL Simplify (and correct) shock expiration.  
+#                Limitation: cannot start shock2 while shock1 is
+#                still in progress.  Not too serious, but maybe
+#                noticeable to some.
+#               Make sure that reducing and restoring lifetime works.
+# 
 # 
 
 #END

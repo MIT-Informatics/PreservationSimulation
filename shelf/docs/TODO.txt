@@ -2,26 +2,33 @@ TODO list for PreservationSimulation SHELF project
 
 
 TODO: shock
-FIXME - add server default lifespan to param files and CLI, zero = infinite.
+DONE - add server default lifespan to param files and CLI, zero = infinite.
 DONE - server default lifespan is random, not fixed.  currently expo.
-MAYBE: add server default lifespan to main CLI and broker.
+DONE add server default lifespan to main CLI and broker.
 FIXME - code shock methods for real not just pseudocode.  new style, at audit.
-FIXME - test shock rescheduling server death.  
+DONE - test shock rescheduling server death.  
 WRONG - server death after shock is after now, not absolute, right?
 FIXME - shock reduces server life by pct. shock duration finite.  after shock
     expires, server life returns to normal if not already dead.  
 FIXME - select reasonable ranges of shock impacts.  
 FIXME - server death evaluated before every audit cycle and at end of run.  
+FIXME - if server is dead when shock expires, do not try to restore life.
+FIXME - watch out for server lifetime zero (=infinite) when assessing
+        server live/dead at audit and end of run.  
 
 
 TODO: web interface to select instructions for broker run
 WRONG - learn kivy and remi, decide which to use.
 DONE - build static web interface to permit choosing instructions for 
   a single run.
-FIXME - add server default halflife to web interface and CLI.
+DONE - add server default halflife to web interface and CLI.
 FIXME - build static web interface to permit choosing subset instructions 
     for group run by broker.
 FIXME - build backend for interface that generates broker.py command.
+
+
+TODO: newtrace
+MAYBE - for trace level zero, do not check facility codes.
 
 
 TODO: extractvalues.py

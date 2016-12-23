@@ -68,11 +68,12 @@ def dumpParamsIntoLog():
         G.fGlitchIgnoreLimit))
 
     # S h o c k   params.
-    lg.logInfo("PARAMS","SHOCKS freq|%d| impact|%d| span|%d| " 
-        % (G.nShockFreq, G.nShockImpact, G.nShockSpan ))
+    lg.logInfo("PARAMS","SHOCKS freq|%d| impact|%d| span|%d| maxlife|%s|" 
+        % (G.nShockFreq, G.nShockImpact, G.nShockSpan, G.nShockMaxlife ))
 
 # Edit History:
 # 20160920  RBL Move these routines out of main.py.
+# 20161222  RBL Add maxlife to shock param output.
 # 
 # 
 
