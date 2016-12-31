@@ -113,6 +113,7 @@ import getcliargs
 import dumpparams
 import dumpuse
 import makethings
+from shock import CShock
 
 
 #-----------------------------------------------------------
@@ -187,6 +188,7 @@ New philosophy on run parameters.
 
 '''
 
+@ntracef("MAIN")
 def main():
 
     NTRC.ntracef(0,"MAIN","proc Document Preservation simulation " 
@@ -271,6 +273,8 @@ def main():
         G.bDoNotLogInfo = True
     tSimBegin = clock()
     env.run(until=G.nSimLength if G.nSimLength > 0 else G.nSimLengthDefault)
+
+    CShock.cmAtEndOfRun()
     tSimEnd = clock()
     G.bDoNotLogInfo = False
     G.tSimCpuLen = tSimEnd - tSimBegin
@@ -283,7 +287,7 @@ def main():
         % (G.nServerLastID,G.nClientLastID,G.nCopyLastID))
     lg.logInfo("MAIN","end run, simulated time|%d|" % (env.now))
 
-
+@ntracef("MAIN")
 def evaluate():
     ''' Assess the damage to the collection(s) during the run.  
         Audit all the docs and see if any have been permanently lost.  
@@ -294,6 +298,7 @@ def evaluate():
 
 
 ##########################################################
+@ntracef("MAIN")
 def mainmain():
     tWallBegin = time()
     

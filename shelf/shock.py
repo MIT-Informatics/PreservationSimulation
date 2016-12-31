@@ -137,27 +137,47 @@ class CShock(object):
             % (G.env.now, mysServerID, fOriginalLifespan))
         cServer.mRescheduleMyLife(fOriginalLifespan)
 
-# m B e f o r e A u d i t 
+# c m B e f o r e A u d i t 
+    @classmethod
     @catchex
     @ntracef("SHOK")
-    def mBeforeAudit(self):
+    def cmBeforeAudit(self):
         '''
         Before each audit cycle, check to see if any servers
          have exceeded their lifetimes.
         '''
-        pass
+        for (sServerID, cServer) in G.dID2Server.items():
+            fCurrentLife = cServer.mfGetMyCurrentLife()
+            lg.logInfo("SHOCK", "t|%6.0f| audit+end checking server|%s| life|%s|" 
+                % (G.env.now, sServerID, fCurrentLife))
+            NTRC.ntracef(3, "SHOK", "proc t|%6.0f| check expir? svr|%s| "
+                "svrdefaulthalflife|%s| currlife|%s|" 
+                % (G.env.now, sServerID, G.fServerDefaultHalflife, fCurrentLife))
+            if (G.fServerDefaultHalflife > 0
+                and fCurrentLife > 0
+                and fCurrentLife <= G.env.now
+                ):
+                lg.logInfo("SHOCK", "t|%6.0f| kill server|%s| life|%s| expired" 
+                    % (G.env.now, sServerID, fCurrentLife))
+                NTRC.ntracef(3, "SHOK", "proc t|%6.0f| expired svr|%s| "
+                    "svrdefaulthalflife|%s| currlife|%s|" 
+                    % (G.env.now, sServerID, G.fServerDefaultHalflife, fCurrentLife))
+                cServer.mKillServer()
 
-# m A t E n d O f R u n 
+# c m A t E n d O f R u n 
+    @classmethod
     @catchex
     @ntracef("SHOK")
-    def mAtEndOfRun(self):
+    def cmAtEndOfRun(self):
         '''
         At end of run, check to see if any servers have exceeded
          their lifetimes.  It is possible for servers to die from
          shocks even if there is no auditing, and that counts
          because we evaluate every doc at the end of run.
         '''
-        pass
+        lg.logInfo("SHOCK", "t|%6.0f| end of run checking all server lifetimes" 
+            % (G.env.now))
+        CShock.cmBeforeAudit()
 
 
 """
@@ -211,6 +231,28 @@ shock end date.
 to their original values.  Doesn't matter if the value is now less than 
 the next audit time, because the death will be noticed then.  
 
+Before each audit and at end of run, check for servers that might have
+died in the meantime.  
+- Servers may have finite lifetimes even if there are no shocks during
+the run.  Check for servers with expired lifetimes at end of run.
+- Servers may die from aging even if there is no shock, of course, 
+just from having bad genes (a short random lifetime).  
+- Server deaths from aging are not detected until the next audit cycle 
+or the end of the run.  Deaths are always silent.  Deaths occur even if
+there is no auditing. 
+- Be careful with servers that have zero lifetimes or if default 
+server lifetime is zero.  There is no server aging in that case, 
+which was always the normal case previously.  
+- If a server's lifetime has expired, declare the server to be dead, 
+using at least CServer.mKillServer.
+- Server is dead if its lifetime is <= now
+and its lifetime is > 0
+and server default life is > 0
+(probably change the order of evaluation for efficiency).
+- Do I need to do anything else to kill a server?
+- Ignore anything that happens between the time that the 
+server *should* die and the time it is actually detected
+during the next audit cycle or at end of run.  
 
 
 """
@@ -227,7 +269,8 @@ the next audit time, because the death will be noticed then.
 #                still in progress.  Not too serious, but maybe
 #                noticeable to some.
 #               Make sure that reducing and restoring lifetime works.
-# 
+# 20161224  RBL Flesh out audit and end routines to check for server
+#                lifetime expirations.  
 # 
 
 #END
