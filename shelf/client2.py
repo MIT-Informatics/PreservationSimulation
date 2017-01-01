@@ -75,7 +75,7 @@ class CClient(object):
             NTRC.ntracef(3,"SHOW","proc mPlaceCollection2 client|%s| send coll|%s| to server|%s|" % (self.ID,mysCollID,sServerID))
             
             # Send copy of collection to server.
-            self.mPlaceCollectionOnServer(mysCollID, sServerID)
+            nDocs = self.mPlaceCollectionOnServer(mysCollID, sServerID)
 
         # Initialize the auditing process for this collection.
         if G.nAuditCycleInterval > 0:
@@ -120,12 +120,12 @@ class CClient(object):
     def mPlaceCollectionOnServer(self, mysCollID, mysServerID):
         # Send copy of collection to server.
         cServer = G.dID2Server[mysServerID]
-        cServer.mAddCollection(mysCollID,self.ID)
+        nDocs = cServer.mAddCollection(mysCollID,self.ID)
         # Record that this server has a copy of this collection.
         cColl = G.dID2Collection[mysCollID]
         cColl.lServerIDs.append(mysServerID)
         lg.logInfo("CLIENT","client|%s| placed collection|%s| to server|%s|" % (self.ID,mysCollID,mysServerID))
-        return
+        return nDocs
 
 # C l i e n t . m T e s t C l i e n t 
     @catchex
@@ -184,9 +184,9 @@ class CClient(object):
         # set of servers in the select-for-collection routine.
         sServerToUse = lServersForCollection.pop(0)
         lg.logInfo("CLIENT", "client|%s| assign new server|%s| to replace|%s|" % (self.ID, sServerToUse, mysServerID))
-        self.mPlaceCollectionOnServer(mysCollID, sServerToUse)
-        lg.logInfo("CLIENT", "client|%s| provisioned new server|%s| collection|%s|" 
-            % (self.ID, sServerToUse, mysCollID))
+        nDocs = self.mPlaceCollectionOnServer(mysCollID, sServerToUse)
+        lg.logInfo("CLIENT", "client|%s| provisioned new server|%s| collection|%s| docs|%s|" 
+            % (self.ID, sServerToUse, mysCollID, nDocs))
         self.nServerReplacements += 1
         return sServerToUse
 
@@ -202,6 +202,8 @@ class CClient(object):
 #                Remove dead server from list, get a new one, repopulate.  
 # 20150812  RBL Move CDocument and CCollection classes to their own files.  
 # 20161231  RBL Log reprovisioning of new server.
+# 20170101  RBL Add count of collection docs to provisioning report.  
+# 
 # 
 # 
 

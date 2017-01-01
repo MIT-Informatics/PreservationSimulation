@@ -189,7 +189,7 @@ class CServer(object):
         self.bInUse = True          # Server now in use
         # BZZZT: new mechanism for declaring server death; don't do this. 
         #self.oTimer.start()         #  and alive, can die.
-        return mysCollID
+        return len(lTempDocIDs)
 
 # S e r v e r . m A d d D o c u m e n t 
     @catchex
@@ -375,7 +375,9 @@ def fnTimerInt(objTimer,xContext):
 # 20161231  RBL When killing a server, add to the dead server list.
 #               BZZZT: When adding a collection, be careful only to add
 #                the documents that still exist.  Use Collection's
-#                ListDocumentsRemaining method.  
+#                ListDocumentsRemaining method.  `
+# 20170101  RBL Return number of docs when placing collection. 
+# 
 # 
 
 #END

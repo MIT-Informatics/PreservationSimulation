@@ -156,15 +156,22 @@ class CShock(object):
         nDeadServers = 0
         for (sServerID, cServer) in G.dID2Server.items():
             fCurrentLife = cServer.mfGetMyCurrentLife()
-            lg.logInfo("SHOCK", "t|%6.0f| audit+end checking server|%s| life|%.0f|" 
-                % (G.env.now, sServerID, fCurrentLife))
+            bServerAlive = not cServer.mbIsServerDead()
+
+            if bServerAlive:
+                lg.logInfo("SHOCK", "t|%6.0f| audit+end checking server|%s| life|%.0f|" 
+                    % (G.env.now, sServerID, fCurrentLife))
+            else:
+                lg.logInfo("SHOCK", "t|%6.0f| audit+end checking server|%s| life|%.0f| dead" 
+                    % (G.env.now, sServerID, fCurrentLife))
             NTRC.ntracef(3, "SHOK", "proc t|%6.0f| check expir? svr|%s| "
                 "svrdefaulthalflife|%s| currlife|%s|" 
                 % (G.env.now, sServerID, G.fServerDefaultHalflife, fCurrentLife))
+
             if (G.fServerDefaultHalflife > 0
                 and fCurrentLife > 0
                 and fCurrentLife <= G.env.now
-                and not cServer.mbIsServerDead()
+                and bServerAlive
                 ):
                 lg.logInfo("SHOCK", "t|%6.0f| kill server|%s| life|%.0f| expired" 
                     % (G.env.now, sServerID, fCurrentLife))
