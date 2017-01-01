@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # audit2.py
-#
+# This is the meanest, nastiest, ugliest, most convoluted code 
+#  in the entire project.  See below for excuses and apologies.  
 
 '''\
 See commentary at end about actual algorithms. 
@@ -13,6 +14,7 @@ from    NewTraceFac     import  TRC, trace, tracef, NTRC, ntrace, ntracef
 import  math
 import  collections     as cc
 from    catchex         import  catchex
+from    shock           import  CShock
 
 
 #===========================================================
@@ -167,6 +169,11 @@ class CAudit2(object):
             # And restart the duration clock after the unproductive wait.
             fTimeCycleBegin = G.env.now
             # So much for timekeeping.  Now do some actual work.
+
+            # P h a s e  0: Check to see if any servers have died of old age, 
+            #  possibly from being weakened by shock.  If so, they get killed
+            #  now so that this audit segment will discover the loss.  
+            nResult = CShock.cmBeforeAudit()
 
             # P h a s e  1: Check servers for copies of docs, record losses.
             # Docs already permanently lost will not be put on the damaged list.
@@ -905,6 +912,9 @@ TODO (x=done):
 #                and uglier than its previous pathetic state.
 #               Improve slightly loop that informs clients of dead servers.
 #               Also, consider factoring out Phase 2 of AuditSegment.
+# 20161231  RBL Call CShock routine to check for dead servers before each 
+#                segment of audit.
+# 
 # 
 
 #END

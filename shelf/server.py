@@ -71,6 +71,7 @@ class CServer(object):
     @ntracef("SERV")
     def mKillServer(self):
         self.bDead = True
+        G.lDeadServers.append(self.ID)
 
 # S e r v e r . m b I s S e r v e r D e a d 
     @catchex
@@ -182,7 +183,7 @@ class CServer(object):
         self.sCollectionID = mysCollID
         lTempDocIDs = list()
         cCollection = G.dID2Collection[mysCollID]
-        lTempDocIDs = cCollection.mListDocuments()
+        lTempDocIDs = cCollection.mListDocumentsRemaining()
         for sDocID in lTempDocIDs:
             self.mAddDocument(sDocID,mysClientID)
         self.bInUse = True          # Server now in use
@@ -371,7 +372,10 @@ def fnTimerInt(objTimer,xContext):
 #               And ensure that all documents report lost if server dead.  
 # 20161205  RBL Add getter routine for lifetime.  
 # 20161222  RBL Add routines to get current and original lifetimes.  
-# 
+# 20161231  RBL When killing a server, add to the dead server list.
+#               BZZZT: When adding a collection, be careful only to add
+#                the documents that still exist.  Use Collection's
+#                ListDocumentsRemaining method.  
 # 
 
 #END

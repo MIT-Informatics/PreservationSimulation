@@ -185,7 +185,10 @@ class CClient(object):
         sServerToUse = lServersForCollection.pop(0)
         lg.logInfo("CLIENT", "client|%s| assign new server|%s| to replace|%s|" % (self.ID, sServerToUse, mysServerID))
         self.mPlaceCollectionOnServer(mysCollID, sServerToUse)
+        lg.logInfo("CLIENT", "client|%s| provisioned new server|%s| collection|%s|" 
+            % (self.ID, sServerToUse, mysCollID))
         self.nServerReplacements += 1
+        return sServerToUse
 
 
 # Edit History (recent, anyway): 
@@ -198,6 +201,8 @@ class CClient(object):
 #                Refactor placing collection onto server.  
 #                Remove dead server from list, get a new one, repopulate.  
 # 20150812  RBL Move CDocument and CCollection classes to their own files.  
+# 20161231  RBL Log reprovisioning of new server.
+# 
 # 
 
 # END

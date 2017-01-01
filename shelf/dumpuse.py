@@ -6,7 +6,7 @@
 from NewTraceFac import NTRC,ntrace,ntracef
 import logoutput as lg
 from globaldata import G,P
-
+import util
 
     
 #-----------------------------------------------------------
@@ -17,7 +17,7 @@ def dumpServerUseStats():
         cShelf = G.dID2Shelf[sKey]
         # Get vector of stats.
         (sID,sServerID,nQual,fExpolife,nCapacity,nHiWater,nCurrentUse) = cShelf.mReportUseStats()
-        lg.logInfo("MAIN","SERVERUSE shelf|%s-%s| qual|%d| expolife|%s| size|%d| hiwater|%d| currentuse|%d| full%%|%d|" % (sServerID,sID,nQual,fExpolife,nCapacity,nHiWater,nCurrentUse,100*nCurrentUse/nCapacity))
+        lg.logInfo("MAIN","SERVERUSE shelf|%s-%s| qual|%d| expolife|%.0f| size|%d| hiwater|%d| currentuse|%d| full%%|%d|" % (sServerID,sID,nQual,fExpolife,nCapacity,nHiWater,nCurrentUse,100*nCurrentUse/nCapacity))
     return sServerID+"+"+sID
 
 # d u m p S e r v e r E r r o r S t a t s 
@@ -34,7 +34,12 @@ def dumpServerErrorStats():
         TnEmptyHits     += nEmptyHits
         TnAboveHiWater  += nAboveHiWater
         TnMultipleHits  += nMultipleHits
-    lg.logInfo("MAIN","SERVERERRTOTALS totalhits|%d| abovehiwater|%d| nonempty|%d| empty|%d| multiples|%d|" % (TnHits,TnAboveHiWater,(TnHits-TnEmptyHits),TnEmptyHits,TnMultipleHits))
+    lg.logInfo("MAIN","SERVERERRTOTALS totalhits|%d| abovehiwater|%d| "
+        "nonempty|%d| empty|%d| multiples|%d|" 
+        % (TnHits, TnAboveHiWater, (TnHits-TnEmptyHits), TnEmptyHits, 
+        TnMultipleHits))
+    lg.logInfo("MAIN","DEADSERVERS RIP n|%d|, |%s|" 
+        % (len(G.lDeadServers), util.fnlSortIDList(G.lDeadServers)))
     return sServerID+"+"+sID
 
 # d u m p A u d i t S t a t s 
@@ -107,7 +112,7 @@ def dumpCollectionStats(mysCollID):
 
 # Edit History:
 # 20160920  RBL Move these routines out of main.py.
-# 
+# 20161231  RBL Add list of dead servers to report.  
 # 
 # 
 

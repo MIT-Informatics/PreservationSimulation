@@ -63,6 +63,8 @@ class ProtoG(object):
     #fServerDefaultHalflife = 33333.0
     #fServerDefaultHalflife = 50000     
 ########################################END TESTING###########################
+    lDeadServers = []       # List of servers that died this run, 
+                            #  from old age or shock or glitch.  
 
     nGlitchFreq = 0         # Half-life of glitch-free intervals.
     nGlitchImpact = 0       # Percent reduction in sector lifetime.
@@ -207,6 +209,7 @@ G = CG()
 # 2014xxxx  RBL Original version, and many enhancements since then, 
 #                not, regrettably, recorded for posterity.  
 # 20161118  RBL Add a default lifespan for servers.  
+# 20161231  RBL Add list of dead servers for reporting.  
 # 
 # 
 

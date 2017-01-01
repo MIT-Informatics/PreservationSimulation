@@ -54,7 +54,7 @@ class CShock(object):
             #  else, never expires, so wait forever and don't 
             #  start another shock cycle.
             if self.nMaxlife > 0:
-                lg.logInfo("SHOCK", "t|%6.0f| waiting for shock to expire in|%6.0f|" 
+                lg.logInfo("SHOCK", "t|%6.0f| waiting for shock to expire in|%.0f|" 
                     % (G.env.now, self.nMaxlife))
                 yield G.env.timeout(self.nMaxlife)
                 self.mShockExpires()
@@ -101,9 +101,9 @@ class CShock(object):
         cServer = G.dID2Server[mysServerID]
         fCurrentLife = cServer.mfGetMyCurrentLife()
         fNewLife = (1.0 - myfReduction) * fCurrentLife
-        NTRC.ntracef(3, "SHOK", "proc shock at t|%8.0f| server|%s| new life|%s|" 
+        NTRC.ntracef(3, "SHOK", "proc shock at t|%8.0f| server|%s| new life|%.0f|" 
             % (G.env.now, mysServerID, fNewLife))
-        lg.logInfo("SHOCK", "t|%6.0f| reducing server|%s| life by|%s| to |%s|" 
+        lg.logInfo("SHOCK", "t|%6.0f| reducing server|%s| life by|%s| to |%.0f|" 
             % (G.env.now, mysServerID, myfReduction, fNewLife))
         cServer.mRescheduleMyLife(fNewLife)
 
@@ -122,6 +122,8 @@ class CShock(object):
     @ntracef("SHOK")
     def mRestoreSomeServerLifetimes(self):
         ''' For all the servers injured by the shock, restore life. '''
+        lg.logInfo("SHOCK", "t|%6.0f| restoring server lifetimes for ids|%s|" 
+            % (G.env.now, self.lsServersShocked))
         for sServerID in self.lsServersShocked:
             self.mRestoreSingleServerLifetime(sServerID)
         self.lsServersShocked = []
@@ -132,10 +134,15 @@ class CShock(object):
     def mRestoreSingleServerLifetime(self, mysServerID):
         ''' Restore normal lifetime to a single server. '''
         cServer = G.dID2Server[mysServerID]
-        fOriginalLifespan = cServer.mfGetMyOriginalLife()
-        lg.logInfo("SHOCK", "t|%6.0f| restoring server|%s| life to |%s|" 
-            % (G.env.now, mysServerID, fOriginalLifespan))
-        cServer.mRescheduleMyLife(fOriginalLifespan)
+        if cServer.mbIsServerDead():
+            lg.logInfo("SHOCK", "t|%6.0f| cannot restore dead server|%s| life" 
+                % (G.env.now, mysServerID))
+        else:
+            fOriginalLifespan = cServer.mfGetMyOriginalLife()
+            lg.logInfo("SHOCK", "t|%6.0f| restoring server|%s| life to |%.0f|" 
+                % (G.env.now, mysServerID, fOriginalLifespan))
+            cServer.mRescheduleMyLife(fOriginalLifespan)
+        return mysServerID
 
 # c m B e f o r e A u d i t 
     @classmethod
@@ -146,9 +153,10 @@ class CShock(object):
         Before each audit cycle, check to see if any servers
          have exceeded their lifetimes.
         '''
+        nDeadServers = 0
         for (sServerID, cServer) in G.dID2Server.items():
             fCurrentLife = cServer.mfGetMyCurrentLife()
-            lg.logInfo("SHOCK", "t|%6.0f| audit+end checking server|%s| life|%s|" 
+            lg.logInfo("SHOCK", "t|%6.0f| audit+end checking server|%s| life|%.0f|" 
                 % (G.env.now, sServerID, fCurrentLife))
             NTRC.ntracef(3, "SHOK", "proc t|%6.0f| check expir? svr|%s| "
                 "svrdefaulthalflife|%s| currlife|%s|" 
@@ -156,13 +164,16 @@ class CShock(object):
             if (G.fServerDefaultHalflife > 0
                 and fCurrentLife > 0
                 and fCurrentLife <= G.env.now
+                and not cServer.mbIsServerDead()
                 ):
-                lg.logInfo("SHOCK", "t|%6.0f| kill server|%s| life|%s| expired" 
+                lg.logInfo("SHOCK", "t|%6.0f| kill server|%s| life|%.0f| expired" 
                     % (G.env.now, sServerID, fCurrentLife))
                 NTRC.ntracef(3, "SHOK", "proc t|%6.0f| expired svr|%s| "
-                    "svrdefaulthalflife|%s| currlife|%s|" 
+                    "svrdefaulthalflife|%s| currlife|%.0f|" 
                     % (G.env.now, sServerID, G.fServerDefaultHalflife, fCurrentLife))
                 cServer.mKillServer()
+                nDeadServers += 1
+        return nDeadServers
 
 # c m A t E n d O f R u n 
     @classmethod
@@ -177,7 +188,7 @@ class CShock(object):
         '''
         lg.logInfo("SHOCK", "t|%6.0f| end of run checking all server lifetimes" 
             % (G.env.now))
-        CShock.cmBeforeAudit()
+        nResult = CShock.cmBeforeAudit()
 
 
 """
@@ -271,6 +282,9 @@ during the next audit cycle or at end of run.
 #               Make sure that reducing and restoring lifetime works.
 # 20161224  RBL Flesh out audit and end routines to check for server
 #                lifetime expirations.  
+# 20161231  RBL If server is already dead, don't kill it again and 
+#                don't try to restore its lifetime to normal.  
+# 
 # 
 
 #END
