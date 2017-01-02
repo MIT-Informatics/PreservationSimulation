@@ -72,6 +72,9 @@ class CServer(object):
     def mKillServer(self):
         self.bDead = True
         G.lDeadServers.append(self.ID)
+        for sShelfID in self.lShelfIDs:
+            cShelf = G.dID2Shelf[sShelfID]
+            cShelf.mKillShelf()
 
 # S e r v e r . m b I s S e r v e r D e a d 
     @catchex

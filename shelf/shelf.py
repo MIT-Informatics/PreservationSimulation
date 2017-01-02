@@ -374,6 +374,14 @@ class CShelf(object):
         '''
         return (self.ID,self.sServerID,self.nQual,self.nSectorHits,self.nEmptySectorHits,self.bAlive,self.nHitsAboveHiWater,self.nMultipleHits)
 
+# S h e l f . m K i l l S h e l f 
+    def mKillShelf(self):
+        ''' Declare shelf el croako and empty it of documents. '''
+        lg.logInfo("SHELF ", "t|%6.0f| kill storage shelf|%s| of server|%s|" 
+            % (G.env.now, self.ID, self.sServerID))
+        self.bAlive = False
+        self.mDestroyShelf()
+
 # S h e l f . m D e s t r o y S h e l f 
     @catchex
     @tracef("SHLF")
@@ -381,7 +389,10 @@ class CShelf(object):
         ''' Nuke all the copies on the shelf.  
             Can't delete the CShelf object, however.
         '''
-        NTRC.ntracef(3,"SHLF","proc mDestroyShelf1 shelf|%s| has ncopies|%s|" % (self.ID, len(self.lCopyIDs)))
+        NTRC.ntracef(3,"SHLF","proc mDestroyShelf1 shelf|%s| has ncopies|%s|" 
+            % (self.ID, len(self.lCopyIDs)))
+        lg.logInfo("SHELF ","t|%6.0f| destroy shelf|%s| of svr|%s| ncopies|%s|" 
+            % (G.env.now, self.ID, self.sServerID, len(self.lCopyIDs)))
         lAllCopyIDs = self.lCopyIDs[:]  # DANGER: list modified inside loop, deepcopy
         for sCopyID in lAllCopyIDs:
                 self.mDestroyCopy(sCopyID)

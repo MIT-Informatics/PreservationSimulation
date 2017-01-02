@@ -59,7 +59,7 @@ class CClient(object):
         Send the collection to each server in turn.  
         '''
         cColl = G.dID2Collection[mysCollID]
-        nCollValue = cColl.nValue
+        nCollValue = cColl.nValue   # Yes, bad, reaching into the colletion's knickers.
         lServersForCollection = self.mSelectServersForCollection(nCollValue)
         # The distribution params have already limited the 
         # set of servers in the select-for-collection routine.
@@ -183,9 +183,10 @@ class CClient(object):
         # The distribution params have already limited the 
         # set of servers in the select-for-collection routine.
         sServerToUse = lServersForCollection.pop(0)
-        lg.logInfo("CLIENT", "client|%s| assign new server|%s| to replace|%s|" % (self.ID, sServerToUse, mysServerID))
+        lg.logInfo("CLIENT", "client|%s| assign new server|%s| to replace|%s|" 
+            % (self.ID, sServerToUse, mysServerID))
         nDocs = self.mPlaceCollectionOnServer(mysCollID, sServerToUse)
-        lg.logInfo("CLIENT", "client|%s| provisioned new server|%s| collection|%s| docs|%s|" 
+        lg.logInfo("CLIENT", "client|%s| provisioned new server|%s| collection|%s| ndocs|%s|" 
             % (self.ID, sServerToUse, mysCollID, nDocs))
         self.nServerReplacements += 1
         return sServerToUse
