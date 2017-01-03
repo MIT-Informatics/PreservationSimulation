@@ -30,29 +30,30 @@ class CServer(object):
         self.nShelfSize = mynShelfSize * 1000000    # Scale up from TB to MB.
         self.ID = "V" + str(self.getID())
         self.lShelfIDs = list()
-        self.lDocIDs = list()           # Docs that still live in this server.
-        self.dDocIDs = dict()           # Dictionary version of alive doc IDs, for fast checking.
+        self.lDocIDs = list()       # Docs that still live in this server.
+        self.dDocIDs = dict()       # Dictionary version of alive doc IDs, 
+                                    #  for faster checking.
         self.lDocIDsComplete = list()   # All docs that were ever in this server.
         self.mListServer()
         G.nServerLastID = self.ID
         self.sClientID = None
         self.sCollectionID = None
-        self.bInUse = False             # This server not yet used by client.
-        self.bDead = False              # Server has not yet suffered a 100% glitch.
+        self.bInUse = False         # This server not yet used by client.
+        self.bDead = False          # Server has not yet suffered a 100% glitch.
         self.fOriginalLifespan = (util.makeserverlife(G.fServerDefaultHalflife)
                                     if G.fServerDefaultHalflife > 0 else 0)
-                                        # Server gets a random lifetime if there
-                                        #  is supposed to be one today.
+                                    # Server gets a random lifetime if there
+                                    #  is supposed to be one today.
         self.fCurrentLifespan = self.fOriginalLifespan
-                                        # Keep current lifespan value here so that 
-                                        #  shock can find it and reduce it.
+                                    # Keep current lifespan value here so that 
+                                    #  shock can find it and reduce it.
         self.oTimer = rt.CResettableTimer(G.env, self.fCurrentLifespan, 
                         fnTimerCall, fnTimerInt, (self, self.ID))
-                                        # Max server lifetime, initially.
-                                        # Context contains server instance and id.
-                                        # TODO: the param is a halflife; need to 
-                                        #  generate a random expo life from that
-                                        #  rather than using a fixed number.
+                                    # Max server lifetime, initially.
+                                    # Context contains server instance and id.
+                                    # TODO: the param is a halflife; need to 
+                                    #  generate a random expo life from that
+                                    #  rather than using a fixed number.
 
 # S e r v e r . m L i s t S e r v e r 
     @catchex
@@ -83,6 +84,12 @@ class CServer(object):
         ''' DO NOT MEMOIZE THIS FUNCTION!
         '''
         return self.bDead
+
+# S e r v e r . m b I s S e r v e r I n U s e 
+    def mbIsServerInUse(self):
+        ''' DO NOT MEMOIZE THIS FUNCTION!
+        '''
+        return self.bInUse
 
 # C S e r v e r . f n C o r r F a i l H a p p e n s T o A l l 
     @classmethod
@@ -132,7 +139,8 @@ class CServer(object):
         with shorter lifespans.
         """
         lPossibleVictims = CServer.fnlListLiveServerIDs()
-        return lPossibleVictims[0: min(mynHowManyVictims, len(lPossibleVictims))]
+        return lPossibleVictims[0: min(mynHowManyVictims, 
+            len(lPossibleVictims))]
 
 # S e r v e r . m C o r r F a i l H a p p e n s T o M e
     @catchex
@@ -167,7 +175,7 @@ class CServer(object):
 # S e r v e r . m R e s c h e d u l e M y L i f e 
     @catchex
     @ntracef("SERV")
-    def mRescheduleMyLife(self,mynNewLife):
+    def mRescheduleMyLife(self, mynNewLife):
         ''' Store new lifespan number. '''
         self.fCurrentLifespan = mynNewLife
 
@@ -181,14 +189,14 @@ class CServer(object):
 # S e r v e r . m A d d C o l l e c t i o n
     @catchex
     @ntracef("SERV")
-    def mAddCollection(self,mysCollID,mysClientID):
+    def mAddCollection(self, mysCollID, mysClientID):
         self.sClientId = mysClientID
         self.sCollectionID = mysCollID
         lTempDocIDs = list()
         cCollection = G.dID2Collection[mysCollID]
         lTempDocIDs = cCollection.mListDocumentsRemaining()
         for sDocID in lTempDocIDs:
-            self.mAddDocument(sDocID,mysClientID)
+            self.mAddDocument(sDocID, mysClientID)
         self.bInUse = True          # Server now in use
         # BZZZT: new mechanism for declaring server death; don't do this. 
         #self.oTimer.start()         #  and alive, can die.
@@ -197,7 +205,7 @@ class CServer(object):
 # S e r v e r . m A d d D o c u m e n t 
     @catchex
     @ntracef("SERV")
-    def mAddDocument(self,mysDocID,mysClientID):
+    def mAddDocument(self, mysDocID, mysClientID):
         ''' Find a shelf with room for the doc, or create one.
             Put the doc on the shelf, decrement the remaining space.
         '''
@@ -209,29 +217,32 @@ class CServer(object):
             cShelf = None
             for sShelfID in self.lShelfIDs:
                 cShelf = G.dID2Shelf[sShelfID]
-                bResult = cShelf.mAcceptDocument(mysDocID,nSize,mysClientID)
+                bResult = cShelf.mAcceptDocument(mysDocID, nSize, mysClientID)
                 if bResult:
                     break       # True = doc has been stored
                 else:
                     continue    # False = no, try another shelf, if any
-            else:               # If no more shelves, create another and use that one.
+            else:               # If no more shelves, create another and use it.
                 sNewShelfID = self.mCreateShelf()
                 self.lShelfIDs.append(sNewShelfID)
                 cShelf = G.dID2Shelf[sNewShelfID]
                 sShelfID = cShelf.ID    # TODO: #Why not just use sNewShelfID?
-                result = cShelf.mAcceptDocument(mysDocID,nSize,mysClientID)
+                result = cShelf.mAcceptDocument(mysDocID, nSize, mysClientID)
                 
             # Record that the doc has been stored on this server.
             self.lDocIDsComplete.append(mysDocID)
             self.bInUse = True
             self.lDocIDs.append(mysDocID)
             self.dDocIDs[mysDocID] = mysClientID
-            TRC.tracef(3,"SERV","proc mAddDocument serv|%s| id|%s| docid|%s| size|%s| assigned to shelfid|%s| remaining|%s|" 
-                % (self.sName,self.ID,mysDocID,cDoc.nSize,sShelfID,cShelf.nFreeSpace))
+            TRC.tracef(3, "SERV", "proc mAddDocument serv|%s| id|%s| docid|%s| "
+                "size|%s| assigned to shelfid|%s| remaining|%s|" 
+                % (self.sName, self.ID, mysDocID, cDoc.nSize, sShelfID, 
+                cShelf.nFreeSpace))
     
             return self.ID+"+"+sShelfID+"+"+mysDocID
         else:
-            NTRC.ntracef(3,"SERV","proc mAddDocument1 dead server|%s| do not add doc|%s| for client|%s|" 
+            NTRC.ntracef(3,"SERV","proc mAddDocument1 dead server|%s| do not "
+                "add doc|%s| for client|%s|" 
                 % (self.ID, mysDocID, mysClientID))
             return False
 
@@ -242,7 +253,7 @@ class CServer(object):
         ''' Add a new shelf of the standard size for this Server.
             Called as needed when a doc arrives too large for available space.  
         '''
-        cShelf = CShelf(self.ID,self.nQual,self.nShelfSize)
+        cShelf = CShelf(self.ID, self.nQual, self.nShelfSize)
         lg.logInfo("SERVER","server |%s| created storage shelf|%s| "
             "quality|%s| size|%s|MB svrlife|%.0f|" 
             % (self.ID, cShelf.ID, cShelf.nQual, cShelf.nCapacity, 
@@ -255,11 +266,12 @@ class CServer(object):
     def mDestroyCopy(self,mysCopyID,mysDocID,mysShelfID):
         ''' Oops, a doc died, maybe just one or maybe the whole shelf.
         '''
-        TRC.tracef(3,"SERV","proc mDestroyCopy remove copy|%s| doc|%s| from shelf|%s|" 
-            % (mysCopyID,mysDocID,mysShelfID))
+        TRC.tracef(3,"SERV","proc mDestroyCopy remove copy|%s| doc|%s| "
+            "from shelf|%s|" 
+            % (mysCopyID, mysDocID, mysShelfID))
         # Inform the client that the copy is gonzo.  
         cClient = G.dID2Client[self.dDocIDs[mysDocID]]
-        cClient.mDestroyCopy(mysDocID,self.ID,mysCopyID)
+        cClient.mDestroyCopy(mysDocID, self.ID, mysCopyID)
         # Clear out local traces of the doc and copy.
         self.lDocIDs.remove(mysDocID)
         del self.dDocIDs[mysDocID]
@@ -300,13 +312,13 @@ class CServer(object):
             # Shall we destroy all the shelves, too, or will that cause a problem?
             for sShelfID in self.lShelfIDs:
                 G.dID2Shelf[sShelfID].mDestroyShelf()
-#                TODO: #mark all shelves as not bAlive
+#               TODO: #mark all shelves as not bAlive
         pass
 
 # S e r v e r . f n T i m e r C a l l 
 @catchex
 @ntracef("SERV")
-def fnTimerCall(objTimer,xContext):
+def fnTimerCall(objTimer, xContext):
     '''\
     Server life-span timer has completed, and the server must die.
     Set the timer event to release any process waiting for it.
@@ -324,7 +336,7 @@ def fnTimerCall(objTimer,xContext):
 # S e r v e r . f n T i m e r I n t 
 @catchex
 @ntracef("SERV")
-def fnTimerInt(objTimer,xContext):
+def fnTimerInt(objTimer, xContext):
     '''\
     Server life-span timer was interrupted to reschedule it, 
     probably by a shock, and presumably to a shorter life.
@@ -378,8 +390,9 @@ def fnTimerInt(objTimer,xContext):
 # 20161231  RBL When killing a server, add to the dead server list.
 #               BZZZT: When adding a collection, be careful only to add
 #                the documents that still exist.  Use Collection's
-#                ListDocumentsRemaining method.  `
+#                ListDocumentsRemaining method.
 # 20170101  RBL Return number of docs when placing collection. 
+# 20170102  RBL PEP8-ify most of the long lines.  
 # 
 # 
 

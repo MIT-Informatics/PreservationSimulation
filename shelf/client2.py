@@ -67,26 +67,33 @@ class CClient(object):
         ''' If there aren't servers enough at this level, 
             the Select method will raise an exception.
         '''
-        NTRC.ntracef(3,"CLI","proc mPlaceCollection1 client|%s| place coll|%s| to|%d|servers" % (self.ID,mysCollID,len(self.lServersToUse)))
+        NTRC.ntracef(3, "CLI", "proc mPlaceCollection1 client|%s| "
+            "place coll|%s| to|%d|servers" 
+            % (self.ID,mysCollID,len(self.lServersToUse)))
 
         # Distribute collection to a set of servers.
         for sServerID in self.lServersToUse:
-            NTRC.ntracef(3,"CLI","proc mPlaceCollection2 client|%s| send coll|%s| to server|%s|" % (self.ID,mysCollID,sServerID))
-            NTRC.ntracef(3,"SHOW","proc mPlaceCollection2 client|%s| send coll|%s| to server|%s|" % (self.ID,mysCollID,sServerID))
+            NTRC.ntracef(3, "CLI", "proc mPlaceCollection2 client|%s| "
+                "send coll|%s| to server|%s|" 
+                % (self.ID, mysCollID, sServerID))
+            NTRC.ntracef(3, "SHOW", "proc mPlaceCollection2 client|%s| "
+                "send coll|%s| to server|%s|" 
+                % (self.ID, mysCollID, sServerID))
             
             # Send copy of collection to server.
             nDocs = self.mPlaceCollectionOnServer(mysCollID, sServerID)
 
         # Initialize the auditing process for this collection.
         if G.nAuditCycleInterval > 0:
-            self.cAudit = fAudit_Select(G.sAuditStrategy,self.ID,mysCollID,G.nAuditCycleInterval)
+            self.cAudit = fAudit_Select(G.sAuditStrategy, self.ID,mysCollID, 
+                G.nAuditCycleInterval)
 
         return self.lServersToUse
 
 # C l i e n t . m S e l e c t S e r v e r s F o r C o l l e c t i o n
     @catchex
     @ntracef("CLI")
-    def mSelectServersForCollection(self,mynCollValue):
+    def mSelectServersForCollection(self, mynCollValue):
         '''\
         Get list of servers at this quality level.
         
@@ -95,7 +102,7 @@ class CClient(object):
         '''
         # Get list of all servers at this quality level.
         # Value level translates to quality required and nr copies.
-        (nQuality,nCopies) = G.dDistnParams[mynCollValue][0]
+        (nQuality, nCopies) = G.dDistnParams[mynCollValue][0]
         lServersAtLevel = [ll[1] for ll in G.dQual2Servers[nQuality]]
         '''\
         For most questions, all servers are functionally 
@@ -105,12 +112,17 @@ class CClient(object):
          the effort any more.  
         NEW: return only servers that are not already in use and not broken.
         '''
-        lPermChosenAlive = [svr for svr in lServersAtLevel if not G.dID2Server[svr].bDead]
-        lPermChosenFull = [svr for svr in lPermChosenAlive if not G.dID2Server[svr].bInUse]
-        NTRC.ntracef(3,"CLI","proc servers chosen level|%s| alive|%s| full|%s|" % (lServersAtLevel, lPermChosenAlive, lPermChosenFull))
+        lPermChosenAlive = [svr for svr in lServersAtLevel 
+            if not G.dID2Server[svr].bDead]
+        lPermChosenFull = [svr for svr in lPermChosenAlive 
+            if not G.dID2Server[svr].bInUse]
+        NTRC.ntracef(3, "CLI", "proc servers chosen level|%s| alive|%s| "
+            "full|%s|" 
+            % (lServersAtLevel, lPermChosenAlive, lPermChosenFull))
         # Just make sure there are enough of them to meet the client's needs.
         if len(lPermChosenAlive) < nCopies:
-            raise IndexError('Not enough servers left alive to satisfy client requirements')
+            raise IndexError(
+                'Not enough servers left alive to satisfy client requirements')
         lPermChosen = lPermChosenFull[0:nCopies]
         return lPermChosen
 
@@ -120,11 +132,13 @@ class CClient(object):
     def mPlaceCollectionOnServer(self, mysCollID, mysServerID):
         # Send copy of collection to server.
         cServer = G.dID2Server[mysServerID]
-        nDocs = cServer.mAddCollection(mysCollID,self.ID)
+        nDocs = cServer.mAddCollection(mysCollID, self.ID)
         # Record that this server has a copy of this collection.
         cColl = G.dID2Collection[mysCollID]
         cColl.lServerIDs.append(mysServerID)
-        lg.logInfo("CLIENT","client|%s| placed collection|%s| to server|%s|" % (self.ID,mysCollID,mysServerID))
+        lg.logInfo("CLIENT", "client|%s| placed collection|%s| "
+            "to server|%s|" 
+            % (self.ID, mysCollID, mysServerID))
         return nDocs
 
 # C l i e n t . m T e s t C l i e n t 
@@ -139,10 +153,14 @@ class CClient(object):
         for sCollID in self.lCollectionIDs:
             cColl = G.dID2Collection[sCollID]
             lResult = cColl.mTestCollection()
-            NTRC.ntracef(3,"CLI","proc TestClient1 client|%s| tests coll|%s| result|%s|" % (self.ID,sCollID,lResult))
+            NTRC.ntracef(3, "CLI", "proc TestClient1 client|%s| "
+                "tests coll|%s| result|%s|" 
+                % (self.ID, sCollID, lResult))
             if len(lResult) > 0:
                 lDeadDocIDs.extend(lResult)
-                NTRC.ntracef(3,"CLI","proc TestClient2 client |%s| coll|%s| lost docs|%s|" % (self.ID,sCollID,lResult))
+                NTRC.ntracef(3, "CLI", "proc TestClient2 client |%s| "
+                    "coll|%s| lost docs|%s|" 
+                    % (self.ID, sCollID, lResult))
         return lDeadDocIDs
 
 # C l i e n t . m L i s t C o l l e c t i o n I D s 
@@ -162,7 +180,7 @@ class CClient(object):
         The Collection keeps only Server-level, not Doc-level stats.  
         '''
         cDoc = G.dID2Document[mysDocID]
-        cDoc.mDestroyCopy(mysServerID,mysCopyID)
+        cDoc.mDestroyCopy(mysServerID, mysCopyID)
 
 # C l i e n t . m S e r v e r I s D e a d 
     @catchex
@@ -173,8 +191,11 @@ class CClient(object):
          accepting documents.  Remove server from active list, 
          find a new server, populate it.  
         '''
-        NTRC.ntracef(3,"CLI","proc deadserver1 client|%s| place coll|%s| to|%d|servers" % (self.ID,mysCollID,len(self.lServersToUse)))
-        lg.logInfo("CLIENT", "server died cli|%s| removed svr|%s| coll|%s| " % (self.ID, mysServerID, mysCollID))
+        NTRC.ntracef(3, "CLI", "proc deadserver1 client|%s| place coll|%s| "
+            "to|%d|servers" 
+            % (self.ID, mysCollID, len(self.lServersToUse)))
+        lg.logInfo("CLIENT", "server died cli|%s| removed svr|%s| coll|%s| " 
+            % (self.ID, mysServerID, mysCollID))
 
         cColl = G.dID2Collection[mysCollID]
         cColl.lServerIDs.remove(mysServerID)
@@ -186,7 +207,8 @@ class CClient(object):
         lg.logInfo("CLIENT", "client|%s| assign new server|%s| to replace|%s|" 
             % (self.ID, sServerToUse, mysServerID))
         nDocs = self.mPlaceCollectionOnServer(mysCollID, sServerToUse)
-        lg.logInfo("CLIENT", "client|%s| provisioned new server|%s| collection|%s| ndocs|%s|" 
+        lg.logInfo("CLIENT", "client|%s| provisioned new server|%s| "
+            "collection|%s| ndocs|%s|" 
             % (self.ID, sServerToUse, mysCollID, nDocs))
         self.nServerReplacements += 1
         return sServerToUse
@@ -204,7 +226,7 @@ class CClient(object):
 # 20150812  RBL Move CDocument and CCollection classes to their own files.  
 # 20161231  RBL Log reprovisioning of new server.
 # 20170101  RBL Add count of collection docs to provisioning report.  
-# 
+# 20170102  RBL PEP8-ify most of the long lines.  
 # 
 # 
 

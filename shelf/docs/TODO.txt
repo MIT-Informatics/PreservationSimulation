@@ -5,16 +5,17 @@ TODO: shock
 DONE - add server default lifespan to param files and CLI, zero = infinite.
 DONE - server default lifespan is random, not fixed.  currently expo.
 DONE add server default lifespan to main CLI and broker.
-FIXME - code shock methods for real not just pseudocode.  new style, at audit.
+DONE - code shock methods for real not just pseudocode.  new style, at audit.
 DONE - test shock rescheduling server death.  
 WRONG - server death after shock is after now, not absolute, right?
-FIXME - shock reduces server life by pct. shock duration finite.  after shock
+DONE - shock reduces server life by pct. shock duration finite.  after shock
     expires, server life returns to normal if not already dead.  
+DONE - do not restore life to server that has expired during the shock.  
 FIXME - select reasonable ranges of shock impacts.  
-FIXME - server death evaluated before every audit cycle and at end of run.  
-FIXME - if server is dead when shock expires, do not try to restore life.
-FIXME - watch out for server lifetime zero (=infinite) when assessing
+DONE - server death evaluated before every audit cycle and at end of run.  
+DONE - watch out for server lifetime zero (=infinite) when assessing
         server live/dead at audit and end of run.  
+DONE - when kill server, also kill shelf and all doc copies on it.  
 
 
 TODO: web interface to select instructions for broker run
@@ -28,7 +29,14 @@ FIXME - build backend for interface that generates broker.py command.
 
 
 TODO: newtrace
+DONE - make new ntrace, ntracef the default inner routines for efficiency.  
 MAYBE - for trace level zero, do not check facility codes.
+
+
+TODO: general
+DONE - stop accepting or rescheduling sector errors on dead shelf.  
+FIXME - at end, report servers that died and were in use at the time; 
+  currently reports all servers that died, even if not used by client.  
 
 
 TODO: extractvalues.py
@@ -88,8 +96,12 @@ FIXME - start the run count from 1 even for cases that have already been done,
 
 
 TODO: audit
-FIXME - log stats at end of each audit cycle: lost, minority repairs, majority repairs.  These are all cross-server figures; don't know if we need per-server figures.
-
+FIXME - log stats at end of each audit cycle: lost, minority repairs, majority 
+  repairs.  These are all cross-server figures; don't know if we need 
+  per-server figures.
+DONE - fix long-standing bug: when reprovision new server to replace dead one, 
+  provision only with docs that have extant copies, not necessarily 
+  the full set; some may already have been lost.  
 
 TODO: newinstructions
 FIXME - Add a squash function to reduce blank sequences to single blanks

@@ -79,6 +79,9 @@ class ProtoG(object):
     nShockSpan = 1          # Number of servers affected by slump. 
     nShockMaxlife = 10000   # Duration of shock (hours), fixed not random. 
     nShocksTotal = 0        # Count of shocks this run. 
+    nDeadOldServers = 0     # Count of servers that died of old age.
+    nDeathsDueToShock = 0   # Count of servers that died of age during shock.  
+    lDeathsDueToShock = []  # List of the shock victims.  
 
     sMongoId = None         # MongoDB _id of the instruction for this run.
 
