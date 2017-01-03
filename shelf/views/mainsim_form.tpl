@@ -60,8 +60,8 @@
         </select></td>
         <td>Sector half-life in kiloHours: <br />(Use only if megaHours is "none")<br />
             <input type="text" name="nLifek" value="" size="8" /></td>
-        <td>Server default half-life: <br />(megaHours) (zero=infinite)<br />
-            <input type="text" name="nServerDefaultLifetime" value="0" size="8" /></td>
+        <td>Server default half-life: <br />(Hours) (zero=infinite)<br />
+            <input type="text" name="nServerDefaultLife" value="0" size="10" /></td>
     </tr>
     
     <tr bgcolor="#ccffbb">
@@ -120,7 +120,9 @@
                 <option value="2500">2500 (quarterly)</option>
                 <option value="10000">10000 (annually)</option>
                 <option value="20000">20000 (every two years)</option>
+                <option value="30000">30000 (every three years)</option>
                 <option value="40000">40000 (every four years)</option>
+                <option value="50000">50000 (every five years)</option>
             </select>
         </td>
         <td>
@@ -152,6 +154,7 @@
                 <option value="1" selected>1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
+                <option value="4">4</option>
                 <option value="5">5</option>
             </select>
         </td>
@@ -181,7 +184,9 @@
                 <option value="2500">2500 (quarterly)</option>
                 <option value="10000">10000 (annually)</option>
                 <option value="20000">20000 (every two years)</option>
+                <option value="30000">30000 (every three years)</option>
                 <option value="40000">40000 (every four years)</option>
+                <option value="50000">50000 (every five years)</option>
             </select>
         </td>
         <td>
@@ -214,6 +219,7 @@
                 <option value="1" selected>1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
+                <option value="4">4</option>
                 <option value="5">5</option>
             </select>
         </td>

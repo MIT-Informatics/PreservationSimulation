@@ -26,7 +26,7 @@ def mainsim_post():
 
     nLifem = request.forms.get("nLifem")
     nLifek = request.forms.get("nLifek")
-    nServerDefaultLifetime = request.forms.nServerDefaultLifetime
+    nServerDefaultLife = request.forms.get("nServerDefaultLife")
 
     nAuditFreq = request.forms.get("nAuditFreq")
     nAuditSegments = request.forms.get("nAuditSegments")
@@ -37,6 +37,11 @@ def mainsim_post():
     nGlitchMaxlife = request.forms.get("nGlitchMaxlife")
     nGlitchSpan = request.forms.get("nGlitchSpan")
     nGlitchDecay = request.forms.get("nGlitchDecay")
+
+    nShockFreq = request.forms.get("nShockFreq")
+    nShockImpact = request.forms.get("nShockImpact")
+    nShockSpan = request.forms.get("nShockSpan")
+    nShockMaxlife = request.forms.get("nShockMaxlife")
 
     bShortLog = request.forms.get("bShortLog")
     sLogLevel = request.forms.get("sLogLevel")
@@ -56,6 +61,7 @@ def mainsim_post():
     # Make a dictionary to use to substitute params into CLI command.
     dVals = dict(sFamilyDir=sFamilyDir, sSpecificDir=sSpecificDir,
                 nCopies=nCopies, nRandomSeed=nRandomSeed, 
+                nServerDefaultLife=nServerDefaultLife, 
                 nLifem=nLifem, nLifek=nLifek,
                 nAuditFreq=nAuditFreq, nAuditSegments=nAuditSegments, 
                 sAuditType=sAuditType,
@@ -66,7 +72,8 @@ def mainsim_post():
                 nShelfSize=nShelfSize, nSmallDoc=nSmallDoc, nLargeDoc=nLargeDoc, 
                 nSmallDocPct=nSmallDocPct, nPctDocVar=nPctDocVar, 
                 nSimLength=nSimLength, nBandwidthMbps=nBandwidthMbps, 
-                nServerDefaultLifetime=nServerDefaultLifetime, 
+                nShockFreq=nShockFreq, nShockImpact=nShockImpact, 
+                nShockSpan=nShockSpan, nShockMaxlife=nShockMaxlife, 
                 
                 msg=msg
                 )
@@ -104,9 +111,9 @@ def mainsim_post():
             sActualCli)
 
 # CLI commands to run the main program.
-sMainCommandStringWithLog = '''python main.py {sFamilyDir} {sSpecificDir} {nSimLength} {nRandomSeed} --ncopies={nCopies} --lifek={nLifek} --audit={nAuditFreq} --auditsegments={nAuditSegments} --audittype={sAuditType} --glitchfreq={nGlitchFreq} --glitchimpact={nGlitchImpact} --glitchdecay={nGlitchDecay} --glitchmaxlife={nGlitchMaxlife} --glitchspan={nGlitchSpan} --shelfsize={nShelfSize} --smalldoc={nSmallDoc} --largedoc={nLargeDoc} --pctsmall={nSmallDocPct} {xshortlog} --mongoid={mongoid}  >  {sFamilyDir}/{sSpecificDir}/log/{sLogFile}.log  2>&1
+sMainCommandStringWithLog = '''python main.py {sFamilyDir} {sSpecificDir} {nSimLength} {nRandomSeed} --ncopies={nCopies} --lifek={nLifek} --serverdefaultlife={nServerDefaultLife} --audit={nAuditFreq} --auditsegments={nAuditSegments} --audittype={sAuditType} --glitchfreq={nGlitchFreq} --glitchimpact={nGlitchImpact} --glitchdecay={nGlitchDecay} --glitchmaxlife={nGlitchMaxlife} --glitchspan={nGlitchSpan} --shockfreq={nShockFreq} --shockimpact={nShockImpact} --shockspan={nShockSpan} --shockmaxlife={nShockMaxlife} --shelfsize={nShelfSize} --smalldoc={nSmallDoc} --largedoc={nLargeDoc} --pctsmall={nSmallDocPct} {xshortlog} --mongoid={mongoid}  >  {sFamilyDir}/{sSpecificDir}/log/{sLogFile}.log  2>&1
 '''
-sMainCommandStringToStdout = '''python main.py {sFamilyDir} {sSpecificDir} {nSimLength} {nRandomSeed} --ncopies={nCopies} --lifek={nLifek} --audit={nAuditFreq} --auditsegments={nAuditSegments} --audittype={sAuditType} --glitchfreq={nGlitchFreq} --glitchimpact={nGlitchImpact} --glitchdecay={nGlitchDecay} --glitchmaxlife={nGlitchMaxlife} --glitchspan={nGlitchSpan} --shelfsize={nShelfSize} --smalldoc={nSmallDoc} --largedoc={nLargeDoc} --pctsmall={nSmallDocPct} {xshortlog} --mongoid={mongoid}   2>&1
+sMainCommandStringToStdout = '''python main.py {sFamilyDir} {sSpecificDir} {nSimLength} {nRandomSeed} --ncopies={nCopies} --lifek={nLifek} --serverdefaultlife={nServerDefaultLife} --audit={nAuditFreq} --auditsegments={nAuditSegments} --audittype={sAuditType} --glitchfreq={nGlitchFreq} --glitchimpact={nGlitchImpact} --glitchdecay={nGlitchDecay} --glitchmaxlife={nGlitchMaxlife} --glitchspan={nGlitchSpan} --shockfreq={nShockFreq} --shockimpact={nShockImpact} --shockspan={nShockSpan} --shockmaxlife={nShockMaxlife} --shelfsize={nShelfSize} --smalldoc={nSmallDoc} --largedoc={nLargeDoc} --pctsmall={nSmallDocPct} {xshortlog} --mongoid={mongoid}   2>&1
 '''
 sMainCommandStringTestOnly = '''python main.py -h
 '''
