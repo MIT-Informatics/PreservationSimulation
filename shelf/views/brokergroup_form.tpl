@@ -33,13 +33,14 @@
         </td>
     </tr>
 
-<!-- d i r e c t o r i e s ,   r a n d o m  s e e d  -->    
+<!--  d i r e c t o r i e s ,  d a t a b a s e   n a m e  -->    
     <tr bgcolor="#ffffbb">
         <td><b>Family dir:</b> <font color="red">* required</font><br />
             <input type="text" name="sFamilyDir" size="30" /><br/><br/></td>
         <td><b>Specific dir:</b> <font color="red">* required</font><br />
             <input type="text" name="sSpecificDir" size="30" /><br/><br/></td>
-        <td>&nbsp;</td>
+        <td><b>Instruction mongodb name:</b> <font color="red">* required</font><br />
+            <input type="text" name="sDatabaseName" size="30" /><br/><br/></td>
         <td>&nbsp;</td>
     </tr>
 

@@ -17,6 +17,7 @@ def mainsim_get():
 
 @post('/mainsim')
 def mainsim_post():
+#   C O L L E C T   D A T A 
     # Collect all the bloody data, one item at a time, grumble.
     sFamilyDir = request.forms.get("sFamilyDir")
     sSpecificDir = request.forms.get("sSpecificDir")
@@ -48,10 +49,12 @@ def mainsim_post():
     nSimLength = request.forms.get("nSimLength")
     nBandwidthMbps = request.forms.get("nBandwidthMbps")
 
-    bTestOnly = request.forms.bTestOnly
+    bTestOnly = request.forms.get("bTestOnly")
+    sDatabaseName = request.forms.get("sDatabaseName")
 
     msg = "mainsim_post: NOT YET IMPLEMENTED"
 
+#   F O R M   D I C T I O N A R Y   O F   S U B S T I T U T I O N S 
     # Make a dictionary to use to substitute params into CLI command.
     dVals = dict(sFamilyDir=sFamilyDir, sSpecificDir=sSpecificDir,
 
@@ -75,13 +78,18 @@ def mainsim_post():
                 nShockSpan=nShockSpan, nShockMaxlife=nShockMaxlife, 
 
                 bTestOnly=bTestOnly, 
+                sDatabaseName=sDatabaseName, 
                 
                 msg=msg
                 )
-
+#  A D D   E X T R A   S P E C I F I C   S T R I N G S 
     # If the user asks for a shortlog, add the option to the command.
     dVals["xshortlog"] = "--shortlog" if bShortLog else ""
 
+    # If the user asks for a test list only, add that option to the command.
+    dVals["xtestonly"] = "--listonly" if bTestOnly else ""
+
+#  S E L E C T   C O M M A N D  A N D   F O R M A T  I T
     # Do something with the form data
     sActualCli = cCmd.mGentlyFormat(sMainCommandStringToStdout, dVals)
 #    sActualCli = cCmd.mGentlyFormat(sMainCommandStringTestOnly, dVals)
@@ -99,25 +107,29 @@ def mainsim_post():
     sLineSuffix = ''
 
 #    return dVals         # TEMP: return dict for visual inspection.
-    
+
+#  E X E C U T E   C L I   C M D ,   R E T U R N   R E S U L T S     
     return cCmd.mDoCmdGen(sPrefix, sSuffix, sLinePrefix, sLineSuffix, 
             sActualCli)
 
 # CLI commands to run the main program.
-sMainCommandStringToStdout = 'python broker.py --familydir={sFamilyDir} '
+sMainCommandStringToStdout = ('python broker.py {sDatabaseName} pending done'
+            '--familydir={sFamilyDir} '
             '--specificdir={sSpecificDir} '
-            '{nSimLength} '
             '--ncopies={nCopies} --lifek={nLifek} '
             '--serverdefaultlife={nServerDefaultLife} '
-            '--audit={nAuditFreq} --auditsegments={nAuditSegments} '
+            '--auditfreq={nAuditFreq} --auditsegments={nAuditSegments} '
             '--audittype={sAuditType} '
             '--glitchfreq={nGlitchFreq} --glitchimpact={nGlitchImpact} '
             '--glitchdecay={nGlitchDecay} --glitchmaxlife={nGlitchMaxlife} '
             '--glitchspan={nGlitchSpan} '
             '--shockfreq={nShockFreq} --shockimpact={nShockImpact} '
             '--shockspan={nShockSpan} --shockmaxlife={nShockMaxlife} '
-            '{xshortlog} --mongoid={mongoid}  '
+            '{xshortlog} {xtestonly} --mongoid={mongoid}  '
             '2>&1 '
+            '--help'
+            )
+# Itsy bitsy test versions
 sMainCommandStringTestOnly = '''python main.py -h
 '''
 sMainCommandStringDumbTest = '''ls -l
