@@ -89,6 +89,14 @@ def mainsim_post():
     # If the user asks for a test list only, add that option to the command.
     dVals["xtestonly"] = "--listonly" if bTestOnly else ""
 
+    # Format the Mongo range expression for nCopies
+    sRange = sRangeTemplate % (nCopiesMin, nCopiesMax)
+    dVals["xcopies"] = sRange
+
+    # Format the Mongo range expression for nLifem
+    sRange = sRangeTemplate % (nLifemMin, nLifemMax)
+    dVals["xlifem"] = sRange
+
 #  S E L E C T   C O M M A N D  A N D   F O R M A T  I T
     # Do something with the form data
     sActualCli = cCmd.mGentlyFormat(sMainCommandStringToStdout, dVals)
@@ -113,10 +121,10 @@ def mainsim_post():
             sActualCli)
 
 # CLI commands to run the main program.
-sMainCommandStringToStdout = ('python broker.py {sDatabaseName} pending done'
+sMainCommandStringToStdout = ('python broker.py {sDatabaseName} pending done '
             '--familydir={sFamilyDir} '
             '--specificdir={sSpecificDir} '
-            '--ncopies={nCopies} --lifek={nLifek} '
+            '--ncopies={xcopies} --lifem={xlifem} '
             '--serverdefaultlife={nServerDefaultLife} '
             '--auditfreq={nAuditFreq} --auditsegments={nAuditSegments} '
             '--audittype={sAuditType} '
@@ -125,15 +133,19 @@ sMainCommandStringToStdout = ('python broker.py {sDatabaseName} pending done'
             '--glitchspan={nGlitchSpan} '
             '--shockfreq={nShockFreq} --shockimpact={nShockImpact} '
             '--shockspan={nShockSpan} --shockmaxlife={nShockMaxlife} '
-            '{xshortlog} {xtestonly} --mongoid={mongoid}  '
+            '{xshortlog} {xtestonly}  '
             '2>&1 '
-            '--help'
+#            '--help'
             )
 # Itsy bitsy test versions
 sMainCommandStringTestOnly = '''python main.py -h
 '''
 sMainCommandStringDumbTest = '''ls -l
 '''
+
+# Template for Mongo range expression.  
+# Note that only the quotes matching the outside quotes need to be escaped.  
+sRangeTemplate = "'{\"$gte\":%s, \"$lte\":%s}'"
 
 #=================================================
 # class   C C o m m a n d
@@ -242,3 +254,11 @@ if __name__ == '__main__':
     runme()
 
 
+# Edit history:
+# 20161230  RBL Original version, adapted from mainsimform.py.
+# 20170101  RBL Flesh out most of it.
+# 20170104  RBL Add Mongo-style range specifiers for ncopies and lifem.
+# 
+# 
+
+#END

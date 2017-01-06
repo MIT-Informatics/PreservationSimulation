@@ -19,7 +19,7 @@ def fndCliParse(mysArglist):
          many options for this run from the command line.  
         Return a dictionary of all of them.  
     '''
-    sVersion = "0.0.7"
+    sVersion = "0.0.8"
     cParse = argparse.ArgumentParser(
         description="Digital Library Preservation Simulation "
         "Instruction Broker CLI "
@@ -115,6 +115,14 @@ def fndCliParse(mysArglist):
                         'zero=infinity.'
                         )
 
+    cParse.add_argument("--glitchspan", type=str
+                        , dest='nGlitchSpan'
+                        , metavar='nGLITCHSPAN'
+                        , nargs='?'
+                        , help='Number of servers affected by a glitch; '
+                        'default=1.'
+                        )
+
     cParse.add_argument("--glitchmaxlife", type=str
                         , dest='nGlitchMaxlife'
                         , metavar='nGLITCHMAXLIFE_hrs'
@@ -144,6 +152,32 @@ def fndCliParse(mysArglist):
                         , metavar='nSHOCKSPAN_nservers'
                         , nargs='?'
                         , help='Number of servers affected by slump.'
+                        )
+
+    cParse.add_argument("--shockmaxlife", type=str
+                        , dest='nShockMaxlife'
+                        , metavar='nSHOCKMAXLIFE_hrs'
+                        , nargs='?'
+                        , help='Maximum duration of shock impact, '
+                        'which ceases after this interval; zero=infinity.'
+                        )
+
+    cParse.add_argument("--serverdefaultlife", type=str
+                        , dest='nServerDefaultLife'
+                        , metavar='nSERVERDEFAULTLIFE_hrs'
+                        , nargs='?'
+                        , help='Half life of distribution from which servers\' '
+                        'lifespans are drawn at birth; zero=infinity.  Shocks '
+                        'reduce these lifespans.  '
+                        )
+
+    cParse.add_argument("--nseeds", type=str
+                        , dest='nRandomSeeds
+                        , metavar='nRANDOMSEEDS
+                        , nargs='?'
+                        , help='Number of random seeds to be used for  '
+                        'repeated trials of each parameter setup.  '
+                        'Range 1 to 1000.'
                         )
 
     cParse.add_argument("--shelfsize", type=str
@@ -255,6 +289,11 @@ class CG(object):
     nShockFreq = None
     nShockImpact = None
     nShockSpan = None
+    nShockMaxlife = None
+    nServerDefaultLife = 0
+
+    nRandomSeeds = 21
+    sRandomSeedFile = "1000Randoms.txt"
 
     nShelfSize = None
     nDocSize = None
@@ -270,8 +309,8 @@ class CG(object):
                         #  but don't execute them.
     sRedo = "N"         # Force cases to be redone (recalculated)?
 
-    sFamilyDir = '../hl'
-    sSpecificDir = 'a0'
+    sFamilyDir = '../hl'        # lifetimes expressed as half-lives, and
+    sSpecificDir = 'a0'         #  no auditing.
 
     sDatabaseName = None
     sPendingCollectionName = None
@@ -294,26 +333,40 @@ class CG(object):
     # The listactor command must redirect all output to a file.
     #  Otherwise, it will not run asynchronously to take advantage
     #  of multiple cores.
-    sActorCmdFileTemplate = '{sFamilyDir}/{sSpecificDir}/cmd/{sShelfLogFileName}.cmds'
+    sActorCmdFileTemplate = ('{sFamilyDir}/{sSpecificDir}/cmd/'
+                            '{sShelfLogFileName}.cmds'
+                            )
     sActorCmdFileName = None
-    sActorCmdTemplate = 'export TRACE_LEVEL=0; export TRACE_FACIL=; python listactor.py {sActorCmdFileName} > {sFamilyDir}/{sSpecificDir}/act/{sShelfLogFileName}_actor.log 2>&1 &'
+    sActorCmdTemplate = ('export TRACE_LEVEL=0; export TRACE_FACIL=; '
+                        'python listactor.py {sActorCmdFileName} > '
+                        '{sFamilyDir}/{sSpecificDir}/act/'
+                        '{sShelfLogFileName}_actor.log 2>&1 &'
+                        )
     sActorCmd = None
 
     # Only field names that appear in items in the database should ever
     #  be in the query dictionary.  Otherwise, no item in the database 
     #  can ever satisfy such a query, i.e., no results.  
-    lSearchables = "nAuditFreq nAuditSegments sAuditType nDocSize nGlitchDecay nGlitchFreq nGlitchIgnorelevel nGlitchImpact nGlitchMaxlife nGlitchSpan nShockFreq nShockImpact nShockSpan nLifem nCopies nRandomseed nShelfSize nSimlen sQuery".split()
-
+    lSearchables = ('nAuditFreq nAuditSegments sAuditType nDocSize '
+                    'nGlitchDecay nGlitchFreq nGlitchIgnorelevel '
+                    'nGlitchImpact nGlitchMaxlife nGlitchSpan '
+                    'nShockFreq nShockImpact nShockSpan nShockMaxlife '
+                    'nLifem nServerDefaultLife '
+                    'nCopies nRandomseed nShelfSize nSimlen sQuery' 
+                    ).split()
     # Special fake CPU-bound commands to test for proper parallel execution.  
     # These take about a minute (75s) and a third of a minute (22s) on a 3Gi7.
     # Make sure we have the right version of bash and Python.
     sStartTime = 'date +%Y%m%d_%H%M%S.%3N'
     sBashIdCmd = 'sh --version'
-    sPythonIdCmd = 'python -c "import sys; print sys.version; print sys.version_info"'
+    sPythonIdCmd = ('python -c "import sys; print sys.version; '
+                    'print sys.version_info"'
+                    )
     sFibCmd1 = 'python fib.py 42'
     sFibCmd2 = 'python fib.py 40'
     sEndTime = 'date +%Y%m%d_%H%M%S.%3N'
-    lFibTemplates = [sStartTime, sBashIdCmd, sPythonIdCmd, sFibCmd1, sFibCmd2, sEndTime]
+    lFibTemplates = [sStartTime, sBashIdCmd, sPythonIdCmd, 
+                    sFibCmd1, sFibCmd2, sEndTime]
 
     # Command used to count instances and wait for an open core.  
     # I added the temp files so that we can track certain errors
@@ -323,8 +376,13 @@ class CG(object):
     # NOTE: When we translate this entire application to python3, this 
     #  command will have to change.  Now it eliminates the python3 something
     #  that Ubuntu is running in the background.  
-    sWaitForOpeningCmd = "ps axu 2>&1 | tee ps.tmp | grep {Name} 2>&1 | grep -v grep | grep -v python3 | grep -v 'sh -c' | grep -v '/sh ' | tee grep.tmp | wc -l | tee wc.tmp"
-    nWcLimit = 100          # How many times to try for a number out of the above command.
+    sWaitForOpeningCmd = ("ps axu 2>&1 | tee ps.tmp | grep {Name} 2>&1 "
+                        "| grep -v grep | grep -v python3 | "
+                        "grep -v 'sh -c' | grep -v '/sh ' | "
+                        "tee grep.tmp | wc -l | tee wc.tmp"
+                        )
+    nWcLimit = 100          # How many times to try for a number out of 
+                            #  the above command.
     nLinuxScrewupTime = 3   # How long between attempts.
 
     '''
@@ -344,8 +402,9 @@ def fnGetCommandTemplates(mysCommandFilename):
     Read (interesting) lines from external file as command templates
      to be filled in and executed.
     '''
-    with open(mysCommandFilename,'r') as fhIn:
-        g.lTemplates = [line.rstrip() for line in fhIn if fnbDoNotIgnoreLine(line)]
+    with open(mysCommandFilename, 'r') as fhIn:
+        g.lTemplates = [line.rstrip() for line in fhIn 
+                        if fnbDoNotIgnoreLine(line)]
         return g.lTemplates
 
 # f n b D o N o t I g n o r e L i n e 
@@ -355,10 +414,10 @@ def fnbDoNotIgnoreLine(mysLine):
     True if not a comment or blank line.
     '''
     # Ignore comment and blank lines.
-    return (not re.match("^\s*#",mysLine)) and (not re.match("^\s*$",mysLine))
+    return (not re.match("^\s*#", mysLine)) and (not re.match("^\s*$", mysLine))
 
 # f n I n t P l e a s e 
-@ntracef("INT",level=5)
+@ntracef("INT", level=5)
 def fnIntPlease(myString):
     # If it looks like an integer, make it one.
     try:
@@ -370,7 +429,7 @@ def fnIntPlease(myString):
 # f n W a i t F o r O p e n i n g 
 @catchex
 @ntracef("WAIT")
-def fnbWaitForOpening(mynProcessMax,mysProcessName,mynWaitTime,mynWaitLimit):
+def fnbWaitForOpening(mynProcessMax, mysProcessName, mynWaitTime, mynWaitLimit):
     ''' Wait for a small, civilized number of processes to be running.  
         If the number is too large, wait a while and look again.  
         But don't wait forever in case something is stuck.  
@@ -661,48 +720,62 @@ def main():
 
     # Process each instruction.
     for dInstruction in itAllInstructions: 
-        NTRC.ntracef(3,"MAIN","proc main instruction\n|%s|" % (dInstruction))
+        NTRC.ntracef(3,"MAIN","proc main instruction\n|%s|" 
+            % (dInstruction))
 
         sInstructionId = str(dInstruction["_id"])
         # If the user insists, redo this case.
         if g.sRedo.startswith("Y"):
-            NTRC.ntracef(0,"MAIN","proc force redo for item id|%s|" % (sInstructionId))
+            NTRC.ntracef(0,"MAIN","proc force redo for item id|%s|" 
+                % (sInstructionId))
             cdb.fnbDeleteDoneRecord(sInstructionId)
 
         nRunNumber += 1
         # If this instruction has already been processed skip it.
         bIsItDone = cdb.fnbIsItDone(sInstructionId)
         if bIsItDone: 
-            NTRC.ntracef(0,"MAIN","proc skip item already done run|%s| id|%s| copies|%s| lifem|%s|" %
-                (nRunNumber, sInstructionId, dInstruction["nCopies"],
+            NTRC.ntracef(0,"MAIN","proc skip item already done run|%s| "
+                "id|%s| copies|%s| lifem|%s|" 
+                % (nRunNumber, sInstructionId, dInstruction["nCopies"],
                 dInstruction["nLifem"]))
 
             continue
 
         if g.sListOnly.startswith("Y"):
             # Testing: Just dump out the instruction dictionary for this item.
-            NTRC.ntracef(0,"MAIN","proc ListOnly, item run|%s| ncopies|%s| lifem|%s| id|%s| dict|%s|" % 
-                (nRunNumber, dInstruction["nCopies"], dInstruction["nLifem"],
+            NTRC.ntracef(0,"MAIN","proc ListOnly, item run|%s| "
+                "ncopies|%s| lifem|%s| id|%s| dict|%s|" 
+                % (nRunNumber, dInstruction["nCopies"], dInstruction["nLifem"],
                 sInstructionId, dInstruction))
         else:   # Real life: execute the instruction.
-            bContinue = fnbWaitForOpening(g.nCores,"python",g.nCoreTimer,g.nStuckLimit)
+            bContinue = fnbWaitForOpening(g.nCores, "python", 
+                        g.nCoreTimer, g.nStuckLimit)
             if bContinue:
                 # Format commands to be executed by actor.
-                g.sShelfLogFileName = cFmt.msGentlyFormat(g.sShelfLogFileTemplate, dInstruction)
+                g.sShelfLogFileName = cFmt.msGentlyFormat(
+                                    g.sShelfLogFileTemplate, dInstruction)
                 g.lCommands = []
                 for sTemplate in g.lTemplates:
                     sCmd = cFmt.msGentlyFormat(sTemplate, dInstruction)
                     g.lCommands.append(sCmd)
     
                 # Make instruction file for the actor.
-                g.sActorCmdFileName = cFmt.msGentlyFormat(g.sActorCmdFileTemplate, dInstruction)
-                g.sActorCommand = cFmt.msGentlyFormat(g.sActorCmdTemplate, dInstruction)
-                NTRC.ntracef(0, "MAIN", "proc main commands run|%s| ncopies|%s| lifem|%s| audit|%s| segs|%s|\n1-|%s|\n2-|%s|\n" % 
-                    (nRunNumber, dInstruction["nCopies"], dInstruction["nLifem"],
-                    dInstruction["nAuditFreq"], dInstruction["nAuditSegments"], 
+                g.sActorCmdFileName = cFmt.msGentlyFormat(
+                                    g.sActorCmdFileTemplate, dInstruction)
+                g.sActorCommand = cFmt.msGentlyFormat(
+                                    g.sActorCmdTemplate, dInstruction)
+                NTRC.ntracef(0, "MAIN", "proc main commands run|%s| '
+                    'ncopies|%s| lifem|%s| audit|%s| "
+                    "segs|%s|\n1-|%s|\n2-|%s|\n" 
+                    % (nRunNumber, dInstruction["nCopies"], 
+                    dInstruction["nLifem"], dInstruction["nAuditFreq"], 
+                    dInstruction["nAuditSegments"], 
                     g.lCommands, g.sActorCommand))
                 with open(g.sActorCmdFileName, 'w') as fhActorCmdFile:
-                    fhActorCmdFile.write("# ListActor command file, automatically generated by broker.  Do not edit.\n")
+                    fhActorCmdFile.write(
+                                    "# ListActor command file, "
+                                    "automatically generated by broker.  "
+                                    "Do not edit.\n")
                     for sCommand in g.lCommands:
                         print >> fhActorCmdFile, cFmt.fnsMaybeTest(sCommand)
     
@@ -712,7 +785,8 @@ def main():
                 time.sleep(g.nPoliteTimer)    
     
             else:
-                NTRC.tracef(0,"MAIN","OOPS, Stuck!  Too many python processes running forever.")
+                NTRC.tracef(0, "MAIN", "OOPS, Stuck!  Too many python "
+                    "processes running forever.")
                 break
     
         # If just doing a short test run today, maybe stop now.
@@ -779,8 +853,13 @@ foreach single-line file in holding dir
 #               Reduce default number of cores so it doesn't kill laptop.
 #               Reduce polite interval timer slightly to 3 sec.
 # 20161009  RBL Reduce polite interval timer to 2 sec.
+# 20170104  RBL Add shock params and server default life param.
+#               Restore glitchspan, which had been removed.  
+#               Begin to break out the set of random seeds from the 
+#                stored instructions.  Loop here on seeds instead of 
+#                having a single item in the db for each param set and seed.
 # 
-
+# 
 
 
 #END

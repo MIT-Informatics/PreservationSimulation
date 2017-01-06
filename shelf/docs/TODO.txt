@@ -16,6 +16,10 @@ DONE - server death evaluated before every audit cycle and at end of run.
 DONE - watch out for server lifetime zero (=infinite) when assessing
         server live/dead at audit and end of run.  
 DONE - when kill server, also kill shelf and all doc copies on it.  
+FIXME - add nRandomSeeds to GUI.
+FIXME - change shock (and maybe other) lists to match the instructions.  
+  One could generate the HTML from the instruction db, but that would
+  be telling.  
 
 
 TODO: web interface to select instructions for broker run
@@ -84,15 +88,18 @@ DONE - slow down after extractvalues, too.
 TODO: broker.py
 DONE - increase the stuck timer a lot.
 DUNNO - protect against grep failure, linux vs windows.
-FIXME - add a cleanstart shell script to empty the dirs that need to 
-  be empty, set a clean GiantOutput file, and rescue any data
+DONE - add a cleanstart shell script to empty the dirs that need to 
+  be empty, set a clean GiantOutput file.
+FIXME - cleanstart shell script should rescue any data
   that was left over in a previous GiantOutput file into
   the done dir.  
 DONE - fix y/n switch options to get rid of the need for a value.
 DONE - fix the broker invocation in the AWSinstallscript to match the
   revised y/n options.
-FIXME - start the run count from 1 even for cases that have already been done, 
+DONE - start the run count from 1 even for cases that have already been done, 
   so that the run number reflects progress toward the total number.  
+FIXME - add param for number of seeds and take the seeds from a separate 
+  file of some specific name.  
 
 
 TODO: audit
@@ -120,6 +127,11 @@ FIXME - write documentation on how to generate instructions flat file
 DONE - fix order of args to filter program, data file last.
 DONE - fix shell script that makes complete instruction list to
   reflect change in argument order.
+FIXME - Remove random seeds from the instruction db; add them in broker 
+  based on a param that states how many seeds today; maybe an environment
+  variable, even, or overridden by one.  Easy enough to add that single param
+  and shorten the instruction Cartesian product by a factor of ten or twenty.  
+  Important when we want to do samples of 100 or 1000.  
 
 
 TODO: packaging into Docker

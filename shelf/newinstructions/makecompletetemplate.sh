@@ -36,14 +36,19 @@ sh substituteall.sh "$2.05" \
         ins/auditfreq.ins ins/lifem.ins             > "$2.06"
 sh substituteall.sh "$2.06" \
         ins/glitchspan.ins ins/ncopies.ins          > "$2.07"
+sh substituteall.sh "$2.07" \
+        ins/shockfreq.ins ins/shockimpact.ins       > "$2.08"
+sh substituteall.sh "$2.08" \
+        ins/shockspan.ins ins/shockmaxlife.ins      > "$2.09"
+
 if [ "$filter" = "ON" ]
 then
     python useinstfilter.py realrulestext.txt \
-        "$2.07"                                     > "$2.08"
+        "$2.09"                                     > "$2.10"
 else
-    cp "$2.07" "$2.08"
+    cp "$2.09" "$2.10"
 fi
-sh substituteall.sh "$2.08" \
+sh substituteall.sh "$2.10" \
         ins/randomseed.ins                          > "$2"
 
 exit 0
@@ -60,6 +65,11 @@ glitchmaxlife
 glitchimpact
 glitchfreq
 glitchdecay
+
+shockfreq
+shockimpact
+shockspan
+shockmaxlife
 
 auditfreq
 lifem
