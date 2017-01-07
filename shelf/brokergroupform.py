@@ -46,6 +46,7 @@ def mainsim_post():
 
     bShortLog = request.forms.get("bShortLog")
 
+    nRandomSeeds = request.forms.get("nRandomSeeds")
     nSimLength = request.forms.get("nSimLength")
     nBandwidthMbps = request.forms.get("nBandwidthMbps")
 
@@ -73,6 +74,7 @@ def mainsim_post():
                 bShortLog=bShortLog, 
 
                 nSimLength=nSimLength, nBandwidthMbps=nBandwidthMbps, 
+                nRandomSeeds=nRandomSeeds, 
 
                 nShockFreq=nShockFreq, nShockImpact=nShockImpact, 
                 nShockSpan=nShockSpan, nShockMaxlife=nShockMaxlife, 
@@ -133,6 +135,7 @@ sMainCommandStringToStdout = ('python broker.py {sDatabaseName} pending done '
             '--glitchspan={nGlitchSpan} '
             '--shockfreq={nShockFreq} --shockimpact={nShockImpact} '
             '--shockspan={nShockSpan} --shockmaxlife={nShockMaxlife} '
+            '--nseeds={nRandomSeeds} '
             '{xshortlog} {xtestonly}  '
             '2>&1 '
 #            '--help'

@@ -35,13 +35,21 @@
 
 <!--  d i r e c t o r i e s ,  d a t a b a s e   n a m e  -->    
     <tr bgcolor="#ffffbb">
-        <td><b>Family dir:</b> <font color="red">* required</font><br />
+        <td><b>Family dir:</b> <font color="red">* required</font><br /><br />
             <input type="text" name="sFamilyDir" size="30" /><br/><br/></td>
-        <td><b>Specific dir:</b> <font color="red">* required</font><br />
+        <td><b>Specific dir:</b> <font color="red">* required</font><br /><br />
             <input type="text" name="sSpecificDir" size="30" /><br/><br/></td>
-        <td><b>Instruction mongodb name:</b> <font color="red">* required</font><br />
+        <td><b>Instruction MongoDb:</b> <font color="red">* required</font><br /><br />
             <input type="text" name="sDatabaseName" size="30" /><br/><br/></td>
-        <td>&nbsp;</td>
+        <td><b>Number of trials:</b> <br /><br />
+            <select name="nRandomSeeds">
+                <option value="11">11</option>
+                <option value="21" selected>21</option>
+                <option value="41">41</option>
+                <option value="101">101</option>
+            </select>
+            <br/><br/>
+        </td>
     </tr>
 
 <!--  c o p i e s ,   s e c t o r   l i f e  -->

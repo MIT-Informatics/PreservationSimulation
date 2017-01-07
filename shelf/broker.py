@@ -172,8 +172,8 @@ def fndCliParse(mysArglist):
                         )
 
     cParse.add_argument("--nseeds", type=str
-                        , dest='nRandomSeeds
-                        , metavar='nRANDOMSEEDS
+                        , dest='nRandomSeeds'
+                        , metavar='nRANDOMSEEDS'
                         , nargs='?'
                         , help='Number of random seeds to be used for  '
                         'repeated trials of each parameter setup.  '
@@ -320,7 +320,7 @@ class CG(object):
     sShelfLogFileTemplate = 'doc{nDocSize}cop{nCopies}shlf{nShelfSize}lif{nLifem}_'
     'af{nAuditFreq}s{nAuditSegments}t{sAuditType}_'
     'gf{nGlitchFreq}i{nGlitchImpact}d{nGlitchDecay}m{nGlitchMaxlife}_'
-    'sh{nShockFreq}i{nShockImpact}s{nShockSpan}_'
+    'sh{nShockFreq}i{nShockImpact}s{nShockSpan}_m{nShockMaxlife}'
     'seed{nRandomseed}'
     sShelfLogFileName = None
 
@@ -346,7 +346,7 @@ class CG(object):
 
     # Only field names that appear in items in the database should ever
     #  be in the query dictionary.  Otherwise, no item in the database 
-    #  can ever satisfy such a query, i.e., no results.  
+    #  can possibly satisfy such a query; i.e., no instructions, no results.  
     lSearchables = ('nAuditFreq nAuditSegments sAuditType nDocSize '
                     'nGlitchDecay nGlitchFreq nGlitchIgnorelevel '
                     'nGlitchImpact nGlitchMaxlife nGlitchSpan '
@@ -355,7 +355,9 @@ class CG(object):
                     'nCopies nRandomseed nShelfSize nSimlen sQuery' 
                     ).split()
     # Special fake CPU-bound commands to test for proper parallel execution.  
-    # These take about a minute (75s) and a third of a minute (22s) on a 3Gi7.
+    # These take about a minute (75s) and a third of a minute (22s) on an
+    #  Intel 3Gi7 CPU in my Dell Optiplex 7010 (2016-08).  Your mileage
+    #  may differ.  
     # Make sure we have the right version of bash and Python.
     sStartTime = 'date +%Y%m%d_%H%M%S.%3N'
     sBashIdCmd = 'sh --version'
@@ -386,7 +388,7 @@ class CG(object):
     nLinuxScrewupTime = 3   # How long between attempts.
 
     '''
-    Directory structure under the family/specific dir:
+    Directory structure under the familydir/specificdir:
     cmd - command files for the listactor program
     log - log file output from the main simulation runs
     act - little bitty log files from the listactor program
@@ -396,6 +398,8 @@ class CG(object):
     '''
 
 #=================================================
+
+# f n G e t C o m m a n d T e m p l a t e s 
 @ntrace
 def fnGetCommandTemplates(mysCommandFilename):
     '''
@@ -413,7 +417,7 @@ def fnbDoNotIgnoreLine(mysLine):
     '''
     True if not a comment or blank line.
     '''
-    # Ignore comment and blank lines.
+    # Ignore comment and blank lines, but take all others.
     return (not re.match("^\s*#", mysLine)) and (not re.match("^\s*$", mysLine))
 
 # f n I n t P l e a s e 
@@ -426,6 +430,7 @@ def fnIntPlease(myString):
         return myString
 
 #=================================================
+
 # f n W a i t F o r O p e n i n g 
 @catchex
 @ntracef("WAIT")
@@ -458,7 +463,7 @@ def fnbWaitForOpening(mynProcessMax, mysProcessName, mynWaitTime, mynWaitLimit):
         nWcLimit = g.nWcLimit
         while nWcLimit > 0:
             sCmd = g.sWaitForOpeningCmd
-            sFullCmd = cCmd.makeCmd(sCmd,dParams)
+            sFullCmd = cCmd.makeCmd(sCmd, dParams)
             sResult = cCmd.doCmdStr(sFullCmd)
             try:
                 nResult = int(sResult)
@@ -468,19 +473,22 @@ def fnbWaitForOpening(mynProcessMax, mysProcessName, mynWaitTime, mynWaitLimit):
                 time.sleep(g.nLinuxScrewupTime)
         #end while waiting for int from wc
 
-        NTRC.tracef(3,"WAIT","proc WaitForOpening1 idx|%d| cmd|%s| result|%s|" % (idx,sFullCmd,nResult))
+        NTRC.tracef(3,"WAIT","proc WaitForOpening1 idx|%d| cmd|%s| result|%s|" 
+            % (idx, sFullCmd, nResult))
         if mysProcessName.find("python") >= 0:
             nOtherProcs = nResult - 1               # Processes that are not me.
             nRealProcs = int(nOtherProcs / 2)       # They come in pairs.
             if nRealProcs < mynProcessMax: break    # If there's still room, go to it.
         else:
             if nResult < mynProcessMax: break
-        NTRC.tracef(3,"WAIT","proc WaitForOpening2 sleep and do again idx|%d| nResult|%d|" % (idx,nResult))
+        NTRC.tracef(3,"WAIT","proc WaitForOpening2 sleep and do again idx|%d| nResult|%d|" 
+            % (idx, nResult))
         time.sleep(mynWaitTime)
     return (idx < mynWaitLimit-1)                   # Return false if we ran out of retries.
 
 
 #=================================================
+
 # c l a s s   C F o r m a t 
 class CFormat(object):
 
@@ -529,12 +537,17 @@ class CFormat(object):
                     result = json.loads(sValue)
                 except ValueError:
                     result = fnIntPlease(sValue)
-                    NTRC.tracef(3, "FMT", "proc FormatQuery notjson item key|%s| val|%s| result|%s|" % (sAttrib, sValue, result))
+                    NTRC.tracef(3, "FMT", "proc FormatQuery notjson item "
+                        "key|%s| val|%s| result|%s|" 
+                        % (sAttrib, sValue, result))
                     if sAttrib == "sQuery":
-                        NTRC.ntrace(0,"ERROR: sQuery string is not valid JSON|%s|" % (sValue))
+                        NTRC.ntrace(0,"ERROR: sQuery string is not valid "
+                            "JSON|%s|" 
+                            % (sValue))
                         NTRC.ntrace(0,"Aborting run.")
                         sys.exit(1)
-            NTRC.tracef(3, "FMT", "proc FormatQuery item key|%s| val|%s| result|%s|" % (sAttrib, sValue, result))
+            NTRC.tracef(3, "FMT", "proc FormatQuery item key|%s| val|%s| result|%s|" 
+                % (sAttrib, sValue, result))
             dOut[sAttrib] = result
         # Allow only attribs that appear in the database, else will get 
         #  no results due to implied AND of all items in query dict.  
@@ -563,6 +576,7 @@ class CFormat(object):
 
 
 #=================================================
+
 # class   C C o m m a n d
 class CCommand(object):
     '''
@@ -612,6 +626,7 @@ class CCommand(object):
 
 
 #=================================================
+
 # c l a s s   C D a t a b a s e 
 class CDatabase(object):
     '''
@@ -665,6 +680,7 @@ class CDatabase(object):
         return result["ok"] != 0
 
 #=================================================
+
 # M A I N 
 @catchex
 @ntracef("MAIN")
@@ -691,109 +707,183 @@ def main():
     fnGetCommandTemplates(g.sCommandListFilename)
 
     # Construct database query for this invocation.
-    cFmt = CFormat()
-    dQuery = cFmt.fndFormatQuery(dCliDict)
+    g.cFmt = CFormat()
+    dQuery = g.cFmt.fndFormatQuery(dCliDict)
     NTRC.tracef(0,"MAIN","proc querydict|%s|" % ((dQuery)))
 
-    # Get the set of instructions for today from database.
-    cdb = CDatabase(g.sDatabaseName, g.sPendingCollectionName, g.sDoneCollectionName)
-    itAllInstructions = cdb.fnitGetInstructionIterator(dQuery)
+    # Look for overriding environment variables
+    fnvGetEnvironmentOverrides()
 
+    # Get the set of instructions for today from database.
+    g.cdb = CDatabase(g.sDatabaseName, g.sPendingCollectionName, g.sDoneCollectionName)
+    itAllInstructions = g.cdb.fnitGetInstructionIterator(dQuery)
+    fnnProcessAllInstructions(itAllInstructions)
+    
+    NTRC.ntracef(0,"MAIN","End.")
+
+# f n v G e t E n v i r o n m e n t O v e r r i d e s 
+@catchex
+@ntracef("MAIN")
+def fnvGetEnvironmentOverrides():
     # Allow user to override number of cores to use today.
+    # First, find out how many cores there are that we could possibly use.
+    nMaxCores = int(os.getenv("NUMBER_OF_PROCESSORS", None))
+    # By default, use one fewer than max available, according to the o/s.  
+    g.nCores = nMaxCores - 1 if nMaxCores else g.nCores
+    # If the user specifies a number, larger or smaller, take it.
     try:
         g.nCores = int(os.getenv("NCORES", CG.nCores))
     except (ValueError, TypeError):
         raise TypeError('Environment variable NCORES must be an integer.')
-
     # Allow user to override the polite interval to use today.
     try:
         g.nPoliteTimer = int(os.getenv("NPOLITE", CG.nPoliteTimer))
     except (ValueError, TypeError):
         raise TypeError('Environment variable NPOLITE must be an integer.')
 
+# f n n P r o c e s s A l l I n s t r u c t i o n s 
+@catchex
+@ntracef("MAIN")
+def fnnProcessAllInstructions(myitInstructionIterator):
+    ''' 
+    Get the set of instructions that match the user's criteria for this batch,
+     and run them one by one.
+    Count the number of runs, and don't exceed the user's limit, if any.
+    If the execution reports a serious error, stop the loop.
+    '''
     nRunNumber = 0
-    # And check for short test run.
     maxcount = int(g.nTestLimit)
-    # Or a completely fake test run.
+    # Is this a completely fake test run?  Replace templates.
     if g.sTestFib.startswith("Y"):
         g.lTemplates = g.lFibTemplates
-
-    # Process each instruction.
-    for dInstruction in itAllInstructions: 
+    # Process each instruction in turn.
+    for dInstruction in myitInstructionIterator: 
         NTRC.ntracef(3,"MAIN","proc main instruction\n|%s|" 
             % (dInstruction))
 
-        sInstructionId = str(dInstruction["_id"])
-        # If the user insists, redo this case.
-        if g.sRedo.startswith("Y"):
-            NTRC.ntracef(0,"MAIN","proc force redo for item id|%s|" 
-                % (sInstructionId))
-            cdb.fnbDeleteDoneRecord(sInstructionId)
-
         nRunNumber += 1
-        # If this instruction has already been processed skip it.
-        bIsItDone = cdb.fnbIsItDone(sInstructionId)
-        if bIsItDone: 
-            NTRC.ntracef(0,"MAIN","proc skip item already done run|%s| "
-                "id|%s| copies|%s| lifem|%s|" 
-                % (nRunNumber, sInstructionId, dInstruction["nCopies"],
-                dInstruction["nLifem"]))
+        nStatus = fnstProcessOneInstructionManyTimes(nRunNumber, dInstruction)
+        if nStatus > 0:     # Some major error, stop loop right now.  
+            break
 
-            continue
-
-        if g.sListOnly.startswith("Y"):
-            # Testing: Just dump out the instruction dictionary for this item.
-            NTRC.ntracef(0,"MAIN","proc ListOnly, item run|%s| "
-                "ncopies|%s| lifem|%s| id|%s| dict|%s|" 
-                % (nRunNumber, dInstruction["nCopies"], dInstruction["nLifem"],
-                sInstructionId, dInstruction))
-        else:   # Real life: execute the instruction.
-            bContinue = fnbWaitForOpening(g.nCores, "python", 
-                        g.nCoreTimer, g.nStuckLimit)
-            if bContinue:
-                # Format commands to be executed by actor.
-                g.sShelfLogFileName = cFmt.msGentlyFormat(
-                                    g.sShelfLogFileTemplate, dInstruction)
-                g.lCommands = []
-                for sTemplate in g.lTemplates:
-                    sCmd = cFmt.msGentlyFormat(sTemplate, dInstruction)
-                    g.lCommands.append(sCmd)
-    
-                # Make instruction file for the actor.
-                g.sActorCmdFileName = cFmt.msGentlyFormat(
-                                    g.sActorCmdFileTemplate, dInstruction)
-                g.sActorCommand = cFmt.msGentlyFormat(
-                                    g.sActorCmdTemplate, dInstruction)
-                NTRC.ntracef(0, "MAIN", "proc main commands run|%s| '
-                    'ncopies|%s| lifem|%s| audit|%s| "
-                    "segs|%s|\n1-|%s|\n2-|%s|\n" 
-                    % (nRunNumber, dInstruction["nCopies"], 
-                    dInstruction["nLifem"], dInstruction["nAuditFreq"], 
-                    dInstruction["nAuditSegments"], 
-                    g.lCommands, g.sActorCommand))
-                with open(g.sActorCmdFileName, 'w') as fhActorCmdFile:
-                    fhActorCmdFile.write(
-                                    "# ListActor command file, "
-                                    "automatically generated by broker.  "
-                                    "Do not edit.\n")
-                    for sCommand in g.lCommands:
-                        print >> fhActorCmdFile, cFmt.fnsMaybeTest(sCommand)
-    
-                # Launch the actor to perform main runs.  
-                cCmd = CCommand()
-                sResult = cCmd.doCmdStr(g.sActorCommand)
-                time.sleep(g.nPoliteTimer)    
-    
-            else:
-                NTRC.tracef(0, "MAIN", "OOPS, Stuck!  Too many python "
-                    "processes running forever.")
-                break
-    
-        # If just doing a short test run today, maybe stop now.
+        # If user asked for a short test run today, maybe stop now.
         maxcount -= 1
         if int(g.nTestLimit) > 0 and maxcount <= 0: break
 
-    NTRC.ntracef(0,"MAIN","End.")
+    return nRunNumber
+
+# f n s t P r o c e s s O n e I n s t r u c t i o n M a n y T i m e s 
+@catchex
+@ntracef("MAIN")
+def fnstProcessOneInstructionManyTimes(mynRunNumber, mydInstruction):
+    ''' 
+    Process a single instruction (set of params) once for each of a
+     predetermined number and sequence of random seeds.
+    '''
+    lSeedsToUse = fnlGetRandomSeeds(g.nRandomSeeds, g.sRandomSeedFile)
+    for (nIdx, nMaybeSeed) in zip(range(len(lSeedsToUse)), lSeedsToUse):
+        sRunId = str(mynRunNumber) + "-" + str(nIdx)
+        nStatus = 0
+        try:
+            nSeed = int(nMaybeSeed)
+        except ValueError:
+            raise ValueError, "Random seed not integer |%s|" % (nMaybeSeed)
+        nStatus = fnstProcessOneInstruction(sRunId, mydInstruction, nSeed)
+        if nStatus > 0:
+            break
+    return nStatus
+
+# f n v P r o c e s s O n e I n s t r u c t i o n 
+@catchex
+@ntracef("MAIN")
+def fnstProcessOneInstruction(mysRunNumber, mydInstruction, mynSeed):
+    ''' 
+    Process one single instruction for one run.  
+    If just testing today, print instruction contents but do not run it.
+    If the instruction has already been processed, skip over it unless
+     the user requires it to be redone.  
+    '''
+    sInstructionId = str(mydInstruction["_id"])
+    # If the user specifies, redo this case even if done before.
+    if g.sRedo.startswith("Y"):
+        NTRC.ntracef(0,"MAIN","proc force redo for item id|%s|" 
+            % (sInstructionId))
+        g.cdb.fnbDeleteDoneRecord(sInstructionId)
+
+    # If this instruction has already been processed skip it.
+    bIsItDone = g.cdb.fnbIsItDone(sInstructionId)
+    if bIsItDone: 
+        NTRC.ntracef(0,"MAIN","proc skip item already done run|%s| "
+            "id|%s| copies|%s| lifem|%s|" 
+            % (mynRunNumber, sInstructionId, mydInstruction["nCopies"],
+            mydInstruction["nLifem"]))
+        #continue    # Skip this iteration of the loop.
+
+    elif g.sListOnly.startswith("Y"):
+        # Testing: Just dump out the instruction dictionary for this item.
+        NTRC.ntracef(0,"MAIN","proc ListOnly, item run|%s| "
+            "ncopies|%s| lifem|%s| id|%s| dict|%s|" 
+            % (mynRunNumber, mydInstruction["nCopies"], mydInstruction["nLifem"],
+            sInstructionId, mydInstruction))
+    
+    else:   # Real life: execute the instruction.
+        bContinue = fnbWaitForOpening(g.nCores, "python", 
+                    g.nCoreTimer, g.nStuckLimit)
+        if bContinue:
+            mydInstruction["nRandomSeed"] = mynSeed
+            # Format commands to be executed by actor.
+            g.sShelfLogFileName = g.cFmt.msGentlyFormat(
+                                g.sShelfLogFileTemplate, mydInstruction)
+            g.lCommands = []
+            for sTemplate in g.lTemplates:
+                sCmd = g.cFmt.msGentlyFormat(sTemplate, mydInstruction)
+                g.lCommands.append(sCmd)
+
+            # Make instruction file for the actor.
+            g.sActorCmdFileName = g.cFmt.msGentlyFormat(
+                                g.sActorCmdFileTemplate, dInstruction)
+            g.sActorCommand = g.cFmt.msGentlyFormat(
+                                g.sActorCmdTemplate, dInstruction)
+            NTRC.ntracef(0, "MAIN", "proc main commands run|%s| "
+                "ncopies|%s| lifem|%s| audit|%s| "
+                "segs|%s|\n1-|%s|\n2-|%s|\n" 
+                % (mysRunNumber, dInstruction["nCopies"], 
+                dInstruction["nLifem"], dInstruction["nAuditFreq"], 
+                dInstruction["nAuditSegments"], 
+                g.lCommands, g.sActorCommand))
+            with open(g.sActorCmdFileName, 'w') as fhActorCmdFile:
+                fhActorCmdFile.write(
+                                "# ListActor command file, "
+                                "automatically generated by broker.  "
+                                "Do not edit.\n")
+                for sCommand in g.lCommands:
+                    print >> fhActorCmdFile, g.cFmt.fnsMaybeTest(sCommand)
+
+            # Launch the actor to perform main runs.  
+            cCmd = CCommand()
+            sResult = cCmd.doCmdStr(g.sActorCommand)
+            time.sleep(g.nPoliteTimer)    
+
+        else:
+            NTRC.tracef(0, "MAIN", "OOPS, Stuck!  Too many python "
+                "processes running forever.")
+            #break
+            return 1
+    return 0
+
+# f n l G e t R a n d o m S e e d s 
+@catchex
+@ntracef("MAIN")
+def fnlGetRandomSeeds(mynHowMany, mysFilename):
+    '''
+    Return a list of the first mynHowMany random seeds from the 
+     file specified.  
+    This is the primitive version that does not permit blank lines, 
+     comments, or other detritus in the list of seed numbers.  
+    '''
+    with open(mysFilename, "r") as fhSeeds:
+        lSeeds = [fnIntPlease(fhSeeds) for _ in xrange(mynHowMany)]
+    return lSeeds
 
 
 #=================================================

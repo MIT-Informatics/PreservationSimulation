@@ -1,5 +1,9 @@
 #!/bin/bash
 # makecompletetemplate.sh 
+# Run this (with bash) to create the expanded flat instruction file
+#  by crossing all the instruction files.  That flat file can then be 
+#  loaded into a MongoDb database, or processed directly if one wants
+#  to write the search function.  
 
 if [ -z "$2" ]
 then
@@ -22,7 +26,7 @@ fi
 #    cp $(ls $ff*.sh | sort | tail -1) $ff.sh
 #done
 
-sh substituteall.sh "$1" \
+sh substituteall.sh "$1"    \
         ins/simlen.ins ins/glitchignorelevel.ins    > "$2.01"
 sh substituteall.sh "$2.01" \
         ins/audittype.ins ins/auditsegments.ins     > "$2.02"
@@ -48,8 +52,7 @@ then
 else
     cp "$2.09" "$2.10"
 fi
-sh substituteall.sh "$2.10" \
-        ins/randomseed.ins                          > "$2"
+cp "$2.10"   "$2" 
 
 exit 0
 #END
