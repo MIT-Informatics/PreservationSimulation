@@ -272,7 +272,7 @@ def main():
     if G.bShortLog:
         G.bDoNotLogInfo = True
     tSimBegin = clock()
-    env.run(until=G.nSimLength if G.nSimLength > 0 else G.nSimLengthDefault)
+    env.run(until=G.nSimLength)
 
     CShock.cmAtEndOfRun()
     tSimEnd = clock()

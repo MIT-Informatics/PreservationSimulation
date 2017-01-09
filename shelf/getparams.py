@@ -4,13 +4,11 @@
 # Get and organize info from all the parameter files, 
 #  plus a few from the environment.  
 
-
 from NewTraceFac import NTRC,ntrace,ntracef
 import readin
 from util import fnIntPlease
 from os import environ
 from globaldata import G,P
-
 
 #-----------------------------------------------------------
 # g e t P a r a m F i l e s 
@@ -84,11 +82,11 @@ def getParamFiles(mysParamdir):
         pass
     '''
 
-
 #-----------------------------------------------------------
 # g e t E n v i r o n m e n t P a r a m s
 @ntracef("GETP")
 def getEnvironmentParams():
+    ''' In every case, keep default if no new envir var present.'''
     try:
         P.nRandomSeed = fnIntPlease(environ["RANDOMSEED"])
     except (KeyError,TypeError,ValueError):
@@ -105,10 +103,17 @@ def getEnvironmentParams():
         P.sLogLevel = environ["LOG_LEVEL"]
     except KeyError:
         pass
+    P.nShockType = fnIntPlease(environ.get("SHELF_SHOCKTYPE", G.nShockType))
+    # Have to resolve some of these from P to G before considering the 
+    #  CLI params that may override them, so that they can be 
+    #  reported correctly.  
+    G.nSimLength = (P.nSimLength if P.nSimLength > 0 else P.nSimLengthDefault)
+    G.nRandomSeed = P.nRandomSeed
 
 # Edit History:
 # 20160920  RBL Move these routines out of main.py.
-# 
+# 20170109  RBL Add shock type to envir vars.  
+#               And note that none of the other envir vers is used anymore.  
 # 
 # 
 

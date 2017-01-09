@@ -113,13 +113,24 @@ class CShock(object):
         ''' Reduce the lifetime of a single server. '''
         cServer = G.dID2Server[mysServerID]
         fCurrentLife = cServer.mfGetMyCurrentLife()
-        fNewLife = (1.0 - myfReduction) * fCurrentLife
+        # Hack to experiment with the two types of shock to see if they
+        #  are statistically different.  
+        if G.nShockType == 1:
+            # Type 1, the exception: lifetime during shock period is just
+            #  half of what it was initially.
+            fNewLife = (1.0 - myfReduction) * fCurrentLife
+        else: 
+            # Type 2, the default: lifetime during shock period is a new
+            #  random chosen from a distribution with less than the lifetime
+            #  of the old one.  
+            fOriginalLife = cServer.mfGetMyOriginalLife()
+            fNewLife = util.makeserverlife((1.0 - myfReduction) * fOriginalLife)
         NTRC.ntracef(3, "SHOK", "proc shock at t|%8.0f| server|%s| new "
-            "life|%.0f|" 
-            % (G.env.now, mysServerID, fNewLife))
+            "life|%.0f| shocktype|%s|" 
+            % (G.env.now, mysServerID, fNewLife, G.nShockType))
         lg.logInfo("SHOCK ", "t|%6.0f| reducing server|%s| life by|%s| to "
-            "|%.0f|" 
-            % (G.env.now, mysServerID, myfReduction, fNewLife))
+            "|%.0f| shocktype|%s|" 
+            % (G.env.now, mysServerID, myfReduction, fNewLife, G.nShockType))
         cServer.mRescheduleMyLife(fNewLife)
 
 # m S h o c k E x p i r e s 

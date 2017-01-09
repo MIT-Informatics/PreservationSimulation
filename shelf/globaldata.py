@@ -57,6 +57,8 @@ class ProtoG(object):
     fInfinity = float(1.0E12)   # Infinitely far in the future.
 
     nLifek = 0              # False lifek value in case lifem specified.  
+    nSimLength = 100000     # Length of simulation, hours.  
+    nSimLengthDefault = 100000
 
     fServerDefaultHalflife = 0  # How long do servers life if unmolested?
 ############################################TESTING###########################
@@ -78,6 +80,8 @@ class ProtoG(object):
     nShockImpact = 33       # Percent reduction in server lifetime.
     nShockSpan = 1          # Number of servers affected by slump. 
     nShockMaxlife = 10000   # Duration of shock (hours), fixed not random. 
+    nShockType = 2          # 1 = half of current life during shock; 
+                            # 2 = new rand life from distn with half param
     nShocksTotal = 0        # Count of shocks this run. 
     nDeadOldServers = 0     # Count of servers that died of old age.
     nDeathsDueToShock = 0   # Count of servers that died of age during shock.  

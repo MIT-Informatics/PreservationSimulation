@@ -66,7 +66,6 @@ def getCliArgsForEverythingElse():
         have to check that this would not also have some 
         unhappy side effects with names.
     '''
-    fnMaybeOverride("nSimLength",dCliDict,G)
     fnMaybeOverride("nRandomSeed",dCliDict,G)
     fnMaybeOverride("sLogLevel",dCliDict,G)
     fnMaybeOverride("sLogFile",dCliDict,G)
@@ -75,7 +74,12 @@ def getCliArgsForEverythingElse():
     fnMaybeOverride("nDocLarge",dCliDict,G)
     fnMaybeOverride("nDocSmallPct",dCliDict,G)
     fnMaybeOverride("nDocPctSdev",dCliDict,G)
-    
+
+    # A CLI value of zero for sim length means don't override whatever
+    #  has already been determined by defaults, params, and environment vars.  
+    if dCliDict["nSimLength"] is not None and dCliDict["nSimLength"] > 0:
+        fnMaybeOverride("nSimLength",dCliDict,G)
+
 #    fnMaybeOverride("lBER",dCliDict,G)
 #    fnMaybeOverride("lBERm",dCliDict,G)
     fnMaybeOverride("nLifek",dCliDict,G)
