@@ -1,7 +1,7 @@
 # Template for HL instruction strings
 
-nAuditFreq nAuditSegments sAuditType nDocSize nGlitchDecay nGlitchFreq nGlitchIgnorelevel nGlitchImpact nGlitchMaxlife nGlitchSpan nLifem nCopies nRandomseed nShelfSize nShockFreq nShockImpact nShockMaxlife nShockSpan nSimlen
+nAuditFreq nAuditSegments sAuditType nDocSize nGlitchDecay nGlitchFreq nGlitchIgnorelevel nGlitchImpact nGlitchMaxlife nGlitchSpan nLifem nCopies nShelfSize nShockFreq nShockImpact nShockMaxlife nShockSpan nSimlen
 
-{nAuditFreq} {nAuditSegments} {sAuditType} {nDocSize} {nGlitchDecay} {nGlitchFreq} {nGlitchIgnorelevel} {nGlitchImpact} {nGlitchMaxlife} {nGlitchSpan} {nLifem} {nCopies} {nRandomseed} {nShelfSize} {nShockFreq} {nShockImpact} {nShockMaxlife} {nShockSpan} {nSimlen}
+{nAuditFreq} {nAuditSegments} {sAuditType} {nDocSize} {nGlitchDecay} {nGlitchFreq} {nGlitchIgnorelevel} {nGlitchImpact} {nGlitchMaxlife} {nGlitchSpan} {nLifem} {nCopies} {nShelfSize} {nShockFreq} {nShockImpact} {nShockMaxlife} {nShockSpan} {nSimlen}
 
 
