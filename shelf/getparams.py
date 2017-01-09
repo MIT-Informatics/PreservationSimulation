@@ -103,7 +103,7 @@ def getEnvironmentParams():
         P.sLogLevel = environ["LOG_LEVEL"]
     except KeyError:
         pass
-    P.nShockType = fnIntPlease(environ.get("SHELF_SHOCKTYPE", G.nShockType))
+    G.nShockType = fnIntPlease(environ.get("SHELF_SHOCKTYPE", G.nShockType))
     # Have to resolve some of these from P to G before considering the 
     #  CLI params that may override them, so that they can be 
     #  reported correctly.  
