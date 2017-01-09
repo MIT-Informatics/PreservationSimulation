@@ -48,8 +48,10 @@ def dumpServerErrorStats():
         "nonempty|%d| empty|%d| multiples|%d|" 
         % (TnHits, TnAboveHiWater, (TnHits-TnEmptyHits), TnEmptyHits, 
         TnMultipleHits))
-    lg.logInfo("MAIN","DEADSERVERS RIP n|%d|, |%s|" 
+    lg.logInfo("MAIN","DEADSERVERS ALL n|%d| |%s|" 
         % (len(G.lDeadServers), util.fnlSortIDList(G.lDeadServers)))
+    lg.logInfo("MAIN","DEADSERVERS ACTIVE n|%d| |%s|" 
+        % (len(G.lDeadActiveServers), util.fnlSortIDList(G.lDeadActiveServers)))
     return sServerID+"+"+sID
 
 # d u m p A u d i t S t a t s 
@@ -118,7 +120,7 @@ def dumpGlitchStats():
 
 # d u m p S h o c k S t a t s 
 def dumpShockStats():
-    lg.logInfo("MAIN","SHOCKS Total shocks|%d| deaths due to shock|%d|%s|" 
+    lg.logInfo("MAIN","SHOCKS Total shocks|%d| deaths due to shock|%d: %s|" 
         % (G.nShocksTotal, G.nDeathsDueToShock, G.lDeathsDueToShock))
 
 # d u m p C o l l e c t i o n S t a t s 
@@ -144,6 +146,7 @@ def dumpCollectionStats(mysCollID):
 # 20161231  RBL Add list of dead servers to report.  
 # 20170102  RBL Add more shock stats.  
 #               PEP8-ify some more lines.  
+# 20170109  RBL Improve reporting of dead servers.  
 # 
 # 
 

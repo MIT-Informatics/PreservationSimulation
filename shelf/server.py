@@ -73,6 +73,8 @@ class CServer(object):
     def mKillServer(self):
         self.bDead = True
         G.lDeadServers.append(self.ID)
+        if self.lShelfIDs:
+            G.lDeadActiveServers.append(self.ID)
         for sShelfID in self.lShelfIDs:
             cShelf = G.dID2Shelf[sShelfID]
             cShelf.mKillShelf()
@@ -393,6 +395,7 @@ def fnTimerInt(objTimer, xContext):
 #                ListDocumentsRemaining method.
 # 20170101  RBL Return number of docs when placing collection. 
 # 20170102  RBL PEP8-ify most of the long lines.  
+# 20170109  RBL Track servers that die, active or otherwise.  
 # 
 # 
 

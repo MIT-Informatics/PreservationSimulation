@@ -101,10 +101,16 @@ class CShock(object):
         NTRC.ntracef(3, "SHOK", "proc reduce servers|%s| by|%s|" 
             % (lServersToShock, fReduction))
         for sServerID in lServersToShock:
-            lg.logInfo("SHOCK ", "t|%6.0f| reduce server|%s| life by pct|%s|" 
+            lg.logInfo("SHOCK ", "t|%6.0f| reduce svr|%s| life by pct|%s|" 
                 % (G.env.now, sServerID, self.nImpact))
-            self.mReduceSingleServerLifetime(sServerID, fReduction)
-            self.lsServersShocked.append(sServerID)
+            cServer = G.dID2Server[sServerID]
+            fOriginalLife = float(cServer.mfGetMyOriginalLife())
+            if fOriginalLife > 0:
+                self.mReduceSingleServerLifetime(sServerID, fReduction)
+                self.lsServersShocked.append(sServerID)
+            else:
+                lg.logInfo("SHOCK ", "t|%6.0f| cannot reduce svr|%s| life|%.0f|"
+                    % (G.env.now, sServerID, fOriginalLife)) 
 
 # m R e d u c e S i n g l e S e r v e r L i f e t i m e 
     @catchex
@@ -113,6 +119,7 @@ class CShock(object):
         ''' Reduce the lifetime of a single server. '''
         cServer = G.dID2Server[mysServerID]
         fCurrentLife = cServer.mfGetMyCurrentLife()
+        fOriginalLife = cServer.mfGetMyOriginalLife()
         # Hack to experiment with the two types of shock to see if they
         #  are statistically different.  
         if G.nShockType == 1:
@@ -123,14 +130,14 @@ class CShock(object):
             # Type 2, the default: lifetime during shock period is a new
             #  random chosen from a distribution with less than the lifetime
             #  of the old one.  
-            fOriginalLife = cServer.mfGetMyOriginalLife()
             fNewLife = util.makeserverlife((1.0 - myfReduction) * fOriginalLife)
-        NTRC.ntracef(3, "SHOK", "proc shock at t|%8.0f| server|%s| new "
+        NTRC.ntracef(3, "SHOK", "proc shock at t|%8.0f| svr|%s| new"
             "life|%.0f| shocktype|%s|" 
             % (G.env.now, mysServerID, fNewLife, G.nShockType))
-        lg.logInfo("SHOCK ", "t|%6.0f| reducing server|%s| life by|%s| to "
+        lg.logInfo("SHOCK ", "t|%6.0f| reduce svr|%s| life by|%s| from|%.0f| to"
             "|%.0f| shocktype|%s|" 
-            % (G.env.now, mysServerID, myfReduction, fNewLife, G.nShockType))
+            % (G.env.now, mysServerID, myfReduction, fOriginalLife, fNewLife, 
+            G.nShockType))
         cServer.mRescheduleMyLife(fNewLife)
 
 # m S h o c k E x p i r e s 
@@ -151,6 +158,7 @@ class CShock(object):
         lg.logInfo("SHOCK ", "t|%6.0f| shock end, restoring server lifetimes "
             "for ids|%s|" 
             % (G.env.now, self.lsServersShocked))
+        # WARNING: list may be empty if server default life is infinite (zero).
         for sServerID in self.lsServersShocked:
             self.mRestoreSingleServerLifetime(sServerID)
         self.lsServersShocked = []
@@ -349,7 +357,14 @@ during the next audit cycle or at end of run.
 # 20161231  RBL If server is already dead, don't kill it again, and 
 #                if it should be dead now, kill it now and 
 #                don't try to restore its lifetime to normal.  
-# 
+# 20170109  RBL Careful not to try to reduce a zero (=infinite) lifetime
+#                of a server, nor to restore it later.  
+#               Slightly improve reporting of changed lifetimes.
+#               Add type 2 shock, which generates a new random lifetime 
+#                based on the same distribution shape but with a reduced
+#                half-life.  In both shock types, the original life is 
+#                restored at the end of the shock if the server has 
+#                not died during the shock.  
 # 
 
 #END

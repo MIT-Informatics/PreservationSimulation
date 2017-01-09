@@ -67,6 +67,7 @@ class ProtoG(object):
 ########################################END TESTING###########################
     lDeadServers = []       # List of servers that died this run, 
                             #  from old age or shock or glitch.  
+    lDeadActiveServers = [] # Servers that died in the line of duty.  
 
     nGlitchFreq = 0         # Half-life of glitch-free intervals.
     nGlitchImpact = 0       # Percent reduction in sector lifetime.
@@ -217,6 +218,7 @@ G = CG()
 #                not, regrettably, recorded for posterity.  
 # 20161118  RBL Add a default lifespan for servers.  
 # 20161231  RBL Add list of dead servers for reporting.  
+# 20170109  RBL Add list of dead active servers, too.  
 # 
 # 
 
