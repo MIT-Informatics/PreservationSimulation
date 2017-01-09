@@ -20,6 +20,7 @@ NTRC.ntrace(3, "Importing...")
 from pymongo import MongoClient
 import re
 import sys
+import os
 import itertools
 
 @ntrace
@@ -74,6 +75,7 @@ def fnnPutIterToDb(myitHandle,mysSeparator,myoCollection):
     '''
     nNewRecs = 0
     lNames = []
+    nProgressInterval = os.environ.get("TRACE_PROGRESS",None)
     for sLine in itertools.ifilter(fnbNotIgnoreLine, myitHandle):
         # The first line is header containing field names.
         # All other lines are data.
@@ -89,7 +91,11 @@ def fnnPutIterToDb(myitHandle,mysSeparator,myoCollection):
         oNewID = myoCollection.insert_one(dLine).inserted_id
         nNewRecs += 1
         NTRC.ntrace(3, "proc stored line n|{}| post_id|{}|".format(nNewRecs, oNewID))
+        if nProgressInterval and (nNewRecs % (int(nProgressInterval) * 1000) == 0):
+            sys.stdout.write(".")
     NTRC.ntrace(3, "proc lines stored|{}|".format(myoCollection.count()))
+    if nProgressInterval: 
+        sys.stdout.write("\n")
     return myoCollection.count()
 
 @ntrace
@@ -209,5 +215,13 @@ def get(post_id):
     document = client.db.collection.find_one({'_id': ObjectId(post_id)})
 
 """
+
+# Edit history:
+# 2015sometime  RBL Original version.
+# 20170107  RBL Add progress indicator, a dot every 1000*n records loaded, 
+#                where n comes from environment variable TRACE_PROGRESS.
+#                If no environment variable defined, no progress indication.
+#  
+# 
 
 #END

@@ -317,11 +317,12 @@ class CG(object):
     sDoneCollectionName = None
 
     # Command template components.
-    sShelfLogFileTemplate = 'doc{nDocSize}cop{nCopies}shlf{nShelfSize}lif{nLifem}_'
-    'af{nAuditFreq}s{nAuditSegments}t{sAuditType}_'
-    'gf{nGlitchFreq}i{nGlitchImpact}d{nGlitchDecay}m{nGlitchMaxlife}_'
-    'sh{nShockFreq}i{nShockImpact}s{nShockSpan}_m{nShockMaxlife}'
-    'seed{nRandomseed}'
+    sShelfLogFileTemplate = ('doc{nDocSize}cop{nCopies}shlf{nShelfSize}lif{nLifem}_'
+        'af{nAuditFreq}s{nAuditSegments}t{sAuditType}_'
+        'gf{nGlitchFreq}i{nGlitchImpact}d{nGlitchDecay}m{nGlitchMaxlife}_'
+        'sh{nShockFreq}i{nShockImpact}s{nShockSpan}_m{nShockMaxlife}'
+        'seed{nRandomseed}'
+        )
     sShelfLogFileName = None
 
     # Templates to be obtained from instruction file, and commands to be 
@@ -780,14 +781,22 @@ def fnstProcessOneInstructionManyTimes(mynRunNumber, mydInstruction):
     Process a single instruction (set of params) once for each of a
      predetermined number and sequence of random seeds.
     '''
-    lSeedsToUse = fnlGetRandomSeeds(g.nRandomSeeds, g.sRandomSeedFile)
-    for (nIdx, nMaybeSeed) in zip(range(len(lSeedsToUse)), lSeedsToUse):
-        sRunId = str(mynRunNumber) + "-" + str(nIdx)
+    lSeedsToUse = fnlGetRandomSeeds(fnIntPlease(g.nRandomSeeds), 
+                    g.sRandomSeedFile)
+    mydInstruction["sBaseId"] = str(mydInstruction["_id"])
+    for (nIdx, nMaybeSeed) in zip(range(1, len(lSeedsToUse)+1), lSeedsToUse):
+        # Adjust run number and mongo id because there are now
+        #  multiple seeds and runs per instruction.  
+        sRunId = str(mynRunNumber) + "." + str(nIdx)
+        sId = str(mydInstruction["sBaseId"])
+        mydInstruction["_id"] = sId + "_" + str(nIdx)
+        
         nStatus = 0
         try:
             nSeed = int(nMaybeSeed)
         except ValueError:
             raise ValueError, "Random seed not integer |%s|" % (nMaybeSeed)
+        mydInstruction["nRandomseed"] = nSeed
         nStatus = fnstProcessOneInstruction(sRunId, mydInstruction, nSeed)
         if nStatus > 0:
             break
@@ -823,7 +832,7 @@ def fnstProcessOneInstruction(mysRunNumber, mydInstruction, mynSeed):
         # Testing: Just dump out the instruction dictionary for this item.
         NTRC.ntracef(0,"MAIN","proc ListOnly, item run|%s| "
             "ncopies|%s| lifem|%s| id|%s| dict|%s|" 
-            % (mynRunNumber, mydInstruction["nCopies"], mydInstruction["nLifem"],
+            % (mysRunNumber, mydInstruction["nCopies"], mydInstruction["nLifem"],
             sInstructionId, mydInstruction))
     
     else:   # Real life: execute the instruction.
@@ -841,15 +850,15 @@ def fnstProcessOneInstruction(mysRunNumber, mydInstruction, mynSeed):
 
             # Make instruction file for the actor.
             g.sActorCmdFileName = g.cFmt.msGentlyFormat(
-                                g.sActorCmdFileTemplate, dInstruction)
+                                g.sActorCmdFileTemplate, mydInstruction)
             g.sActorCommand = g.cFmt.msGentlyFormat(
-                                g.sActorCmdTemplate, dInstruction)
+                                g.sActorCmdTemplate, mydInstruction)
             NTRC.ntracef(0, "MAIN", "proc main commands run|%s| "
                 "ncopies|%s| lifem|%s| audit|%s| "
                 "segs|%s|\n1-|%s|\n2-|%s|\n" 
-                % (mysRunNumber, dInstruction["nCopies"], 
-                dInstruction["nLifem"], dInstruction["nAuditFreq"], 
-                dInstruction["nAuditSegments"], 
+                % (mysRunNumber, mydInstruction["nCopies"], 
+                mydInstruction["nLifem"], mydInstruction["nAuditFreq"], 
+                mydInstruction["nAuditSegments"], 
                 g.lCommands, g.sActorCommand))
             with open(g.sActorCmdFileName, 'w') as fhActorCmdFile:
                 fhActorCmdFile.write(
@@ -882,8 +891,9 @@ def fnlGetRandomSeeds(mynHowMany, mysFilename):
      comments, or other detritus in the list of seed numbers.  
     '''
     with open(mysFilename, "r") as fhSeeds:
-        lSeeds = [fnIntPlease(fhSeeds) for _ in xrange(mynHowMany)]
-    return lSeeds
+        lsSeeds = [(fhSeeds.next()) for _ in range(mynHowMany)]
+        lnSeeds = [fnIntPlease(_) for _ in lsSeeds]
+    return lnSeeds
 
 
 #=================================================

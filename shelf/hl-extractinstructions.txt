@@ -67,7 +67,7 @@ simlength,"PARAMS INFO.*timelimit",8,timelimit.(\d+)
 seed,PARAMS INFO.*seed,7,(\d+)
 
 # Include the MongoDB _id field so we can declare a job done.  
-mongoid,"Command line",0,--mongoid=.([0-9a-fA-F]+)
+mongoid,"Command line",0,--mongoid=.([0-9a-fA-F_.]+)
 
 # How many docs lost, according to the final evaluation.  
 lost,NEWS,16,(\d+)
