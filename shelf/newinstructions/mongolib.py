@@ -93,6 +93,7 @@ def fnnPutIterToDb(myitHandle,mysSeparator,myoCollection):
         NTRC.ntrace(3, "proc stored line n|{}| post_id|{}|".format(nNewRecs, oNewID))
         if nProgressInterval and (nNewRecs % (int(nProgressInterval) * 1000) == 0):
             sys.stdout.write(".")
+            sys.stdout.flush()
     NTRC.ntrace(3, "proc lines stored|{}|".format(myoCollection.count()))
     if nProgressInterval: 
         sys.stdout.write("\n")
@@ -221,7 +222,8 @@ def get(post_id):
 # 20170107  RBL Add progress indicator, a dot every 1000*n records loaded, 
 #                where n comes from environment variable TRACE_PROGRESS.
 #                If no environment variable defined, no progress indication.
-#  
+# 20170110  RBL And remember to flush the output so the progress is visible.
+# 
 # 
 
 #END
