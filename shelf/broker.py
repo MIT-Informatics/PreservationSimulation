@@ -824,7 +824,7 @@ def fnstProcessOneInstruction(mysRunNumber, mydInstruction, mynSeed):
     if bIsItDone: 
         NTRC.ntracef(0,"MAIN","proc skip item already done run|%s| "
             "id|%s| copies|%s| lifem|%s|" 
-            % (mynRunNumber, sInstructionId, mydInstruction["nCopies"],
+            % (mysRunNumber, sInstructionId, mydInstruction["nCopies"],
             mydInstruction["nLifem"]))
         #continue    # Skip this iteration of the loop.
 
