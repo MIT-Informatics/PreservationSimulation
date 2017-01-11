@@ -8,7 +8,7 @@
 #  can use a different separator if the user wishes.  
 
 =template
-{timestamp} {docsize} {shelfsize} {copies} {lifem} {simlength} {seed} {lost} {docstotal} {docsokay} {docsrepairedmajority} {docsrepairedminority} {docslost} {auditcycles} {auditfrequency} {auditsegments} {auditrepairs} {auditmajority} {auditminority} {auditlost} {glitchfreq} {glitchimpact} {glitchdecay} {glitchmaxlife} {nglitches} {shockfreq} {shockimpact} {shockmaxlife} {shockspan} {shocktype} {nshocks} {walltime} {cputime} {logfilename} {logfilesize} {instructionfilename} {todaysdatetime} {extractorversion} {mongoid}
+{timestamp} {docsize} {shelfsize} {copies} {lifem} {simlength} {seed} {lost} {docstotal} {docsokay} {docsrepairedmajority} {docsrepairedminority} {docslost} {auditcycles} {auditfrequency} {auditsegments} {auditrepairs} {auditmajority} {auditminority} {auditlost} {glitchfreq} {glitchimpact} {glitchdecay} {glitchmaxlife} {nglitches} {serverdefaultlife} {shockfreq} {shockimpact} {shockmaxlife} {shockspan} {shocktype} {nshocks} {walltime} {cputime} {logfilename} {logfilesize} {instructionfilename} {todaysdatetime} {extractorversion} {mongoid}
 
 # The header line will be output or not, depending on the 
 #  --header CLI option or the "header" environment variable.  
@@ -97,6 +97,7 @@ glitchdecay,GLITCH,8,decay.(\d+)
 glitchmaxlife,GLITCH,9,maxlife.(\d+)
 nglitches,"LIFETIME Total glitches",7,glitches.(\d+)
 
+serverdefaultlife,"PARAMS INFO.*Default",0,'DefaultHalfLife[^0-9]*(\d*)'
 shockfreq,"PARAMS INFO - SHOCKS",6,freq.(\d+)
 shockimpact,"PARAMS INFO - SHOCKS",7,impact.(\d+)
 shockmaxlife,"PARAMS INFO - SHOCKS",9,maxlife.(\d+)
