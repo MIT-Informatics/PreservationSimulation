@@ -4,14 +4,200 @@
 # Supply an instruction stream for the broker by combining all the 
 #  individual instruction files and filtering according the the 
 #  user's request.  
+# Eliminate possibly redundant instructions.
+# Check to see that the user's restrictions were not too strong.
+# 
+# The dictionaries get rather badly mangled because of Python's method
+#  of call by object reference.  In several cases, it is necessary to 
+#  make deepcopies of the input arguments to prevent leakage.  
+# 
+
+import re
+import os
+import copy
+import json
+from NewTraceFac import NTRC, ntrace, ntracef
+import util
+import itertools
+
+# f n d R e a d A l l I n s F i l e s 
+@ntracef("SRCH")
+def fndReadAllInsFiles(mysDir, mysTyp):
+    ''' 
+    Get contents of all the instruction files into a dictionary.
+    '''
+    dInstructions = dict()
+    for sFile in os.listdir(mysDir):
+        if sFile.endswith(mysTyp):
+            (sName, lValueList) = fntReadOneFile(mysDir+'/'+sFile)
+            dInstructions[sName] = lValueList
+    return dInstructions
+
+# f n t R e a d O n e F i l e 
+@ntracef("SRCH")
+def fntReadOneFile(mysFilespec):
+    '''
+    Read one instruction file into a list with separate header name.
+    All the values in the list are integer-ized where possible.  
+    '''
+    with open(mysFilespec, "r") as fhInsfile:
+        lLines = [sLine.rstrip() for sLine in fhInsfile 
+            if not re.match("^\s*$", sLine) and not re.match("^\s*#", sLine)]
+    sName = lLines.pop(0)
+    lValueList = [util.fnIntPlease(line) for line in lLines]
+    return (sName, lValueList)
+
+# f n t P r o c e s s A l l U s e r R u l e s 
+@ntracef("SRCH")
+def fntProcessAllUserRules(mydUserRuleDict, mysInstructionDict):
+    '''
+    Trim the instruction space using all the rules in the user's dictionary.  
+    '''
+    dOldInstructionDict = copy.deepcopy(mysInstructionDict)
+    dWorkingInstructionDict = copy.deepcopy(mysInstructionDict)
+    for (sName, xRule) in mydUserRuleDict.items():
+        fndProcessOneUserRule(dWorkingInstructionDict, sName, xRule)
+    return (dWorkingInstructionDict, dOldInstructionDict)
+
+# f n d P r o c e s s O n e U s e r R u l e 
+@ntracef("SRCH")
+def fndProcessOneUserRule(mydInstructionDict, mysName, myxRule):
+    '''
+    Use one user rule to remove value options from instructions.
+    '''
+    try:
+        lInsVals = mydInstructionDict[mysName]
+    except KeyError:
+        raise KeyError, "Error: Unknown parameter name|%s|" % (mysName)
+    try:
+        xResult = json.loads(myxRule)
+    except ValueError:
+        raise ValueError, "Error: Query string is not valid JSON|%s|" % (myxRule)
+    
+    if isinstance(xResult, int):
+        lNewVals = [item for item in lInsVals 
+                    if item == xResult]
+    elif isinstance(xResult, list):
+        lNewVals = [item for item in lInsVals 
+                    if item in xResult]
+    elif isinstance(xResult, dict):
+        lCleanResult = [(k,util.fnIntPlease(v)) 
+                        for (k,v) in xResult.items()]
+        lNewVals = copy.deepcopy(lInsVals)
+        for k,v in lCleanResult:
+            if "$eq" == k:
+                lNewVals = [item for item in lNewVals 
+                            if item == v]
+            elif "$ne" == k:
+                lNewVals = [item for item in lNewVals 
+                            if item != v]
+            elif "$lt" == k:
+                lNewVals = [item for item in lNewVals 
+                            if item < v]
+            elif "$lte" == k:
+                lNewVals = [item for item in lNewVals 
+                            if item <= v]
+            elif "$gt" == k:
+                lNewVals = [item for item in lNewVals 
+                            if item > v]
+            elif "$gte" == k:
+                lNewVals = [item for item in lNewVals 
+                            if item >= v]
+            
+            elif "$in" in xResult:
+                raise NotImplementedError, "$in"
+            elif "$nin" in xResult:
+                raise NotImplementedError, "$nin"
+    else:
+        lNewVals = ["rule type not found"] 
+        raise ValueError, "Error: unknown comparison operator|%s|" % (xResult)
+    
+    mydInstructionDict[mysName] = lNewVals
+    return mydInstructionDict
+
+# f n d F i l t e r R e s u l t s 
+@ntracef("SRCH")
+def fndFilterResults(mydOldInstructions):
+    ''' 
+    Remove redundant cases that would result in wasted effort.  
+    If, e.g., no shocks, then don't test for various frequencies.
+    '''
+    dInstructions = copy.deepcopy(mydOldInstructions)
+    if mydOldInstructions["nGlitchFreq"] == [0]:
+        (dInstructions["nGlitchSpan"], dInstructions["nGlitchImpact"], 
+            dInstructions["nGlitchDecay"], dInstructions["nGlitchMaxlife"], 
+            dInstructions["nGlitchIgnorelevel"],) = [0],[0],[0],[0],[0]
+    # ORDER DEPENDENCY: test server life before shock frequency.
+    if mydOldInstructions["nServerDefaultLife"] == [0]:
+        dInstructions["nShockFreq"] = [0]
+    if mydOldInstructions["nShockFreq"] == [0]:
+        (dInstructions["nShockSpan"], dInstructions["nShockImpact"], 
+            dInstructions["nShockMaxlife"],) = [0],[0],[0]
+    # END ORDER DEPENDENCY.
+    if mydOldInstructions["nAuditFreq"] == [0]:
+        dInstructions["nAuditSegments"] = [0]
+        dInstructions["sAuditType"] = ["TOTAL"]
+    return dInstructions
+
+# f n v T e s t R e s u l t s 
+@ntracef("SRCH")
+def fnvTestResults(mydInstructions, mydOldInstructions):
+    '''
+    If any of the dimensions is empty, the cross product would be empty, 
+    i.e., no instructions because the user's criteria are too strict.
+    '''
+    for sKey, lVal in mydInstructions.items():
+        if len(lVal) == 0:
+            raise ValueError, ("Error: instructions too restrictive, \n"
+                            "no values remain for param|%s|; \n"
+                            "original value set=|%s|"
+                            ) % (sKey, mydOldInstructions[sKey])
+
+# f n l g C o m b i n e R e s u l t s 
+@ntracef("SRCH")
+def fnlgCombineResults(mydInstructions):
+    '''
+    Expand the cross product of remaining instruction values.
+    '''
+    lKeyNames = [k for k in mydInstructions.keys()]
+    yield itertools.product(*lKeyNames)
+    '''
+    BZZZT!
+    not quite the right alg
+    
+    a=[1]
+    b=[2,3]
+    c=[4,5,6]
+    dd = {'a':a, 'b':b, 'c':c}
+    lk = [k for k in dd.keys()]
+    lvv = [dd[x] for x in dd.keys()]
+    for x in itertools.product(*lvv): print x
+    for x in itertools.product(*[dd[y] for y in lk]): print x
+
+
+    '''
+
+# f n l G e t S e a r c h S p a c e N a m e s 
+def fnlGetSearchSpaceNames():
+    lKeyNames = [k for k in mydInstructions.keys()]
+    return lKeyNames
+
+# f n l g G e t S e a r c h S p a c e 
+@ntracef("SRCH")
+def fnlgGetSearchSpace(mysDir, mysTyp, mydUserRuleDict):
+    '''
+    Produce instruction stream from instruction files and user rules.
+    '''
+    dFullDict = fndReadAllInsFiles(mysDir, mysTyp)
+    (dTrimmedDict,dOriginalDict) = fntProcessAllUserRules(mydUserRuleDict, 
+                                    dFullDict)
+    dFilteredDict = fndFilterResults(dTrimmedDict)
+    fnvTestResults(dFilteredDict, dFullDict)
+    return fnlgCombineResults(dFilteredDict)
 
 '''
-
 cross product the dimensions and yield out
 use itertools.product()
-
-
-
 
 read all files:
     for all files in dir
@@ -70,109 +256,14 @@ filter results
             reduce segments, type to single values
 
 doall(userruledict):
-    oldinstructiondict = readallfiles(dir)
+    oldinstructiondict = readallfilfes(dir)
     newinstructiondict = processallrules(userruledict)
     return combineresults(newinstructiondict,oldinstructiondict)
-
-
 '''
 
-import re
-import os
-import copy
-import json
-from NewTraceFac import NTRC, ntrace, ntracef
-import util
+# Edit history:
+# 20170113  RBL Original version.  
+# 
+# 
 
-
-@ntracef("SRCH")
-def fndReadAllInsFiles(mysDir, mysTyp):
-    dInstructions = dict()
-    for sFile in os.listdir(mysDir):
-        if sFile.endswith(mysTyp):
-            (sName, lValueList) = fntReadOneFile(mysDir+'/'+sFile)
-            dInstructions[sName] = lValueList
-    return dInstructions
-
-@ntracef("SRCH")
-def fntReadOneFile(mysFilespec):
-    with open(mysFilespec, "r") as fhInsfile:
-        lLines = [sLine.rstrip() for sLine in fhInsfile 
-            if not re.match("^\s*$", sLine) and not re.match("^\s*#", sLine)]
-    sName = lLines.pop(0)
-    lValueList = [util.fnIntPlease(line) for line in lLines]
-    return (sName, lValueList)
-
-@ntracef("SRCH")
-def fntProcessAllUserRules(mydUserRuleDict, mysInstructionDict):
-    dOldInstructionDict = copy.deepcopy(mysInstructionDict)
-    dWorkingInstructionDict = copy.deepcopy(mysInstructionDict)
-    for (sName, xRule) in mydUserRuleDict.items():
-        fndProcessOneUserRule(dWorkingInstructionDict, sName, xRule)
-    return (dWorkingInstructionDict, dOldInstructionDict)
-
-@ntracef("SRCH")
-def fndProcessOneUserRule(mydInstructionDict, mysName, myxRule):
-    try:
-        lInsVals = mydInstructionDict[mysName]
-    except KeyError:
-        raise KeyError, "Error: Unknown parameter name|%s|" % (mysName)
-    try:
-        xResult = json.loads(myxRule)
-    except ValueError:
-        raise ValueError, "Error: Query string is not valid JSON|%s|" % (myxRule)
-    
-    if isinstance(xResult, int):
-        lNewVals = [item for item in lInsVals 
-                    if item == xResult]
-    elif isinstance(xResult, list):
-        lNewVals = [item for item in lInsVals 
-                    if item in xResult]
-    elif isinstance(xResult, dict):
-        lCleanResult = [(k,util.fnIntPlease(v)) 
-                        for (k,v) in xResult.items()]
-        lNewVals = copy.deepcopy(lInsVals)
-        for k,v in lCleanResult:
-            if "$eq" == k:
-                lNewVals = [item for item in lNewVals 
-                            if item == v]
-            elif "$ne" == k:
-                lNewVals = [item for item in lNewVals 
-                            if item != v]
-            elif "$lt" == k:
-                lNewVals = [item for item in lNewVals 
-                            if item < v]
-            elif "$lte" == k:
-                lNewVals = [item for item in lNewVals 
-                            if item <= v]
-            elif "$gt" == k:
-                lNewVals = [item for item in lNewVals 
-                            if item > v]
-            elif "$gte" == k:
-                lNewVals = [item for item in lNewVals 
-                            if item >= v]
-            
-            elif "$in" in xResult:
-                raise NotImplementedError, "$in"
-            elif "$nin" in xResult:
-                raise NotImplementedError, "$nin"
-    else:
-        lNewVals = ["rule type not found"] 
-        raise ValueError, "Error: unknown comparison operator|%s|" % (xResult)
-    
-    mydInstructionDict[mysName] = lNewVals
-    return mydInstructionDict
-
-@ntracef("SRCH")
-def fnlgCombineResults(mydNewInstructionDict, mydOldInstructionDict):
-    pass
-    yield
-
-@ntracef("SRCH")
-def fnlgGetSearchSpace(mysDir, mydUserRuleDict):
-    pass
-    return
-
-
-
-
+#END
