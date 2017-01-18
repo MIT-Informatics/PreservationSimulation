@@ -10,6 +10,8 @@ from    NewTraceFac     import  NTRC,ntrace,ntracef
 import  mongolib
 import  sys
 from    catchex         import  catchex
+import  searchspace
+import  searchdatabase
 
 
 #=================================================
@@ -194,14 +196,14 @@ def fndCliParse(mysArglist):
                         , help='Document size in MB.'
                         )
 
-    cParse.add_argument("--query", type=str
-                        , dest='sQuery'
-                        , metavar='sMONGODB_JSON_QUERYSTRING'
-                        , nargs='?'
-                        , help='For the brave and foolhardy, a full '
-                        'JSON-ized query string for MongoDB.  This '
-                        'cannot be combined with any other selector options.'
-                        )
+#    cParse.add_argument("--query", type=str
+#                        , dest='sQuery'
+#                        , metavar='sMONGODB_JSON_QUERYSTRING'
+#                        , nargs='?'
+#                        , help='For the brave and foolhardy, a full '
+#                        'JSON-ized query string for MongoDB.  This '
+#                        'cannot be combined with any other selector options.'
+#                        )
     
     
 # Other options that are not used for selection, but for overrides or testing.
@@ -258,11 +260,17 @@ def fndCliParse(mysArglist):
                         )
 
     if mysArglist:          # If there is a specific string, use it.
-        (xx) = cParse.parse_args(mysArglist)
+        xx = cParse.parse_args(mysArglist)
     else:                   # If no string, then parse from argv[].
-        (xx) = cParse.parse_args()
-
-    return vars(xx)
+        xx = cParse.parse_args()
+    NTRC.ntracef(3, "BCLI", "proc namespace xx|%s|" % (xx))
+    dxx = vars(xx)
+    NTRC.ntracef(3, "BCLI", "proc dict-var dxx|%s|" % (dxx))
+    dxx1 = {k : (v.replace('u"', '"') 
+                if (v is not None) and ('{' in v) and ('}' in v) and ('u"' in v) 
+                else v)
+                for k, v in dxx.items()}
+    return dxx1
 
 
 #=================================================
@@ -312,10 +320,17 @@ class CG(object):
     sFamilyDir = '../hl'        # lifetimes expressed as half-lives, and
     sSpecificDir = 'a0'         #  no auditing.
 
+    # MongoDB info
     sDatabaseName = None
     sPendingCollectionName = None
     sDoneCollectionName = None
-
+    cdb = None
+    
+    # SearchSpace db info
+    sInsDir = './ins'   # Where to find instruction (*.ins) files.
+    sInsTyp = '.ins'    # File type (extension) specifier for instruction files.
+    ssdb = None         # Instance of searchspace db.
+    
     # Command template components.
     sShelfLogFileTemplate = ('doc{nDocSize}cop{nCopies}shlf{nShelfSize}lif{nLifem}_'
         'af{nAuditFreq}s{nAuditSegments}t{sAuditType}_'
@@ -541,15 +556,20 @@ class CFormat(object):
                     NTRC.tracef(3, "FMT", "proc FormatQuery notjson item "
                         "key|%s| val|%s| result|%s|" 
                         % (sAttrib, sValue, result))
-                    if sAttrib == "sQuery":
-                        NTRC.ntrace(0,"ERROR: sQuery string is not valid "
-                            "JSON|%s|" 
-                            % (sValue))
-                        NTRC.ntrace(0,"Aborting run.")
-                        sys.exit(1)
+#                    if sAttrib == "sQuery":
+#                        NTRC.ntrace(0,"ERROR: sQuery string is not valid "
+#                            "JSON|%s|" 
+#                            % (sValue))
+#                        NTRC.ntrace(0,"Aborting run.")
+#                        sys.exit(1)
             NTRC.tracef(3, "FMT", "proc FormatQuery item key|%s| val|%s| result|%s|" 
                 % (sAttrib, sValue, result))
-            dOut[sAttrib] = result
+            # Can't process dicts thru json twice.
+            if isinstance(result, dict):
+                dOut[sAttrib] = sValue
+            else:
+                dOut[sAttrib] = result
+
         # Allow only attribs that appear in the database, else will get 
         #  no results due to implied AND of all items in query dict.  
         dOutSafe = {k:v for k,v in dOut.items() if k in g.lSearchables}
@@ -627,7 +647,6 @@ class CCommand(object):
 
 
 #=================================================
-
 # c l a s s   C D a t a b a s e 
 class CDatabase(object):
     '''
@@ -710,37 +729,30 @@ def main():
     # Construct database query for this invocation.
     g.cFmt = CFormat()
     dQuery = g.cFmt.fndFormatQuery(dCliDict)
-    NTRC.tracef(0,"MAIN","proc querydict|%s|" % ((dQuery)))
 
     # Look for overriding environment variables
     fnvGetEnvironmentOverrides()
 
     # Get the set of instructions for today from database.
-    g.cdb = CDatabase(g.sDatabaseName, g.sPendingCollectionName, g.sDoneCollectionName)
-    itAllInstructions = g.cdb.fnitGetInstructionIterator(dQuery)
+#    g.cdb = CDatabase(g.sDatabaseName, g.sPendingCollectionName, 
+#            g.sDoneCollectionName)
+#    itAllInstructions = g.cdb.fnitGetInstructionIterator(dQuery)
+
+    # Fix up dQuery to contain only lists and dicts.
+    def fnsQuoteMe(x):
+        return "'" + str(x).encode('ascii', 'ignore') + "'"
+#        return "'%s'" % x
+    #dQuery1 = {k:(fnsQuoteMe(v) if isinstance(v, int) else v) 
+    #        for k,v in dQuery.items()}
+    #dQuery1 = {k:(fnsQuoteMe(v) if isinstance(v, dict) else str(v)) for k,v in dQuery.items()}
+    dQuery1 = dQuery
+    NTRC.tracef(0,"MAIN","proc querydict2|%s|" % ((dQuery1)))
+    
+    itAllInstructions = searchspace.fndgGetSearchSpace(g.sInsDir, g.sInsTyp, 
+                        dQuery1)
     fnnProcessAllInstructions(itAllInstructions)
     
     NTRC.ntracef(0,"MAIN","End.")
-
-# f n v G e t E n v i r o n m e n t O v e r r i d e s 
-@catchex
-@ntracef("MAIN")
-def fnvGetEnvironmentOverrides():
-    # Allow user to override number of cores to use today.
-    # First, find out how many cores there are that we could possibly use.
-    nMaxCores = int(os.getenv("NUMBER_OF_PROCESSORS", None))
-    # By default, use one fewer than max available, according to the o/s.  
-    g.nCores = nMaxCores - 1 if nMaxCores else g.nCores
-    # If the user specifies a number, larger or smaller, take it.
-    try:
-        g.nCores = int(os.getenv("NCORES", CG.nCores))
-    except (ValueError, TypeError):
-        raise TypeError('Environment variable NCORES must be an integer.')
-    # Allow user to override the polite interval to use today.
-    try:
-        g.nPoliteTimer = int(os.getenv("NPOLITE", CG.nPoliteTimer))
-    except (ValueError, TypeError):
-        raise TypeError('Environment variable NPOLITE must be an integer.')
 
 # f n n P r o c e s s A l l I n s t r u c t i o n s 
 @catchex
@@ -817,10 +829,11 @@ def fnstProcessOneInstruction(mysRunNumber, mydInstruction, mynSeed):
     if g.sRedo.startswith("Y"):
         NTRC.ntracef(0,"MAIN","proc force redo for item id|%s|" 
             % (sInstructionId))
-        g.cdb.fnbDeleteDoneRecord(sInstructionId)
+#        g.cdb.fnbDeleteDoneRecord(sInstructionId)
 
     # If this instruction has already been processed skip it.
-    bIsItDone = g.cdb.fnbIsItDone(sInstructionId)
+#    bIsItDone = g.cdb.fnbIsItDone(sInstructionId)
+    bIsItDone = False
     if bIsItDone: 
         NTRC.ntracef(0,"MAIN","proc skip item already done run|%s| "
             "id|%s| copies|%s| lifem|%s|" 
@@ -880,6 +893,26 @@ def fnstProcessOneInstruction(mysRunNumber, mydInstruction, mynSeed):
             return 1
     return 0
 
+# f n v G e t E n v i r o n m e n t O v e r r i d e s 
+@catchex
+@ntracef("MAIN")
+def fnvGetEnvironmentOverrides():
+    # Allow user to override number of cores to use today.
+    # First, find out how many cores there are that we could possibly use.
+    nMaxCores = int(os.getenv("NUMBER_OF_PROCESSORS", None))
+    # By default, use one fewer than max available, according to the o/s.  
+    g.nCores = nMaxCores - 1 if nMaxCores else g.nCores
+    # If the user specifies a number, larger or smaller, take it.
+    try:
+        g.nCores = int(os.getenv("NCORES", CG.nCores))
+    except (ValueError, TypeError):
+        raise TypeError('Environment variable NCORES must be an integer.')
+    # Allow user to override the polite interval to use today.
+    try:
+        g.nPoliteTimer = int(os.getenv("NPOLITE", CG.nPoliteTimer))
+    except (ValueError, TypeError):
+        raise TypeError('Environment variable NPOLITE must be an integer.')
+
 # f n l G e t R a n d o m S e e d s 
 @catchex
 @ntracef("MAIN")
@@ -901,7 +934,7 @@ def fnlGetRandomSeeds(mynHowMany, mysFilename):
 # E n t r y   p o i n t . 
 if __name__ == "__main__":
     g = CG()
-    main()
+    sys.exit(main())
 
 
 '''
@@ -958,6 +991,9 @@ foreach single-line file in holding dir
 #               Begin to break out the set of random seeds from the 
 #                stored instructions.  Loop here on seeds instead of 
 #                having a single item in the db for each param set and seed.
+# 20170117  RBL Begin to remove Mongo class so it can eventually be replaced
+#                by the equivalent for searchspace.  
+#               Put in special handling for dictionaries going into json.  
 # 
 # 
 

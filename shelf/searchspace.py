@@ -19,6 +19,7 @@ import json
 from NewTraceFac import NTRC, ntrace, ntracef
 import util
 import itertools
+import hashlib
 
 # f n d R e a d A l l I n s F i l e s 
 @ntracef("SRCH")
@@ -70,9 +71,10 @@ def fndProcessOneUserRule(mydInstructionDict, mysName, myxRule):
     except KeyError:
         raise KeyError, "Error: Unknown parameter name|%s|" % (mysName)
     try:
-        xResult = json.loads(myxRule)
+        sRule = str(myxRule).encode('ascii', 'ignore').replace('u"', '"')
+        xResult = json.loads(sRule)
     except ValueError:
-        raise ValueError, "Error: Query string is not valid JSON|%s|" % (myxRule)
+        raise ValueError, "Error: Query string is not valid JSON|%s|" % (sRule)
     
     if isinstance(xResult, int):
         lNewVals = [item for item in lInsVals 
@@ -155,16 +157,24 @@ def fnvTestResults(mydInstructions, mydOldInstructions):
 
 # f n l g C o m b i n e R e s u l t s 
 @ntracef("SRCH")
-def fnlgCombineResults(mydInstructions):
+def fndgCombineResults(mydInstructions):
     '''
     Expand the cross product of remaining instruction values.
     '''
     lKeyNames = [k for k in mydInstructions.keys()]
-    yield itertools.product(*lKeyNames)
+    for lInstruction in itertools.product(*[mydInstructions[sKey] 
+                                        for sKey in lKeyNames]):
+        dInstruction = dict(zip(lKeyNames, lInstruction)) 
+        # Add unique id, as Mongo does, so we can find jobs already done.
+        dInstruction["_id"] = hashlib.sha1(str(dInstruction)).hexdigest()
+        NTRC.ntracef(3, "SRCH", "proc CombineResults:dInstruction|%s|" 
+            % (dInstruction))
+        yield dInstruction
+    
     '''
     BZZZT!
-    not quite the right alg
-    
+    the right alg appears to be to do this with two list comprehensions.
+    e.g.,    
     a=[1]
     b=[2,3]
     c=[4,5,6]
@@ -173,18 +183,19 @@ def fnlgCombineResults(mydInstructions):
     lvv = [dd[x] for x in dd.keys()]
     for x in itertools.product(*lvv): print x
     for x in itertools.product(*[dd[y] for y in lk]): print x
-
-
+    then zip the names and values together into a dictionary.
     '''
 
 # f n l G e t S e a r c h S p a c e N a m e s 
-def fnlGetSearchSpaceNames():
+@ntracef("SRCH")
+def fnlGetSearchSpaceNames(mydInstructions):
+    lKeyNames = [k for k in mydInstructions.keys()]
     lKeyNames = [k for k in mydInstructions.keys()]
     return lKeyNames
 
 # f n l g G e t S e a r c h S p a c e 
 @ntracef("SRCH")
-def fnlgGetSearchSpace(mysDir, mysTyp, mydUserRuleDict):
+def fndgGetSearchSpace(mysDir, mysTyp, mydUserRuleDict):
     '''
     Produce instruction stream from instruction files and user rules.
     '''
@@ -193,7 +204,9 @@ def fnlgGetSearchSpace(mysDir, mysTyp, mydUserRuleDict):
                                     dFullDict)
     dFilteredDict = fndFilterResults(dTrimmedDict)
     fnvTestResults(dFilteredDict, dFullDict)
-    return fnlgCombineResults(dFilteredDict)
+    NTRC.ntracef(3, "SRCH", "proc GetSearchSpace:FilteredDict|%s|" 
+        % (dFilteredDict))
+    return fndgCombineResults(dFilteredDict)
 
 '''
 cross product the dimensions and yield out
@@ -263,6 +276,7 @@ doall(userruledict):
 
 # Edit history:
 # 20170113  RBL Original version.  
+# 20170114  RBL Change Get... function to return full dictionary instruction.
 # 
 # 
 

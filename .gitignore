@@ -16,6 +16,8 @@ articles
 test
 tmp
 results
+searchspacedb
 
 shelf/R/.R*
 *.big
+*.toobig

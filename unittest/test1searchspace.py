@@ -1,5 +1,12 @@
+#!/usr/bin/python
+# test1searchspace.py
+# 
+# Unit tests for the searchspace.py module, which has many nasty functions.
+
+# Extend the path so that unittest can find modules in the shelf dir.
 import sys
 sys.path.append('..')
+
 
 import unittest
 from shelf.searchspace import *
@@ -121,17 +128,34 @@ class CSearchSpaceTest(unittest.TestCase):
         self.assertEqual(foo["sAuditType"], ["TOTAL"])
 
     def test_emptylistreport(self):
-        ''' Test is empty lists get reported properly.  '''
+        ''' Test if empty lists get reported properly.  '''
         dNew = copy.deepcopy(self.ddd)
         dNew["nCopies"] = []
         with self.assertRaises(ValueError):
             fnvTestResults(dNew, self.ddd)
 
-    def test_combine(self):
-        ''' Test the minimal instruction. '''
+    def test_getnames(self):
+        ''' Get list of field names. Right length? '''
         rules = {
                 "nCopies" : '1'
                 ,"nLifem" : '1000'
+                ,"nServerDefaultLife" : '0'
+                ,"nAuditFreq" : '0'
+                ,"nShockFreq" : '0'
+                ,"nGlitchFreq" : '0'
+                }
+        (foo, originaldict) = fntProcessAllUserRules(rules, self.ddd)
+        foo = fndFilterResults(foo)
+        fnvTestResults(foo, self.ddd)
+        lNames = fnlGetSearchSpaceNames(foo)
+        self.assertEqual(len(lNames), 19)
+
+    def test_combine(self):
+        ''' Test the minimal instruction. Do we get just one? '''
+        rules = {
+                "nCopies" : '1'
+                ,"nLifem" : '1000'
+                ,"nServerDefaultLife" : '0'
                 ,"nAuditFreq" : '0'
                 ,"nShockFreq" : '0'
                 ,"nGlitchFreq" : '0'
@@ -140,21 +164,36 @@ class CSearchSpaceTest(unittest.TestCase):
         foo = fndFilterResults(foo)
         fnvTestResults(foo, self.ddd)
         lInstructions = [lInstruction for lInstruction 
-                        in fnlgCombineResults(foo)]
+                        in fndgCombineResults(foo)]
         self.assertEqual(len(lInstructions), 1)
 
-    def test_getall(self):
-        ''' Test the overall entry point. '''
+    def test_getallone(self):
+        ''' Test the overall entry point with minimal instruction. '''
         rules = {
                 "nCopies" : '1'
                 ,"nLifem" : '1000'
+                ,"nServerDefaultLife" : '0'
                 ,"nAuditFreq" : '0'
                 ,"nShockFreq" : '0'
                 ,"nGlitchFreq" : '0'
                 }
         lInstructions = [lInstruction for lInstruction in 
-                        fnlgGetSearchSpace("./ins", ".ins", rules)]
+                        fndgGetSearchSpace("./ins", ".ins", rules)]
         self.assertEqual(len(lInstructions), 1)
 
+    def test_getallseveral(self):
+        ''' Test the overall entry point with a simple set of instructions. '''
+        rules = {
+                "nCopies" : '{"$gte":1, "$lte":5}'
+                ,"nLifem" : '1000'
+                ,"nServerDefaultLife" : '0'
+                ,"nAuditFreq" : '0'
+                ,"nShockFreq" : '0'
+                ,"nGlitchFreq" : '0'
+                }
+        lInstructions = [lInstruction for lInstruction in 
+                        fndgGetSearchSpace("./ins", ".ins", rules)]
+        self.assertEqual(len(lInstructions), 5)
+        self.assertEqual(len(lInstructions[0]), 20)
 
 
