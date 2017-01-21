@@ -11,6 +11,47 @@ from NewTraceFac import NTRC, ntrace, ntracef
 # c l a s s   C S e a r c h D a t a b a s e 
 class CSearchDatabase(object):
     pass
+
+    @ntracef("SRDB")
+    def __init__(self,mysDatabaseName, mysPendingCollectionName, mysDoneCollectionName):
+        self.sDbName = mysDatabaseName
+        self.sPendingName = mysPendingCollectionName
+        self.sDoneName = mysDoneCollectionName
+        self.oDb = searchlib.fnoOpenDb(self.sDbName)
+
+    @ntracef("SRDB")
+    def fnitGetInstructionIterator(self, mydQuery):
+        raise NotImplementedError
+        pass
+
+    @ntracef("SRDB")
+    def fnbIsItDone(self, mysInstructionId):
+        result = searchlib.fnoGetOne(self.sDoneName, mysInstructionId)
+        return (result is not None)
+
+    @ntracef("SRDB")
+    def fndInsertDoneRecord(self, mysInstructionId, mysOtherInfo):
+        dCollection = searchlib.fndInsertOne(self.sDoneName, 
+                        mysInstructionId, mysOtherInfo)
+        return dCollection
+
+    @ntracef("SRDB")
+    def fnbDeleteDoneRecord(self, mysInstructionId):
+        dCollection = searchlib.fndDeleteOne(self.sDoneName, mysInstructionId)
+        return dCollection
+
+    @ntracef("SRDB")
+    def fnvDeleteDoneCollection(self):
+        dCollection = searchlib.fnvDeleteCollection(self.sDoneName)
+        return
+
+    @ntracef("SRDB")
+    def fniCountCollection(self, mysCollectionName):
+        nResult = searchlib.fniCollectionCount(mysCollectionName)
+        return nResult
+
+
+############### leftovers from mongo ###################
 """
     @ntracef("DB")
     def __init__(self,mysDatabaseName, mysPendingCollectionName, mysDoneCollectionName):

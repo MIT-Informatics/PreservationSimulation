@@ -14,7 +14,7 @@ import  searchspace
 import  searchdatabase
 
 
-#=================================================
+#===========================================================
 @ntracef("CLI")
 def fndCliParse(mysArglist):
     ''' Parse the mandatory and optional positional arguments, and the 
@@ -273,7 +273,7 @@ def fndCliParse(mysArglist):
     return dxx1
 
 
-#=================================================
+#===========================================================
 # class   C G   f o r   g l o b a l   d a t a 
 class CG(object):
     ''' Global data.
@@ -320,16 +320,10 @@ class CG(object):
     sFamilyDir = '../hl'        # lifetimes expressed as half-lives, and
     sSpecificDir = 'a0'         #  no auditing.
 
-    # MongoDB info
-    sDatabaseName = None
-    sPendingCollectionName = None
-    sDoneCollectionName = None
-    cdb = None
-    
     # SearchSpace db info
     sInsDir = './ins'   # Where to find instruction (*.ins) files.
     sInsTyp = '.ins'    # File type (extension) specifier for instruction files.
-    ssdb = None         # Instance of searchspace db.
+    sdb = None         # Instance of searchspace db.
     
     # Command template components.
     sShelfLogFileTemplate = ('doc{nDocSize}cop{nCopies}shlf{nShelfSize}lif{nLifem}_'
@@ -413,7 +407,7 @@ class CG(object):
           redundant headers)
     '''
 
-#=================================================
+#===========================================================
 
 # f n G e t C o m m a n d T e m p l a t e s 
 @ntrace
@@ -445,7 +439,7 @@ def fnIntPlease(myString):
     except ValueError:
         return myString
 
-#=================================================
+#===========================================================
 
 # f n W a i t F o r O p e n i n g 
 @catchex
@@ -503,7 +497,7 @@ def fnbWaitForOpening(mynProcessMax, mysProcessName, mynWaitTime, mynWaitLimit):
     return (idx < mynWaitLimit-1)                   # Return false if we ran out of retries.
 
 
-#=================================================
+#===========================================================
 
 # c l a s s   C F o r m a t 
 class CFormat(object):
@@ -596,7 +590,7 @@ class CFormat(object):
         return sCommand
 
 
-#=================================================
+#===========================================================
 
 # class   C C o m m a n d
 class CCommand(object):
@@ -646,60 +640,7 @@ class CCommand(object):
         return sCmd
 
 
-#=================================================
-# c l a s s   C D a t a b a s e 
-class CDatabase(object):
-    '''
-    Isolate all the Mongo-specific stuff here.  
-    '''
-    @ntracef("DB")
-    def __init__(self,mysDatabaseName, mysPendingCollectionName, mysDoneCollectionName):
-        self.ID = mysDatabaseName
-        self.oDb = mongolib.fnoOpenDb(mysDatabaseName)
-        self.oPendingCollection = self.oDb[mysPendingCollectionName]
-        self.oDoneCollection = self.oDb[mysDoneCollectionName]
-        nPendingCount = self.oPendingCollection.count()
-        NTRC.ntracef(0,"DB","proc main pending nRecs|{}|".format(nPendingCount))
-
-    @catchex
-    @ntracef("DB")
-    def fnitGetInstructionIterator(self,mydQuery):
-        '''
-        Query pending instructions to get subset of work for today.
-        '''
-        itCurrentSet = self.oPendingCollection.find(mydQuery)
-        '''
-        MongoDB tends to time out cursors if they are kept too long.  
-         Max number of runs we get is just over 100 before the timeout.  
-        Don't want to disable the timeout completely, so collect the entire
-         instruction stream into a list up front.  Icky.  Try to be a good
-         citizen and what does it get you.  Try to keep the instruction set
-         reasonable size, like under a million.  
-        '''
-        ldAllInstructions = list(itCurrentSet)
-        NTRC.ntracef(0,"DB","proc main nInstructionsqueried|{}|".format(len(ldAllInstructions)))
-        return ldAllInstructions
-
-    @catchex
-    @ntracef("DB")
-    def fnbIsItDone(self,mysInstructionId):
-        '''
-        Does this sDoneId(=mongoid) value already appear in the done collection?
-        '''
-        dIsItDone = { "sDoneId" : mysInstructionId }
-        lMaybeDone = list(self.oDoneCollection.find(dIsItDone))
-        NTRC.ntracef(3,"DB","proc check donelist id|%s| list|%s|" % (mysInstructionId, lMaybeDone))
-        return len(lMaybeDone) > 0
-
-    @catchex
-    @ntracef("DB")
-    def fnbDeleteDoneRecord(self,mysInstructionId):
-        dIsItDone = { "sDoneId" : mysInstructionId }
-        result = self.oDoneCollection.remove(dIsItDone)
-        NTRC.ntracef(3,"DB","proc DeleteDone result|%s|" % (result))
-        return result["ok"] != 0
-
-#=================================================
+#===========================================================
 
 # M A I N 
 @catchex
@@ -733,23 +674,13 @@ def main():
     # Look for overriding environment variables
     fnvGetEnvironmentOverrides()
 
-    # Get the set of instructions for today from database.
-#    g.cdb = CDatabase(g.sDatabaseName, g.sPendingCollectionName, 
-#            g.sDoneCollectionName)
-#    itAllInstructions = g.cdb.fnitGetInstructionIterator(dQuery)
-
-    # Fix up dQuery to contain only lists and dicts.
-    def fnsQuoteMe(x):
-        return "'" + str(x).encode('ascii', 'ignore') + "'"
-#        return "'%s'" % x
-    #dQuery1 = {k:(fnsQuoteMe(v) if isinstance(v, int) else v) 
-    #        for k,v in dQuery.items()}
-    #dQuery1 = {k:(fnsQuoteMe(v) if isinstance(v, dict) else str(v)) for k,v in dQuery.items()}
-    dQuery1 = dQuery
-    NTRC.tracef(0,"MAIN","proc querydict2|%s|" % ((dQuery1)))
+    # Open the database to keep "done" records.
+    g.sdb = searchdatabase.CSearchDatabase("./tmp/searchdb.json", "pending", "done")
     
+    # Get the set of instructions for today from database.
+    NTRC.tracef(0,"MAIN","proc querydict2|%s|" % ((dQuery)))
     itAllInstructions = searchspace.fndgGetSearchSpace(g.sInsDir, g.sInsTyp, 
-                        dQuery1)
+                        dQuery)
     fnnProcessAllInstructions(itAllInstructions)
     
     NTRC.ntracef(0,"MAIN","End.")
@@ -796,12 +727,12 @@ def fnstProcessOneInstructionManyTimes(mynRunNumber, mydInstruction):
     lSeedsToUse = fnlGetRandomSeeds(fnIntPlease(g.nRandomSeeds), 
                     g.sRandomSeedFile)
     mydInstruction["sBaseId"] = str(mydInstruction["_id"])
-    for (nIdx, nMaybeSeed) in zip(range(1, len(lSeedsToUse)+1), lSeedsToUse):
+    for (nIdx, nMaybeSeed) in enumerate(lSeedsToUse):
         # Adjust run number and mongo id because there are now
         #  multiple seeds and runs per instruction.  
-        sRunId = str(mynRunNumber) + "." + str(nIdx)
+        sRunId = str(mynRunNumber) + "." + str(nIdx+1)
         sId = str(mydInstruction["sBaseId"])
-        mydInstruction["_id"] = sId + "_" + str(nIdx)
+        mydInstruction["_id"] = sId + "_" + str(nIdx+1)
         
         nStatus = 0
         try:
@@ -829,11 +760,10 @@ def fnstProcessOneInstruction(mysRunNumber, mydInstruction, mynSeed):
     if g.sRedo.startswith("Y"):
         NTRC.ntracef(0,"MAIN","proc force redo for item id|%s|" 
             % (sInstructionId))
-#        g.cdb.fnbDeleteDoneRecord(sInstructionId)
+        g.sdb.fnbDeleteDoneRecord(sInstructionId)
 
     # If this instruction has already been processed skip it.
-#    bIsItDone = g.cdb.fnbIsItDone(sInstructionId)
-    bIsItDone = False
+    bIsItDone = g.sdb.fnbIsItDone(sInstructionId)
     if bIsItDone: 
         NTRC.ntracef(0,"MAIN","proc skip item already done run|%s| "
             "id|%s| copies|%s| lifem|%s|" 
@@ -929,7 +859,7 @@ def fnlGetRandomSeeds(mynHowMany, mysFilename):
     return lnSeeds
 
 
-#=================================================
+#===========================================================
 #
 # E n t r y   p o i n t . 
 if __name__ == "__main__":

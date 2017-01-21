@@ -4,142 +4,271 @@
 # 
 # ideas from http://api.mongodb.org/python/current/tutorial.html
 
+
 '''
-Interface of a few convenience functions for using pymongo.  
-- OpenDb (someone else has already started the mongod server)
-- ClearCollection: remove data from a collection in db
-- PutFileToDb: add CSV (or blank, tab, etc.) data to db
-- PutIterToDb: add any iterable file to db
-- NotIgnoreLine: used to filter blank and comment lines from input file
-- IntPlease: convert string to int if possible
-- GetSet: find in db collection (table) using some criteria in dict
-- GetPendingWork: generate items from pending table that are not in done table
-(more to come)
+New theory for searchspace database rather than MongoDB: 
+keep everything in a dictionary and back that up in a json file.
+dict entry
+    { str(id_key) : (str(instruction dict), timestamp when executed )}
+    or maybe
+    { str(id_key) : (instruction dict, timestamp when executed )}
+e.g., 
+    { 'efa338427818683d045cfb17e553810570c26195_3' : ( "'nShockSpan': 0, 
+    'sAuditType': 'TOTAL', 'nAuditFreq': 0, 'nGlitchFreq': 0, 
+    'nGlitchMaxlife': 0, 'nLifem': 1000, 'nShockMaxlife': 0, 
+    'nCopies': 1, 'nGlitchIgnorelevel': 0, 'nGlitchSpan': 0, 
+    'nAuditSegments': 0, 'nShockFreq': 0, 'nSimlen': 100000, 
+    'nRandomseed': 141246882, 'nShelfSize': 1, 'nDocSize': 50, 
+    'nServerDefaultLife': 0, 
+    'sBaseId': 'efa338427818683d045cfb17e553810570c26195', 
+    'nGlitchImpact': 0, 'nShockImpact': 0, 'nGlitchDecay': 0, 
+    '_id': 'efa338427818683d045cfb17e553810570c26195_3'", 
+    "20170118_002355")}
+The string might be better than dict because it is immutable.  
+Note that getting the instruction dict requires a change to the signature.
+
+Question: do we need to keep DbName?  Since the pending list is calculated
+from the user params at the instant rather than selected from a large
+set calculated in advance, there really is no interesting db.  Hmmm.  
+
+Write the file every time a dictionary entry is entered or deleted:
+e.g., 
+>>> dd = {1:11, 2:22}
+>>> with open("tmp/test1.json", "w") as fh:
+...   json.dump(dd,fh)
+
+Read the file in if it's not already in memory:
+e.g., 
+>>> with open("tmp/test1.json", "r") as fh:
+...  xx = json.load(fh)
+...
+>>> xx
+{u'1': 11, u'2': 22}
+landau@RicksYoga2 ~
+$ cat tmp/test2.json
+{"1": 11, "2": 22}
+landau@RicksYoga2 ~
+$ cat tmp/test1.json
+{"1": 11, "2": 22}
+landau@RicksYoga2 ~
+#Note that the key is ALWAYS a string.
+>>> xx[1]
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+KeyError: 1
+>>> xx['1']
+11
+>>>
+
+Clear collection = write file with empty (approx) dict.
+
+Open = read dict in.
+
+GetFilename = e-z
+
+PutFileToDb = for input dict, make entries in output dict.
+
+PutIterToDb = much the same, I hope.
+
+GetSet
+GetPendingWork
+Hmmm, tricky.  Perhaps we need to structure the json dict differently, with 
+nested dictionaries for collections.  This is approximately what mongo feels
+like.  
+{
+    str(collection name) : dictofitemsincollection, 
+    str(another collection) : dict of those items
+}
+This way, both pending and done can remain in use.  
+Dump all pending into the dict when we get the iterator from searchspace.
+Put done items in when they occur.  Leave the pending items, as we do now.
+E.g., 
+{
+    "pending" : {
+                "id of first" : {instruction dict}, 
+                "id of next" : {instruction dict}
+                }
+    "done" : {
+                "id of first done" :    (
+                                        "id",
+                                        "timestamp"
+                                        )
+            }
+}
+
+We may still need a ClearCollection utility.
+We probably won't need a LoadCollection utility.  
+We can get rid of all the template expansion foolishness in newinstructions,
+and quit worrying about toobig files.
+We can get rid of the filtering foolishness that was hard to get just so, that
+cried out for a comprehensive unittest that I never got around to writing.  
+So rename newinstructions to OLDnewinstructions and let it rust.  
+
+
+
 '''
 
 from NewTraceFac import ntrace,ntracef,NTRC
-NTRC.ntrace(3, "Importing...")
-from pymongo import MongoClient
 import re
 import sys
 import itertools
+import json
+import copy
+import os
 
-@ntrace
-def fnoOpenDb(mysDbName):
-    client = MongoClient('localhost', 27017)
-    db = client[mysDbName]         # Create db if not already there.
-    NTRC.ntrace(3, "Connected to db.")
-    return db
 
-@ntrace
-def fniClearCollection(myoDb,mysCollectionName):
-    myoDb[mysCollectionName].remove()    # Clear outmoldy, old records. 
-    NTRC.ntrace(3, "Cleared collection {}.".format(mysCollectionName))
-    return myoDb[mysCollectionName].count()
+# Always start the day with an empty database.
+dDb = dict()
+# WARNING: no error checking, very fool-vulnerable.  
+# If you don't open the db, e.g., you will get nonsense.
 
-@ntrace
+
+# f n o O p e n D b 
+@ntracef("SRLB")
+def fnoOpenDb(mysDbFilename):
+    '''
+    If the db file exists, read it.  If not, write an empty copy.
+    '''
+    global sDbName
+    sDbName = mysDbFilename
+    if os.path.isfile(mysDbFilename) and os.path.getsize(mysDbFilename) > 0:
+        NTRC.ntracef(3, "SRLB", "proc open json for read|%s|" 
+            % (mysDbFilename))
+        with open(mysDbFilename, "r") as fh:
+            # File present, try to read it as json.  
+            sDbContent = "".join(fh.readlines())
+            NTRC.ntracef(3, "SRLB", "proc file content|%s|" 
+                % (sDbContent))
+            try: 
+                dDb = json.loads(sDbContent)
+            except ValueError:
+                raise ValueError, ("Error: file|%s| is not valid JSON" 
+                    % (mysDbFilename))
+    else:
+        # File not there yet, write it.
+            try:
+                NTRC.ntracef(3, "SRLB", "proc open json for write|%s|" 
+                    % (mysDbFilename))
+                with open(mysDbFilename, "w") as fh:
+                    dDb = copy.deepcopy(dDbEmpty)
+                    json.dump(dDb, fh)
+            except IOError:
+                raise IOError, ("Error: cannot create new json file|%s|" 
+                    % (mysDbFilename))
+    return dDb
+
+# f n v C l e a r C o l l e c t i o n 
+@ntracef("SRLB")
+def fnvClearCollection(mysCollectionName):
+    dDb[mysCollectionName] = {}
+
+# f n i C o l l e c t i o n C o u n t 
+@ntracef("SRLB")
+def fniCollectionCount(mysCollectionName):
+    with open(sDbName, "r") as fh:
+        dDb = json.load(fh)
+    return (len(dDb[mysCollectionName].keys()) 
+        if mysCollectionName in dDb.keys() 
+        else 0)
+
+# f n s G e t F i l e n a m e 
+@ntracef("SRLB")
 def fnsGetFilename():
-    if len(sys.argv) < 2:
-        print "Usage: {} <filename> (required)".format(sys.argv[0])
-        exit(1)
-    return sys.argv[1]
+    return sDbName
 
-@ntrace
+@ntracef("SRLB")
 def fniPutFileToDb(mysFilename, mysSeparator, myoCollection):
-    '''
-    Open file to iterable, then use that to add file to db.
-    '''
-    # Store fresh, new records into the collection.
-    with open(mysFilename, "r") as fhInfile:
-        NTRC.ntrace(3, "File {} opened.".format(mysFilename))
-    
-        nRec = fnnPutIterToDb(fhInfile,mysSeparator,myoCollection)
-    return nRec
+    raise NotImplementedError
 
-@ntrace
+# f n b N o t I g n o r e L i n e 
+@ntracef("SRLB")
 def fnbNotIgnoreLine(mysLine):
-    # Ignore comment and blank lines.
+    ''' True if real line, i.e., not comment or blank line. '''
     return (not re.match("^\s*#",mysLine)) and (not re.match("^\s*$",mysLine))
 
+# f n I n t P l e a s e 
+@ntracef("SRLB")
 def fnIntPlease(myString):
-    # If it looks like an integer, make it one.
+    ''' If it looks like an integer, make it one. '''
     try:
         return int(myString)
     except ValueError:
         return myString
 
-@ntrace
+@ntracef("SRLB")
 def fnnPutIterToDb(myitHandle,mysSeparator,myoCollection):
-    '''
-    Get lines of file from iterable, add to db.
-    First line of file is header with field names.
-    '''
-    nNewRecs = 0
-    lNames = []
-    for sLine in itertools.ifilter(fnbNotIgnoreLine, myitHandle):
-        # The first line is header containing field names.
-        # All other lines are data.
-        if lNames == []:
-            lNames = sLine.strip().split(mysSeparator)
-            NTRC.ntrace(3, "proc field names|{}|".format(lNames))
-            continue
-        lValues = map(fnIntPlease, sLine.strip().split(mysSeparator))
-        # Combine names and values into a list, then into a dict.
-        dLine = dict(zip(lNames,lValues))
-        NTRC.ntrace(3, "proc line dict|{}|".format(dLine))
-        # Store new record into db table (pardon me, collection).
-        oNewID = myoCollection.insert_one(dLine).inserted_id
-        nNewRecs += 1
-        NTRC.ntrace(3, "proc stored line n|{}| post_id|{}|".format(nNewRecs, oNewID))
-    NTRC.ntrace(3, "proc lines stored|{}|".format(myoCollection.count()))
-    return myoCollection.count()
+    raise NotImplementedError
+    return 'count of collection that got added to or maybe of records added'
 
-@ntrace
+@ntracef("SRLB")
 def fngGetSet(myoDb, mysCollectionName, mydCriteria={}):
-    oCollection = myoDb[mysCollectionName]
-    for dItem in oCollection.find(mydCriteria):
-        yield dItem
+    raise NotImplementedError
 
-@ntrace
-def fngGetPendingWork(myoDb, mydCriteria):
-    oWorkCollection = myoDb['pending']
-    oDoneCollection = myoDb['done']
-    
-    # TODO: check here that the instruction is not already done.  
-    #  This doesn't work as written now because I don't have the 
-    #  item available to add to the done collection.
-    #  Will have to use the str value of the _id to compare
-    #  by converting the string back into an bson.ObjectId.  
-    #  Oh, this is a mess.  
-    yield itertools.ifilter(lambda item: item not in oDoneCollection, \
-            fngGetSet(oWorkCollection,mydCriteria))
+# f n v I n s e r t O n e 
+@ntracef("SRLB")
+def fndInsertOne(mysCollectionName, mysKey, mysVal):
+    with open(sDbName, "r") as fh:
+        dDb = json.load(fh)
+    with open(sDbName, "w") as fh:
+        if mysCollectionName not in dDb.keys():
+            dDb[mysCollectionName] = dict()
+        dDb[mysCollectionName][mysKey] = mysVal
+        json.dump(dDb, fh)
+    return dDb[mysCollectionName]
+
+# f n o G e t O n e 
+@ntracef("SRLB")
+def fnoGetOne(mysCollectionName, mysKey):
+    with open(sDbName, "r") as fh:
+        dDb = json.load(fh)
+        if mysCollectionName in dDb and mysKey in dDb[mysCollectionName]:
+            oVal = dDb[mysCollectionName][mysKey]
+        else:
+            oVal = None
+    return oVal
+
+# f n v D e l e t e O n e 
+@ntracef("SRLB")
+def fndDeleteOne(mysCollectionName, mysKey):
+    with open(sDbName, "r") as fh:
+        dDb = json.load(fh)
+    with open(sDbName, "w") as fh:
+        if mysCollectionName in dDb and mysKey in dDb[mysCollectionName]:
+            del dDb[mysCollectionName][mysKey]
+        json.dump(dDb, fh)
+    return dDb[mysCollectionName]
+
+# f n v D e l e t e C o l l e c t i o n 
+@ntracef("SRLB")
+def fnvDeleteCollection(mysCollectionName):
+    with open(sDbName, "r") as fh:
+        dDb = json.load(fh)
+    if mysCollectionName in dDb:
+        with open(sDbName, "w") as fh:
+            del dDb[mysCollectionName]
+            json.dump(dDb, fh)
+
+@ntracef("SRLB")
+def fngGetPendingWork(mydCriteria):
+    raise NotImplementedError
+
+@ntracef("SRLB")
+def fnvFlushDb():
+    # If I use with properly, this should not be necessary.
+    pass
+
+sDbName = "./tmp/test1.json"
+dDbEmpty =   {  "nocollection" : {"noentry" : "novalue"},  
+                "pending" : {}, 
+                "done" : {}
+            }
+dDb = dict()
+
+''' Put the tests that used to be in main in a proper unittest. '''
 
 
-def main2(mysDbName):
-    oDb = fnoOpenDb(mysDbName)
-    for dItem in fngGetPendingWork(oDb, {}):
-        print dItem
 
-def main(mysDbName, mysCollectionName):
-    oDb = fnoOpenDb(mysDbName)
-    betterbezero = fniClearCollection(oDb, mysCollectionName)
-
-    sFilename = fnsGetFilename()
-    oCollection = oDb[mysCollectionName]
-    nRecordCount = fniPutFileToDb(sFilename, " ", oCollection)
-    dTmp = oCollection.find_one()
-    NTRC.ntrace(0,"======\n{}\n======".format(dTmp))
-    NTRC.ntrace(0,"nRecs stored|{}|".format(nRecordCount))
-
-
-if __name__ == "__main__":
-    NTRC.ntrace(0,"Begin...")
-
-    sDbName = "test_database"
-    sCollectionName = "t3"
-    main(sDbName, sCollectionName)
-
-    NTRC.ntrace(0,"End.")
+##################### leftovers from mongo #######################
 
 
 """
