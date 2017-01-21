@@ -12,6 +12,7 @@ import  sys
 from    catchex         import  catchex
 import  searchspace
 import  searchdatabase
+import  util
 
 
 #===========================================================
@@ -39,18 +40,13 @@ def fndCliParse(mysArglist):
     # P O S I T I O N A L  arguments
     #cParse.add_argument('--something', type=, dest='', metavar='', help='')
 
-    cParse.add_argument('sDatabaseName', type=str
-                        , metavar='sDATABASENAME'
-                        , help='Name of MongoDB database that pymongo will find.'
+    cParse.add_argument('sSearchDbProgressCollectionName', type=str
+                        , metavar='sPROGRESSCOLLECTIONNAME'
+                        , help='Collection name within the search database '
+                        'of the instructions in progress for this broker run.'
                         )
 
-    cParse.add_argument('sPendingCollectionName', type=str
-                        , metavar='sPENDINGCOLLECTIONNAME'
-                        , help='Collection name within the database '
-                        'of the instructions to be executed.'
-                        )
-
-    cParse.add_argument('sDoneCollectionName', type=str
+    cParse.add_argument('sSearchDbDoneCollectionName', type=str
                         , metavar='sDONECOLLECTIONNAME'
                         , help='Collection name within the database '
                         'of the instructions that have been completed.'
@@ -320,9 +316,15 @@ class CG(object):
     sFamilyDir = '../hl'        # lifetimes expressed as half-lives, and
     sSpecificDir = 'a0'         #  no auditing.
 
-    # SearchSpace db info
+    # SearchSpace db info (for instructions)
     sInsDir = './ins'   # Where to find instruction (*.ins) files.
     sInsTyp = '.ins'    # File type (extension) specifier for instruction files.
+
+    # SearchDatabase db info (for progress and done records)
+    sSearchDbFile = "./searchspacedb/searchdb.json"
+    sSearchDbPendingCollectionName = "pending"  # (Currently not used.)
+    sSearchDbProgressCollectionName = "progress"
+    sSearchDbDoneCollectionName = "done"
     sdb = None         # Instance of searchspace db.
     
     # Command template components.
@@ -674,8 +676,12 @@ def main():
     # Look for overriding environment variables
     fnvGetEnvironmentOverrides()
 
-    # Open the database to keep "done" records.
-    g.sdb = searchdatabase.CSearchDatabase("./tmp/searchdb.json", "pending", "done")
+    # Open the database to keep "done" records,
+    #  and delete moldy, old in-progress records.
+    g.sdb = searchdatabase.CSearchDatabase(g.sSearchDbFile, 
+                g.sSearchDbProgressCollectionName, 
+                g.sSearchDbDoneCollectionName)
+    g.sdb.fnvDeleteProgressCollection()
     
     # Get the set of instructions for today from database.
     NTRC.tracef(0,"MAIN","proc querydict2|%s|" % ((dQuery)))
@@ -760,7 +766,7 @@ def fnstProcessOneInstruction(mysRunNumber, mydInstruction, mynSeed):
     if g.sRedo.startswith("Y"):
         NTRC.ntracef(0,"MAIN","proc force redo for item id|%s|" 
             % (sInstructionId))
-        g.sdb.fnbDeleteDoneRecord(sInstructionId)
+        g.sdb.fndDeleteDoneRecord(sInstructionId)
 
     # If this instruction has already been processed skip it.
     bIsItDone = g.sdb.fnbIsItDone(sInstructionId)
@@ -811,6 +817,9 @@ def fnstProcessOneInstruction(mysRunNumber, mydInstruction, mynSeed):
                 for sCommand in g.lCommands:
                     print >> fhActorCmdFile, g.cFmt.fnsMaybeTest(sCommand)
 
+            # Record that this job is running.
+            mydInstruction["starttime"] = util.fnsGetTimeStamp()
+            g.sdb.fndInsertProgressRecord(mydInstruction["_id"], mydInstruction)
             # Launch the actor to perform main runs.  
             cCmd = CCommand()
             sResult = cCmd.doCmdStr(g.sActorCommand)
@@ -924,6 +933,7 @@ foreach single-line file in holding dir
 # 20170117  RBL Begin to remove Mongo class so it can eventually be replaced
 #                by the equivalent for searchspace.  
 #               Put in special handling for dictionaries going into json.  
+# 20170121  RBL Complete conversion to searchspace and searchdatabase.
 # 
 # 
 

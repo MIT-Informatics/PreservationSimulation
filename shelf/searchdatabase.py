@@ -13,9 +13,10 @@ class CSearchDatabase(object):
     pass
 
     @ntracef("SRDB")
-    def __init__(self,mysDatabaseName, mysPendingCollectionName, mysDoneCollectionName):
+    def __init__(self,mysDatabaseName, mysProgressCollectionName, 
+                mysDoneCollectionName):
         self.sDbName = mysDatabaseName
-        self.sPendingName = mysPendingCollectionName
+        self.sProgressName = mysProgressCollectionName
         self.sDoneName = mysDoneCollectionName
         self.oDb = searchlib.fnoOpenDb(self.sDbName)
 
@@ -36,13 +37,30 @@ class CSearchDatabase(object):
         return dCollection
 
     @ntracef("SRDB")
-    def fnbDeleteDoneRecord(self, mysInstructionId):
+    def fndDeleteDoneRecord(self, mysInstructionId):
         dCollection = searchlib.fndDeleteOne(self.sDoneName, mysInstructionId)
         return dCollection
 
     @ntracef("SRDB")
     def fnvDeleteDoneCollection(self):
         dCollection = searchlib.fnvDeleteCollection(self.sDoneName)
+        return
+
+    @ntracef("SRDB")
+    def fndInsertProgressRecord(self, mysInstructionId, mysOtherInfo):
+        dCollection = searchlib.fndInsertOne(self.sProgressName, 
+                        mysInstructionId, mysOtherInfo)
+        return dCollection
+
+    @ntracef("SRDB")
+    def fndDeleteProgressRecord(self, mysInstructionId):
+        dCollection = searchlib.fndDeleteOne(self.sProgressName, 
+                        mysInstructionId)
+        return dCollection
+
+    @ntracef("SRDB")
+    def fnvDeleteProgressCollection(self):
+        dCollection = searchlib.fnvDeleteCollection(self.sProgressName)
         return
 
     @ntracef("SRDB")
@@ -156,3 +174,8 @@ class CDatabase(object):
         return result["ok"] != 0
 
 """
+
+# Edit history:
+# 20170120  RBL Original version.  
+# 
+# 

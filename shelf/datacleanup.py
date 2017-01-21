@@ -9,6 +9,7 @@ import  json
 from    NewTraceFac     import NTRC,ntrace,ntracef
 import  mongolib
 import  csv
+import  searchdatabase
 
 
 @ntracef("CLI")
@@ -30,14 +31,14 @@ def fndCliParse(mysArglist):
     # P O S I T I O N A L  arguments
     #cParse.add_argument('--something', type=, dest='', metavar='', help='')
 
-    cParse.add_argument('sDatabaseName', type=str
-                        , metavar='sDATABASENAME'
-                        , help='Name of MongoDB database that pymongo will find.'
+    cParse.add_argument('sProgressCollectionName', type=str
+                        , metavar='sPROGRESSCOLLECTIONNAME'
+                        , help='Collection name in database of instructions being processed.'
                         )
 
     cParse.add_argument('sDoneCollectionName', type=str
                         , metavar='sDONECOLLECTIONNAME'
-                        , help='Collection name within the database of the instructions that have been completed.'
+                        , help='Collection name in database of instructions that have been completed.'
                         )
 
     cParse.add_argument("sInputFilename", type=str
@@ -93,8 +94,11 @@ class CG(object):
     sFamilyDir = '../q3'
     sSpecificDir = '.'
 
-    sDatabaseName = None
+    # SearchDatabase info
+    sSearchDbFile = "./searchspacedb/searchdb.json"
+    sdb = None              # Instance of SearchDatabase to use
     sDoneCollectionName = None
+    sProgressCollectionName = None
 
     sSeparator = ' '        # CSV-ish separator for input and output files.
     sInputFilename = None
@@ -127,7 +131,6 @@ def main():
     Else    dictionary-ify the data (maybe csvreader already did that for us).
             add the dict to the done collection, including the sDoneId field.
             end.
-    
     '''
     NTRC.ntracef(0,"MAIN","Begin.")
     # Get args from CLI and put them into the global data
@@ -145,22 +148,21 @@ def main():
         NTRC.tracef(3, "MAIN", "proc lValues|%s|" % (lValues))
     dValues = dict(zip(lHeader, lValues))
     NTRC.tracef(3, "MAIN", "proc dValues|%s|" % (dValues))
-
+    
+    # Open the SearchDatabase for done and progress records.
+    g.sdb = searchdatabase.CSearchDatabase(g.sSearchDbFile, 
+            g.sProgressCollectionName, 
+            g.sDoneCollectionName)
     # Construct database query for this invocation.  
-    dQuery = {"sDoneId" : dValues["mongoid"]}
-    NTRC.tracef(0,"MAIN","proc querydict|%s|" % ((dQuery)))
-
-    # Is this extract already stored in the database?
-    #  If so, skip all this work.
-    oDb = mongolib.fnoOpenDb(g.sDatabaseName)
-    oDoneCollection = oDb[g.sDoneCollectionName]
-    lMatches = list(oDoneCollection.find(dQuery))
-    NTRC.ntracef(0,"MAIN","proc main looking for done lMatches|{}|".format(lMatches))
+    sInstructionId = dValues["mongoid"]
     sLineOut = g.sSeparator.join(lValues)
-    if len(lMatches) == 0:
-        
+    NTRC.tracef(0,"MAIN","proc looking for done recd|%s|" % (sInstructionId))
+    # Is this extract already stored in the database?
+    bIsItDone = g.sdb.fnbIsItDone(sInstructionId)
+    if not bIsItDone:
         # Always add a line of data to the giant output file.
-        NTRC.tracef(0, "MAIN", "proc line appended to output \nsLineOut|%s|" % (sLineOut))
+        NTRC.tracef(0, "MAIN", "proc line appended to output \nsLineOut|%s|" 
+            % (sLineOut))
         with open(g.sGiantOutputFilename,'a') as fhOutput:
             fhOutput.write(sLineOut + "\n")
             NTRC.tracef(3, "MAIN", "proc wroteline|%s|" % (sLineOut))
@@ -169,8 +171,7 @@ def main():
         if g.sDoNotRecord.startswith("Y"):
             NTRC.tracef(0, "MAIN", "proc Done not recorded.")
         else:
-            dValues["sDoneId"] = dValues["mongoid"]
-            oDoneCollection.insert_one(dValues)
+            dResult = g.sdb.fndInsertDoneRecord(sInstructionId, dValues)
 
         # Maybe delete the extract file.
         if g.sDoNotDelete.startswith("Y"):
@@ -178,6 +179,8 @@ def main():
         else:
             os.remove(g.sInputFilename)
             NTRC.tracef(3,"MAIN", "proc fileremoved|%s|" % (g.sInputFilename))
+            # And remove its in-progress record from the search db.
+            g.sdb.fndDeleteProgressRecord(sInstructionId)
     else:
         # Duplicate instruction; do not add line to output file.
         NTRC.tracef(0, "MAIN", "proc line NOT appended to output file \nsLineOut|%s|" % (sLineOut))
@@ -189,6 +192,14 @@ def main():
 if __name__ == "__main__":
     g = CG()
     main()
+
+# Edit history:
+# 2016xxxx  RBL Original version.
+# 20170121  FBL Adapt to new searchdatabasae to hold done and progress records.
+# 
+# 
+
+
 
 #END
 

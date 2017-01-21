@@ -85,7 +85,7 @@ sleep 5
 # Data cleanup command.  Appends line from extract file to output file, 
 #  and usually deletes the extract file and records it in the done collection.
 
-python datacleanup.py {sDatabaseName} {sDoneCollectionName} {sFamilyDir}/{sSpecificDir}/ext/{sShelfLogFileName}.ext {sFamilyDir}/{sSpecificDir}/dat/GiantOutput_00.txt  --separator=' ' --donotdelete=N
+python datacleanup.py {sSearchDbProgressName} {sSearchDbDoneCollectionName} {sFamilyDir}/{sSpecificDir}/ext/{sShelfLogFileName}.ext {sFamilyDir}/{sSpecificDir}/dat/GiantOutput_00.txt  --separator=' ' --donotdelete=N
 
 # End time
 date +%Y%m%d_%H%M%S.%3N

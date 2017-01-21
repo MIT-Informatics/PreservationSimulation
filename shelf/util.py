@@ -7,6 +7,7 @@ from NewTraceFac import TRC,trace,tracef,NTRC,ntrace,ntracef
 from math import sqrt, log
 import itertools
 from globaldata import *
+from time import localtime
 
 
 # U t i l i t i e s 
@@ -208,6 +209,21 @@ def fniNumberFromID(sSomeID):
      remembered to put in the leading zeros.  
     '''
     return int(sSomeID[1:])
+
+# f n s G e t T i m e S t a m p 
+@tracef("UTIL",level=5)
+def fnsGetTimeStamp():
+    vecT = localtime()
+    (year,month,day,hrs,mins,secs,_,_,_) = vecT
+    ascT = "%4d%02d%02d_%02d%02d%02d" % (year,month,day,hrs,mins,secs)
+    return ascT
+
+# Edit history:
+# 2014xxxx  RBL Original version.
+# 20170121  RBL Add GetTimeStamp.
+# 
+# 
+
 
 
 #END

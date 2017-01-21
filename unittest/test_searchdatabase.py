@@ -15,16 +15,22 @@ class CSearchDatabaseTest(unittest.TestCase):
     
     def setUp(self):
         self.sDbName = "./tmp/testsearchlib.json"
-        self.sPendingCollectionName = "pending"
+        self.sProgressCollectionName = "progress"
         self.sDoneCollectionName = "done"
         self.sKey = "testcase"
         self.sVal = {"value" : 123}
-        self.oDb = CSearchDatabase(self.sDbName, self.sPendingCollectionName, 
+        self.oDb = CSearchDatabase(self.sDbName, self.sProgressCollectionName, 
                     self.sDoneCollectionName)
 
     def tearDown(self):
         pass
 
+
+    @ntracef("TSRD")
+    def test_deletealldone(self):
+        self.oDb.fnvDeleteDoneCollection()
+        result = self.oDb.fniCountCollection(self.sDoneCollectionName)
+        self.assertEqual(result, 0)
 
     @ntracef("TSRD")
     def test_insertdone(self):
@@ -53,14 +59,49 @@ class CSearchDatabaseTest(unittest.TestCase):
     
     @ntracef("TSRD")
     def test_deletedone(self):
+        result = self.oDb.fniCountCollection(self.sDoneCollectionName)
+        nCountBefore = result
         result = self.oDb.fndInsertDoneRecord(self.sKey, self.sVal)
-        pass
-    
+        result = self.oDb.fndDeleteDoneRecord(self.sKey)
+        self.assertTrue(isinstance(result, dict))
+        result = self.oDb.fniCountCollection(self.sDoneCollectionName)
+        nCountAfter = result
+        self.assertEqual(nCountAfter, 0)
+
     @ntracef("TSRD")
     def test_count(self):
         result = self.oDb.fndInsertDoneRecord(self.sKey, self.sVal)
         result = self.oDb.fniCountCollection(self.sDoneCollectionName)
         self.assertEqual(result, 1)
     
+    @ntracef("TSRD")
+    def test_deleteallprogress(self):
+        self.oDb.fnvDeleteProgressCollection()
+        result = self.oDb.fniCountCollection(self.sProgressCollectionName)
+        self.assertEqual(result, 0)
+
+    @ntracef("TSRD")
+    def test_insertprogress(self):
+        result = self.oDb.fndInsertProgressRecord(self.sKey, self.sVal)
+        self.assertTrue(isinstance(result,dict))
+        self.assertTrue(self.sKey in result.keys())
+        self.assertTrue(self.sVal in result.values())
+
+    def test_deleteprogress(self):
+        result = self.oDb.fniCountCollection(self.sProgressCollectionName)
+        nCountBefore = result
+        result = self.oDb.fndInsertProgressRecord(self.sKey, self.sVal)
+        result = self.oDb.fndDeleteProgressRecord(self.sKey)
+        self.assertTrue(isinstance(result, dict))
+        result = self.oDb.fniCountCollection(self.sProgressCollectionName)
+        nCountAfter = result
+        self.assertEqual(nCountAfter, 0)
+
+# Edit history:
+# 20170120  RBL Original version.
+# 
+# 
 
 
+
+#END

@@ -1,6 +1,6 @@
 # extract instruction file for extractvalues.py
 # RBLandau 20141125, revised 20141130, revised 20150609, revised 20160216,
-#  revised 20170109 and 20170110.
+#  revised 20170109 and 20170110 and 20170121.
 
 # In the template line, all the variable names must be extracted (successfully)
 #  by a line in the variables section below.  
@@ -32,7 +32,9 @@
 #  (usually a number) that you want.  Use the least specific expression
 #  that works.
 #  If a valueregex contains a vertical bar, it MUST be enclosed in 
-#  single quotes (apostrophes).  If not, it MAY be.  
+#  single quotes (apostrophes).  
+#  I used to think that it COULD be enclosed in single quotes, but 
+#  recent experience says that it must not be in single quotes.  
 #  It MUST NOT be enclosed in double quotes, don't ask me why.  
 #  To avoid the problems with vertical bars, mainly I just use dots
 #  to skip over them.  
@@ -97,7 +99,7 @@ glitchdecay,GLITCH,8,decay.(\d+)
 glitchmaxlife,GLITCH,9,maxlife.(\d+)
 nglitches,"LIFETIME Total glitches",7,glitches.(\d+)
 
-serverdefaultlife,"PARAMS INFO.*Default",0,'DefaultHalfLife[^0-9]*(\d*)'
+serverdefaultlife,"PARAMS INFO.*Default",6,DefaultHalflife.(\d+)
 shockfreq,"PARAMS INFO - SHOCKS",6,freq.(\d+)
 shockimpact,"PARAMS INFO - SHOCKS",7,impact.(\d+)
 shockmaxlife,"PARAMS INFO - SHOCKS",9,maxlife.(\d+)

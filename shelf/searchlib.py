@@ -119,7 +119,7 @@ import os
 
 # Always start the day with an empty database.
 dDb = dict()
-# WARNING: no error checking, very fool-vulnerable.  
+# WARNING: no error checking in this module, very fool-vulnerable.  
 # If you don't open the db, e.g., you will get nonsense.
 
 
@@ -260,6 +260,7 @@ def fnvFlushDb():
 sDbName = "./tmp/test1.json"
 dDbEmpty =   {  "nocollection" : {"noentry" : "novalue"},  
                 "pending" : {}, 
+                "progress" : {}, 
                 "done" : {}
             }
 dDb = dict()
@@ -341,5 +342,11 @@ def get(post_id):
     document = client.db.collection.find_one({'_id': ObjectId(post_id)})
 
 """
+
+# Edit history:
+# 20170120  RBL Original version.
+# 
+# 
+
 
 #END
