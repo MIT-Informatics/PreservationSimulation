@@ -224,7 +224,7 @@ def fndCliParse(mysArglist):
                         , dest='nTestLimit'
                         , metavar='nTESTLIMIT'
                         , nargs='?'
-                        , help='TESTING ONLY: limit on number of runs to execute.'
+                        , help='TESTING ONLY: limit on number of runs to execute.  Each case is executed nseeds number of times.'
                         )
     
     cParse.add_argument("--testcommand"
@@ -839,7 +839,7 @@ def fnvGetEnvironmentOverrides():
     # First, find out how many cores there are that we could possibly use.
     nMaxCores = int(os.getenv("NUMBER_OF_PROCESSORS", None))
     # By default, use one fewer than max available, according to the o/s.  
-    g.nCores = nMaxCores - 1 if nMaxCores else g.nCores
+    g.nCores = nMaxCores if nMaxCores else g.nCores
     # If the user specifies a number, larger or smaller, take it.
     try:
         g.nCores = int(os.getenv("NCORES", CG.nCores))

@@ -46,7 +46,7 @@ dDb = dict()
 
 
 # f n d R e a d R e t r y L o c k 
-def fndReadRetryLock(mysDbFilename, mynRetries= 20):
+def fndReadRetryLock(mysDbFilename, mynRetries=60):
     ''' 
     Read a json dict from file, with retries for file locking errors.
     FileLock does not seem to work perfectly on Windows/Cygwin, 
