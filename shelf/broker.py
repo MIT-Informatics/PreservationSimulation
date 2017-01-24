@@ -77,9 +77,9 @@ def fndCliParse(mysArglist):
 
     cParse.add_argument("--audittype", type=str
                         , dest='sAuditType'
-                        , choices=['TOTAL','OFF']
+                        #, choices=['TOTAL','OFF']
                         , nargs='?'
-                        , help='Strategy for auditing, default=SYSTEMATIC.'
+                        , help='Strategy for auditing, default=TOTAL.'
                         )
 
     cParse.add_argument("--auditsegments", type=str
@@ -937,6 +937,10 @@ foreach single-line file in holding dir
 #               Put in special handling for dictionaries going into json.  
 # 20170121  RBL Complete conversion to searchspace and searchdatabase.
 # 20170122  RBL Fix calc of nCores, limit = cores on this ship.  
+# 20170124  RBL Remove restrictions on --audittype because the string "TOTAL"
+#                is not valid JSON.  Rather than put in an exception to 
+#                translate string values to proper JSON (which I might do
+#                later), let's permit --auditsegments='{"$eq":"TOTAL"}' to work.
 # 
 # 
 
