@@ -12,7 +12,7 @@ from NewTraceFac import NTRC, ntrace, ntracef
 class CSearchDatabase(object):
     pass
 
-    @ntracef("SRDB")
+    @ntracef("SRDM")
     def __init__(self,mysDatabaseName, mysProgressCollectionName, 
                 mysDoneCollectionName):
         self.sDbName = mysDatabaseName
@@ -20,45 +20,45 @@ class CSearchDatabase(object):
         self.sDoneName = mysDoneCollectionName
         self.oDb = searchlib.fnoOpenDb(self.sDbName)
 
-    @ntracef("SRDB")
+    @ntracef("SRDM")
     def fnbIsItDone(self, mysInstructionId):
         result = searchlib.fnoGetOne(self.sDoneName, mysInstructionId)
         return (result is not None)
 
-    @ntracef("SRDB")
+    @ntracef("SRDM")
     def fndInsertDoneRecord(self, mysInstructionId, mysOtherInfo):
         dCollection = searchlib.fndInsertOne(self.sDoneName, 
                         mysInstructionId, mysOtherInfo)
         return dCollection
 
-    @ntracef("SRDB")
+    @ntracef("SRDM")
     def fndDeleteDoneRecord(self, mysInstructionId):
         dCollection = searchlib.fndDeleteOne(self.sDoneName, mysInstructionId)
         return dCollection
 
-    @ntracef("SRDB")
+    @ntracef("SRDM")
     def fnvDeleteDoneCollection(self):
         dCollection = searchlib.fnvDeleteCollection(self.sDoneName)
         return
 
-    @ntracef("SRDB")
+    @ntracef("SRDM")
     def fndInsertProgressRecord(self, mysInstructionId, mysOtherInfo):
         dCollection = searchlib.fndInsertOne(self.sProgressName, 
                         mysInstructionId, mysOtherInfo)
         return dCollection
 
-    @ntracef("SRDB")
+    @ntracef("SRDM")
     def fndDeleteProgressRecord(self, mysInstructionId):
         dCollection = searchlib.fndDeleteOne(self.sProgressName, 
                         mysInstructionId)
         return dCollection
 
-    @ntracef("SRDB")
+    @ntracef("SRDM")
     def fnvDeleteProgressCollection(self):
         dCollection = searchlib.fnvDeleteCollection(self.sProgressName)
         return
 
-    @ntracef("SRDB")
+    @ntracef("SRDM")
     def fniCountCollection(self, mysCollectionName):
         nResult = searchlib.fniCollectionCount(mysCollectionName)
         return nResult

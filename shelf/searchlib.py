@@ -2,7 +2,6 @@
 # searchlib.py
 # 
 # 
-# ideas from http://api.mongodb.org/python/current/tutorial.html
 
 
 '''
@@ -15,97 +14,20 @@ dict entry
 e.g., 
     { 'efa338427818683d045cfb17e553810570c26195_3' : ( "'nShockSpan': 0, 
     'sAuditType': 'TOTAL', 'nAuditFreq': 0, 'nGlitchFreq': 0, 
-    'nGlitchMaxlife': 0, 'nLifem': 1000, 'nShockMaxlife': 0, 
-    'nCopies': 1, 'nGlitchIgnorelevel': 0, 'nGlitchSpan': 0, 
-    'nAuditSegments': 0, 'nShockFreq': 0, 'nSimlen': 100000, 
-    'nRandomseed': 141246882, 'nShelfSize': 1, 'nDocSize': 50, 
-    'nServerDefaultLife': 0, 
-    'sBaseId': 'efa338427818683d045cfb17e553810570c26195', 
+ ...
     'nGlitchImpact': 0, 'nShockImpact': 0, 'nGlitchDecay': 0, 
     '_id': 'efa338427818683d045cfb17e553810570c26195_3'", 
     "20170118_002355")}
-The string might be better than dict because it is immutable.  
 Note that getting the instruction dict requires a change to the signature.
 
-Question: do we need to keep DbName?  Since the pending list is calculated
-from the user params at the instant rather than selected from a large
-set calculated in advance, there really is no interesting db.  Hmmm.  
-
 Write the file every time a dictionary entry is entered or deleted:
-e.g., 
->>> dd = {1:11, 2:22}
->>> with open("tmp/test1.json", "w") as fh:
-...   json.dump(dd,fh)
-
-Read the file in if it's not already in memory:
-e.g., 
->>> with open("tmp/test1.json", "r") as fh:
-...  xx = json.load(fh)
-...
->>> xx
-{u'1': 11, u'2': 22}
-landau@RicksYoga2 ~
-$ cat tmp/test2.json
-{"1": 11, "2": 22}
-landau@RicksYoga2 ~
-$ cat tmp/test1.json
-{"1": 11, "2": 22}
-landau@RicksYoga2 ~
-#Note that the key is ALWAYS a string.
->>> xx[1]
-Traceback (most recent call last):
-  File "<stdin>", line 1, in <module>
-KeyError: 1
->>> xx['1']
-11
->>>
-
-Clear collection = write file with empty (approx) dict.
-
-Open = read dict in.
-
-GetFilename = e-z
-
-PutFileToDb = for input dict, make entries in output dict.
-
-PutIterToDb = much the same, I hope.
-
-GetSet
-GetPendingWork
-Hmmm, tricky.  Perhaps we need to structure the json dict differently, with 
-nested dictionaries for collections.  This is approximately what mongo feels
-like.  
-{
-    str(collection name) : dictofitemsincollection, 
-    str(another collection) : dict of those items
-}
-This way, both pending and done can remain in use.  
-Dump all pending into the dict when we get the iterator from searchspace.
-Put done items in when they occur.  Leave the pending items, as we do now.
-E.g., 
-{
-    "pending" : {
-                "id of first" : {instruction dict}, 
-                "id of next" : {instruction dict}
-                }
-    "done" : {
-                "id of first done" :    (
-                                        "id",
-                                        "timestamp"
-                                        )
-            }
-}
 
 We may still need a ClearCollection utility.
-We probably won't need a LoadCollection utility.  
 We can get rid of all the template expansion foolishness in newinstructions,
 and quit worrying about toobig files.
 We can get rid of the filtering foolishness that was hard to get just so, that
 cried out for a comprehensive unittest that I never got around to writing.  
 So rename newinstructions to OLDnewinstructions and let it rust.  
-
-
-
 '''
 
 from NewTraceFac import ntrace,ntracef,NTRC
@@ -115,13 +37,32 @@ import itertools
 import json
 import copy
 import os
-
+import filelock
+import time
 
 # Always start the day with an empty database.
 dDb = dict()
 # WARNING: no error checking in this module, very fool-vulnerable.  
-# If you don't open the db, e.g., you will get nonsense.
 
+
+# f n d R e a d R e t r y L o c k 
+def fndReadRetryLock(mysDbFilename, mynRetries= 20):
+    ''' 
+    Read a json dict from file, with retries for file locking errors.
+    FileLock does not seem to work perfectly on Windows/Cygwin, 
+    so lets retry it a bunch of times before we give up entirely.
+    '''
+    while True:
+        try:
+            with open(mysDbFilename, 'r') as fh:
+                dWhatever = json.load(fh)
+                break       # When we get valid json, done.
+        except:
+            if mynRetries <= 0:
+                raise 
+        mynRetries -= 1
+        time.sleep(1)
+    return dWhatever
 
 # f n o O p e n D b 
 @ntracef("SRLB")
@@ -134,8 +75,10 @@ def fnoOpenDb(mysDbFilename):
     if os.path.isfile(mysDbFilename) and os.path.getsize(mysDbFilename) > 0:
         NTRC.ntracef(3, "SRLB", "proc open json for read|%s|" 
             % (mysDbFilename))
-        with open(mysDbFilename, "r") as fh:
+        """
+        with filelock.FileLock(mysDbFilename):
             # File present, try to read it as json.  
+            fh = open(mysDbFilename, "r") 
             sDbContent = "".join(fh.readlines())
             NTRC.ntracef(3, "SRLB", "proc file content|%s|" 
                 % (sDbContent))
@@ -144,12 +87,16 @@ def fnoOpenDb(mysDbFilename):
             except ValueError:
                 raise ValueError, ("Error: file|%s| is not valid JSON" 
                     % (mysDbFilename))
+        """
+        with filelock.FileLock(mysDbFilename):
+            dDb = fndReadRetryLock(mysDbFilename)
     else:
         # File not there yet, write it.
             try:
                 NTRC.ntracef(3, "SRLB", "proc open json for write|%s|" 
                     % (mysDbFilename))
-                with open(mysDbFilename, "w") as fh:
+                with filelock.FileLock(mysDbFilename):
+                    fh = open(mysDbFilename, "wb") 
                     dDb = copy.deepcopy(dDbEmpty)
                     json.dump(dDb, fh)
             except IOError:
@@ -165,11 +112,11 @@ def fnvClearCollection(mysCollectionName):
 # f n i C o l l e c t i o n C o u n t 
 @ntracef("SRLB")
 def fniCollectionCount(mysCollectionName):
-    with open(sDbName, "r") as fh:
-        dDb = json.load(fh)
-    return (len(dDb[mysCollectionName].keys()) 
-        if mysCollectionName in dDb.keys() 
-        else 0)
+    with filelock.FileLock(sDbName):
+        dDb = fndReadRetryLock(sDbName)
+        return (len(dDb[mysCollectionName].keys()) 
+            if mysCollectionName in dDb.keys() 
+            else 0)
 
 # f n s G e t F i l e n a m e 
 @ntracef("SRLB")
@@ -207,59 +154,50 @@ def fngGetSet(myoDb, mysCollectionName, mydCriteria={}):
 # f n v I n s e r t O n e 
 @ntracef("SRLB")
 def fndInsertOne(mysCollectionName, mysKey, mysVal):
-    with open(sDbName, "r") as fh:
-        dDb = json.load(fh)
-    with open(sDbName, "w") as fh:
+    with filelock.FileLock(sDbName):
+        dDb = fndReadRetryLock(sDbName)
+        fh = open(sDbName, "wb")
         if mysCollectionName not in dDb.keys():
             dDb[mysCollectionName] = dict()
         dDb[mysCollectionName][mysKey] = mysVal
         json.dump(dDb, fh)
-    return dDb[mysCollectionName]
+        return dDb[mysCollectionName]
 
 # f n o G e t O n e 
 @ntracef("SRLB")
 def fnoGetOne(mysCollectionName, mysKey):
-    with open(sDbName, "r") as fh:
-        dDb = json.load(fh)
+    with filelock.FileLock(sDbName):
+        dDb = fndReadRetryLock(sDbName)
         if mysCollectionName in dDb and mysKey in dDb[mysCollectionName]:
             oVal = dDb[mysCollectionName][mysKey]
         else:
             oVal = None
-    return oVal
+        return oVal
 
 # f n v D e l e t e O n e 
 @ntracef("SRLB")
 def fndDeleteOne(mysCollectionName, mysKey):
-    with open(sDbName, "r") as fh:
-        dDb = json.load(fh)
-    with open(sDbName, "w") as fh:
+    with filelock.FileLock(sDbName):
+        dDb = fndReadRetryLock(sDbName)
+        fh = open(sDbName, "wb")
         if mysCollectionName in dDb and mysKey in dDb[mysCollectionName]:
             del dDb[mysCollectionName][mysKey]
         json.dump(dDb, fh)
-    return dDb[mysCollectionName]
+        return dDb[mysCollectionName]
 
 # f n v D e l e t e C o l l e c t i o n 
 @ntracef("SRLB")
 def fnvDeleteCollection(mysCollectionName):
-    with open(sDbName, "r") as fh:
-        dDb = json.load(fh)
-    if mysCollectionName in dDb:
-        with open(sDbName, "w") as fh:
+    with filelock.FileLock(sDbName):
+        dDb = fndReadRetryLock(sDbName)
+        if mysCollectionName in dDb:
+            fh = open(sDbName, "wb")
             del dDb[mysCollectionName]
             json.dump(dDb, fh)
 
-@ntracef("SRLB")
-def fngGetPendingWork(mydCriteria):
-    raise NotImplementedError
-
-@ntracef("SRLB")
-def fnvFlushDb():
-    # If I use with properly, this should not be necessary.
-    pass
 
 sDbName = "./tmp/test1.json"
 dDbEmpty =   {  "nocollection" : {"noentry" : "novalue"},  
-                "pending" : {}, 
                 "progress" : {}, 
                 "done" : {}
             }
@@ -270,8 +208,6 @@ dDb = dict()
 
 
 ##################### leftovers from mongo #######################
-
-
 """
 Idioms for MongoDB: 
 
@@ -340,13 +276,27 @@ from bson.objectid import ObjectId
 def get(post_id):
     # Convert from string to ObjectId:
     document = client.db.collection.find_one({'_id': ObjectId(post_id)})
-
 """
 
 # Edit history:
 # 20170120  RBL Original version.
+# 20170122  RBL Windows/Cygwin file locking apparently does not fully work, 
+#                so I may have to abandon this line of coding.  
+#               Try adding the FileLock mechanism from Evan Fosmark that I 
+#                found on stackoverflow.  Writes a temporary lockfile 
+#                using os.open.  Seems to work.  
+#                Well, after some testing, it may work well enough, on 
+#                Windows, at least.  Extensive testing required.  
+#               After considerable testing, the verdict is bad.  The FileLock
+#                mechanism just doesn't work perfectly on Windows/Cygwin.  
+#                Revert.  
+# 20170123  RBL Well, try another approach to FileLock, doing retries of
+#                the json conversion inside a retry loop.  If a writer 
+#                sneaks in and changes it, we don't really care so long
+#                as the result is correct syntactic json.  All of the 
+#                insert/delete/get operations, at the level of the broker
+#                and datacleanup utilities, are sort of idempotent.  
 # 
 # 
-
 
 #END

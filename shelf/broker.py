@@ -322,7 +322,6 @@ class CG(object):
 
     # SearchDatabase db info (for progress and done records)
     sSearchDbFile = "./searchspacedb/searchdb.json"
-    sSearchDbPendingCollectionName = "pending"  # (Currently not used.)
     sSearchDbProgressCollectionName = "progress"
     sSearchDbDoneCollectionName = "done"
     sdb = None         # Instance of searchspace db.
@@ -650,7 +649,7 @@ class CCommand(object):
 def main():
     '''
     Process:
-    - Query the db for pending instructions
+    - Query the searchspace for the stream of instructions
     - For each instruction from database selection, get dict for line
     - Using dict args, construct plausible command lines, into file
     - Check to see that there aren't too many similar processes 
@@ -844,11 +843,14 @@ def fnvGetEnvironmentOverrides():
     # If the user specifies a number, larger or smaller, take it.
     try:
         g.nCores = int(os.getenv("NCORES", CG.nCores))
+        g.nCores = min(g.nCores, nMaxCores)
+        NTRC.ntracef(0, "MAIN", "proc ncores|%s|" % (g.nCores))
     except (ValueError, TypeError):
         raise TypeError('Environment variable NCORES must be an integer.')
     # Allow user to override the polite interval to use today.
     try:
         g.nPoliteTimer = int(os.getenv("NPOLITE", CG.nPoliteTimer))
+        NTRC.ntracef(0, "MAIN", "proc politetimer|%s|" % (g.nPoliteTimer))
     except (ValueError, TypeError):
         raise TypeError('Environment variable NPOLITE must be an integer.')
 
@@ -934,6 +936,7 @@ foreach single-line file in holding dir
 #                by the equivalent for searchspace.  
 #               Put in special handling for dictionaries going into json.  
 # 20170121  RBL Complete conversion to searchspace and searchdatabase.
+# 20170122  RBL Fix calc of nCores, limit = cores on this ship.  
 # 
 # 
 
