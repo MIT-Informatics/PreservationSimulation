@@ -191,16 +191,6 @@ def fndCliParse(mysArglist):
                         , nargs='?'
                         , help='Document size in MB.'
                         )
-
-#    cParse.add_argument("--query", type=str
-#                        , dest='sQuery'
-#                        , metavar='sMONGODB_JSON_QUERYSTRING'
-#                        , nargs='?'
-#                        , help='For the brave and foolhardy, a full '
-#                        'JSON-ized query string for MongoDB.  This '
-#                        'cannot be combined with any other selector options.'
-#                        )
-    
     
 # Other options that are not used for selection, but for overrides or testing.
 
@@ -313,6 +303,15 @@ class CG(object):
                         #  but don't execute them.
     sRedo = "N"         # Force cases to be redone (recalculated)?
 
+    # Options that are string-valued but special, have only Y/N/YES/NO 
+    #  answers.  DO NOT JSON-ify them.  
+    lYesNoOptions = ("sRedo sListOnly sTestCommand sTestFib").split()
+    
+    # Mandatory arguments that are strings shouldn't be manhandled, either.
+    lMandatoryArgs = ("sSearchDbProgressCollectionName "
+                        "sSearchDbDoneCollectionName "
+                        "sFamilyDir sSpecificDir").split()
+    
     sFamilyDir = '../hl'        # lifetimes expressed as half-lives, and
     sSpecificDir = 'a0'         #  no auditing.
 
@@ -537,26 +536,39 @@ class CFormat(object):
     def fndFormatQuery(self, mydCli):
         '''
         Take all the CLI options that might specify a searchable attribute, and 
-         construct a MongoDB query dictionary.  
+         construct a MongoDB or searchspace query dictionary.  
+         This is lots nastier than it first appears to be
+         because json is so bloody picky.
         '''
         dOut = dict()
         for sAttrib,sValue in mydCli.items():
             result = None
             if sValue is not None:
-                
+                # Is it something valid in json?                
                 try:
                     result = json.loads(sValue)
                 except ValueError:
-                    result = fnIntPlease(sValue)
+                    # Is it a string that should be an integer, ok in json?
+                    try:
+                        result = int(sValue)
+                    except:
+                        # Is it a naked string for some string-valued var
+                        #  that isn't just Y/N or a mandatory string?  
+                        #  Rule out dict values that are already formatted.
+                        if (isinstance(sValue, str)
+                            and sAttrib not in g.lYesNoOptions
+                            and sAttrib not in g.lMandatoryArgs
+                            and '{' not in sValue
+                            and '}' not in sValue
+                            and ':' not in sValue
+                            and ',' not in sValue
+                            ):
+                            result = '{"$eq":' + '"'+sValue+'"' + '}'
+                        else:
+                            result = sValue
                     NTRC.tracef(3, "FMT", "proc FormatQuery notjson item "
                         "key|%s| val|%s| result|%s|" 
                         % (sAttrib, sValue, result))
-#                    if sAttrib == "sQuery":
-#                        NTRC.ntrace(0,"ERROR: sQuery string is not valid "
-#                            "JSON|%s|" 
-#                            % (sValue))
-#                        NTRC.ntrace(0,"Aborting run.")
-#                        sys.exit(1)
             NTRC.tracef(3, "FMT", "proc FormatQuery item key|%s| val|%s| result|%s|" 
                 % (sAttrib, sValue, result))
             # Can't process dicts thru json twice.
@@ -569,7 +581,8 @@ class CFormat(object):
         #  no results due to implied AND of all items in query dict.  
         dOutSafe = {k:v for k,v in dOut.items() if k in g.lSearchables}
         dOutNotNone = {k:v for k,v in dOutSafe.items() if v is not None}
-        NTRC.ntracef(3,"FMT","proc dict b4|%s| \nsafe|%s|\nclean|%s|" % (dOut,dOutSafe,dOutNotNone))
+        NTRC.ntracef(3,"FMT","proc dict b4|%s| \nsafe|%s|\nclean|%s|" 
+            % (dOut,dOutSafe,dOutNotNone))
         if "sQuery" in dOutNotNone.keys():
             # If the brave user has supplied a full, standalone query string,
             #  add its contents to the query dict so far.
@@ -940,10 +953,12 @@ foreach single-line file in holding dir
 # 20170124  RBL Remove restrictions on --audittype because the string "TOTAL"
 #                is not valid JSON.  Rather than put in an exception to 
 #                translate string values to proper JSON (which I might do
-#                later), let's permit --auditsegments='{"$eq":"TOTAL"}' to work.
+#                later), let's permit --audittype='{"$eq":"TOTAL"}' to work.
+# 20170124  RBL Smarten FormatQuery to permit string value for --audittype
+#                and turn TOTAL into {"$eq":"TOTAL"} which is acceptable
+#                to json.
 # 
 # 
-
 
 #END
 
