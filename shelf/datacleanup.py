@@ -109,8 +109,8 @@ class CG(object):
     # SearchDatabase info
     sSearchDbFile = "./searchspacedb/searchdb.json"
     sdb = None              # Instance of SearchDatabase to use
-    sDoneCollectionName = None
-    sProgressCollectionName = None
+    sDoneCollectionName = "done"
+    sProgressCollectionName = "inprogress"
 
     sSeparator = ' '        # CSV-ish separator for input and output files.
     sInputFilename = None

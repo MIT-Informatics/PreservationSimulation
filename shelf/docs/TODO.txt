@@ -4,42 +4,69 @@ TODO list for PreservationSimulation SHELF project
 TODO: shock
 DONE - add server default lifespan to param files and CLI, zero = infinite.
 DONE - server default lifespan is random, not fixed.  currently expo.
-DONE add server default lifespan to main CLI and broker.
+DONE - add server default lifespan to main CLI and broker.
 DONE - code shock methods for real not just pseudocode.  new style, at audit.
 DONE - test shock rescheduling server death.  
 WRONG - server death after shock is after now, not absolute, right?
 DONE - shock reduces server life by pct. shock duration finite.  after shock
     expires, server life returns to normal if not already dead.  
 DONE - do not restore life to server that has expired during the shock.  
-FIXME - select reasonable ranges of shock impacts.  
+DONE - select reasonable ranges of shock impacts.  
 DONE - server death evaluated before every audit cycle and at end of run.  
 DONE - watch out for server lifetime zero (=infinite) when assessing
         server live/dead at audit and end of run.  
 DONE - when kill server, also kill shelf and all doc copies on it.  
-FIXME - add nRandomSeeds to GUI.
+DONE - add nRandomSeeds to GUI.
 FIXME - change shock (and maybe other) lists to match the instructions.  
-  One could generate the HTML from the instruction db, but that would
-  be telling.  
+FIXME - generate the HTML from the instruction db.
+
+
+TODO: instruction generation
+DONE - new searchspace facility to generate cross-product instructions.
+DONE - unittests for searchspace.
+DONE - adapt broker to new instruction ifc.
+
+
+TODO: status bookkeeping database
+DONE - write searchdb status database based on json files.
+DONE - unittests for searchdb.
+DONE - adapt broker to new done and progress ifcs.
+DONE - adapt datacleanup to new done and progress ifcs.
+DON'T - redo and make new utilities for progress and done collections:
+    delete, count, list keys, list all.
+DONE - nope, rewrite the status database, have to go back to Mongo; 
+    file locking on Win10/Cygwin does not work well enough to prevent
+    some corruption of the database's json file.  oh, crap.  
+DONE - write searchdbmongo facility and unittest.
+FIXME - adapt broker to new mongo done and progress ifcs.
+FIXME - adapt datacleanup to new mongo done and progress ifcs.
+FIXME - redo and make new utilities for progress and done collections:
+    delete, count, list keys, list all.
 
 
 TODO: web interface to select instructions for broker run
 WRONG - learn kivy and remi, decide which to use.
 DONE - build static web interface to permit choosing instructions for 
-  a single run.
+    a single run using bottle.
 DONE - add server default halflife to web interface and CLI.
-FIXME - build static web interface to permit choosing subset instructions 
+DONE - build static web interface to permit choosing subset instructions 
     for group run by broker.
-FIXME - build backend for interface that generates broker.py command.
+DONE - build backend for interface that generates broker.py command.
+FIXME - fix the interface for new instruction values and revised interface 
+    for broker CLI.
 
 
 TODO: newtrace
 DONE - make new ntrace, ntracef the default inner routines for efficiency.  
 MAYBE - for trace level zero, do not check facility codes.
+FIXME - do null version of trace decorators for production use
+    that do as little as possible.  trace consumes about 40% of CPU time
+    during typical run.
 
 
 TODO: general
 DONE - stop accepting or rescheduling sector errors on dead shelf.  
-FIXME - at end, report servers that died and were in use at the time; 
+DONE - at end, report servers that died and were in use at the time; 
   currently reports all servers that died, even if not used by client.  
 
 
@@ -55,6 +82,18 @@ DONE - recode entirely to force filter first thing, to reduce the size
     of the internal lists required, and speed things up.  
     dramatic improvement.  
 DEFER - Is there some place here where memoizing can help further?
+DONE - add new fields for shock and serverlife.
+FIXME - test with --shortlog.  may have to adjust logging and/or extract
+    rules.  
+
+
+TODO: R 
+FIXME - can the ugly loop be resturcuted to run from a list of vars
+    in the order we want them nested?
+FIXME - learn Pandas, which is supposed to be equivalent to the R data.frame
+    data structure.  this might make it easier to do the nested loop in 
+    a more easily maintainable way.  
+FIXME - need new versions of table summary with glitch y/n and shock y/n.
 
 
 TODO: 100% glitch impact
@@ -98,8 +137,11 @@ DONE - fix the broker invocation in the AWSinstallscript to match the
   revised y/n options.
 DONE - start the run count from 1 even for cases that have already been done, 
   so that the run number reflects progress toward the total number.  
-FIXME - add param for number of seeds and take the seeds from a separate 
+DONE - add param for number of seeds and take the seeds from a separate 
   file of some specific name.  
+FIXME - break into several pieces to make editing easier.
+FIXME - adapt to new instruction generator.
+FIXME - adapt to new status bookkeeping database.  
 
 
 TODO: audit
@@ -109,6 +151,7 @@ FIXME - log stats at end of each audit cycle: lost, minority repairs, majority
 DONE - fix long-standing bug: when reprovision new server to replace dead one, 
   provision only with docs that have extant copies, not necessarily 
   the full set; some may already have been lost.  
+
 
 TODO: newinstructions
 FIXME - Add a squash function to reduce blank sequences to single blanks
@@ -127,11 +170,13 @@ FIXME - write documentation on how to generate instructions flat file
 DONE - fix order of args to filter program, data file last.
 DONE - fix shell script that makes complete instruction list to
   reflect change in argument order.
-FIXME - Remove random seeds from the instruction db; add them in broker 
+DONE - Remove random seeds from the instruction db; add them in broker 
   based on a param that states how many seeds today; maybe an environment
   variable, even, or overridden by one.  Easy enough to add that single param
   and shorten the instruction Cartesian product by a factor of ten or twenty.  
   Important when we want to do samples of 100 or 1000.  
+FIXME - move some of the utilities up to shelf or maybe to a util dir.  
+FIXME - remove the shelf/newinstructions directory.  
 
 
 TODO: packaging into Docker

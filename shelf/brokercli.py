@@ -4,6 +4,7 @@
 
 
 import argparse
+from NewTraceFac import NTRC, ntrace, ntracef
 
 
 @ntracef("CLI")
@@ -12,7 +13,7 @@ def fndCliParse(mysArglist):
          many options for this run from the command line.  
         Return a dictionary of all of them.  
     '''
-    sVersion = "0.0.8"
+    sVersion = "0.0.9"
     cParse = argparse.ArgumentParser(
         description="Digital Library Preservation Simulation "
         "Instruction Broker CLI "
@@ -221,6 +222,13 @@ def fndCliParse(mysArglist):
                         'CPU intensive process instead of real stuff.'
                         )
 
+    cParse.add_argument("--shortlog"
+                        , action='store_const', const="Y"
+                        , dest='sShortLog'
+                        , help='Log only begin setup and end results, '
+                        ' not all the error info in the middle.  '
+                        )
+
     cParse.add_argument("--listonly"
                         , action='store_const', const="Y"
                         , dest='sListOnly'
@@ -250,6 +258,7 @@ def fndCliParse(mysArglist):
 
 # Edit history:
 # 20170124  RBL Original version, removed from broker.py for legibility.  
+# 20170127  RBL Add --shortlog, which somehow was forgotten long ago.
 # 
 # 
 

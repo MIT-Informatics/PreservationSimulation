@@ -1,262 +1,20 @@
 #!/usr/bin/python
 # broker.py
 
-import  argparse
 import  os
 import  re
 import  time
 import  json
 from    NewTraceFac     import  NTRC,ntrace,ntracef
-import  mongolib
 import  sys
 from    catchex         import  catchex
 import  searchspace
 import  searchdatabase
+import  searchdatabasemongo
 import  util
-
-
-#===========================================================
-@ntracef("CLI")
-def fndCliParse(mysArglist):
-    ''' Parse the mandatory and optional positional arguments, and the 
-         many options for this run from the command line.  
-        Return a dictionary of all of them.  
-    '''
-    sVersion = "0.0.8"
-    cParse = argparse.ArgumentParser(
-        description="Digital Library Preservation Simulation "
-        "Instruction Broker CLI "
-        "v"+sVersion+"  "
-        "For each selection variable, enter either a value "
-        "or a MongoDB dictionary spec " 
-        "that is a valid JSON dictionary string.  \n" 
-        "Note that special characters such as $ { } must be escaped "
-        "or single-quoted to protect them from the shell.  " 
-        "" 
-        ""
-        ,epilog="Defaults for args as follows: (none)\n"
-        , version=sVersion)
-    
-    # P O S I T I O N A L  arguments
-    #cParse.add_argument('--something', type=, dest='', metavar='', help='')
-
-    cParse.add_argument('sSearchDbProgressCollectionName', type=str
-                        , metavar='sPROGRESSCOLLECTIONNAME'
-                        , help='Collection name within the search database '
-                        'of the instructions in progress for this broker run.'
-                        )
-
-    cParse.add_argument('sSearchDbDoneCollectionName', type=str
-                        , metavar='sDONECOLLECTIONNAME'
-                        , help='Collection name within the database '
-                        'of the instructions that have been completed.'
-                        )
-
-    # - - O P T I O N S
-
-    cParse.add_argument("--ncopies", type=str
-                        , dest='nCopies'
-                        , metavar='nCOPIES'
-                        , nargs='?'
-                        , help='Number of copies in session.'
-                        )
-
-    cParse.add_argument("--lifem", "--lifetimemegahours", type=str
-                        , dest='nLifem'
-                        , metavar='nLIFE_Mhrs'
-                        , nargs='?'
-                        , help='Sector mean lifetime for storage shelf.'
-                        )
-
-    cParse.add_argument("--auditfreq", type=str
-                        , dest='nAuditFreq'
-                        , metavar='nAUDITCYCLEINTERVAL_hrs'
-                        , nargs='?'
-                        , help='Hours between auditing cycles; zero=no auditing.'
-                        )
-
-    cParse.add_argument("--audittype", type=str
-                        , dest='sAuditType'
-                        #, choices=['TOTAL','OFF']
-                        , nargs='?'
-                        , help='Strategy for auditing, default=TOTAL.'
-                        )
-
-    cParse.add_argument("--auditsegments", type=str
-                        , dest='nAuditSegments'
-                        , metavar='nAUDITSEGMENTS'
-                        , nargs='?'
-                        , help='Number of subsamples per audit cycle, default=1.'
-                        )
-
-    cParse.add_argument("--glitchfreq", type=str
-                        , dest='nGlitchFreq'
-                        , metavar='nGLITCHFREQ_hrs'
-                        , nargs='?'
-                        , help='Half-life of intervals between glitches; '
-                        '0=never happens.'
-                        )
-
-    cParse.add_argument("--glitchimpact", type=str
-                        , dest='nGlitchImpact'
-                        , metavar='nGLITCHIMPACT_pct'
-                        , nargs='?'
-                        , help='Percent reduction in sector lifetime due to '
-                        'glitch; 100%%=fatal to shelf.'
-                        )
-
-    cParse.add_argument("--glitchdecay", type=str
-                        , dest='nGlitchDecay'
-                        , metavar='nGLITCHDECAY_hrs'
-                        , nargs='?'
-                        , help='Half-life of glitch impact exponential decay; '
-                        'zero=infinity.'
-                        )
-
-    cParse.add_argument("--glitchspan", type=str
-                        , dest='nGlitchSpan'
-                        , metavar='nGLITCHSPAN'
-                        , nargs='?'
-                        , help='Number of servers affected by a glitch; '
-                        'default=1.'
-                        )
-
-    cParse.add_argument("--glitchmaxlife", type=str
-                        , dest='nGlitchMaxlife'
-                        , metavar='nGLITCHMAXLIFE_hrs'
-                        , nargs='?'
-                        , help='Maximum duration of glitch impact, '
-                        'which ceases after this interval; zero=infinity.'
-                        )
-
-    cParse.add_argument("--shockfreq", type=str
-                        , dest='nShockFreq'
-                        , metavar='nSHOCKFREQ_hrs'
-                        , nargs='?'
-                        , help='Half-life of intervals between economic '
-                        'slumps; 0=never happens.'
-                        )
-
-    cParse.add_argument("--shockimpact", type=str
-                        , dest='nShockImpact'
-                        , metavar='nSHOCKIMPACT_pct'
-                        , nargs='?'
-                        , help='Percent reduction in sector lifetime due to '
-                        'slump; 100%%=fatal to shelf.'
-                        )
-
-    cParse.add_argument("--shockspan", type=str
-                        , dest='nShockSpan'
-                        , metavar='nSHOCKSPAN_nservers'
-                        , nargs='?'
-                        , help='Number of servers affected by slump.'
-                        )
-
-    cParse.add_argument("--shockmaxlife", type=str
-                        , dest='nShockMaxlife'
-                        , metavar='nSHOCKMAXLIFE_hrs'
-                        , nargs='?'
-                        , help='Maximum duration of shock impact, '
-                        'which ceases after this interval; zero=infinity.'
-                        )
-
-    cParse.add_argument("--serverdefaultlife", type=str
-                        , dest='nServerDefaultLife'
-                        , metavar='nSERVERDEFAULTLIFE_hrs'
-                        , nargs='?'
-                        , help='Half life of distribution from which servers\' '
-                        'lifespans are drawn at birth; zero=infinity.  Shocks '
-                        'reduce these lifespans.  '
-                        )
-
-    cParse.add_argument("--nseeds", type=str
-                        , dest='nRandomSeeds'
-                        , metavar='nRANDOMSEEDS'
-                        , nargs='?'
-                        , help='Number of random seeds to be used for  '
-                        'repeated trials of each parameter setup.  '
-                        'Range 1 to 1000.'
-                        )
-
-    cParse.add_argument("--shelfsize", type=str
-                        , dest='nShelfSize'
-                        , metavar='nSHELFSIZE_TB'
-                        , nargs='?'
-                        , help='Size for storage shelf in TB.'
-                        )
-   
-    cParse.add_argument("--docsize", type=str
-                        , dest='nDocSize'
-                        , metavar='nDOCSIZE_MB'
-                        , nargs='?'
-                        , help='Document size in MB.'
-                        )
-    
-# Other options that are not used for selection, but for overrides or testing.
-
-    cParse.add_argument("--familydir", type=str
-                        , dest='sFamilyDir'
-                        , metavar='sFAMILYDIR'
-                        , nargs='?'
-                        , required=True
-                        , help='Family directory for param and log files.'
-                        )
-    
-    cParse.add_argument("--specificdir", type=str
-                        , dest='sSpecificDir'
-                        , metavar='sSPECIFICDIR'
-                        , nargs='?'
-                        , required=True
-                        , help='Specific directory for param and log files.'
-                        )
-    
-    cParse.add_argument("--testlimit", type=str
-                        , dest='nTestLimit'
-                        , metavar='nTESTLIMIT'
-                        , nargs='?'
-                        , help='TESTING ONLY: limit on number of runs to execute.  Each case is executed nseeds number of times.'
-                        )
-    
-    cParse.add_argument("--testcommand"
-                        , action='store_const', const="Y"
-                        , dest='sTestCommand'
-                        , help='TESTING ONLY: echo formatted commands only, '
-                        'not execute.'
-                        )
-    
-    cParse.add_argument("--testfib"
-                        , action='store_const', const="Y"
-                        , dest='sTestFib'
-                        , help='TESTING ONLY: use fako Fibonacci '
-                        'CPU intensive process instead of real stuff.'
-                        )
-
-    cParse.add_argument("--listonly"
-                        , action='store_const', const="Y"
-                        , dest='sListOnly'
-                        , help='List all chosen cases to stdout.  '
-                        'Do nothing else.'
-                        )
-
-    cParse.add_argument("--redo"
-                        , action='store_const', const="Y"
-                        , dest='sRedo'
-                        , help='Force these cases to be redone, even if '
-                        'they have been done before.'
-                        )
-
-    if mysArglist:          # If there is a specific string, use it.
-        xx = cParse.parse_args(mysArglist)
-    else:                   # If no string, then parse from argv[].
-        xx = cParse.parse_args()
-    NTRC.ntracef(3, "BCLI", "proc namespace xx|%s|" % (xx))
-    dxx = vars(xx)
-    NTRC.ntracef(3, "BCLI", "proc dict-var dxx|%s|" % (dxx))
-    dxx1 = {k : (v.replace('u"', '"') 
-                if (v is not None) and ('{' in v) and ('}' in v) and ('u"' in v) 
-                else v)
-                for k, v in dxx.items()}
-    return dxx1
+import  brokercli
+import  command
+import  copy
 
 
 #===========================================================
@@ -264,11 +22,12 @@ def fndCliParse(mysArglist):
 class CG(object):
     ''' Global data.
     '''
+    # Options that should be passed thru to main.py.
     # All the interesting options should be None here, so that 
     #  they are removed from the selection dictionary before
-    #  it is handed to MongoDB.
+    #  it is handed to MongoDB.  (No longer a consideration.)
     #  If the user doesn't specify it on the command line, 
-    #  then it is not a selection criterion.
+    #  then it is not a selection criterion for searching.
     nCopies = None
     nLifem = None
     nAuditFreq = None
@@ -291,6 +50,9 @@ class CG(object):
 
     nShelfSize = None
     nDocSize = None
+    sShortLog = "N"     # Log only setup and results info, no error details.  
+
+    # Administrative options to guide broker's behavior.
     sQuery = None
     nCores = 8          # Default, overridden by NCORES env var
     nCoreTimer = 10     # Wait for a free core,
@@ -316,12 +78,12 @@ class CG(object):
     sSpecificDir = 'a0'         #  no auditing.
 
     # SearchSpace db info (for instructions)
-    sInsDir = './ins'   # Where to find instruction (*.ins) files.
+    sInsDir = './instructions'  # Where to find instruction (*.ins) files.
     sInsTyp = '.ins'    # File type (extension) specifier for instruction files.
 
     # SearchDatabase db info (for progress and done records)
     sSearchDbFile = "./searchspacedb/searchdb.json"
-    sSearchDbProgressCollectionName = "progress"
+    sSearchDbProgressCollectionName = "inprogress"
     sSearchDbDoneCollectionName = "done"
     sdb = None         # Instance of searchspace db.
     
@@ -462,7 +224,7 @@ def fnbWaitForOpening(mynProcessMax, mysProcessName, mynWaitTime, mynWaitLimit):
          - divide by two for the actor and the main
          - is that number greater than the stated limit?
     '''
-    cCmd = CCommand()
+    cCmd = command.CCommand()
     dParams = dict()
     dParams['Name'] = mysProcessName
     for idx in range(mynWaitLimit):
@@ -603,56 +365,26 @@ class CFormat(object):
             sCommand = mysCommand
         return sCommand
 
-
 #===========================================================
 
-# class   C C o m m a n d
-class CCommand(object):
+# f n d M a y b e E n h a n c e I n s t r u c t i o n 
+@catchex
+@ntracef("MAIN")
+def fndMaybeEnhanceInstruction(mydRawInstruction):
     '''
-    Class to format and execute a CLI command, parse results
-     using a regular expression supplied by the caller.  
-    Nothing specific here, so should probably be a separate module.  
+    There may be some qualifiers that are neither searchable nor
+    merely adminstrative, but have to be passed thru to main.py.  
+    If they are not searchable, they probably don't come back in 
+    the instruction dict.  Add them to instruction dict.
     '''
-
-    @catchex
-    @ntracef("CMD")
-    def doCmdStr(self,mysCommand):
-        ''' Return concatenated string of result lines with newlines stripped.  
-        '''
-        sResult = ""
-        for sLine in os.popen(mysCommand):
-            sResult += sLine.strip()
-        return sResult
-        
-    @catchex
-    @ntracef("CMD")
-    def doCmdLst(self,mysCommand):
-        ''' Return list of result lines with newlines stripped.  
-        '''
-        lResult = list()
-        for sLine in os.popen(mysCommand):
-            lResult.append(sLine.strip())
-        return lResult
-        
-    @catchex
-    @ntracef("CMD")
-    def doParse(self,mysCommand,mysRegex):
-        sOutput = self.doCmd(mysCommand)
-        mCheck = search(mysRegex,sOutput)
-        if mCheck:
-            sResult = mCheck.groups()
-        else:
-            sResult = None
-        return sResult
-
-    @catchex
-    @ntracef("CMD")
-    def makeCmd(self,mysCmd,mydArgs):
-        ''' Substitute arguments into command template string.  
-        '''
-        sCmd = mysCmd.format(**mydArgs)
-        return sCmd
-
+    dInstruction = copy.deepcopy(mydRawInstruction)
+    # Add additional attributed here.
+    
+    # shortlog is unusual in not taking an argument but being true by presence.
+    if g.sShortLog.startswith("Y"):
+        dInstruction["sShortLogOption"] = "--shortlog"
+    
+    return dInstruction
 
 #===========================================================
 
@@ -673,7 +405,7 @@ def main():
     NTRC.ntracef(0,"MAIN","Begin.")
 
     # Get args from CLI and put them into the global data
-    dCliDict = fndCliParse("")
+    dCliDict = brokercli.fndCliParse("")
     # Carefully insert any new CLI values into the Global object.
     dCliDictClean = {k:v for k,v in dCliDict.items() if v is not None}
     g.__dict__.update(dCliDictClean)
@@ -719,8 +451,11 @@ def fnnProcessAllInstructions(myitInstructionIterator):
     if g.sTestFib.startswith("Y"):
         g.lTemplates = g.lFibTemplates
     # Process each instruction in turn.
-    for dInstruction in myitInstructionIterator: 
-        NTRC.ntracef(3,"MAIN","proc main instruction\n|%s|" 
+    for dRawInstruction in myitInstructionIterator: 
+        NTRC.ntracef(3,"MAIN","proc main raw instruction\n|%s|" 
+            % (dRawInstruction))
+        dInstruction = fndMaybeEnhanceInstruction(dRawInstruction)
+        NTRC.ntracef(3,"MAIN","proc main enhanced instruction\n|%s|" 
             % (dInstruction))
 
         nRunNumber += 1
@@ -833,7 +568,7 @@ def fnstProcessOneInstruction(mysRunNumber, mydInstruction, mynSeed):
             mydInstruction["starttime"] = util.fnsGetTimeStamp()
             g.sdb.fndInsertProgressRecord(mydInstruction["_id"], mydInstruction)
             # Launch the actor to perform main runs.  
-            cCmd = CCommand()
+            cCmd = command.CCommand()
             sResult = cCmd.doCmdStr(g.sActorCommand)
             time.sleep(g.nPoliteTimer)    
 
@@ -850,7 +585,7 @@ def fnstProcessOneInstruction(mysRunNumber, mydInstruction, mynSeed):
 def fnvGetEnvironmentOverrides():
     # Allow user to override number of cores to use today.
     # First, find out how many cores there are that we could possibly use.
-    nMaxCores = int(os.getenv("NUMBER_OF_PROCESSORS", None))
+    nMaxCores = int(os.getenv("NUMBER_OF_PROCESSORS", None)) + 1
     # By default, use one fewer than max available, according to the o/s.  
     g.nCores = nMaxCores if nMaxCores else g.nCores
     # If the user specifies a number, larger or smaller, take it.
@@ -957,6 +692,12 @@ foreach single-line file in holding dir
 # 20170124  RBL Smarten FormatQuery to permit string value for --audittype
 #                and turn TOTAL into {"$eq":"TOTAL"} which is acceptable
 #                to json.
+# 20170126  RBL Move CLI to a separate file, brokercli.py.
+#               Move CCommand to a separate file, command.py.
+# 20170127  RBL Add hack to enhance the main.py instruction dictionary
+#                with some options that are not searchable and don't 
+#                appear in the instuctions but are still necessary, 
+#                e.g., --shortlog.  
 # 
 # 
 
