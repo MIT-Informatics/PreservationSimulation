@@ -381,8 +381,9 @@ def fndMaybeEnhanceInstruction(mydRawInstruction):
     # Add additional attributed here.
     
     # shortlog is unusual in not taking an argument but being true by presence.
-    if g.sShortLog.startswith("Y"):
-        dInstruction["sShortLogOption"] = "--shortlog"
+    dInstruction["sShortLogOption"] = ("--shortlog" 
+                if g.sShortLog.startswith("Y") 
+                else "")
     
     return dInstruction
 
