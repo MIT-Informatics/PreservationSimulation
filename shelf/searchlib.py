@@ -3,7 +3,6 @@
 # 
 # 
 
-
 '''
 New theory for searchspace database rather than MongoDB: 
 keep everything in a dictionary and back that up in a json file.
@@ -42,7 +41,7 @@ import time
 
 # Always start the day with an empty database.
 dDb = dict()
-# WARNING: no error checking in this module, very fool-vulnerable.  
+# WARNING: There is no error checking in this module, very fool-vulnerable.  
 
 
 # f n d R e a d R e t r y L o c k 
@@ -72,6 +71,12 @@ def fnoOpenDb(mysDbFilename):
     '''
     global sDbName
     sDbName = mysDbFilename
+    
+    # First, make sure there is a place to put our file.
+    sDirName = os.path.dirname(mysDbFilename)
+    if not os.path.isdir(sDirName):
+        os.mkdir(sDirName)
+    
     if os.path.isfile(mysDbFilename) and os.path.getsize(mysDbFilename) > 0:
         NTRC.ntracef(3, "SRLB", "proc open json for read|%s|" 
             % (mysDbFilename))
@@ -296,6 +301,11 @@ def get(post_id):
 #                as the result is correct syntactic json.  All of the 
 #                insert/delete/get operations, at the level of the broker
 #                and datacleanup utilities, are sort of idempotent.  
+# 20170128  RBL After sad experience, this approach to file locking does 
+#                not work on Windows 10, period.  Maybe some other variation
+#                does, but I don't have the energy anymore.  Revert to MongoDB.
+#               Ensure that there is a directory into which to put the
+#                json file, according to the caller's filespec.  
 # 
 # 
 
