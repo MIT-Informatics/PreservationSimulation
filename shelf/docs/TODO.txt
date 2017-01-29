@@ -40,7 +40,8 @@ DONE - adapt broker to new mongo done and progress ifcs.
 DONE - adapt datacleanup to new mongo done and progress ifcs.
 DONE - redo and make new utilities for progress and done collections:
     delete, count, list keys, list all.
-
+FIXME - need new utils: list databases, list collections in db.  
+    because the mongo console util is so, um, unwonderful.  
 
 TODO: web interface to select instructions for broker run
 WRONG - learn kivy and remi, decide which to use.

@@ -128,13 +128,14 @@ def fndFilterResults(mydOldInstructions):
     if mydOldInstructions["nGlitchFreq"] == [0]:
         (dInstructions["nGlitchSpan"], dInstructions["nGlitchImpact"], 
             dInstructions["nGlitchDecay"], dInstructions["nGlitchMaxlife"], 
-            dInstructions["nGlitchIgnorelevel"],) = [0],[0],[0],[0],[0]
+            dInstructions["nGlitchIgnorelevel"],) = [0], [0], [0], [0], [0]
     # ORDER DEPENDENCY: test server life before shock frequency.
     if mydOldInstructions["nServerDefaultLife"] == [0]:
         dInstructions["nShockFreq"] = [0]
-    if mydOldInstructions["nShockFreq"] == [0]:
+    if (mydOldInstructions["nShockFreq"] == [0]
+        or dInstructions["nShockFreq"] == [0]):
         (dInstructions["nShockSpan"], dInstructions["nShockImpact"], 
-            dInstructions["nShockMaxlife"],) = [0],[0],[0]
+        dInstructions["nShockMaxlife"],) = [0], [0], [0] 
     # END ORDER DEPENDENCY.
     if mydOldInstructions["nAuditFreq"] == [0]:
         dInstructions["nAuditSegments"] = [0]
@@ -152,8 +153,9 @@ def fnvTestResults(mydInstructions, mydOldInstructions):
         if len(lVal) == 0:
             raise ValueError, ("Error: instructions too restrictive, \n"
                             "no values remain for param|%s|; \n"
-                            "original value set=|%s|"
-                            ) % (sKey, mydOldInstructions[sKey])
+                            "original value set=|%s|\n"
+                            ) % (sKey, mydOldInstructions[sKey], 
+                                )
 
 # f n l g C o m b i n e R e s u l t s 
 @ntracef("SRCH")
@@ -268,15 +270,31 @@ filter results
         if freq == 0
             reduce segments, type to single values
 
+test results
+    if any instruction list is empty, that means the cross-product
+     will also be empty.  wrongo.  raise error.  
+
 doall(userruledict):
     oldinstructiondict = readallfilfes(dir)
     newinstructiondict = processallrules(userruledict)
     return combineresults(newinstructiondict,oldinstructiondict)
+
+Acceptable types of things to specify, just examples.  Be careful with quotes.
+--ncopies=5                         number
+--ncopies='{"$eq":5}'               number not in quote
+--audittype=TOTAL                   string
+--audittype='{"$eq":"SYSTEMATIC"}'  string in quotes
+--auditsegments='[2,4]'             list in quotes
+--ncopies='["$lte":5]'              half-range
+--lifem='{"$gte":10,"$lte":1000}'   range
+
 '''
 
 # Edit history:
 # 20170113  RBL Original version.  
 # 20170114  RBL Change Get... function to return full dictionary instruction.
+# 20170129  RBL Fix bug in Filter that looked at old dict instead of new and
+#                did not zero out shock attribs correctly.  
 # 
 # 
 
