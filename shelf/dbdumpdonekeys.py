@@ -19,9 +19,11 @@ def fndCliParse(mysArglist):
         not necessary, since most of them have already been decanted
         into the P params object.  
     '''
-    sVersion = "0.0.1"
-    cParse = argparse.ArgumentParser(description="Digital Library Preservation Simulation LoadIntoDb MongoDB collection dumper",epilog="Defaults for args as follows:\n\
-        (none), version=%s" % sVersion
+    sVersion = "0.0.2"
+    cParse = argparse.ArgumentParser(description="Digital Library Preservation "
+            "Simulation DbDumpCollection MongoDB collection lister",
+            epilog="Defaults for args as follows:\n"
+            "(none), version=%s" % sVersion
         )
 
     # P O S I T I O N A L  arguments
@@ -30,11 +32,6 @@ def fndCliParse(mysArglist):
     cParse.add_argument('sDatabaseName', type=str
                         , metavar='sDATABASENAME'
                         , help='Name of MongoDB database that pymongo will find.'
-                        )
-
-    cParse.add_argument('sCollectionName', type=str
-                        , metavar='sCOLLECTIONNAME'
-                        , help='Collection name within the database.'
                         )
 
     # - - O P T I O N S
@@ -52,7 +49,7 @@ class CG(object):
     ''' Global data.
     '''
     sDatabaseName = None
-    sCollectionName = None
+    sCollectionName = "done"
     mdb = None
 
 # M A I N 
@@ -70,14 +67,31 @@ def main():
     #  with a different name today.  
     g.mdb = searchdatabasemongo.CSearchDatabase(g.sDatabaseName, 
                     g.sCollectionName, g.sCollectionName)
-    lCollection = g.mdb.fnlGetCollection(g.sCollectionName)
+    lCollection = g.mdb.fnlGetDoneCollection()
 
     # Just print all the items in collection.
-    nItem = 0
-    for thing in lCollection:
-        nItem += 1
-        print("--- %s ------ collection %s ------ db %s -----------------------------" % (nItem, g.sCollectionName, g.sDatabaseName))
-        print(thing)
+    print ("Found %d items:" % (len(lCollection)))
+    for (nItem, dItem) in enumerate(lCollection):
+        nItem += 1              # Humans are one-based, not zero-based.
+        sDoneId = dItem["sDoneId"]
+        dResults = dItem["info"]
+        sCopies = dResults["copies"]
+        sSeed = dResults["seed"]
+        sLost = dResults["lost"]
+        sTimestamp = dResults["timestamp"]
+        sLifem = dResults["lifem"]
+        sAuditFreq = dResults["auditfrequency"]
+        sAuditSegs = dResults["auditsegments"]
+        sShockFreq = dResults["shockfreq"]
+        sShockSpan = dResults["shockspan"]
+        sGlitchFreq = dResults["glitchfreq"]
+        sGlitchImpact = dResults["glitchimpact"]
+        #sGlitchSpan = dResults["glitchspan"]
+        
+        print ("#%4d cop %2s life %4s lost %4s audit %5s-%1s shock %s-%s %s %s " 
+        % (nItem, sCopies, sLifem, sLost, sAuditFreq, sAuditSegs, 
+        sShockFreq, sShockSpan, 
+        sSeed, sTimestamp))
 
 
 # E n t r y   p o i n t . 

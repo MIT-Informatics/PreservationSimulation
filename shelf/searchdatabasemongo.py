@@ -15,18 +15,22 @@ class CSearchDatabase(object):
 
     @ntracef("SRDM")
     def __init__(self,mysDatabaseName, mysProgressCollectionName, 
-                mysDoneCollectionName):
+                mysDoneCollectionName, 
+                mysMongoSystem="localhost", mynMongoPort=27017):
         self.sDbName = mysDatabaseName
         self.sProgressName = mysProgressCollectionName
         self.sDoneName = mysDoneCollectionName
-        self.oDb = self.fnoOpenDb(self.sDbName)
+        self.sMongoSystem = mysMongoSystem
+        self.nMongoPort = mynMongoPort
+        # Open the db and get important collection pointers.
+        self.oDb = self._fnoOpenDb(self.sDbName)
         self.oDoneCollection = self.oDb[mysDoneCollectionName]
         self.oProgressCollection = self.oDb[mysProgressCollectionName]
 
 # f n o O p e n D b 
     @ntracef("SRDM")
-    def fnoOpenDb(self, mysDbName):
-        client = MongoClient('localhost', 27017)
+    def _fnoOpenDb(self, mysDbName):
+        client = MongoClient(self.sMongoSystem, self.nMongoPort)
         db = client.__getattr__(mysDbName)
         NTRC.ntracef(3, "SRDM", "Connected to db.")
         return db
@@ -55,10 +59,16 @@ class CSearchDatabase(object):
         NTRC.ntracef(3,"DB","proc DeleteDone result|%s|" % (result))
         return result["ok"] != 0
 
+# f n v D e l e t e C o l l e c t i o n 
+    @ntracef("SRDM")
+    def fnvDeleteCollection(self, mysCollectionName):
+        self.oDb[mysCollectionName].remove()
+        return
+
 # f n v D e l e t e D o n e C o l l e c t i o n 
     @ntracef("SRDM")
     def fnvDeleteDoneCollection(self):
-        self.oDb[self.sDoneName].remove()
+        self.fnvDeleteCollection(self.sDoneName)
         return
 
 # f n d I n s e r t P r o g r e s s R e c o r d 
@@ -79,7 +89,7 @@ class CSearchDatabase(object):
 # f n v D e l e t e P r o g r e s s C o l l e c t i o n 
     @ntracef("SRDM")
     def fnvDeleteProgressCollection(self):
-        self.oDb[self.sProgressName].remove()
+        self.fnvDeleteCollection(self.sProgressName)
         return
 
 # f n i C o u n t C o l l e c t i o n 
@@ -88,10 +98,33 @@ class CSearchDatabase(object):
         nResult = self.oDb[mysCollectionName].count()
         return nResult
 
+# f n l G e t C o l l e c t i o n 
+    @ntracef("SRDM")
+    def fnlGetCollection(self, mysCollectionName):
+        oCollection = self.oDb[mysCollectionName]
+        oCursor = oCollection.find()
+        lOut = list()
+        for record in oCursor:
+            lOut.append(record)
+        return lOut
+
+# f n l G e t D o n e C o l l e c t i o n 
+    @ntracef("SRDM")
+    def fnlGetDoneCollection(self):
+        return self.fnlGetCollection(self.sDoneName)
+
+# f n l G e t P r o g r e s s C o l l e c t i o n 
+    @ntracef("SRDM")
+    def fnlGetProgressCollection(self):
+        return self.fnlGetCollection(self.sProgressName)
+
 
 # Edit history:
 # 20170124  RBL Original version cribbed from the CSearchDatabase and mongolib.
 # 20170126  RBL Finally works with its unittest.  Does NOT use searchlibmongo; 
 #                goes directly to mongolib.
+# 20170128  RBL Add GetCollection, GetDoneCollection, GetProgressCollection.
 # 
 # 
+
+#END

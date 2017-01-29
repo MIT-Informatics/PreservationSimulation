@@ -82,13 +82,16 @@ class CG(object):
     sInsTyp = '.ins'    # File type (extension) specifier for instruction files.
 
     # SearchDatabase db info (for progress and done records)
-    sSearchDbFile = "./searchspacedb/searchdb.json"
+    sSearchDbFile = "./searchspacedb/searchdb.json"     # Obsolete, I hope.
+    sSearchDbMongoName = "brokeradmin"
     sSearchDbProgressCollectionName = "inprogress"
     sSearchDbDoneCollectionName = "done"
-    sdb = None         # Instance of searchspace db.
+    sdb = None          # Instance of searchspace db.   # Obsolete, I hope.
+    mdb = None          # Instance of searchdatabasemongo db.
     
     # Command template components.
-    sShelfLogFileTemplate = ('doc{nDocSize}cop{nCopies}shlf{nShelfSize}lif{nLifem}_'
+    sShelfLogFileTemplate = (
+        'doc{nDocSize}cop{nCopies}shlf{nShelfSize}lif{nLifem}_'
         'af{nAuditFreq}s{nAuditSegments}t{sAuditType}_'
         'gf{nGlitchFreq}i{nGlitchImpact}d{nGlitchDecay}m{nGlitchMaxlife}_'
         'sh{nShockFreq}i{nShockImpact}s{nShockSpan}_m{nShockMaxlife}'
@@ -423,10 +426,10 @@ def main():
 
     # Open the database to keep "done" records,
     #  and delete moldy, old in-progress records.
-    g.sdb = searchdatabase.CSearchDatabase(g.sSearchDbFile, 
+    g.mdb = searchdatabasemongo.CSearchDatabase(g.sSearchDbMongoName, 
                 g.sSearchDbProgressCollectionName, 
                 g.sSearchDbDoneCollectionName)
-    g.sdb.fnvDeleteProgressCollection()
+    g.mdb.fnvDeleteProgressCollection()
     
     # Get the set of instructions for today from database.
     NTRC.tracef(0,"MAIN","proc querydict2|%s|" % ((dQuery)))
@@ -514,10 +517,10 @@ def fnstProcessOneInstruction(mysRunNumber, mydInstruction, mynSeed):
     if g.sRedo.startswith("Y"):
         NTRC.ntracef(0,"MAIN","proc force redo for item id|%s|" 
             % (sInstructionId))
-        g.sdb.fndDeleteDoneRecord(sInstructionId)
+        g.mdb.fndDeleteDoneRecord(sInstructionId)
 
     # If this instruction has already been processed skip it.
-    bIsItDone = g.sdb.fnbIsItDone(sInstructionId)
+    bIsItDone = g.mdb.fnbIsItDone(sInstructionId)
     if bIsItDone: 
         NTRC.ntracef(0,"MAIN","proc skip item already done run|%s| "
             "id|%s| copies|%s| lifem|%s|" 
@@ -567,7 +570,7 @@ def fnstProcessOneInstruction(mysRunNumber, mydInstruction, mynSeed):
 
             # Record that this job is running.
             mydInstruction["starttime"] = util.fnsGetTimeStamp()
-            g.sdb.fndInsertProgressRecord(mydInstruction["_id"], mydInstruction)
+            g.mdb.fndInsertProgressRecord(mydInstruction["_id"], mydInstruction)
             # Launch the actor to perform main runs.  
             cCmd = command.CCommand()
             sResult = cCmd.doCmdStr(g.sActorCommand)
@@ -699,6 +702,7 @@ foreach single-line file in holding dir
 #                with some options that are not searchable and don't 
 #                appear in the instuctions but are still necessary, 
 #                e.g., --shortlog.  
+# 20170128  RBL Adapt to searchdatabasemongo instead of json version.  
 # 
 # 
 

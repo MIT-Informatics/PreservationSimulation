@@ -3,13 +3,14 @@
 
 import  argparse
 import  os
+import  sys
 import  re
 import  time
 import  json
 from    NewTraceFac     import NTRC,ntrace,ntracef
-import  mongolib
+#import  mongolib
 import  csv
-import  searchdatabase
+import  searchdatabasemongo
 
 
 @ntracef("CLI")
@@ -107,8 +108,8 @@ class CG(object):
     sSpecificDir = '.'
 
     # SearchDatabase info
-    sSearchDbFile = "./searchspacedb/searchdb.json"
-    sdb = None              # Instance of SearchDatabase to use
+    sSearchDbMongoName = "brokeradmin"
+    mdb = None              # Instance of SearchDatabaseMongo to use
     sDoneCollectionName = "done"
     sProgressCollectionName = "inprogress"
 
@@ -162,7 +163,7 @@ def main():
     NTRC.tracef(3, "DCLN", "proc dValues|%s|" % (dValues))
     
     # Open the SearchDatabase for done and progress records.
-    g.sdb = searchdatabase.CSearchDatabase(g.sSearchDbFile, 
+    g.mdb = searchdatabasemongo.CSearchDatabase(g.sSearchDbMongoName, 
             g.sProgressCollectionName, 
             g.sDoneCollectionName)
     # Construct database query for this invocation.  
@@ -171,7 +172,7 @@ def main():
     NTRC.tracef(0,"DCLN","proc looking for done recd|%s|" 
         % (sInstructionId))
     # Is this extract already stored in the database?
-    bIsItDone = g.sdb.fnbIsItDone(sInstructionId)
+    bIsItDone = g.mdb.fnbIsItDone(sInstructionId)
     if not bIsItDone:
         # Always add a line of data to the giant output file.
         NTRC.tracef(0, "DCLN", "proc line appended to output \nsLineOut|%s|" 
@@ -185,7 +186,7 @@ def main():
         if g.sDoNotRecord.startswith("Y"):
             NTRC.tracef(0, "DCLN", "proc Done not recorded.")
         else:
-            dResult = g.sdb.fndInsertDoneRecord(sInstructionId, dValues)
+            dResult = g.mdb.fndInsertDoneRecord(sInstructionId, dValues)
 
         # Maybe delete the extract file.
         if g.sDoNotDelete.startswith("Y"):
@@ -195,7 +196,7 @@ def main():
             NTRC.tracef(3,"DCLN", "proc fileremoved|%s|" 
                 % (g.sInputFilename))
             # And remove its in-progress record from the search db.
-            g.sdb.fndDeleteProgressRecord(sInstructionId)
+            g.mdb.fndDeleteProgressRecord(sInstructionId)
     else:
         # Duplicate instruction; do not add line to output file.
         NTRC.tracef(0, "DCLN", "proc line NOT appended to output file \n"
@@ -203,20 +204,22 @@ def main():
             % (sLineOut))
 
     NTRC.ntracef(0,"DCLN","datacleanup End.")
+    return 0
 
 
 # E n t r y   p o i n t . 
 if __name__ == "__main__":
     g = CG()
-    main()
+    sys.exit(main())
 
 # Edit history:
 # 2016xxxx  RBL Original version.
 # 20170121  RBL Adapt to new searchdatabasae to hold done and progress records.
 # 20170124  RBL Change ntrace facility name to DCLN to make some post-process
 #                bug-checking easier.  
+# 20170128  RBL Change over to searchdatabasemongo.
 # 
-
+# 
 
 #END
 
@@ -225,7 +228,7 @@ if __name__ == "__main__":
 cleaner:
 foreach two-line extract file in holding dir
   append data line to combined results file
-    if it has not already been done
+    if that has not already been done
   add _id to done tbl of db
   delete one-liner
   delete progress record

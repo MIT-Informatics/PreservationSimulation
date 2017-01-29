@@ -38,8 +38,8 @@ DONE - nope, rewrite the status database, have to go back to Mongo;
     file locking on Win10/Cygwin does not work well enough to prevent
     some corruption of the database's json file.  oh, crap.  
 DONE - write searchdbmongo facility and unittest.
-FIXME - adapt broker to new mongo done and progress ifcs.
-FIXME - adapt datacleanup to new mongo done and progress ifcs.
+DONE - adapt broker to new mongo done and progress ifcs.
+DONE - adapt datacleanup to new mongo done and progress ifcs.
 FIXME - redo and make new utilities for progress and done collections:
     delete, count, list keys, list all.
 
@@ -59,9 +59,9 @@ FIXME - fix the interface for new instruction values and revised interface
 TODO: newtrace
 DONE - make new ntrace, ntracef the default inner routines for efficiency.  
 MAYBE - for trace level zero, do not check facility codes.
-FIXME - do null version of trace decorators for production use
+DONE - do null version of trace decorators for production use
     that do as little as possible.  trace consumes about 40% of CPU time
-    during typical run.
+    during typical run.  make sure that level 0 traces always come out.
 
 
 TODO: general
@@ -83,7 +83,7 @@ DONE - recode entirely to force filter first thing, to reduce the size
     dramatic improvement.  
 DEFER - Is there some place here where memoizing can help further?
 DONE - add new fields for shock and serverlife.
-FIXME - test with --shortlog.  may have to adjust logging and/or extract
+DONE - test with --shortlog.  may have to adjust logging and/or extract
     rules.  
 
 
@@ -115,7 +115,7 @@ DONE - BUG, NEEDS FIXING: when client provisions a new server, it must
 FIXME - QUESTION: when provisioning a new server to replace a failed one, 
   should the client mark the re-provisioning as majority or minority 
   repairs?
-FIXME - optimize auditing: when it finds a dead server, don't bother checking 
+DONE - optimize auditing: when it finds a dead server, don't bother checking 
   any more documents on that particular server, and don't attempt any
   repairs to that server.  should speed up auditing considerably.  
 
@@ -139,9 +139,11 @@ DONE - start the run count from 1 even for cases that have already been done,
   so that the run number reflects progress toward the total number.  
 DONE - add param for number of seeds and take the seeds from a separate 
   file of some specific name.  
-FIXME - break into several pieces to make editing easier.
-FIXME - adapt to new instruction generator.
-FIXME - adapt to new status bookkeeping database.  
+DONE - break into several pieces to make editing easier.
+DONE - adapt to new instruction generator.
+DONE - adapt to new status bookkeeping database.  
+DONE - fix option processing to permit presence-only options to pass thru, 
+    e.g., --shortlog.
 
 
 TODO: audit
@@ -154,7 +156,7 @@ DONE - fix long-standing bug: when reprovision new server to replace dead one,
 
 
 TODO: newinstructions
-FIXME - Add a squash function to reduce blank sequences to single blanks
+DON'T - Add a squash function to reduce blank sequences to single blanks
   in flat files, in case someone created instructions in fixed columns.
 DONE - write filter for instructions as they are being generated flat
   hierarchical: a field named action for permit/deny
@@ -165,7 +167,7 @@ DONE - rewrite rules to filter lots more, particularly nonsense cases
   with glitch freq, impact, decay, and life.  
 DONE - integrate filter into last stage of flat instruction 
   generation
-FIXME - write documentation on how to generate instructions flat file 
+DON'T - write documentation on how to generate instructions flat file 
   and database.  
 DONE - fix order of args to filter program, data file last.
 DONE - fix shell script that makes complete instruction list to
@@ -177,6 +179,8 @@ DONE - Remove random seeds from the instruction db; add them in broker
   Important when we want to do samples of 100 or 1000.  
 FIXME - move some of the utilities up to shelf or maybe to a util dir.  
 FIXME - remove the shelf/newinstructions directory.  
+FIXME - write new procedure for generating instructions: simpler, just edit
+    the shelf/instructions/*.ins files.  
 
 
 TODO: packaging into Docker
@@ -211,6 +215,9 @@ DONE - test docker deployment on 32 core system.
 DONE - change newinstructions db to something smaller and more useful.
 FIXME - change newinstructions section of script to create flat instructions 
   and database from the ins files pulled.  
+FIXME - change newinstructions section of script to be way simpler with
+    newnewnewinstructions method of on-demand cross-product with no
+    pre-stored instructions.
 
 
 TODO: rationalize time constants so that people can understand them
@@ -233,24 +240,27 @@ FIXME - BUG: fix main.py default values in G so that is doesn't fail if there ar
   no param files in the familydir or specificdir; always fails for the list
   items, such as ncopies, I think because the list items in the dictionaries
   should be one level deeper.  
-FIXME - Update SERVERUSE log lines and some other lines, too, at end to state half-life and exponential lifetime with few or no decimal places.
+FIXME - Update SERVERUSE log lines and some other lines, too, at end to state 
+    half-life and exponential lifetime with few or no decimal places.
 
 
 TODO: calibration
-FIXME: do spreadsheet of a0 numbers compared with simple Poisson theoretical results.  
+FIXME: do spreadsheet of a0 numbers compared with simple Poisson 
+    theoretical results.  
+DONE - test that shortlog and traceproduction do not affect the numbers.
 
 
 TODO: lifetimes: correlated institutional failures
-FIXME - at some interval, economic glitch dramatically increases the 
+DONE - at some interval, economic glitch dramatically increases the 
   institutional 100% failure rate for >= 1 server.
   Note trickiness: this is cross-server, needs access to several
-  server instances at once.
-FIXME - add external parameters to set number of servers affected,
+  server instances at once.  see shock.
+DONE - add external parameters to set number of servers affected,
   the decrease in institution lifetime, and the rate of economic
-  recession/depression.  
+  recession/depression.  see shock.
 
 
-DEFER: newnewinstructions
+ABANDON: newnewinstructions
 FIXME - custom flat db or maybe tiny or buzhug
 FIXME - facade or adapter: same interface as current mongolib
 FIXME - new load, list, and clear utilities that use flatlib
@@ -286,12 +296,6 @@ DONE - what numbers to compute?
 
 TODO: same for November presentation to iPRES at UNC
 DONE - write slides for Micah to use, update from September's.
-
-
-
-
-
-
 
 
 
