@@ -114,6 +114,7 @@ def getCliArgsForEverythingElse():
     fnMaybeOverride("nShockFreq", dCliDict, G)
     fnMaybeOverride("nShockImpact", dCliDict, G)
     fnMaybeOverride("nShockSpan", dCliDict, G)
+    fnMaybeOverride("nShockMaxlife", dCliDict, G)
 
     fnMaybeOverride("sMongoId",dCliDict,G)
 

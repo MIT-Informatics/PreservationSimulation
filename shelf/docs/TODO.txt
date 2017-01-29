@@ -17,8 +17,6 @@ DONE - watch out for server lifetime zero (=infinite) when assessing
         server live/dead at audit and end of run.  
 DONE - when kill server, also kill shelf and all doc copies on it.  
 DONE - add nRandomSeeds to GUI.
-FIXME - change shock (and maybe other) lists to match the instructions.  
-FIXME - generate the HTML from the instruction db.
 
 
 TODO: instruction generation
@@ -40,7 +38,7 @@ DONE - nope, rewrite the status database, have to go back to Mongo;
 DONE - write searchdbmongo facility and unittest.
 DONE - adapt broker to new mongo done and progress ifcs.
 DONE - adapt datacleanup to new mongo done and progress ifcs.
-FIXME - redo and make new utilities for progress and done collections:
+DONE - redo and make new utilities for progress and done collections:
     delete, count, list keys, list all.
 
 
@@ -54,6 +52,8 @@ DONE - build static web interface to permit choosing subset instructions
 DONE - build backend for interface that generates broker.py command.
 FIXME - fix the interface for new instruction values and revised interface 
     for broker CLI.
+FIXME - change shock (and maybe other) lists in GUI to match the instructions.  
+FIXME - generate the HTML from the instruction db.  not simple.  
 
 
 TODO: newtrace
@@ -88,7 +88,7 @@ DONE - test with --shortlog.  may have to adjust logging and/or extract
 
 
 TODO: R 
-FIXME - can the ugly loop be resturcuted to run from a list of vars
+FIXME - can the ugly nested loop be restructured to run from a list of vars
     in the order we want them nested?
 FIXME - learn Pandas, which is supposed to be equivalent to the R data.frame
     data structure.  this might make it easier to do the nested loop in 
@@ -144,6 +144,10 @@ DONE - adapt to new instruction generator.
 DONE - adapt to new status bookkeeping database.  
 DONE - fix option processing to permit presence-only options to pass thru, 
     e.g., --shortlog.
+FIXME - put out notice about TRACE_PRODUCTION mode, both in broker
+    and in main.py.  must be in the log file.  
+FIXME - adapt the pretestchecklist and other scripts to the new instruction
+    files, location, etc.  
 
 
 TODO: audit
@@ -179,7 +183,7 @@ DONE - Remove random seeds from the instruction db; add them in broker
   Important when we want to do samples of 100 or 1000.  
 FIXME - move some of the utilities up to shelf or maybe to a util dir.  
 FIXME - remove the shelf/newinstructions directory.  
-FIXME - write new procedure for generating instructions: simpler, just edit
+FIXME - document new procedure for generating instructions: simpler, just edit
     the shelf/instructions/*.ins files.  
 
 
@@ -240,7 +244,7 @@ FIXME - BUG: fix main.py default values in G so that is doesn't fail if there ar
   no param files in the familydir or specificdir; always fails for the list
   items, such as ncopies, I think because the list items in the dictionaries
   should be one level deeper.  
-FIXME - Update SERVERUSE log lines and some other lines, too, at end to state 
+DONE - Update SERVERUSE log lines and some other lines, too, at end to state 
     half-life and exponential lifetime with few or no decimal places.
 
 
@@ -261,23 +265,23 @@ DONE - add external parameters to set number of servers affected,
 
 
 ABANDON: newnewinstructions
-FIXME - custom flat db or maybe tiny or buzhug
-FIXME - facade or adapter: same interface as current mongolib
-FIXME - new load, list, and clear utilities that use flatlib
-FIXME - eventually, web app to generate smallish sets of instructions
+ABANDON - custom flat db or maybe tiny or buzhug
+ABANDON - facade or adapter: same interface as current mongolib
+ABANDON - new load, list, and clear utilities that use flatlib
+ABANDON - eventually, web app to generate smallish sets of instructions
 
 
 DEFER: packaging
 DONE - do Docker basic tutorials
 DONE - construct vm platforms for docker learning on both systems
-FIXME - transcribe crummy bash script to dockerfile
+DEFER - transcribe crummy bash script to dockerfile
 
 
-DEFER nonmonotonicity testing
-FIXME - do runs in the sensitive areas, limited to 3-4 lifetimes and few copies
-FIXME - runs with 100 or more seeds?
-FIXME - many runs with 20ish seeds to assess variability?
-FIXME - jacknife the existing numbers?
+ABANDON: nonmonotonicity testing
+ABANDON - do runs in the sensitive areas, limited to 3-4 lifetimes and few copies
+ABANDON - runs with 100 or more seeds?
+ABANDON - many runs with 20ish seeds to assess variability?
+ABANDON - jacknife the existing numbers?
 
 
 TODO: outline for September presentation
@@ -298,4 +302,4 @@ TODO: same for November presentation to iPRES at UNC
 DONE - write slides for Micah to use, update from September's.
 
 
-
+#END
