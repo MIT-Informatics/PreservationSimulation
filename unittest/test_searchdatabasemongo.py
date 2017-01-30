@@ -134,6 +134,14 @@ class CSearchDatabaseTest(unittest.TestCase):
         self.assertTrue(isinstance(result, list))
         self.assertEqual(len(result), 1)
 
+    @ntracef("TSRM")
+    def test_getcollections(self):
+        result = self.oDb.fndInsertProgressRecord(self.sKey, self.sVal)
+        self.assertEqual(result, 1)
+        result = self.oDb.fnlGetCollections()
+        self.assertTrue(isinstance(result, list))
+        self.assertGreaterEqual(len(result), 1)
+        self.assertTrue(self.sProgressCollectionName in result)
 
 
 # Edit history:
@@ -141,6 +149,7 @@ class CSearchDatabaseTest(unittest.TestCase):
 # 20170126  RBL Adapt from searchlib to mongolib.  Not that simple.  
 # 20170128  RBL Change trace facility code to TSRM.
 #               Add tests for getcollection, deletecollection, and friends.
+# 20170130  RBL Add test for GetCollections.
 # 
 # 
 

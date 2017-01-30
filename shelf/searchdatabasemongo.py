@@ -14,8 +14,9 @@ class CSearchDatabase(object):
     pass
 
     @ntracef("SRDM")
-    def __init__(self,mysDatabaseName, mysProgressCollectionName, 
-                mysDoneCollectionName, 
+    def __init__(self,mysDatabaseName, 
+                mysProgressCollectionName="inprogress", 
+                mysDoneCollectionName="done", 
                 mysMongoSystem="localhost", mynMongoPort=27017):
         self.sDbName = mysDatabaseName
         self.sProgressName = mysProgressCollectionName
@@ -118,12 +119,18 @@ class CSearchDatabase(object):
     def fnlGetProgressCollection(self):
         return self.fnlGetCollection(self.sProgressName)
 
+# f n l G e t C o l l e c t i o n s
+    @ntracef("SRDM")
+    def fnlGetCollections(self):
+        return [db for db in self.oDb.collection_names()]
+
 
 # Edit history:
 # 20170124  RBL Original version cribbed from the CSearchDatabase and mongolib.
 # 20170126  RBL Finally works with its unittest.  Does NOT use searchlibmongo; 
 #                goes directly to mongolib.
 # 20170128  RBL Add GetCollection, GetDoneCollection, GetProgressCollection.
+# 20170130  RBL Add GetCollections.
 # 
 # 
 

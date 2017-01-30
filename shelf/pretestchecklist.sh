@@ -22,7 +22,7 @@ else
     sSpecificDir="$2"
 fi
 sShelfDir=.
-sInstructionDir=$sShelfDir/newinstructions
+sInstructionDir=$sShelfDir/instructions
 
 # Check all the important directories.
 for needdir in $sFamilyDir $sFamilyDir/$sSpecificDir $sFamilyDir/$sSpecificDir/cmd $sFamilyDir/$sSpecificDir/act $sFamilyDir/$sSpecificDir/log $sFamilyDir/$sSpecificDir/ext $sFamilyDir/$sSpecificDir/dat  
@@ -49,18 +49,7 @@ fi
 
 # Do we have all the instruction files?
 sTargetDir="$sInstructionDir"
-for needfile in makecompletetemplate.sh substituteall.sh expandtemplate.py \
-    mongolib.py NewTraceFac.py hlinstructiontemplate.txt \
-    useinstfilter.py instfilter.py realrulestext.txt memoize.py loadintodb.py 
-do
-    if [ ! -f "$sTargetDir/$needfile" ]
-    then
-        echo "Error: missing important file $sTargetDir/$needfile"
-        exit 1
-    fi
-done
-sTargetDir="$sInstructionDir/ins"
-for needfile in simlen.ins glitchignorelevel.ins audittype.ins auditsegments.ins docsize.ins shelfsize.ins glitchmaxlife.ins glitchimpact.ins glitchfreq.ins glitchdecay.ins glitchspan.ins auditfreq.ins lifem.ins ncopies.ins randomseed.ins 
+for needfile in simlen.ins glitchignorelevel.ins audittype.ins auditsegments.ins docsize.ins shelfsize.ins glitchmaxlife.ins glitchimpact.ins glitchfreq.ins glitchdecay.ins glitchspan.ins auditfreq.ins lifem.ins ncopies.ins  
 do
     if [ ! -f "$sTargetDir/$needfile" ]
     then
@@ -71,7 +60,7 @@ done
 
 # Do we have the db manipulation files?
 sTargetDir="$sShelfDir"
-for needfile in dbclearcollection.py dbdumpcollection.py mongolib.py NewTraceFac.py 
+for needfile in dbclearcollection.py dbdumpcollection.py dbdumpdonekeys.py mongolib.py searchspace.py searchdatabase.py searchdatabasemongo.py NewTraceFac.py 
 do
     if [ ! -f "$sTargetDir/$needfile" ]
     then
@@ -83,7 +72,7 @@ done
 
 # Do we have all the execution files?
 sTargetDir="$sShelfDir"
-for needfile in broker.py NewTraceFac.py brokercommandlist.txt mongolib.py main.py fib.py extractvalues2.py hl-extractinstructions.txt datacleanup.py NewTraceFac.py 
+for needfile in broker.py brokercli.py catchex.py NewTraceFac.py brokercommandlist.txt client2.py cliparse.py main.py command.py fib.py extractvalues2.py hl-extractinstructions.txt datacleanup.py lifetime.py listactor.py 
 do
     if [ ! -f "$sTargetDir/$needfile" ]
     then
@@ -94,7 +83,7 @@ done
 
 # Do we have all the simulation files?
 sTargetDir="$sShelfDir"
-for needfile in audit2.py client2.py cliparse.py globaldata.py logoutput.py main.py NewTraceFac.py readin.py repair.py server.py util.py 
+for needfile in audit2.py client2.py cliparse.py collection.py command.py doccopy.py document.py dumpparams.py dumpuse.py getcliargs.py getparams.py globaldata.py logoutput.py main.py catchex.py NewTraceFac.py logoutput.py readin.py repair.py server.py shelf.py shock.py util.py 
 do
     if [ ! -f "$needfile" ]
     then
