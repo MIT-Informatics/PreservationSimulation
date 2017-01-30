@@ -20,14 +20,15 @@ def dumpParamsIntoLog():
     lg.logInfo("MAIN","Command line|%s|" % (argv[1:]))
     lg.logInfo("PARAMS","familydir|%s| specificdir|%s|" 
         % (G.sFamilyDir,G.sSpecificDir)) 
-    lg.logInfo("PARAMS","random seed|%d| "
+    lg.logInfo("PARAMS","RANDOM random seed|%d| "
         % (G.nRandomSeed))
     lg.logInfo("PARAMS","begin simulation timelimit|%d|hr=|%d|metricyr "
         "defaultlimit|%d|hr=|%d|metricyr" 
         % (G.nSimLength, G.nSimLength/10000, 
         G.nSimLengthDefault, G.nSimLengthDefault/10000))
-    lg.logInfo("PARAMS","logfile|%s| loglevel|%s|" 
+    lg.logInfo("PARAMS","LOG    logfile|%s| loglevel|%s|" 
         % (G.sLogFile,G.sLogLevel)) 
+    lg.logInfo("PARAMS", "TRACE  traceproduction|%s|" % NTRC.isProduction())
 
     # C l i e n t  params
     NTRC.ntracef(3,"MAIN","client params dict|%s|" 
