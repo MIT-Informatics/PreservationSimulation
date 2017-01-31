@@ -17,6 +17,8 @@ DONE - watch out for server lifetime zero (=infinite) when assessing
         server live/dead at audit and end of run.  
 DONE - when kill server, also kill shelf and all doc copies on it.  
 DONE - add nRandomSeeds to GUI.
+FIXME - do a thorough testing and maybe even filecomp on RICKS9, after
+    I accidentally deleted the entire repository and tried to re-clone it.  
 
 
 TODO: instruction generation
