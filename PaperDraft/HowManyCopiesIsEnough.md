@@ -247,15 +247,11 @@ Even if we understood the source and accuracy of stated MTTF estimates for disk 
 
 - Long term -- bit rot
 
-    o	Show results from long term simulation 
-    
-    o	[TABLE] (how long for 1% loss, based on number of copies) 
-    (TODO:RBL: Q: Do you intend a table of error rate (V) by number of copies (H), the data being hours before loss exceeds 1%?  This is part of the response surface that we have not yet investigated.)
-    
+    o Using poisson closed form -- if expectation loss is just less than .5 doc in 10 years . Expect not to see any doc loss in 10 years ... how long to see a doc lost... how long to see 1% failure. 
+
     o	Interaction  -- fragility of big documents 
     
-    o	[FIGURE] (how long for 1% loss, based on increasing size)
-    (TODO:RBL: Q: Again, do you intend a table of document size (H) by error rate (V), the data again being hours before loss exceeds 1%?  Again, a part of the response surface untouched by silicon hands.)
+    o	[FIGURE] (above -- suppose we increas doc size by 10, by 100, by 1000 -- how many expected doc lossed in the same period)
     
     o	Cite to Rosenthal previous results on this
     
