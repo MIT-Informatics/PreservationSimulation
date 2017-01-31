@@ -40,8 +40,9 @@ DONE - adapt broker to new mongo done and progress ifcs.
 DONE - adapt datacleanup to new mongo done and progress ifcs.
 DONE - redo and make new utilities for progress and done collections:
     delete, count, list keys, list all.
-FIXME - need new utils: list databases, list collections in db.  
+DONE - need new utils: list databases, list collections in db.  
     because the mongo console util is so, um, unwonderful.  
+
 
 TODO: web interface to select instructions for broker run
 WRONG - learn kivy and remi, decide which to use.
@@ -63,6 +64,7 @@ MAYBE - for trace level zero, do not check facility codes.
 DONE - do null version of trace decorators for production use
     that do as little as possible.  trace consumes about 40% of CPU time
     during typical run.  make sure that level 0 traces always come out.
+DONE - add routine to tell if production mode is on, so it can be logged.  
 
 
 TODO: general
@@ -132,7 +134,7 @@ DONE - add a cleanstart shell script to empty the dirs that need to
   be empty, set a clean GiantOutput file.
 FIXME - cleanstart shell script should rescue any data
   that was left over in a previous GiantOutput file into
-  the done dir.  
+  the done dir.  and it should delete everything else.
 DONE - fix y/n switch options to get rid of the need for a value.
 DONE - fix the broker invocation in the AWSinstallscript to match the
   revised y/n options.
@@ -147,8 +149,14 @@ DONE - fix option processing to permit presence-only options to pass thru,
     e.g., --shortlog.
 FIXME - put out notice about TRACE_PRODUCTION mode, both in broker
     and in main.py.  must be in the log file.  
-FIXME - adapt the pretestchecklist and other scripts to the new instruction
+DONE - adapt the pretestchecklist and other scripts to the new instruction
     files, location, etc.  
+FIXME - write a utility to reconstitute the main.py command line 
+    from a result line in GiantOutput.  
+FIXME - put out the command line, or at least the arg list, as trace-0
+    so that it gets recorded into a tee file.  
+FIXME - dump the instruction dictionary as trace-0 before or just after
+    getting iterator from searchspace.  
 
 
 TODO: audit
@@ -223,6 +231,7 @@ FIXME - change newinstructions section of script to create flat instructions
 FIXME - change newinstructions section of script to be way simpler with
     newnewnewinstructions method of on-demand cross-product with no
     pre-stored instructions.
+FIXME - change broker cli for tests and examples.
 
 
 TODO: rationalize time constants so that people can understand them
@@ -250,7 +259,7 @@ DONE - Update SERVERUSE log lines and some other lines, too, at end to state
 
 
 TODO: calibration
-FIXME: do spreadsheet of a0 numbers compared with simple Poisson 
+DONE: do spreadsheet of a0 numbers compared with simple Poisson 
     theoretical results.  
 DONE - test that shortlog and traceproduction do not affect the numbers.
 
