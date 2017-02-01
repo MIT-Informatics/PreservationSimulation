@@ -113,6 +113,7 @@ import getcliargs
 import dumpparams
 import dumpuse
 import makethings
+from shock import CShock
 
 
 #-----------------------------------------------------------
@@ -187,9 +188,11 @@ New philosophy on run parameters.
 
 '''
 
+@ntracef("MAIN")
 def main():
 
-    NTRC.ntracef(0,"MAIN","proc Document Preservation simulation " % ())
+    NTRC.ntracef(0,"MAIN","proc Document Preservation simulation " 
+        % ())
 
     # ---------------------------------------------------------------
     '''
@@ -255,6 +258,7 @@ def main():
     # Populate servers, clients, collections of documents.
     makethings.makeServers(G.dServerParams)
     makethings.makeClients(G.dClientParams)
+    makethings.makeShock(G.nShockFreq)
     dumpuse.dumpServerUseStats()
 
     # ---------------------------------------------------------------
@@ -269,16 +273,21 @@ def main():
         G.bDoNotLogInfo = True
     tSimBegin = clock()
     env.run(until=G.nSimLength)
+
+    CShock.cmAtEndOfRun()
     tSimEnd = clock()
     G.bDoNotLogInfo = False
     G.tSimCpuLen = tSimEnd - tSimBegin
 
-    NTRC.ntracef(0,"MAIN","proc End simulation1 timenow|%d| cpusecs|%s| lastevent|%d| " % (env.now,G.tSimCpuLen,G.nTimeLastEvent))
-    NTRC.ntracef(0,"MAIN","proc End simulation2 hidoc|%s| hicoll|%s| hishelf|%s|" % (G.nDocLastID,G.nCollLastID,G.nShelfLastID))
-    NTRC.ntracef(0,"MAIN","proc End simulation3 hiserver|%s| hiclient|%s| hicopy|%s|" % (G.nServerLastID,G.nClientLastID,G.nCopyLastID))
+    NTRC.ntracef(0,"MAIN","proc End simulation1 timenow|%d| cpusecs|%s| lastevent|%d| " 
+        % (env.now,G.tSimCpuLen,G.nTimeLastEvent))
+    NTRC.ntracef(0,"MAIN","proc End simulation2 hidoc|%s| hicoll|%s| hishelf|%s|" 
+        % (G.nDocLastID,G.nCollLastID,G.nShelfLastID))
+    NTRC.ntracef(0,"MAIN","proc End simulation3 hiserver|%s| hiclient|%s| hicopy|%s|" 
+        % (G.nServerLastID,G.nClientLastID,G.nCopyLastID))
     lg.logInfo("MAIN","end run, simulated time|%d|" % (env.now))
 
-
+@ntracef("MAIN")
 def evaluate():
     ''' Assess the damage to the collection(s) during the run.  
         Audit all the docs and see if any have been permanently lost.  
@@ -289,6 +298,7 @@ def evaluate():
 
 
 ##########################################################
+@ntracef("MAIN")
 def mainmain():
     tWallBegin = time()
     
@@ -305,25 +315,21 @@ def mainmain():
 
     tWallEnd = time()
     G.tWallLen = tWallEnd - tWallBegin
-    NTRC.ntracef(0,"MAIN","proc End time stats: wall|%8.3f| cpu|%s|" % (G.tWallLen,G.tSimCpuLen))
+    NTRC.ntracef(0,"MAIN","proc End time stats: wall|%8.3f| cpu|%s|" 
+        % (G.tWallLen,G.tSimCpuLen))
+    NTRC.ntracef(0,"MAIN","ENDENDEND" 
+        % ())
 
 # ----------------------------------------------------------
 # If this is the main program, run it now.  
 if __name__ == "__main__":
-    '''
-    bAlreadyRan = False
-    try:
-        sProfileVar = environ["PROFILE"]
-        if sProfileVar == "YES":
-            profile.run('mainmain()')
-            bAlreadyRan = True
-    except (KeyError,TypeError,ValueError):
-        pass
-    if not bAlreadyRan:
-        mainmain()
-    '''
+
+    if environ.get("MONKEYPATCH", "NO") == "YES":
+        import monkeypatch
+
     if environ.get("PROFILE","NO") == "YES":
-        NTRC.ntracef(0,"MAIN","proc PROFILE=YES for this ssslllooowww run " % ())
+        NTRC.ntracef(0,"MAIN","proc PROFILE=YES for this ssslllooowww run " 
+            % ())
         profile.run('mainmain()')
     else:
         mainmain()
@@ -352,7 +358,8 @@ if __name__ == "__main__":
 #                to separate module, makethings.
 #               Upgrade all refs to NTRC and ntrace.  
 #               Remove extraneous imports.  
-# 
+# 20161221  RBL Add optional monkeypatch inclusion.
+#               Fix some over-long lines.  
 # 
 # 
 

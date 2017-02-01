@@ -4,7 +4,7 @@
 # into the Params.  
 # Recovered, we hope, after commit/delete screw-up.  
 
-sVersion = "0.0.10"
+sVersion = "0.0.11"
 import argparse
 from NewTraceFac import TRC,trace,tracef
 
@@ -27,7 +27,8 @@ def fndCliParse(mysArglist):
         "shortlog=N, loglevel=NOTSET, "
         "audit=0 (off), bandwidth=10Mbps "
         "logfile=stdout, glitchfreq=0 (never), \n"
-        "shockfreq=0 (never), shockspan=1" 
+        "shockfreq=0 (never), shockspan=1, shockmaxlife=10000, \n"
+        "serverdefaultlife=10000" 
         , version=sVersion)
     
     # P O S I T I O N A L  arguments
@@ -83,6 +84,16 @@ def fndCliParse(mysArglist):
                         , nargs='?'
                         , help='Sector half-life for storage shelf in '
                         'mega-hours.  May be overridden by lifek.'
+                        )
+    
+    cParse.add_argument("--serverdefaultlife", "--serverdefaulthalflife"
+                        , type=int
+                        , dest='fServerDefaultHalflife'
+                        , metavar='nHALFLIFE_Mhrs'
+                        #, nargs='?'
+                        , help='Default half-life of servers before'
+                        'they fail, in mega-hours.  May be reduced by'
+                        'an economic shock.  0=never die.'
                         )
     
     cParse.add_argument("--shelfsize", type=int
@@ -199,6 +210,12 @@ def fndCliParse(mysArglist):
                         'ceases after this interval; 0=infinity.'
                         )
 
+    cParse.add_argument("--glitchspan", type=int
+                        , dest='nGlitchSpan'
+                        , metavar='nGLITCHSPAN'
+                        , help='Number of servers affected by a glitch.'
+                        )
+
     cParse.add_argument("--shockfreq", type=int
                         , dest='nShockFreq'
                         , metavar='nSHOCKFREQ_hrs'
@@ -218,6 +235,13 @@ def fndCliParse(mysArglist):
                         , metavar='nSHOCKSPAN_nservers'
                         , help='Number of servers affected by '
                          'slump.  0=>default=1.'
+                        )
+
+    cParse.add_argument("--shockmaxlife", type=int
+                        , dest='nShockMaxlife'
+                        , metavar='nSHOCKMAXLIFE_nhours'
+                        , help='Duration of economic slump that affects '
+                         'servers.  0=>default=10000.'
                         )
 
     cParse.add_argument("--mongoid", type=str
@@ -250,6 +274,9 @@ def fndCliParse(mysArglist):
 # 20160617  RBL Remove glitch span.
 #               Add economic slump with half-life, impact level, and span.
 #               Fix up some 80-character-ness.
+# 20161215  RBL Add maxlife to shock.  
+#               Add defaultlife to server.
+# 
 # 
 
 # END

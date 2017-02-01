@@ -25,9 +25,14 @@ def fndCliParse(mysArglist):
         not necessary, since most of them have already been decanted
         into the P params object.  
     '''
-    sVersion = "0.0.2"
-    cParse = argparse.ArgumentParser(description="Digital Library Preservation Simulation LoadIntoDb instruction file database loader",epilog="Defaults for args as follows:\n\
-        (none), version=%s" % sVersion
+    sVersion = "0.0.3"
+    cParse = argparse.ArgumentParser(description="Digital Library "
+        "Preservation Simulation LoadIntoDb instruction file database loader",
+        epilog="Defaults for args as follows:\n"
+        "(none), version=%s \n" 
+        "Envir var TRACE_PROGRESS=n will generate progress dots every "
+        "n*1000 writes to mongodb."
+        % sVersion
         )
 
     # P O S I T I O N A L  arguments
@@ -104,6 +109,13 @@ def main():
 # E n t r y   p o i n t . 
 if __name__ == "__main__":
     main()
+
+
+# Edit history:
+# 2015xxxx  RBL Original version, date lost in history.
+# 20170110  RBL Add CLI help about envir var for progress bar.  
+# 
+# 
 
 #END
 

@@ -1,219 +1,33 @@
 #!/usr/bin/python
 # broker.py
 
-import  argparse
 import  os
 import  re
 import  time
 import  json
 from    NewTraceFac     import  NTRC,ntrace,ntracef
-import  mongolib
 import  sys
 from    catchex         import  catchex
+import  searchspace
+import  searchdatabase
+import  searchdatabasemongo
+import  util
+import  brokercli
+import  command
+import  copy
 
 
-#=================================================
-@ntracef("CLI")
-def fndCliParse(mysArglist):
-    ''' Parse the mandatory and optional positional arguments, and the 
-         many options for this run from the command line.  
-        Return a dictionary of all of them.  
-    '''
-    sVersion = "0.0.7"
-    cParse = argparse.ArgumentParser(
-        description="Digital Library Preservation Simulation "
-        "Instruction Broker CLI "
-        "v"+sVersion+"  "
-        "For each selection variable, enter either a value "
-        "or a MongoDB dictionary spec " 
-        "that is a valid JSON dictionary string.  \n" 
-        "Note that special characters such as $ { } must be escaped "
-        "or single-quoted to protect them from the shell.  " 
-        "" 
-        ""
-        ,epilog="Defaults for args as follows: (none)\n"
-        , version=sVersion)
-    
-    # P O S I T I O N A L  arguments
-    #cParse.add_argument('--something', type=, dest='', metavar='', help='')
-
-    cParse.add_argument('sDatabaseName', type=str
-                        , metavar='sDATABASENAME'
-                        , help='Name of MongoDB database that pymongo will find.'
-                        )
-
-    cParse.add_argument('sPendingCollectionName', type=str
-                        , metavar='sPENDINGCOLLECTIONNAME'
-                        , help='Collection name within the database of the instructions to be executed.'
-                        )
-
-    cParse.add_argument('sDoneCollectionName', type=str
-                        , metavar='sDONECOLLECTIONNAME'
-                        , help='Collection name within the database of the instructions that have been completed.'
-                        )
-
-    # - - O P T I O N S
-
-    cParse.add_argument("--ncopies", type=str
-                        , dest='nCopies'
-                        , metavar='nCOPIES'
-                        , nargs='?'
-                        , help='Number of copies in session.'
-                        )
-
-    cParse.add_argument("--lifem", "--lifetimemegahours", type=str
-                        , dest='nLifem'
-                        , metavar='nLIFE_Mhrs'
-                        , nargs='?'
-                        , help='Sector mean lifetime for storage shelf.'
-                        )
-
-    cParse.add_argument("--auditfreq", type=str
-                        , dest='nAuditFreq'
-                        , metavar='nAUDITCYCLEINTERVAL_hrs'
-                        , nargs='?'
-                        , help='Hours between auditing cycles; zero=no auditing.'
-                        )
-
-    cParse.add_argument("--audittype", type=str
-                        , dest='sAuditType'
-                        , choices=['TOTAL','OFF']
-                        , nargs='?'
-                        , help='Strategy for auditing, default=SYSTEMATIC.'
-                        )
-
-    cParse.add_argument("--auditsegments", type=str
-                        , dest='nAuditSegments'
-                        , metavar='nAUDITSEGMENTS'
-                        , nargs='?'
-                        , help='Number of subsamples per audit cycle, default=1.'
-                        )
-
-    cParse.add_argument("--glitchfreq", type=str
-                        , dest='nGlitchFreq'
-                        , metavar='nGLITCHFREQ_hrs'
-                        , nargs='?'
-                        , help='Half-life of intervals between glitches; 0=never happens.'
-                        )
-
-    cParse.add_argument("--glitchimpact", type=str
-                        , dest='nGlitchImpact'
-                        , metavar='nGLITCHIMPACT_pct'
-                        , nargs='?'
-                        , help='Percent reduction in sector lifetime due to glitch; 100%%=fatal to shelf.'
-                        )
-
-    cParse.add_argument("--glitchdecay", type=str
-                        , dest='nGlitchDecay'
-                        , metavar='nGLITCHDECAY_hrs'
-                        , nargs='?'
-                        , help='Half-life of glitch impact exponential decay; zero=infinity.'
-                        )
-
-    cParse.add_argument("--glitchmaxlife", type=str
-                        , dest='nGlitchMaxlife'
-                        , metavar='nGLITCHMAXLIFE_hrs'
-                        , nargs='?'
-                        , help='Maximum duration of glitch impact, which ceases after this interval; zero=infinity.'
-                        )
-
-    cParse.add_argument("--glitchspan", type=str
-                        , dest='nGlitchSpan'
-                        , metavar='nGLITCHSPAN_nservers'
-                        , nargs='?'
-                        , help='Number of servers affected by glitch.'
-                        )
-
-    cParse.add_argument("--shelfsize", type=str
-                        , dest='nShelfSize'
-                        , metavar='nSHELFSIZE_TB'
-                        , nargs='?'
-                        , help='Size for storage shelf in TB.'
-                        )
-   
-    cParse.add_argument("--docsize", type=str
-                        , dest='nDocSize'
-                        , metavar='nDOCSIZE_MB'
-                        , nargs='?'
-                        , help='Document size in MB.'
-                        )
-
-    cParse.add_argument("--query", type=str
-                        , dest='sQuery'
-                        , metavar='sMONGODB_JSON_QUERYSTRING'
-                        , nargs='?'
-                        , help='For the brave and foolhardy, a full JSON-ized query string for MongoDB.  This cannot be combined with any other selector options.'
-                        )
-
-    
-    
-# Other options that are not used for selection, but for overrides or testing.
-
-    cParse.add_argument("--familydir", type=str
-                        , dest='sFamilyDir'
-                        , metavar='sFAMILYDIR'
-                        , nargs='?'
-                        , required=True
-                        , help='Family directory for param and log files.'
-                        )
-    
-    cParse.add_argument("--specificdir", type=str
-                        , dest='sSpecificDir'
-                        , metavar='sSPECIFICDIR'
-                        , nargs='?'
-                        , required=True
-                        , help='Specific directory for param and log files.'
-                        )
-    
-    cParse.add_argument("--testlimit", type=str
-                        , dest='nTestLimit'
-                        , metavar='nTESTLIMIT'
-                        , nargs='?'
-                        , help='TESTING ONLY: limit on number of runs to execute.'
-                        )
-    
-    cParse.add_argument("--testcommand"
-                        , action='store_const', const="Y"
-                        , dest='sTestCommand'
-                        , help='TESTING ONLY: echo formatted commands only, not execute.'
-                        )
-    
-    cParse.add_argument("--testfib"
-                        , action='store_const', const="Y"
-                        , dest='sTestFib'
-                        , help='TESTING ONLY: use fako Fibonacci CPU intensive process instead of real stuff.'
-                        )
-
-    cParse.add_argument("--listonly"
-                        , action='store_const', const="Y"
-                        , dest='sListOnly'
-                        , help='List all chosen cases to stdout.  Do nothing else.'
-                        )
-
-    cParse.add_argument("--redo"
-                        , action='store_const', const="Y"
-                        , dest='sRedo'
-                        , help='Force these cases to be redone, even if they have been done before.'
-                        )
-
-    if mysArglist:          # If there is a specific string, use it.
-        (xx) = cParse.parse_args(mysArglist)
-    else:                   # If no string, then parse from argv[].
-        (xx) = cParse.parse_args()
-
-    return vars(xx)
-
-
-#=================================================
+#===========================================================
 # class   C G   f o r   g l o b a l   d a t a 
 class CG(object):
     ''' Global data.
     '''
+    # Options that should be passed thru to main.py.
     # All the interesting options should be None here, so that 
     #  they are removed from the selection dictionary before
-    #  it is handed to MongoDB.
+    #  it is handed to MongoDB.  (No longer a consideration.)
     #  If the user doesn't specify it on the command line, 
-    #  then it is not a selection criterion.
+    #  then it is not a selection criterion for searching.
     nCopies = None
     nLifem = None
     nAuditFreq = None
@@ -224,10 +38,23 @@ class CG(object):
     nGlitchDecay = None
     nGlitchMaxlife = None
     nGlitchSpan = None
+
+    nShockFreq = None
+    nShockImpact = None
+    nShockSpan = None
+    nShockMaxlife = None
+    nServerDefaultLife = 0
+
+    nRandomSeeds = 21
+    sRandomSeedFile = "1000Randoms.txt"
+
     nShelfSize = None
     nDocSize = None
+    sShortLog = "N"     # Log only setup and results info, no error details.  
+
+    # Administrative options to guide broker's behavior.
     sQuery = None
-    nCores = 4          # Default, overridden by NCORES env var
+    nCores = 8          # Default, overridden by NCORES env var
     nCoreTimer = 10     # Wait for a free core,
     nPoliteTimer = 2    # Shorter wait between sequential launches.
     nStuckLimit = 600   # Max nr of CoreTimer waits before giving up.
@@ -238,15 +65,38 @@ class CG(object):
                         #  but don't execute them.
     sRedo = "N"         # Force cases to be redone (recalculated)?
 
-    sFamilyDir = '../hl'
-    sSpecificDir = 'a0'
+    # Options that are string-valued but special, have only Y/N/YES/NO 
+    #  answers.  DO NOT JSON-ify them.  
+    lYesNoOptions = ("sRedo sListOnly sTestCommand sTestFib").split()
+    
+    # Mandatory arguments that are strings shouldn't be manhandled, either.
+    lMandatoryArgs = ("sSearchDbProgressCollectionName "
+                        "sSearchDbDoneCollectionName "
+                        "sFamilyDir sSpecificDir").split()
+    
+    sFamilyDir = '../hl'        # lifetimes expressed as half-lives, and
+    sSpecificDir = 'a0'         #  no auditing.
 
-    sDatabaseName = None
-    sPendingCollectionName = None
-    sDoneCollectionName = None
+    # SearchSpace db info (for instructions)
+    sInsDir = './instructions'  # Where to find instruction (*.ins) files.
+    sInsTyp = '.ins'    # File type (extension) specifier for instruction files.
 
+    # SearchDatabase db info (for progress and done records)
+    sSearchDbFile = "./searchspacedb/searchdb.json"     # Obsolete, I hope.
+    sSearchDbMongoName = "brokeradmin"
+    sSearchDbProgressCollectionName = "inprogress"
+    sSearchDbDoneCollectionName = "done"
+    sdb = None          # Instance of searchspace db.   # Obsolete, I hope.
+    mdb = None          # Instance of searchdatabasemongo db.
+    
     # Command template components.
-    sShelfLogFileTemplate = 'doc{nDocSize}cop{nCopies}shlf{nShelfSize}lif{nLifem}_af{nAuditFreq}s{nAuditSegments}t{sAuditType}_gf{nGlitchFreq}i{nGlitchImpact}d{nGlitchDecay}m{nGlitchMaxlife}s{nGlitchSpan}_seed{nRandomseed}'
+    sShelfLogFileTemplate = (
+        'doc{nDocSize}cop{nCopies}shlf{nShelfSize}lif{nLifem}_'
+        'af{nAuditFreq}s{nAuditSegments}t{sAuditType}_'
+        'gf{nGlitchFreq}i{nGlitchImpact}d{nGlitchDecay}m{nGlitchMaxlife}_'
+        'sh{nShockFreq}i{nShockImpact}s{nShockSpan}_m{nShockMaxlife}'
+        'seed{nRandomseed}'
+        )
     sShelfLogFileName = None
 
     # Templates to be obtained from instruction file, and commands to be 
@@ -258,26 +108,42 @@ class CG(object):
     # The listactor command must redirect all output to a file.
     #  Otherwise, it will not run asynchronously to take advantage
     #  of multiple cores.
-    sActorCmdFileTemplate = '{sFamilyDir}/{sSpecificDir}/cmd/{sShelfLogFileName}.cmds'
+    sActorCmdFileTemplate = ('{sFamilyDir}/{sSpecificDir}/cmd/'
+                            '{sShelfLogFileName}.cmds'
+                            )
     sActorCmdFileName = None
-    sActorCmdTemplate = 'export TRACE_LEVEL=0; export TRACE_FACIL=; python listactor.py {sActorCmdFileName} > {sFamilyDir}/{sSpecificDir}/act/{sShelfLogFileName}_actor.log 2>&1 &'
+    sActorCmdTemplate = ('export TRACE_LEVEL=0; export TRACE_FACIL=; '
+                        'python listactor.py {sActorCmdFileName} > '
+                        '{sFamilyDir}/{sSpecificDir}/act/'
+                        '{sShelfLogFileName}_actor.log 2>&1 &'
+                        )
     sActorCmd = None
 
     # Only field names that appear in items in the database should ever
     #  be in the query dictionary.  Otherwise, no item in the database 
-    #  can ever satisfy such a query, i.e., no results.  
-    lSearchables = "nAuditFreq nAuditSegments sAuditType nDocSize nGlitchDecay nGlitchFreq nGlitchIgnorelevel nGlitchImpact nGlitchMaxlife nGlitchSpan nLifem nCopies nRandomseed nShelfSize nSimlen sQuery".split()
-
+    #  can possibly satisfy such a query; i.e., no instructions, no results.  
+    lSearchables = ('nAuditFreq nAuditSegments sAuditType nDocSize '
+                    'nGlitchDecay nGlitchFreq nGlitchIgnorelevel '
+                    'nGlitchImpact nGlitchMaxlife nGlitchSpan '
+                    'nShockFreq nShockImpact nShockSpan nShockMaxlife '
+                    'nLifem nServerDefaultLife '
+                    'nCopies nRandomseed nShelfSize nSimlen sQuery' 
+                    ).split()
     # Special fake CPU-bound commands to test for proper parallel execution.  
-    # These take about a minute (75s) and a third of a minute (22s) on a 3Gi7.
+    # These take about a minute (75s) and a third of a minute (22s) on an
+    #  Intel 3Gi7 CPU in my Dell Optiplex 7010 (2016-08).  Your mileage
+    #  may differ.  
     # Make sure we have the right version of bash and Python.
     sStartTime = 'date +%Y%m%d_%H%M%S.%3N'
     sBashIdCmd = 'sh --version'
-    sPythonIdCmd = 'python -c "import sys; print sys.version; print sys.version_info"'
+    sPythonIdCmd = ('python -c "import sys; print sys.version; '
+                    'print sys.version_info"'
+                    )
     sFibCmd1 = 'python fib.py 42'
     sFibCmd2 = 'python fib.py 40'
     sEndTime = 'date +%Y%m%d_%H%M%S.%3N'
-    lFibTemplates = [sStartTime, sBashIdCmd, sPythonIdCmd, sFibCmd1, sFibCmd2, sEndTime]
+    lFibTemplates = [sStartTime, sBashIdCmd, sPythonIdCmd, 
+                    sFibCmd1, sFibCmd2, sEndTime]
 
     # Command used to count instances and wait for an open core.  
     # I added the temp files so that we can track certain errors
@@ -287,12 +153,17 @@ class CG(object):
     # NOTE: When we translate this entire application to python3, this 
     #  command will have to change.  Now it eliminates the python3 something
     #  that Ubuntu is running in the background.  
-    sWaitForOpeningCmd = "ps axu 2>&1 | tee ps.tmp | grep {Name} 2>&1 | grep -v grep | grep -v python3 | grep -v 'sh -c' | grep -v '/sh ' | tee grep.tmp | wc -l | tee wc.tmp"
-    nWcLimit = 100          # How many times to try for a number out of the above command.
+    sWaitForOpeningCmd = ("ps axu 2>&1 | tee ps.tmp | grep {Name} 2>&1 "
+                        "| grep -v grep | grep -v python3 | "
+                        "grep -v 'sh -c' | grep -v '/sh ' | "
+                        "tee grep.tmp | wc -l | tee wc.tmp"
+                        )
+    nWcLimit = 100          # How many times to try for a number out of 
+                            #  the above command.
     nLinuxScrewupTime = 3   # How long between attempts.
 
     '''
-    Directory structure under the family/specific dir:
+    Directory structure under the familydir/specificdir:
     cmd - command files for the listactor program
     log - log file output from the main simulation runs
     act - little bitty log files from the listactor program
@@ -301,15 +172,18 @@ class CG(object):
           redundant headers)
     '''
 
-#=================================================
+#===========================================================
+
+# f n G e t C o m m a n d T e m p l a t e s 
 @ntrace
 def fnGetCommandTemplates(mysCommandFilename):
     '''
     Read (interesting) lines from external file as command templates
      to be filled in and executed.
     '''
-    with open(mysCommandFilename,'r') as fhIn:
-        g.lTemplates = [line.rstrip() for line in fhIn if fnbDoNotIgnoreLine(line)]
+    with open(mysCommandFilename, 'r') as fhIn:
+        g.lTemplates = [line.rstrip() for line in fhIn 
+                        if fnbDoNotIgnoreLine(line)]
         return g.lTemplates
 
 # f n b D o N o t I g n o r e L i n e 
@@ -318,11 +192,11 @@ def fnbDoNotIgnoreLine(mysLine):
     '''
     True if not a comment or blank line.
     '''
-    # Ignore comment and blank lines.
-    return (not re.match("^\s*#",mysLine)) and (not re.match("^\s*$",mysLine))
+    # Ignore comment and blank lines, but take all others.
+    return (not re.match("^\s*#", mysLine)) and (not re.match("^\s*$", mysLine))
 
 # f n I n t P l e a s e 
-@ntracef("INT",level=5)
+@ntracef("INT", level=5)
 def fnIntPlease(myString):
     # If it looks like an integer, make it one.
     try:
@@ -330,11 +204,12 @@ def fnIntPlease(myString):
     except ValueError:
         return myString
 
-#=================================================
+#===========================================================
+
 # f n W a i t F o r O p e n i n g 
 @catchex
 @ntracef("WAIT")
-def fnbWaitForOpening(mynProcessMax,mysProcessName,mynWaitTime,mynWaitLimit):
+def fnbWaitForOpening(mynProcessMax, mysProcessName, mynWaitTime, mynWaitLimit):
     ''' Wait for a small, civilized number of processes to be running.  
         If the number is too large, wait a while and look again.  
         But don't wait forever in case something is stuck.  
@@ -352,7 +227,7 @@ def fnbWaitForOpening(mynProcessMax,mysProcessName,mynWaitTime,mynWaitLimit):
          - divide by two for the actor and the main
          - is that number greater than the stated limit?
     '''
-    cCmd = CCommand()
+    cCmd = command.CCommand()
     dParams = dict()
     dParams['Name'] = mysProcessName
     for idx in range(mynWaitLimit):
@@ -363,7 +238,7 @@ def fnbWaitForOpening(mynProcessMax,mysProcessName,mynWaitTime,mynWaitLimit):
         nWcLimit = g.nWcLimit
         while nWcLimit > 0:
             sCmd = g.sWaitForOpeningCmd
-            sFullCmd = cCmd.makeCmd(sCmd,dParams)
+            sFullCmd = cCmd.makeCmd(sCmd, dParams)
             sResult = cCmd.doCmdStr(sFullCmd)
             try:
                 nResult = int(sResult)
@@ -373,19 +248,22 @@ def fnbWaitForOpening(mynProcessMax,mysProcessName,mynWaitTime,mynWaitLimit):
                 time.sleep(g.nLinuxScrewupTime)
         #end while waiting for int from wc
 
-        NTRC.tracef(3,"WAIT","proc WaitForOpening1 idx|%d| cmd|%s| result|%s|" % (idx,sFullCmd,nResult))
+        NTRC.tracef(3,"WAIT","proc WaitForOpening1 idx|%d| cmd|%s| result|%s|" 
+            % (idx, sFullCmd, nResult))
         if mysProcessName.find("python") >= 0:
             nOtherProcs = nResult - 1               # Processes that are not me.
             nRealProcs = int(nOtherProcs / 2)       # They come in pairs.
             if nRealProcs < mynProcessMax: break    # If there's still room, go to it.
         else:
             if nResult < mynProcessMax: break
-        NTRC.tracef(3,"WAIT","proc WaitForOpening2 sleep and do again idx|%d| nResult|%d|" % (idx,nResult))
+        NTRC.tracef(3,"WAIT","proc WaitForOpening2 sleep and do again idx|%d| nResult|%d|" 
+            % (idx, nResult))
         time.sleep(mynWaitTime)
     return (idx < mynWaitLimit-1)                   # Return false if we ran out of retries.
 
 
-#=================================================
+#===========================================================
+
 # c l a s s   C F o r m a t 
 class CFormat(object):
 
@@ -423,29 +301,53 @@ class CFormat(object):
     def fndFormatQuery(self, mydCli):
         '''
         Take all the CLI options that might specify a searchable attribute, and 
-         construct a MongoDB query dictionary.  
+         construct a MongoDB or searchspace query dictionary.  
+         This is lots nastier than it first appears to be
+         because json is so bloody picky.
         '''
         dOut = dict()
         for sAttrib,sValue in mydCli.items():
             result = None
             if sValue is not None:
-                
+                # Is it something valid in json?                
                 try:
                     result = json.loads(sValue)
                 except ValueError:
-                    result = fnIntPlease(sValue)
-                    NTRC.tracef(3, "FMT", "proc FormatQuery notjson item key|%s| val|%s| result|%s|" % (sAttrib, sValue, result))
-                    if sAttrib == "sQuery":
-                        NTRC.ntrace(0,"ERROR: sQuery string is not valid JSON|%s|" % (sValue))
-                        NTRC.ntrace(0,"Aborting run.")
-                        sys.exit(1)
-            NTRC.tracef(3, "FMT", "proc FormatQuery item key|%s| val|%s| result|%s|" % (sAttrib, sValue, result))
-            dOut[sAttrib] = result
+                    # Is it a string that should be an integer, ok in json?
+                    try:
+                        result = int(sValue)
+                    except:
+                        # Is it a naked string for some string-valued var
+                        #  that isn't just Y/N or a mandatory string?  
+                        #  Rule out dict values that are already formatted.
+                        if (isinstance(sValue, str)
+                            and sAttrib not in g.lYesNoOptions
+                            and sAttrib not in g.lMandatoryArgs
+                            and '{' not in sValue
+                            and '}' not in sValue
+                            and ':' not in sValue
+                            and ',' not in sValue
+                            ):
+                            result = '{"$eq":' + '"'+sValue+'"' + '}'
+                        else:
+                            result = sValue
+                    NTRC.tracef(3, "FMT", "proc FormatQuery notjson item "
+                        "key|%s| val|%s| result|%s|" 
+                        % (sAttrib, sValue, result))
+            NTRC.tracef(3, "FMT", "proc FormatQuery item key|%s| val|%s| result|%s|" 
+                % (sAttrib, sValue, result))
+            # Can't process dicts thru json twice.
+            if isinstance(result, dict):
+                dOut[sAttrib] = sValue
+            else:
+                dOut[sAttrib] = result
+
         # Allow only attribs that appear in the database, else will get 
         #  no results due to implied AND of all items in query dict.  
         dOutSafe = {k:v for k,v in dOut.items() if k in g.lSearchables}
         dOutNotNone = {k:v for k,v in dOutSafe.items() if v is not None}
-        NTRC.ntracef(3,"FMT","proc dict b4|%s| \nsafe|%s|\nclean|%s|" % (dOut,dOutSafe,dOutNotNone))
+        NTRC.ntracef(3,"FMT","proc dict b4|%s| \nsafe|%s|\nclean|%s|" 
+            % (dOut,dOutSafe,dOutNotNone))
         if "sQuery" in dOutNotNone.keys():
             # If the brave user has supplied a full, standalone query string,
             #  add its contents to the query dict so far.
@@ -466,117 +368,37 @@ class CFormat(object):
             sCommand = mysCommand
         return sCommand
 
+#===========================================================
 
-#=================================================
-# class   C C o m m a n d
-class CCommand(object):
+# f n d M a y b e E n h a n c e I n s t r u c t i o n 
+@catchex
+@ntracef("MAIN")
+def fndMaybeEnhanceInstruction(mydRawInstruction):
     '''
-    Class to format and execute a CLI command, parse results
-     using a regular expression supplied by the caller.  
-    Nothing specific here, so should probably be a separate module.  
+    There may be some qualifiers that are neither searchable nor
+    merely adminstrative, but have to be passed thru to main.py.  
+    If they are not searchable, they probably don't come back in 
+    the instruction dict.  Add them to instruction dict.
     '''
+    dInstruction = copy.deepcopy(mydRawInstruction)
+    # Add additional attributed here.
+    
+    # shortlog is unusual in not taking an argument but being true by presence.
+    dInstruction["sShortLogOption"] = ("--shortlog" 
+                if g.sShortLog.startswith("Y") 
+                else "")
+    
+    return dInstruction
 
-    @catchex
-    @ntracef("CMD")
-    def doCmdStr(self,mysCommand):
-        ''' Return concatenated string of result lines with newlines stripped.  
-        '''
-        sResult = ""
-        for sLine in os.popen(mysCommand):
-            sResult += sLine.strip()
-        return sResult
-        
-    @catchex
-    @ntracef("CMD")
-    def doCmdLst(self,mysCommand):
-        ''' Return list of result lines with newlines stripped.  
-        '''
-        lResult = list()
-        for sLine in os.popen(mysCommand):
-            lResult.append(sLine.strip())
-        return lResult
-        
-    @catchex
-    @ntracef("CMD")
-    def doParse(self,mysCommand,mysRegex):
-        sOutput = self.doCmd(mysCommand)
-        mCheck = search(mysRegex,sOutput)
-        if mCheck:
-            sResult = mCheck.groups()
-        else:
-            sResult = None
-        return sResult
+#===========================================================
 
-    @catchex
-    @ntracef("CMD")
-    def makeCmd(self,mysCmd,mydArgs):
-        ''' Substitute arguments into command template string.  
-        '''
-        sCmd = mysCmd.format(**mydArgs)
-        return sCmd
-
-
-#=================================================
-# c l a s s   C D a t a b a s e 
-class CDatabase(object):
-    '''
-    Isolate all the Mongo-specific stuff here.  
-    '''
-    @ntracef("DB")
-    def __init__(self,mysDatabaseName, mysPendingCollectionName, mysDoneCollectionName):
-        self.ID = mysDatabaseName
-        self.oDb = mongolib.fnoOpenDb(mysDatabaseName)
-        self.oPendingCollection = self.oDb[mysPendingCollectionName]
-        self.oDoneCollection = self.oDb[mysDoneCollectionName]
-        nPendingCount = self.oPendingCollection.count()
-        NTRC.ntracef(0,"DB","proc main pending nRecs|{}|".format(nPendingCount))
-
-    @catchex
-    @ntracef("DB")
-    def fnitGetInstructionIterator(self,mydQuery):
-        '''
-        Query pending instructions to get subset of work for today.
-        '''
-        itCurrentSet = self.oPendingCollection.find(mydQuery)
-        '''
-        MongoDB tends to time out cursors if they are kept too long.  
-         Max number of runs we get is just over 100 before the timeout.  
-        Don't want to disable the timeout completely, so collect the entire
-         instruction stream into a list up front.  Icky.  Try to be a good
-         citizen and what does it get you.  Try to keep the instruction set
-         reasonable size, like under a million.  
-        '''
-        ldAllInstructions = list(itCurrentSet)
-        NTRC.ntracef(0,"DB","proc main nInstructionsqueried|{}|".format(len(ldAllInstructions)))
-        return ldAllInstructions
-
-    @catchex
-    @ntracef("DB")
-    def fnbIsItDone(self,mysInstructionId):
-        '''
-        Does this sDoneId(=mongoid) value already appear in the done collection?
-        '''
-        dIsItDone = { "sDoneId" : mysInstructionId }
-        lMaybeDone = list(self.oDoneCollection.find(dIsItDone))
-        NTRC.ntracef(3,"DB","proc check donelist id|%s| list|%s|" % (mysInstructionId, lMaybeDone))
-        return len(lMaybeDone) > 0
-
-    @catchex
-    @ntracef("DB")
-    def fnbDeleteDoneRecord(self,mysInstructionId):
-        dIsItDone = { "sDoneId" : mysInstructionId }
-        result = self.oDoneCollection.remove(dIsItDone)
-        NTRC.ntracef(3,"DB","proc DeleteDone result|%s|" % (result))
-        return result["ok"] != 0
-
-#=================================================
 # M A I N 
 @catchex
 @ntracef("MAIN")
 def main():
     '''
     Process:
-    - Query the db for pending instructions
+    - Query the searchspace for the stream of instructions
     - For each instruction from database selection, get dict for line
     - Using dict args, construct plausible command lines, into file
     - Check to see that there aren't too many similar processes 
@@ -587,7 +409,7 @@ def main():
     NTRC.ntracef(0,"MAIN","Begin.")
 
     # Get args from CLI and put them into the global data
-    dCliDict = fndCliParse("")
+    dCliDict = brokercli.fndCliParse("")
     # Carefully insert any new CLI values into the Global object.
     dCliDictClean = {k:v for k,v in dCliDict.items() if v is not None}
     g.__dict__.update(dCliDictClean)
@@ -596,107 +418,217 @@ def main():
     fnGetCommandTemplates(g.sCommandListFilename)
 
     # Construct database query for this invocation.
-    cFmt = CFormat()
-    dQuery = cFmt.fndFormatQuery(dCliDict)
-    NTRC.tracef(0,"MAIN","proc querydict|%s|" % ((dQuery)))
+    g.cFmt = CFormat()
+    dQuery = g.cFmt.fndFormatQuery(dCliDict)
 
+    # Look for overriding environment variables
+    fnvGetEnvironmentOverrides()
+
+    # Open the database to keep "done" records,
+    #  and delete moldy, old in-progress records.
+    g.mdb = searchdatabasemongo.CSearchDatabase(g.sSearchDbMongoName, 
+                g.sSearchDbProgressCollectionName, 
+                g.sSearchDbDoneCollectionName)
+    g.mdb.fnvDeleteProgressCollection()
+    
     # Get the set of instructions for today from database.
-    cdb = CDatabase(g.sDatabaseName, g.sPendingCollectionName, g.sDoneCollectionName)
-    itAllInstructions = cdb.fnitGetInstructionIterator(dQuery)
+    NTRC.tracef(0,"MAIN","proc querydict2|%s|" % ((dQuery)))
+    itAllInstructions = searchspace.fndgGetSearchSpace(g.sInsDir, g.sInsTyp, 
+                        dQuery)
+    fnnProcessAllInstructions(itAllInstructions)
+    
+    NTRC.ntracef(0,"MAIN","End.")
 
-    # Allow user to override number of cores to use today.
-    try:
-        g.nCores = int(os.getenv("NCORES", CG.nCores))
-    except (ValueError, TypeError):
-        raise TypeError('Environment variable NCORES must be an integer.')
-
-    # Allow user to override the polite interval to use today.
-    try:
-        g.nPoliteTimer = int(os.getenv("NPOLITE", CG.nPoliteTimer))
-    except (ValueError, TypeError):
-        raise TypeError('Environment variable NPOLITE must be an integer.')
-
+# f n n P r o c e s s A l l I n s t r u c t i o n s 
+@catchex
+@ntracef("MAIN")
+def fnnProcessAllInstructions(myitInstructionIterator):
+    ''' 
+    Get the set of instructions that match the user's criteria for this batch,
+     and run them one by one.
+    Count the number of runs, and don't exceed the user's limit, if any.
+    If the execution reports a serious error, stop the loop.
+    '''
     nRunNumber = 0
-    # And check for short test run.
     maxcount = int(g.nTestLimit)
-    # Or a completely fake test run.
+    # Is this a completely fake test run?  Replace templates.
     if g.sTestFib.startswith("Y"):
         g.lTemplates = g.lFibTemplates
-
-    # Process each instruction.
-    for dInstruction in itAllInstructions: 
-        NTRC.ntracef(3,"MAIN","proc main instruction\n|%s|" % (dInstruction))
-
-        sInstructionId = str(dInstruction["_id"])
-        # If the user insists, redo this case.
-        if g.sRedo.startswith("Y"):
-            NTRC.ntracef(0,"MAIN","proc force redo for item id|%s|" % (sInstructionId))
-            cdb.fnbDeleteDoneRecord(sInstructionId)
+    # Process each instruction in turn.
+    for dRawInstruction in myitInstructionIterator: 
+        NTRC.ntracef(3,"MAIN","proc main raw instruction\n|%s|" 
+            % (dRawInstruction))
+        dInstruction = fndMaybeEnhanceInstruction(dRawInstruction)
+        NTRC.ntracef(3,"MAIN","proc main enhanced instruction\n|%s|" 
+            % (dInstruction))
 
         nRunNumber += 1
-        # If this instruction has already been processed skip it.
-        bIsItDone = cdb.fnbIsItDone(sInstructionId)
-        if bIsItDone: 
-            NTRC.ntracef(0,"MAIN","proc skip item already done run|%s| id|%s| copies|%s| lifem|%s|" %
-                (nRunNumber, sInstructionId, dInstruction["nCopies"],
-                dInstruction["nLifem"]))
-<<<<<<< HEAD
-=======
+        nStatus = fnstProcessOneInstructionManyTimes(nRunNumber, dInstruction)
+        if nStatus > 0:     # Some major error, stop loop right now.  
+            break
 
->>>>>>> shock
-            continue
-
-        if g.sListOnly.startswith("Y"):
-            # Testing: Just dump out the instruction dictionary for this item.
-            NTRC.ntracef(0,"MAIN","proc ListOnly, item run|%s| ncopies|%s| lifem|%s| id|%s| dict|%s|" % 
-                (nRunNumber, dInstruction["nCopies"], dInstruction["nLifem"],
-                sInstructionId, dInstruction))
-        else:   # Real life: execute the instruction.
-            bContinue = fnbWaitForOpening(g.nCores,"python",g.nCoreTimer,g.nStuckLimit)
-            if bContinue:
-                # Format commands to be executed by actor.
-                g.sShelfLogFileName = cFmt.msGentlyFormat(g.sShelfLogFileTemplate, dInstruction)
-                g.lCommands = []
-                for sTemplate in g.lTemplates:
-                    sCmd = cFmt.msGentlyFormat(sTemplate, dInstruction)
-                    g.lCommands.append(sCmd)
-    
-                # Make instruction file for the actor.
-                g.sActorCmdFileName = cFmt.msGentlyFormat(g.sActorCmdFileTemplate, dInstruction)
-                g.sActorCommand = cFmt.msGentlyFormat(g.sActorCmdTemplate, dInstruction)
-                NTRC.ntracef(0, "MAIN", "proc main commands run|%s| ncopies|%s| lifem|%s| audit|%s| segs|%s|\n1-|%s|\n2-|%s|\n" % 
-                    (nRunNumber, dInstruction["nCopies"], dInstruction["nLifem"],
-                    dInstruction["nAuditFreq"], dInstruction["nAuditSegments"], 
-                    g.lCommands, g.sActorCommand))
-                with open(g.sActorCmdFileName, 'w') as fhActorCmdFile:
-                    fhActorCmdFile.write("# ListActor command file, automatically generated by broker.  Do not edit.\n")
-                    for sCommand in g.lCommands:
-                        print >> fhActorCmdFile, cFmt.fnsMaybeTest(sCommand)
-    
-                # Launch the actor to perform main runs.  
-                cCmd = CCommand()
-                sResult = cCmd.doCmdStr(g.sActorCommand)
-                time.sleep(g.nPoliteTimer)    
-    
-            else:
-                NTRC.tracef(0,"MAIN","OOPS, Stuck!  Too many python processes running forever.")
-                break
-    
-        # If just doing a short test run today, maybe stop now.
+        # If user asked for a short test run today, maybe stop now.
         maxcount -= 1
         if int(g.nTestLimit) > 0 and maxcount <= 0: break
 
-    NTRC.ntracef(0,"MAIN","End.")
+    return nRunNumber
+
+# f n s t P r o c e s s O n e I n s t r u c t i o n M a n y T i m e s 
+@catchex
+@ntracef("MAIN")
+def fnstProcessOneInstructionManyTimes(mynRunNumber, mydInstruction):
+    ''' 
+    Process a single instruction (set of params) once for each of a
+     predetermined number and sequence of random seeds.
+    '''
+    lSeedsToUse = fnlGetRandomSeeds(fnIntPlease(g.nRandomSeeds), 
+                    g.sRandomSeedFile)
+    mydInstruction["sBaseId"] = str(mydInstruction["_id"])
+    for (nIdx, nMaybeSeed) in enumerate(lSeedsToUse):
+        # Adjust run number and mongo id because there are now
+        #  multiple seeds and runs per instruction.  
+        sRunId = str(mynRunNumber) + "." + str(nIdx+1)
+        sId = str(mydInstruction["sBaseId"])
+        mydInstruction["_id"] = sId + "_" + str(nIdx+1)
+        
+        nStatus = 0
+        try:
+            nSeed = int(nMaybeSeed)
+        except ValueError:
+            raise ValueError, "Random seed not integer |%s|" % (nMaybeSeed)
+        mydInstruction["nRandomseed"] = nSeed
+        nStatus = fnstProcessOneInstruction(sRunId, mydInstruction, nSeed)
+        if nStatus > 0:
+            break
+    return nStatus
+
+# f n v P r o c e s s O n e I n s t r u c t i o n 
+@catchex
+@ntracef("MAIN")
+def fnstProcessOneInstruction(mysRunNumber, mydInstruction, mynSeed):
+    ''' 
+    Process one single instruction for one run.  
+    If just testing today, print instruction contents but do not run it.
+    If the instruction has already been processed, skip over it unless
+     the user requires it to be redone.  
+    '''
+    sInstructionId = str(mydInstruction["_id"])
+    # If the user specifies, redo this case even if done before.
+    if g.sRedo.startswith("Y"):
+        NTRC.ntracef(0,"MAIN","proc force redo for item id|%s|" 
+            % (sInstructionId))
+        g.mdb.fndDeleteDoneRecord(sInstructionId)
+
+    # If this instruction has already been processed skip it.
+    bIsItDone = g.mdb.fnbIsItDone(sInstructionId)
+    if bIsItDone: 
+        NTRC.ntracef(0,"MAIN","proc skip item already done run|%s| "
+            "id|%s| copies|%s| lifem|%s|" 
+            % (mysRunNumber, sInstructionId, mydInstruction["nCopies"],
+            mydInstruction["nLifem"]))
+        #continue    # Skip this iteration of the loop.
+
+    elif g.sListOnly.startswith("Y"):
+        # Testing: Just dump out the instruction dictionary for this item.
+        NTRC.ntracef(0,"MAIN","proc ListOnly, item run|%s| "
+            "ncopies|%s| lifem|%s| id|%s| dict|%s|" 
+            % (mysRunNumber, mydInstruction["nCopies"], mydInstruction["nLifem"],
+            sInstructionId, mydInstruction))
+    
+    else:   # Real life: execute the instruction.
+        bContinue = fnbWaitForOpening(g.nCores, "python", 
+                    g.nCoreTimer, g.nStuckLimit)
+        if bContinue:
+            mydInstruction["nRandomSeed"] = mynSeed
+            # Format commands to be executed by actor.
+            g.sShelfLogFileName = g.cFmt.msGentlyFormat(
+                                g.sShelfLogFileTemplate, mydInstruction)
+            g.lCommands = []
+            for sTemplate in g.lTemplates:
+                sCmd = g.cFmt.msGentlyFormat(sTemplate, mydInstruction)
+                g.lCommands.append(sCmd)
+
+            # Make instruction file for the actor.
+            g.sActorCmdFileName = g.cFmt.msGentlyFormat(
+                                g.sActorCmdFileTemplate, mydInstruction)
+            g.sActorCommand = g.cFmt.msGentlyFormat(
+                                g.sActorCmdTemplate, mydInstruction)
+            NTRC.ntracef(0, "MAIN", "proc main commands run|%s| "
+                "ncopies|%s| lifem|%s| audit|%s| "
+                "segs|%s|\n1-|%s|\n2-|%s|\n" 
+                % (mysRunNumber, mydInstruction["nCopies"], 
+                mydInstruction["nLifem"], mydInstruction["nAuditFreq"], 
+                mydInstruction["nAuditSegments"], 
+                g.lCommands, g.sActorCommand))
+            with open(g.sActorCmdFileName, 'w') as fhActorCmdFile:
+                fhActorCmdFile.write(
+                                "# ListActor command file, "
+                                "automatically generated by broker.  "
+                                "Do not edit.\n")
+                for sCommand in g.lCommands:
+                    print >> fhActorCmdFile, g.cFmt.fnsMaybeTest(sCommand)
+
+            # Record that this job is running.
+            mydInstruction["starttime"] = util.fnsGetTimeStamp()
+            g.mdb.fndInsertProgressRecord(mydInstruction["_id"], mydInstruction)
+            # Launch the actor to perform main runs.  
+            cCmd = command.CCommand()
+            sResult = cCmd.doCmdStr(g.sActorCommand)
+            time.sleep(g.nPoliteTimer)    
+
+        else:
+            NTRC.tracef(0, "MAIN", "OOPS, Stuck!  Too many python "
+                "processes running forever.")
+            #break
+            return 1
+    return 0
+
+# f n v G e t E n v i r o n m e n t O v e r r i d e s 
+@catchex
+@ntracef("MAIN")
+def fnvGetEnvironmentOverrides():
+    # Allow user to override number of cores to use today.
+    # First, find out how many cores there are that we could possibly use.
+    nMaxCores = int(os.getenv("NUMBER_OF_PROCESSORS", None)) + 1
+    # By default, use one fewer than max available, according to the o/s.  
+    g.nCores = nMaxCores if nMaxCores else g.nCores
+    # If the user specifies a number, larger or smaller, take it.
+    try:
+        g.nCores = int(os.getenv("NCORES", CG.nCores))
+        g.nCores = min(g.nCores, nMaxCores)
+        NTRC.ntracef(0, "MAIN", "proc ncores|%s|" % (g.nCores))
+    except (ValueError, TypeError):
+        raise TypeError('Environment variable NCORES must be an integer.')
+    # Allow user to override the polite interval to use today.
+    try:
+        g.nPoliteTimer = int(os.getenv("NPOLITE", CG.nPoliteTimer))
+        NTRC.ntracef(0, "MAIN", "proc politetimer|%s|" % (g.nPoliteTimer))
+    except (ValueError, TypeError):
+        raise TypeError('Environment variable NPOLITE must be an integer.')
+
+# f n l G e t R a n d o m S e e d s 
+@catchex
+@ntracef("MAIN")
+def fnlGetRandomSeeds(mynHowMany, mysFilename):
+    '''
+    Return a list of the first mynHowMany random seeds from the 
+     file specified.  
+    This is the primitive version that does not permit blank lines, 
+     comments, or other detritus in the list of seed numbers.  
+    '''
+    with open(mysFilename, "r") as fhSeeds:
+        lsSeeds = [(fhSeeds.next()) for _ in range(mynHowMany)]
+        lnSeeds = [fnIntPlease(_) for _ in lsSeeds]
+    return lnSeeds
 
 
-#=================================================
+#===========================================================
 #
 # E n t r y   p o i n t . 
 if __name__ == "__main__":
     g = CG()
-    main()
+    sys.exit(main())
 
-#END
 
 '''
 main events in the broker:
@@ -737,10 +669,7 @@ foreach single-line file in holding dir
 #                not True-False values.  Put back 90% of the code I changed.
 # 20160216  RBL Add --glitchspan option.
 #               Incr run counter before checking for already done.
-<<<<<<< HEAD
-=======
 
->>>>>>> shock
 # 20161006  RBL Make familydir and specificdir mandatory options.
 #                BEWARE: if you say nargs=1 instead of nargs='?', 
 #                the value returned is a list containing the string, 
@@ -750,16 +679,32 @@ foreach single-line file in holding dir
 #               Reduce default number of cores so it doesn't kill laptop.
 #               Reduce polite interval timer slightly to 3 sec.
 # 20161009  RBL Reduce polite interval timer to 2 sec.
-<<<<<<< HEAD
+# 20170104  RBL Add shock params and server default life param.
+#               Restore glitchspan, which had been removed.  
+#               Begin to break out the set of random seeds from the 
+#                stored instructions.  Loop here on seeds instead of 
+#                having a single item in the db for each param set and seed.
+# 20170117  RBL Begin to remove Mongo class so it can eventually be replaced
+#                by the equivalent for searchspace.  
+#               Put in special handling for dictionaries going into json.  
+# 20170121  RBL Complete conversion to searchspace and searchdatabase.
+# 20170122  RBL Fix calc of nCores, limit = cores on this ship.  
+# 20170124  RBL Remove restrictions on --audittype because the string "TOTAL"
+#                is not valid JSON.  Rather than put in an exception to 
+#                translate string values to proper JSON (which I might do
+#                later), let's permit --audittype='{"$eq":"TOTAL"}' to work.
+# 20170124  RBL Smarten FormatQuery to permit string value for --audittype
+#                and turn TOTAL into {"$eq":"TOTAL"} which is acceptable
+#                to json.
+# 20170126  RBL Move CLI to a separate file, brokercli.py.
+#               Move CCommand to a separate file, command.py.
+# 20170127  RBL Add hack to enhance the main.py instruction dictionary
+#                with some options that are not searchable and don't 
+#                appear in the instuctions but are still necessary, 
+#                e.g., --shortlog.  
+# 20170128  RBL Adapt to searchdatabasemongo instead of json version.  
 # 
 # 
-
-=======
-# 
-
-
 
 #END
->>>>>>> shock
 
-#END

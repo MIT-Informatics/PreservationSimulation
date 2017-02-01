@@ -1,6 +1,80 @@
 TODO list for PreservationSimulation SHELF project
 
 
+TODO: shock
+DONE - add server default lifespan to param files and CLI, zero = infinite.
+DONE - server default lifespan is random, not fixed.  currently expo.
+DONE - add server default lifespan to main CLI and broker.
+DONE - code shock methods for real not just pseudocode.  new style, at audit.
+DONE - test shock rescheduling server death.  
+WRONG - server death after shock is after now, not absolute, right?
+DONE - shock reduces server life by pct. shock duration finite.  after shock
+    expires, server life returns to normal if not already dead.  
+DONE - do not restore life to server that has expired during the shock.  
+DONE - select reasonable ranges of shock impacts.  
+DONE - server death evaluated before every audit cycle and at end of run.  
+DONE - watch out for server lifetime zero (=infinite) when assessing
+        server live/dead at audit and end of run.  
+DONE - when kill server, also kill shelf and all doc copies on it.  
+DONE - add nRandomSeeds to GUI.
+FIXME - do a thorough testing and maybe even filecomp on RICKS9, after
+    I accidentally deleted the entire repository and tried to re-clone it.  
+
+
+TODO: instruction generation
+DONE - new searchspace facility to generate cross-product instructions.
+DONE - unittests for searchspace.
+DONE - adapt broker to new instruction ifc.
+
+
+TODO: status bookkeeping database
+DONE - write searchdb status database based on json files.
+DONE - unittests for searchdb.
+DONE - adapt broker to new done and progress ifcs.
+DONE - adapt datacleanup to new done and progress ifcs.
+DON'T - redo and make new utilities for progress and done collections:
+    delete, count, list keys, list all.
+DONE - nope, rewrite the status database, have to go back to Mongo; 
+    file locking on Win10/Cygwin does not work well enough to prevent
+    some corruption of the database's json file.  oh, crap.  
+DONE - write searchdbmongo facility and unittest.
+DONE - adapt broker to new mongo done and progress ifcs.
+DONE - adapt datacleanup to new mongo done and progress ifcs.
+DONE - redo and make new utilities for progress and done collections:
+    delete, count, list keys, list all.
+DONE - need new utils: list databases, list collections in db.  
+    because the mongo console util is so, um, unwonderful.  
+
+
+TODO: web interface to select instructions for broker run
+WRONG - learn kivy and remi, decide which to use.
+DONE - build static web interface to permit choosing instructions for 
+    a single run using bottle.
+DONE - add server default halflife to web interface and CLI.
+DONE - build static web interface to permit choosing subset instructions 
+    for group run by broker.
+DONE - build backend for interface that generates broker.py command.
+FIXME - fix the interface for new instruction values and revised interface 
+    for broker CLI.
+FIXME - change shock (and maybe other) lists in GUI to match the instructions.  
+FIXME - generate the HTML from the instruction db.  not simple.  
+
+
+TODO: newtrace
+DONE - make new ntrace, ntracef the default inner routines for efficiency.  
+MAYBE - for trace level zero, do not check facility codes.
+DONE - do null version of trace decorators for production use
+    that do as little as possible.  trace consumes about 40% of CPU time
+    during typical run.  make sure that level 0 traces always come out.
+DONE - add routine to tell if production mode is on, so it can be logged.  
+
+
+TODO: general
+DONE - stop accepting or rescheduling sector errors on dead shelf.  
+DONE - at end, report servers that died and were in use at the time; 
+  currently reports all servers that died, even if not used by client.  
+
+
 TODO: extractvalues.py
 DONE - add optional arg for --separator=','
 DONE - default should still be space
@@ -27,6 +101,18 @@ DONE - add commentary about how this should have been done with
   awk in the first place; reproducing this trivial subset of awk
   in Python was not a good idea because it constantly needs
   functional extensions.
+DONE - add new fields for shock and serverlife.
+DONE - test with --shortlog.  may have to adjust logging and/or extract
+    rules.  
+
+
+TODO: R 
+FIXME - can the ugly nested loop be restructured to run from a list of vars
+    in the order we want them nested?
+FIXME - learn Pandas, which is supposed to be equivalent to the R data.frame
+    data structure.  this might make it easier to do the nested loop in 
+    a more easily maintainable way.  
+FIXME - need new versions of table summary with glitch y/n and shock y/n.
 
 
 TODO: 100% glitch impact
@@ -60,10 +146,11 @@ DONE - slow down after extractvalues, too.
 TODO: broker.py
 DONE - increase the stuck timer a lot.
 DUNNO - protect against grep failure, linux vs windows.
-FIXME - add a cleanstart shell script to empty the dirs that need to 
-  be empty, set a clean GiantOutput file, and rescue any data
+DONE - add a cleanstart shell script to empty the dirs that need to 
+  be empty, set a clean GiantOutput file.
+FIXME - cleanstart shell script should rescue any data
   that was left over in a previous GiantOutput file into
-  the done dir.  
+  the done dir.  and it should delete everything else.
 DONE - fix y/n switch options to get rid of the need for a value.
 DONE - fix the broker invocation in the AWSinstallscript to match the
   revised y/n options.
@@ -73,6 +160,23 @@ DONE - start the run count from 1 even for cases that have already been done,
 FIXME - log all broker commands into some file.
 DONE - add auditfreq and segs to the intro run-n lines.  
 DONE - make familydir and specificdir required options (fun oxymoron).
+DONE - add param for number of seeds and take the seeds from a separate 
+  file of some specific name.  
+DONE - break into several pieces to make editing easier.
+DONE - adapt to new instruction generator.
+DONE - adapt to new status bookkeeping database.  
+DONE - fix option processing to permit presence-only options to pass thru, 
+    e.g., --shortlog.
+FIXME - put out notice about TRACE_PRODUCTION mode, both in broker
+    and in main.py.  must be in the log file.  
+DONE - adapt the pretestchecklist and other scripts to the new instruction
+    files, location, etc.  
+FIXME - write a utility to reconstitute the main.py command line 
+    from a result line in GiantOutput.  
+FIXME - put out the command line, or at least the arg list, as trace-0
+    so that it gets recorded into a tee file.  
+FIXME - dump the instruction dictionary as trace-0 before or just after
+    getting iterator from searchspace.  
 
 
 TODO: broker docs
@@ -90,10 +194,16 @@ FIXME - log stats at end of each audit cycle: lost, minority repairs,
   add per-server figures, too.  Goal is to see if the user could 
   possibly detect server glitch less than fatal.  
 DONE - log per-server total losses and hits at end of run.  
+FIXME - log stats at end of each audit cycle: lost, minority repairs, majority 
+  repairs.  These are all cross-server figures; don't know if we need 
+  per-server figures.
+DONE - fix long-standing bug: when reprovision new server to replace dead one, 
+  provision only with docs that have extant copies, not necessarily 
+  the full set; some may already have been lost.  
 
 
 TODO: newinstructions
-FIXME - Add a squash function to reduce blank sequences to single blanks
+DON'T - Add a squash function to reduce blank sequences to single blanks
   in flat files, in case someone created instructions in fixed columns.
 DONE - write filter for instructions as they are being generated flat
   hierarchical: a field named action for permit/deny
@@ -104,11 +214,20 @@ DONE - rewrite rules to filter lots more, particularly nonsense cases
   with glitch freq, impact, decay, and life.  
 DONE - integrate filter into last stage of flat instruction 
   generation
-FIXME - write documentation on how to generate instructions flat file 
+DON'T - write documentation on how to generate instructions flat file 
   and database.  
 DONE - fix order of args to filter program, data file last.
 DONE - fix shell script that makes complete instruction list to
   reflect change in argument order.
+DONE - Remove random seeds from the instruction db; add them in broker 
+  based on a param that states how many seeds today; maybe an environment
+  variable, even, or overridden by one.  Easy enough to add that single param
+  and shorten the instruction Cartesian product by a factor of ten or twenty.  
+  Important when we want to do samples of 100 or 1000.  
+FIXME - move some of the utilities up to shelf or maybe to a util dir.  
+FIXME - remove the shelf/newinstructions directory.  
+FIXME - document new procedure for generating instructions: simpler, just edit
+    the shelf/instructions/*.ins files.  
 
 
 TODO: packaging into Docker
@@ -143,6 +262,10 @@ DONE - test docker deployment on 32 core system.
 DONE - change newinstructions db to something smaller and more useful.
 FIXME - change newinstructions section of script to create flat instructions 
   and database from the ins files pulled.  
+FIXME - change newinstructions section of script to be way simpler with
+    newnewnewinstructions method of on-demand cross-product with no
+    pre-stored instructions.
+FIXME - change broker cli for tests and examples.
 
 
 TODO: rationalize time constants so that people can understand them
@@ -165,6 +288,8 @@ FIXME - BUG: fix main.py default values in G so that is doesn't fail if there ar
   no param files in the familydir or specificdir; always fails for the list
   items, such as ncopies, I think because the list items in the dictionaries
   should be one level deeper.  
+DONE - Update SERVERUSE log lines and some other lines, too, at end to state 
+    half-life and exponential lifetime with few or no decimal places.
 
 DONE - Update SERVERUSE log lines and some other lines, too, at end to state half-life and exponential lifetime with few or no decimal places.
 
@@ -172,6 +297,9 @@ DONE - Update SERVERUSE log lines and some other lines, too, at end to state hal
 TODO: calibration
 DONE - do spreadsheet of a0 numbers compared with simple Poisson theoretical results.  
   Completed for samples of 21 and 101.  
+DONE: do spreadsheet of a0 numbers compared with simple Poisson 
+    theoretical results.  
+DONE - test that shortlog and traceproduction do not affect the numbers.
 
 
 TODO: log file reporting
@@ -199,40 +327,33 @@ FIXME - state tables both as loss numbers and as percentage losses of collection
 
 
 TODO: lifetimes: correlated institutional failures
-FIXME - at some interval, economic glitch dramatically increases the 
+DONE - at some interval, economic glitch dramatically increases the 
   institutional up to 100% failure rate for >= 1 server.
   Note trickiness: this is cross-server, needs access to several
-  server instances at once.
+  server instances at once.  see shock.
 DONE - add external parameters to set number of servers affected,
   the decrease in institution lifetime, and the rate of economic
-  recession/depression.  Named shockfreq, shockimpact, shockspan.  
+  recession/depression.  see shock.
 
 
-DEFER: web interface to select instructions for broker run
-FIXME - learn kivy and remi, decide which to use.
-FIXME - build static web interface to permit choosing instructions for 
-  a single run, or subset instructions for group run.
-FIXME - build backend for interface that generates broker.py command.
-
-
-DEFER: newnewinstructions
-FIXME - custom flat db or maybe tiny or buzhug
-FIXME - facade or adapter: same interface as current mongolib
-FIXME - new load, list, and clear utilities that use flatlib
-FIXME - eventually, web app to generate smallish sets of instructions
+ABANDON: newnewinstructions
+ABANDON - custom flat db or maybe tiny or buzhug
+ABANDON - facade or adapter: same interface as current mongolib
+ABANDON - new load, list, and clear utilities that use flatlib
+ABANDON - eventually, web app to generate smallish sets of instructions
 
 
 DEFER: packaging
 DONE - do Docker basic tutorials
 DONE - construct vm platforms for docker learning on both systems
-FIXME - transcribe crummy bash script to dockerfile
+DEFER - transcribe crummy bash script to dockerfile
 
 
-DEFER: nonmonotonicity testing
-FIXME - do runs in the sensitive areas, limited to 3-4 lifetimes and few copies
-FIXME - runs with 100 or more seeds?
-FIXME - many runs with 20ish seeds to assess variability?
-FIXME - jacknife the existing numbers?
+ABANDON: nonmonotonicity testing
+ABANDON - do runs in the sensitive areas, limited to 3-4 lifetimes and few copies
+ABANDON - runs with 100 or more seeds?
+ABANDON - many runs with 20ish seeds to assess variability?
+ABANDON - jacknife the existing numbers?
 
 
 TODO: outline for September presentation
@@ -253,4 +374,4 @@ TODO: same for November presentation to iPRES at UNC
 DONE - write slides for Micah to use, update from September's.
 
 
-
+#END

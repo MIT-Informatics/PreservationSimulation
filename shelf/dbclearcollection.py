@@ -8,20 +8,23 @@ Clear out a collection of a database.
 '''
 from NewTraceFac    import NTRC,ntrace,ntracef
 import argparse
-import mongolib
+import searchdatabasemongo
 
 # C l i P a r s e 
 @ntracef("CLI")
 def fndCliParse(mysArglist):
     ''' Parse the mandatory and optional positional arguments, and the 
         many options for this run from the command line.  
-        Return a dictionary of all of them.  Strictly speaking that is 
-        not necessary, since most of them have already been decanted
-        into the P params object.  
+        Return a dictionary of all of them.  
     '''
-    sVersion = "0.0.1"
-    cParse = argparse.ArgumentParser(description="Digital Library Preservation Simulation LoadIntoDb MongoDB collection eraser",epilog="Defaults for args as follows:\n\
-        (none), version=%s" % sVersion
+    sVersion = "0.0.2"
+    cParse = argparse.ArgumentParser(description="Digital Library Preservation "
+            "Simulation ClearCollection, MongoDB collection eraser\n"
+            "Misspelled database and collection names will not be detected, "
+            "due to MongoDB's extraordinary generosity.",
+            epilog="Defaults for args as follows:\n"
+            "(none), version=%s" 
+            % sVersion
         )
 
     # P O S I T I O N A L  arguments
@@ -53,7 +56,7 @@ class CG(object):
     '''
     sDatabaseName = None
     sCollectionName = None
-
+    mdb = None
 
 # M A I N 
 @ntrace
@@ -65,9 +68,13 @@ def main():
     dCliDictClean = {k:v for k,v in dCliDict.items() if v is not None}
     g.__dict__.update(dCliDictClean)
 
-    # Inject the instructions file into the db where specified.
-    oDb = mongolib.fnoOpenDb(g.sDatabaseName)
-    betterbezero = mongolib.fniClearCollection(oDb, g.sCollectionName)
+    # Since we're deleting an arbitrary collection from the db, 
+    #  it doesn't matter if we pretend that it is a specific one
+    #  with a different name today.  
+    g.mdb = searchdatabasemongo.CSearchDatabase(g.sDatabaseName, 
+                    g.sCollectionName, g.sCollectionName)
+    g.mdb.fnvDeleteProgressCollection()
+
     NTRC.ntrace(0,"Cleared collection|{1}| in database|{0}|".format(g.sDatabaseName,g.sCollectionName))
 
 

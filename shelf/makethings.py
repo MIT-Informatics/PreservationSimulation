@@ -9,6 +9,7 @@ import logoutput as lg
 import client2 as client
 import server
 import dumpuse
+import shock
 
 
 #-----------------------------------------------------------
@@ -21,7 +22,10 @@ def makeServers(mydServers):
         cServer = server.CServer(sServerName,nServerQual,nShelfSize)
         sServerID = cServer.ID
         G.lAllServers.append(cServer)
-        lg.logInfo("MAIN","created server|%s| quality|%s| shelfsize|%s|TB name|%s|" % (sServerID,nServerQual,nShelfSize,sServerName))
+        fCurrentLife = cServer.mfGetMyCurrentLife()
+        lg.logInfo("MAIN","created server|%s| quality|%s| shelfsize|%s|TB "
+            "name|%s| life|%.0f|" 
+            % (sServerID, nServerQual, nShelfSize, sServerName, fCurrentLife))
         # Invert the server list so that clients can look up 
         # all the servers that satisfy a quality criterion.  
         if nServerQual in G.dQual2Servers:
@@ -71,13 +75,14 @@ def testAllClients(mylClients):
 @ntracef("MAKE")
 @ntracef("SHOK")
 def makeShock(dunnoyet):
-    pass
+    G.oShock = shock.CShock(G.nShockFreq, G.nShockSpan, G.nShockImpact, G.nShockMaxlife)
 
 
 # Edit History:
 # 20160920  RBL Move these routines out of main.py.
-# 
-# 
+# 20161121  RBL Import shock so we can someday call it.
+# 20161205  RBL Call CShock with real args.  
+# 20161205  RBL Add maxlife arg to shock.  
 # 
 
 #END

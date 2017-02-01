@@ -48,6 +48,9 @@
 #               In startup.sh, remind user about changing NCORES and NPOLITE.
 # 20160228  RBL Harden a couple shell-if tests against empty strings.
 #               Remove now-redundant emptygiantoutput call after setup.
+# 20170130  RBL Change for new instruction location, and no need to build.
+#               Change test familydir from ../Q3 to ../hl.
+#               Change broker tests and examples.  
 # 
 # 
 
@@ -82,7 +85,10 @@ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
 echo "deb http://repo.mongodb.org/apt/ubuntu "$(lsb_release -sc)"/mongodb-org/3.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.0.list
 sudo apt-get update
 sudo apt-get install -y mongodb-org
-# The MongoDB instance stores its data files in /var/lib/mongodb and its log files in /var/log/mongodb by default, and runs using the mongodb user account. 
+# The MongoDB instance stores its data files in /var/lib/mongodb 
+#  and its log files in /var/log/mongodb by default, 
+#  and runs using the mongodb user account. 
+# Ubuntu starts MongoDB as a daemon (mongod).
 
 echo "**************************************** Installing zip and perf tools"
 sudo apt-get --yes install unzip 
@@ -92,28 +98,18 @@ sudo apt-get --yes install sysstat
 
 echo "**************************************** END INSTALLS"
 echo ""
-echo "**************************************** Make new instructions db"
-olddir=$(pwd)
-cd shelf/newinstructions
-cp newdblists.RENAMETOzip newdblists.zip
-unzip -o newdblists.zip 
-# This next step might take several minutes.  No kidding.  
-#  Go get coffee.
-cp newdb20160124.big newdb20160124.txt
-python loadintodb.py newdb20160124 pending newdb20160124.txt
-cd "$olddir"
 
 echo "**************************************** Quick setup and simple test"
 # Quick setup and test of directories.
 cd shelf
 # Remove any leftovers from possible previous deployment.
-sudo rm --force --recursive ../Q3
-bash setupfamilydir.sh ../Q3 . 
-bash pretestchecklist.sh ../Q3 . 
+sudo rm --force --recursive ../hl
+bash setupfamilydir.sh ../hl . 
+bash pretestchecklist.sh ../hl . 
 # Run one simple test of the simulation, and check the answer.
 sudo rm --force --recursive tmp
 mkdir tmp
-python main.py ../Q3 . 0 1 --ncopies=1 --lifek=693147 --audit=0 >tmp/initialtest.log 2>&1
+python main.py ../hl . 0 1 --ncopies=1 --lifek=693147 --audit=0 >tmp/initialtest.log 2>&1
 # The correct answer should be   "BAD NEWS: Total documents lost by 
 #  client |T1| in all servers |49|".
 # (The crazy half-life number in the command is 1,000,000 * ln(2), 
@@ -130,32 +126,48 @@ else
     exit 1
 fi
 
-echo "**************************************** Test instructions db"
+echo "**************************************** Test broker CLI and instruction db"
 # Broker should find test cases to run.
-python broker.py newdb20160124 pending done --glitchfreq=30000 --auditfreq=10000   --listonly >tmp/brokertest.log 2>&1
-nTestCases=$(grep "run|" tmp/brokertest.log | tail -1 | sed 's/.*run|//' | sed 's/|.*//')
-if [ -n "$nTestCases" -a "$nTestCases" -eq 1512 ]
+python broker.py inprogress done --familydir=../hl --specificdir=a0 --serverdefaultlife=0 --glitchfreq=0 --ncopies=1 --lifem=1000 --auditfreq=0 --nseeds=1 --redo --listonly  >tmp/brokertest.log 2>&1
+sTestCases=$(grep "run|" tmp/brokertest.log | tail -1 | sed 's/.*run|//' | sed 's/|.*//')
+if [ -n "$sTestCases" -a "$sTestCases" = "1.1" ]
 then
-    echo "SUCCESS: broker and instruction db look okay!"
+    echo "SUCCESS: broker/instructions test case 1 looks okay!"
     echo "Proceeding..."
 else
-    echo "ERROR: broker and instruction db test failed!"
+    echo "ERROR: broker/instructions test case 1 failed!"
+    echo "STOPPING here."
+    exit 1
+fi
+python broker.py inprogress done --familydir=../hl --specificdir=a0 --serverdefaultlife=0 --glitchfreq=0 --ncopies='{"$gte":1,"$lte":5}' --lifem='[100,200,300]' --auditfreq=10000 --audittype=TOTAL --auditsegments='[1]' --nseeds=1 --redo --listonly  >tmp/brokertest.log 2>&1
+if [ -n "$sTestCases" -a "$sTestCases" = "15.1" ]
+then
+    echo "SUCCESS: broker/instructions test case 2 looks okay!"
+    echo "Proceeding..."
+else
+    echo "ERROR: broker/instructions test case 2 failed!"
     echo "STOPPING here."
     exit 1
 fi
 
 echo "**************************************** Test broker"
+# Clean out Mongo databases.
+python dbclearcollection.py brokeradmin done
+# And set up new working directories for these runs.  
+bash setupfamilydir.sh ../hl testing
 # Until we expand to larger quarters, don't run too many cores at once.  
 #  Xeon isn't *that* fast.  Adjust as needed.  
-#export NCORES=2        # Adjust this number, or remove for default.
-python broker.py newdb20160124 pending done --familydir=../Q3 --specificdir=. --auditfreq=2500 --glitchfreq=30000 --glitchimpact=100 --glitchdecay=0 --glitchmaxlife=0 --lifem='{"$gte":10,"$lte":1000}' --testlimit=4 
+export NCORES=4        # Adjust this number, or remove for default.
+python broker.py inprogress done --familydir=../hl --specificdir=testing --serverdefaultlife=0 --glitchfreq=0 --ncopies='{"$gte":1,"$lte":5}' --lifem='[100,200,300]' --auditfreq=10000 --audittype=TOTAL --auditsegments=1 --nseeds=2 --redo --testlimit=4 
 
 # If everything looks okay, remove or raise the --testlimit, 
 #  raise the NCORES limit, and probably lower the NPOLITE interval,
 #  and let 'er rip.  
 #export NCORES=32       # Max 32 cores on Amazon.
-#export NPOLITE=2       # Wait 2 seconds between process end and start another.  
-#python broker.py newdb20150724glitch100 pending done --familydir=../Q3 --specificdir=. --auditfreq=2500 --glitchfreq=50000 --glitchimpact=100 --glitchdecay=0 --glitchmaxlife=0 --lifem='{"$gte":10,"$lte":1000}' 
+#export NPOLITE=2       # Wait 2 seconds between process end and start another. 
+# This command will run thirty individual simulation tests, which will take
+#  more than a couple minutes. 
+#python broker.py inprogress done --familydir=../hl --specificdir=testing --serverdefaultlife=0 --glitchfreq=0 --ncopies='{"$gte":1,"$lte":5}' --lifem='[100,200,300]' --auditfreq=10000 --audittype=TOTAL --auditsegments=1 --nseeds=20 --redo 
 
 echo "**************************************** Done initial tests"
 echo "**************************************** Build latest instruction database"
@@ -177,13 +189,14 @@ echo "*** Ready to run 'shelf' simulations.                ***"
 echo "***  The shelfenv virtualenv should be activated,    ***"
 echo "***  and the correct directory should be set.        ***" 
 echo "***                                                  ***" 
-echo "*** REMEMBER to change NCORES and NPOLITE for        ***" 
+echo "*** You may wish to change NCORES and NPOLITE for    ***" 
 echo "***  the capabilities of this server.  E.g.,         ***" 
 echo "***      export NCORES=8              (or maybe 32)  ***" 
-echo "***      export NPOLITE=2                            ***" 
+echo "***      export NPOLITE=2             (the default)  ***" 
 echo "***  or similar, appropriate values.                 ***" 
-echo "***  (Currently, the number of cores is not sensed   ***" 
-echo "***   automatically.)                                ***" 
+echo "***  (Alternatively, the number of cores is sensed   ***" 
+echo "***   automatically, but you may wish to impose      ***" 
+echo "***   a lower limit on CPU use.)                     ***" 
 echo "***                                                  ***" 
 echo "*** Try   python main.py -h                          ***"
 echo "*** or    python broker.py -h                        ***" 
@@ -201,7 +214,7 @@ echo "***                                  *** "
 echo "***      . startup.sh                *** "
 echo "***                                  *** "
 echo "*** (Yes, that is                    *** "
-echo "***     dot space startup.sh )       *** "
+echo "***     dot space startup.sh)        *** "
 echo "***                                  *** "
 echo "*** Happy hunting!                   *** "
 echo "***                                  *** "

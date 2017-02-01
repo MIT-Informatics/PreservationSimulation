@@ -54,6 +54,7 @@ def getCliArgsForEverythingElse():
 
     G.nRandomSeed = P.nRandomSeed
     G.nSimLength = P.nSimLength
+    G.nSimLengthDefault = P.nSimLengthDefault
 
     # Now scan the command line again, this time overwriting anything
     # that came from the param files or environment.  
@@ -65,7 +66,6 @@ def getCliArgsForEverythingElse():
         have to check that this would not also have some 
         unhappy side effects with names.
     '''
-    fnMaybeOverride("nSimLength",dCliDict,G)
     fnMaybeOverride("nRandomSeed",dCliDict,G)
     fnMaybeOverride("sLogLevel",dCliDict,G)
     fnMaybeOverride("sLogFile",dCliDict,G)
@@ -74,7 +74,12 @@ def getCliArgsForEverythingElse():
     fnMaybeOverride("nDocLarge",dCliDict,G)
     fnMaybeOverride("nDocSmallPct",dCliDict,G)
     fnMaybeOverride("nDocPctSdev",dCliDict,G)
-    
+
+    # A CLI value of zero for sim length means don't override whatever
+    #  has already been determined by defaults, params, and environment vars.  
+    if dCliDict["nSimLength"] is not None and dCliDict["nSimLength"] > 0:
+        fnMaybeOverride("nSimLength",dCliDict,G)
+
 #    fnMaybeOverride("lBER",dCliDict,G)
 #    fnMaybeOverride("lBERm",dCliDict,G)
     fnMaybeOverride("nLifek",dCliDict,G)
@@ -89,6 +94,7 @@ def getCliArgsForEverythingElse():
     
     fnMaybeOverride("lCopies",dCliDict,G)
     
+    fnMaybeOverride("fServerDefaultHalflife",dCliDict,G)
     fnMaybeOverride("lShelfSize",dCliDict,G)
     
     fnMaybeOverride("sShortLogStr",dCliDict,G)
@@ -104,19 +110,26 @@ def getCliArgsForEverythingElse():
     fnMaybeOverride("nGlitchDecay",dCliDict,G)
     fnMaybeOverride("nGlitchMaxlife",dCliDict,G)
     fnMaybeOverride("nGlitchSpan", dCliDict, G)
+    
+    fnMaybeOverride("nShockFreq", dCliDict, G)
+    fnMaybeOverride("nShockImpact", dCliDict, G)
+    fnMaybeOverride("nShockSpan", dCliDict, G)
+    fnMaybeOverride("nShockMaxlife", dCliDict, G)
 
     fnMaybeOverride("sMongoId",dCliDict,G)
 
     # Override ncopies if present on the command line.  
     if getattr(G,"lCopies",None):
-        NTRC.ntracef(3,"MAIN","proc CliEverythingElse1bef before G.dDistnParams|%s| G.lCopies|%s|" % (G.dDistnParams,G.lCopies))
+        NTRC.ntracef(3,"MAIN","proc CliEverythingElse1bef before G.dDistnParams|%s| G.lCopies|%s|" 
+            % (G.dDistnParams,G.lCopies))
         for nKey in G.dDistnParams:
             lValue = G.dDistnParams[nKey][0]
             # Substitute the second item in the list, which is the 
             #  number of copies to make.
             if len(G.lCopies) >= nKey:
                 lValue[1] = G.lCopies[nKey - 1]
-        NTRC.ntracef(3,"MAIN"," proc CliEverythingElse1aft after  G.dDistnParams|%s|" % (G.dDistnParams))
+        NTRC.ntracef(3,"MAIN"," proc CliEverythingElse1aft after  G.dDistnParams|%s|" 
+            % (G.dDistnParams))
 
     ''' TODO:
         If the user supplies lifem instead of lifek on the command line, 
@@ -128,18 +141,21 @@ def getCliArgsForEverythingElse():
         instead of BERs now.
     '''
     if getattr(G,"lBER",None):
-        NTRC.ntracef(3,"MAIN","CliEverythingElse2bef before G.lBER|%s| G.dShelfParams|%s|" % (G.lBER,G.dShelfParams))
+        NTRC.ntracef(3,"MAIN","CliEverythingElse2bef before G.lBER|%s| G.dShelfParams|%s|" 
+            % (G.lBER,G.dShelfParams))
         for nKey in G.dShelfParams:
             lValue = G.dShelfParams[nKey][0]
             # Substitute the first item in the list, which is the 
             #  small block error rate.
             if len(G.lBER) >= nKey:
                 lValue[0] = G.lBER[nKey - 1]
-        NTRC.ntracef(3,"MAIN","CliEverythingElse2aft after  G.lBER|%s|" % (G.lBER))
+        NTRC.ntracef(3,"MAIN","CliEverythingElse2aft after  G.lBER|%s|" 
+            % (G.lBER))
 
     # Override shelf sizes if present on the command line.  
     if getattr(G,"lShelfSize",None):
-        NTRC.ntracef(3,"MAIN","CliEverythingElse3bef before G.lShelfSize|%s|" % (G.lShelfSize))
+        NTRC.ntracef(3,"MAIN","CliEverythingElse3bef before G.lShelfSize|%s|" 
+            % (G.lShelfSize))
         for nKey in G.dServerParams:
             lValue = G.dServerParams[nKey][0]
             # The first item in the list is the quality level; the 
@@ -147,11 +163,13 @@ def getCliArgsForEverythingElse():
             # quality level of the server.  
             if len(G.lShelfSize) >= lValue[0]:
                 lValue[1] = G.lShelfSize[lValue[0] - 1]
-        NTRC.ntracef(3,"MAIN","CliEverythingElse3aft after  G.lShelfSize|%s|" % (G.lShelfSize))
+        NTRC.ntracef(3,"MAIN","CliEverythingElse3aft after  G.lShelfSize|%s|" 
+            % (G.lShelfSize))
 
     # Override doc size params if present on the command line.  
     # This !@#$%^&*() data structure is waaay too complicated.  
-    NTRC.ntracef(3,"MAIN","CliEverythingElse4bef before G.dDocParams|%s|" % (G.dDocParams))
+    NTRC.ntracef(3,"MAIN","CliEverythingElse4bef before G.dDocParams|%s|" 
+        % (G.dDocParams))
     for nKey in G.dDocParams:
         (lSmallValues,lLargeValues) = G.dDocParams[nKey]
         if getattr(G,"nDocSmall",None):
@@ -164,10 +182,12 @@ def getCliArgsForEverythingElse():
         if getattr(G,"nDocPctSdev",None):
             lSmallValues[2] = int(lSmallValues[1] * G.nDocPctSdev / 100)
             lLargeValues[2] = int(lLargeValues[1] * G.nDocPctSdev / 100)
-    NTRC.ntracef(3,"MAIN","CliEverythingElse4aft after  G.dDocParams|%s|" % (G.dDocParams))
+    NTRC.ntracef(3,"MAIN","CliEverythingElse4aft after  G.dDocParams|%s|" 
+        % (G.dDocParams))
 
     # Override bShortLog if the user says to.
-    NTRC.ntracef(3,"MAIN","CliEverythingElse5bef before G.sShortLogStr|%s|" % (G.sShortLogStr))
+    NTRC.ntracef(3,"MAIN","CliEverythingElse5bef before G.sShortLogStr|%s|" 
+        % (G.sShortLogStr))
     if 'Y' in G.sShortLogStr:
         G.bShortLog = True
 
@@ -180,7 +200,7 @@ def fnMaybeOverride(mysArg,mydDict,mycClass):
         TODO: simplify this a lot
     '''
     try:
-        if mydDict[mysArg]:
+        if mydDict[mysArg] is not None:
             setattr( mycClass, mysArg, mydDict[mysArg] )
     except KeyError:
             if not getattr(mycClass,mysArg,None):
@@ -190,7 +210,9 @@ def fnMaybeOverride(mysArg,mydDict,mycClass):
 
 # Edit History:
 # 20160920  RBL Move these routines out of main.py.
-# 
+# 20161221  RBL Remember to include serverdefaultlife value in G, duh.
+#               Fix some of the overlong lines.  
+#               Allow MaybeOverride to place zero values.
 # 
 # 
 
