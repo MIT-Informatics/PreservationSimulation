@@ -406,7 +406,8 @@ def main():
     - Launch ListActor process to execute commands.
     - Wait a polite interval before launching another.
     '''
-    NTRC.ntracef(0,"MAIN","Begin.")
+    NTRC.ntracef(0, "MAIN", "Begin.")
+    NTRC.ntracef(0, "MAIN", "TRACE  traceproduction|%s|" % NTRC.isProduction())
 
     # Get args from CLI and put them into the global data
     dCliDict = brokercli.fndCliParse("")
@@ -703,6 +704,7 @@ foreach single-line file in holding dir
 #                appear in the instuctions but are still necessary, 
 #                e.g., --shortlog.  
 # 20170128  RBL Adapt to searchdatabasemongo instead of json version.  
+# 20170201  RBL Dump traceproduction y/n in trace-0.
 # 
 # 
 

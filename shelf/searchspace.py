@@ -125,18 +125,25 @@ def fndFilterResults(mydOldInstructions):
     If, e.g., no shocks, then don't test for various frequencies.
     '''
     dInstructions = copy.deepcopy(mydOldInstructions)
+    # If glitch frequency is zero, clear all the other glitch lists.
     if mydOldInstructions["nGlitchFreq"] == [0]:
         (dInstructions["nGlitchSpan"], dInstructions["nGlitchImpact"], 
             dInstructions["nGlitchDecay"], dInstructions["nGlitchMaxlife"], 
             dInstructions["nGlitchIgnorelevel"],) = [0], [0], [0], [0], [0]
     # ORDER DEPENDENCY: test server life before shock frequency.
+    # If servers have infinite default life, then shocks do not matter.  
     if mydOldInstructions["nServerDefaultLife"] == [0]:
         dInstructions["nShockFreq"] = [0]
+    # If shock frequency is zero, clear all the other shock lists.  
     if (mydOldInstructions["nShockFreq"] == [0]
         or dInstructions["nShockFreq"] == [0]):
         (dInstructions["nShockSpan"], dInstructions["nShockImpact"], 
         dInstructions["nShockMaxlife"],) = [0], [0], [0] 
     # END ORDER DEPENDENCY.
+    # If audit type is TOTAL, then audit segments reduce to one.  
+    if mydOldInstructions["sAuditType"] == ["TOTAL"]:
+        dInstructions["nAuditSegments"] = [1]
+    # If audit frequency is zero, reduce all the other audit options.  
     if mydOldInstructions["nAuditFreq"] == [0]:
         dInstructions["nAuditSegments"] = [0]
         dInstructions["sAuditType"] = ["TOTAL"]
@@ -295,6 +302,7 @@ Acceptable types of things to specify, just examples.  Be careful with quotes.
 # 20170114  RBL Change Get... function to return full dictionary instruction.
 # 20170129  RBL Fix bug in Filter that looked at old dict instead of new and
 #                did not zero out shock attribs correctly.  
+# 20170201  RBL If auditing type is TOTAL, then permit only one segment.
 # 
 # 
 

@@ -37,7 +37,7 @@ python -c 'import sys; print sys.version; print sys.version_info'
 # Singletons such as docsize and audittype can be ignored at one's risk.  
 #  But will they always remain singletons?
 
-python main.py {sFamilyDir} {sSpecificDir} {nSimlen} {nRandomseed} --ncopies={nCopies} --lifek={nLifem}000 --audit={nAuditFreq} --auditsegments={nAuditSegments} --audittype={sAuditType} --glitchfreq={nGlitchFreq} --glitchimpact={nGlitchImpact} --glitchdecay={nGlitchDecay} --glitchmaxlife={nGlitchMaxlife} --glitchspan={nGlitchSpan} --shockfreq={nShockFreq} --shockimpact={nShockImpact} --shockmaxlife={nShockMaxlife} --shockspan={nShockSpan} --shelfsize={nShelfSize} --smalldoc={nDocSize} --pctsmall=100 {sShortLogOption} --mongoid=\'{_id}\'  >  {sFamilyDir}/{sSpecificDir}/log/{sShelfLogFileName}.log  2>&1
+python main.py {sFamilyDir} {sSpecificDir} {nSimlen} {nRandomseed} --ncopies={nCopies} --lifek={nLifem}000 --audit={nAuditFreq} --auditsegments={nAuditSegments} --audittype={sAuditType} --glitchfreq={nGlitchFreq} --glitchimpact={nGlitchImpact} --glitchdecay={nGlitchDecay} --glitchmaxlife={nGlitchMaxlife} --glitchspan={nGlitchSpan} --serverdefaultlife={nServerDefaultLife} --shockfreq={nShockFreq} --shockimpact={nShockImpact} --shockmaxlife={nShockMaxlife} --shockspan={nShockSpan} --shelfsize={nShelfSize} --smalldoc={nDocSize} --pctsmall=100 {sShortLogOption} --mongoid=\'{_id}\'  >  {sFamilyDir}/{sSpecificDir}/log/{sShelfLogFileName}.log  2>&1
 
 # Slow things down here to avoid maybe looking at the log file
 #  before it has finished being written to disk.  
