@@ -376,12 +376,12 @@ Sources of failures are modeled as a stochastic processes, in a hierarchical  mo
 
 |  |	Logical Block |	Server (Provider) Glitch |	Global Shock |
 |-----|--------------|--------------|--------------|
-| Represents | failure of logical block within physically raided storage | event affecting reliability of single provider | event affecting reliability of multiple providers |
+| Represents | failure of logical block within physically raided storage | event affecting reliability of single provider -- increase logical block error rate | event affecting reliability of multiple providers -- increase server failure rate|
 | Distribution | Poisson IID | Poisson IID	| Poisson IID |
-| Duration	| Instantaneous and permanent | Bounded Duration %GLITCH_MAX_LIFE%, Exponential Decay | instantaneous| 
-|Effect | loss of single block of single copy of document | Increases logical block failure rate | (Immediately) inject  glitch in k servers |
-| Detection | Loss is detected on audit	| Server error itself detected on audit iff. block error rate > %CLIENT_SENSITIVITY | Invisible (detected only through effects on block failure and server glitch) |
-| Notes	| Failure rate is not known precisely to client	| Induces additional block failures, correlations among block failures.  | Induces server glitches, and correlations among server |
+| Duration	| Instantaneous and permanent | Possibly bounded Duration %GLITCH_MAX_LIFE%, Exponential Decay | bounded duration | 
+|Effect | loss of single block of single copy of document | Increases logical block failure rate -- parameterized level of impact | increase likelihood of death of k servers |
+| Detection | Loss is detected on audit	| Server error itself detected on audit iff. block error rate > %CLIENT_SENSITIVITY (not yet implemented) | Invisible (detected only through effects) |
+| Notes	| Failure rate is not known precisely to client	| Induces additional block failures, induces non-stationary errors (temporal clusters).  | Induces server deats, and temporal cluster of server failures among  |
 
 A number of sources are not modeled, but are assumed to be addressed through storage practices:
 
@@ -439,8 +439,8 @@ Server Error Parameterizations
 
 | Type	| frequency	| Impact	| lifetime	| Notes |
 |----------|-------------|------------|------------|------------|
-| Server Billing	| Medium	| High ((> sensitivity rate)	| Permanent loss  of content	| Loss of entire collection on server |
-| Financial	| Low | High	| Permanent -> simulation period	| Bankruptcy - loss of collection |
+| Server Billing	| Medium	| High ((> sensitivity rate)	| Permanent loss  of content	| Shock. Loss of entire collection on server |
+| Financial (recession)	| Low | High	| Permanent -> simulation period	|Shock. Loss of entire collection on server |
 |Low Resource External Adversary	| Low	| Medium	| Medium	| Assume that adversary does not subvert audit |
 | HVAC	| high	| small	| medium	| |
 |Unanticipated Environmental Catastrophe	| low	| high 	| short	| |
