@@ -25,6 +25,8 @@ class CSearchSpaceTest(unittest.TestCase):
     
     def test_getfiles(self):
         ''' Do we get the right number of files? '''
+        # BEWARE the number in here if we add any new param dimensions.  
+        # Maybe glob and count would be safer.
         self.assertEqual(len([k for k,v in self.ddd.items()]), 19)
 
     def test_matchone(self):

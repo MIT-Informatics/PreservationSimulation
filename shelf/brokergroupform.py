@@ -123,7 +123,7 @@ def mainsim_post():
             sActualCli)
 
 # CLI commands to run the main program.
-sMainCommandStringToStdout = ('python broker.py {sDatabaseName} pending done '
+sMainCommandStringToStdout = ('python broker.py inprogress done '
             '--familydir={sFamilyDir} '
             '--specificdir={sSpecificDir} '
             '--ncopies={xcopies} --lifem={xlifem} '
@@ -261,6 +261,8 @@ if __name__ == '__main__':
 # 20161230  RBL Original version, adapted from mainsimform.py.
 # 20170101  RBL Flesh out most of it.
 # 20170104  RBL Add Mongo-style range specifiers for ncopies and lifem.
+# 20170214  RBL Change name pending to inprogress, no big deal.  
+#               Remove dbname from generated command line.
 # 
 # 
 

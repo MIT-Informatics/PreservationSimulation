@@ -40,9 +40,10 @@
         <td><b>Specific dir:</b> <font color="red">* required</font><br /><br />
             <input type="text" name="sSpecificDir" size="30" /><br/><br/></td>
         <td><b>Instruction MongoDb:</b> <font color="red">* required</font><br /><br />
-            <input type="text" name="sDatabaseName" size="30" /><br/><br/></td>
+            <input type="text" name="sDatabaseName" size="30" value="brokeradmin" disabled/><br/><br/></td>
         <td><b>Number of trials:</b> <br /><br />
             <select name="nRandomSeeds">
+                <option value="1">1</option>
                 <option value="11">11</option>
                 <option value="21" selected>21</option>
                 <option value="41">41</option>
@@ -64,9 +65,10 @@
                 <option value="5">5</option>
                 <option value="8">8</option>
                 <option value="10">10</option>
-                <option value="12">12</option>
+<!--                <option value="12">12</option>
                 <option value="14">14</option>
                 <option value="20">20</option>
+-->
             </select></td>
         <td><b>MAX Number of copies:</b> <br />
              <br />
@@ -78,9 +80,10 @@
                 <option value="5" selected>5</option>
                 <option value="8">8</option>
                 <option value="10">10</option>
-                <option value="12">12</option>
+<!--                <option value="12">12</option>
                 <option value="14">14</option>
                 <option value="20">20</option>
+-->
             </select></td>
         <td><b>MIN Sector half-life:</b> <br />
             (in megaHours)<br />
@@ -97,10 +100,11 @@
                 <option value="300">300</option>
                 <option value="500">500</option>
                 <option value="1000">1000</option>
-                <option value="2000">2000</option>
+<!--                <option value="2000">2000</option>
                 <option value="3000">3000</option>
                 <option value="5000">5000</option>
                 <option value="10000">10000</option>
+-->
         </select></td>
         <td><b>MAX Sector half-life:</b> <br />
             (in megaHours)<br />
@@ -118,10 +122,11 @@
                 <option value="300">300</option>
                 <option value="500">500</option>
                 <option value="1000" selected>1000</option>
-                <option value="2000">2000</option>
+<!--                <option value="2000">2000</option>
                 <option value="3000">3000</option>
                 <option value="5000">5000</option>
                 <option value="10000">10000</option>
+-->
         </select></td>
     </tr>
  
