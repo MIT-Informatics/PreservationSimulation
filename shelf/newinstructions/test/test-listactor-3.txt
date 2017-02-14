@@ -1,5 +1,0 @@
-# Test listactor.py
-
-python slow.py 3 first
-python slow.py 3 second
-python slow.py 3 third

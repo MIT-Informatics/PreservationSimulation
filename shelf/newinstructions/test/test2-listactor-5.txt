@@ -1,7 +1,0 @@
-# Test2 listactor.py
-
-python fib.py 33
-python fib.py 34
-python fib.py 35
-python fib.py 36
-python fib.py 37

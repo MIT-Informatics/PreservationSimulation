@@ -15,7 +15,7 @@ border-collapse: collapse;
 </head>
 <!-- author block, doesn't seem to work per spec with *my* pandoc, phooey! -->
 <p>% How Many Copies Is Enough? % Micah Altman; Richard Landau % 2016-08-15</p>
-<h1 id="title" class="unnumbered">How Many Copies Is Enough?</h1>
+<h1 id="title" class="unnumbered">Information Integrity Over the Long Term -- How Many Copies Is Enough?</h1>
 <p><strong>Assessing Long-term Durability of Collections Through A Flexible, Replicable Simulation</strong></p>
 <blockquote>
 <p><strong>Abstract</strong></p>
@@ -23,27 +23,25 @@ border-collapse: collapse;
 <blockquote>
 <p>How to protect a large, valuable, digital document collection?</p>
 </blockquote>
-<blockquote>
-<ul>
-<li>How many copies do you need to keep it safe?</li>
-<li>Where to put the copies?</li>
-<li>Later, are you sure they're still there?</li>
-<li>Whether to use compression, encryption, ... ?</li>
-<li>There is not much hard data on which to base policy decisions.</li>
-<li>We developed a flexible, replicable simulation framework to test configurations.</li>
-<li>We aim to provide some guidance, based on some common, but not universal, calibration points.</li>
-</ul>
-</blockquote>
-<h1 id="motivation">Motivation</h1>
-<ul>
-<li>Information production is rapidly increasing.</li>
-<li>The vast majority of the world's data is stored on rotating disks, 90% in 2007 and not changing very rapidly.</li>
-<li>Digital store changes the goal of preservation, from maintaining a constant optimal physical environment for documents to continual curation in order to maintain document integrity and understanding.</li>
-<li>Information systems are generally designed for immediate use, not for long term access and understanding. Much of the information generated is at risk.</li>
-<li>The changing economics of digital production make it difficult for any one institution to safeguard everything it uses.</li>
-<li>The changing economics also provide opportunities for preservation: replication, cloud services, auditing, and a variety of storage options.</li>
-<li>Curators are faced with a set of choices: storage media, replication, cloud vendors, auditing strategy, encryption, compression. There is currently no systematic guidance based on quantitative models.</li>
-</ul>
+<p>This article addresses the problem of ensuring information integrity over long periods, and against a diverse range of real-world legal, organizational, technical, and economic threats. Rapid advances information technology have shifted the economics of information production, transmission, and storage -- resulting in a vast amount of information that is increasing stored online or near-line. This shift in information storage changes both the profile of threat to integrity, and the set of feasible methods for mitigating these threats. We develop a general event-based simulation framework that can be used to flexibly and reproducibly simulate the effectiveness of various methods of storage, replication, auditing, and transformation against a diverse portfolio of threats to data loss. We then apply this framework to a range of scenarios that are representative of common baseline threats and current storage technology. From this we derive general guidance for the use of replication, platform diversification, fixity metadata, integrity auditing, compression, and encryption where long-term integrity is desired.</p>
+<!-- START:TODO-->
+<!-- Add a summary of specific recommendations. -->
+<!-- END:TODO-->
+<div class="figure">
+<img src="threats.jpg" title="Various Threat Types (in quotes after the link addr)" alt="Various Threats to Library Collections (in the square brackets)" />
+<p class="caption">Various Threats to Library Collections (in the square brackets)</p>
+</div>
+<ol style="list-style-type: decimal">
+<li>Document rot (bit rot) on disk.</li>
+<li>Environmental failures that accelerate document rot.</li>
+<li>Server failures that destroy sets of documents.</li>
+<li>Lack of independence of servers.</li>
+<li>Business failures: a single business failure may affect more than one server, due, e.g., to consolidation or cross-financing. That is, servers that appeared to be independent may not be financially independent in practice.<br />
+</li>
+<li>Economic failures.</li>
+<li>Attack on collection, institution, subject matter. <!-- END:TODO:MICAH--></li>
+</ol>
+<p>e # Motivation - Information production is rapidly increasing. - The vast majority of the world's data is stored on rotating disks, 90% in 2007 and not changing very rapidly. - Digital store changes the goal of preservation, from maintaining a constant optimal physical environment for documents to continual curation in order to maintain document integrity and understanding. - Information systems are generally designed for immediate use, not for long term access and understanding. Much of the information generated is at risk. - The changing economics of digital production make it difficult for any one institution to safeguard everything it uses. - The changing economics also provide opportunities for preservation: replication, cloud services, auditing, and a variety of storage options. - Curators are faced with a set of choices: storage media, replication, cloud vendors, auditing strategy, encryption, compression. There is currently no systematic guidance based on quantitative models.</p>
 <h1 id="fifty-thousand-foot-view">Fifty-Thousand Foot View</h1>
 <!-- START:TODO:MICAH-->
 <h2 id="problem-definition">Problem Definition</h2>
@@ -227,10 +225,9 @@ end of outline area -->
 <li>If observed failure rate in large collections of disk are boundid in X% , y%... what is a reasonable lower / upper bound for half-life of block</li>
 </ul></li>
 <li><p>Long term -- bit rot</p>
-<p>o Show results from long term simulation</p>
-<p>o [TABLE] (how long for 1% loss, based on number of copies) (TODO:RBL: Q: Do you intend a table of error rate (V) by number of copies (H), the data being hours before loss exceeds 1%? This is part of the response surface that we have not yet investigated.)</p>
+<p>o Using poisson closed form -- if expectation loss is just less than .5 doc in 10 years . Expect not to see any doc loss in 10 years ... how long to see a doc lost... how long to see 1% failure.</p>
 <p>o Interaction -- fragility of big documents</p>
-<p>o [FIGURE] (how long for 1% loss, based on increasing size) (TODO:RBL: Q: Again, do you intend a table of document size (H) by error rate (V), the data again being hours before loss exceeds 1%? Again, a part of the response surface untouched by silicon hands.)</p>
+<p>o [FIGURE] (above -- suppose we increas doc size by 10, by 100, by 1000 -- how many expected doc lossed in the same period)</p>
 <p>o Cite to Rosenthal previous results on this</p></li>
 <li><p>Medium term -- if storage error rates are uncertain</p>
 <p>o Storage error rates are difficult to verify</p>
@@ -318,8 +315,8 @@ end of outline area -->
 <tr class="odd">
 <td>Represents</td>
 <td>failure of logical block within physically raided storage</td>
-<td>event affecting reliability of single provider</td>
-<td>event affecting reliability of multiple providers</td>
+<td>event affecting reliability of single provider -- increase logical block error rate</td>
+<td>event affecting reliability of multiple providers -- increase server failure rate</td>
 </tr>
 <tr class="even">
 <td>Distribution</td>
@@ -330,26 +327,26 @@ end of outline area -->
 <tr class="odd">
 <td>Duration</td>
 <td>Instantaneous and permanent</td>
-<td>Bounded Duration %GLITCH_MAX_LIFE%, Exponential Decay</td>
-<td>instantaneous</td>
+<td>Possibly bounded Duration %GLITCH_MAX_LIFE%, Exponential Decay</td>
+<td>bounded duration</td>
 </tr>
 <tr class="even">
 <td>Effect</td>
 <td>loss of single block of single copy of document</td>
-<td>Increases logical block failure rate</td>
-<td>(Immediately) inject glitch in k servers</td>
+<td>Increases logical block failure rate -- parameterized level of impact</td>
+<td>increase likelihood of death of k servers</td>
 </tr>
 <tr class="odd">
 <td>Detection</td>
 <td>Loss is detected on audit</td>
-<td>Server error itself detected on audit iff. block error rate &gt; %CLIENT_SENSITIVITY</td>
-<td>Invisible (detected only through effects on block failure and server glitch)</td>
+<td>Server error itself detected on audit iff. block error rate &gt; %CLIENT_SENSITIVITY (not yet implemented)</td>
+<td>Invisible (detected only through effects)</td>
 </tr>
 <tr class="even">
 <td>Notes</td>
 <td>Failure rate is not known precisely to client</td>
-<td>Induces additional block failures, correlations among block failures.</td>
-<td>Induces server glitches, and correlations among server</td>
+<td>Induces additional block failures, induces non-stationary errors (temporal clusters).</td>
+<td>Induces server deats, and temporal cluster of server failures among</td>
 </tr>
 </tbody>
 </table>
@@ -418,14 +415,14 @@ loss due to raid/internal replication characteristics and failure
 <td>Medium</td>
 <td>High ((&gt; sensitivity rate)</td>
 <td>Permanent loss of content</td>
-<td>Loss of entire collection on server</td>
+<td>Shock. Loss of entire collection on server</td>
 </tr>
 <tr class="even">
-<td>Financial</td>
+<td>Financial (recession)</td>
 <td>Low</td>
 <td>High</td>
 <td>Permanent -&gt; simulation period</td>
-<td>Bankruptcy - loss of collection</td>
+<td>Shock. Loss of entire collection on server</td>
 </tr>
 <tr class="odd">
 <td>Low Resource External Adversary</td>
@@ -521,7 +518,8 @@ loss due to raid/internal replication characteristics and failure
 <li><p>Assume availability and integrity of key is verified on audit</p>
 <p>For example:</p></li>
 </ul>
-<p>Suppose there are only 2 copies of keys. Is the expected document rate due to encryption key loss is equivalent to the expected document loss in the following scenario? - there are two servers - logical block failure is 0 - audits are annual - servers are subject to glitches of the <em>financial failure</em> form -- permanent, total loss - What is L*= E(L|KL,N_K) - Can this be derived from failure rate of N_S servers with a rate of KL financial failures ## Format Obsolescence</p>
+<p>Suppose there are only 2 copies of keys. Is the expected document rate due to encryption key loss is equivalent to the expected document loss in the following scenario? - there are two servers - logical block failure is 0 - audits are annual - servers are subject to glitches of the <em>financial failure</em> form -- permanent, total loss - What is L*= E(L|KL,N_K) - Can this be derived from failure rate of N_S servers with a rate of KL financial failures - Also affects repairability</p>
+<h2 id="format-obsolescence">Format Obsolescence</h2>
 <ul>
 <li>can be simulated using reparameterized correlated surver failure model
 <ul>
@@ -644,7 +642,7 @@ end outline -->
 </li>
 <li><strong>Storage Structure Size:</strong> We chose a fixed size of 1 TB (one terabyte) for a storage structure (&quot;shelf&quot;) on which documents are stored. We tested 10 TB structures as well, and found that the results scaled linearly with size. Given the modest number of documents in a collection, larger storage structures are less fully occupied and have more available empty space. Sector errors occur in empty sectors at the same rate as in document sectors, but errors in empty (non-document) space waste time and resources in the simulations.<br />
 </li>
-<li><strong>Storage Sector Size:</strong> For most simulations, we chose 1 MB (one megabyte) as the size of a &quot;sector&quot; of a document on disk. Given the assumption that a single error destroys a document copy, we wanted to reduce the number of items considered in the simulations. We also note that disk sector size has been enlarged recently and may change again in the future.<br />
+<li><strong>Storage &quot;Metric&quot; Sector Size:</strong> For most simulations, we chose 1 MB (one megabyte) as the size of a &quot;metric sector&quot; of a document on disk. Given the assumption that a single error destroys a document copy, we wanted to reduce the number of items considered in the simulations. We also note that physical disk sector size has been enlarged recently (from 512 to 4096 bytes) and may change again in the future.<br />
 </li>
 <li><strong>Linear Relationships:</strong> We found all these relationships among document size, error rate, and storage extent to be as nearly linear as could be expected from any random process.<br />
 </li>
