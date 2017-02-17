@@ -1,0 +1,7 @@
+# Simulation length in hours
+# One metric year = 10,000 hours; quarter = 2500 hrs; month = 1000 hrs.
+
+nSimlen
+Length of Simulation (hrs)
+value,label,selected
+100000,100000,0

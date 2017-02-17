@@ -79,7 +79,7 @@ class CG(object):
 
     # SearchSpace db info (for instructions)
     sInsDir = './instructions'  # Where to find instruction (*.ins) files.
-    sInsTyp = '.ins'    # File type (extension) specifier for instruction files.
+    sInsTyp = '.ins3'   # File type (extension) specifier for instruction files.
 
     # SearchDatabase db info (for progress and done records)
     sSearchDbFile = "./searchspacedb/searchdb.json"     # Obsolete, I hope.

@@ -1,0 +1,10 @@
+# Audit type
+
+sAuditType
+Auditing Strategy
+value,label,selected
+TOTAL,"TOTAL",0
+SYSTEMATIC,"SYSTEMATIC",0
+#RANDOM,"RANDOM",0
+#ZIPF,"ZIPF",0
+

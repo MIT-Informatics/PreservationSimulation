@@ -1,0 +1,10 @@
+# Glitch max life in hours, zero=infinity
+
+nGlitchMaxlife 
+Duration of Glitch (hrs) (0=infinite)
+value,label,selected
+0,0,0
+#100,100,0
+250,250,0
+1000,1000,0
+

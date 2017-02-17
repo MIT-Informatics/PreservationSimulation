@@ -1,0 +1,17 @@
+# Glitch frequency in hours
+# Remember: all frequencies are now half-lives.
+
+nGlitchFreq
+Glitch Frequency Half-life (hrs) (0=never)
+value,label,selected
+0,0,0
+#1000,1000,0
+2500,2500,0
+10000,10000,0
+20000,20000,0
+30000,30000,0
+50000,50000,0
+#70000,70000,0
+100000,100000,0
+#200000,200000,0
+#300000,300000,0

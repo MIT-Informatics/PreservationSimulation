@@ -20,18 +20,25 @@ from NewTraceFac import NTRC, ntrace, ntracef
 import util
 import itertools
 import hashlib
+import csv
+
 
 # f n d R e a d A l l I n s F i l e s 
 @ntracef("SRCH")
 def fndReadAllInsFiles(mysDir, mysTyp):
     ''' 
     Get contents of all the instruction files into a dictionary.
+    Use the new new new instruction format, 3 columns, and extract
+     and reformat the value info from that.
     '''
     dInstructions = dict()
     for sFile in os.listdir(mysDir):
         if sFile.endswith(mysTyp):
-            (sName, lValueList) = fntReadOneFile(mysDir+'/'+sFile)
-            dInstructions[sName] = lValueList
+            (sName, _, lValueList) = fntReadOneFileForGUI(mysDir+'/'+sFile)
+            dInstructions[sName] = [util.fnIntPlease(item["value"]) 
+                                        for item in lValueList]
+    if len([k for k in dInstructions.keys()]) == 0:
+        raise ValueError, "No instruction files for type|%s|" % (mysTyp)
     return dInstructions
 
 # f n t R e a d O n e F i l e 
@@ -40,13 +47,65 @@ def fntReadOneFile(mysFilespec):
     '''
     Read one instruction file into a list with separate header name.
     All the values in the list are integer-ized where possible.  
+    WARNING: the single-column instruction files and this routine are
+     OBSOLETE.  Fatal error if called.  
     '''
+    
+    raise NotImplementedError, "Old-format .ins files are now obsolete."
+    
     with open(mysFilespec, "r") as fhInsfile:
         lLines = [sLine.rstrip() for sLine in fhInsfile 
             if not re.match("^\s*$", sLine) and not re.match("^\s*#", sLine)]
     sName = lLines.pop(0)
     lValueList = [util.fnIntPlease(line) for line in lLines]
     return (sName, lValueList)
+
+# f n d R e a d A l l I n s F i l e s F o r G U I 
+@ntracef("SRCH")
+def fndReadAllInsFilesForGUI(mysDir, mysTyp):
+    ''' 
+    Get contents of all the instruction files into a dictionary.
+    '''
+    dInstructions = dict()
+    for sFile in os.listdir(mysDir):
+        if sFile.endswith(mysTyp):
+            (sName, sHeading, lValueList) = (
+                    fntReadOneFileForGUI(mysDir+'/'+sFile))
+            dInstructions[sName] =  {
+                                    "varname" : sName, 
+                                    "heading" : sHeading, 
+                                    "lValueList" : lValueList
+                                    }
+    if len([k for k in dInstructions.keys()]) == 0:
+        raise ValueError, "No instruction files for type|%s|" % (mysTyp)
+    return dInstructions
+
+# f n t R e a d O n e F i l e F o r G U I 
+@ntracef("SRCH")
+def fntReadOneFileForGUI(mysFilespec):
+    '''
+    Read one instruction file into a list with separate header name.
+    Return a list of dicts for substitution as options.
+    Instruction file format:
+        - Blank lines and comment lines ignored.
+        - First line is name of parameter, e.g., "nAuditFreq".
+        - Second line is heading text for GUI.  
+        - Third line is CSV headings for the data that follows, 
+            e.g., "value,label,selected".
+        - All remaining lines are data to match the 
+    '''
+    with open(mysFilespec, "r") as fhInsfile:
+        lLines = [sLine.rstrip() for sLine in fhInsfile 
+            if not re.match("^\s*$", sLine) and not re.match("^\s*#", sLine)]
+    sName = lLines.pop(0)       # First line is name
+    sHeading = lLines.pop(0)    # Second line is heading info for GUI.  
+    ldRowDicts = csv.DictReader(lLines)
+    ldValues = []
+    for dValue in ldRowDicts:
+#        dValue["varname"] = sName
+#        dValue["heading"] = sHeading
+        ldValues.append(dValue)
+    return (sName, sHeading, ldValues)
 
 # f n t P r o c e s s A l l U s e r R u l e s 
 @ntracef("SRCH")
@@ -75,6 +134,10 @@ def fndProcessOneUserRule(mydInstructionDict, mysName, myxRule):
         xResult = json.loads(sRule)
     except ValueError:
         raise ValueError, "Error: Query string is not valid JSON|%s|" % (sRule)
+    
+    # One last fixup: Maybe the rule is a string that did not get integer-ified.
+    if not xResult:
+        xResult = util.fnIntPlease(myxRule)
     
     if isinstance(xResult, int):
         lNewVals = [item for item in lInsVals 
@@ -303,6 +366,10 @@ Acceptable types of things to specify, just examples.  Be careful with quotes.
 # 20170129  RBL Fix bug in Filter that looked at old dict instead of new and
 #                did not zero out shock attribs correctly.  
 # 20170201  RBL If auditing type is TOTAL, then permit only one segment.
+# 20170213  RBL Add "ForGUI" versions of read routines to process .ins3 files.
+# 20170216  RBL Change all read routines to use .ins3 files.
+#               Make sure that strings containing ints become ints.  
+#               Raise fatal error if no instruction files get translated.
 # 
 # 
 

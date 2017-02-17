@@ -1,0 +1,12 @@
+# Shock frequency in hours
+# Remember: all frequencies are now half-lives.
+
+nShockFreq
+Frequency Half-life of Economic Shocks (hrs) (0=never)
+value,label,selected
+0,0,0
+20000,20000,0
+30000,30000,0
+50000,50000,0
+100000,100000,0
+200000,200000,0

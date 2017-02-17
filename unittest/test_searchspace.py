@@ -10,70 +10,86 @@ sys.path.append('..')
 
 import unittest
 from shelf.searchspace import *
+from NewTraceFac import NTRC, ntrace, ntracef
 
 class CSearchSpaceTest(unittest.TestCase):
     sInsTestDir = "./ins"
     
+    @ntracef("TSRS")
     def setUp(self):
-        self.ddd = fndReadAllInsFiles(self.sInsTestDir, ".ins")
+        self.ddd = fndReadAllInsFiles(self.sInsTestDir, ".ins3")
 
+    @ntracef("TSRS")
     def test_getonefile(self):
         ''' Read a single file and check value. '''
-        (sName, lValues) = fntReadOneFile(self.sInsTestDir+'/'+"docsize.ins")
-        self.assertEqual("nDocSize", sName)
-        self.assertIn(50, lValues)
+        with self.assertRaises(NotImplementedError):
+            (sName, lValues) = fntReadOneFile(self.sInsTestDir+'/'+"docsize.ins3")
+            self.assertEqual("nDocSize", sName)
+            self.assertIn(50, lValues)
     
+    @ntracef("TSRS")
     def test_getfiles(self):
         ''' Do we get the right number of files? '''
         # BEWARE the number in here if we add any new param dimensions.  
         # Maybe glob and count would be safer.
         self.assertEqual(len([k for k,v in self.ddd.items()]), 19)
 
+    @ntracef("TSRS")
     def test_matchone(self):
         ''' Match leaves string as is. '''
         foo = fndProcessOneUserRule(self.ddd, "nShelfSize", '1')
         self.assertEqual(foo["nShelfSize"], [1])
 
+    @ntracef("TSRS")
     def test_matchonebad(self):
         ''' Mismatch removes values from list. '''
         foo = fndProcessOneUserRule(self.ddd, "nShelfSize", '1000')
         self.assertEqual(foo["nShelfSize"], [])
 
+    @ntracef("TSRS")
     def test_dictset(self):
         ''' Does set extract multiple values from list? '''
         foo = fndProcessOneUserRule(self.ddd, "nShockSpan", '[2,3,4]')
         self.assertEqual(foo["nShockSpan"], [2,3])
 
+    @ntracef("TSRS")
     def test_dicteq(self):
         ''' Test all the dictionary rules, one by one. '''
         foo = fndProcessOneUserRule(self.ddd, "nShelfSize", '{"$eq":1}')
         self.assertEqual(foo["nShelfSize"], [1])
 
+    @ntracef("TSRS")
     def test_dictne(self):
         foo = fndProcessOneUserRule(self.ddd, "nShelfSize", '{"$ne":1111}')
         self.assertEqual(foo["nShelfSize"], [1])
 
+    @ntracef("TSRS")
     def test_dictlt(self):
         foo = fndProcessOneUserRule(self.ddd, "nCopies", '{"$lt":9}')
         self.assertEqual(foo["nCopies"], [1,2,3,4,5,8])
 
+    @ntracef("TSRS")
     def test_dictgt(self):
         foo = fndProcessOneUserRule(self.ddd, "nAuditSegments", '{"$gt":1}')
         self.assertEqual(foo["nAuditSegments"], [2,4])
 
+    @ntracef("TSRS")
     def test_dictlte(self):
         foo = fndProcessOneUserRule(self.ddd, "nCopies", '{"$lte":9}')
         self.assertEqual(foo["nCopies"], [1,2,3,4,5,8])
 
+    @ntracef("TSRS")
     def test_dictgte(self):
         foo = fndProcessOneUserRule(self.ddd, "nAuditSegments", '{"$gte":2}')
         self.assertEqual(foo["nAuditSegments"], [2,4])
 
+    @ntracef("TSRS")
     def test_dictbetween(self):
         ''' Test two rules in one dict, as often done for range selection. '''
         foo = fndProcessOneUserRule(self.ddd, "nCopies", '{"$gte":2,"$lte":9}')
         self.assertEqual(foo["nCopies"], [2,3,4,5,8])
 
+    @ntracef("TSRS")
     def test_userruledict(self):
         ''' Test entire rule dict. '''
         rules = {
@@ -99,8 +115,9 @@ class CSearchSpaceTest(unittest.TestCase):
         self.assertEqual(foo["nAuditSegments"], [2,4])
         self.assertEqual(foo["nShockSpan"], [2,3])
         self.assertEqual(foo["nShelfSize"], [1])
-        self.assertEqual(foo["nGlitchDecay"], [300])
+        self.assertEqual(foo["nGlitchDecay"], [200,1000])
 
+    @ntracef("TSRS")
     def test_filterglitch(self):
         ''' Test the filters,one by one. '''
         self.ddd["nGlitchFreq"] = [0]
@@ -111,11 +128,13 @@ class CSearchSpaceTest(unittest.TestCase):
         self.assertEqual(len(foo["nGlitchMaxlife"]), 1)
         self.assertEqual(len(foo["nGlitchIgnorelevel"]), 1)
 
+    @ntracef("TSRS")
     def test_filterserverdefaultlife(self):
         self.ddd["nServerDefaultLife"] = [0]
         foo = fndFilterResults(self.ddd)
         self.assertEqual(foo["nShockFreq"], [0])
 
+    @ntracef("TSRS")
     def test_filtershock(self):
         self.ddd["nShockFreq"] = [0]
         foo = fndFilterResults(self.ddd)
@@ -123,12 +142,14 @@ class CSearchSpaceTest(unittest.TestCase):
         self.assertEqual(len(foo["nShockImpact"]), 1)
         self.assertEqual(len(foo["nShockMaxlife"]), 1)
 
+    @ntracef("TSRS")
     def test_filteraudit(self):
         self.ddd["nAuditFreq"] = [0]
         foo = fndFilterResults(self.ddd)
         self.assertEqual(len(foo["nAuditSegments"]), 1)
         self.assertEqual(foo["sAuditType"], ["TOTAL"])
 
+    @ntracef("TSRS")
     def test_emptylistreport(self):
         ''' Test if empty lists get reported properly.  '''
         dNew = copy.deepcopy(self.ddd)
@@ -136,6 +157,7 @@ class CSearchSpaceTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             fnvTestResults(dNew, self.ddd)
 
+    @ntracef("TSRS")
     def test_getnames(self):
         ''' Get list of field names. Right length? '''
         rules = {
@@ -152,6 +174,7 @@ class CSearchSpaceTest(unittest.TestCase):
         lNames = fnlGetSearchSpaceNames(foo)
         self.assertEqual(len(lNames), 19)
 
+    @ntracef("TSRS")
     def test_combine(self):
         ''' Test the minimal instruction. Do we get just one? '''
         rules = {
@@ -169,6 +192,7 @@ class CSearchSpaceTest(unittest.TestCase):
                         in fndgCombineResults(foo)]
         self.assertEqual(len(lInstructions), 1)
 
+    @ntracef("TSRS")
     def test_getallone(self):
         ''' Test the overall entry point with minimal instruction. '''
         rules = {
@@ -180,9 +204,10 @@ class CSearchSpaceTest(unittest.TestCase):
                 ,"nGlitchFreq" : '0'
                 }
         lInstructions = [lInstruction for lInstruction in 
-                        fndgGetSearchSpace("./ins", ".ins", rules)]
+                        fndgGetSearchSpace("./ins", ".ins3", rules)]
         self.assertEqual(len(lInstructions), 1)
 
+    @ntracef("TSRS")
     def test_getallseveral(self):
         ''' Test the overall entry point with a simple set of instructions. '''
         rules = {
@@ -194,7 +219,7 @@ class CSearchSpaceTest(unittest.TestCase):
                 ,"nGlitchFreq" : '0'
                 }
         lInstructions = [lInstruction for lInstruction in 
-                        fndgGetSearchSpace("./ins", ".ins", rules)]
+                        fndgGetSearchSpace("./ins", ".ins3", rules)]
         self.assertEqual(len(lInstructions), 5)
         self.assertEqual(len(lInstructions[0]), 20)
 

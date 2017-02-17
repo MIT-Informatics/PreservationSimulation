@@ -1,0 +1,10 @@
+# Shock max life in hours, zero=infinity
+
+nShockMaxlife 
+Shock Duration (hrs) (0=infinite)
+value,label,selected
+0,0,0
+10000,10000,0
+20000,20000,0
+30000,30000,0
+
