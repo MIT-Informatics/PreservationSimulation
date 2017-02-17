@@ -439,15 +439,28 @@ Server Error Parameterizations
 
 | Type	| frequency	| Impact	| lifetime	| Notes |
 |----------|-------------|------------|------------|------------|
-| Server Billing	| Medium	| High ((> sensitivity rate)	| Permanent loss  of content	| Shock. Loss of entire collection on server |
+| Server Billing/Government Takedown	| Medium	| High ((> sensitivity rate)	| Instantaneous	| Shock. Loss of entire collection on server |
 | Financial (recession)	| Low | High	| Permanent -> simulation period	|Shock. Loss of entire collection on server |
 |Low Resource External Adversary	| Low	| Medium	| Medium	| Assume that adversary does not subvert audit |
-| HVAC	| high	| small	| medium	| |
-|Unanticipated Environmental Catastrophe	| low	| high 	| short	| |
+| HVAC/power glitch	| high	| low	| low	| |
+|Unanticipated Environmental Catastrophe	| low	| high 	| instantaneous	| shock |
 | Local Software	| medium	| medium	| long	| |
-|Administrator Error	| medium	| small	| short	| |
+|Administrator Error	| medium	| medium	| medium	| |
 | Hardware batch quality	| Medium 	| Medium	| Long | |
+
+Specific value parameterisations
 	
+Frequency|Low|Financial, Low Resource External Adversary, Unanticipated Environment Catastrophe; |5 years|20 years
+Frequency|Medium|Local Software; Administrator Error; Hardware Batch Quality Defect, Server Billing/Government|1 year|5 year
+Frequency|High|HVAC|0.3 years|1 year
+Impact|Low|HVAC|10% reduction in half-life|33% reduction
+Impact|Medium|Low Resource External Adversary; Local Software, Hardware Batch, Administrator error|33%|90%
+Impact|High|Server Billing/Government takedown, Financial, Unanticipated Server Catastrophe,|1 server|50% of servers
+Lifetime|Instantaneous|Unanticipated Environmental Catastrophe, Server Billing |Instantaneous|instantaneous
+Lifetime|Low|HVAC/Power Glitch|1 Week|1 Month
+Lifetime|Medium|Low Resource External Adversary |1 Month|1 Year
+Lifetime|High|Hardware Batch|1 Year|3 year
+
 
 ## How Many More for 
 <!-- START:TODO:RICK--> 
