@@ -411,10 +411,10 @@ loss due to raid/internal replication characteristics and failure
 </thead>
 <tbody>
 <tr class="odd">
-<td>Server Billing</td>
+<td>Server Billing/Government Takedown</td>
 <td>Medium</td>
-<td>High ((&gt; sensitivity rate)</td>
-<td>Permanent loss of content</td>
+<td>High (&gt; sensitivity rate)</td>
+<td>Instantaneous</td>
 <td>Shock. Loss of entire collection on server</td>
 </tr>
 <tr class="even">
@@ -432,18 +432,18 @@ loss due to raid/internal replication characteristics and failure
 <td>Assume that adversary does not subvert audit</td>
 </tr>
 <tr class="even">
-<td>HVAC</td>
+<td>HVAC/power glitch</td>
 <td>high</td>
-<td>small</td>
-<td>medium</td>
+<td>low</td>
+<td>low</td>
 <td></td>
 </tr>
 <tr class="odd">
 <td>Unanticipated Environmental Catastrophe</td>
 <td>low</td>
 <td>high</td>
-<td>short</td>
-<td></td>
+<td>instantaneous</td>
+<td>shock</td>
 </tr>
 <tr class="even">
 <td>Local Software</td>
@@ -455,8 +455,8 @@ loss due to raid/internal replication characteristics and failure
 <tr class="odd">
 <td>Administrator Error</td>
 <td>medium</td>
-<td>small</td>
-<td>short</td>
+<td>medium</td>
+<td>medium</td>
 <td></td>
 </tr>
 <tr class="even">
@@ -465,6 +465,97 @@ loss due to raid/internal replication characteristics and failure
 <td>Medium</td>
 <td>Long</td>
 <td></td>
+</tr>
+</tbody>
+</table>
+<p>Specific Parameter Value Ranges</p>
+<table style="width:93%;">
+<colgroup>
+<col width="13%" />
+<col width="9%" />
+<col width="47%" />
+<col width="11%" />
+<col width="11%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Parameter</th>
+<th>Range</th>
+<th>Cause(s)</th>
+<th>Low End</th>
+<th>High End</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Frequency</td>
+<td>Low</td>
+<td>Financial, Low Resource External Adversary, Unanticipated Environment Catastrophe;</td>
+<td>5 years</td>
+<td>20 years</td>
+</tr>
+<tr class="even">
+<td>Frequency</td>
+<td>Medium</td>
+<td>Local Software; Administrator Error; Hardware Batch Quality Defect, Server Billing/Government</td>
+<td>1 year</td>
+<td>5 year</td>
+</tr>
+<tr class="odd">
+<td>Frequency</td>
+<td>High</td>
+<td>HVAC</td>
+<td>0.3 years</td>
+<td>1 year</td>
+</tr>
+<tr class="even">
+<td>Impact</td>
+<td>Low</td>
+<td>HVAC</td>
+<td>10% reduction in half-life</td>
+<td>33% reduction</td>
+</tr>
+<tr class="odd">
+<td>Impact</td>
+<td>Medium</td>
+<td>Low Resource External Adversary; Local Software, Hardware Batch, Administrator error</td>
+<td>33%</td>
+<td>90%</td>
+</tr>
+<tr class="even">
+<td>Impact</td>
+<td>High</td>
+<td>Server Billing/Government takedown, Financial, Unanticipated Server Catastrophe,</td>
+<td>1 server</td>
+<td>50% of servers</td>
+</tr>
+<tr class="odd">
+<td>Lifetime</td>
+<td>Instantaneous</td>
+<td>Unanticipated Environmental Catastrophe, Server Billing</td>
+<td>Instantaneous</td>
+<td>instantaneous</td>
+</tr>
+<tr class="even">
+<td>Lifetime</td>
+<td>Low</td>
+<td>HVAC/Power Glitch</td>
+<td>1 Week</td>
+<td>1 Month</td>
+</tr>
+<tr class="odd">
+<td>Lifetime</td>
+<td>Medium</td>
+<td>Low Resource External Adversary</td>
+<td>1 Month</td>
+<td>1 Year</td>
+</tr>
+<tr class="even">
+<td>Lifetime</td>
+<td>High</td>
+<td>Hardware Batch</td>
+<td>1 Year</td>
+<td>3 year</td>
 </tr>
 </tbody>
 </table>

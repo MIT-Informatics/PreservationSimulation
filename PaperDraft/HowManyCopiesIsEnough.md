@@ -439,7 +439,7 @@ Server Error Parameterizations
 
 | Type	| frequency	| Impact	| lifetime	| Notes |
 |----------|-------------|------------|------------|------------|
-| Server Billing/Government Takedown	| Medium	| High ((> sensitivity rate)	| Instantaneous	| Shock. Loss of entire collection on server |
+| Server Billing/Government Takedown	| Medium	| High (> sensitivity rate)	| Instantaneous	| Shock. Loss of entire collection on server |
 | Financial (recession)	| Low | High	| Permanent -> simulation period	|Shock. Loss of entire collection on server |
 |Low Resource External Adversary	| Low	| Medium	| Medium	| Assume that adversary does not subvert audit |
 | HVAC/power glitch	| high	| low	| low	| |
@@ -448,8 +448,10 @@ Server Error Parameterizations
 |Administrator Error	| medium	| medium	| medium	| |
 | Hardware batch quality	| Medium 	| Medium	| Long | |
 
-Specific value parameterisations
-	
+Specific Parameter Value Ranges
+
+Parameter | Range | Cause(s) | Low End | High End | 
+|---------|------|---------------------------------|-------|-------|	
 Frequency|Low|Financial, Low Resource External Adversary, Unanticipated Environment Catastrophe; |5 years|20 years
 Frequency|Medium|Local Software; Administrator Error; Hardware Batch Quality Defect, Server Billing/Government|1 year|5 year
 Frequency|High|HVAC|0.3 years|1 year
