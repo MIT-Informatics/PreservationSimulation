@@ -2,7 +2,7 @@
 # Remember: all frequencies are now half-lives.
 
 nGlitchFreq
-Glitch Frequency Half-life (hrs) (0=never)
+Frequency Half-life of Glitches (hrs) (0=never)
 value,label,selected
 0,0,0
 #1000,1000,0

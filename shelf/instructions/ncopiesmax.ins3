@@ -1,14 +1,13 @@
 # Number of document copies to be maintained
-# Special copy for processing instructions, not for display.  
 
-nCopies
-Number of Copies of Documents
+nCopiesMax
+Maximum Number of Copies of Documents
 value,label,selected
 1,1,0
 2,2,0
 3,3,0
 4,4,0
-5,5,0
+5,5,YES
 #6,6,0
 #7,7,0
 8,8,0

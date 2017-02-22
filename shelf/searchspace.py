@@ -188,6 +188,11 @@ def fndFilterResults(mydOldInstructions):
     If, e.g., no shocks, then don't test for various frequencies.
     '''
     dInstructions = copy.deepcopy(mydOldInstructions)
+    # First, nuke the special cases that are caused by the dynamic display.  
+    dInstructions["nCopiesMax"] = [0]
+    dInstructions["nCopiesMin"] = [0]
+    dInstructions["nLifemMax"] = [0]
+    dInstructions["nLifemMin"] = [0]
     # If glitch frequency is zero, clear all the other glitch lists.
     if mydOldInstructions["nGlitchFreq"] == [0]:
         (dInstructions["nGlitchSpan"], dInstructions["nGlitchImpact"], 

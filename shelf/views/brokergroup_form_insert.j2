@@ -1,14 +1,17 @@
 <!-- brokergroup_form_insert.j2 file -->
-{% extends "./brokergroup_form_base.tpl " %}
+{% extends "brokergroup_form_base.j2" %}
 
 {# Macro to insert 2x1 table element for var, 
-    top for heading, bottom for values. #}
-{% macro insertmyvar(data) %}    
+    top for heading, bottom for values. 
+    All Values found in the dictionary 
+    passed in. #}
+{% macro insertmyvar(data, heading=none, required=none) %}    
     <td>
         <table>
-            <tr><td>
-                <b>{{data.heading}}</b>
-            </td></tr>
+            <tr><th align="left">
+                <b>{%if heading%}{{heading}}{%else%}{{data.heading}}{%endif%}
+                    {%if required%}<font color="red">* required</font>{%endif%}</b>
+            </th></tr>
             <tr><td>
                 <select name="{{data.varname}}">
     {% for item in data.lValueList %}
@@ -20,142 +23,135 @@
     </td>
 {% endmacro %}
 
-{% macro inserttextvar(name, size, value="") %}
-    <input type="text" name={{name}} size="{{size}}" value={{value}}>
+{# Macro for text var, similar table. #}
+{% macro inserttextvar(name, heading, size, value="", required=none, extra=none) %}
+    <td>
+        <table>
+            <tr><td>
+                <b>{{heading}}
+                    {%if required%}<font color="red">* required</font>{%endif%}</b>
+            </td></tr>
+            <tr><td>
+                <input type="text" name={{name}} size="{{size}}" value={{value}} 
+                {%if extra%}{{extra}}{%endif%}>
+            </td></tr>
+        </table>
+    </td>
 {%endmacro%}
 
-{% macro insertcheckvar(name, value="") %}
-    <input type="checkbox" name={{name}} value={{value}}>
+{% macro insertcheckvar(name, heading, value="", required=none, extra=none) %}
+    <td>
+        <table>
+            <tr><td>
+                <b>{{heading}}
+                    {%if required%}<font color="red">* required</font>{%endif%}</b>
+            </td></tr>
+            <tr><td>
+                <input type="checkbox" name={{name}} value={{value}} 
+                {%if extra%}{{extra}}{%endif%}>
+            </td></tr>
+        </table>
+    </td>
 {%endmacro%}
 
 
-{% block CHILD -%}
-{% for varname1, vardict1 in dVars.iteritems() %}
-    {% set varname = varname1 %}
-    {% set vardict = vardict1 %}
-    {% set data = vardict1 %}
+{% block nAuditFreq scoped %}
+    {{insertmyvar(dVars.nAuditFreq)}}
+{% endblock %}
 
-    {% if varname == "nAuditFreq" %}
-        {% block nAuditFreq scoped %}
-            {{insertmyvar(vardict)}}
-        {% endblock %}
+{% block nAuditSegments scoped %}
+    {{insertmyvar(dVars.nAuditSegments)}}
+{% endblock %}
 
-    {% elif varname == "nAuditSegments" %}
-        {% block nAuditSegments scoped %}
-            {{insertmyvar(vardict)}}
-        {% endblock %}
+{% block sAuditType scoped %}
+    {{insertmyvar(dVars.sAuditType)}}
+{% endblock %}
 
-    {% if varname == "nAuditType" %}
-        {% block nAuditType scoped %}
-            {{insertmyvar(vardict)}}
-        {% endblock %}
+{% block nCopiesMax scoped %}
+   {{insertmyvar(dVars.nCopiesMax)}}
+{% endblock %}
 
-    {% elif varname == "nCopies" %}  
-        {% block nCopies scoped %}
-           {{insertmyvar(vardict)}}
-        {% endblock %}
+{% block nCopiesMin scoped %}
+   {{insertmyvar(dVars.nCopiesMin)}}
+{% endblock %}
 
-    {% elif varname == "nDocSize" %}
-        {% block nDocSize scoped %}
-            {{insertmyvar(vardict)}}
-        {% endblock %}
+{% block nDocSize scoped %}
+    {{insertmyvar(dVars.nDocSize)}}
+{% endblock %}
 
-    {% elif varname == "nGlitchDecay" %}
-        {% block nGlitchDecay scoped %}
-            {{insertmyvar(vardict)}}
-        {% endblock %}
+{% block nGlitchDecay scoped %}
+    {{insertmyvar(dVars.nGlitchDecay)}}
+{% endblock %}
 
-    {% elif varname == "nGlitchFreq" %}
-        {% block nGlitchFreq scoped %}
-            {{insertmyvar(vardict)}}
-        {% endblock %}
+{% block nGlitchFreq scoped %}
+    {{insertmyvar(dVars.nGlitchFreq)}}
+{% endblock %}
 
-    {% elif varname == "nGlitchIgnorelevel" %}
-        {% block nGlitchIgnorelevel scoped %}
-            {{insertmyvar(vardict)}}
-        {% endblock %}
+{% block nGlitchIgnorelevel scoped %}
+    {{insertmyvar(dVars.nGlitchIgnorelevel)}}
+{% endblock %}
 
-    {% elif varname == "nGlitchImpact" %}
-        {% block nGlitchImpact scoped %}
-            {{insertmyvar(vardict)}}
-        {% endblock %}
+{% block nGlitchImpact scoped %}
+    {{insertmyvar(dVars.nGlitchImpact)}}
+{% endblock %}
 
-    {% elif varname == "nGlitchMaxlife" %}
-        {% block nGlitchMaxlife scoped %}
-            {{insertmyvar(vardict)}}
-        {% endblock %}
+{% block nGlitchMaxlife scoped %}
+    {{insertmyvar(dVars.nGlitchMaxlife)}}
+{% endblock %}
 
-    {% elif varname == "nGlitchSpan" %}
-        {% block nGlitchSpan scoped %}
-            {{insertmyvar(vardict)}}
-        {% endblock %}
+{% block nGlitchSpan scoped %}
+    {{insertmyvar(dVars.nGlitchSpan)}}
+{% endblock %}
 
-    {% elif varname == "nLifem" %}  
-        {% block nLifem scoped %}
-           {{insertmyvar(vardict)}}
-        {% endblock %}
+{% block nLifemMax scoped %}
+   {{insertmyvar(dVars.nLifemMax)}}
+{% endblock %}
 
-    {% elif varname == "nSeeds" %}  
-        {% block nSeeds scoped %}
-           {{insertmyvar(vardict)}}
-        {% endblock %}
+{% block nLifemMin scoped %}
+   {{insertmyvar(dVars.nLifemMin)}}
+{% endblock %}
 
-    {% elif varname == "nServerDefaultLife" %}  
-        {% block nServerDefaultLife scoped %}
-           {{insertmyvar(vardict)}}
-        {% endblock %}
+{% block nRandomSeeds scoped %}
+   {{inserttextvar("nRandomSeeds", "Number of Replications with Random Seeds", 5, 21)}}
+{% endblock %}
 
-    {% elif varname == "nShelfSize" %}  
-        {% block nShelfSize scoped %}
-           {{insertmyvar(vardict)}}
-        {% endblock %}
+{% block nServerDefaultLife scoped %}
+   {{insertmyvar(dVars.nServerDefaultLife)}}
+{% endblock %}
 
-    {% elif varname == "nShockImpact" %}  
-        {% block nShockImpact scoped %}
-           {{insertmyvar(vardict)}}
-        {% endblock %}
+{% block nShelfSize scoped %}
+   {{insertmyvar(dVars.nShelfSize)}}
+{% endblock %}
 
-    {% elif varname == "nShockMaxlife" %}  
-        {% block nShockMaxlife scoped %}
-           {{insertmyvar(vardict)}}
-        {% endblock %}
+{% block nShockImpact scoped %}
+   {{insertmyvar(dVars.nShockImpact)}}
+{% endblock %}
 
-    {% elif varname == "nShockFreq" %}  
-        {% block nShockFreq scoped %}
-           {{insertmyvar(vardict)}}
-        {% endblock %}
+{% block nShockMaxlife scoped %}
+   {{insertmyvar(dVars.nShockMaxlife)}}
+{% endblock %}
 
-    {% elif varname == "nShockSpan" %}  
-        {% block nShockSpan scoped %}
-           {{insertmyvar(vardict)}}
-        {% endblock %}
+{% block nShockFreq scoped %}
+   {{insertmyvar(dVars.nShockFreq)}}
+{% endblock %}
 
-    {% elif varname == "nSimlen" %}  
-        {% block nSimlen scoped %}
-           {{insertmyvar(vardict)}}
-        {% endblock %}
+{% block nShockSpan scoped %}
+   {{insertmyvar(dVars.nShockSpan)}}
+{% endblock %}
 
-    {% elif varname == "sDatabaseName" %}  
-        {% block sDatabaseName scoped %}
-           {{insertmyvar(vardict)}}
-        {% endblock %}
+{% block sDatabaseName scoped %}
+   {{inserttextvar("sDatabaseName", "Database Name", 10, "brokeradmin", extra="disabled")}}
+{% endblock %}
 
-    {% elif varname == "sFamilyDir" %}  
-        {% block sFamilyDir scoped %}
-           {{insertmyvar(vardict)}}
-        {% endblock %}
+{% block sFamilyDir scoped %}
+   {{inserttextvar("sFamilyDir", "Family Directory", 10, required=true)}}
+{% endblock %}
 
-    {% elif varname == "sSpecificDir" %}  
-        {% block sSpecificDir scoped %}
-           {{insertmyvar(vardict)}}
-        {% endblock %}
+{% block sSpecificDir scoped %}
+   {{inserttextvar("sSpecificDir", "Specific Directory", 10, required=true)}}
+{% endblock %}
 
-    {% else %} ERROR: Unknown variable name {{varname}}
 
-    {% endif %}
-
-{% endfor %}
-{%- endblock CHILD%}
 
 {%block ignoreme1%}
 -----------------------------
@@ -173,31 +169,14 @@ five trs
 
 child
 
-huge child block containing 
-    block name1
-        content, trs, tds, substitutions
-    block name2
-        similar content but different vars
-    22 of these
+block name1
+    content, trs, tds, substitutions
+block name2
+    similar content but different vars
+22 of these
 
-each block called with a different dict containing name, head, list
+each block calls macro with a different dict containing name, head, list
 
-this requires a factory, i think
-
-for eachstuff in full context
-    get eachstuff.name
-    if name == something
-        define the block for that name
-
-    if name == name1
-        block name1
-    elif name == name2
-        block name2
-    etc.
-    else
-        skip unknown varname
-
-this repeated stuff inside each block is where the macro is handy.
 
 nAuditSegments
 nDocSize

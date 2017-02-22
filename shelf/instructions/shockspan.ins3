@@ -4,8 +4,9 @@
 nShockSpan
 How Many Servers Affected by Shock?
 value,label,selected
-1,1,0
+1,1,yes
 2,2,0
 3,3,0
+4,4,0
 5,5,0
 

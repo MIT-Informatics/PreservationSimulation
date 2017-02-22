@@ -3,7 +3,7 @@
 nAuditSegments 
 Number of Audit Segments per Cycle
 value,label,selected
-1,1,0
+1,1,y
 2,2,0
 4,4,0
 

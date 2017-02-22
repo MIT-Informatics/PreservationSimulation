@@ -1,10 +1,9 @@
 # Number of document copies to be maintained
-# Special copy for processing instructions, not for display.  
 
-nCopies
-Number of Copies of Documents
+nCopiesMin
+Minimum Number of Copies of Documents
 value,label,selected
-1,1,0
+1,1,YES
 2,2,0
 3,3,0
 4,4,0
