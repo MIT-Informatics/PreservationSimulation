@@ -4,7 +4,7 @@
 # Likely use: 
 # python brokergroup_makeform.py                        \
 #                   brokergroup_form_insert.j2          \ (input)
-#                   views/brokergroupform2.tpl          \ (output)
+#                   views/brokergroup_form2.tpl         \ (output)
 #                   instructions                          (.ins3 dir)
 # 
 

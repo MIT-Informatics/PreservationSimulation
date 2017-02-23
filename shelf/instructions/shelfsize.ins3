@@ -3,6 +3,6 @@
 nShelfSize
 Size of Storage Shelf (TB)
 value,label,selected
-1,1,0
-#10,10,0
+1,1,selected
+10,10,0
 #100,100,0

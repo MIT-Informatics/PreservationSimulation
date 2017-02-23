@@ -1,5 +1,15 @@
 <!-- brokergroup_form_insert.j2 file -->
 {% extends "brokergroup_form_base.j2" %}
+<!-- Child file for Jinja2 that defines almost all the blocks
+      of menu items, particularly the multi-value select 
+      option blocks.  The shelf/instructions/*.ins3 files
+      contain the various option values for the many 
+      variable parameters.  They are processed and 
+      dictionary-ified to be suitable for use by Jinja.  
+     The parent HTML form file contains all the structure,
+      including table layout, placement, commentary, 
+      color fields, and so forth.  A small attempt, at
+      any rate, to separate form from content.  -->
 
 {# Macro to insert 2x1 table element for var, 
     top for heading, bottom for values. 
@@ -196,5 +206,32 @@ nShockMaxlife
 nShockFreq
 nShockSpan
 nSimlen
+
+A notable kludge occurs here.  For params that have a min and max value
+ that the user selects from separate drop-down lists, three variables
+ need to be defined and one special case added to the instruction
+ expander, searchspace.py.  
+ - The variable, e.g., nCopies, needs to have three such variables with 
+    identical values:
+    1.  nCopies
+    2.  nCopiesMax
+    3.  nCopiesMin
+    The max and min versions populate the pull-downs for those parameters.
+    The nCopies version is used by searchspace to check if the user's
+    selections have produced any valid values, i.e., a non-empty vector
+    of possibilities.  HOWEVER, it is also necessary for searchspace to
+    null out the max and min versions, empty their lists, before the 
+    actual combinatorial expansion takes place.  
+ Yes, kludge.  You were warned.  
+The same applies to nLifem.  And any other range-type params you were 
+ thinking of adding.  Don't do it.  
+
+<!-- Edit history:
+20170220    RBL Original version.
+20170221    RBL Enhance macros and invocations to permit overriding
+                 headings, adding "required" notices, etc.  
+20170222    RBL Add some comments and this history.  
+
+-->
 
 {%endblock%}

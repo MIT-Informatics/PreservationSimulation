@@ -3,7 +3,7 @@
 nDocSize
 Size of Documents (MB)
 value,label,selected
-#5,5,0
-50,50,0
-#500,500,0
+5,5,0
+50,50,selected
+500,500,0
 #5000,5000,0
