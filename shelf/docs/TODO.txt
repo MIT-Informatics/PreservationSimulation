@@ -17,7 +17,7 @@ DONE - watch out for server lifetime zero (=infinite) when assessing
         server live/dead at audit and end of run.  
 DONE - when kill server, also kill shelf and all doc copies on it.  
 DONE - add nRandomSeeds to GUI.
-FIXME - do a thorough testing and maybe even filecomp on RICKS9, after
+DONE - do a thorough testing and maybe even filecomp on RICKS9, after
     I accidentally deleted the entire repository and tried to re-clone it.  
 
 
@@ -54,10 +54,10 @@ DONE - add server default halflife to web interface and CLI.
 DONE - build static web interface to permit choosing subset instructions 
     for group run by broker.
 DONE - build backend for interface that generates broker.py command.
-FIXME - fix the interface for new instruction values and revised interface 
+DONE - fix the interface for new instruction values and revised interface 
     for broker CLI.
-FIXME - change shock (and maybe other) lists in GUI to match the instructions.  
-FIXME - generate the HTML from the instruction db.  not simple.  
+DONE - change shock (and maybe other) lists in GUI to match the instructions.  
+DONE - generate the HTML from the instruction db.  not simple.  
 
 
 TODO: newtrace
@@ -167,7 +167,7 @@ DONE - adapt to new instruction generator.
 DONE - adapt to new status bookkeeping database.  
 DONE - fix option processing to permit presence-only options to pass thru, 
     e.g., --shortlog.
-FIXME - put out notice about TRACE_PRODUCTION mode, both in broker
+DONE - put out notice about TRACE_PRODUCTION mode, both in broker
     and in main.py.  must be in the log file.  
 DONE - adapt the pretestchecklist and other scripts to the new instruction
     files, location, etc.  
@@ -248,6 +248,12 @@ FIXME - after container install, run broker tests
 
 
 TODO: AWS deployment
+FIXME - change newinstructions section of script to create flat instructions 
+  and database from the ins files pulled.  
+FIXME - change newinstructions section of script to be way simpler with
+    newnewnewinstructions method of on-demand cross-product with no
+    pre-stored instructions.
+FIXME - change broker cli for tests and examples.
 DONE - deploy shelf on AWS free tier system.
 DONE - automate deployment to AWS systems.
 DONE - run shelf on free tier system.
@@ -260,12 +266,6 @@ DONE - clean up and document the AWS-Ubuntu install script.
 DONE - test docker deployment on 8 core system.
 DONE - test docker deployment on 32 core system.
 DONE - change newinstructions db to something smaller and more useful.
-FIXME - change newinstructions section of script to create flat instructions 
-  and database from the ins files pulled.  
-FIXME - change newinstructions section of script to be way simpler with
-    newnewnewinstructions method of on-demand cross-product with no
-    pre-stored instructions.
-FIXME - change broker cli for tests and examples.
 
 
 TODO: rationalize time constants so that people can understand them

@@ -94,7 +94,7 @@ class CG(object):
         'doc{nDocSize}cop{nCopies}shlf{nShelfSize}lif{nLifem}_'
         'af{nAuditFreq}s{nAuditSegments}t{sAuditType}_'
         'gf{nGlitchFreq}i{nGlitchImpact}d{nGlitchDecay}m{nGlitchMaxlife}_'
-        'sh{nShockFreq}i{nShockImpact}s{nShockSpan}_m{nShockMaxlife}'
+        'sh{nShockFreq}i{nShockImpact}s{nShockSpan}m{nShockMaxlife}_'
         'seed{nRandomseed}'
         )
     sShelfLogFileName = None
@@ -705,7 +705,8 @@ foreach single-line file in holding dir
 #                e.g., --shortlog.  
 # 20170128  RBL Adapt to searchdatabasemongo instead of json version.  
 # 20170201  RBL Dump traceproduction y/n in trace-0.
-# 
+# 20170317  RBL Repair logfilename template, which had the shock maxlife
+#                on the wrong side of the underscore, duh.  
 # 
 
 #END

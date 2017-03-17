@@ -124,28 +124,14 @@ class CShock(object):
         #  are statistically different.  
         if G.nShockType == 1:
             # Type 1, the exception: lifetime during shock period is just
-            #  part of what it was initially.
-            fNewLifeParam = (1.0 - myfReduction) * fCurrentLife
-            # Lifetime cannot actually be zero for 100% reduction, so
-            #  make it just really, really small, like 2 hours.  
-            fNewLifeParam = max(fNewLifeParam, 2.0)
-            NTRC.ntracef(3, "SHOK", "proc shock1 at t|%8.0f| svr|%s| new"
-                "lifeparam|%.0f| shocktype|%s|" 
-                % (G.env.now, mysServerID, fNewLifeParam, G.nShockType))
-            fNewLife = fNewLifeParam
+            #  half of what it was initially.
+            fNewLife = (1.0 - myfReduction) * fCurrentLife
         else: 
             # Type 2, the default: lifetime during shock period is a new
             #  random chosen from a distribution with less than the lifetime
             #  of the old one.  
-            fNewLifeParam = (1.0 - myfReduction) * fOriginalLife
-            # Lifetime cannot actually be zero for 100% reduction, so
-            #  make it just really, really small, like 2 hours.  
-            fNewLifeParam = max(fNewLifeParam, 2.0)
-            NTRC.ntracef(3, "SHOK", "proc shock1 at t|%8.0f| svr|%s| new"
-                "lifeparam|%.0f| shocktype|%s|" 
-                % (G.env.now, mysServerID, fNewLifeParam, G.nShockType))
-            fNewLife = util.makeserverlife(fNewLifeParam)
-        NTRC.ntracef(3, "SHOK", "proc shock2 at t|%8.0f| svr|%s| new"
+            fNewLife = util.makeserverlife((1.0 - myfReduction) * fOriginalLife)
+        NTRC.ntracef(3, "SHOK", "proc shock at t|%8.0f| svr|%s| new"
             "life|%.0f| shocktype|%s|" 
             % (G.env.now, mysServerID, fNewLife, G.nShockType))
         lg.logInfo("SHOCK ", "t|%6.0f| reduce svr|%s| life by|%s| from|%.0f| to"
@@ -379,8 +365,6 @@ during the next audit cycle or at end of run.
 #                half-life.  In both shock types, the original life is 
 #                restored at the end of the shock if the server has 
 #                not died during the shock.  
-# 20170317  RBL On 100% shock impact, do not permit the lifetime to go
-#                quite to zero; causes an div-zero exception in util.
 # 
 
 #END
