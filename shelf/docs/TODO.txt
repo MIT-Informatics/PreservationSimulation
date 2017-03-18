@@ -47,8 +47,10 @@ DONE - need new utils: list databases, list collections in db.
 
 
 TODO: web interface to select instructions for broker run
-FIXME - maybe add button for Production Mode.
-FIXME - add startup shell script with easy name.  maybe that script sets
+DONE - validate directories before launching broker.py.
+DONOTDO - maybe add button for Production Mode.  broker runs should *always*
+    be in production mode, so have the script set that.  
+DONE - add startup shell script with easy name.  maybe that script sets
     production mode before starting?  maybe opt-out of production?
 WRONG - learn kivy and remi, decide which to use.
 DONE - build static web interface to permit choosing instructions for 
@@ -147,20 +149,27 @@ DONE - slow down after extractvalues, too.
 
 
 TODO: broker.py
+FIXME - log all broker commands into some file.
+FIXME - write a utility to reconstitute the main.py command line 
+    from a result line in GiantOutput.  
+FIXME - put out the command line, or at least the arg list, as trace-0
+    so that it gets recorded into a tee file.  
+FIXME - dump the instruction dictionary as trace-0 before or just after
+    getting iterator from searchspace.  
+FIXME - add a cleanstart shell script to empty the dirs that need to 
+    be empty, set a clean GiantOutput file.
+FIXME - validate directories before doing anything else.
+DONE - emptygiantoutput shell script should rescue any data
+  that was left over in a previous GiantOutput file into
+  the done dir.  
 DONE - increase the stuck timer a lot.
 DUNNO - protect against grep failure, linux vs windows.
-DONE - add a cleanstart shell script to empty the dirs that need to 
-  be empty, set a clean GiantOutput file.
-FIXME - cleanstart shell script should rescue any data
-  that was left over in a previous GiantOutput file into
-  the done dir.  and it should delete everything else.
 DONE - fix y/n switch options to get rid of the need for a value.
 DONE - fix the broker invocation in the AWSinstallscript to match the
   revised y/n options.
 DONE - start the run count from 1 even for cases that have already been done, 
   so that the run number reflects progress toward the total number, and print 
   the run number in the already-done line.  
-FIXME - log all broker commands into some file.
 DONE - add auditfreq and segs to the intro run-n lines.  
 DONE - make familydir and specificdir required options (fun oxymoron).
 DONE - add param for number of seeds and take the seeds from a separate 
@@ -174,12 +183,6 @@ DONE - put out notice about TRACE_PRODUCTION mode, both in broker
     and in main.py.  must be in the log file.  
 DONE - adapt the pretestchecklist and other scripts to the new instruction
     files, location, etc.  
-FIXME - write a utility to reconstitute the main.py command line 
-    from a result line in GiantOutput.  
-FIXME - put out the command line, or at least the arg list, as trace-0
-    so that it gets recorded into a tee file.  
-FIXME - dump the instruction dictionary as trace-0 before or just after
-    getting iterator from searchspace.  
 
 
 TODO: broker docs
