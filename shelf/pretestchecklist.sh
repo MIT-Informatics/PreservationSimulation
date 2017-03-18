@@ -49,7 +49,7 @@ fi
 
 # Do we have all the instruction files?
 sTargetDir="$sInstructionDir"
-for needfile in simlen.ins glitchignorelevel.ins audittype.ins auditsegments.ins docsize.ins shelfsize.ins glitchmaxlife.ins glitchimpact.ins glitchfreq.ins glitchdecay.ins glitchspan.ins auditfreq.ins lifem.ins ncopies.ins  
+for needfile in simlen.ins3 glitchignorelevel.ins3 audittype.ins3 auditsegments.ins3 docsize.ins3 shelfsize.ins3 glitchmaxlife.ins3 glitchimpact.ins3 glitchfreq.ins3 glitchdecay.ins3 glitchspan.ins3 auditfreq.ins3 lifem.ins3 ncopies.ins3  
 do
     if [ ! -f "$sTargetDir/$needfile" ]
     then

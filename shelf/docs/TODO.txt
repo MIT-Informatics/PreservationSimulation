@@ -47,6 +47,9 @@ DONE - need new utils: list databases, list collections in db.
 
 
 TODO: web interface to select instructions for broker run
+FIXME - maybe add button for Production Mode.
+FIXME - add startup shell script with easy name.  maybe that script sets
+    production mode before starting?  maybe opt-out of production?
 WRONG - learn kivy and remi, decide which to use.
 DONE - build static web interface to permit choosing instructions for 
     a single run using bottle.
