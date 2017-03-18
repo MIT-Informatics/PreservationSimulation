@@ -14,11 +14,18 @@ fi
 sFamilyDir="$1"
 if [ -z "$2" ] 
 then
-    specificdir=.
+    sSpecificDir=.
 else
-    specificdir="$2"
+    sSpecificDir="$2"
 fi
 
-cp -v ./GiantOutput_HeaderOnly.txt $sFamilyDir/$specificdir/dat/GiantOutput_00.txt
+# Preserve contents of GiantOutput file, if any, by appending to backup file.
+if [ -r $sFamilyDir/$sSpecificDir/dat/GiantOutput_00.txt ]
+then
+    touch $sFamilyDir/$sSpecificDir/dat/GiantOutput_00.txt.prev
+    cat $sFamilyDir/$sSpecificDir/dat/GiantOutput_00.txt \
+     >> $sFamilyDir/$sSpecificDir/dat/GiantOutput_00.txt.prev
+fi
+cp -v ./GiantOutput_HeaderOnly.txt $sFamilyDir/$sSpecificDir/dat/GiantOutput_00.txt
 
 #END
