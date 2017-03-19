@@ -590,8 +590,7 @@ def fnstProcessOneInstruction(mysRunNumber, mydInstruction, mynSeed):
 def fnvGetEnvironmentOverrides():
     # Allow user to override number of cores to use today.
     # First, find out how many cores there are that we could possibly use.
-    nMaxCores = int(os.getenv("NUMBER_OF_PROCESSORS", None)) + 1
-    # By default, use one fewer than max available, according to the o/s.  
+    nMaxCores = int(os.getenv("NUMBER_OF_PROCESSORS", 2))
     g.nCores = nMaxCores if nMaxCores else g.nCores
     # If the user specifies a number, larger or smaller, take it.
     try:

@@ -51,8 +51,14 @@
 # 20170130  RBL Change for new instruction location, and no need to build.
 #               Change test familydir from ../Q3 to ../hl.
 #               Change broker tests and examples.  
+# 20170319  RBL Install jinja2 package for python.
+#               Fix broker tests for new instruction generation.
+#               Start the brokerform web app in the startup script.
+#               Remove mentions of NCORES since broker now adapts to
+#                the number of cores available
 # 
 # 
+ 
 
 echo "**************************************** Beginning installation"
 echo ""
@@ -68,6 +74,7 @@ virtualenv shelfenv
 . shelfenv/bin/activate
 pip install simpy
 pip install pymongo
+pip install jinja2
 
 echo "**************************************** Install git and pull source code"
 # Get Git.
@@ -104,12 +111,12 @@ echo "**************************************** Quick setup and simple test"
 cd shelf
 # Remove any leftovers from possible previous deployment.
 sudo rm --force --recursive ../hl
-bash setupfamilydir.sh ../hl . 
-bash pretestchecklist.sh ../hl . 
+bash setupfamilydir.sh ../hl a0 
+bash pretestchecklist.sh ../hl a0 
 # Run one simple test of the simulation, and check the answer.
 sudo rm --force --recursive tmp
 mkdir tmp
-python main.py ../hl . 0 1 --ncopies=1 --lifek=693147 --audit=0 >tmp/initialtest.log 2>&1
+python main.py ../hl a0 0 1 --ncopies=1 --lifek=693147 --audit=0 >tmp/initialtest.log 2>&1
 # The correct answer should be   "BAD NEWS: Total documents lost by 
 #  client |T1| in all servers |49|".
 # (The crazy half-life number in the command is 1,000,000 * ln(2), 
@@ -127,8 +134,15 @@ else
 fi
 
 echo "**************************************** Test broker CLI and instruction db"
-# Broker should find test cases to run.
-python broker.py inprogress done --familydir=../hl --specificdir=a0 --serverdefaultlife=0 --glitchfreq=0 --ncopies=1 --lifem=1000 --auditfreq=0 --nseeds=1 --redo --listonly  >tmp/brokertest.log 2>&1
+# Set a plausible number of cores if the environment won't tell us.
+if [ -z "$NUMBER_OF_PROCESSORS" ]
+then
+    export NUMBER_OF_PROCESSORS=$(cat /proc/cpuinfo | grep processor | wc -l)
+fi
+
+# Broker should find exactly one test case to run.
+python broker.py installtest done --familydir=../hl --specificdir=a0 --serverdefaultlife=0 --glitchfreq=0 --shockfreq=0 --ncopies=1 --lifem=1000 --auditfreq=0 --docsize=50 --shelfsize=1 --nseeds=1 --redo --listonly   >tmp/brokertest.log 2>&1
+# The number of the last case should be "1.1".
 sTestCases=$(grep "run|" tmp/brokertest.log | tail -1 | sed 's/.*run|//' | sed 's/|.*//')
 if [ -n "$sTestCases" -a "$sTestCases" = "1.1" ]
 then
@@ -139,7 +153,10 @@ else
     echo "STOPPING here."
     exit 1
 fi
-python broker.py inprogress done --familydir=../hl --specificdir=a0 --serverdefaultlife=0 --glitchfreq=0 --ncopies='{"$gte":1,"$lte":5}' --lifem='[100,200,300]' --auditfreq=10000 --audittype=TOTAL --auditsegments='[1]' --nseeds=1 --redo --listonly  >tmp/brokertest.log 2>&1
+
+# And fifteen cases here.
+python broker.py installtest done --familydir=../hl --specificdir=a0 --serverdefaultlife=0 --glitchfreq=0 --ncopies='{"$gte":1,"$lte":5}' --lifem='[100,200,300]' --auditfreq=10000 --audittype=TOTAL --auditsegments='[1]' --docsize=50 --shelfsize=1 --nseeds=1 --redo --listonly  >tmp/brokertest.log 2>&1
+sTestCases=$(grep "run|" tmp/brokertest.log | tail -1 | sed 's/.*run|//' | sed 's/|.*//')
 if [ -n "$sTestCases" -a "$sTestCases" = "15.1" ]
 then
     echo "SUCCESS: broker/instructions test case 2 looks okay!"
@@ -152,13 +169,10 @@ fi
 
 echo "**************************************** Test broker"
 # Clean out Mongo databases.
-python dbclearcollection.py brokeradmin done
+python dbclearcollection.py installtest done
 # And set up new working directories for these runs.  
 bash setupfamilydir.sh ../hl testing
-# Until we expand to larger quarters, don't run too many cores at once.  
-#  Xeon isn't *that* fast.  Adjust as needed.  
-export NCORES=4        # Adjust this number, or remove for default.
-python broker.py inprogress done --familydir=../hl --specificdir=testing --serverdefaultlife=0 --glitchfreq=0 --ncopies='{"$gte":1,"$lte":5}' --lifem='[100,200,300]' --auditfreq=10000 --audittype=TOTAL --auditsegments=1 --nseeds=2 --redo --testlimit=4 
+python broker.py installtest done --familydir=../hl --specificdir=testing --serverdefaultlife=0 --glitchfreq=0 --ncopies='{"$gte":1,"$lte":5}' --lifem='[100,200,300]' --auditfreq=10000 --audittype=TOTAL --auditsegments=1 --docsize=50 --shelfsize=1 --nseeds=2 --redo --testlimit=4 
 
 # If everything looks okay, remove or raise the --testlimit, 
 #  raise the NCORES limit, and probably lower the NPOLITE interval,
@@ -170,36 +184,44 @@ python broker.py inprogress done --familydir=../hl --specificdir=testing --serve
 #python broker.py inprogress done --familydir=../hl --specificdir=testing --serverdefaultlife=0 --glitchfreq=0 --ncopies='{"$gte":1,"$lte":5}' --lifem='[100,200,300]' --auditfreq=10000 --audittype=TOTAL --auditsegments=1 --nseeds=20 --redo 
 
 echo "**************************************** Done initial tests"
-echo "**************************************** Build latest instruction database"
-cd newinstructions
-bash makecompletetemplate.sh hlinstructiontemplate.txt latestinstructions.big filter
-python loadintodb.py latest pending latestinstructions.big
-cd ..
 
-echo "**************************************** Instruction db 'latest' available for use"
-
-echo "**************************************** Create startup.sh script"
+echo "**************************************** Create startup.sh script in ~"
 cd ~
 cat >startup.sh <<EOF
+if [ -z "$NUMBER_OF_PROCESSORS" ]
+then
+    export NUMBER_OF_PROCESSORS=$(cat /proc/cpuinfo | grep processor | wc -l)
+fi
 . shelfenv/bin/activate
 cd working/shelf
+bash start_brokerform.sh & 
+
 echo ""
 echo "********************************************************"
 echo "*** Ready to run 'shelf' simulations.                ***"
 echo "***  The shelfenv virtualenv should be activated,    ***"
-echo "***  and the correct directory should be set.        ***" 
+echo "***  the correct directory should be set,            ***" 
+echo "***  and the broker web application running          ***" 
+echo "***  on localhost:8080.                              ***" 
 echo "***                                                  ***" 
-echo "*** You may wish to change NCORES and NPOLITE for    ***" 
-echo "***  the capabilities of this server.  E.g.,         ***" 
-echo "***      export NCORES=8              (or maybe 32)  ***" 
-echo "***      export NPOLITE=2             (the default)  ***" 
-echo "***  or similar, appropriate values.                 ***" 
-echo "***  (Alternatively, the number of cores is sensed   ***" 
+echo "***  The simulation broker will exploit all the      ***" 
+echo "***   CPU cores (and threads) available.             ***" 
+echo "***   The number of cores available is sensed        ***" 
 echo "***   automatically, but you may wish to impose      ***" 
-echo "***   a lower limit on CPU use.)                     ***" 
+echo "***   a lower limit on CPU use.                      ***" 
+echo "***  Example:                                        ***" 
+echo "***      export NCORES=8                             ***" 
+echo "***  or similar, appropriate values.                 ***" 
 echo "***                                                  ***" 
-echo "*** Try   python main.py -h                          ***"
-echo "*** or    python broker.py -h                        ***" 
+echo "*** The easiest intro is to browse to localhost:8080 ***" 
+echo "***  and fill out the form (and leave the TESTONLY  ***" 
+echo "***  box checked).  This way, you can see the set    ***" 
+echo "***  of runs that will be executed for a given range ***" 
+echo "***  of your instructions.                           ***" 
+echo "***                                                  ***" 
+echo "*** For those who like typing CLI commands,          ***" 
+echo "***  try   python main.py -h                         ***"
+echo "***  or    python broker.py -h                       ***" 
 echo "*** for help.                                        ***"
 echo "***                                                  ***" 
 echo "*** HowTo info can be found in the 'docs' directory. ***"

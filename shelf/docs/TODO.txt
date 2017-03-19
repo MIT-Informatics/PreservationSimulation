@@ -47,6 +47,7 @@ DONE - need new utils: list databases, list collections in db.
 
 
 TODO: web interface to select instructions for broker run
+DONE - let web server read from any address so it can be controlled remotely.  
 DONE - validate directories before launching broker.py.
 DONOTDO - maybe add button for Production Mode.  broker runs should *always*
     be in production mode, so have the script set that.  
@@ -333,7 +334,7 @@ FIXME - QUESTION: the last audit cycle is always left open. Is this problem?  So
 
 TODO: unittests
 FIXME - fix the numbers in the current tests so they match what the new 
-    new new instructions put out.  
+    new new instructions put out.  and find a way to fix this permanently.
 
 
 TODO: R reporting
