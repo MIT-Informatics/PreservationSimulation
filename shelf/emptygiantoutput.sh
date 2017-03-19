@@ -20,7 +20,7 @@ else
 fi
 
 # Preserve contents of GiantOutput file, if any, by appending to backup file.
-if [ -r "$sFamilyDir/$sSpecificDir/dat/GiantOutput_00.txt" ]
+if [ -f "$sFamilyDir/$sSpecificDir/dat/GiantOutput_00.txt" ]
 then
     echo "Appending previous GiantOutput data to backup file."
     touch "$sFamilyDir/$sSpecificDir/dat/GiantOutput_00.txt.prev"
