@@ -149,6 +149,8 @@ DONE - slow down after extractvalues, too.
 
 
 TODO: broker.py
+FIXME - harden against missing env var for NUMBER_OF_PROCESSORS.  and then
+    remove the crap added to AWSinstall.
 FIXME - log all broker commands into some file.
 FIXME - write a utility to reconstitute the main.py command line 
     from a result line in GiantOutput.  
@@ -254,12 +256,13 @@ FIXME - after container install, run broker tests
 
 
 TODO: AWS deployment
-FIXME - change newinstructions section of script to create flat instructions 
+FIXME - add broker test that runs and check the loss number.
+DONE - change newinstructions section of script to create flat instructions 
   and database from the ins files pulled.  
-FIXME - change newinstructions section of script to be way simpler with
+DONE - change newinstructions section of script to be way simpler with
     newnewnewinstructions method of on-demand cross-product with no
     pre-stored instructions.
-FIXME - change broker cli for tests and examples.
+DONE - change broker cli for tests and examples.
 DONE - deploy shelf on AWS free tier system.
 DONE - automate deployment to AWS systems.
 DONE - run shelf on free tier system.
@@ -326,6 +329,11 @@ FIXME - QUESTION: the last audit cycle is always left open. Is this problem?  So
   at the end of the simulation would seem to add a touch of reality to it: 
   losses may occur at any time in the auditing cycle, and you never know when
   you will need access to a particular document.  
+
+
+TODO: unittests
+FIXME - fix the numbers in the current tests so they match what the new 
+    new new instructions put out.  
 
 
 TODO: R reporting

@@ -287,7 +287,7 @@ class CCommand(object):
 
 def runme():
     port = int(os.environ.get('PORT', 8080))
-    run(host='localhost', port=port, debug=True, reloader=True)
+    run(host='0.0.0.0', port=port, debug=True, reloader=True)
 
 if __name__ == '__main__':
     cCmd = CCommand()
