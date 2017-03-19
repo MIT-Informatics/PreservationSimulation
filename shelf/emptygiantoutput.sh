@@ -20,12 +20,14 @@ else
 fi
 
 # Preserve contents of GiantOutput file, if any, by appending to backup file.
-if [ -r $sFamilyDir/$sSpecificDir/dat/GiantOutput_00.txt ]
+if [ -r "$sFamilyDir/$sSpecificDir/dat/GiantOutput_00.txt" ]
 then
-    touch $sFamilyDir/$sSpecificDir/dat/GiantOutput_00.txt.prev
-    cat $sFamilyDir/$sSpecificDir/dat/GiantOutput_00.txt \
-     >> $sFamilyDir/$sSpecificDir/dat/GiantOutput_00.txt.prev
+    echo "Appending previous GiantOutput data to backup file."
+    touch "$sFamilyDir/$sSpecificDir/dat/GiantOutput_00.txt.prev"
+    cat "$sFamilyDir/$sSpecificDir/dat/GiantOutput_00.txt" \
+     >> "$sFamilyDir/$sSpecificDir/dat/GiantOutput_00.txt.prev"
 fi
-cp -v ./GiantOutput_HeaderOnly.txt $sFamilyDir/$sSpecificDir/dat/GiantOutput_00.txt
+echo "Placing new blank GiantOutput file."
+cp -v ./GiantOutput_HeaderOnly.txt "$sFamilyDir/$sSpecificDir/dat/GiantOutput_00.txt"
 
 #END

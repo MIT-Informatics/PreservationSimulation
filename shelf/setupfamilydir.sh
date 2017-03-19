@@ -32,7 +32,7 @@ then
     echo "Family Dir $sFamilyDir already exists."
 else
     echo "Creating dir $sFamilyDir"
-    mkdir $sFamilyDir
+    mkdir "$sFamilyDir"
 fi
 
 if [ -d "$sFamilyDir/$sSpecificDir" ] 
@@ -40,7 +40,7 @@ then
     echo "Specific Dir $sFamilyDir/$sSpecificDir already exists."
 else
     echo "Creating dir $sFamilyDir/$sSpecificDir"
-    mkdir $sFamilyDir/$sSpecificDir
+    mkdir "$sFamilyDir/$sSpecificDir"
 fi
 
 for dd in act cmd dat ext log 'done'
@@ -50,15 +50,15 @@ do
         echo "Dir $sFamilyDir/$sSpecificDir/$dd already exists."
     else
         echo "Creating dir $sFamilyDir/$sSpecificDir/$dd"
-        mkdir $sFamilyDir/$sSpecificDir/$dd
+        mkdir "$sFamilyDir/$sSpecificDir/$dd"
     fi
 done
 
 echo "Copying default param files to $sFamilyDir"
-cp ./defaults/* $sFamilyDir/$sSpecificDir
+cp ./defaults/* "$sFamilyDir/$sSpecificDir"
 
 echo "Copying starter output file to $sFamilyDir/$sSpecificDir/dat"
-bash ./emptygiantoutput.sh $sFamilyDir $sSpecificDir
+bash ./emptygiantoutput.sh "$sFamilyDir" "$sSpecificDir"
 
 echo "Done."
 
