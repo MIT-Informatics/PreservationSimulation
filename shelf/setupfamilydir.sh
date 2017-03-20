@@ -10,7 +10,7 @@
 #  parameter files into the family dir.
 # familydir required, but specific defaults to "." for convenience.
 
-if [ -z "$1" -o "$1" == "-h" -o "$1" == "--help" ]
+if [ -z "$1" -o "$1" = "-h" -o "$1" = "--help" ]
 then
     echo "Usage: $0 [<familydir> [<specificdir>]]"
     echo "<specificdir> defaults to ."

@@ -6,7 +6,7 @@
 # 
 # Show the smallest and largest few files to see if they are oddly short or long.  
 
-if [ -z "$1" -o "$1" == "-h" -o "$1" == "--help" ]
+if [ -z "$1" -o "$1" = "-h" -o "$1" = "--help" ]
 then
     echo "Usage: $0 [<familydir> [<specificdir>]]"
     echo "<specificdir> defaults to ."

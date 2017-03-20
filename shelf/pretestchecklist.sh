@@ -5,7 +5,7 @@
 # familydir required, but specific defaults to .
 # 
 
-if [ -z "$1" -o "$1" == "-h" -o "$1" == "--help" ]
+if [ -z "$1" -o "$1" = "-h" -o "$1" = "--help" ]
 then 
     echo "Usage: $0 [<familydir> [<specificdir>]]"
     echo "<specificdir> defaults to ."

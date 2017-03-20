@@ -56,6 +56,9 @@
 #               Start the brokerform web app in the startup script.
 #               Remove mentions of NCORES since broker now adapts to
 #                the number of cores available
+#               Add calc of number of cores to startup.sh script.
+#               Add broker test3 that looks for correct resultof a single run,
+#                from broker command all the way through to GiantOutput data.
 # 
 # 
  
@@ -174,13 +177,13 @@ echo "**************************************** Test broker result"
 # B R O K E R   T E S T   3 
 # And one right answer here.
 sudo rm --force --recursive ../hl
-bash setupfamilydir.sh ../hl test3
-bash pretestchecklist.sh ../hl test3
+bash setupfamilydir.sh ../hl installtest
+bash pretestchecklist.sh ../hl installtest
 python dbclearcollection.py installtest done
-python broker.py installtest done --familydir=../hl --specificdir=test3 --ncopies=1 --lifem=1000 --auditfreq=0 --auditsegments=0 --audittype=TOTAL --glitchfreq=0 --glitchimpact=0 --glitchdecay=0 --glitchmaxlife=0 --glitchspan=0 --serverdefaultlife=0 --shockfreq=0 --shockimpact=0 --shockmaxlife=0 --shockspan=0 --shelfsize=1 --docsize=50 --nseeds=1 --redo 
+python broker.py installtest done --familydir=../hl --specificdir=installtest --ncopies=1 --lifem=1000 --auditfreq=0 --auditsegments=0 --audittype=TOTAL --glitchfreq=0 --glitchimpact=0 --glitchdecay=0 --glitchmaxlife=0 --glitchspan=0 --serverdefaultlife=0 --shockfreq=0 --shockimpact=0 --shockmaxlife=0 --shockspan=0 --shelfsize=1 --docsize=50 --nseeds=1 --redo 
 while true
 do
-    sDataLine=$(tail -1 ../hl/test3/dat/GiantOutput_00.txt)
+    sDataLine=$(tail -1 ../hl/installtest/dat/GiantOutput_00.txt)
     sField1=$(echo $sDataLine | cut -d " " -f 1)
     if [ "$sField1" = "timestamp" ]
     then
@@ -194,10 +197,10 @@ sSeed=$(echo $sDataLine | cut -d " " -f 7)
 sLost=$(echo $sDataLine | cut -d " " -f 8)
 if [ -n "$sSeed" -a "$sSeed" = "919028296" -a -n "$sLost" -a "$sLost" = "42" ]
 then
-    echo "SUCCESS: broker/instructions test case 3 looks okay!"
+    echo "SUCCESS: broker/results test case 3 looks okay!"
     echo "Proceeding..."
 else
-    echo "ERROR: broker/instructions test case 3 failed!"
+    echo "ERROR: broker/results test case 3 failed!"
     echo "STOPPING here."
     exit 1
 fi
@@ -239,7 +242,7 @@ echo "***  and the broker web application running          ***"
 echo "***  on localhost:8080.                              ***" 
 echo "***                                                  ***" 
 echo "***  The simulation broker will exploit all the      ***" 
-echo "***   CPU cores (and threads) available.             ***" 
+echo "***   CPU cores (and hyperthreads) available.        ***" 
 echo "***   The number of cores available is sensed        ***" 
 echo "***   automatically, but you may wish to impose      ***" 
 echo "***   a lower limit on CPU use.                      ***" 
@@ -248,7 +251,8 @@ echo "***      export NCORES=8                             ***"
 echo "***  or similar, appropriate values.                 ***" 
 echo "***                                                  ***" 
 echo "*** The easiest intro is to browse to localhost:8080 ***" 
-echo "***  and fill out the form (and leave the TESTONLY  ***" 
+echo "***  (or to someipaddress:8080 from another system)  ***" 
+echo "***  and fill out the form (and leave the TESTONLY   ***" 
 echo "***  box checked).  This way, you can see the set    ***" 
 echo "***  of runs that will be executed for a given range ***" 
 echo "***  of your instructions.                           ***" 
