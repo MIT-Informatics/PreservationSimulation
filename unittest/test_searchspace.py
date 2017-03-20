@@ -172,7 +172,7 @@ class CSearchSpaceTest(unittest.TestCase):
         foo = fndFilterResults(foo)
         fnvTestResults(foo, self.ddd)
         lNames = fnlGetSearchSpaceNames(foo)
-        self.assertEqual(len(lNames), 19)
+        self.assertEqual(len(lNames), 23)
 
     @ntracef("TSRS")
     def test_combine(self):
@@ -221,6 +221,6 @@ class CSearchSpaceTest(unittest.TestCase):
         lInstructions = [lInstruction for lInstruction in 
                         fndgGetSearchSpace("./ins", ".ins3", rules)]
         self.assertEqual(len(lInstructions), 5)
-        self.assertEqual(len(lInstructions[0]), 20)
+        self.assertEqual(len(lInstructions[0]), 24)
 
 

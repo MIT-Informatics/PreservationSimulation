@@ -113,6 +113,7 @@ cd shelf
 sudo rm --force --recursive ../hl
 bash setupfamilydir.sh ../hl a0 
 bash pretestchecklist.sh ../hl a0 
+# M A I N   T E S T   1 
 # Run one simple test of the simulation, and check the answer.
 sudo rm --force --recursive tmp
 mkdir tmp
@@ -140,6 +141,7 @@ then
     export NUMBER_OF_PROCESSORS=$(cat /proc/cpuinfo | grep processor | wc -l)
 fi
 
+# B R O K E R   T E S T   1 
 # Broker should find exactly one test case to run.
 python broker.py installtest done --familydir=../hl --specificdir=a0 --serverdefaultlife=0 --glitchfreq=0 --shockfreq=0 --ncopies=1 --lifem=1000 --auditfreq=0 --docsize=50 --shelfsize=1 --nseeds=1 --redo --listonly   >tmp/brokertest.log 2>&1
 # The number of the last case should be "1.1".
@@ -154,6 +156,7 @@ else
     exit 1
 fi
 
+# B R O K E R   T E S T   2 
 # And fifteen cases here.
 python broker.py installtest done --familydir=../hl --specificdir=a0 --serverdefaultlife=0 --glitchfreq=0 --ncopies='{"$gte":1,"$lte":5}' --lifem='[100,200,300]' --auditfreq=10000 --audittype=TOTAL --auditsegments='[1]' --docsize=50 --shelfsize=1 --nseeds=1 --redo --listonly  >tmp/brokertest.log 2>&1
 sTestCases=$(grep "run|" tmp/brokertest.log | tail -1 | sed 's/.*run|//' | sed 's/|.*//')
@@ -167,7 +170,38 @@ else
     exit 1
 fi
 
-echo "**************************************** Test broker"
+echo "**************************************** Test broker result"
+# B R O K E R   T E S T   3 
+# And one right answer here.
+sudo rm --force --recursive ../hl
+bash setupfamilydir.sh ../hl test3
+bash pretestchecklist.sh ../hl test3
+python dbclearcollection.py installtest done
+python broker.py installtest done --familydir=../hl --specificdir=test3 --ncopies=1 --lifem=1000 --auditfreq=0 --auditsegments=0 --audittype=TOTAL --glitchfreq=0 --glitchimpact=0 --glitchdecay=0 --glitchmaxlife=0 --glitchspan=0 --serverdefaultlife=0 --shockfreq=0 --shockimpact=0 --shockmaxlife=0 --shockspan=0 --shelfsize=1 --docsize=50 --nseeds=1 --redo 
+while true
+do
+    sDataLine=$(tail -1 ../hl/test3/dat/GiantOutput_00.txt)
+    sField1=$(echo $sDataLine | cut -d " " -f 1)
+    if [ "$sField1" = "timestamp" ]
+    then
+        echo "Waiting. . . "
+        sleep 5
+    else
+        break
+    fi
+done
+sSeed=$(echo $sDataLine | cut -d " " -f 7)
+sLost=$(echo $sDataLine | cut -d " " -f 8)
+if [ -n "$sSeed" -a "$sSeed" = "919028296" -a -n "$sLost" -a "$sLost" = "42" ]
+then
+    echo "SUCCESS: broker/instructions test case 3 looks okay!"
+    echo "Proceeding..."
+else
+    echo "ERROR: broker/instructions test case 3 failed!"
+    echo "STOPPING here."
+    exit 1
+fi
+
 # Clean out Mongo databases.
 python dbclearcollection.py installtest done
 # And set up new working directories for these runs.  
