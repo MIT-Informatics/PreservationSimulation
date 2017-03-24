@@ -3,3 +3,6 @@ test
 tmp
 *.pyc
 *.tmp
+!R
+!R/hl
+!R/hl/*

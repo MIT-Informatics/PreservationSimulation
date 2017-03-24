@@ -1,0 +1,4979 @@
+Q2-NOT-HL copies=var Audit=var Glitch=0 Shock=0 lifem=var seedXXX 
+(test of summ-audit-test1.r with combined data) 
+
+Input data from  ../hl/data/test/big-q2-afvar.txt 
+Output analysis into  ../hl/tabs/q2q3_combined_AuditVar_copvar_shock0_glitch0_lifvar-seed21_analysis_20170316_00.txt 
+
+analysis tables by  ./ShelfAnalyze.r 
+and summarize script ./summ-audit-test1.r 
+ at  20170316_160543 EDT 
+
+Summary losses (midmeans)
+   auditfreq auditseg    lifem   c1     c2    c3    c4    c5  c8
+1       2500        1        1 9931 4254.9 634.6  78.3  9.43 0.7
+2       2500        1        2 9183 1356.0  90.3   5.5  0.08 0.0
+3       2500        1        3 8128  673.5  28.5   0.8  0.00 0.0
+4       2500        1        5 6326  247.6   5.2   0.0  0.00 0.0
+5       2500        1       10 3933   61.7   0.4   0.0  0.00 0.0
+6       2500        1       20 2217   16.3   0.0   0.0  0.00 0.0
+7       2500        1       30 1552    6.0   0.0   0.0  0.00 0.0
+8       2500        1       50  949    2.8   0.0   0.0  0.00 0.0
+9       2500        1      100  487    1.0   0.0   0.0  0.00 0.0
+10      2500        1      200  242    0.0   0.0   0.0  0.00 0.0
+11      2500        1      300  169    0.0   0.0   0.0  0.00 0.0
+12      2500        1      500  104    0.0   0.0   0.0  0.00 0.0
+13      2500        1     1000   50    0.0   0.0   0.0  0.00 0.0
+14      2500        1     2000   25    0.0   0.0   0.0  0.00 0.0
+15      2500        1     3000   17    0.0   0.0   0.0  0.00 0.0
+16      2500        1     5000   11    0.0   0.0   0.0  0.00 0.0
+17      2500        1    10000    6    0.0   0.0   0.0  0.00 0.0
+18     10000        4        2 9183 3850.9 991.3 225.7 51.43 0.9
+19     10000        4        3 8128 2068.1 346.6  53.7  8.86 0.0
+20     10000        4        5 6324  862.1  79.6   8.0  0.71 0.0
+21     10000        4       10 3932  238.1  11.3   0.1  0.00 0.0
+22     10000        4       20 2216   59.0   1.1   0.0  0.00 0.0
+23     10000        4       30 1551   28.7   0.4   0.0  0.00 0.0
+24     10000        4       50  950   11.0   0.0   0.0  0.00 0.0
+25     10000        4      100  487    3.1   0.0   0.0  0.00 0.0
+26     10000        4      200  243    0.9   0.0   0.0  0.00 0.0
+27     10000        4      300  168    0.1   0.0   0.0  0.00 0.0
+28     10000        4      500  104    0.0   0.0   0.0  0.00 0.0
+29     10000        4     1000   50    0.0   0.0   0.0  0.00 0.0
+30     10000        4     2000   25    0.0   0.0   0.0  0.00 0.0
+31     10000        4     3000   17    0.0   0.0   0.0  0.00 0.0
+32     10000        4     5000   11    0.0   0.0   0.0  0.00 0.0
+33     10000        4    10000    6    0.0   0.0   0.0  0.00 0.0
+
+Summary losses (medians)
+   auditfreq auditseg    lifem   c1   c2  c3  c4 c5 c8
+1       2500        1        1 9934 4249 633  78  9  0
+2       2500        1        2 9183 1354  89   6  0  0
+3       2500        1        3 8126  673  28   1  0  0
+4       2500        1        5 6331  251   5   0  0  0
+5       2500        1       10 3947   61   0   0  0  0
+6       2500        1       20 2215   16   0   0  0  0
+7       2500        1       30 1546    6   0   0  0  0
+8       2500        1       50  946    3   0   0  0  0
+9       2500        1      100  486    1   0   0  0  0
+10      2500        1      200  246    0   0   0  0  0
+11      2500        1      300  171    0   0   0  0  0
+12      2500        1      500  105    0   0   0  0  0
+13      2500        1     1000   50    0   0   0  0  0
+14      2500        1     2000   25    0   0   0  0  0
+15      2500        1     3000   17    0   0   0  0  0
+16      2500        1     5000   11    0   0   0  0  0
+17      2500        1    10000    6    0   0   0  0  0
+18     10000        4        2 9183 3850 996 223 53  1
+19     10000        4        3 8126 2067 344  53 10  0
+20     10000        4        5 6331  861  79   8  1  0
+21     10000        4       10 3947  235  12   0  0  0
+22     10000        4       20 2215   58   1   0  0  0
+23     10000        4       30 1546   30   0   0  0  0
+24     10000        4       50  946   11   0   0  0  0
+25     10000        4      100  486    3   0   0  0  0
+26     10000        4      200  246    1   0   0  0  0
+27     10000        4      300  171    0   0   0  0  0
+28     10000        4      500  105    0   0   0  0  0
+29     10000        4     1000   50    0   0   0  0  0
+30     10000        4     2000   25    0   0   0  0  0
+31     10000        4     3000   17    0   0   0  0  0
+32     10000        4     5000   11    0   0   0  0  0
+33     10000        4    10000    6    0   0   0  0  0
+
+Summary losses (trimeans)
+   auditfreq auditseg    lifem   c1     c2    c3    c4   c5  c8
+1       2500        1        1 9932 4254.1 633.8  78.1  9.4 0.5
+2       2500        1        2 9180 1353.5  90.0   6.0  0.2 0.0
+3       2500        1        3 8126  667.0  28.5   1.0  0.0 0.0
+4       2500        1        5 6323  249.2   5.0   0.0  0.0 0.0
+5       2500        1       10 3936   61.5   0.2   0.0  0.0 0.0
+6       2500        1       20 2214   16.5   0.0   0.0  0.0 0.0
+7       2500        1       30 1547    6.0   0.0   0.0  0.0 0.0
+8       2500        1       50  950    2.8   0.0   0.0  0.0 0.0
+9       2500        1      100  487    1.0   0.0   0.0  0.0 0.0
+10      2500        1      200  244    0.0   0.0   0.0  0.0 0.0
+11      2500        1      300  169    0.0   0.0   0.0  0.0 0.0
+12      2500        1      500  104    0.0   0.0   0.0  0.0 0.0
+13      2500        1     1000   50    0.0   0.0   0.0  0.0 0.0
+14      2500        1     2000   25    0.0   0.0   0.0  0.0 0.0
+15      2500        1     3000   17    0.0   0.0   0.0  0.0 0.0
+16      2500        1     5000   11    0.0   0.0   0.0  0.0 0.0
+17      2500        1    10000    6    0.0   0.0   0.0  0.0 0.0
+18     10000        4        2 9183 3849.9 992.8 224.5 52.0 1.0
+19     10000        4        3 8127 2067.1 346.0  53.4  9.1 0.0
+20     10000        4        5 6326  862.2  79.4   7.9  0.8 0.0
+21     10000        4       10 3937  237.1  11.5   0.1  0.0 0.0
+22     10000        4       20 2215   58.8   1.1   0.0  0.0 0.0
+23     10000        4       30 1549   29.2   0.2   0.0  0.0 0.0
+24     10000        4       50  949   11.1   0.0   0.0  0.0 0.0
+25     10000        4      100  488    3.1   0.0   0.0  0.0 0.0
+26     10000        4      200  244    0.9   0.0   0.0  0.0 0.0
+27     10000        4      300  169    0.1   0.0   0.0  0.0 0.0
+28     10000        4      500  104    0.0   0.0   0.0  0.0 0.0
+29     10000        4     1000   50    0.0   0.0   0.0  0.0 0.0
+30     10000        4     2000   25    0.0   0.0   0.0  0.0 0.0
+31     10000        4     3000   17    0.0   0.0   0.0  0.0 0.0
+32     10000        4     5000   11    0.0   0.0   0.0  0.0 0.0
+33     10000        4    10000    6    0.0   0.0   0.0  0.0 0.0
+
+
+============================================
+======  lifem 1 copies 1 auditfreq 2500 auditseg 1 N 11  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  991 | 6
+  992 | 017
+  993 | 245567
+  994 | 4
+
+lifem 1 copies 1 auditfreq 2500 auditseg 1 N 11 
+median 		 9934 
+trimean 	 9932 
+midmean 	 9931 
+mean 		 9931 
+stddev 		 9 
+IQR 		 12 
+mad 		 4 
+SEM 		 3 
+MeanOverSEM 	 3848 
+LogMeanOverSEM 	 4 
+
+======  lifem 1 copies 2 auditfreq 2500 auditseg 1 N 11  ====== 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  41 | 9
+  42 | 114
+  42 | 5559
+  43 | 002
+
+lifem 1 copies 2 auditfreq 2500 auditseg 1 N 11 
+median 		 4249 
+trimean 	 4254 
+midmean 	 4255 
+mean 		 4255 
+stddev 		 42 
+IQR 		 72 
+mad 		 59 
+SEM 		 13 
+MeanOverSEM 	 340 
+LogMeanOverSEM 	 3 
+
+======  lifem 1 copies 3 auditfreq 2500 auditseg 1 N 11  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  60 | 548
+  62 | 903
+  64 | 1294
+  66 | 0
+
+lifem 1 copies 3 auditfreq 2500 auditseg 1 N 11 
+median 		 633 
+trimean 	 634 
+midmean 	 635 
+mean 		 634 
+stddev 		 17 
+IQR 		 22 
+mad 		 22 
+SEM 		 5 
+MeanOverSEM 	 122 
+LogMeanOverSEM 	 2 
+
+======  lifem 1 copies 4 auditfreq 2500 auditseg 1 N 11  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  7 | 03
+  7 | 67889
+  8 | 004
+  8 | 7
+
+lifem 1 copies 4 auditfreq 2500 auditseg 1 N 11 
+median 		 78 
+trimean 	 78 
+midmean 	 78 
+mean 		 78 
+stddev 		 5 
+IQR 		 4 
+mad 		 3 
+SEM 		 1 
+MeanOverSEM 	 56 
+LogMeanOverSEM 	 2 
+
+======  lifem 1 copies 5 auditfreq 2500 auditseg 1 N 11  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 34
+  0 | 88999
+  1 | 1224
+
+lifem 1 copies 5 auditfreq 2500 auditseg 1 N 11 
+median 		 9 
+trimean 	 9 
+midmean 	 9 
+mean 		 9 
+stddev 		 3 
+IQR 		 4 
+mad 		 3 
+SEM 		 1 
+MeanOverSEM 	 9 
+LogMeanOverSEM 	 1 
+
+======  lifem 1 copies 6 auditfreq 2500 auditseg 1 N 11  ====== 
+
+  The decimal point is at the |
+
+  0 | 000000
+  1 | 0
+  2 | 00
+  3 | 0
+  4 | 0
+
+lifem 1 copies 6 auditfreq 2500 auditseg 1 N 11 
+median 		 0 
+trimean 	 0.5 
+midmean 	 0.7 
+mean 		 1 
+stddev 		 1 
+IQR 		 2 
+mad 		 0 
+SEM 		 0.4 
+MeanOverSEM 	 3 
+LogMeanOverSEM 	 0.4 
+
+======  lifem 1 copies 7 auditfreq 2500 auditseg 1 N 11  ====== 
+
+  The decimal point is at the |
+
+  0 | 0000000000
+  0 | 
+  1 | 0
+
+lifem 1 copies 7 auditfreq 2500 auditseg 1 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0.09 
+stddev 		 0.3 
+IQR 		 0 
+mad 		 0 
+SEM 		 0.09 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 0 
+
+======  lifem 1 copies 8 auditfreq 2500 auditseg 1 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 1 copies 8 auditfreq 2500 auditseg 1 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 1 copies 9 auditfreq 2500 auditseg 1 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 1 copies 9 auditfreq 2500 auditseg 1 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 1 copies 10 auditfreq 2500 auditseg 1 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 1 copies 10 auditfreq 2500 auditseg 1 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 2 copies 1 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  914 | 331177
+  916 | 99
+  918 | 0033446699
+  920 | 5533
+
+lifem 2 copies 1 auditfreq 2500 auditseg 1 N 22 
+median 		 9183 
+trimean 	 9180 
+midmean 	 9183 
+mean 		 9181 
+stddev 		 22 
+IQR 		 36 
+mad 		 24 
+SEM 		 5 
+MeanOverSEM 	 1956 
+LogMeanOverSEM 	 3 
+
+======  lifem 2 copies 2 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  128 | 66
+  130 | 
+  132 | 5588
+  134 | 44444455
+  136 | 66881155
+
+lifem 2 copies 2 auditfreq 2500 auditseg 1 N 22 
+median 		 1354 
+trimean 	 1354 
+midmean 	 1356 
+mean 		 1351 
+stddev 		 24 
+IQR 		 26 
+mad 		 21 
+SEM 		 5 
+MeanOverSEM 	 261 
+LogMeanOverSEM 	 2 
+
+======  lifem 2 copies 3 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  8 | 00
+  8 | 5566888899
+  9 | 00
+  9 | 66666677
+
+lifem 2 copies 3 auditfreq 2500 auditseg 1 N 22 
+median 		 89 
+trimean 	 90 
+midmean 	 90 
+mean 		 90 
+stddev 		 5 
+IQR 		 10 
+mad 		 6 
+SEM 		 1 
+MeanOverSEM 	 78 
+LogMeanOverSEM 	 2 
+
+======  lifem 2 copies 4 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is at the |
+
+  0 | 00
+  2 | 00
+  4 | 000000
+  6 | 000000
+  8 | 000000
+
+lifem 2 copies 4 auditfreq 2500 auditseg 1 N 22 
+median 		 6 
+trimean 	 6 
+midmean 	 6 
+mean 		 5 
+stddev 		 2 
+IQR 		 4 
+mad 		 3 
+SEM 		 0.5 
+MeanOverSEM 	 10 
+LogMeanOverSEM 	 1 
+
+======  lifem 2 copies 5 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is at the |
+
+  0 | 0000000000000000
+  0 | 
+  1 | 0000
+  1 | 
+  2 | 00
+
+lifem 2 copies 5 auditfreq 2500 auditseg 1 N 22 
+median 		 0 
+trimean 	 0.2 
+midmean 	 0.08 
+mean 		 0.4 
+stddev 		 0.7 
+IQR 		 0.8 
+mad 		 0 
+SEM 		 0.1 
+MeanOverSEM 	 3 
+LogMeanOverSEM 	 0.4 
+
+======  lifem 2 copies 6 auditfreq 2500 auditseg 1 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 2 copies 6 auditfreq 2500 auditseg 1 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 2 copies 7 auditfreq 2500 auditseg 1 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 2 copies 7 auditfreq 2500 auditseg 1 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 2 copies 8 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 0000000000000000000000
+
+lifem 2 copies 8 auditfreq 2500 auditseg 1 N 22 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 2 copies 9 auditfreq 2500 auditseg 1 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 2 copies 9 auditfreq 2500 auditseg 1 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 2 copies 10 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 0000000000000000000000
+
+lifem 2 copies 10 auditfreq 2500 auditseg 1 N 22 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 3 copies 1 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  806 | 22
+  808 | 
+  810 | 447766
+  812 | 336688
+  814 | 0066
+  816 | 0000
+
+lifem 3 copies 1 auditfreq 2500 auditseg 1 N 22 
+median 		 8126 
+trimean 	 8126 
+midmean 	 8128 
+mean 		 8126 
+stddev 		 28 
+IQR 		 35 
+mad 		 28 
+SEM 		 6 
+MeanOverSEM 	 1372 
+LogMeanOverSEM 	 3 
+
+======  lifem 3 copies 2 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  60 | 33
+  62 | 6677
+  64 | 
+  66 | 112233
+  68 | 222255
+  70 | 0033
+
+lifem 3 copies 2 auditfreq 2500 auditseg 1 N 22 
+median 		 673 
+trimean 	 667 
+midmean 	 674 
+mean 		 668 
+stddev 		 29 
+IQR 		 39 
+mad 		 18 
+SEM 		 6 
+MeanOverSEM 	 109 
+LogMeanOverSEM 	 2 
+
+======  lifem 3 copies 3 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  2 | 2233
+  2 | 6677778888
+  3 | 22223344
+
+lifem 3 copies 3 auditfreq 2500 auditseg 1 N 22 
+median 		 28 
+trimean 	 28 
+midmean 	 28 
+mean 		 28 
+stddev 		 4 
+IQR 		 6 
+mad 		 6 
+SEM 		 0.8 
+MeanOverSEM 	 34 
+LogMeanOverSEM 	 2 
+
+======  lifem 3 copies 4 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is at the |
+
+  0 | 00000000
+  1 | 00000000
+  2 | 0000
+  3 | 00
+
+lifem 3 copies 4 auditfreq 2500 auditseg 1 N 22 
+median 		 1 
+trimean 	 1 
+midmean 	 0.8 
+mean 		 1 
+stddev 		 1 
+IQR 		 2 
+mad 		 1 
+SEM 		 0.2 
+MeanOverSEM 	 5 
+LogMeanOverSEM 	 0.7 
+
+======  lifem 3 copies 5 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 0000000000000000000000
+
+lifem 3 copies 5 auditfreq 2500 auditseg 1 N 22 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 3 copies 6 auditfreq 2500 auditseg 1 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 3 copies 6 auditfreq 2500 auditseg 1 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 3 copies 7 auditfreq 2500 auditseg 1 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 3 copies 7 auditfreq 2500 auditseg 1 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 3 copies 8 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 0000000000000000000000
+
+lifem 3 copies 8 auditfreq 2500 auditseg 1 N 22 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 3 copies 9 auditfreq 2500 auditseg 1 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 3 copies 9 auditfreq 2500 auditseg 1 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 3 copies 10 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 0000000000000000000000
+
+lifem 3 copies 10 auditfreq 2500 auditseg 1 N 22 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 5 copies 1 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  62 | 777788
+  63 | 2222333344
+  63 | 557799
+
+lifem 5 copies 1 auditfreq 2500 auditseg 1 N 22 
+median 		 6331 
+trimean 	 6323 
+midmean 	 6326 
+mean 		 6325 
+stddev 		 36 
+IQR 		 53 
+mad 		 24 
+SEM 		 8 
+MeanOverSEM 	 820 
+LogMeanOverSEM 	 3 
+
+======  lifem 5 copies 2 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  20 | 55
+  22 | 11990055
+  24 | 1166
+  26 | 66668888
+
+lifem 5 copies 2 auditfreq 2500 auditseg 1 N 22 
+median 		 251 
+trimean 	 249 
+midmean 	 248 
+mean 		 247 
+stddev 		 21 
+IQR 		 37 
+mad 		 25 
+SEM 		 4 
+MeanOverSEM 	 55 
+LogMeanOverSEM 	 2 
+
+======  lifem 5 copies 3 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is at the |
+
+  3 | 000000
+  4 | 
+  5 | 00000000
+  6 | 00
+  7 | 000000
+
+lifem 5 copies 3 auditfreq 2500 auditseg 1 N 22 
+median 		 5 
+trimean 	 5 
+midmean 	 5 
+mean 		 5 
+stddev 		 2 
+IQR 		 3 
+mad 		 3 
+SEM 		 0.3 
+MeanOverSEM 	 16 
+LogMeanOverSEM 	 1 
+
+======  lifem 5 copies 4 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 0000000000000000000000
+
+lifem 5 copies 4 auditfreq 2500 auditseg 1 N 22 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 5 copies 5 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 0000000000000000000000
+
+lifem 5 copies 5 auditfreq 2500 auditseg 1 N 22 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 5 copies 6 auditfreq 2500 auditseg 1 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 5 copies 6 auditfreq 2500 auditseg 1 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 5 copies 7 auditfreq 2500 auditseg 1 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 5 copies 7 auditfreq 2500 auditseg 1 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 5 copies 8 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 0000000000000000000000
+
+lifem 5 copies 8 auditfreq 2500 auditseg 1 N 22 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 5 copies 9 auditfreq 2500 auditseg 1 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 5 copies 9 auditfreq 2500 auditseg 1 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 5 copies 10 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 0000000000000000000000
+
+lifem 5 copies 10 auditfreq 2500 auditseg 1 N 22 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 10 copies 1 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  388 | 227799
+  390 | 3399
+  392 | 
+  394 | 7788880033
+  396 | 11
+
+lifem 10 copies 1 auditfreq 2500 auditseg 1 N 22 
+median 		 3947 
+trimean 	 3936 
+midmean 	 3933 
+mean 		 3928 
+stddev 		 28 
+IQR 		 47 
+mad 		 21 
+SEM 		 6 
+MeanOverSEM 	 655 
+LogMeanOverSEM 	 3 
+
+======  lifem 10 copies 2 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  4 | 44
+  5 | 2288
+  6 | 111111223366
+  7 | 4477
+
+lifem 10 copies 2 auditfreq 2500 auditseg 1 N 22 
+median 		 61 
+trimean 	 62 
+midmean 	 62 
+mean 		 62 
+stddev 		 9 
+IQR 		 6 
+mad 		 4 
+SEM 		 2 
+MeanOverSEM 	 33 
+LogMeanOverSEM 	 2 
+
+======  lifem 10 copies 3 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is at the |
+
+  0 | 000000000000
+  1 | 000000
+  2 | 00
+  3 | 00
+
+lifem 10 copies 3 auditfreq 2500 auditseg 1 N 22 
+median 		 0 
+trimean 	 0.2 
+midmean 	 0.4 
+mean 		 0.7 
+stddev 		 1 
+IQR 		 1 
+mad 		 0 
+SEM 		 0.2 
+MeanOverSEM 	 3 
+LogMeanOverSEM 	 0.5 
+
+======  lifem 10 copies 4 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 0000000000000000000000
+
+lifem 10 copies 4 auditfreq 2500 auditseg 1 N 22 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 10 copies 5 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 0000000000000000000000
+
+lifem 10 copies 5 auditfreq 2500 auditseg 1 N 22 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 10 copies 6 auditfreq 2500 auditseg 1 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 10 copies 6 auditfreq 2500 auditseg 1 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 10 copies 7 auditfreq 2500 auditseg 1 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 10 copies 7 auditfreq 2500 auditseg 1 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 10 copies 8 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 0000000000000000000000
+
+lifem 10 copies 8 auditfreq 2500 auditseg 1 N 22 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 10 copies 9 auditfreq 2500 auditseg 1 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 10 copies 9 auditfreq 2500 auditseg 1 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 10 copies 10 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 0000000000000000000000
+
+lifem 10 copies 10 auditfreq 2500 auditseg 1 N 22 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 20 copies 1 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  21 | 666699
+  22 | 002222224444
+  22 | 5566
+
+lifem 20 copies 1 auditfreq 2500 auditseg 1 N 22 
+median 		 2215 
+trimean 	 2214 
+midmean 	 2217 
+mean 		 2212 
+stddev 		 33 
+IQR 		 50 
+mad 		 37 
+SEM 		 7 
+MeanOverSEM 	 317 
+LogMeanOverSEM 	 3 
+
+======  lifem 20 copies 2 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 77
+  1 | 2244
+  1 | 5555667788
+  2 | 001133
+
+lifem 20 copies 2 auditfreq 2500 auditseg 1 N 22 
+median 		 16 
+trimean 	 16 
+midmean 	 16 
+mean 		 16 
+stddev 		 4 
+IQR 		 5 
+mad 		 3 
+SEM 		 0.9 
+MeanOverSEM 	 17 
+LogMeanOverSEM 	 1 
+
+======  lifem 20 copies 3 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is at the |
+
+  0 | 00000000000000000000
+  0 | 
+  1 | 00
+
+lifem 20 copies 3 auditfreq 2500 auditseg 1 N 22 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0.09 
+stddev 		 0.3 
+IQR 		 0 
+mad 		 0 
+SEM 		 0.06 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 0.2 
+
+======  lifem 20 copies 4 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 0000000000000000000000
+
+lifem 20 copies 4 auditfreq 2500 auditseg 1 N 22 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 20 copies 5 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 0000000000000000000000
+
+lifem 20 copies 5 auditfreq 2500 auditseg 1 N 22 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 20 copies 6 auditfreq 2500 auditseg 1 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 20 copies 6 auditfreq 2500 auditseg 1 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 20 copies 7 auditfreq 2500 auditseg 1 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 20 copies 7 auditfreq 2500 auditseg 1 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 20 copies 8 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 0000000000000000000000
+
+lifem 20 copies 8 auditfreq 2500 auditseg 1 N 22 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 20 copies 9 auditfreq 2500 auditseg 1 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 20 copies 9 auditfreq 2500 auditseg 1 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 20 copies 10 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 0000000000000000000000
+
+lifem 20 copies 10 auditfreq 2500 auditseg 1 N 22 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 30 copies 1 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  148 | 88
+  150 | 11
+  152 | 00
+  154 | 44446699
+  156 | 007788
+  158 | 77
+
+lifem 30 copies 1 auditfreq 2500 auditseg 1 N 22 
+median 		 1546 
+trimean 	 1547 
+midmean 	 1552 
+mean 		 1549 
+stddev 		 30 
+IQR 		 49 
+mad 		 39 
+SEM 		 6 
+MeanOverSEM 	 243 
+LogMeanOverSEM 	 2 
+
+======  lifem 30 copies 2 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 33334444
+  0 | 666677778888
+  1 | 33
+
+lifem 30 copies 2 auditfreq 2500 auditseg 1 N 22 
+median 		 6 
+trimean 	 6 
+midmean 	 6 
+mean 		 6 
+stddev 		 3 
+IQR 		 4 
+mad 		 3 
+SEM 		 0.6 
+MeanOverSEM 	 10 
+LogMeanOverSEM 	 1 
+
+======  lifem 30 copies 3 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 0000000000000000000000
+
+lifem 30 copies 3 auditfreq 2500 auditseg 1 N 22 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 30 copies 4 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 0000000000000000000000
+
+lifem 30 copies 4 auditfreq 2500 auditseg 1 N 22 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 30 copies 5 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 0000000000000000000000
+
+lifem 30 copies 5 auditfreq 2500 auditseg 1 N 22 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 30 copies 6 auditfreq 2500 auditseg 1 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 30 copies 6 auditfreq 2500 auditseg 1 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 30 copies 7 auditfreq 2500 auditseg 1 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 30 copies 7 auditfreq 2500 auditseg 1 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 30 copies 8 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 0000000000000000000000
+
+lifem 30 copies 8 auditfreq 2500 auditseg 1 N 22 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 30 copies 9 auditfreq 2500 auditseg 1 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 30 copies 9 auditfreq 2500 auditseg 1 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 30 copies 10 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 0000000000000000000000
+
+lifem 30 copies 10 auditfreq 2500 auditseg 1 N 22 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 50 copies 1 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+   9 | 1111444444
+   9 | 5566667799
+  10 | 22
+
+lifem 50 copies 1 auditfreq 2500 auditseg 1 N 22 
+median 		 946 
+trimean 	 950 
+midmean 	 949 
+mean 		 953 
+stddev 		 32 
+IQR 		 33 
+mad 		 19 
+SEM 		 7 
+MeanOverSEM 	 140 
+LogMeanOverSEM 	 2 
+
+======  lifem 50 copies 2 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is at the |
+
+  2 | 00000000
+  3 | 000000000000
+  4 | 
+  5 | 00
+
+lifem 50 copies 2 auditfreq 2500 auditseg 1 N 22 
+median 		 3 
+trimean 	 3 
+midmean 	 3 
+mean 		 3 
+stddev 		 0.9 
+IQR 		 1 
+mad 		 0 
+SEM 		 0.2 
+MeanOverSEM 	 16 
+LogMeanOverSEM 	 1 
+
+======  lifem 50 copies 3 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 0000000000000000000000
+
+lifem 50 copies 3 auditfreq 2500 auditseg 1 N 22 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 50 copies 4 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 0000000000000000000000
+
+lifem 50 copies 4 auditfreq 2500 auditseg 1 N 22 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 50 copies 5 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 0000000000000000000000
+
+lifem 50 copies 5 auditfreq 2500 auditseg 1 N 22 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 50 copies 6 auditfreq 2500 auditseg 1 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 50 copies 6 auditfreq 2500 auditseg 1 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 50 copies 7 auditfreq 2500 auditseg 1 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 50 copies 7 auditfreq 2500 auditseg 1 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 50 copies 8 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 0000000000000000000000
+
+lifem 50 copies 8 auditfreq 2500 auditseg 1 N 22 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 50 copies 9 auditfreq 2500 auditseg 1 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 50 copies 9 auditfreq 2500 auditseg 1 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 50 copies 10 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 0000000000000000000000
+
+lifem 50 copies 10 auditfreq 2500 auditseg 1 N 22 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 100 copies 1 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  46 | 66
+  47 | 4477
+  48 | 33336666
+  49 | 8888
+  50 | 4444
+
+lifem 100 copies 1 auditfreq 2500 auditseg 1 N 22 
+median 		 486 
+trimean 	 487 
+midmean 	 487 
+mean 		 487 
+stddev 		 12 
+IQR 		 20 
+mad 		 18 
+SEM 		 3 
+MeanOverSEM 	 187 
+LogMeanOverSEM 	 2 
+
+======  lifem 100 copies 2 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is at the |
+
+  0 | 00000000
+  0 | 
+  1 | 000000
+  1 | 
+  2 | 00000000
+
+lifem 100 copies 2 auditfreq 2500 auditseg 1 N 22 
+median 		 1 
+trimean 	 1 
+midmean 	 1 
+mean 		 1 
+stddev 		 0.9 
+IQR 		 2 
+mad 		 1 
+SEM 		 0.2 
+MeanOverSEM 	 5 
+LogMeanOverSEM 	 0.7 
+
+======  lifem 100 copies 3 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 0000000000000000000000
+
+lifem 100 copies 3 auditfreq 2500 auditseg 1 N 22 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 100 copies 4 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 0000000000000000000000
+
+lifem 100 copies 4 auditfreq 2500 auditseg 1 N 22 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 100 copies 5 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 0000000000000000000000
+
+lifem 100 copies 5 auditfreq 2500 auditseg 1 N 22 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 100 copies 8 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 0000000000000000000000
+
+lifem 100 copies 8 auditfreq 2500 auditseg 1 N 22 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 100 copies 10 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 0000000000000000000000
+
+lifem 100 copies 10 auditfreq 2500 auditseg 1 N 22 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 200 copies 1 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  22 | 55
+  23 | 00113355
+  24 | 6688
+  25 | 005577
+  26 | 
+  27 | 11
+
+lifem 200 copies 1 auditfreq 2500 auditseg 1 N 22 
+median 		 246 
+trimean 	 244 
+midmean 	 242 
+mean 		 244 
+stddev 		 14 
+IQR 		 22 
+mad 		 16 
+SEM 		 3 
+MeanOverSEM 	 83 
+LogMeanOverSEM 	 2 
+
+======  lifem 200 copies 2 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is at the |
+
+  0 | 000000000000000000
+  0 | 
+  1 | 0000
+
+lifem 200 copies 2 auditfreq 2500 auditseg 1 N 22 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0.2 
+stddev 		 0.4 
+IQR 		 0 
+mad 		 0 
+SEM 		 0.08 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.3 
+
+======  lifem 200 copies 3 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 0000000000000000000000
+
+lifem 200 copies 3 auditfreq 2500 auditseg 1 N 22 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 200 copies 4 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 0000000000000000000000
+
+lifem 200 copies 4 auditfreq 2500 auditseg 1 N 22 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 200 copies 5 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 0000000000000000000000
+
+lifem 200 copies 5 auditfreq 2500 auditseg 1 N 22 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 200 copies 8 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 0000000000000000000000
+
+lifem 200 copies 8 auditfreq 2500 auditseg 1 N 22 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 200 copies 10 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 0000000000000000000000
+
+lifem 200 copies 10 auditfreq 2500 auditseg 1 N 22 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 300 copies 1 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  14 | 66
+  15 | 446677
+  16 | 88
+  17 | 11337777
+  18 | 2277
+
+lifem 300 copies 1 auditfreq 2500 auditseg 1 N 22 
+median 		 171 
+trimean 	 169 
+midmean 	 169 
+mean 		 168 
+stddev 		 13 
+IQR 		 21 
+mad 		 16 
+SEM 		 3 
+MeanOverSEM 	 62 
+LogMeanOverSEM 	 2 
+
+======  lifem 300 copies 2 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is at the |
+
+  0 | 00000000000000000000
+  0 | 
+  1 | 00
+
+lifem 300 copies 2 auditfreq 2500 auditseg 1 N 22 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0.09 
+stddev 		 0.3 
+IQR 		 0 
+mad 		 0 
+SEM 		 0.06 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 0.2 
+
+======  lifem 300 copies 3 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 0000000000000000000000
+
+lifem 300 copies 3 auditfreq 2500 auditseg 1 N 22 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 300 copies 4 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 0000000000000000000000
+
+lifem 300 copies 4 auditfreq 2500 auditseg 1 N 22 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 300 copies 5 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 0000000000000000000000
+
+lifem 300 copies 5 auditfreq 2500 auditseg 1 N 22 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 300 copies 8 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 0000000000000000000000
+
+lifem 300 copies 8 auditfreq 2500 auditseg 1 N 22 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 300 copies 10 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 0000000000000000000000
+
+lifem 300 copies 10 auditfreq 2500 auditseg 1 N 22 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 500 copies 1 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+   7 | 77
+   8 | 
+   9 | 556688
+  10 | 005555
+  11 | 00226688
+
+lifem 500 copies 1 auditfreq 2500 auditseg 1 N 22 
+median 		 105 
+trimean 	 104 
+midmean 	 104 
+mean 		 103 
+stddev 		 11 
+IQR 		 15 
+mad 		 10 
+SEM 		 2 
+MeanOverSEM 	 42 
+LogMeanOverSEM 	 2 
+
+======  lifem 500 copies 2 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 0000000000000000000000
+
+lifem 500 copies 2 auditfreq 2500 auditseg 1 N 22 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 500 copies 3 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 0000000000000000000000
+
+lifem 500 copies 3 auditfreq 2500 auditseg 1 N 22 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 500 copies 4 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 0000000000000000000000
+
+lifem 500 copies 4 auditfreq 2500 auditseg 1 N 22 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 500 copies 5 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 0000000000000000000000
+
+lifem 500 copies 5 auditfreq 2500 auditseg 1 N 22 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 500 copies 8 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 0000000000000000000000
+
+lifem 500 copies 8 auditfreq 2500 auditseg 1 N 22 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 500 copies 10 auditfreq 2500 auditseg 1 N 22  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 0000000000000000000000
+
+lifem 500 copies 10 auditfreq 2500 auditseg 1 N 22 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 1000 copies 1 auditfreq 2500 auditseg 1 N 11  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  4 | 44
+  4 | 678
+  5 | 0334
+  5 | 59
+
+lifem 1000 copies 1 auditfreq 2500 auditseg 1 N 11 
+median 		 50 
+trimean 	 50 
+midmean 	 50 
+mean 		 50 
+stddev 		 5 
+IQR 		 7 
+mad 		 6 
+SEM 		 1 
+MeanOverSEM 	 34 
+LogMeanOverSEM 	 2 
+
+======  lifem 1000 copies 2 auditfreq 2500 auditseg 1 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 1000 copies 2 auditfreq 2500 auditseg 1 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 1000 copies 3 auditfreq 2500 auditseg 1 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 1000 copies 3 auditfreq 2500 auditseg 1 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 1000 copies 4 auditfreq 2500 auditseg 1 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 1000 copies 4 auditfreq 2500 auditseg 1 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 1000 copies 5 auditfreq 2500 auditseg 1 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 1000 copies 5 auditfreq 2500 auditseg 1 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 1000 copies 8 auditfreq 2500 auditseg 1 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 1000 copies 8 auditfreq 2500 auditseg 1 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 1000 copies 10 auditfreq 2500 auditseg 1 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 1000 copies 10 auditfreq 2500 auditseg 1 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 2000 copies 1 auditfreq 2500 auditseg 1 N 11  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  2 | 00444
+  2 | 5678
+  3 | 14
+
+lifem 2000 copies 1 auditfreq 2500 auditseg 1 N 11 
+median 		 25 
+trimean 	 25 
+midmean 	 25 
+mean 		 26 
+stddev 		 4 
+IQR 		 4 
+mad 		 3 
+SEM 		 1 
+MeanOverSEM 	 20 
+LogMeanOverSEM 	 1 
+
+======  lifem 2000 copies 2 auditfreq 2500 auditseg 1 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 2000 copies 2 auditfreq 2500 auditseg 1 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 2000 copies 3 auditfreq 2500 auditseg 1 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 2000 copies 3 auditfreq 2500 auditseg 1 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 2000 copies 4 auditfreq 2500 auditseg 1 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 2000 copies 4 auditfreq 2500 auditseg 1 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 2000 copies 5 auditfreq 2500 auditseg 1 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 2000 copies 5 auditfreq 2500 auditseg 1 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 2000 copies 8 auditfreq 2500 auditseg 1 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 2000 copies 8 auditfreq 2500 auditseg 1 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 2000 copies 10 auditfreq 2500 auditseg 1 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 2000 copies 10 auditfreq 2500 auditseg 1 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 3000 copies 1 auditfreq 2500 auditseg 1 N 11  ====== 
+
+  The decimal point is at the |
+
+  14 | 000
+  16 | 000
+  18 | 00
+  20 | 000
+
+lifem 3000 copies 1 auditfreq 2500 auditseg 1 N 11 
+median 		 17 
+trimean 	 17 
+midmean 	 17 
+mean 		 17 
+stddev 		 2 
+IQR 		 4 
+mad 		 3 
+SEM 		 0.7 
+MeanOverSEM 	 24 
+LogMeanOverSEM 	 1 
+
+======  lifem 3000 copies 2 auditfreq 2500 auditseg 1 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 3000 copies 2 auditfreq 2500 auditseg 1 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 3000 copies 3 auditfreq 2500 auditseg 1 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 3000 copies 3 auditfreq 2500 auditseg 1 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 3000 copies 4 auditfreq 2500 auditseg 1 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 3000 copies 4 auditfreq 2500 auditseg 1 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 3000 copies 5 auditfreq 2500 auditseg 1 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 3000 copies 5 auditfreq 2500 auditseg 1 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 3000 copies 8 auditfreq 2500 auditseg 1 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 3000 copies 8 auditfreq 2500 auditseg 1 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 3000 copies 10 auditfreq 2500 auditseg 1 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 3000 copies 10 auditfreq 2500 auditseg 1 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 5000 copies 1 auditfreq 2500 auditseg 1 N 11  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 79
+  1 | 00111134
+  1 | 8
+
+lifem 5000 copies 1 auditfreq 2500 auditseg 1 N 11 
+median 		 11 
+trimean 	 11 
+midmean 	 11 
+mean 		 11 
+stddev 		 3 
+IQR 		 2 
+mad 		 1 
+SEM 		 0.9 
+MeanOverSEM 	 13 
+LogMeanOverSEM 	 1 
+
+======  lifem 5000 copies 2 auditfreq 2500 auditseg 1 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 5000 copies 2 auditfreq 2500 auditseg 1 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 5000 copies 3 auditfreq 2500 auditseg 1 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 5000 copies 3 auditfreq 2500 auditseg 1 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 5000 copies 4 auditfreq 2500 auditseg 1 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 5000 copies 4 auditfreq 2500 auditseg 1 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 5000 copies 5 auditfreq 2500 auditseg 1 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 5000 copies 5 auditfreq 2500 auditseg 1 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 5000 copies 8 auditfreq 2500 auditseg 1 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 5000 copies 8 auditfreq 2500 auditseg 1 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 5000 copies 10 auditfreq 2500 auditseg 1 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 5000 copies 10 auditfreq 2500 auditseg 1 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 10000 copies 1 auditfreq 2500 auditseg 1 N 11  ====== 
+
+  The decimal point is at the |
+
+   4 | 0000
+   6 | 00000
+   8 | 0
+  10 | 0
+
+lifem 10000 copies 1 auditfreq 2500 auditseg 1 N 11 
+median 		 6 
+trimean 	 6 
+midmean 	 6 
+mean 		 6 
+stddev 		 2 
+IQR 		 2 
+mad 		 1 
+SEM 		 0.6 
+MeanOverSEM 	 10 
+LogMeanOverSEM 	 1 
+
+======  lifem 10000 copies 2 auditfreq 2500 auditseg 1 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 10000 copies 2 auditfreq 2500 auditseg 1 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 10000 copies 3 auditfreq 2500 auditseg 1 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 10000 copies 3 auditfreq 2500 auditseg 1 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 10000 copies 4 auditfreq 2500 auditseg 1 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 10000 copies 4 auditfreq 2500 auditseg 1 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 10000 copies 5 auditfreq 2500 auditseg 1 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 10000 copies 5 auditfreq 2500 auditseg 1 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 10000 copies 8 auditfreq 2500 auditseg 1 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 10000 copies 8 auditfreq 2500 auditseg 1 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 10000 copies 10 auditfreq 2500 auditseg 1 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 10000 copies 10 auditfreq 2500 auditseg 1 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 2 copies 1 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  914 | 317
+  916 | 9
+  918 | 03469
+  920 | 53
+
+lifem 2 copies 1 auditfreq 10000 auditseg 4 N 11 
+median 		 9183 
+trimean 	 9183 
+midmean 	 9183 
+mean 		 9181 
+stddev 		 23 
+IQR 		 30 
+mad 		 24 
+SEM 		 7 
+MeanOverSEM 	 1350 
+LogMeanOverSEM 	 3 
+
+======  lifem 2 copies 2 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  37 | 99
+  38 | 23
+  38 | 556799
+  39 | 4
+
+lifem 2 copies 2 auditfreq 10000 auditseg 4 N 11 
+median 		 3850 
+trimean 	 3850 
+midmean 	 3851 
+mean 		 3851 
+stddev 		 44 
+IQR 		 54 
+mad 		 49 
+SEM 		 13 
+MeanOverSEM 	 287 
+LogMeanOverSEM 	 2 
+
+======  lifem 2 copies 3 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+   9 | 2
+   9 | 5688
+  10 | 00114
+  10 | 5
+
+lifem 2 copies 3 auditfreq 10000 auditseg 4 N 11 
+median 		 996 
+trimean 	 993 
+midmean 	 991 
+mean 		 991 
+stddev 		 38 
+IQR 		 37 
+mad 		 24 
+SEM 		 11 
+MeanOverSEM 	 87 
+LogMeanOverSEM 	 2 
+
+======  lifem 2 copies 4 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  20 | 8
+  21 | 457
+  22 | 23
+  23 | 157
+  24 | 57
+
+lifem 2 copies 4 auditfreq 10000 auditseg 4 N 11 
+median 		 223 
+trimean 	 224 
+midmean 	 226 
+mean 		 227 
+stddev 		 13 
+IQR 		 20 
+mad 		 13 
+SEM 		 4 
+MeanOverSEM 	 57 
+LogMeanOverSEM 	 2 
+
+======  lifem 2 copies 5 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  4 | 24
+  4 | 588
+  5 | 3
+  5 | 5568
+  6 | 1
+
+lifem 2 copies 5 auditfreq 10000 auditseg 4 N 11 
+median 		 53 
+trimean 	 52 
+midmean 	 51 
+mean 		 51 
+stddev 		 6 
+IQR 		 9 
+mad 		 7 
+SEM 		 2 
+MeanOverSEM 	 27 
+LogMeanOverSEM 	 1 
+
+======  lifem 2 copies 8 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is at the |
+
+  0 | 00000
+  1 | 00
+  2 | 000
+  3 | 0
+
+lifem 2 copies 8 auditfreq 10000 auditseg 4 N 11 
+median 		 1 
+trimean 	 1 
+midmean 	 0.9 
+mean 		 1 
+stddev 		 1 
+IQR 		 2 
+mad 		 1 
+SEM 		 0.3 
+MeanOverSEM 	 3 
+LogMeanOverSEM 	 0.5 
+
+======  lifem 2 copies 10 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 2 copies 10 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 3 copies 1 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  806 | 2
+  808 | 
+  810 | 476
+  812 | 368
+  814 | 06
+  816 | 00
+
+lifem 3 copies 1 auditfreq 10000 auditseg 4 N 11 
+median 		 8126 
+trimean 	 8127 
+midmean 	 8128 
+mean 		 8126 
+stddev 		 28 
+IQR 		 32 
+mad 		 28 
+SEM 		 9 
+MeanOverSEM 	 947 
+LogMeanOverSEM 	 3 
+
+======  lifem 3 copies 2 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  202 | 13
+  204 | 02
+  206 | 07
+  208 | 143
+  210 | 60
+
+lifem 3 copies 2 auditfreq 10000 auditseg 4 N 11 
+median 		 2067 
+trimean 	 2067 
+midmean 	 2068 
+mean 		 2067 
+stddev 		 31 
+IQR 		 42 
+mad 		 39 
+SEM 		 9 
+MeanOverSEM 	 221 
+LogMeanOverSEM 	 2 
+
+======  lifem 3 copies 3 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  30 | 8
+  32 | 6683
+  34 | 47
+  36 | 9925
+
+lifem 3 copies 3 auditfreq 10000 auditseg 4 N 11 
+median 		 344 
+trimean 	 346 
+midmean 	 347 
+mean 		 347 
+stddev 		 22 
+IQR 		 42 
+mad 		 27 
+SEM 		 7 
+MeanOverSEM 	 53 
+LogMeanOverSEM 	 2 
+
+======  lifem 3 copies 4 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  4 | 89
+  5 | 1233
+  5 | 56679
+
+lifem 3 copies 4 auditfreq 10000 auditseg 4 N 11 
+median 		 53 
+trimean 	 53 
+midmean 	 54 
+mean 		 54 
+stddev 		 3 
+IQR 		 4 
+mad 		 4 
+SEM 		 1 
+MeanOverSEM 	 52 
+LogMeanOverSEM 	 2 
+
+======  lifem 3 copies 5 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is at the |
+
+   2 | 0
+   4 | 00
+   6 | 0
+   8 | 0
+  10 | 0000
+  12 | 00
+
+lifem 3 copies 5 auditfreq 10000 auditseg 4 N 11 
+median 		 10 
+trimean 	 9 
+midmean 	 9 
+mean 		 8 
+stddev 		 3 
+IQR 		 6 
+mad 		 3 
+SEM 		 1 
+MeanOverSEM 	 8 
+LogMeanOverSEM 	 0.9 
+
+======  lifem 3 copies 8 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 3 copies 8 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 3 copies 10 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 3 copies 10 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 5 copies 1 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  62 | 778
+  63 | 22334
+  63 | 579
+
+lifem 5 copies 1 auditfreq 10000 auditseg 4 N 11 
+median 		 6331 
+trimean 	 6326 
+midmean 	 6324 
+mean 		 6325 
+stddev 		 37 
+IQR 		 42 
+mad 		 24 
+SEM 		 11 
+MeanOverSEM 	 566 
+LogMeanOverSEM 	 3 
+
+======  lifem 5 copies 2 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  82 | 6
+  84 | 4507
+  86 | 139
+  88 | 046
+
+lifem 5 copies 2 auditfreq 10000 auditseg 4 N 11 
+median 		 861 
+trimean 	 862 
+midmean 	 862 
+mean 		 861 
+stddev 		 19 
+IQR 		 32 
+mad 		 25 
+SEM 		 6 
+MeanOverSEM 	 148 
+LogMeanOverSEM 	 2 
+
+======  lifem 5 copies 3 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  6 | 8
+  7 | 23
+  7 | 699
+  8 | 03
+  8 | 779
+
+lifem 5 copies 3 auditfreq 10000 auditseg 4 N 11 
+median 		 79 
+trimean 	 79 
+midmean 	 80 
+mean 		 79 
+stddev 		 7 
+IQR 		 10 
+mad 		 9 
+SEM 		 2 
+MeanOverSEM 	 39 
+LogMeanOverSEM 	 2 
+
+======  lifem 5 copies 4 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is at the |
+
+   2 | 0
+   4 | 0
+   6 | 00
+   8 | 0000
+  10 | 000
+
+lifem 5 copies 4 auditfreq 10000 auditseg 4 N 11 
+median 		 8 
+trimean 	 8 
+midmean 	 8 
+mean 		 8 
+stddev 		 2 
+IQR 		 4 
+mad 		 3 
+SEM 		 0.7 
+MeanOverSEM 	 10 
+LogMeanOverSEM 	 1 
+
+======  lifem 5 copies 5 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is at the |
+
+  0 | 0000
+  0 | 
+  1 | 000000
+  1 | 
+  2 | 0
+
+lifem 5 copies 5 auditfreq 10000 auditseg 4 N 11 
+median 		 1 
+trimean 	 0.8 
+midmean 	 0.7 
+mean 		 0.7 
+stddev 		 0.6 
+IQR 		 1 
+mad 		 0 
+SEM 		 0.2 
+MeanOverSEM 	 4 
+LogMeanOverSEM 	 0.6 
+
+======  lifem 5 copies 8 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 5 copies 8 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 5 copies 10 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 5 copies 10 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 10 copies 1 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  388 | 279
+  390 | 39
+  392 | 
+  394 | 78803
+  396 | 1
+
+lifem 10 copies 1 auditfreq 10000 auditseg 4 N 11 
+median 		 3947 
+trimean 	 3937 
+midmean 	 3932 
+mean 		 3928 
+stddev 		 29 
+IQR 		 43 
+mad 		 21 
+SEM 		 9 
+MeanOverSEM 	 452 
+LogMeanOverSEM 	 3 
+
+======  lifem 10 copies 2 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  18 | 9
+  20 | 7
+  22 | 6015
+  24 | 447
+  26 | 23
+
+lifem 10 copies 2 auditfreq 10000 auditseg 4 N 11 
+median 		 235 
+trimean 	 237 
+midmean 	 238 
+mean 		 237 
+stddev 		 20 
+IQR 		 22 
+mad 		 13 
+SEM 		 6 
+MeanOverSEM 	 40 
+LogMeanOverSEM 	 2 
+
+======  lifem 10 copies 3 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is at the |
+
+   6 | 00
+   8 | 0
+  10 | 00
+  12 | 00000
+  14 | 0
+
+lifem 10 copies 3 auditfreq 10000 auditseg 4 N 11 
+median 		 12 
+trimean 	 12 
+midmean 	 11 
+mean 		 11 
+stddev 		 3 
+IQR 		 3 
+mad 		 1 
+SEM 		 0.8 
+MeanOverSEM 	 14 
+LogMeanOverSEM 	 1 
+
+======  lifem 10 copies 4 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is at the |
+
+  0 | 00000000
+  0 | 
+  1 | 000
+
+lifem 10 copies 4 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0.1 
+midmean 	 0.1 
+mean 		 0.3 
+stddev 		 0.5 
+IQR 		 0.5 
+mad 		 0 
+SEM 		 0.1 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.3 
+
+======  lifem 10 copies 5 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 10 copies 5 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 10 copies 8 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 10 copies 8 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 10 copies 10 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 10 copies 10 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 20 copies 1 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  21 | 669
+  22 | 022244
+  22 | 56
+
+lifem 20 copies 1 auditfreq 10000 auditseg 4 N 11 
+median 		 2215 
+trimean 	 2215 
+midmean 	 2216 
+mean 		 2212 
+stddev 		 34 
+IQR 		 46 
+mad 		 37 
+SEM 		 10 
+MeanOverSEM 	 219 
+LogMeanOverSEM 	 2 
+
+======  lifem 20 copies 2 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  4 | 8
+  5 | 3
+  5 | 5778
+  6 | 00
+  6 | 678
+
+lifem 20 copies 2 auditfreq 10000 auditseg 4 N 11 
+median 		 58 
+trimean 	 59 
+midmean 	 59 
+mean 		 59 
+stddev 		 6 
+IQR 		 7 
+mad 		 4 
+SEM 		 2 
+MeanOverSEM 	 32 
+LogMeanOverSEM 	 2 
+
+======  lifem 20 copies 3 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is at the |
+
+  0 | 000
+  1 | 0000
+  2 | 00
+  3 | 00
+
+lifem 20 copies 3 auditfreq 10000 auditseg 4 N 11 
+median 		 1 
+trimean 	 1 
+midmean 	 1 
+mean 		 1 
+stddev 		 1 
+IQR 		 2 
+mad 		 1 
+SEM 		 0.3 
+MeanOverSEM 	 4 
+LogMeanOverSEM 	 0.6 
+
+======  lifem 20 copies 4 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 20 copies 4 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 20 copies 5 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 20 copies 5 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 20 copies 8 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 20 copies 8 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 20 copies 10 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 20 copies 10 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 30 copies 1 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  148 | 8
+  150 | 1
+  152 | 0
+  154 | 4469
+  156 | 078
+  158 | 7
+
+lifem 30 copies 1 auditfreq 10000 auditseg 4 N 11 
+median 		 1546 
+trimean 	 1549 
+midmean 	 1551 
+mean 		 1549 
+stddev 		 31 
+IQR 		 42 
+mad 		 39 
+SEM 		 9 
+MeanOverSEM 	 168 
+LogMeanOverSEM 	 2 
+
+======  lifem 30 copies 2 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  2 | 123
+  2 | 77
+  3 | 0022
+  3 | 59
+
+lifem 30 copies 2 auditfreq 10000 auditseg 4 N 11 
+median 		 30 
+trimean 	 29 
+midmean 	 29 
+mean 		 29 
+stddev 		 6 
+IQR 		 7 
+mad 		 4 
+SEM 		 2 
+MeanOverSEM 	 17 
+LogMeanOverSEM 	 1 
+
+======  lifem 30 copies 3 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is at the |
+
+  0 | 000000
+  0 | 
+  1 | 00000
+
+lifem 30 copies 3 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0.2 
+midmean 	 0.4 
+mean 		 0.5 
+stddev 		 0.5 
+IQR 		 1 
+mad 		 0 
+SEM 		 0.2 
+MeanOverSEM 	 3 
+LogMeanOverSEM 	 0.5 
+
+======  lifem 30 copies 4 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 30 copies 4 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 30 copies 5 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 30 copies 5 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 30 copies 8 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 30 copies 8 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 30 copies 10 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 30 copies 10 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 50 copies 1 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+   9 | 11444
+   9 | 56679
+  10 | 2
+
+lifem 50 copies 1 auditfreq 10000 auditseg 4 N 11 
+median 		 946 
+trimean 	 949 
+midmean 	 950 
+mean 		 953 
+stddev 		 33 
+IQR 		 30 
+mad 		 19 
+SEM 		 10 
+MeanOverSEM 	 97 
+LogMeanOverSEM 	 2 
+
+======  lifem 50 copies 2 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 79
+  1 | 00011234
+  1 | 7
+
+lifem 50 copies 2 auditfreq 10000 auditseg 4 N 11 
+median 		 11 
+trimean 	 11 
+midmean 	 11 
+mean 		 11 
+stddev 		 3 
+IQR 		 2 
+mad 		 1 
+SEM 		 0.8 
+MeanOverSEM 	 14 
+LogMeanOverSEM 	 1 
+
+======  lifem 50 copies 3 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is at the |
+
+  0 | 0000000000
+  0 | 
+  1 | 0
+
+lifem 50 copies 3 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0.09 
+stddev 		 0.3 
+IQR 		 0 
+mad 		 0 
+SEM 		 0.09 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 0 
+
+======  lifem 50 copies 4 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 50 copies 4 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 50 copies 5 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 50 copies 5 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 50 copies 8 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 50 copies 8 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 50 copies 10 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 50 copies 10 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 100 copies 1 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  46 | 6
+  47 | 47
+  48 | 3366
+  49 | 88
+  50 | 44
+
+lifem 100 copies 1 auditfreq 10000 auditseg 4 N 11 
+median 		 486 
+trimean 	 488 
+midmean 	 487 
+mean 		 487 
+stddev 		 13 
+IQR 		 18 
+mad 		 18 
+SEM 		 4 
+MeanOverSEM 	 129 
+LogMeanOverSEM 	 2 
+
+======  lifem 100 copies 2 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is at the |
+
+  1 | 0
+  2 | 0
+  3 | 000000
+  4 | 0
+  5 | 00
+
+lifem 100 copies 2 auditfreq 10000 auditseg 4 N 11 
+median 		 3 
+trimean 	 3 
+midmean 	 3 
+mean 		 3 
+stddev 		 1 
+IQR 		 0.5 
+mad 		 0 
+SEM 		 0.4 
+MeanOverSEM 	 9 
+LogMeanOverSEM 	 1 
+
+======  lifem 100 copies 3 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 100 copies 3 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 100 copies 4 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 100 copies 4 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 100 copies 5 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 100 copies 5 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 100 copies 8 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 100 copies 8 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 100 copies 10 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 100 copies 10 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 200 copies 1 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  22 | 5
+  23 | 0135
+  24 | 68
+  25 | 057
+  26 | 
+  27 | 1
+
+lifem 200 copies 1 auditfreq 10000 auditseg 4 N 11 
+median 		 246 
+trimean 	 244 
+midmean 	 243 
+mean 		 244 
+stddev 		 14 
+IQR 		 20 
+mad 		 16 
+SEM 		 4 
+MeanOverSEM 	 57 
+LogMeanOverSEM 	 2 
+
+======  lifem 200 copies 2 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is at the |
+
+  0 | 000
+  1 | 000000
+  2 | 0
+  3 | 0
+
+lifem 200 copies 2 auditfreq 10000 auditseg 4 N 11 
+median 		 1 
+trimean 	 0.9 
+midmean 	 0.9 
+mean 		 1 
+stddev 		 0.9 
+IQR 		 0.5 
+mad 		 0 
+SEM 		 0.3 
+MeanOverSEM 	 4 
+LogMeanOverSEM 	 0.6 
+
+======  lifem 200 copies 3 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 200 copies 3 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 200 copies 4 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 200 copies 4 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 200 copies 5 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 200 copies 5 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 200 copies 8 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 200 copies 8 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 200 copies 10 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 200 copies 10 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 300 copies 1 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  14 | 6
+  15 | 467
+  16 | 8
+  17 | 1377
+  18 | 27
+
+lifem 300 copies 1 auditfreq 10000 auditseg 4 N 11 
+median 		 171 
+trimean 	 169 
+midmean 	 168 
+mean 		 168 
+stddev 		 13 
+IQR 		 20 
+mad 		 16 
+SEM 		 4 
+MeanOverSEM 	 43 
+LogMeanOverSEM 	 2 
+
+======  lifem 300 copies 2 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is at the |
+
+  0 | 00000000
+  0 | 
+  1 | 000
+
+lifem 300 copies 2 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0.1 
+midmean 	 0.1 
+mean 		 0.3 
+stddev 		 0.5 
+IQR 		 0.5 
+mad 		 0 
+SEM 		 0.1 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.3 
+
+======  lifem 300 copies 3 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 300 copies 3 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 300 copies 4 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 300 copies 4 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 300 copies 5 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 300 copies 5 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 300 copies 8 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 300 copies 8 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 300 copies 10 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 300 copies 10 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 500 copies 1 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+   7 | 7
+   8 | 
+   9 | 568
+  10 | 055
+  11 | 0268
+
+lifem 500 copies 1 auditfreq 10000 auditseg 4 N 11 
+median 		 105 
+trimean 	 104 
+midmean 	 104 
+mean 		 103 
+stddev 		 12 
+IQR 		 14 
+mad 		 10 
+SEM 		 4 
+MeanOverSEM 	 29 
+LogMeanOverSEM 	 1 
+
+======  lifem 500 copies 2 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is at the |
+
+  0 | 0000000000
+  0 | 
+  1 | 0
+
+lifem 500 copies 2 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0.09 
+stddev 		 0.3 
+IQR 		 0 
+mad 		 0 
+SEM 		 0.09 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 0 
+
+======  lifem 500 copies 3 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 500 copies 3 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 500 copies 4 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 500 copies 4 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 500 copies 5 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 500 copies 5 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 500 copies 8 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 500 copies 8 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 500 copies 10 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 500 copies 10 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 1000 copies 1 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  4 | 44
+  4 | 678
+  5 | 0334
+  5 | 59
+
+lifem 1000 copies 1 auditfreq 10000 auditseg 4 N 11 
+median 		 50 
+trimean 	 50 
+midmean 	 50 
+mean 		 50 
+stddev 		 5 
+IQR 		 7 
+mad 		 6 
+SEM 		 1 
+MeanOverSEM 	 34 
+LogMeanOverSEM 	 2 
+
+======  lifem 1000 copies 2 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is at the |
+
+  0 | 0000000000
+  0 | 
+  1 | 0
+
+lifem 1000 copies 2 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0.09 
+stddev 		 0.3 
+IQR 		 0 
+mad 		 0 
+SEM 		 0.09 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 0 
+
+======  lifem 1000 copies 3 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 1000 copies 3 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 1000 copies 4 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 1000 copies 4 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 1000 copies 5 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 1000 copies 5 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 1000 copies 8 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 1000 copies 8 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 1000 copies 10 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 1000 copies 10 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 2000 copies 1 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  2 | 00444
+  2 | 5678
+  3 | 14
+
+lifem 2000 copies 1 auditfreq 10000 auditseg 4 N 11 
+median 		 25 
+trimean 	 25 
+midmean 	 25 
+mean 		 26 
+stddev 		 4 
+IQR 		 4 
+mad 		 3 
+SEM 		 1 
+MeanOverSEM 	 20 
+LogMeanOverSEM 	 1 
+
+======  lifem 2000 copies 2 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 2000 copies 2 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 2000 copies 3 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 2000 copies 3 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 2000 copies 4 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 2000 copies 4 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 2000 copies 5 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 2000 copies 5 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 2000 copies 8 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 2000 copies 8 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 2000 copies 10 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 2000 copies 10 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 3000 copies 1 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is at the |
+
+  14 | 000
+  16 | 000
+  18 | 00
+  20 | 000
+
+lifem 3000 copies 1 auditfreq 10000 auditseg 4 N 11 
+median 		 17 
+trimean 	 17 
+midmean 	 17 
+mean 		 17 
+stddev 		 2 
+IQR 		 4 
+mad 		 3 
+SEM 		 0.7 
+MeanOverSEM 	 24 
+LogMeanOverSEM 	 1 
+
+======  lifem 3000 copies 2 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is at the |
+
+  0 | 0000000000
+  0 | 
+  1 | 0
+
+lifem 3000 copies 2 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0.09 
+stddev 		 0.3 
+IQR 		 0 
+mad 		 0 
+SEM 		 0.09 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 0 
+
+======  lifem 3000 copies 3 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 3000 copies 3 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 3000 copies 4 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 3000 copies 4 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 3000 copies 5 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 3000 copies 5 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 3000 copies 8 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 3000 copies 8 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 3000 copies 10 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 3000 copies 10 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 5000 copies 1 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 79
+  1 | 00111134
+  1 | 8
+
+lifem 5000 copies 1 auditfreq 10000 auditseg 4 N 11 
+median 		 11 
+trimean 	 11 
+midmean 	 11 
+mean 		 11 
+stddev 		 3 
+IQR 		 2 
+mad 		 1 
+SEM 		 0.9 
+MeanOverSEM 	 13 
+LogMeanOverSEM 	 1 
+
+======  lifem 5000 copies 2 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 5000 copies 2 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 5000 copies 3 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 5000 copies 3 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 5000 copies 4 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 5000 copies 4 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 5000 copies 5 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 5000 copies 5 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 5000 copies 8 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 5000 copies 8 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 5000 copies 10 auditfreq 10000 auditseg 4 N 10  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 0000000000
+
+lifem 5000 copies 10 auditfreq 10000 auditseg 4 N 10 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 10000 copies 1 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is at the |
+
+   4 | 0000
+   6 | 00000
+   8 | 0
+  10 | 0
+
+lifem 10000 copies 1 auditfreq 10000 auditseg 4 N 11 
+median 		 6 
+trimean 	 6 
+midmean 	 6 
+mean 		 6 
+stddev 		 2 
+IQR 		 2 
+mad 		 1 
+SEM 		 0.6 
+MeanOverSEM 	 10 
+LogMeanOverSEM 	 1 
+
+======  lifem 10000 copies 2 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 10000 copies 2 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 10000 copies 3 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 10000 copies 3 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 10000 copies 4 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 10000 copies 4 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 10000 copies 5 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 10000 copies 5 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 10000 copies 8 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 10000 copies 8 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  lifem 10000 copies 10 auditfreq 10000 auditseg 4 N 11  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 00000000000
+
+lifem 10000 copies 10 auditfreq 10000 auditseg 4 N 11 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+

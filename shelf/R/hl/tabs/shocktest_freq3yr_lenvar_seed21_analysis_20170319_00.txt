@@ -1,0 +1,8736 @@
+shocktest HL copies=var Audit=1yr Glitch=0 Shock=3yr len=var lifem=var seed21 
+(impact=50,100pct len=1,2yr) 
+
+Input data from  ../hl/data/GiantOutput_shock3yr_lenvar_00.txt 
+Output analysis into  ../hl/tabs/shocktest_freq3yr_lenvar_seed21_analysis_20170319_00.txt 
+
+analysis tables by  ./ShelfAnalyze.r 
+and summarize script ./summ-shock.r 
+ at  20170319_161820 EDT 
+
+Summary losses (midmeans)
+   shockfreq impact span maxlife lifem    c1    c2       c3     c4    c5 c8
+1      30000     50    1   10000    10 10000   744    44.55   6.27  0.18  0
+2      30000     50    1   10000    20 10000   398    10.09   1.09  0.00  0
+3      30000     50    1   10000    30 10000   295     4.55   0.27  0.00  0
+4      30000     50    1   10000    50 10000   185     7.18   0.09  0.00  0
+5      30000     50    1   10000   100 10000    71     0.36   0.00  0.00  0
+6      30000     50    1   10000   200 10000    44     0.00   0.00  0.00  0
+7      30000     50    1   10000   300 10000    28     0.00   0.00  0.00  0
+8      30000     50    1   10000   500 10000    19     1.64   0.00  0.00  0
+9      30000     50    1   10000  1000 10000     9     0.00   0.00  0.00  0
+10     30000     50    1   20000    10 10000   800    39.91   7.82  0.18  0
+11     30000     50    1   20000    20 10000   366     9.64   0.36  0.00  0
+12     30000     50    1   20000    30 10000   263    23.64   0.36  0.00  0
+13     30000     50    1   20000    50 10000   155     1.36   0.00  0.00  0
+14     30000     50    1   20000   100 10000    78     0.45   0.00  0.00  0
+15     30000     50    1   20000   200 10000    39     0.00   0.00  0.00  0
+16     30000     50    1   20000   300 10000    28     0.00   0.00  0.00  0
+17     30000     50    1   20000   500 10000    15     0.09   0.00  0.00  0
+18     30000     50    1   20000  1000 10000     7     0.09   0.00  0.00  0
+19     30000     50    2   10000    10 10000  2845   184.91   7.82  0.18  0
+20     30000     50    2   10000    20 10000  3961    54.45   2.00  0.00  0
+21     30000     50    2   10000    30 10000  3856    74.36   0.73  0.00  0
+22     30000     50    2   10000    50 10000   235    29.82   0.09  0.00  0
+23     30000     50    2   10000   100 10000   115    19.45   0.00  0.00  0
+24     30000     50    2   10000   200 10000    49     3.27   0.00  0.00  0
+25     30000     50    2   10000   300 10000  1851     1.64   0.00  0.00  0
+26     30000     50    2   10000   500 10000  2744     3.82   0.00  0.00  0
+27     30000     50    2   10000  1000 10000  2735     2.36   0.00  0.00  0
+28     30000     50    2   20000    10 10000  2704   246.45   6.73  0.09  0
+29     30000     50    2   20000    20 10000  3988    51.82   0.91  0.00  0
+30     30000     50    2   20000    30 10000   355    48.73   1.09  0.00  0
+31     30000     50    2   20000    50 10000   205    18.27   0.00  0.00  0
+32     30000     50    2   20000   100 10000   137    27.18   0.00  0.00  0
+33     30000     50    2   20000   200 10000    49     4.64   0.00  0.00  0
+34     30000     50    2   20000   300 10000    36     3.18   0.00  0.00  0
+35     30000     50    2   20000   500 10000  3652     2.55   0.00  0.00  0
+36     30000     50    2   20000  1000 10000   920     1.27   0.00  0.00  0
+37     30000     50    3   10000    10 10000  2845   318.00  13.91  3.45  0
+38     30000     50    3   10000    20 10000  3961   210.00   2.27  0.00  0
+39     30000     50    3   10000    30 10000  3856   102.36   1.91  0.00  0
+40     30000     50    3   10000    50 10000   235    38.00   0.27  0.00  0
+41     30000     50    3   10000   100 10000   115    45.64   0.00  0.00  0
+42     30000     50    3   10000   200 10000    49    11.00   0.00  0.00  0
+43     30000     50    3   10000   300 10000  1851    11.64   0.00  0.00  0
+44     30000     50    3   10000   500 10000  2744     4.27   0.00  0.00  0
+45     30000     50    3   10000  1000 10000  2735     4.45   0.00  0.00  0
+46     30000     50    3   20000    10 10000  2704   281.73   9.55  2.18  0
+47     30000     50    3   20000    20 10000  3988   159.45   2.64  0.00  0
+48     30000     50    3   20000    30 10000   355   100.36   1.45  0.00  0
+49     30000     50    3   20000    50 10000   205    55.00   0.09  0.00  0
+50     30000     50    3   20000   100 10000   137    33.91   0.00  0.00  0
+51     30000     50    3   20000   200 10000    49     8.18   0.00  0.00  0
+52     30000     50    3   20000   300 10000    36    10.00   0.00  0.00  0
+53     30000     50    3   20000   500 10000  3652     5.55   0.00  0.00  0
+54     30000     50    3   20000  1000 10000   920     3.00   0.00  0.00  0
+55     30000    100    1   10000    10 10000  1227    56.55   9.91  0.45  0
+56     30000    100    1   10000    20 10000   657    56.55   1.73  0.00  0
+57     30000    100    1   10000    30 10000   483     6.45   0.82  0.00  0
+58     30000    100    1   10000    50 10000   261    23.55   0.00  0.00  0
+59     30000    100    1   10000   100 10000   138     5.91   0.00  0.00  0
+60     30000    100    1   10000   200 10000    70     2.27   0.00  0.00  0
+61     30000    100    1   10000   300 10000    44     0.91   0.00  0.00  0
+62     30000    100    1   10000   500 10000    24     1.91   0.00  0.00  0
+63     30000    100    1   10000  1000 10000    13     0.18   0.00  0.00  0
+64     30000    100    2   10000    10 10000 10000   831.27  25.45  1.91  0
+65     30000    100    2   10000    20 10000 10000   408.55   7.27  0.45  0
+66     30000    100    2   10000    30 10000 10000   318.73   4.36  0.00  0
+67     30000    100    2   10000    50 10000 10000   128.55   1.18  0.00  0
+68     30000    100    2   10000   100 10000 10000    82.82   0.00  0.00  0
+69     30000    100    2   10000   200 10000 10000    41.91   0.00  0.00  0
+70     30000    100    2   10000   300 10000 10000    27.55   0.00  0.00  0
+71     30000    100    2   10000   500 10000 10000    15.45   0.00  0.00  0
+72     30000    100    2   10000  1000 10000 10000     7.91   0.00  0.00  0
+73     30000    100    3   10000    10 10000 10000 10000.00 703.82 18.45  0
+74     30000    100    3   10000    20 10000 10000 10000.00 351.82 21.73  0
+75     30000    100    3   10000    30 10000 10000 10000.00 194.55 12.55  0
+76     30000    100    3   10000    50 10000 10000 10000.00 140.00  7.00  0
+77     30000    100    3   10000   100 10000 10000 10000.00  65.00  0.09  0
+78     30000    100    3   10000   200 10000 10000 10000.00  30.18  0.00  0
+79     30000    100    3   10000   300 10000 10000 10000.00  20.55  0.09  0
+80     30000    100    3   10000   500 10000 10000 10000.00  14.27  0.00  0
+81     30000    100    3   10000  1000 10000 10000 10000.00   6.09  0.09  0
+
+Percentage losses (midmeans)
+   shockfreq impact span maxlife lifem  c1     c2       c3     c4     c5 c8
+1      30000     50    1   10000    10 100   7.44   0.4455 0.0627 0.0018  0
+2      30000     50    1   10000    20 100   3.98   0.1009 0.0109 0.0000  0
+3      30000     50    1   10000    30 100   2.95   0.0455 0.0027 0.0000  0
+4      30000     50    1   10000    50 100   1.85   0.0718 0.0009 0.0000  0
+5      30000     50    1   10000   100 100   0.71   0.0036 0.0000 0.0000  0
+6      30000     50    1   10000   200 100   0.44   0.0000 0.0000 0.0000  0
+7      30000     50    1   10000   300 100   0.28   0.0000 0.0000 0.0000  0
+8      30000     50    1   10000   500 100   0.19   0.0164 0.0000 0.0000  0
+9      30000     50    1   10000  1000 100   0.09   0.0000 0.0000 0.0000  0
+10     30000     50    1   20000    10 100   8.00   0.3991 0.0782 0.0018  0
+11     30000     50    1   20000    20 100   3.66   0.0964 0.0036 0.0000  0
+12     30000     50    1   20000    30 100   2.63   0.2364 0.0036 0.0000  0
+13     30000     50    1   20000    50 100   1.55   0.0136 0.0000 0.0000  0
+14     30000     50    1   20000   100 100   0.78   0.0045 0.0000 0.0000  0
+15     30000     50    1   20000   200 100   0.39   0.0000 0.0000 0.0000  0
+16     30000     50    1   20000   300 100   0.28   0.0000 0.0000 0.0000  0
+17     30000     50    1   20000   500 100   0.15   0.0009 0.0000 0.0000  0
+18     30000     50    1   20000  1000 100   0.07   0.0009 0.0000 0.0000  0
+19     30000     50    2   10000    10 100  28.45   1.8491 0.0782 0.0018  0
+20     30000     50    2   10000    20 100  39.61   0.5445 0.0200 0.0000  0
+21     30000     50    2   10000    30 100  38.56   0.7436 0.0073 0.0000  0
+22     30000     50    2   10000    50 100   2.35   0.2982 0.0009 0.0000  0
+23     30000     50    2   10000   100 100   1.15   0.1945 0.0000 0.0000  0
+24     30000     50    2   10000   200 100   0.49   0.0327 0.0000 0.0000  0
+25     30000     50    2   10000   300 100  18.51   0.0164 0.0000 0.0000  0
+26     30000     50    2   10000   500 100  27.44   0.0382 0.0000 0.0000  0
+27     30000     50    2   10000  1000 100  27.35   0.0236 0.0000 0.0000  0
+28     30000     50    2   20000    10 100  27.04   2.4645 0.0673 0.0009  0
+29     30000     50    2   20000    20 100  39.88   0.5182 0.0091 0.0000  0
+30     30000     50    2   20000    30 100   3.55   0.4873 0.0109 0.0000  0
+31     30000     50    2   20000    50 100   2.05   0.1827 0.0000 0.0000  0
+32     30000     50    2   20000   100 100   1.37   0.2718 0.0000 0.0000  0
+33     30000     50    2   20000   200 100   0.49   0.0464 0.0000 0.0000  0
+34     30000     50    2   20000   300 100   0.36   0.0318 0.0000 0.0000  0
+35     30000     50    2   20000   500 100  36.52   0.0255 0.0000 0.0000  0
+36     30000     50    2   20000  1000 100   9.20   0.0127 0.0000 0.0000  0
+37     30000     50    3   10000    10 100  28.45   3.1800 0.1391 0.0345  0
+38     30000     50    3   10000    20 100  39.61   2.1000 0.0227 0.0000  0
+39     30000     50    3   10000    30 100  38.56   1.0236 0.0191 0.0000  0
+40     30000     50    3   10000    50 100   2.35   0.3800 0.0027 0.0000  0
+41     30000     50    3   10000   100 100   1.15   0.4564 0.0000 0.0000  0
+42     30000     50    3   10000   200 100   0.49   0.1100 0.0000 0.0000  0
+43     30000     50    3   10000   300 100  18.51   0.1164 0.0000 0.0000  0
+44     30000     50    3   10000   500 100  27.44   0.0427 0.0000 0.0000  0
+45     30000     50    3   10000  1000 100  27.35   0.0445 0.0000 0.0000  0
+46     30000     50    3   20000    10 100  27.04   2.8173 0.0955 0.0218  0
+47     30000     50    3   20000    20 100  39.88   1.5945 0.0264 0.0000  0
+48     30000     50    3   20000    30 100   3.55   1.0036 0.0145 0.0000  0
+49     30000     50    3   20000    50 100   2.05   0.5500 0.0009 0.0000  0
+50     30000     50    3   20000   100 100   1.37   0.3391 0.0000 0.0000  0
+51     30000     50    3   20000   200 100   0.49   0.0818 0.0000 0.0000  0
+52     30000     50    3   20000   300 100   0.36   0.1000 0.0000 0.0000  0
+53     30000     50    3   20000   500 100  36.52   0.0555 0.0000 0.0000  0
+54     30000     50    3   20000  1000 100   9.20   0.0300 0.0000 0.0000  0
+55     30000    100    1   10000    10 100  12.27   0.5655 0.0991 0.0045  0
+56     30000    100    1   10000    20 100   6.57   0.5655 0.0173 0.0000  0
+57     30000    100    1   10000    30 100   4.83   0.0645 0.0082 0.0000  0
+58     30000    100    1   10000    50 100   2.61   0.2355 0.0000 0.0000  0
+59     30000    100    1   10000   100 100   1.38   0.0591 0.0000 0.0000  0
+60     30000    100    1   10000   200 100   0.70   0.0227 0.0000 0.0000  0
+61     30000    100    1   10000   300 100   0.44   0.0091 0.0000 0.0000  0
+62     30000    100    1   10000   500 100   0.24   0.0191 0.0000 0.0000  0
+63     30000    100    1   10000  1000 100   0.13   0.0018 0.0000 0.0000  0
+64     30000    100    2   10000    10 100 100.00   8.3127 0.2545 0.0191  0
+65     30000    100    2   10000    20 100 100.00   4.0855 0.0727 0.0045  0
+66     30000    100    2   10000    30 100 100.00   3.1873 0.0436 0.0000  0
+67     30000    100    2   10000    50 100 100.00   1.2855 0.0118 0.0000  0
+68     30000    100    2   10000   100 100 100.00   0.8282 0.0000 0.0000  0
+69     30000    100    2   10000   200 100 100.00   0.4191 0.0000 0.0000  0
+70     30000    100    2   10000   300 100 100.00   0.2755 0.0000 0.0000  0
+71     30000    100    2   10000   500 100 100.00   0.1545 0.0000 0.0000  0
+72     30000    100    2   10000  1000 100 100.00   0.0791 0.0000 0.0000  0
+73     30000    100    3   10000    10 100 100.00 100.0000 7.0382 0.1845  0
+74     30000    100    3   10000    20 100 100.00 100.0000 3.5182 0.2173  0
+75     30000    100    3   10000    30 100 100.00 100.0000 1.9455 0.1255  0
+76     30000    100    3   10000    50 100 100.00 100.0000 1.4000 0.0700  0
+77     30000    100    3   10000   100 100 100.00 100.0000 0.6500 0.0009  0
+78     30000    100    3   10000   200 100 100.00 100.0000 0.3018 0.0000  0
+79     30000    100    3   10000   300 100 100.00 100.0000 0.2055 0.0009  0
+80     30000    100    3   10000   500 100 100.00 100.0000 0.1427 0.0000  0
+81     30000    100    3   10000  1000 100 100.00 100.0000 0.0609 0.0009  0
+
+
+============================================
+
+======  shockfreq 30000 impact 50 duration 10000 span 1 lifem 10 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   2 | 990
+   4 | 
+   6 | 
+   8 | 
+  10 | 000000000000000000
+
+shockfreq 30000 impact 50 duration 10000 span 1 lifem 10 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 8988 
+stddev 		 2541 
+IQR 		 0 
+mad 		 0 
+SEM 		 555 
+MeanOverSEM 	 16 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 50 duration 10000 span 1 lifem 10 copies 2 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 1444445777778801117
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 00
+
+shockfreq 30000 impact 50 duration 10000 span 1 lifem 10 copies 2 N 21 
+median 		 747 
+trimean 	 745 
+midmean 	 744 
+mean 		 1612 
+stddev 		 2810 
+IQR 		 624 
+mad 		 469 
+SEM 		 613 
+MeanOverSEM 	 3 
+LogMeanOverSEM 	 0.4 
+
+======  shockfreq 30000 impact 50 duration 10000 span 1 lifem 10 copies 3 N 21  ====== 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  0 | 1112333444444667
+  1 | 
+  2 | 
+  3 | 4577
+  4 | 1
+
+shockfreq 30000 impact 50 duration 10000 span 1 lifem 10 copies 3 N 21 
+median 		 41 
+trimean 	 45 
+midmean 	 45 
+mean 		 115 
+stddev 		 147 
+IQR 		 43 
+mad 		 27 
+SEM 		 32 
+MeanOverSEM 	 4 
+LogMeanOverSEM 	 0.6 
+
+======  shockfreq 30000 impact 50 duration 10000 span 1 lifem 10 copies 4 N 21  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 000001113
+  0 | 559
+  1 | 002233
+  1 | 8
+  2 | 01
+
+shockfreq 30000 impact 50 duration 10000 span 1 lifem 10 copies 4 N 21 
+median 		 5 
+trimean 	 6 
+midmean 	 6 
+mean 		 7 
+stddev 		 7 
+IQR 		 11 
+mad 		 7 
+SEM 		 2 
+MeanOverSEM 	 5 
+LogMeanOverSEM 	 0.7 
+
+======  shockfreq 30000 impact 50 duration 10000 span 1 lifem 10 copies 5 N 21  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 0000000000000011111
+  0 | 
+  1 | 1
+  1 | 5
+
+shockfreq 30000 impact 50 duration 10000 span 1 lifem 10 copies 5 N 21 
+median 		 0 
+trimean 	 0.2 
+midmean 	 0.2 
+mean 		 1 
+stddev 		 4 
+IQR 		 1 
+mad 		 0 
+SEM 		 0.9 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.2 
+
+======  shockfreq 30000 impact 50 duration 10000 span 1 lifem 20 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 66666
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 0000000000000000
+
+shockfreq 30000 impact 50 duration 10000 span 1 lifem 20 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 7994 
+stddev 		 3676 
+IQR 		 0 
+mad 		 0 
+SEM 		 802 
+MeanOverSEM 	 10 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 50 duration 10000 span 1 lifem 20 copies 2 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 0222223334444557779
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 00
+
+shockfreq 30000 impact 50 duration 10000 span 1 lifem 20 copies 2 N 21 
+median 		 354 
+trimean 	 401 
+midmean 	 398 
+mean 		 1306 
+stddev 		 2898 
+IQR 		 454 
+mad 		 225 
+SEM 		 632 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.3 
+
+======  shockfreq 30000 impact 50 duration 10000 span 1 lifem 20 copies 3 N 21  ====== 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  0 | 00000011111111113
+  0 | 
+  1 | 
+  1 | 679
+  2 | 0
+
+shockfreq 30000 impact 50 duration 10000 span 1 lifem 20 copies 3 N 21 
+median 		 11 
+trimean 	 10 
+midmean 	 10 
+mean 		 41 
+stddev 		 69 
+IQR 		 10 
+mad 		 10 
+SEM 		 15 
+MeanOverSEM 	 3 
+LogMeanOverSEM 	 0.4 
+
+======  shockfreq 30000 impact 50 duration 10000 span 1 lifem 20 copies 4 N 21  ====== 
+
+  The decimal point is at the |
+
+  0 | 000000000000
+  2 | 000000
+  4 | 00
+  6 | 0
+
+shockfreq 30000 impact 50 duration 10000 span 1 lifem 20 copies 4 N 21 
+median 		 1 
+trimean 	 1 
+midmean 	 1 
+mean 		 2 
+stddev 		 2 
+IQR 		 3 
+mad 		 1 
+SEM 		 0.4 
+MeanOverSEM 	 4 
+LogMeanOverSEM 	 0.6 
+
+======  shockfreq 30000 impact 50 duration 10000 span 1 lifem 20 copies 5 N 21  ====== 
+
+  The decimal point is at the |
+
+  0 | 0000000000000000000
+  2 | 
+  4 | 0
+  6 | 0
+
+shockfreq 30000 impact 50 duration 10000 span 1 lifem 20 copies 5 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0.5 
+stddev 		 2 
+IQR 		 0 
+mad 		 0 
+SEM 		 0.3 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 0.2 
+
+======  shockfreq 30000 impact 50 duration 10000 span 1 lifem 30 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 11111
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 0000000000000000
+
+shockfreq 30000 impact 50 duration 10000 span 1 lifem 30 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 7877 
+stddev 		 3892 
+IQR 		 0 
+mad 		 0 
+SEM 		 849 
+MeanOverSEM 	 9 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 50 duration 10000 span 1 lifem 30 copies 2 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 11111222222234456
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 0000
+
+shockfreq 30000 impact 50 duration 10000 span 1 lifem 30 copies 2 N 21 
+median 		 239 
+trimean 	 291 
+midmean 	 295 
+mean 		 2116 
+stddev 		 3920 
+IQR 		 260 
+mad 		 162 
+SEM 		 856 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.4 
+
+======  shockfreq 30000 impact 50 duration 10000 span 1 lifem 30 copies 3 N 21  ====== 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  0 | 00000000001111111
+  0 | 
+  1 | 1123
+
+shockfreq 30000 impact 50 duration 10000 span 1 lifem 30 copies 3 N 21 
+median 		 5 
+trimean 	 5 
+midmean 	 5 
+mean 		 25 
+stddev 		 45 
+IQR 		 6 
+mad 		 4 
+SEM 		 10 
+MeanOverSEM 	 3 
+LogMeanOverSEM 	 0.4 
+
+======  shockfreq 30000 impact 50 duration 10000 span 1 lifem 30 copies 4 N 21  ====== 
+
+  The decimal point is at the |
+
+  0 | 0000000000000
+  1 | 0000
+  2 | 000
+  3 | 0
+
+shockfreq 30000 impact 50 duration 10000 span 1 lifem 30 copies 4 N 21 
+median 		 0 
+trimean 	 0.2 
+midmean 	 0.3 
+mean 		 0.6 
+stddev 		 0.9 
+IQR 		 1 
+mad 		 0 
+SEM 		 0.2 
+MeanOverSEM 	 3 
+LogMeanOverSEM 	 0.5 
+
+======  shockfreq 30000 impact 50 duration 10000 span 1 lifem 30 copies 5 N 21  ====== 
+
+  The decimal point is at the |
+
+  0 | 00000000000000000000
+  1 | 
+  2 | 
+  3 | 0
+
+shockfreq 30000 impact 50 duration 10000 span 1 lifem 30 copies 5 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0.1 
+stddev 		 0.7 
+IQR 		 0 
+mad 		 0 
+SEM 		 0.1 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 0 
+
+======  shockfreq 30000 impact 50 duration 10000 span 1 lifem 50 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 77
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 0000000000000000000
+
+shockfreq 30000 impact 50 duration 10000 span 1 lifem 50 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 9111 
+stddev 		 2809 
+IQR 		 0 
+mad 		 0 
+SEM 		 613 
+MeanOverSEM 	 15 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 50 duration 10000 span 1 lifem 50 copies 2 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 0111111122222223333
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 00
+
+shockfreq 30000 impact 50 duration 10000 span 1 lifem 50 copies 2 N 21 
+median 		 193 
+trimean 	 184 
+midmean 	 185 
+mean 		 1106 
+stddev 		 2958 
+IQR 		 194 
+mad 		 126 
+SEM 		 646 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.2 
+
+======  shockfreq 30000 impact 50 duration 10000 span 1 lifem 50 copies 3 N 21  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 000000011113345
+  2 | 
+  4 | 
+  6 | 039137
+
+shockfreq 30000 impact 50 duration 10000 span 1 lifem 50 copies 3 N 21 
+median 		 1 
+trimean 	 16 
+midmean 	 7 
+mean 		 21 
+stddev 		 31 
+IQR 		 60 
+mad 		 1 
+SEM 		 7 
+MeanOverSEM 	 3 
+LogMeanOverSEM 	 0.5 
+
+======  shockfreq 30000 impact 50 duration 10000 span 1 lifem 50 copies 4 N 21  ====== 
+
+  The decimal point is at the |
+
+  0 | 000000000000000
+  0 | 
+  1 | 00000
+  1 | 
+  2 | 0
+
+shockfreq 30000 impact 50 duration 10000 span 1 lifem 50 copies 4 N 21 
+median 		 0 
+trimean 	 0.2 
+midmean 	 0.09 
+mean 		 0.3 
+stddev 		 0.6 
+IQR 		 1 
+mad 		 0 
+SEM 		 0.1 
+MeanOverSEM 	 3 
+LogMeanOverSEM 	 0.4 
+
+======  shockfreq 30000 impact 50 duration 10000 span 1 lifem 50 copies 5 N 21  ====== 
+
+  The decimal point is at the |
+
+  0 | 00000000000000000000
+  0 | 
+  1 | 0
+
+shockfreq 30000 impact 50 duration 10000 span 1 lifem 50 copies 5 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0.05 
+stddev 		 0.2 
+IQR 		 0 
+mad 		 0 
+SEM 		 0.05 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 0 
+
+======  shockfreq 30000 impact 50 duration 10000 span 1 lifem 100 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 33333
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 0000000000000000
+
+shockfreq 30000 impact 50 duration 10000 span 1 lifem 100 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 7695 
+stddev 		 4225 
+IQR 		 0 
+mad 		 0 
+SEM 		 922 
+MeanOverSEM 	 8 
+LogMeanOverSEM 	 0.9 
+
+======  shockfreq 30000 impact 50 duration 10000 span 1 lifem 100 copies 2 N 21  ====== 
+
+  The decimal point is 4 digit(s) to the right of the |
+
+  0 | 00000000000000000000
+  0 | 
+  1 | 0
+
+shockfreq 30000 impact 50 duration 10000 span 1 lifem 100 copies 2 N 21 
+median 		 64 
+trimean 	 70 
+midmean 	 71 
+mean 		 550 
+stddev 		 2166 
+IQR 		 69 
+mad 		 37 
+SEM 		 473 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 0.07 
+
+======  shockfreq 30000 impact 50 duration 10000 span 1 lifem 100 copies 3 N 21  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 0000000000000112
+  1 | 
+  2 | 4
+  3 | 0159
+
+shockfreq 30000 impact 50 duration 10000 span 1 lifem 100 copies 3 N 21 
+median 		 0 
+trimean 	 0.5 
+midmean 	 0.4 
+mean 		 8 
+stddev 		 14 
+IQR 		 2 
+mad 		 0 
+SEM 		 3 
+MeanOverSEM 	 3 
+LogMeanOverSEM 	 0.4 
+
+======  shockfreq 30000 impact 50 duration 10000 span 1 lifem 100 copies 4 N 21  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 000000000000000000000
+
+shockfreq 30000 impact 50 duration 10000 span 1 lifem 100 copies 4 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  shockfreq 30000 impact 50 duration 10000 span 1 lifem 100 copies 5 N 21  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 000000000000000000000
+
+shockfreq 30000 impact 50 duration 10000 span 1 lifem 100 copies 5 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  shockfreq 30000 impact 50 duration 10000 span 1 lifem 200 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 1
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 00000000000000000000
+
+shockfreq 30000 impact 50 duration 10000 span 1 lifem 200 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 9531 
+stddev 		 2150 
+IQR 		 0 
+mad 		 0 
+SEM 		 469 
+MeanOverSEM 	 20 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 50 duration 10000 span 1 lifem 200 copies 2 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 000000000000001111
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 000
+
+shockfreq 30000 impact 50 duration 10000 span 1 lifem 200 copies 2 N 21 
+median 		 38 
+trimean 	 45 
+midmean 	 44 
+mean 		 1464 
+stddev 		 3571 
+IQR 		 37 
+mad 		 24 
+SEM 		 779 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.3 
+
+======  shockfreq 30000 impact 50 duration 10000 span 1 lifem 200 copies 3 N 21  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 00000000000000000
+  0 | 
+  1 | 144
+  1 | 8
+
+shockfreq 30000 impact 50 duration 10000 span 1 lifem 200 copies 3 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 3 
+stddev 		 6 
+IQR 		 0 
+mad 		 0 
+SEM 		 1 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.3 
+
+======  shockfreq 30000 impact 50 duration 10000 span 1 lifem 200 copies 4 N 21  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 000000000000000000000
+
+shockfreq 30000 impact 50 duration 10000 span 1 lifem 200 copies 4 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  shockfreq 30000 impact 50 duration 10000 span 1 lifem 200 copies 5 N 21  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 000000000000000000000
+
+shockfreq 30000 impact 50 duration 10000 span 1 lifem 200 copies 5 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  shockfreq 30000 impact 50 duration 10000 span 1 lifem 300 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 1111
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 00000000000000000
+
+shockfreq 30000 impact 50 duration 10000 span 1 lifem 300 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 8115 
+stddev 		 3981 
+IQR 		 0 
+mad 		 0 
+SEM 		 869 
+MeanOverSEM 	 9 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 50 duration 10000 span 1 lifem 300 copies 2 N 21  ====== 
+
+  The decimal point is 4 digit(s) to the right of the |
+
+  0 | 000000000000000000
+  0 | 
+  1 | 000
+
+shockfreq 30000 impact 50 duration 10000 span 1 lifem 300 copies 2 N 21 
+median 		 30 
+trimean 	 28 
+midmean 	 28 
+mean 		 1450 
+stddev 		 3577 
+IQR 		 16 
+mad 		 16 
+SEM 		 781 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.3 
+
+======  shockfreq 30000 impact 50 duration 10000 span 1 lifem 300 copies 3 N 21  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 00000000000000000
+  0 | 
+  1 | 02
+  1 | 78
+
+shockfreq 30000 impact 50 duration 10000 span 1 lifem 300 copies 3 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 3 
+stddev 		 6 
+IQR 		 0 
+mad 		 0 
+SEM 		 1 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.3 
+
+======  shockfreq 30000 impact 50 duration 10000 span 1 lifem 300 copies 4 N 21  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 000000000000000000000
+
+shockfreq 30000 impact 50 duration 10000 span 1 lifem 300 copies 4 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  shockfreq 30000 impact 50 duration 10000 span 1 lifem 300 copies 5 N 21  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 000000000000000000000
+
+shockfreq 30000 impact 50 duration 10000 span 1 lifem 300 copies 5 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  shockfreq 30000 impact 50 duration 10000 span 1 lifem 500 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 1111
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 00000000000000000
+
+shockfreq 30000 impact 50 duration 10000 span 1 lifem 500 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 8109 
+stddev 		 3995 
+IQR 		 0 
+mad 		 0 
+SEM 		 872 
+MeanOverSEM 	 9 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 50 duration 10000 span 1 lifem 500 copies 2 N 21  ====== 
+
+  The decimal point is 4 digit(s) to the right of the |
+
+  0 | 0000000000000000000
+  0 | 
+  1 | 00
+
+shockfreq 30000 impact 50 duration 10000 span 1 lifem 500 copies 2 N 21 
+median 		 21 
+trimean 	 20 
+midmean 	 19 
+mean 		 969 
+stddev 		 3003 
+IQR 		 23 
+mad 		 19 
+SEM 		 655 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 0.2 
+
+======  shockfreq 30000 impact 50 duration 10000 span 1 lifem 500 copies 3 N 21  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 00000000000134
+  0 | 55789
+  1 | 2
+  1 | 
+  2 | 4
+
+shockfreq 30000 impact 50 duration 10000 span 1 lifem 500 copies 3 N 21 
+median 		 0 
+trimean 	 1 
+midmean 	 2 
+mean 		 4 
+stddev 		 6 
+IQR 		 5 
+mad 		 0 
+SEM 		 1 
+MeanOverSEM 	 3 
+LogMeanOverSEM 	 0.5 
+
+======  shockfreq 30000 impact 50 duration 10000 span 1 lifem 500 copies 4 N 21  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 000000000000000000000
+
+shockfreq 30000 impact 50 duration 10000 span 1 lifem 500 copies 4 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  shockfreq 30000 impact 50 duration 10000 span 1 lifem 500 copies 5 N 21  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 000000000000000000000
+
+shockfreq 30000 impact 50 duration 10000 span 1 lifem 500 copies 5 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  shockfreq 30000 impact 50 duration 10000 span 1 lifem 1000 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 0000
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 00000000000000000
+
+shockfreq 30000 impact 50 duration 10000 span 1 lifem 1000 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 8102 
+stddev 		 4009 
+IQR 		 0 
+mad 		 0 
+SEM 		 875 
+MeanOverSEM 	 9 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 50 duration 10000 span 1 lifem 1000 copies 2 N 21  ====== 
+
+  The decimal point is 4 digit(s) to the right of the |
+
+  0 | 00000000000000000000
+  0 | 
+  1 | 0
+
+shockfreq 30000 impact 50 duration 10000 span 1 lifem 1000 copies 2 N 21 
+median 		 8 
+trimean 	 8 
+midmean 	 9 
+mean 		 484 
+stddev 		 2180 
+IQR 		 8 
+mad 		 6 
+SEM 		 476 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 0.008 
+
+======  shockfreq 30000 impact 50 duration 10000 span 1 lifem 1000 copies 3 N 21  ====== 
+
+  The decimal point is at the |
+
+  0 | 0000000000000000
+  2 | 0
+  4 | 0000
+
+shockfreq 30000 impact 50 duration 10000 span 1 lifem 1000 copies 3 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 1 
+stddev 		 2 
+IQR 		 0 
+mad 		 0 
+SEM 		 0.4 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.4 
+
+======  shockfreq 30000 impact 50 duration 10000 span 1 lifem 1000 copies 4 N 21  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 000000000000000000000
+
+shockfreq 30000 impact 50 duration 10000 span 1 lifem 1000 copies 4 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  shockfreq 30000 impact 50 duration 10000 span 1 lifem 1000 copies 5 N 21  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 000000000000000000000
+
+shockfreq 30000 impact 50 duration 10000 span 1 lifem 1000 copies 5 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  shockfreq 30000 impact 50 duration 10000 span 2 lifem 10 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   2 | 990
+   4 | 
+   6 | 
+   8 | 
+  10 | 000000000000000000
+
+shockfreq 30000 impact 50 duration 10000 span 2 lifem 10 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 8988 
+stddev 		 2541 
+IQR 		 0 
+mad 		 0 
+SEM 		 555 
+MeanOverSEM 	 16 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 50 duration 10000 span 2 lifem 10 copies 2 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 57888801114467
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 0000000
+
+shockfreq 30000 impact 50 duration 10000 span 2 lifem 10 copies 2 N 21 
+median 		 1387 
+trimean 	 3389 
+midmean 	 2845 
+mean 		 4035 
+stddev 		 4332 
+IQR 		 9218 
+mad 		 925 
+SEM 		 945 
+MeanOverSEM 	 4 
+LogMeanOverSEM 	 0.6 
+
+======  shockfreq 30000 impact 50 duration 10000 span 2 lifem 10 copies 3 N 21  ====== 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  0 | 03334455566
+  2 | 34555789
+  4 | 
+  6 | 69
+
+shockfreq 30000 impact 50 duration 10000 span 2 lifem 10 copies 3 N 21 
+median 		 64 
+trimean 	 130 
+midmean 	 185 
+mean 		 221 
+stddev 		 216 
+IQR 		 314 
+mad 		 90 
+SEM 		 47 
+MeanOverSEM 	 5 
+LogMeanOverSEM 	 0.7 
+
+======  shockfreq 30000 impact 50 duration 10000 span 2 lifem 10 copies 4 N 21  ====== 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  0 | 00000000011111122222
+  1 | 
+  2 | 
+  3 | 1
+
+shockfreq 30000 impact 50 duration 10000 span 2 lifem 10 copies 4 N 21 
+median 		 9 
+trimean 	 8 
+midmean 	 8 
+mean 		 22 
+stddev 		 66 
+IQR 		 14 
+mad 		 10 
+SEM 		 14 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.2 
+
+======  shockfreq 30000 impact 50 duration 10000 span 2 lifem 10 copies 5 N 21  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 00000000000000111
+  0 | 8
+  1 | 12
+  1 | 5
+
+shockfreq 30000 impact 50 duration 10000 span 2 lifem 10 copies 5 N 21 
+median 		 0 
+trimean 	 0.2 
+midmean 	 0.2 
+mean 		 2 
+stddev 		 5 
+IQR 		 1 
+mad 		 0 
+SEM 		 1 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.4 
+
+======  shockfreq 30000 impact 50 duration 10000 span 2 lifem 20 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 66666
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 0000000000000000
+
+shockfreq 30000 impact 50 duration 10000 span 2 lifem 20 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 7994 
+stddev 		 3676 
+IQR 		 0 
+mad 		 0 
+SEM 		 802 
+MeanOverSEM 	 10 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 50 duration 10000 span 2 lifem 20 copies 2 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 222344445569
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 000000000
+
+shockfreq 30000 impact 50 duration 10000 span 2 lifem 20 copies 2 N 21 
+median 		 572 
+trimean 	 2877 
+midmean 	 3961 
+mean 		 4517 
+stddev 		 4868 
+IQR 		 9636 
+mad 		 565 
+SEM 		 1062 
+MeanOverSEM 	 4 
+LogMeanOverSEM 	 0.6 
+
+======  shockfreq 30000 impact 50 duration 10000 span 2 lifem 20 copies 3 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 00000000000002222234
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 0
+
+shockfreq 30000 impact 50 duration 10000 span 2 lifem 20 copies 3 N 21 
+median 		 11 
+trimean 	 55 
+midmean 	 54 
+mean 		 557 
+stddev 		 2167 
+IQR 		 183 
+mad 		 12 
+SEM 		 473 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 0.07 
+
+======  shockfreq 30000 impact 50 duration 10000 span 2 lifem 20 copies 4 N 21  ====== 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  0 | 0000000000000001111
+  0 | 
+  1 | 
+  1 | 68
+
+shockfreq 30000 impact 50 duration 10000 span 2 lifem 20 copies 4 N 21 
+median 		 2 
+trimean 	 2 
+midmean 	 2 
+mean 		 18 
+stddev 		 50 
+IQR 		 5 
+mad 		 3 
+SEM 		 11 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.2 
+
+======  shockfreq 30000 impact 50 duration 10000 span 2 lifem 20 copies 5 N 21  ====== 
+
+  The decimal point is at the |
+
+  0 | 00000000000000000
+  2 | 
+  4 | 00
+  6 | 00
+
+shockfreq 30000 impact 50 duration 10000 span 2 lifem 20 copies 5 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 1 
+stddev 		 2 
+IQR 		 0 
+mad 		 0 
+SEM 		 0.4 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.3 
+
+======  shockfreq 30000 impact 50 duration 10000 span 2 lifem 30 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 11111
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 0000000000000000
+
+shockfreq 30000 impact 50 duration 10000 span 2 lifem 30 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 7877 
+stddev 		 3892 
+IQR 		 0 
+mad 		 0 
+SEM 		 849 
+MeanOverSEM 	 9 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 50 duration 10000 span 2 lifem 30 copies 2 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 111222333346
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 000000000
+
+shockfreq 30000 impact 50 duration 10000 span 2 lifem 30 copies 2 N 21 
+median 		 351 
+trimean 	 2736 
+midmean 	 3856 
+mean 		 4439 
+stddev 		 4935 
+IQR 		 9756 
+mad 		 342 
+SEM 		 1077 
+MeanOverSEM 	 4 
+LogMeanOverSEM 	 0.6 
+
+======  shockfreq 30000 impact 50 duration 10000 span 2 lifem 30 copies 3 N 21  ====== 
+
+  The decimal point is 4 digit(s) to the right of the |
+
+  0 | 00000000000000000000
+  0 | 
+  1 | 0
+
+shockfreq 30000 impact 50 duration 10000 span 2 lifem 30 copies 3 N 21 
+median 		 107 
+trimean 	 86 
+midmean 	 74 
+mean 		 558 
+stddev 		 2165 
+IQR 		 119 
+mad 		 148 
+SEM 		 473 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 0.07 
+
+======  shockfreq 30000 impact 50 duration 10000 span 2 lifem 30 copies 4 N 21  ====== 
+
+  The decimal point is at the |
+
+  0 | 0000000000000
+  2 | 0000
+  4 | 000
+  6 | 0
+
+shockfreq 30000 impact 50 duration 10000 span 2 lifem 30 copies 4 N 21 
+median 		 0 
+trimean 	 0.8 
+midmean 	 0.7 
+mean 		 1 
+stddev 		 2 
+IQR 		 3 
+mad 		 0 
+SEM 		 0.5 
+MeanOverSEM 	 3 
+LogMeanOverSEM 	 0.5 
+
+======  shockfreq 30000 impact 50 duration 10000 span 2 lifem 30 copies 5 N 21  ====== 
+
+  The decimal point is at the |
+
+  0 | 00000000000000000000
+  1 | 
+  2 | 
+  3 | 0
+
+shockfreq 30000 impact 50 duration 10000 span 2 lifem 30 copies 5 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0.1 
+stddev 		 0.7 
+IQR 		 0 
+mad 		 0 
+SEM 		 0.1 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 0 
+
+======  shockfreq 30000 impact 50 duration 10000 span 2 lifem 50 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 77
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 0000000000000000000
+
+shockfreq 30000 impact 50 duration 10000 span 2 lifem 50 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 9111 
+stddev 		 2809 
+IQR 		 0 
+mad 		 0 
+SEM 		 613 
+MeanOverSEM 	 15 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 50 duration 10000 span 2 lifem 50 copies 2 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 0111111222223334
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 00000
+
+shockfreq 30000 impact 50 duration 10000 span 2 lifem 50 copies 2 N 21 
+median 		 218 
+trimean 	 238 
+midmean 	 235 
+mean 		 2525 
+stddev 		 4283 
+IQR 		 233 
+mad 		 132 
+SEM 		 935 
+MeanOverSEM 	 3 
+LogMeanOverSEM 	 0.4 
+
+======  shockfreq 30000 impact 50 duration 10000 span 2 lifem 50 copies 3 N 21  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 00001111224
+  2 | 
+  4 | 
+  6 | 123388923
+  8 | 1
+
+shockfreq 30000 impact 50 duration 10000 span 2 lifem 50 copies 3 N 21 
+median 		 4 
+trimean 	 19 
+midmean 	 30 
+mean 		 33 
+stddev 		 35 
+IQR 		 67 
+mad 		 6 
+SEM 		 8 
+MeanOverSEM 	 4 
+LogMeanOverSEM 	 0.6 
+
+======  shockfreq 30000 impact 50 duration 10000 span 2 lifem 50 copies 4 N 21  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 00000000000000011111
+  2 | 
+  4 | 
+  6 | 9
+
+shockfreq 30000 impact 50 duration 10000 span 2 lifem 50 copies 4 N 21 
+median 		 0 
+trimean 	 0.2 
+midmean 	 0.09 
+mean 		 4 
+stddev 		 15 
+IQR 		 1 
+mad 		 0 
+SEM 		 3 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 0.03 
+
+======  shockfreq 30000 impact 50 duration 10000 span 2 lifem 50 copies 5 N 21  ====== 
+
+  The decimal point is at the |
+
+  0 | 0000000000000000000
+  0 | 
+  1 | 00
+
+shockfreq 30000 impact 50 duration 10000 span 2 lifem 50 copies 5 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0.1 
+stddev 		 0.3 
+IQR 		 0 
+mad 		 0 
+SEM 		 0.07 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 0.2 
+
+======  shockfreq 30000 impact 50 duration 10000 span 2 lifem 100 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 33333
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 0000000000000000
+
+shockfreq 30000 impact 50 duration 10000 span 2 lifem 100 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 7695 
+stddev 		 4225 
+IQR 		 0 
+mad 		 0 
+SEM 		 922 
+MeanOverSEM 	 8 
+LogMeanOverSEM 	 0.9 
+
+======  shockfreq 30000 impact 50 duration 10000 span 2 lifem 100 copies 2 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 01111111111111122
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 0000
+
+shockfreq 30000 impact 50 duration 10000 span 2 lifem 100 copies 2 N 21 
+median 		 111 
+trimean 	 118 
+midmean 	 115 
+mean 		 1988 
+stddev 		 3983 
+IQR 		 108 
+mad 		 61 
+SEM 		 869 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.4 
+
+======  shockfreq 30000 impact 50 duration 10000 span 2 lifem 100 copies 3 N 21  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 000000111
+  2 | 46903455
+  4 | 047
+  6 | 5
+
+shockfreq 30000 impact 50 duration 10000 span 2 lifem 100 copies 3 N 21 
+median 		 26 
+trimean 	 22 
+midmean 	 19 
+mean 		 22 
+stddev 		 21 
+IQR 		 35 
+mad 		 31 
+SEM 		 5 
+MeanOverSEM 	 5 
+LogMeanOverSEM 	 0.7 
+
+======  shockfreq 30000 impact 50 duration 10000 span 2 lifem 100 copies 4 N 21  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 00000000000000000000
+  1 | 
+  2 | 
+  3 | 8
+
+shockfreq 30000 impact 50 duration 10000 span 2 lifem 100 copies 4 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 2 
+stddev 		 8 
+IQR 		 0 
+mad 		 0 
+SEM 		 2 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 -0.00000000000000005 
+
+======  shockfreq 30000 impact 50 duration 10000 span 2 lifem 100 copies 5 N 21  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 000000000000000000000
+
+shockfreq 30000 impact 50 duration 10000 span 2 lifem 100 copies 5 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  shockfreq 30000 impact 50 duration 10000 span 2 lifem 200 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 1
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 00000000000000000000
+
+shockfreq 30000 impact 50 duration 10000 span 2 lifem 200 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 9531 
+stddev 		 2150 
+IQR 		 0 
+mad 		 0 
+SEM 		 469 
+MeanOverSEM 	 20 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 50 duration 10000 span 2 lifem 200 copies 2 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 000000000000011111
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 000
+
+shockfreq 30000 impact 50 duration 10000 span 2 lifem 200 copies 2 N 21 
+median 		 46 
+trimean 	 52 
+midmean 	 49 
+mean 		 1468 
+stddev 		 3569 
+IQR 		 38 
+mad 		 16 
+SEM 		 779 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.3 
+
+======  shockfreq 30000 impact 50 duration 10000 span 2 lifem 200 copies 3 N 21  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 0000000000001
+  0 | 
+  1 | 113
+  1 | 569
+  2 | 03
+
+shockfreq 30000 impact 50 duration 10000 span 2 lifem 200 copies 3 N 21 
+median 		 0 
+trimean 	 3 
+midmean 	 3 
+mean 		 6 
+stddev 		 8 
+IQR 		 13 
+mad 		 0 
+SEM 		 2 
+MeanOverSEM 	 3 
+LogMeanOverSEM 	 0.5 
+
+======  shockfreq 30000 impact 50 duration 10000 span 2 lifem 200 copies 4 N 21  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 000000000000000000000
+
+shockfreq 30000 impact 50 duration 10000 span 2 lifem 200 copies 4 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  shockfreq 30000 impact 50 duration 10000 span 2 lifem 200 copies 5 N 21  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 000000000000000000000
+
+shockfreq 30000 impact 50 duration 10000 span 2 lifem 200 copies 5 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  shockfreq 30000 impact 50 duration 10000 span 2 lifem 300 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 1111
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 00000000000000000
+
+shockfreq 30000 impact 50 duration 10000 span 2 lifem 300 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 8115 
+stddev 		 3981 
+IQR 		 0 
+mad 		 0 
+SEM 		 869 
+MeanOverSEM 	 9 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 50 duration 10000 span 2 lifem 300 copies 2 N 21  ====== 
+
+  The decimal point is 4 digit(s) to the right of the |
+
+  0 | 00000000000000
+  0 | 
+  1 | 0000000
+
+shockfreq 30000 impact 50 duration 10000 span 2 lifem 300 copies 2 N 21 
+median 		 35 
+trimean 	 2525 
+midmean 	 1851 
+mean 		 3355 
+stddev 		 4815 
+IQR 		 9969 
+mad 		 33 
+SEM 		 1051 
+MeanOverSEM 	 3 
+LogMeanOverSEM 	 0.5 
+
+======  shockfreq 30000 impact 50 duration 10000 span 2 lifem 300 copies 3 N 21  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 000000000000008
+  1 | 0235
+  2 | 78
+
+shockfreq 30000 impact 50 duration 10000 span 2 lifem 300 copies 3 N 21 
+median 		 0 
+trimean 	 2 
+midmean 	 2 
+mean 		 5 
+stddev 		 9 
+IQR 		 10 
+mad 		 0 
+SEM 		 2 
+MeanOverSEM 	 3 
+LogMeanOverSEM 	 0.4 
+
+======  shockfreq 30000 impact 50 duration 10000 span 2 lifem 300 copies 4 N 21  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 00000000000000000000
+  0 | 
+  1 | 
+  1 | 7
+
+shockfreq 30000 impact 50 duration 10000 span 2 lifem 300 copies 4 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0.8 
+stddev 		 4 
+IQR 		 0 
+mad 		 0 
+SEM 		 0.8 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 0 
+
+======  shockfreq 30000 impact 50 duration 10000 span 2 lifem 300 copies 5 N 21  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 000000000000000000000
+
+shockfreq 30000 impact 50 duration 10000 span 2 lifem 300 copies 5 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  shockfreq 30000 impact 50 duration 10000 span 2 lifem 500 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 1111
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 00000000000000000
+
+shockfreq 30000 impact 50 duration 10000 span 2 lifem 500 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 8109 
+stddev 		 3995 
+IQR 		 0 
+mad 		 0 
+SEM 		 872 
+MeanOverSEM 	 9 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 50 duration 10000 span 2 lifem 500 copies 2 N 21  ====== 
+
+  The decimal point is 4 digit(s) to the right of the |
+
+  0 | 0000000000000
+  0 | 
+  1 | 00000000
+
+shockfreq 30000 impact 50 duration 10000 span 2 lifem 500 copies 2 N 21 
+median 		 22 
+trimean 	 2514 
+midmean 	 2744 
+mean 		 3819 
+stddev 		 4968 
+IQR 		 9987 
+mad 		 27 
+SEM 		 1084 
+MeanOverSEM 	 4 
+LogMeanOverSEM 	 0.5 
+
+======  shockfreq 30000 impact 50 duration 10000 span 2 lifem 500 copies 3 N 21  ====== 
+
+  The decimal point is 4 digit(s) to the right of the |
+
+  0 | 00000000000000000000
+  0 | 
+  1 | 0
+
+shockfreq 30000 impact 50 duration 10000 span 2 lifem 500 copies 3 N 21 
+median 		 5 
+trimean 	 5 
+midmean 	 4 
+mean 		 480 
+stddev 		 2181 
+IQR 		 9 
+mad 		 7 
+SEM 		 476 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 0.004 
+
+======  shockfreq 30000 impact 50 duration 10000 span 2 lifem 500 copies 4 N 21  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 000000000000000000000
+
+shockfreq 30000 impact 50 duration 10000 span 2 lifem 500 copies 4 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  shockfreq 30000 impact 50 duration 10000 span 2 lifem 500 copies 5 N 21  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 000000000000000000000
+
+shockfreq 30000 impact 50 duration 10000 span 2 lifem 500 copies 5 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  shockfreq 30000 impact 50 duration 10000 span 2 lifem 1000 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 0000
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 00000000000000000
+
+shockfreq 30000 impact 50 duration 10000 span 2 lifem 1000 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 8102 
+stddev 		 4009 
+IQR 		 0 
+mad 		 0 
+SEM 		 875 
+MeanOverSEM 	 9 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 50 duration 10000 span 2 lifem 1000 copies 2 N 21  ====== 
+
+  The decimal point is 4 digit(s) to the right of the |
+
+  0 | 0000000000000
+  0 | 
+  1 | 00000000
+
+shockfreq 30000 impact 50 duration 10000 span 2 lifem 1000 copies 2 N 21 
+median 		 15 
+trimean 	 2509 
+midmean 	 2735 
+mean 		 3814 
+stddev 		 4972 
+IQR 		 9995 
+mad 		 18 
+SEM 		 1085 
+MeanOverSEM 	 4 
+LogMeanOverSEM 	 0.5 
+
+======  shockfreq 30000 impact 50 duration 10000 span 2 lifem 1000 copies 3 N 21  ====== 
+
+  The decimal point is 4 digit(s) to the right of the |
+
+  0 | 00000000000000000000
+  0 | 
+  1 | 0
+
+shockfreq 30000 impact 50 duration 10000 span 2 lifem 1000 copies 3 N 21 
+median 		 2 
+trimean 	 2 
+midmean 	 2 
+mean 		 479 
+stddev 		 2182 
+IQR 		 6 
+mad 		 3 
+SEM 		 476 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 0.003 
+
+======  shockfreq 30000 impact 50 duration 10000 span 2 lifem 1000 copies 4 N 21  ====== 
+
+  The decimal point is at the |
+
+  0 | 00000000000000000000
+  1 | 
+  2 | 
+  3 | 
+  4 | 0
+
+shockfreq 30000 impact 50 duration 10000 span 2 lifem 1000 copies 4 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0.2 
+stddev 		 0.9 
+IQR 		 0 
+mad 		 0 
+SEM 		 0.2 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 0 
+
+======  shockfreq 30000 impact 50 duration 10000 span 2 lifem 1000 copies 5 N 21  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 000000000000000000000
+
+shockfreq 30000 impact 50 duration 10000 span 2 lifem 1000 copies 5 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  shockfreq 30000 impact 50 duration 10000 span 3 lifem 10 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   2 | 990
+   4 | 
+   6 | 
+   8 | 
+  10 | 000000000000000000
+
+shockfreq 30000 impact 50 duration 10000 span 3 lifem 10 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 8988 
+stddev 		 2541 
+IQR 		 0 
+mad 		 0 
+SEM 		 555 
+MeanOverSEM 	 16 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 50 duration 10000 span 3 lifem 10 copies 2 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 57888801114467
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 0000000
+
+shockfreq 30000 impact 50 duration 10000 span 3 lifem 10 copies 2 N 21 
+median 		 1387 
+trimean 	 3389 
+midmean 	 2845 
+mean 		 4035 
+stddev 		 4332 
+IQR 		 9218 
+mad 		 925 
+SEM 		 945 
+MeanOverSEM 	 4 
+LogMeanOverSEM 	 0.6 
+
+======  shockfreq 30000 impact 50 duration 10000 span 3 lifem 10 copies 3 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 00001113344444444677
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 0
+
+shockfreq 30000 impact 50 duration 10000 span 3 lifem 10 copies 3 N 21 
+median 		 372 
+trimean 	 302 
+midmean 	 318 
+mean 		 764 
+stddev 		 2127 
+IQR 		 346 
+mad 		 384 
+SEM 		 464 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.2 
+
+======  shockfreq 30000 impact 50 duration 10000 span 3 lifem 10 copies 4 N 21  ====== 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  0 | 000001111111222233
+  2 | 66
+  4 | 
+  6 | 6
+
+shockfreq 30000 impact 50 duration 10000 span 3 lifem 10 copies 4 N 21 
+median 		 13 
+trimean 	 14 
+midmean 	 14 
+mean 		 76 
+stddev 		 170 
+IQR 		 14 
+mad 		 12 
+SEM 		 37 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.3 
+
+======  shockfreq 30000 impact 50 duration 10000 span 3 lifem 10 copies 5 N 21  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 0000000001112
+  0 | 
+  1 | 01224
+  1 | 556
+
+shockfreq 30000 impact 50 duration 10000 span 3 lifem 10 copies 5 N 21 
+median 		 1 
+trimean 	 4 
+midmean 	 3 
+mean 		 5 
+stddev 		 6 
+IQR 		 12 
+mad 		 1 
+SEM 		 1 
+MeanOverSEM 	 4 
+LogMeanOverSEM 	 0.6 
+
+======  shockfreq 30000 impact 50 duration 10000 span 3 lifem 20 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 66666
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 0000000000000000
+
+shockfreq 30000 impact 50 duration 10000 span 3 lifem 20 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 7994 
+stddev 		 3676 
+IQR 		 0 
+mad 		 0 
+SEM 		 802 
+MeanOverSEM 	 10 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 50 duration 10000 span 3 lifem 20 copies 2 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 222344445569
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 000000000
+
+shockfreq 30000 impact 50 duration 10000 span 3 lifem 20 copies 2 N 21 
+median 		 572 
+trimean 	 2877 
+midmean 	 3961 
+mean 		 4517 
+stddev 		 4868 
+IQR 		 9636 
+mad 		 565 
+SEM 		 1062 
+MeanOverSEM 	 4 
+LogMeanOverSEM 	 0.6 
+
+======  shockfreq 30000 impact 50 duration 10000 span 3 lifem 20 copies 3 N 21  ====== 
+
+  The decimal point is 4 digit(s) to the right of the |
+
+  0 | 00000000000000001
+  0 | 
+  1 | 0000
+
+shockfreq 30000 impact 50 duration 10000 span 3 lifem 20 copies 3 N 21 
+median 		 182 
+trimean 	 226 
+midmean 	 210 
+mean 		 2055 
+stddev 		 3951 
+IQR 		 214 
+mad 		 37 
+SEM 		 862 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.4 
+
+======  shockfreq 30000 impact 50 duration 10000 span 3 lifem 20 copies 4 N 21  ====== 
+
+  The decimal point is at the |
+
+  0 | 00000000
+  2 | 00000
+  4 | 0000
+  6 | 00
+  8 | 00
+
+shockfreq 30000 impact 50 duration 10000 span 3 lifem 20 copies 4 N 21 
+median 		 2 
+trimean 	 2 
+midmean 	 2 
+mean 		 3 
+stddev 		 3 
+IQR 		 4 
+mad 		 3 
+SEM 		 0.6 
+MeanOverSEM 	 5 
+LogMeanOverSEM 	 0.7 
+
+======  shockfreq 30000 impact 50 duration 10000 span 3 lifem 20 copies 5 N 21  ====== 
+
+  The decimal point is at the |
+
+  0 | 00000000000000000
+  2 | 
+  4 | 0
+  6 | 000
+
+shockfreq 30000 impact 50 duration 10000 span 3 lifem 20 copies 5 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 1 
+stddev 		 2 
+IQR 		 0 
+mad 		 0 
+SEM 		 0.5 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.3 
+
+======  shockfreq 30000 impact 50 duration 10000 span 3 lifem 30 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 11111
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 0000000000000000
+
+shockfreq 30000 impact 50 duration 10000 span 3 lifem 30 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 7877 
+stddev 		 3892 
+IQR 		 0 
+mad 		 0 
+SEM 		 849 
+MeanOverSEM 	 9 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 50 duration 10000 span 3 lifem 30 copies 2 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 111222333346
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 000000000
+
+shockfreq 30000 impact 50 duration 10000 span 3 lifem 30 copies 2 N 21 
+median 		 351 
+trimean 	 2736 
+midmean 	 3856 
+mean 		 4439 
+stddev 		 4935 
+IQR 		 9756 
+mad 		 342 
+SEM 		 1077 
+MeanOverSEM 	 4 
+LogMeanOverSEM 	 0.6 
+
+======  shockfreq 30000 impact 50 duration 10000 span 3 lifem 30 copies 3 N 21  ====== 
+
+  The decimal point is 4 digit(s) to the right of the |
+
+  0 | 0000000000000000000
+  0 | 
+  1 | 00
+
+shockfreq 30000 impact 50 duration 10000 span 3 lifem 30 copies 3 N 21 
+median 		 111 
+trimean 	 91 
+midmean 	 102 
+mean 		 1039 
+stddev 		 2980 
+IQR 		 128 
+mad 		 42 
+SEM 		 650 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.2 
+
+======  shockfreq 30000 impact 50 duration 10000 span 3 lifem 30 copies 4 N 21  ====== 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  0 | 0000000000000000001
+  0 | 
+  1 | 0
+  1 | 
+  2 | 3
+
+shockfreq 30000 impact 50 duration 10000 span 3 lifem 30 copies 4 N 21 
+median 		 2 
+trimean 	 2 
+midmean 	 2 
+mean 		 17 
+stddev 		 53 
+IQR 		 4 
+mad 		 3 
+SEM 		 12 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.2 
+
+======  shockfreq 30000 impact 50 duration 10000 span 3 lifem 30 copies 5 N 21  ====== 
+
+  The decimal point is at the |
+
+  0 | 00000000000000000000
+  1 | 
+  2 | 
+  3 | 0
+
+shockfreq 30000 impact 50 duration 10000 span 3 lifem 30 copies 5 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0.1 
+stddev 		 0.7 
+IQR 		 0 
+mad 		 0 
+SEM 		 0.1 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 0 
+
+======  shockfreq 30000 impact 50 duration 10000 span 3 lifem 50 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 77
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 0000000000000000000
+
+shockfreq 30000 impact 50 duration 10000 span 3 lifem 50 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 9111 
+stddev 		 2809 
+IQR 		 0 
+mad 		 0 
+SEM 		 613 
+MeanOverSEM 	 15 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 50 duration 10000 span 3 lifem 50 copies 2 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 0111111222223334
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 00000
+
+shockfreq 30000 impact 50 duration 10000 span 3 lifem 50 copies 2 N 21 
+median 		 218 
+trimean 	 238 
+midmean 	 235 
+mean 		 2525 
+stddev 		 4283 
+IQR 		 233 
+mad 		 132 
+SEM 		 935 
+MeanOverSEM 	 3 
+LogMeanOverSEM 	 0.4 
+
+======  shockfreq 30000 impact 50 duration 10000 span 3 lifem 50 copies 3 N 21  ====== 
+
+  The decimal point is 4 digit(s) to the right of the |
+
+  0 | 000000000000000000
+  0 | 
+  1 | 000
+
+shockfreq 30000 impact 50 duration 10000 span 3 lifem 50 copies 3 N 21 
+median 		 61 
+trimean 	 50 
+midmean 	 38 
+mean 		 1458 
+stddev 		 3574 
+IQR 		 73 
+mad 		 87 
+SEM 		 780 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.3 
+
+======  shockfreq 30000 impact 50 duration 10000 span 3 lifem 50 copies 4 N 21  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 0000000000000111112
+  2 | 
+  4 | 
+  6 | 23
+
+shockfreq 30000 impact 50 duration 10000 span 3 lifem 50 copies 4 N 21 
+median 		 0 
+trimean 	 0.2 
+midmean 	 0.3 
+mean 		 7 
+stddev 		 22 
+IQR 		 1 
+mad 		 0 
+SEM 		 5 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.2 
+
+======  shockfreq 30000 impact 50 duration 10000 span 3 lifem 50 copies 5 N 21  ====== 
+
+  The decimal point is at the |
+
+  0 | 000000000000000000
+  0 | 
+  1 | 00
+  1 | 
+  2 | 0
+
+shockfreq 30000 impact 50 duration 10000 span 3 lifem 50 copies 5 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0.2 
+stddev 		 0.5 
+IQR 		 0 
+mad 		 0 
+SEM 		 0.1 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.2 
+
+======  shockfreq 30000 impact 50 duration 10000 span 3 lifem 100 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 33333
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 0000000000000000
+
+shockfreq 30000 impact 50 duration 10000 span 3 lifem 100 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 7695 
+stddev 		 4225 
+IQR 		 0 
+mad 		 0 
+SEM 		 922 
+MeanOverSEM 	 8 
+LogMeanOverSEM 	 0.9 
+
+======  shockfreq 30000 impact 50 duration 10000 span 3 lifem 100 copies 2 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 01111111111111122
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 0000
+
+shockfreq 30000 impact 50 duration 10000 span 3 lifem 100 copies 2 N 21 
+median 		 111 
+trimean 	 118 
+midmean 	 115 
+mean 		 1988 
+stddev 		 3983 
+IQR 		 108 
+mad 		 61 
+SEM 		 869 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.4 
+
+======  shockfreq 30000 impact 50 duration 10000 span 3 lifem 100 copies 3 N 21  ====== 
+
+  The decimal point is 4 digit(s) to the right of the |
+
+  0 | 0000000000000000
+  0 | 
+  1 | 00000
+
+shockfreq 30000 impact 50 duration 10000 span 3 lifem 100 copies 3 N 21 
+median 		 39 
+trimean 	 46 
+midmean 	 46 
+mean 		 2406 
+stddev 		 4350 
+IQR 		 47 
+mad 		 40 
+SEM 		 949 
+MeanOverSEM 	 3 
+LogMeanOverSEM 	 0.4 
+
+======  shockfreq 30000 impact 50 duration 10000 span 3 lifem 100 copies 4 N 21  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 0000000000000000001
+  1 | 
+  2 | 1
+  3 | 5
+
+shockfreq 30000 impact 50 duration 10000 span 3 lifem 100 copies 4 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 3 
+stddev 		 9 
+IQR 		 0 
+mad 		 0 
+SEM 		 2 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 0.2 
+
+======  shockfreq 30000 impact 50 duration 10000 span 3 lifem 100 copies 5 N 21  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 000000000000000000000
+
+shockfreq 30000 impact 50 duration 10000 span 3 lifem 100 copies 5 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  shockfreq 30000 impact 50 duration 10000 span 3 lifem 200 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 1
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 00000000000000000000
+
+shockfreq 30000 impact 50 duration 10000 span 3 lifem 200 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 9531 
+stddev 		 2150 
+IQR 		 0 
+mad 		 0 
+SEM 		 469 
+MeanOverSEM 	 20 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 50 duration 10000 span 3 lifem 200 copies 2 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 000000000000011111
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 000
+
+shockfreq 30000 impact 50 duration 10000 span 3 lifem 200 copies 2 N 21 
+median 		 46 
+trimean 	 52 
+midmean 	 49 
+mean 		 1468 
+stddev 		 3569 
+IQR 		 38 
+mad 		 16 
+SEM 		 779 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.3 
+
+======  shockfreq 30000 impact 50 duration 10000 span 3 lifem 200 copies 3 N 21  ====== 
+
+  The decimal point is 4 digit(s) to the right of the |
+
+  0 | 000000000000000000
+  0 | 
+  1 | 000
+
+shockfreq 30000 impact 50 duration 10000 span 3 lifem 200 copies 3 N 21 
+median 		 14 
+trimean 	 11 
+midmean 	 11 
+mean 		 1437 
+stddev 		 3582 
+IQR 		 16 
+mad 		 21 
+SEM 		 782 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.3 
+
+======  shockfreq 30000 impact 50 duration 10000 span 3 lifem 200 copies 4 N 21  ====== 
+
+  The decimal point is at the |
+
+  0 | 00000000000000000000
+  0 | 
+  1 | 0
+
+shockfreq 30000 impact 50 duration 10000 span 3 lifem 200 copies 4 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0.05 
+stddev 		 0.2 
+IQR 		 0 
+mad 		 0 
+SEM 		 0.05 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 0 
+
+======  shockfreq 30000 impact 50 duration 10000 span 3 lifem 200 copies 5 N 21  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 000000000000000000000
+
+shockfreq 30000 impact 50 duration 10000 span 3 lifem 200 copies 5 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  shockfreq 30000 impact 50 duration 10000 span 3 lifem 300 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 1111
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 00000000000000000
+
+shockfreq 30000 impact 50 duration 10000 span 3 lifem 300 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 8115 
+stddev 		 3981 
+IQR 		 0 
+mad 		 0 
+SEM 		 869 
+MeanOverSEM 	 9 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 50 duration 10000 span 3 lifem 300 copies 2 N 21  ====== 
+
+  The decimal point is 4 digit(s) to the right of the |
+
+  0 | 00000000000000
+  0 | 
+  1 | 0000000
+
+shockfreq 30000 impact 50 duration 10000 span 3 lifem 300 copies 2 N 21 
+median 		 35 
+trimean 	 2525 
+midmean 	 1851 
+mean 		 3355 
+stddev 		 4815 
+IQR 		 9969 
+mad 		 33 
+SEM 		 1051 
+MeanOverSEM 	 3 
+LogMeanOverSEM 	 0.5 
+
+======  shockfreq 30000 impact 50 duration 10000 span 3 lifem 300 copies 3 N 21  ====== 
+
+  The decimal point is 4 digit(s) to the right of the |
+
+  0 | 000000000000000000
+  0 | 
+  1 | 000
+
+shockfreq 30000 impact 50 duration 10000 span 3 lifem 300 copies 3 N 21 
+median 		 11 
+trimean 	 12 
+midmean 	 12 
+mean 		 1437 
+stddev 		 3582 
+IQR 		 25 
+mad 		 16 
+SEM 		 782 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.3 
+
+======  shockfreq 30000 impact 50 duration 10000 span 3 lifem 300 copies 4 N 21  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 00000000000000000
+  0 | 69
+  1 | 12
+
+shockfreq 30000 impact 50 duration 10000 span 3 lifem 300 copies 4 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 2 
+stddev 		 4 
+IQR 		 0 
+mad 		 0 
+SEM 		 0.9 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.3 
+
+======  shockfreq 30000 impact 50 duration 10000 span 3 lifem 300 copies 5 N 21  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 000000000000000000000
+
+shockfreq 30000 impact 50 duration 10000 span 3 lifem 300 copies 5 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  shockfreq 30000 impact 50 duration 10000 span 3 lifem 500 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 1111
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 00000000000000000
+
+shockfreq 30000 impact 50 duration 10000 span 3 lifem 500 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 8109 
+stddev 		 3995 
+IQR 		 0 
+mad 		 0 
+SEM 		 872 
+MeanOverSEM 	 9 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 50 duration 10000 span 3 lifem 500 copies 2 N 21  ====== 
+
+  The decimal point is 4 digit(s) to the right of the |
+
+  0 | 0000000000000
+  0 | 
+  1 | 00000000
+
+shockfreq 30000 impact 50 duration 10000 span 3 lifem 500 copies 2 N 21 
+median 		 22 
+trimean 	 2514 
+midmean 	 2744 
+mean 		 3819 
+stddev 		 4968 
+IQR 		 9987 
+mad 		 27 
+SEM 		 1084 
+MeanOverSEM 	 4 
+LogMeanOverSEM 	 0.5 
+
+======  shockfreq 30000 impact 50 duration 10000 span 3 lifem 500 copies 3 N 21  ====== 
+
+  The decimal point is 4 digit(s) to the right of the |
+
+  0 | 000000000000000000
+  0 | 
+  1 | 000
+
+shockfreq 30000 impact 50 duration 10000 span 3 lifem 500 copies 3 N 21 
+median 		 4 
+trimean 	 4 
+midmean 	 4 
+mean 		 1432 
+stddev 		 3584 
+IQR 		 9 
+mad 		 6 
+SEM 		 782 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.3 
+
+======  shockfreq 30000 impact 50 duration 10000 span 3 lifem 500 copies 4 N 21  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 000000000000000000
+  0 | 79
+  1 | 0
+
+shockfreq 30000 impact 50 duration 10000 span 3 lifem 500 copies 4 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 1 
+stddev 		 3 
+IQR 		 0 
+mad 		 0 
+SEM 		 0.7 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.3 
+
+======  shockfreq 30000 impact 50 duration 10000 span 3 lifem 500 copies 5 N 21  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 000000000000000000000
+
+shockfreq 30000 impact 50 duration 10000 span 3 lifem 500 copies 5 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  shockfreq 30000 impact 50 duration 10000 span 3 lifem 1000 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 0000
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 00000000000000000
+
+shockfreq 30000 impact 50 duration 10000 span 3 lifem 1000 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 8102 
+stddev 		 4009 
+IQR 		 0 
+mad 		 0 
+SEM 		 875 
+MeanOverSEM 	 9 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 50 duration 10000 span 3 lifem 1000 copies 2 N 21  ====== 
+
+  The decimal point is 4 digit(s) to the right of the |
+
+  0 | 0000000000000
+  0 | 
+  1 | 00000000
+
+shockfreq 30000 impact 50 duration 10000 span 3 lifem 1000 copies 2 N 21 
+median 		 15 
+trimean 	 2509 
+midmean 	 2735 
+mean 		 3814 
+stddev 		 4972 
+IQR 		 9995 
+mad 		 18 
+SEM 		 1085 
+MeanOverSEM 	 4 
+LogMeanOverSEM 	 0.5 
+
+======  shockfreq 30000 impact 50 duration 10000 span 3 lifem 1000 copies 3 N 21  ====== 
+
+  The decimal point is 4 digit(s) to the right of the |
+
+  0 | 0000000000000000
+  0 | 
+  1 | 00000
+
+shockfreq 30000 impact 50 duration 10000 span 3 lifem 1000 copies 3 N 21 
+median 		 4 
+trimean 	 4 
+midmean 	 4 
+mean 		 2383 
+stddev 		 4363 
+IQR 		 10 
+mad 		 6 
+SEM 		 952 
+MeanOverSEM 	 3 
+LogMeanOverSEM 	 0.4 
+
+======  shockfreq 30000 impact 50 duration 10000 span 3 lifem 1000 copies 4 N 21  ====== 
+
+  The decimal point is at the |
+
+  0 | 0000000000000000000
+  2 | 0
+  4 | 0
+
+shockfreq 30000 impact 50 duration 10000 span 3 lifem 1000 copies 4 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0.3 
+stddev 		 1 
+IQR 		 0 
+mad 		 0 
+SEM 		 0.3 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 0.1 
+
+======  shockfreq 30000 impact 50 duration 10000 span 3 lifem 1000 copies 5 N 21  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 000000000000000000000
+
+shockfreq 30000 impact 50 duration 10000 span 3 lifem 1000 copies 5 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  shockfreq 30000 impact 50 duration 20000 span 1 lifem 10 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   2 | 990
+   4 | 
+   6 | 
+   8 | 
+  10 | 000000000000000000
+
+shockfreq 30000 impact 50 duration 20000 span 1 lifem 10 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 8991 
+stddev 		 2533 
+IQR 		 0 
+mad 		 0 
+SEM 		 553 
+MeanOverSEM 	 16 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 50 duration 20000 span 1 lifem 10 copies 2 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 1144457788888001117
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 00
+
+shockfreq 30000 impact 50 duration 20000 span 1 lifem 10 copies 2 N 21 
+median 		 762 
+trimean 	 764 
+midmean 	 800 
+mean 		 1628 
+stddev 		 2806 
+IQR 		 612 
+mad 		 461 
+SEM 		 612 
+MeanOverSEM 	 3 
+LogMeanOverSEM 	 0.4 
+
+======  shockfreq 30000 impact 50 duration 20000 span 1 lifem 10 copies 3 N 21  ====== 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  0 | 01233333334444567
+  1 | 
+  2 | 
+  3 | 557
+  4 | 1
+
+shockfreq 30000 impact 50 duration 20000 span 1 lifem 10 copies 3 N 21 
+median 		 41 
+trimean 	 44 
+midmean 	 40 
+mean 		 99 
+stddev 		 137 
+IQR 		 34 
+mad 		 19 
+SEM 		 30 
+MeanOverSEM 	 3 
+LogMeanOverSEM 	 0.5 
+
+======  shockfreq 30000 impact 50 duration 20000 span 1 lifem 10 copies 4 N 21  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 0000112223
+  0 | 9
+  1 | 223
+  1 | 55668
+  2 | 22
+
+shockfreq 30000 impact 50 duration 20000 span 1 lifem 10 copies 4 N 21 
+median 		 9 
+trimean 	 8 
+midmean 	 8 
+mean 		 9 
+stddev 		 8 
+IQR 		 14 
+mad 		 10 
+SEM 		 2 
+MeanOverSEM 	 5 
+LogMeanOverSEM 	 0.7 
+
+======  shockfreq 30000 impact 50 duration 20000 span 1 lifem 10 copies 5 N 21  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 0000000000000011111
+  0 | 
+  1 | 1
+  1 | 5
+
+shockfreq 30000 impact 50 duration 20000 span 1 lifem 10 copies 5 N 21 
+median 		 0 
+trimean 	 0.2 
+midmean 	 0.2 
+mean 		 1 
+stddev 		 4 
+IQR 		 1 
+mad 		 0 
+SEM 		 0.9 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.2 
+
+======  shockfreq 30000 impact 50 duration 20000 span 1 lifem 20 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 666
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 000000000000000000
+
+shockfreq 30000 impact 50 duration 20000 span 1 lifem 20 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 8796 
+stddev 		 3021 
+IQR 		 0 
+mad 		 0 
+SEM 		 659 
+MeanOverSEM 	 13 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 50 duration 20000 span 1 lifem 20 copies 2 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 0002222333333555679
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 00
+
+shockfreq 30000 impact 50 duration 20000 span 1 lifem 20 copies 2 N 21 
+median 		 345 
+trimean 	 358 
+midmean 	 366 
+mean 		 1267 
+stddev 		 2911 
+IQR 		 333 
+mad 		 239 
+SEM 		 635 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.3 
+
+======  shockfreq 30000 impact 50 duration 20000 span 1 lifem 20 copies 3 N 21  ====== 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  0 | 0000111111111112
+  1 | 678
+  2 | 
+  3 | 6
+  4 | 
+  5 | 0
+
+shockfreq 30000 impact 50 duration 20000 span 1 lifem 20 copies 3 N 21 
+median 		 10 
+trimean 	 10 
+midmean 	 10 
+mean 		 71 
+stddev 		 134 
+IQR 		 10 
+mad 		 7 
+SEM 		 29 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.4 
+
+======  shockfreq 30000 impact 50 duration 20000 span 1 lifem 20 copies 4 N 21  ====== 
+
+  The decimal point is at the |
+
+  0 | 000000000000000
+  2 | 00000
+  4 | 0
+
+shockfreq 30000 impact 50 duration 20000 span 1 lifem 20 copies 4 N 21 
+median 		 0 
+trimean 	 0.5 
+midmean 	 0.4 
+mean 		 0.9 
+stddev 		 1 
+IQR 		 2 
+mad 		 0 
+SEM 		 0.3 
+MeanOverSEM 	 3 
+LogMeanOverSEM 	 0.5 
+
+======  shockfreq 30000 impact 50 duration 20000 span 1 lifem 20 copies 5 N 21  ====== 
+
+  The decimal point is at the |
+
+  0 | 0000000000000000000
+  2 | 
+  4 | 0
+  6 | 0
+
+shockfreq 30000 impact 50 duration 20000 span 1 lifem 20 copies 5 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0.5 
+stddev 		 2 
+IQR 		 0 
+mad 		 0 
+SEM 		 0.3 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.2 
+
+======  shockfreq 30000 impact 50 duration 20000 span 1 lifem 30 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 111
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 000000000000000000
+
+shockfreq 30000 impact 50 duration 20000 span 1 lifem 30 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 8727 
+stddev 		 3195 
+IQR 		 0 
+mad 		 0 
+SEM 		 697 
+MeanOverSEM 	 13 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 50 duration 20000 span 1 lifem 30 copies 2 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 0111112222223444456
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 00
+
+shockfreq 30000 impact 50 duration 20000 span 1 lifem 30 copies 2 N 21 
+median 		 236 
+trimean 	 248 
+midmean 	 263 
+mean 		 1182 
+stddev 		 2935 
+IQR 		 232 
+mad 		 166 
+SEM 		 640 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.3 
+
+======  shockfreq 30000 impact 50 duration 20000 span 1 lifem 30 copies 3 N 21  ====== 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  0 | 00000000000111
+  1 | 11233
+  2 | 16
+
+shockfreq 30000 impact 50 duration 20000 span 1 lifem 30 copies 3 N 21 
+median 		 3 
+trimean 	 30 
+midmean 	 24 
+mean 		 53 
+stddev 		 79 
+IQR 		 112 
+mad 		 4 
+SEM 		 17 
+MeanOverSEM 	 3 
+LogMeanOverSEM 	 0.5 
+
+======  shockfreq 30000 impact 50 duration 20000 span 1 lifem 30 copies 4 N 21  ====== 
+
+  The decimal point is at the |
+
+  0 | 000000000000
+  1 | 0000
+  2 | 0000
+  3 | 0
+
+shockfreq 30000 impact 50 duration 20000 span 1 lifem 30 copies 4 N 21 
+median 		 0 
+trimean 	 0.2 
+midmean 	 0.4 
+mean 		 0.7 
+stddev 		 1 
+IQR 		 1 
+mad 		 0 
+SEM 		 0.2 
+MeanOverSEM 	 3 
+LogMeanOverSEM 	 0.5 
+
+======  shockfreq 30000 impact 50 duration 20000 span 1 lifem 30 copies 5 N 21  ====== 
+
+  The decimal point is at the |
+
+  0 | 00000000000000000000
+  1 | 
+  2 | 
+  3 | 0
+
+shockfreq 30000 impact 50 duration 20000 span 1 lifem 30 copies 5 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0.1 
+stddev 		 0.7 
+IQR 		 0 
+mad 		 0 
+SEM 		 0.1 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 0 
+
+======  shockfreq 30000 impact 50 duration 20000 span 1 lifem 50 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 7777
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 00000000000000000
+
+shockfreq 30000 impact 50 duration 20000 span 1 lifem 50 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 8224 
+stddev 		 3752 
+IQR 		 0 
+mad 		 0 
+SEM 		 819 
+MeanOverSEM 	 10 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 50 duration 20000 span 1 lifem 50 copies 2 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 01111111111222222223
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 0
+
+shockfreq 30000 impact 50 duration 20000 span 1 lifem 50 copies 2 N 21 
+median 		 142 
+trimean 	 154 
+midmean 	 155 
+mean 		 619 
+stddev 		 2151 
+IQR 		 91 
+mad 		 95 
+SEM 		 469 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 0.1 
+
+======  shockfreq 30000 impact 50 duration 20000 span 1 lifem 50 copies 3 N 21  ====== 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  0 | 00000000000000001
+  0 | 668
+  1 | 4
+
+shockfreq 30000 impact 50 duration 20000 span 1 lifem 50 copies 3 N 21 
+median 		 1 
+trimean 	 1 
+midmean 	 1 
+mean 		 17 
+stddev 		 37 
+IQR 		 3 
+mad 		 1 
+SEM 		 8 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.3 
+
+======  shockfreq 30000 impact 50 duration 20000 span 1 lifem 50 copies 4 N 21  ====== 
+
+  The decimal point is at the |
+
+  0 | 000000000000000000
+  0 | 
+  1 | 00
+  1 | 
+  2 | 0
+
+shockfreq 30000 impact 50 duration 20000 span 1 lifem 50 copies 4 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0.2 
+stddev 		 0.5 
+IQR 		 0 
+mad 		 0 
+SEM 		 0.1 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.2 
+
+======  shockfreq 30000 impact 50 duration 20000 span 1 lifem 50 copies 5 N 21  ====== 
+
+  The decimal point is at the |
+
+  0 | 00000000000000000000
+  0 | 
+  1 | 0
+
+shockfreq 30000 impact 50 duration 20000 span 1 lifem 50 copies 5 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0.05 
+stddev 		 0.2 
+IQR 		 0 
+mad 		 0 
+SEM 		 0.05 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 0 
+
+======  shockfreq 30000 impact 50 duration 20000 span 1 lifem 100 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 33334
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 0000000000000000
+
+shockfreq 30000 impact 50 duration 20000 span 1 lifem 100 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 7696 
+stddev 		 4223 
+IQR 		 0 
+mad 		 0 
+SEM 		 921 
+MeanOverSEM 	 8 
+LogMeanOverSEM 	 0.9 
+
+======  shockfreq 30000 impact 50 duration 20000 span 1 lifem 100 copies 2 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 00011111111111111112
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 0
+
+shockfreq 30000 impact 50 duration 20000 span 1 lifem 100 copies 2 N 21 
+median 		 72 
+trimean 	 78 
+midmean 	 78 
+mean 		 553 
+stddev 		 2165 
+IQR 		 38 
+mad 		 27 
+SEM 		 472 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 0.07 
+
+======  shockfreq 30000 impact 50 duration 20000 span 1 lifem 100 copies 3 N 21  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 0000000000000122
+  2 | 801
+  4 | 07
+
+shockfreq 30000 impact 50 duration 20000 span 1 lifem 100 copies 3 N 21 
+median 		 0 
+trimean 	 0.5 
+midmean 	 0.5 
+mean 		 9 
+stddev 		 17 
+IQR 		 2 
+mad 		 0 
+SEM 		 4 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.4 
+
+======  shockfreq 30000 impact 50 duration 20000 span 1 lifem 100 copies 4 N 21  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 000000000000000000000
+
+shockfreq 30000 impact 50 duration 20000 span 1 lifem 100 copies 4 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  shockfreq 30000 impact 50 duration 20000 span 1 lifem 100 copies 5 N 21  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 000000000000000000000
+
+shockfreq 30000 impact 50 duration 20000 span 1 lifem 100 copies 5 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  shockfreq 30000 impact 50 duration 20000 span 1 lifem 200 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 12
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 0000000000000000000
+
+shockfreq 30000 impact 50 duration 20000 span 1 lifem 200 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 9062 
+stddev 		 2963 
+IQR 		 0 
+mad 		 0 
+SEM 		 647 
+MeanOverSEM 	 14 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 50 duration 20000 span 1 lifem 200 copies 2 N 21  ====== 
+
+  The decimal point is 4 digit(s) to the right of the |
+
+  0 | 00000000000000000000
+  0 | 
+  1 | 0
+
+shockfreq 30000 impact 50 duration 20000 span 1 lifem 200 copies 2 N 21 
+median 		 36 
+trimean 	 40 
+midmean 	 39 
+mean 		 514 
+stddev 		 2174 
+IQR 		 29 
+mad 		 25 
+SEM 		 474 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 0.04 
+
+======  shockfreq 30000 impact 50 duration 20000 span 1 lifem 200 copies 3 N 21  ====== 
+
+  The decimal point is 4 digit(s) to the right of the |
+
+  0 | 00000000000000000000
+  0 | 
+  1 | 0
+
+shockfreq 30000 impact 50 duration 20000 span 1 lifem 200 copies 3 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 480 
+stddev 		 2181 
+IQR 		 0 
+mad 		 0 
+SEM 		 476 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 0.004 
+
+======  shockfreq 30000 impact 50 duration 20000 span 1 lifem 200 copies 4 N 21  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 000000000000000000000
+
+shockfreq 30000 impact 50 duration 20000 span 1 lifem 200 copies 4 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  shockfreq 30000 impact 50 duration 20000 span 1 lifem 200 copies 5 N 21  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 000000000000000000000
+
+shockfreq 30000 impact 50 duration 20000 span 1 lifem 200 copies 5 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  shockfreq 30000 impact 50 duration 20000 span 1 lifem 300 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 11111
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 0000000000000000
+
+shockfreq 30000 impact 50 duration 20000 span 1 lifem 300 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 7645 
+stddev 		 4318 
+IQR 		 0 
+mad 		 0 
+SEM 		 942 
+MeanOverSEM 	 8 
+LogMeanOverSEM 	 0.9 
+
+======  shockfreq 30000 impact 50 duration 20000 span 1 lifem 300 copies 2 N 21  ====== 
+
+  The decimal point is 4 digit(s) to the right of the |
+
+  0 | 0000000000000000000
+  0 | 
+  1 | 00
+
+shockfreq 30000 impact 50 duration 20000 span 1 lifem 300 copies 2 N 21 
+median 		 31 
+trimean 	 29 
+midmean 	 28 
+mean 		 975 
+stddev 		 3000 
+IQR 		 17 
+mad 		 16 
+SEM 		 655 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 0.2 
+
+======  shockfreq 30000 impact 50 duration 20000 span 1 lifem 300 copies 3 N 21  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 00000000000000000
+  1 | 028
+  2 | 
+  3 | 4
+
+shockfreq 30000 impact 50 duration 20000 span 1 lifem 300 copies 3 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 4 
+stddev 		 9 
+IQR 		 0 
+mad 		 0 
+SEM 		 2 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.3 
+
+======  shockfreq 30000 impact 50 duration 20000 span 1 lifem 300 copies 4 N 21  ====== 
+
+  The decimal point is at the |
+
+  0 | 00000000000000000000
+  0 | 
+  1 | 0
+
+shockfreq 30000 impact 50 duration 20000 span 1 lifem 300 copies 4 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0.05 
+stddev 		 0.2 
+IQR 		 0 
+mad 		 0 
+SEM 		 0.05 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 0 
+
+======  shockfreq 30000 impact 50 duration 20000 span 1 lifem 300 copies 5 N 21  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 000000000000000000000
+
+shockfreq 30000 impact 50 duration 20000 span 1 lifem 300 copies 5 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  shockfreq 30000 impact 50 duration 20000 span 1 lifem 500 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 11
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 0000000000000000000
+
+shockfreq 30000 impact 50 duration 20000 span 1 lifem 500 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 9054 
+stddev 		 2987 
+IQR 		 0 
+mad 		 0 
+SEM 		 652 
+MeanOverSEM 	 14 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 50 duration 20000 span 1 lifem 500 copies 2 N 21  ====== 
+
+  The decimal point is 4 digit(s) to the right of the |
+
+  0 | 00000000000000000000
+  0 | 
+  1 | 0
+
+shockfreq 30000 impact 50 duration 20000 span 1 lifem 500 copies 2 N 21 
+median 		 13 
+trimean 	 14 
+midmean 	 15 
+mean 		 491 
+stddev 		 2179 
+IQR 		 18 
+mad 		 12 
+SEM 		 475 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 0.01 
+
+======  shockfreq 30000 impact 50 duration 20000 span 1 lifem 500 copies 3 N 21  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 0000000000000001
+  0 | 5589
+  1 | 2
+
+shockfreq 30000 impact 50 duration 20000 span 1 lifem 500 copies 3 N 21 
+median 		 0 
+trimean 	 0.2 
+midmean 	 0.09 
+mean 		 2 
+stddev 		 4 
+IQR 		 1 
+mad 		 0 
+SEM 		 0.8 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.4 
+
+======  shockfreq 30000 impact 50 duration 20000 span 1 lifem 500 copies 4 N 21  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 000000000000000000000
+
+shockfreq 30000 impact 50 duration 20000 span 1 lifem 500 copies 4 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  shockfreq 30000 impact 50 duration 20000 span 1 lifem 500 copies 5 N 21  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 000000000000000000000
+
+shockfreq 30000 impact 50 duration 20000 span 1 lifem 500 copies 5 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  shockfreq 30000 impact 50 duration 20000 span 1 lifem 1000 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 000
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 000000000000000000
+
+shockfreq 30000 impact 50 duration 20000 span 1 lifem 1000 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 8577 
+stddev 		 3572 
+IQR 		 0 
+mad 		 0 
+SEM 		 780 
+MeanOverSEM 	 11 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 50 duration 20000 span 1 lifem 1000 copies 2 N 21  ====== 
+
+  The decimal point is 4 digit(s) to the right of the |
+
+  0 | 00000000000000000000
+  0 | 
+  1 | 0
+
+shockfreq 30000 impact 50 duration 20000 span 1 lifem 1000 copies 2 N 21 
+median 		 7 
+trimean 	 8 
+midmean 	 7 
+mean 		 483 
+stddev 		 2181 
+IQR 		 8 
+mad 		 6 
+SEM 		 476 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 0.007 
+
+======  shockfreq 30000 impact 50 duration 20000 span 1 lifem 1000 copies 3 N 21  ====== 
+
+  The decimal point is at the |
+
+  0 | 0000000000000000
+  2 | 000
+  4 | 00
+
+shockfreq 30000 impact 50 duration 20000 span 1 lifem 1000 copies 3 N 21 
+median 		 0 
+trimean 	 0.2 
+midmean 	 0.09 
+mean 		 0.9 
+stddev 		 2 
+IQR 		 1 
+mad 		 0 
+SEM 		 0.4 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.4 
+
+======  shockfreq 30000 impact 50 duration 20000 span 1 lifem 1000 copies 4 N 21  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 000000000000000000000
+
+shockfreq 30000 impact 50 duration 20000 span 1 lifem 1000 copies 4 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  shockfreq 30000 impact 50 duration 20000 span 1 lifem 1000 copies 5 N 21  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 000000000000000000000
+
+shockfreq 30000 impact 50 duration 20000 span 1 lifem 1000 copies 5 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  shockfreq 30000 impact 50 duration 20000 span 2 lifem 10 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   2 | 990
+   4 | 
+   6 | 
+   8 | 
+  10 | 000000000000000000
+
+shockfreq 30000 impact 50 duration 20000 span 2 lifem 10 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 8991 
+stddev 		 2533 
+IQR 		 0 
+mad 		 0 
+SEM 		 553 
+MeanOverSEM 	 16 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 50 duration 20000 span 2 lifem 10 copies 2 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 14777888111147
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 0000000
+
+shockfreq 30000 impact 50 duration 20000 span 2 lifem 10 copies 2 N 21 
+median 		 1097 
+trimean 	 3240 
+midmean 	 2704 
+mean 		 3930 
+stddev 		 4409 
+IQR 		 9235 
+mad 		 544 
+SEM 		 962 
+MeanOverSEM 	 4 
+LogMeanOverSEM 	 0.6 
+
+======  shockfreq 30000 impact 50 duration 20000 span 2 lifem 10 copies 3 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+  0 | 0000001113444444
+  0 | 777
+  1 | 01
+
+shockfreq 30000 impact 50 duration 20000 span 2 lifem 10 copies 3 N 21 
+median 		 350 
+trimean 	 281 
+midmean 	 246 
+mean 		 333 
+stddev 		 329 
+IQR 		 341 
+mad 		 457 
+SEM 		 72 
+MeanOverSEM 	 5 
+LogMeanOverSEM 	 0.7 
+
+======  shockfreq 30000 impact 50 duration 20000 span 2 lifem 10 copies 4 N 21  ====== 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  0 | 0000000000111111122
+  2 | 5
+  4 | 
+  6 | 6
+
+shockfreq 30000 impact 50 duration 20000 span 2 lifem 10 copies 4 N 21 
+median 		 7 
+trimean 	 7 
+midmean 	 7 
+mean 		 54 
+stddev 		 158 
+IQR 		 12 
+mad 		 9 
+SEM 		 35 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.2 
+
+======  shockfreq 30000 impact 50 duration 20000 span 2 lifem 10 copies 5 N 21  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 000000000000000111
+  0 | 9
+  1 | 1
+  1 | 5
+
+shockfreq 30000 impact 50 duration 20000 span 2 lifem 10 copies 5 N 21 
+median 		 0 
+trimean 	 0.2 
+midmean 	 0.09 
+mean 		 2 
+stddev 		 4 
+IQR 		 1 
+mad 		 0 
+SEM 		 0.9 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.3 
+
+======  shockfreq 30000 impact 50 duration 20000 span 2 lifem 20 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 666
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 000000000000000000
+
+shockfreq 30000 impact 50 duration 20000 span 2 lifem 20 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 8796 
+stddev 		 3021 
+IQR 		 0 
+mad 		 0 
+SEM 		 659 
+MeanOverSEM 	 13 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 50 duration 20000 span 2 lifem 20 copies 2 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 022234555569
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 000000000
+
+shockfreq 30000 impact 50 duration 20000 span 2 lifem 20 copies 2 N 21 
+median 		 579 
+trimean 	 2886 
+midmean 	 3988 
+mean 		 4517 
+stddev 		 4869 
+IQR 		 9615 
+mad 		 577 
+SEM 		 1062 
+MeanOverSEM 	 4 
+LogMeanOverSEM 	 0.6 
+
+======  shockfreq 30000 impact 50 duration 20000 span 2 lifem 20 copies 3 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 00000000000002222225
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 0
+
+shockfreq 30000 impact 50 duration 20000 span 2 lifem 20 copies 3 N 21 
+median 		 12 
+trimean 	 51 
+midmean 	 52 
+mean 		 557 
+stddev 		 2168 
+IQR 		 163 
+mad 		 10 
+SEM 		 473 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 0.07 
+
+======  shockfreq 30000 impact 50 duration 20000 span 2 lifem 20 copies 4 N 21  ====== 
+
+  The decimal point is at the |
+
+  0 | 000000000000
+  2 | 0000000
+  4 | 0
+  6 | 0
+
+shockfreq 30000 impact 50 duration 20000 span 2 lifem 20 copies 4 N 21 
+median 		 1 
+trimean 	 1 
+midmean 	 0.9 
+mean 		 1 
+stddev 		 2 
+IQR 		 2 
+mad 		 1 
+SEM 		 0.4 
+MeanOverSEM 	 4 
+LogMeanOverSEM 	 0.5 
+
+======  shockfreq 30000 impact 50 duration 20000 span 2 lifem 20 copies 5 N 21  ====== 
+
+  The decimal point is at the |
+
+  0 | 00000000000000000
+  2 | 
+  4 | 00
+  6 | 00
+
+shockfreq 30000 impact 50 duration 20000 span 2 lifem 20 copies 5 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 1 
+stddev 		 2 
+IQR 		 0 
+mad 		 0 
+SEM 		 0.5 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.3 
+
+======  shockfreq 30000 impact 50 duration 20000 span 2 lifem 30 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 111
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 000000000000000000
+
+shockfreq 30000 impact 50 duration 20000 span 2 lifem 30 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 8727 
+stddev 		 3195 
+IQR 		 0 
+mad 		 0 
+SEM 		 697 
+MeanOverSEM 	 13 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 50 duration 20000 span 2 lifem 30 copies 2 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 0112222233444556
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 00000
+
+shockfreq 30000 impact 50 duration 20000 span 2 lifem 30 copies 2 N 21 
+median 		 351 
+trimean 	 374 
+midmean 	 355 
+mean 		 2601 
+stddev 		 4240 
+IQR 		 320 
+mad 		 185 
+SEM 		 925 
+MeanOverSEM 	 3 
+LogMeanOverSEM 	 0.4 
+
+======  shockfreq 30000 impact 50 duration 20000 span 2 lifem 30 copies 3 N 21  ====== 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  0 | 00000000011
+  0 | 
+  1 | 0001222234
+
+shockfreq 30000 impact 50 duration 20000 span 2 lifem 30 copies 3 N 21 
+median 		 7 
+trimean 	 33 
+midmean 	 49 
+mean 		 56 
+stddev 		 59 
+IQR 		 113 
+mad 		 10 
+SEM 		 13 
+MeanOverSEM 	 4 
+LogMeanOverSEM 	 0.6 
+
+======  shockfreq 30000 impact 50 duration 20000 span 2 lifem 30 copies 4 N 21  ====== 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  0 | 00000000000000000000
+  0 | 
+  1 | 2
+
+shockfreq 30000 impact 50 duration 20000 span 2 lifem 30 copies 4 N 21 
+median 		 1 
+trimean 	 1 
+midmean 	 1 
+mean 		 7 
+stddev 		 25 
+IQR 		 3 
+mad 		 1 
+SEM 		 6 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 0.09 
+
+======  shockfreq 30000 impact 50 duration 20000 span 2 lifem 30 copies 5 N 21  ====== 
+
+  The decimal point is at the |
+
+  0 | 0000000000000000000
+  1 | 0
+  2 | 
+  3 | 0
+
+shockfreq 30000 impact 50 duration 20000 span 2 lifem 30 copies 5 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0.2 
+stddev 		 0.7 
+IQR 		 0 
+mad 		 0 
+SEM 		 0.1 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 0.1 
+
+======  shockfreq 30000 impact 50 duration 20000 span 2 lifem 50 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 7777
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 00000000000000000
+
+shockfreq 30000 impact 50 duration 20000 span 2 lifem 50 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 8224 
+stddev 		 3752 
+IQR 		 0 
+mad 		 0 
+SEM 		 819 
+MeanOverSEM 	 10 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 50 duration 20000 span 2 lifem 50 copies 2 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 1111111122222223
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 00000
+
+shockfreq 30000 impact 50 duration 20000 span 2 lifem 50 copies 2 N 21 
+median 		 215 
+trimean 	 225 
+midmean 	 205 
+mean 		 2506 
+stddev 		 4293 
+IQR 		 219 
+mad 		 184 
+SEM 		 937 
+MeanOverSEM 	 3 
+LogMeanOverSEM 	 0.4 
+
+======  shockfreq 30000 impact 50 duration 20000 span 2 lifem 50 copies 3 N 21  ====== 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  0 | 0000000000000
+  0 | 6667788
+  1 | 4
+
+shockfreq 30000 impact 50 duration 20000 span 2 lifem 50 copies 3 N 21 
+median 		 2 
+trimean 	 17 
+midmean 	 18 
+mean 		 30 
+stddev 		 40 
+IQR 		 62 
+mad 		 3 
+SEM 		 9 
+MeanOverSEM 	 3 
+LogMeanOverSEM 	 0.5 
+
+======  shockfreq 30000 impact 50 duration 20000 span 2 lifem 50 copies 4 N 21  ====== 
+
+  The decimal point is at the |
+
+  0 | 000000000000000000
+  0 | 
+  1 | 000
+
+shockfreq 30000 impact 50 duration 20000 span 2 lifem 50 copies 4 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0.1 
+stddev 		 0.4 
+IQR 		 0 
+mad 		 0 
+SEM 		 0.08 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.3 
+
+======  shockfreq 30000 impact 50 duration 20000 span 2 lifem 50 copies 5 N 21  ====== 
+
+  The decimal point is at the |
+
+  0 | 0000000000000000000
+  0 | 
+  1 | 00
+
+shockfreq 30000 impact 50 duration 20000 span 2 lifem 50 copies 5 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0.1 
+stddev 		 0.3 
+IQR 		 0 
+mad 		 0 
+SEM 		 0.07 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 0.2 
+
+======  shockfreq 30000 impact 50 duration 20000 span 2 lifem 100 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 33334
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 0000000000000000
+
+shockfreq 30000 impact 50 duration 20000 span 2 lifem 100 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 7696 
+stddev 		 4223 
+IQR 		 0 
+mad 		 0 
+SEM 		 921 
+MeanOverSEM 	 8 
+LogMeanOverSEM 	 0.9 
+
+======  shockfreq 30000 impact 50 duration 20000 span 2 lifem 100 copies 2 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 1111111111112222
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 00000
+
+shockfreq 30000 impact 50 duration 20000 span 2 lifem 100 copies 2 N 21 
+median 		 127 
+trimean 	 133 
+midmean 	 137 
+mean 		 2468 
+stddev 		 4315 
+IQR 		 95 
+mad 		 82 
+SEM 		 942 
+MeanOverSEM 	 3 
+LogMeanOverSEM 	 0.4 
+
+======  shockfreq 30000 impact 50 duration 20000 span 2 lifem 100 copies 3 N 21  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 0000112
+  2 | 60004456
+  4 | 157
+  6 | 290
+
+shockfreq 30000 impact 50 duration 20000 span 2 lifem 100 copies 3 N 21 
+median 		 30 
+trimean 	 26 
+midmean 	 27 
+mean 		 28 
+stddev 		 23 
+IQR 		 40 
+mad 		 25 
+SEM 		 5 
+MeanOverSEM 	 6 
+LogMeanOverSEM 	 0.7 
+
+======  shockfreq 30000 impact 50 duration 20000 span 2 lifem 100 copies 4 N 21  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 00000000000000000001
+  1 | 
+  2 | 9
+
+shockfreq 30000 impact 50 duration 20000 span 2 lifem 100 copies 4 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 1 
+stddev 		 6 
+IQR 		 0 
+mad 		 0 
+SEM 		 1 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 0.02 
+
+======  shockfreq 30000 impact 50 duration 20000 span 2 lifem 100 copies 5 N 21  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 000000000000000000000
+
+shockfreq 30000 impact 50 duration 20000 span 2 lifem 100 copies 5 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  shockfreq 30000 impact 50 duration 20000 span 2 lifem 200 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 12
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 0000000000000000000
+
+shockfreq 30000 impact 50 duration 20000 span 2 lifem 200 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 9062 
+stddev 		 2963 
+IQR 		 0 
+mad 		 0 
+SEM 		 647 
+MeanOverSEM 	 14 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 50 duration 20000 span 2 lifem 200 copies 2 N 21  ====== 
+
+  The decimal point is 4 digit(s) to the right of the |
+
+  0 | 0000000000000000000
+  0 | 
+  1 | 00
+
+shockfreq 30000 impact 50 duration 20000 span 2 lifem 200 copies 2 N 21 
+median 		 48 
+trimean 	 47 
+midmean 	 49 
+mean 		 992 
+stddev 		 2995 
+IQR 		 44 
+mad 		 36 
+SEM 		 654 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.2 
+
+======  shockfreq 30000 impact 50 duration 20000 span 2 lifem 200 copies 3 N 21  ====== 
+
+  The decimal point is 4 digit(s) to the right of the |
+
+  0 | 00000000000000000000
+  0 | 
+  1 | 0
+
+shockfreq 30000 impact 50 duration 20000 span 2 lifem 200 copies 3 N 21 
+median 		 0 
+trimean 	 4 
+midmean 	 5 
+mean 		 483 
+stddev 		 2181 
+IQR 		 15 
+mad 		 0 
+SEM 		 476 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 0.006 
+
+======  shockfreq 30000 impact 50 duration 20000 span 2 lifem 200 copies 4 N 21  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 000000000000000000000
+
+shockfreq 30000 impact 50 duration 20000 span 2 lifem 200 copies 4 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  shockfreq 30000 impact 50 duration 20000 span 2 lifem 200 copies 5 N 21  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 000000000000000000000
+
+shockfreq 30000 impact 50 duration 20000 span 2 lifem 200 copies 5 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  shockfreq 30000 impact 50 duration 20000 span 2 lifem 300 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 11111
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 0000000000000000
+
+shockfreq 30000 impact 50 duration 20000 span 2 lifem 300 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 7645 
+stddev 		 4318 
+IQR 		 0 
+mad 		 0 
+SEM 		 942 
+MeanOverSEM 	 8 
+LogMeanOverSEM 	 0.9 
+
+======  shockfreq 30000 impact 50 duration 20000 span 2 lifem 300 copies 2 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 0000000000000001
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 00000
+
+shockfreq 30000 impact 50 duration 20000 span 2 lifem 300 copies 2 N 21 
+median 		 33 
+trimean 	 36 
+midmean 	 36 
+mean 		 2404 
+stddev 		 4351 
+IQR 		 30 
+mad 		 13 
+SEM 		 949 
+MeanOverSEM 	 3 
+LogMeanOverSEM 	 0.4 
+
+======  shockfreq 30000 impact 50 duration 20000 span 2 lifem 300 copies 3 N 21  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 000000000000
+  0 | 789
+  1 | 1223
+  1 | 58
+
+shockfreq 30000 impact 50 duration 20000 span 2 lifem 300 copies 3 N 21 
+median 		 0 
+trimean 	 3 
+midmean 	 3 
+mean 		 5 
+stddev 		 6 
+IQR 		 11 
+mad 		 0 
+SEM 		 1 
+MeanOverSEM 	 4 
+LogMeanOverSEM 	 0.6 
+
+======  shockfreq 30000 impact 50 duration 20000 span 2 lifem 300 copies 4 N 21  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 000000000000000000000
+
+shockfreq 30000 impact 50 duration 20000 span 2 lifem 300 copies 4 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  shockfreq 30000 impact 50 duration 20000 span 2 lifem 300 copies 5 N 21  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 000000000000000000000
+
+shockfreq 30000 impact 50 duration 20000 span 2 lifem 300 copies 5 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  shockfreq 30000 impact 50 duration 20000 span 2 lifem 500 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 11
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 0000000000000000000
+
+shockfreq 30000 impact 50 duration 20000 span 2 lifem 500 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 9054 
+stddev 		 2987 
+IQR 		 0 
+mad 		 0 
+SEM 		 652 
+MeanOverSEM 	 14 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 50 duration 20000 span 2 lifem 500 copies 2 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 000000000000
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 000000000
+
+shockfreq 30000 impact 50 duration 20000 span 2 lifem 500 copies 2 N 21 
+median 		 40 
+trimean 	 2522 
+midmean 	 3652 
+mean 		 4296 
+stddev 		 5062 
+IQR 		 9990 
+mad 		 53 
+SEM 		 1105 
+MeanOverSEM 	 4 
+LogMeanOverSEM 	 0.6 
+
+======  shockfreq 30000 impact 50 duration 20000 span 2 lifem 500 copies 3 N 21  ====== 
+
+  The decimal point is 4 digit(s) to the right of the |
+
+  0 | 00000000000000000000
+  0 | 
+  1 | 0
+
+shockfreq 30000 impact 50 duration 20000 span 2 lifem 500 copies 3 N 21 
+median 		 1 
+trimean 	 2 
+midmean 	 3 
+mean 		 481 
+stddev 		 2181 
+IQR 		 8 
+mad 		 1 
+SEM 		 476 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 0.004 
+
+======  shockfreq 30000 impact 50 duration 20000 span 2 lifem 500 copies 4 N 21  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 000000000000000000000
+
+shockfreq 30000 impact 50 duration 20000 span 2 lifem 500 copies 4 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  shockfreq 30000 impact 50 duration 20000 span 2 lifem 500 copies 5 N 21  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 000000000000000000000
+
+shockfreq 30000 impact 50 duration 20000 span 2 lifem 500 copies 5 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  shockfreq 30000 impact 50 duration 20000 span 2 lifem 1000 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 000
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 000000000000000000
+
+shockfreq 30000 impact 50 duration 20000 span 2 lifem 1000 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 8577 
+stddev 		 3572 
+IQR 		 0 
+mad 		 0 
+SEM 		 780 
+MeanOverSEM 	 11 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 50 duration 20000 span 2 lifem 1000 copies 2 N 21  ====== 
+
+  The decimal point is 4 digit(s) to the right of the |
+
+  0 | 000000000000000
+  0 | 
+  1 | 000000
+
+shockfreq 30000 impact 50 duration 20000 span 2 lifem 1000 copies 2 N 21 
+median 		 13 
+trimean 	 2508 
+midmean 	 920 
+mean 		 2863 
+stddev 		 4625 
+IQR 		 9995 
+mad 		 12 
+SEM 		 1009 
+MeanOverSEM 	 3 
+LogMeanOverSEM 	 0.5 
+
+======  shockfreq 30000 impact 50 duration 20000 span 2 lifem 1000 copies 3 N 21  ====== 
+
+  The decimal point is 4 digit(s) to the right of the |
+
+  0 | 00000000000000000000
+  0 | 
+  1 | 0
+
+shockfreq 30000 impact 50 duration 20000 span 2 lifem 1000 copies 3 N 21 
+median 		 0 
+trimean 	 1 
+midmean 	 1 
+mean 		 478 
+stddev 		 2182 
+IQR 		 5 
+mad 		 0 
+SEM 		 476 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 0.002 
+
+======  shockfreq 30000 impact 50 duration 20000 span 2 lifem 1000 copies 4 N 21  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 000000000000000000000
+
+shockfreq 30000 impact 50 duration 20000 span 2 lifem 1000 copies 4 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  shockfreq 30000 impact 50 duration 20000 span 2 lifem 1000 copies 5 N 21  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 000000000000000000000
+
+shockfreq 30000 impact 50 duration 20000 span 2 lifem 1000 copies 5 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  shockfreq 30000 impact 50 duration 20000 span 3 lifem 10 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   2 | 990
+   4 | 
+   6 | 
+   8 | 
+  10 | 000000000000000000
+
+shockfreq 30000 impact 50 duration 20000 span 3 lifem 10 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 8991 
+stddev 		 2533 
+IQR 		 0 
+mad 		 0 
+SEM 		 553 
+MeanOverSEM 	 16 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 50 duration 20000 span 3 lifem 10 copies 2 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 14777888111147
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 0000000
+
+shockfreq 30000 impact 50 duration 20000 span 3 lifem 10 copies 2 N 21 
+median 		 1097 
+trimean 	 3240 
+midmean 	 2704 
+mean 		 3930 
+stddev 		 4409 
+IQR 		 9235 
+mad 		 544 
+SEM 		 962 
+MeanOverSEM 	 4 
+LogMeanOverSEM 	 0.6 
+
+======  shockfreq 30000 impact 50 duration 20000 span 3 lifem 10 copies 3 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 000000003344444441
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 000
+
+shockfreq 30000 impact 50 duration 20000 span 3 lifem 10 copies 3 N 21 
+median 		 353 
+trimean 	 287 
+midmean 	 282 
+mean 		 1652 
+stddev 		 3501 
+IQR 		 375 
+mad 		 466 
+SEM 		 764 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.3 
+
+======  shockfreq 30000 impact 50 duration 20000 span 3 lifem 10 copies 4 N 21  ====== 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  0 | 00000000111111222236
+  1 | 
+  2 | 
+  3 | 2
+
+shockfreq 30000 impact 50 duration 20000 span 3 lifem 10 copies 4 N 21 
+median 		 11 
+trimean 	 10 
+midmean 	 10 
+mean 		 27 
+stddev 		 68 
+IQR 		 13 
+mad 		 12 
+SEM 		 15 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.2 
+
+======  shockfreq 30000 impact 50 duration 20000 span 3 lifem 10 copies 5 N 21  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 00000000001112
+  0 | 8
+  1 | 1224
+  1 | 56
+
+shockfreq 30000 impact 50 duration 20000 span 3 lifem 10 copies 5 N 21 
+median 		 1 
+trimean 	 3 
+midmean 	 2 
+mean 		 4 
+stddev 		 6 
+IQR 		 11 
+mad 		 1 
+SEM 		 1 
+MeanOverSEM 	 3 
+LogMeanOverSEM 	 0.5 
+
+======  shockfreq 30000 impact 50 duration 20000 span 3 lifem 20 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 666
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 000000000000000000
+
+shockfreq 30000 impact 50 duration 20000 span 3 lifem 20 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 8796 
+stddev 		 3021 
+IQR 		 0 
+mad 		 0 
+SEM 		 659 
+MeanOverSEM 	 13 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 50 duration 20000 span 3 lifem 20 copies 2 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 022234555569
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 000000000
+
+shockfreq 30000 impact 50 duration 20000 span 3 lifem 20 copies 2 N 21 
+median 		 579 
+trimean 	 2886 
+midmean 	 3988 
+mean 		 4517 
+stddev 		 4869 
+IQR 		 9615 
+mad 		 577 
+SEM 		 1062 
+MeanOverSEM 	 4 
+LogMeanOverSEM 	 0.6 
+
+======  shockfreq 30000 impact 50 duration 20000 span 3 lifem 20 copies 3 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 000000002222223345
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 000
+
+shockfreq 30000 impact 50 duration 20000 span 3 lifem 20 copies 3 N 21 
+median 		 172 
+trimean 	 176 
+midmean 	 159 
+mean 		 1555 
+stddev 		 3536 
+IQR 		 336 
+mad 		 240 
+SEM 		 772 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.3 
+
+======  shockfreq 30000 impact 50 duration 20000 span 3 lifem 20 copies 4 N 21  ====== 
+
+  The decimal point is at the |
+
+  0 | 00000000
+  2 | 00000
+  4 | 000
+  6 | 0000
+  8 | 0
+
+shockfreq 30000 impact 50 duration 20000 span 3 lifem 20 copies 4 N 21 
+median 		 3 
+trimean 	 3 
+midmean 	 3 
+mean 		 3 
+stddev 		 3 
+IQR 		 5 
+mad 		 4 
+SEM 		 0.6 
+MeanOverSEM 	 5 
+LogMeanOverSEM 	 0.7 
+
+======  shockfreq 30000 impact 50 duration 20000 span 3 lifem 20 copies 5 N 21  ====== 
+
+  The decimal point is at the |
+
+  0 | 0000000000000000
+  2 | 0
+  4 | 00
+  6 | 00
+
+shockfreq 30000 impact 50 duration 20000 span 3 lifem 20 copies 5 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 1 
+stddev 		 2 
+IQR 		 0 
+mad 		 0 
+SEM 		 0.5 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.4 
+
+======  shockfreq 30000 impact 50 duration 20000 span 3 lifem 30 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 111
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 000000000000000000
+
+shockfreq 30000 impact 50 duration 20000 span 3 lifem 30 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 8727 
+stddev 		 3195 
+IQR 		 0 
+mad 		 0 
+SEM 		 697 
+MeanOverSEM 	 13 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 50 duration 20000 span 3 lifem 30 copies 2 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 0112222233444556
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 00000
+
+shockfreq 30000 impact 50 duration 20000 span 3 lifem 30 copies 2 N 21 
+median 		 351 
+trimean 	 374 
+midmean 	 355 
+mean 		 2601 
+stddev 		 4240 
+IQR 		 320 
+mad 		 185 
+SEM 		 925 
+MeanOverSEM 	 3 
+LogMeanOverSEM 	 0.4 
+
+======  shockfreq 30000 impact 50 duration 20000 span 3 lifem 30 copies 3 N 21  ====== 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  0 | 001111
+  1 | 001111122234
+  2 | 566
+
+shockfreq 30000 impact 50 duration 20000 span 3 lifem 30 copies 3 N 21 
+median 		 109 
+trimean 	 86 
+midmean 	 100 
+mean 		 102 
+stddev 		 81 
+IQR 		 106 
+mad 		 24 
+SEM 		 18 
+MeanOverSEM 	 6 
+LogMeanOverSEM 	 0.8 
+
+======  shockfreq 30000 impact 50 duration 20000 span 3 lifem 30 copies 4 N 21  ====== 
+
+  The decimal point is 4 digit(s) to the right of the |
+
+  0 | 00000000000000000000
+  0 | 
+  1 | 0
+
+shockfreq 30000 impact 50 duration 20000 span 3 lifem 30 copies 4 N 21 
+median 		 1 
+trimean 	 1 
+midmean 	 1 
+mean 		 488 
+stddev 		 2180 
+IQR 		 3 
+mad 		 1 
+SEM 		 476 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 0.01 
+
+======  shockfreq 30000 impact 50 duration 20000 span 3 lifem 30 copies 5 N 21  ====== 
+
+  The decimal point is at the |
+
+  0 | 000000000000000000
+  1 | 0
+  2 | 
+  3 | 00
+
+shockfreq 30000 impact 50 duration 20000 span 3 lifem 30 copies 5 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0.3 
+stddev 		 0.9 
+IQR 		 0 
+mad 		 0 
+SEM 		 0.2 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.2 
+
+======  shockfreq 30000 impact 50 duration 20000 span 3 lifem 50 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 7777
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 00000000000000000
+
+shockfreq 30000 impact 50 duration 20000 span 3 lifem 50 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 8224 
+stddev 		 3752 
+IQR 		 0 
+mad 		 0 
+SEM 		 819 
+MeanOverSEM 	 10 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 50 duration 20000 span 3 lifem 50 copies 2 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 1111111122222223
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 00000
+
+shockfreq 30000 impact 50 duration 20000 span 3 lifem 50 copies 2 N 21 
+median 		 215 
+trimean 	 225 
+midmean 	 205 
+mean 		 2506 
+stddev 		 4293 
+IQR 		 219 
+mad 		 184 
+SEM 		 937 
+MeanOverSEM 	 3 
+LogMeanOverSEM 	 0.4 
+
+======  shockfreq 30000 impact 50 duration 20000 span 3 lifem 50 copies 3 N 21  ====== 
+
+  The decimal point is 4 digit(s) to the right of the |
+
+  0 | 00000000000000000000
+  0 | 
+  1 | 0
+
+shockfreq 30000 impact 50 duration 20000 span 3 lifem 50 copies 3 N 21 
+median 		 67 
+trimean 	 53 
+midmean 	 55 
+mean 		 527 
+stddev 		 2171 
+IQR 		 74 
+mad 		 28 
+SEM 		 474 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 0.05 
+
+======  shockfreq 30000 impact 50 duration 20000 span 3 lifem 50 copies 4 N 21  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 00000000000000011122
+  2 | 
+  4 | 
+  6 | 9
+
+shockfreq 30000 impact 50 duration 20000 span 3 lifem 50 copies 4 N 21 
+median 		 0 
+trimean 	 0.2 
+midmean 	 0.09 
+mean 		 4 
+stddev 		 15 
+IQR 		 1 
+mad 		 0 
+SEM 		 3 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 0.04 
+
+======  shockfreq 30000 impact 50 duration 20000 span 3 lifem 50 copies 5 N 21  ====== 
+
+  The decimal point is at the |
+
+  0 | 00000000000000000
+  0 | 
+  1 | 000
+  1 | 
+  2 | 0
+
+shockfreq 30000 impact 50 duration 20000 span 3 lifem 50 copies 5 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0.2 
+stddev 		 0.5 
+IQR 		 0 
+mad 		 0 
+SEM 		 0.1 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.3 
+
+======  shockfreq 30000 impact 50 duration 20000 span 3 lifem 100 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 33334
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 0000000000000000
+
+shockfreq 30000 impact 50 duration 20000 span 3 lifem 100 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 7696 
+stddev 		 4223 
+IQR 		 0 
+mad 		 0 
+SEM 		 921 
+MeanOverSEM 	 8 
+LogMeanOverSEM 	 0.9 
+
+======  shockfreq 30000 impact 50 duration 20000 span 3 lifem 100 copies 2 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 1111111111112222
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 00000
+
+shockfreq 30000 impact 50 duration 20000 span 3 lifem 100 copies 2 N 21 
+median 		 127 
+trimean 	 133 
+midmean 	 137 
+mean 		 2468 
+stddev 		 4315 
+IQR 		 95 
+mad 		 82 
+SEM 		 942 
+MeanOverSEM 	 3 
+LogMeanOverSEM 	 0.4 
+
+======  shockfreq 30000 impact 50 duration 20000 span 3 lifem 100 copies 3 N 21  ====== 
+
+  The decimal point is 4 digit(s) to the right of the |
+
+  0 | 000000000000000000
+  0 | 
+  1 | 000
+
+shockfreq 30000 impact 50 duration 20000 span 3 lifem 100 copies 3 N 21 
+median 		 36 
+trimean 	 34 
+midmean 	 34 
+mean 		 1453 
+stddev 		 3575 
+IQR 		 63 
+mad 		 52 
+SEM 		 780 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.3 
+
+======  shockfreq 30000 impact 50 duration 20000 span 3 lifem 100 copies 4 N 21  ====== 
+
+  The decimal point is at the |
+
+  0 | 00000000000000000000
+  0 | 
+  1 | 0
+
+shockfreq 30000 impact 50 duration 20000 span 3 lifem 100 copies 4 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0.05 
+stddev 		 0.2 
+IQR 		 0 
+mad 		 0 
+SEM 		 0.05 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 0 
+
+======  shockfreq 30000 impact 50 duration 20000 span 3 lifem 100 copies 5 N 21  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 000000000000000000000
+
+shockfreq 30000 impact 50 duration 20000 span 3 lifem 100 copies 5 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  shockfreq 30000 impact 50 duration 20000 span 3 lifem 200 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 12
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 0000000000000000000
+
+shockfreq 30000 impact 50 duration 20000 span 3 lifem 200 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 9062 
+stddev 		 2963 
+IQR 		 0 
+mad 		 0 
+SEM 		 647 
+MeanOverSEM 	 14 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 50 duration 20000 span 3 lifem 200 copies 2 N 21  ====== 
+
+  The decimal point is 4 digit(s) to the right of the |
+
+  0 | 0000000000000000000
+  0 | 
+  1 | 00
+
+shockfreq 30000 impact 50 duration 20000 span 3 lifem 200 copies 2 N 21 
+median 		 48 
+trimean 	 47 
+midmean 	 49 
+mean 		 992 
+stddev 		 2995 
+IQR 		 44 
+mad 		 36 
+SEM 		 654 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.2 
+
+======  shockfreq 30000 impact 50 duration 20000 span 3 lifem 200 copies 3 N 21  ====== 
+
+  The decimal point is 4 digit(s) to the right of the |
+
+  0 | 0000000000000000000
+  0 | 
+  1 | 00
+
+shockfreq 30000 impact 50 duration 20000 span 3 lifem 200 copies 3 N 21 
+median 		 12 
+trimean 	 10 
+midmean 	 8 
+mean 		 960 
+stddev 		 3005 
+IQR 		 14 
+mad 		 18 
+SEM 		 656 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 0.2 
+
+======  shockfreq 30000 impact 50 duration 20000 span 3 lifem 200 copies 4 N 21  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 00000000000000000001
+  0 | 
+  1 | 3
+
+shockfreq 30000 impact 50 duration 20000 span 3 lifem 200 copies 4 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0.7 
+stddev 		 3 
+IQR 		 0 
+mad 		 0 
+SEM 		 0.6 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 0.03 
+
+======  shockfreq 30000 impact 50 duration 20000 span 3 lifem 200 copies 5 N 21  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 000000000000000000000
+
+shockfreq 30000 impact 50 duration 20000 span 3 lifem 200 copies 5 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  shockfreq 30000 impact 50 duration 20000 span 3 lifem 300 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 11111
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 0000000000000000
+
+shockfreq 30000 impact 50 duration 20000 span 3 lifem 300 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 7645 
+stddev 		 4318 
+IQR 		 0 
+mad 		 0 
+SEM 		 942 
+MeanOverSEM 	 8 
+LogMeanOverSEM 	 0.9 
+
+======  shockfreq 30000 impact 50 duration 20000 span 3 lifem 300 copies 2 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 0000000000000001
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 00000
+
+shockfreq 30000 impact 50 duration 20000 span 3 lifem 300 copies 2 N 21 
+median 		 33 
+trimean 	 36 
+midmean 	 36 
+mean 		 2404 
+stddev 		 4351 
+IQR 		 30 
+mad 		 13 
+SEM 		 949 
+MeanOverSEM 	 3 
+LogMeanOverSEM 	 0.4 
+
+======  shockfreq 30000 impact 50 duration 20000 span 3 lifem 300 copies 3 N 21  ====== 
+
+  The decimal point is 4 digit(s) to the right of the |
+
+  0 | 00000000000000000
+  0 | 
+  1 | 0000
+
+shockfreq 30000 impact 50 duration 20000 span 3 lifem 300 copies 3 N 21 
+median 		 10 
+trimean 	 9 
+midmean 	 10 
+mean 		 1911 
+stddev 		 4021 
+IQR 		 16 
+mad 		 15 
+SEM 		 877 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.3 
+
+======  shockfreq 30000 impact 50 duration 20000 span 3 lifem 300 copies 4 N 21  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 00000000000000000
+  0 | 6
+  1 | 02
+  1 | 
+  2 | 2
+
+shockfreq 30000 impact 50 duration 20000 span 3 lifem 300 copies 4 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 2 
+stddev 		 6 
+IQR 		 0 
+mad 		 0 
+SEM 		 1 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.3 
+
+======  shockfreq 30000 impact 50 duration 20000 span 3 lifem 300 copies 5 N 21  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 000000000000000000000
+
+shockfreq 30000 impact 50 duration 20000 span 3 lifem 300 copies 5 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  shockfreq 30000 impact 50 duration 20000 span 3 lifem 500 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 11
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 0000000000000000000
+
+shockfreq 30000 impact 50 duration 20000 span 3 lifem 500 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 9054 
+stddev 		 2987 
+IQR 		 0 
+mad 		 0 
+SEM 		 652 
+MeanOverSEM 	 14 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 50 duration 20000 span 3 lifem 500 copies 2 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 000000000000
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 000000000
+
+shockfreq 30000 impact 50 duration 20000 span 3 lifem 500 copies 2 N 21 
+median 		 40 
+trimean 	 2522 
+midmean 	 3652 
+mean 		 4296 
+stddev 		 5062 
+IQR 		 9990 
+mad 		 53 
+SEM 		 1105 
+MeanOverSEM 	 4 
+LogMeanOverSEM 	 0.6 
+
+======  shockfreq 30000 impact 50 duration 20000 span 3 lifem 500 copies 3 N 21  ====== 
+
+  The decimal point is 4 digit(s) to the right of the |
+
+  0 | 0000000000000000000
+  0 | 
+  1 | 00
+
+shockfreq 30000 impact 50 duration 20000 span 3 lifem 500 copies 3 N 21 
+median 		 5 
+trimean 	 5 
+midmean 	 6 
+mean 		 957 
+stddev 		 3006 
+IQR 		 9 
+mad 		 7 
+SEM 		 656 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 0.2 
+
+======  shockfreq 30000 impact 50 duration 20000 span 3 lifem 500 copies 4 N 21  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 000000000000000000
+  0 | 79
+  1 | 0
+
+shockfreq 30000 impact 50 duration 20000 span 3 lifem 500 copies 4 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 1 
+stddev 		 3 
+IQR 		 0 
+mad 		 0 
+SEM 		 0.7 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.3 
+
+======  shockfreq 30000 impact 50 duration 20000 span 3 lifem 500 copies 5 N 21  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 000000000000000000000
+
+shockfreq 30000 impact 50 duration 20000 span 3 lifem 500 copies 5 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  shockfreq 30000 impact 50 duration 20000 span 3 lifem 1000 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 000
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 000000000000000000
+
+shockfreq 30000 impact 50 duration 20000 span 3 lifem 1000 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 8577 
+stddev 		 3572 
+IQR 		 0 
+mad 		 0 
+SEM 		 780 
+MeanOverSEM 	 11 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 50 duration 20000 span 3 lifem 1000 copies 2 N 21  ====== 
+
+  The decimal point is 4 digit(s) to the right of the |
+
+  0 | 000000000000000
+  0 | 
+  1 | 000000
+
+shockfreq 30000 impact 50 duration 20000 span 3 lifem 1000 copies 2 N 21 
+median 		 13 
+trimean 	 2508 
+midmean 	 920 
+mean 		 2863 
+stddev 		 4625 
+IQR 		 9995 
+mad 		 12 
+SEM 		 1009 
+MeanOverSEM 	 3 
+LogMeanOverSEM 	 0.5 
+
+======  shockfreq 30000 impact 50 duration 20000 span 3 lifem 1000 copies 3 N 21  ====== 
+
+  The decimal point is 4 digit(s) to the right of the |
+
+  0 | 000000000000000000
+  0 | 
+  1 | 000
+
+shockfreq 30000 impact 50 duration 20000 span 3 lifem 1000 copies 3 N 21 
+median 		 3 
+trimean 	 3 
+midmean 	 3 
+mean 		 1431 
+stddev 		 3585 
+IQR 		 6 
+mad 		 4 
+SEM 		 782 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.3 
+
+======  shockfreq 30000 impact 50 duration 20000 span 3 lifem 1000 copies 4 N 21  ====== 
+
+  The decimal point is at the |
+
+  0 | 00000000000000000000
+  2 | 
+  4 | 0
+
+shockfreq 30000 impact 50 duration 20000 span 3 lifem 1000 copies 4 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0.2 
+stddev 		 1 
+IQR 		 0 
+mad 		 0 
+SEM 		 0.2 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 0 
+
+======  shockfreq 30000 impact 50 duration 20000 span 3 lifem 1000 copies 5 N 21  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 000000000000000000000
+
+shockfreq 30000 impact 50 duration 20000 span 3 lifem 1000 copies 5 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  shockfreq 30000 impact 100 duration 10000 span 1 lifem 10 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   2 | 9
+   4 | 
+   6 | 
+   8 | 
+  10 | 00000000000000000000
+
+shockfreq 30000 impact 100 duration 10000 span 1 lifem 10 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 9662 
+stddev 		 1548 
+IQR 		 0 
+mad 		 0 
+SEM 		 338 
+MeanOverSEM 	 29 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 100 duration 10000 span 1 lifem 10 copies 2 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 447800111133344479
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 000
+
+shockfreq 30000 impact 100 duration 10000 span 1 lifem 10 copies 2 N 21 
+median 		 1316 
+trimean 	 1270 
+midmean 	 1227 
+mean 		 2401 
+stddev 		 3199 
+IQR 		 379 
+mad 		 417 
+SEM 		 698 
+MeanOverSEM 	 3 
+LogMeanOverSEM 	 0.5 
+
+======  shockfreq 30000 impact 100 duration 10000 span 1 lifem 10 copies 3 N 21  ====== 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  0 | 2334444455666778
+  2 | 578
+  4 | 
+  6 | 12
+
+shockfreq 30000 impact 100 duration 10000 span 1 lifem 10 copies 3 N 21 
+median 		 58 
+trimean 	 58 
+midmean 	 57 
+mean 		 157 
+stddev 		 217 
+IQR 		 37 
+mad 		 28 
+SEM 		 47 
+MeanOverSEM 	 3 
+LogMeanOverSEM 	 0.5 
+
+======  shockfreq 30000 impact 100 duration 10000 span 1 lifem 10 copies 4 N 21  ====== 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  0 | 00000000111112222223
+  1 | 
+  2 | 
+  3 | 2
+
+shockfreq 30000 impact 100 duration 10000 span 1 lifem 10 copies 4 N 21 
+median 		 11 
+trimean 	 11 
+midmean 	 10 
+mean 		 25 
+stddev 		 68 
+IQR 		 15 
+mad 		 12 
+SEM 		 15 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.2 
+
+======  shockfreq 30000 impact 100 duration 10000 span 1 lifem 10 copies 5 N 21  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 000000000001111112
+  0 | 
+  1 | 13
+  1 | 5
+
+shockfreq 30000 impact 100 duration 10000 span 1 lifem 10 copies 5 N 21 
+median 		 0 
+trimean 	 0.2 
+midmean 	 0.5 
+mean 		 2 
+stddev 		 5 
+IQR 		 1 
+mad 		 0 
+SEM 		 1 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.3 
+
+======  shockfreq 30000 impact 100 duration 10000 span 1 lifem 20 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 6
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 00000000000000000000
+
+shockfreq 30000 impact 100 duration 10000 span 1 lifem 20 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 9599 
+stddev 		 1837 
+IQR 		 0 
+mad 		 0 
+SEM 		 401 
+MeanOverSEM 	 24 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 100 duration 10000 span 1 lifem 20 copies 2 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 3444555567777789
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 00000
+
+shockfreq 30000 impact 100 duration 10000 span 1 lifem 20 copies 2 N 21 
+median 		 670 
+trimean 	 680 
+midmean 	 657 
+mean 		 2818 
+stddev 		 4117 
+IQR 		 361 
+mad 		 243 
+SEM 		 898 
+MeanOverSEM 	 3 
+LogMeanOverSEM 	 0.5 
+
+======  shockfreq 30000 impact 100 duration 10000 span 1 lifem 20 copies 3 N 21  ====== 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  0 | 1111111111223
+  1 | 577789
+  2 | 0
+  3 | 1
+
+shockfreq 30000 impact 100 duration 10000 span 1 lifem 20 copies 3 N 21 
+median 		 17 
+trimean 	 55 
+midmean 	 57 
+mean 		 82 
+stddev 		 94 
+IQR 		 161 
+mad 		 12 
+SEM 		 20 
+MeanOverSEM 	 4 
+LogMeanOverSEM 	 0.6 
+
+======  shockfreq 30000 impact 100 duration 10000 span 1 lifem 20 copies 4 N 21  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 00000011112223334
+  0 | 667
+  1 | 2
+
+shockfreq 30000 impact 100 duration 10000 span 1 lifem 20 copies 4 N 21 
+median 		 2 
+trimean 	 2 
+midmean 	 2 
+mean 		 3 
+stddev 		 3 
+IQR 		 3 
+mad 		 3 
+SEM 		 0.7 
+MeanOverSEM 	 4 
+LogMeanOverSEM 	 0.6 
+
+======  shockfreq 30000 impact 100 duration 10000 span 1 lifem 20 copies 5 N 21  ====== 
+
+  The decimal point is at the |
+
+  0 | 000000000000000000
+  2 | 0
+  4 | 0
+  6 | 0
+
+shockfreq 30000 impact 100 duration 10000 span 1 lifem 20 copies 5 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0.6 
+stddev 		 2 
+IQR 		 0 
+mad 		 0 
+SEM 		 0.3 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.2 
+
+======  shockfreq 30000 impact 100 duration 10000 span 1 lifem 30 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 1
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 00000000000000000000
+
+shockfreq 30000 impact 100 duration 10000 span 1 lifem 30 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 9574 
+stddev 		 1950 
+IQR 		 0 
+mad 		 0 
+SEM 		 426 
+MeanOverSEM 	 23 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 100 duration 10000 span 1 lifem 30 copies 2 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 2233344445555666
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 00000
+
+shockfreq 30000 impact 100 duration 10000 span 1 lifem 30 copies 2 N 21 
+median 		 466 
+trimean 	 480 
+midmean 	 483 
+mean 		 2701 
+stddev 		 4182 
+IQR 		 269 
+mad 		 184 
+SEM 		 913 
+MeanOverSEM 	 3 
+LogMeanOverSEM 	 0.5 
+
+======  shockfreq 30000 impact 100 duration 10000 span 1 lifem 30 copies 3 N 21  ====== 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  0 | 0000000111111111
+  0 | 
+  1 | 233
+  1 | 
+  2 | 23
+
+shockfreq 30000 impact 100 duration 10000 span 1 lifem 30 copies 3 N 21 
+median 		 6 
+trimean 	 6 
+midmean 	 6 
+mean 		 43 
+stddev 		 74 
+IQR 		 5 
+mad 		 4 
+SEM 		 16 
+MeanOverSEM 	 3 
+LogMeanOverSEM 	 0.4 
+
+======  shockfreq 30000 impact 100 duration 10000 span 1 lifem 30 copies 4 N 21  ====== 
+
+  The decimal point is at the |
+
+  0 | 000000000
+  1 | 00000
+  2 | 00000
+  3 | 0
+  4 | 0
+
+shockfreq 30000 impact 100 duration 10000 span 1 lifem 30 copies 4 N 21 
+median 		 1 
+trimean 	 1 
+midmean 	 0.8 
+mean 		 1 
+stddev 		 1 
+IQR 		 2 
+mad 		 1 
+SEM 		 0.3 
+MeanOverSEM 	 4 
+LogMeanOverSEM 	 0.6 
+
+======  shockfreq 30000 impact 100 duration 10000 span 1 lifem 30 copies 5 N 21  ====== 
+
+  The decimal point is at the |
+
+  0 | 0000000000000000000
+  1 | 0
+  2 | 
+  3 | 0
+
+shockfreq 30000 impact 100 duration 10000 span 1 lifem 30 copies 5 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0.2 
+stddev 		 0.7 
+IQR 		 0 
+mad 		 0 
+SEM 		 0.1 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 0.1 
+
+======  shockfreq 30000 impact 100 duration 10000 span 1 lifem 50 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 7
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 00000000000000000000
+
+shockfreq 30000 impact 100 duration 10000 span 1 lifem 50 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 9555 
+stddev 		 2038 
+IQR 		 0 
+mad 		 0 
+SEM 		 445 
+MeanOverSEM 	 21 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 100 duration 10000 span 1 lifem 50 copies 2 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 111222222233333344
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 000
+
+shockfreq 30000 impact 100 duration 10000 span 1 lifem 50 copies 2 N 21 
+median 		 275 
+trimean 	 278 
+midmean 	 261 
+mean 		 1636 
+stddev 		 3500 
+IQR 		 128 
+mad 		 98 
+SEM 		 764 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.3 
+
+======  shockfreq 30000 impact 100 duration 10000 span 1 lifem 50 copies 3 N 21  ====== 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  0 | 000000000001
+  0 | 66667788
+  1 | 3
+
+shockfreq 30000 impact 100 duration 10000 span 1 lifem 50 copies 3 N 21 
+median 		 4 
+trimean 	 18 
+midmean 	 24 
+mean 		 32 
+stddev 		 39 
+IQR 		 62 
+mad 		 6 
+SEM 		 9 
+MeanOverSEM 	 4 
+LogMeanOverSEM 	 0.6 
+
+======  shockfreq 30000 impact 100 duration 10000 span 1 lifem 50 copies 4 N 21  ====== 
+
+  The decimal point is at the |
+
+  0 | 00000000000000000
+  0 | 
+  1 | 000
+  1 | 
+  2 | 0
+
+shockfreq 30000 impact 100 duration 10000 span 1 lifem 50 copies 4 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0.2 
+stddev 		 0.5 
+IQR 		 0 
+mad 		 0 
+SEM 		 0.1 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.3 
+
+======  shockfreq 30000 impact 100 duration 10000 span 1 lifem 50 copies 5 N 21  ====== 
+
+  The decimal point is at the |
+
+  0 | 0000000000000000000
+  0 | 
+  1 | 0
+  1 | 
+  2 | 0
+
+shockfreq 30000 impact 100 duration 10000 span 1 lifem 50 copies 5 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0.1 
+stddev 		 0.5 
+IQR 		 0 
+mad 		 0 
+SEM 		 0.1 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 0.1 
+
+======  shockfreq 30000 impact 100 duration 10000 span 1 lifem 100 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 3
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 00000000000000000000
+
+shockfreq 30000 impact 100 duration 10000 span 1 lifem 100 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 9539 
+stddev 		 2114 
+IQR 		 0 
+mad 		 0 
+SEM 		 461 
+MeanOverSEM 	 21 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 100 duration 10000 span 1 lifem 100 copies 2 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 0011111111112222222
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 00
+
+shockfreq 30000 impact 100 duration 10000 span 1 lifem 100 copies 2 N 21 
+median 		 132 
+trimean 	 131 
+midmean 	 138 
+mean 		 1066 
+stddev 		 2971 
+IQR 		 111 
+mad 		 82 
+SEM 		 648 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.2 
+
+======  shockfreq 30000 impact 100 duration 10000 span 1 lifem 100 copies 3 N 21  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 00000000111112
+  1 | 
+  2 | 8
+  3 | 00166
+  4 | 0
+
+shockfreq 30000 impact 100 duration 10000 span 1 lifem 100 copies 3 N 21 
+median 		 1 
+trimean 	 8 
+midmean 	 6 
+mean 		 11 
+stddev 		 16 
+IQR 		 30 
+mad 		 1 
+SEM 		 3 
+MeanOverSEM 	 3 
+LogMeanOverSEM 	 0.5 
+
+======  shockfreq 30000 impact 100 duration 10000 span 1 lifem 100 copies 4 N 21  ====== 
+
+  The decimal point is at the |
+
+  0 | 00000000000000000000
+  0 | 
+  1 | 0
+
+shockfreq 30000 impact 100 duration 10000 span 1 lifem 100 copies 4 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0.05 
+stddev 		 0.2 
+IQR 		 0 
+mad 		 0 
+SEM 		 0.05 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 0 
+
+======  shockfreq 30000 impact 100 duration 10000 span 1 lifem 100 copies 5 N 21  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 000000000000000000000
+
+shockfreq 30000 impact 100 duration 10000 span 1 lifem 100 copies 5 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  shockfreq 30000 impact 100 duration 10000 span 1 lifem 200 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 1
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 00000000000000000000
+
+shockfreq 30000 impact 100 duration 10000 span 1 lifem 200 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 9531 
+stddev 		 2150 
+IQR 		 0 
+mad 		 0 
+SEM 		 469 
+MeanOverSEM 	 20 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 100 duration 10000 span 1 lifem 200 copies 2 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 0000000011111111
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 00000
+
+shockfreq 30000 impact 100 duration 10000 span 1 lifem 200 copies 2 N 21 
+median 		 70 
+trimean 	 72 
+midmean 	 70 
+mean 		 2425 
+stddev 		 4339 
+IQR 		 55 
+mad 		 39 
+SEM 		 947 
+MeanOverSEM 	 3 
+LogMeanOverSEM 	 0.4 
+
+======  shockfreq 30000 impact 100 duration 10000 span 1 lifem 200 copies 3 N 21  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 00000000000000
+  1 | 1456
+  2 | 0
+  3 | 
+  4 | 01
+
+shockfreq 30000 impact 100 duration 10000 span 1 lifem 200 copies 3 N 21 
+median 		 0 
+trimean 	 4 
+midmean 	 2 
+mean 		 7 
+stddev 		 13 
+IQR 		 14 
+mad 		 0 
+SEM 		 3 
+MeanOverSEM 	 3 
+LogMeanOverSEM 	 0.4 
+
+======  shockfreq 30000 impact 100 duration 10000 span 1 lifem 200 copies 4 N 21  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 000000000000000000000
+
+shockfreq 30000 impact 100 duration 10000 span 1 lifem 200 copies 4 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  shockfreq 30000 impact 100 duration 10000 span 1 lifem 200 copies 5 N 21  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 000000000000000000000
+
+shockfreq 30000 impact 100 duration 10000 span 1 lifem 200 copies 5 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  shockfreq 30000 impact 100 duration 10000 span 1 lifem 300 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 1
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 00000000000000000000
+
+shockfreq 30000 impact 100 duration 10000 span 1 lifem 300 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 9528 
+stddev 		 2163 
+IQR 		 0 
+mad 		 0 
+SEM 		 472 
+MeanOverSEM 	 20 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 100 duration 10000 span 1 lifem 300 copies 2 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 00000000000111111
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 0000
+
+shockfreq 30000 impact 100 duration 10000 span 1 lifem 300 copies 2 N 21 
+median 		 46 
+trimean 	 46 
+midmean 	 44 
+mean 		 1936 
+stddev 		 4008 
+IQR 		 34 
+mad 		 25 
+SEM 		 875 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.3 
+
+======  shockfreq 30000 impact 100 duration 10000 span 1 lifem 300 copies 3 N 21  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 000000000000000
+  1 | 0248
+  2 | 16
+
+shockfreq 30000 impact 100 duration 10000 span 1 lifem 300 copies 3 N 21 
+median 		 0 
+trimean 	 2 
+midmean 	 0.9 
+mean 		 5 
+stddev 		 8 
+IQR 		 10 
+mad 		 0 
+SEM 		 2 
+MeanOverSEM 	 3 
+LogMeanOverSEM 	 0.4 
+
+======  shockfreq 30000 impact 100 duration 10000 span 1 lifem 300 copies 4 N 21  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 000000000000000000000
+
+shockfreq 30000 impact 100 duration 10000 span 1 lifem 300 copies 4 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  shockfreq 30000 impact 100 duration 10000 span 1 lifem 300 copies 5 N 21  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 000000000000000000000
+
+shockfreq 30000 impact 100 duration 10000 span 1 lifem 300 copies 5 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  shockfreq 30000 impact 100 duration 10000 span 1 lifem 500 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 1
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 00000000000000000000
+
+shockfreq 30000 impact 100 duration 10000 span 1 lifem 500 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 9527 
+stddev 		 2169 
+IQR 		 0 
+mad 		 0 
+SEM 		 473 
+MeanOverSEM 	 20 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 100 duration 10000 span 1 lifem 500 copies 2 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 0000000000000000000
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 00
+
+shockfreq 30000 impact 100 duration 10000 span 1 lifem 500 copies 2 N 21 
+median 		 24 
+trimean 	 24 
+midmean 	 24 
+mean 		 972 
+stddev 		 3001 
+IQR 		 19 
+mad 		 15 
+SEM 		 655 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 0.2 
+
+======  shockfreq 30000 impact 100 duration 10000 span 1 lifem 500 copies 3 N 21  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 0000000000014
+  0 | 5567
+  1 | 122
+  1 | 5
+
+shockfreq 30000 impact 100 duration 10000 span 1 lifem 500 copies 3 N 21 
+median 		 0 
+trimean 	 2 
+midmean 	 2 
+mean 		 4 
+stddev 		 5 
+IQR 		 6 
+mad 		 0 
+SEM 		 1 
+MeanOverSEM 	 3 
+LogMeanOverSEM 	 0.5 
+
+======  shockfreq 30000 impact 100 duration 10000 span 1 lifem 500 copies 4 N 21  ====== 
+
+  The decimal point is at the |
+
+  0 | 00000000000000000000
+  0 | 
+  1 | 0
+
+shockfreq 30000 impact 100 duration 10000 span 1 lifem 500 copies 4 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0.05 
+stddev 		 0.2 
+IQR 		 0 
+mad 		 0 
+SEM 		 0.05 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 0 
+
+======  shockfreq 30000 impact 100 duration 10000 span 1 lifem 500 copies 5 N 21  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 000000000000000000000
+
+shockfreq 30000 impact 100 duration 10000 span 1 lifem 500 copies 5 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  shockfreq 30000 impact 100 duration 10000 span 1 lifem 1000 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 0
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 00000000000000000000
+
+shockfreq 30000 impact 100 duration 10000 span 1 lifem 1000 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 9525 
+stddev 		 2175 
+IQR 		 0 
+mad 		 0 
+SEM 		 475 
+MeanOverSEM 	 20 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 100 duration 10000 span 1 lifem 1000 copies 2 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 00000000000000000
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 0000
+
+shockfreq 30000 impact 100 duration 10000 span 1 lifem 1000 copies 2 N 21 
+median 		 13 
+trimean 	 13 
+midmean 	 13 
+mean 		 1914 
+stddev 		 4019 
+IQR 		 10 
+mad 		 7 
+SEM 		 877 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.3 
+
+======  shockfreq 30000 impact 100 duration 10000 span 1 lifem 1000 copies 3 N 21  ====== 
+
+  The decimal point is at the |
+
+  0 | 000000000000000
+  2 | 00
+  4 | 0000
+
+shockfreq 30000 impact 100 duration 10000 span 1 lifem 1000 copies 3 N 21 
+median 		 0 
+trimean 	 0.5 
+midmean 	 0.2 
+mean 		 1 
+stddev 		 2 
+IQR 		 2 
+mad 		 0 
+SEM 		 0.4 
+MeanOverSEM 	 3 
+LogMeanOverSEM 	 0.4 
+
+======  shockfreq 30000 impact 100 duration 10000 span 1 lifem 1000 copies 4 N 21  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 000000000000000000000
+
+shockfreq 30000 impact 100 duration 10000 span 1 lifem 1000 copies 4 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  shockfreq 30000 impact 100 duration 10000 span 1 lifem 1000 copies 5 N 21  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 000000000000000000000
+
+shockfreq 30000 impact 100 duration 10000 span 1 lifem 1000 copies 5 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  shockfreq 30000 impact 100 duration 10000 span 2 lifem 10 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   2 | 9
+   4 | 
+   6 | 
+   8 | 
+  10 | 00000000000000000000
+
+shockfreq 30000 impact 100 duration 10000 span 2 lifem 10 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 9662 
+stddev 		 1548 
+IQR 		 0 
+mad 		 0 
+SEM 		 338 
+MeanOverSEM 	 29 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 100 duration 10000 span 2 lifem 10 copies 2 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 17
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 0000000000000000000
+
+shockfreq 30000 impact 100 duration 10000 span 2 lifem 10 copies 2 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 9180 
+stddev 		 2591 
+IQR 		 0 
+mad 		 0 
+SEM 		 565 
+MeanOverSEM 	 16 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 100 duration 10000 span 2 lifem 10 copies 3 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 446677777770000000
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 000
+
+shockfreq 30000 impact 100 duration 10000 span 2 lifem 10 copies 3 N 21 
+median 		 713 
+trimean 	 780 
+midmean 	 831 
+mean 		 2089 
+stddev 		 3315 
+IQR 		 345 
+mad 		 400 
+SEM 		 723 
+MeanOverSEM 	 3 
+LogMeanOverSEM 	 0.5 
+
+======  shockfreq 30000 impact 100 duration 10000 span 2 lifem 10 copies 4 N 21  ====== 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  0 | 0111222222333333446
+  1 | 
+  2 | 
+  3 | 36
+
+shockfreq 30000 impact 100 duration 10000 span 2 lifem 10 copies 4 N 21 
+median 		 26 
+trimean 	 26 
+midmean 	 25 
+mean 		 55 
+stddev 		 97 
+IQR 		 13 
+mad 		 10 
+SEM 		 21 
+MeanOverSEM 	 3 
+LogMeanOverSEM 	 0.4 
+
+======  shockfreq 30000 impact 100 duration 10000 span 2 lifem 10 copies 5 N 21  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 000000000011116
+  1 | 159
+  2 | 13
+  3 | 
+  4 | 2
+
+shockfreq 30000 impact 100 duration 10000 span 2 lifem 10 copies 5 N 21 
+median 		 1 
+trimean 	 3 
+midmean 	 2 
+mean 		 7 
+stddev 		 11 
+IQR 		 11 
+mad 		 1 
+SEM 		 2 
+MeanOverSEM 	 3 
+LogMeanOverSEM 	 0.4 
+
+======  shockfreq 30000 impact 100 duration 10000 span 2 lifem 20 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 6
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 00000000000000000000
+
+shockfreq 30000 impact 100 duration 10000 span 2 lifem 20 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 9599 
+stddev 		 1837 
+IQR 		 0 
+mad 		 0 
+SEM 		 401 
+MeanOverSEM 	 24 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 100 duration 10000 span 2 lifem 20 copies 2 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 59
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 0000000000000000000
+
+shockfreq 30000 impact 100 duration 10000 span 2 lifem 20 copies 2 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 9113 
+stddev 		 2802 
+IQR 		 0 
+mad 		 0 
+SEM 		 611 
+MeanOverSEM 	 15 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 100 duration 10000 span 2 lifem 20 copies 3 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 222333344444555577
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 000
+
+shockfreq 30000 impact 100 duration 10000 span 2 lifem 20 copies 3 N 21 
+median 		 376 
+trimean 	 402 
+midmean 	 409 
+mean 		 1764 
+stddev 		 3448 
+IQR 		 194 
+mad 		 166 
+SEM 		 752 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.4 
+
+======  shockfreq 30000 impact 100 duration 10000 span 2 lifem 20 copies 4 N 21  ====== 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  0 | 0000111111111111112
+  0 | 
+  1 | 
+  1 | 67
+
+shockfreq 30000 impact 100 duration 10000 span 2 lifem 20 copies 4 N 21 
+median 		 7 
+trimean 	 7 
+midmean 	 7 
+mean 		 22 
+stddev 		 47 
+IQR 		 5 
+mad 		 4 
+SEM 		 10 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.3 
+
+======  shockfreq 30000 impact 100 duration 10000 span 2 lifem 20 copies 5 N 21  ====== 
+
+  The decimal point is at the |
+
+  0 | 00000000000000
+  2 | 000
+  4 | 00
+  6 | 00
+
+shockfreq 30000 impact 100 duration 10000 span 2 lifem 20 copies 5 N 21 
+median 		 0 
+trimean 	 0.5 
+midmean 	 0.5 
+mean 		 1 
+stddev 		 2 
+IQR 		 2 
+mad 		 0 
+SEM 		 0.5 
+MeanOverSEM 	 3 
+LogMeanOverSEM 	 0.5 
+
+======  shockfreq 30000 impact 100 duration 10000 span 2 lifem 30 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 1
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 00000000000000000000
+
+shockfreq 30000 impact 100 duration 10000 span 2 lifem 30 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 9574 
+stddev 		 1950 
+IQR 		 0 
+mad 		 0 
+SEM 		 426 
+MeanOverSEM 	 23 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 100 duration 10000 span 2 lifem 30 copies 2 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 36
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 0000000000000000000
+
+shockfreq 30000 impact 100 duration 10000 span 2 lifem 30 copies 2 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 9090 
+stddev 		 2874 
+IQR 		 0 
+mad 		 0 
+SEM 		 627 
+MeanOverSEM 	 14 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 100 duration 10000 span 2 lifem 30 copies 3 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 11122222233344456
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 0000
+
+shockfreq 30000 impact 100 duration 10000 span 2 lifem 30 copies 3 N 21 
+median 		 339 
+trimean 	 342 
+midmean 	 319 
+mean 		 2136 
+stddev 		 3911 
+IQR 		 242 
+mad 		 176 
+SEM 		 853 
+MeanOverSEM 	 3 
+LogMeanOverSEM 	 0.4 
+
+======  shockfreq 30000 impact 100 duration 10000 span 2 lifem 30 copies 4 N 21  ====== 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  0 | 00000000000011111
+  0 | 
+  1 | 2223
+
+shockfreq 30000 impact 100 duration 10000 span 2 lifem 30 copies 4 N 21 
+median 		 4 
+trimean 	 4 
+midmean 	 4 
+mean 		 26 
+stddev 		 48 
+IQR 		 3 
+mad 		 3 
+SEM 		 10 
+MeanOverSEM 	 3 
+LogMeanOverSEM 	 0.4 
+
+======  shockfreq 30000 impact 100 duration 10000 span 2 lifem 30 copies 5 N 21  ====== 
+
+  The decimal point is at the |
+
+  0 | 00000000000000000
+  1 | 000
+  2 | 
+  3 | 0
+
+shockfreq 30000 impact 100 duration 10000 span 2 lifem 30 copies 5 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0.3 
+stddev 		 0.7 
+IQR 		 0 
+mad 		 0 
+SEM 		 0.2 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.3 
+
+======  shockfreq 30000 impact 100 duration 10000 span 2 lifem 50 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 7
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 00000000000000000000
+
+shockfreq 30000 impact 100 duration 10000 span 2 lifem 50 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 9555 
+stddev 		 2038 
+IQR 		 0 
+mad 		 0 
+SEM 		 445 
+MeanOverSEM 	 21 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 100 duration 10000 span 2 lifem 50 copies 2 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 23
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 0000000000000000000
+
+shockfreq 30000 impact 100 duration 10000 span 2 lifem 50 copies 2 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 9074 
+stddev 		 2923 
+IQR 		 0 
+mad 		 0 
+SEM 		 638 
+MeanOverSEM 	 14 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 100 duration 10000 span 2 lifem 50 copies 3 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 1111111111112222233
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 00
+
+shockfreq 30000 impact 100 duration 10000 span 2 lifem 50 copies 3 N 21 
+median 		 133 
+trimean 	 136 
+midmean 	 129 
+mean 		 1072 
+stddev 		 2969 
+IQR 		 136 
+mad 		 95 
+SEM 		 648 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.2 
+
+======  shockfreq 30000 impact 100 duration 10000 span 2 lifem 50 copies 4 N 21  ====== 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  0 | 0000000000000000
+  0 | 6788
+  1 | 
+  1 | 5
+
+shockfreq 30000 impact 100 duration 10000 span 2 lifem 50 copies 4 N 21 
+median 		 1 
+trimean 	 1 
+midmean 	 1 
+mean 		 21 
+stddev 		 41 
+IQR 		 2 
+mad 		 1 
+SEM 		 9 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.4 
+
+======  shockfreq 30000 impact 100 duration 10000 span 2 lifem 50 copies 5 N 21  ====== 
+
+  The decimal point is at the |
+
+  0 | 0000000000000000
+  0 | 
+  1 | 00000
+
+shockfreq 30000 impact 100 duration 10000 span 2 lifem 50 copies 5 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0.2 
+stddev 		 0.4 
+IQR 		 0 
+mad 		 0 
+SEM 		 0.1 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.4 
+
+======  shockfreq 30000 impact 100 duration 10000 span 2 lifem 100 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 3
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 00000000000000000000
+
+shockfreq 30000 impact 100 duration 10000 span 2 lifem 100 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 9539 
+stddev 		 2114 
+IQR 		 0 
+mad 		 0 
+SEM 		 461 
+MeanOverSEM 	 21 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 100 duration 10000 span 2 lifem 100 copies 2 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 12
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 0000000000000000000
+
+shockfreq 30000 impact 100 duration 10000 span 2 lifem 100 copies 2 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 9061 
+stddev 		 2964 
+IQR 		 0 
+mad 		 0 
+SEM 		 647 
+MeanOverSEM 	 14 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 100 duration 10000 span 2 lifem 100 copies 3 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 000001111111111111
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 000
+
+shockfreq 30000 impact 100 duration 10000 span 2 lifem 100 copies 3 N 21 
+median 		 78 
+trimean 	 81 
+midmean 	 83 
+mean 		 1493 
+stddev 		 3559 
+IQR 		 51 
+mad 		 46 
+SEM 		 777 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.3 
+
+======  shockfreq 30000 impact 100 duration 10000 span 2 lifem 100 copies 4 N 21  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 000000000000000002
+  2 | 18
+  4 | 
+  6 | 0
+
+shockfreq 30000 impact 100 duration 10000 span 2 lifem 100 copies 4 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 7 
+stddev 		 18 
+IQR 		 0 
+mad 		 0 
+SEM 		 4 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.2 
+
+======  shockfreq 30000 impact 100 duration 10000 span 2 lifem 100 copies 5 N 21  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 000000000000000000000
+
+shockfreq 30000 impact 100 duration 10000 span 2 lifem 100 copies 5 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  shockfreq 30000 impact 100 duration 10000 span 2 lifem 200 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 1
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 00000000000000000000
+
+shockfreq 30000 impact 100 duration 10000 span 2 lifem 200 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 9531 
+stddev 		 2150 
+IQR 		 0 
+mad 		 0 
+SEM 		 469 
+MeanOverSEM 	 20 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 100 duration 10000 span 2 lifem 200 copies 2 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 01
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 0000000000000000000
+
+shockfreq 30000 impact 100 duration 10000 span 2 lifem 200 copies 2 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 9053 
+stddev 		 2990 
+IQR 		 0 
+mad 		 0 
+SEM 		 652 
+MeanOverSEM 	 14 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 100 duration 10000 span 2 lifem 200 copies 3 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 000000000000111111
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 000
+
+shockfreq 30000 impact 100 duration 10000 span 2 lifem 200 copies 3 N 21 
+median 		 38 
+trimean 	 42 
+midmean 	 42 
+mean 		 1462 
+stddev 		 3572 
+IQR 		 34 
+mad 		 22 
+SEM 		 779 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.3 
+
+======  shockfreq 30000 impact 100 duration 10000 span 2 lifem 200 copies 4 N 21  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 00000000000000000
+  0 | 
+  1 | 2
+  1 | 68
+  2 | 1
+
+shockfreq 30000 impact 100 duration 10000 span 2 lifem 200 copies 4 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 3 
+stddev 		 7 
+IQR 		 0 
+mad 		 0 
+SEM 		 2 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.3 
+
+======  shockfreq 30000 impact 100 duration 10000 span 2 lifem 200 copies 5 N 21  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 000000000000000000000
+
+shockfreq 30000 impact 100 duration 10000 span 2 lifem 200 copies 5 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  shockfreq 30000 impact 100 duration 10000 span 2 lifem 300 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 1
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 00000000000000000000
+
+shockfreq 30000 impact 100 duration 10000 span 2 lifem 300 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 9528 
+stddev 		 2163 
+IQR 		 0 
+mad 		 0 
+SEM 		 472 
+MeanOverSEM 	 20 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 100 duration 10000 span 2 lifem 300 copies 2 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 01
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 0000000000000000000
+
+shockfreq 30000 impact 100 duration 10000 span 2 lifem 300 copies 2 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 9052 
+stddev 		 2994 
+IQR 		 0 
+mad 		 0 
+SEM 		 653 
+MeanOverSEM 	 14 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 100 duration 10000 span 2 lifem 300 copies 3 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 00000000000000001
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 0000
+
+shockfreq 30000 impact 100 duration 10000 span 2 lifem 300 copies 3 N 21 
+median 		 26 
+trimean 	 28 
+midmean 	 28 
+mean 		 1925 
+stddev 		 4014 
+IQR 		 24 
+mad 		 19 
+SEM 		 876 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.3 
+
+======  shockfreq 30000 impact 100 duration 10000 span 2 lifem 300 copies 4 N 21  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 000000000000000000
+  0 | 79
+  1 | 
+  1 | 6
+
+shockfreq 30000 impact 100 duration 10000 span 2 lifem 300 copies 4 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 2 
+stddev 		 4 
+IQR 		 0 
+mad 		 0 
+SEM 		 0.9 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.2 
+
+======  shockfreq 30000 impact 100 duration 10000 span 2 lifem 300 copies 5 N 21  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 000000000000000000000
+
+shockfreq 30000 impact 100 duration 10000 span 2 lifem 300 copies 5 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  shockfreq 30000 impact 100 duration 10000 span 2 lifem 500 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 1
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 00000000000000000000
+
+shockfreq 30000 impact 100 duration 10000 span 2 lifem 500 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 9527 
+stddev 		 2169 
+IQR 		 0 
+mad 		 0 
+SEM 		 473 
+MeanOverSEM 	 20 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 100 duration 10000 span 2 lifem 500 copies 2 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 00
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 0000000000000000000
+
+shockfreq 30000 impact 100 duration 10000 span 2 lifem 500 copies 2 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 9051 
+stddev 		 2998 
+IQR 		 0 
+mad 		 0 
+SEM 		 654 
+MeanOverSEM 	 14 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 100 duration 10000 span 2 lifem 500 copies 3 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 000000000000000000
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 000
+
+shockfreq 30000 impact 100 duration 10000 span 2 lifem 500 copies 3 N 21 
+median 		 16 
+trimean 	 15 
+midmean 	 15 
+mean 		 1440 
+stddev 		 3581 
+IQR 		 7 
+mad 		 7 
+SEM 		 781 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.3 
+
+======  shockfreq 30000 impact 100 duration 10000 span 2 lifem 500 copies 4 N 21  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 000000000000000000000
+
+shockfreq 30000 impact 100 duration 10000 span 2 lifem 500 copies 4 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  shockfreq 30000 impact 100 duration 10000 span 2 lifem 500 copies 5 N 21  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 000000000000000000000
+
+shockfreq 30000 impact 100 duration 10000 span 2 lifem 500 copies 5 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  shockfreq 30000 impact 100 duration 10000 span 2 lifem 1000 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 0
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 00000000000000000000
+
+shockfreq 30000 impact 100 duration 10000 span 2 lifem 1000 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 9525 
+stddev 		 2175 
+IQR 		 0 
+mad 		 0 
+SEM 		 475 
+MeanOverSEM 	 20 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 100 duration 10000 span 2 lifem 1000 copies 2 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 00
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 0000000000000000000
+
+shockfreq 30000 impact 100 duration 10000 span 2 lifem 1000 copies 2 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 9049 
+stddev 		 3003 
+IQR 		 0 
+mad 		 0 
+SEM 		 655 
+MeanOverSEM 	 14 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 100 duration 10000 span 2 lifem 1000 copies 3 N 21  ====== 
+
+  The decimal point is 4 digit(s) to the right of the |
+
+  0 | 0000000000000000
+  0 | 
+  1 | 00000
+
+shockfreq 30000 impact 100 duration 10000 span 2 lifem 1000 copies 3 N 21 
+median 		 8 
+trimean 	 8 
+midmean 	 8 
+mean 		 2386 
+stddev 		 4362 
+IQR 		 7 
+mad 		 6 
+SEM 		 952 
+MeanOverSEM 	 3 
+LogMeanOverSEM 	 0.4 
+
+======  shockfreq 30000 impact 100 duration 10000 span 2 lifem 1000 copies 4 N 21  ====== 
+
+  The decimal point is at the |
+
+  0 | 00000000000000000000
+  0 | 
+  1 | 
+  1 | 
+  2 | 0
+
+shockfreq 30000 impact 100 duration 10000 span 2 lifem 1000 copies 4 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0.1 
+stddev 		 0.4 
+IQR 		 0 
+mad 		 0 
+SEM 		 0.1 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 0 
+
+======  shockfreq 30000 impact 100 duration 10000 span 2 lifem 1000 copies 5 N 21  ====== 
+
+  The decimal point is 8 digit(s) to the left of the |
+
+  0 | 000000000000000000000
+
+shockfreq 30000 impact 100 duration 10000 span 2 lifem 1000 copies 5 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 NaN 
+LogMeanOverSEM 	 NaN 
+
+======  shockfreq 30000 impact 100 duration 10000 span 3 lifem 10 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   2 | 9
+   4 | 
+   6 | 
+   8 | 
+  10 | 00000000000000000000
+
+shockfreq 30000 impact 100 duration 10000 span 3 lifem 10 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 9662 
+stddev 		 1548 
+IQR 		 0 
+mad 		 0 
+SEM 		 338 
+MeanOverSEM 	 29 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 100 duration 10000 span 3 lifem 10 copies 2 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 17
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 0000000000000000000
+
+shockfreq 30000 impact 100 duration 10000 span 3 lifem 10 copies 2 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 9180 
+stddev 		 2591 
+IQR 		 0 
+mad 		 0 
+SEM 		 565 
+MeanOverSEM 	 16 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 100 duration 10000 span 3 lifem 10 copies 3 N 21  ====== 
+
+  The decimal point is 4 digit(s) to the right of the |
+
+  1 | 000000000000000000000
+
+shockfreq 30000 impact 100 duration 10000 span 3 lifem 10 copies 3 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 10000 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 Inf 
+LogMeanOverSEM 	 Inf 
+
+======  shockfreq 30000 impact 100 duration 10000 span 3 lifem 10 copies 4 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+  0 | 00344
+  0 | 6777777777
+  1 | 000001
+
+shockfreq 30000 impact 100 duration 10000 span 3 lifem 10 copies 4 N 21 
+median 		 676 
+trimean 	 742 
+midmean 	 704 
+mean 		 660 
+stddev 		 304 
+IQR 		 348 
+mad 		 451 
+SEM 		 66 
+MeanOverSEM 	 10 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 100 duration 10000 span 3 lifem 10 copies 5 N 21  ====== 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  0 | 001111112222223345
+  2 | 68
+  4 | 
+  6 | 0
+
+shockfreq 30000 impact 100 duration 10000 span 3 lifem 10 copies 5 N 21 
+median 		 20 
+trimean 	 19 
+midmean 	 18 
+mean 		 84 
+stddev 		 176 
+IQR 		 15 
+mad 		 13 
+SEM 		 39 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.3 
+
+======  shockfreq 30000 impact 100 duration 10000 span 3 lifem 20 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 6
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 00000000000000000000
+
+shockfreq 30000 impact 100 duration 10000 span 3 lifem 20 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 9599 
+stddev 		 1837 
+IQR 		 0 
+mad 		 0 
+SEM 		 401 
+MeanOverSEM 	 24 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 100 duration 10000 span 3 lifem 20 copies 2 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 59
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 0000000000000000000
+
+shockfreq 30000 impact 100 duration 10000 span 3 lifem 20 copies 2 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 9113 
+stddev 		 2802 
+IQR 		 0 
+mad 		 0 
+SEM 		 611 
+MeanOverSEM 	 15 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 100 duration 10000 span 3 lifem 20 copies 3 N 21  ====== 
+
+  The decimal point is 4 digit(s) to the right of the |
+
+  1 | 000000000000000000000
+
+shockfreq 30000 impact 100 duration 10000 span 3 lifem 20 copies 3 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 10000 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 Inf 
+LogMeanOverSEM 	 Inf 
+
+======  shockfreq 30000 impact 100 duration 10000 span 3 lifem 20 copies 4 N 21  ====== 
+
+  The decimal point is 4 digit(s) to the right of the |
+
+  0 | 0000000000000001111
+  0 | 
+  1 | 00
+
+shockfreq 30000 impact 100 duration 10000 span 3 lifem 20 copies 4 N 21 
+median 		 348 
+trimean 	 344 
+midmean 	 352 
+mean 		 1244 
+stddev 		 2916 
+IQR 		 318 
+mad 		 236 
+SEM 		 636 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.3 
+
+======  shockfreq 30000 impact 100 duration 10000 span 3 lifem 20 copies 5 N 21  ====== 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  0 | 000000011111111
+  0 | 
+  1 | 
+  1 | 777789
+
+shockfreq 30000 impact 100 duration 10000 span 3 lifem 20 copies 5 N 21 
+median 		 8 
+trimean 	 46 
+midmean 	 22 
+mean 		 54 
+stddev 		 78 
+IQR 		 161 
+mad 		 7 
+SEM 		 17 
+MeanOverSEM 	 3 
+LogMeanOverSEM 	 0.5 
+
+======  shockfreq 30000 impact 100 duration 10000 span 3 lifem 30 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 1
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 00000000000000000000
+
+shockfreq 30000 impact 100 duration 10000 span 3 lifem 30 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 9574 
+stddev 		 1950 
+IQR 		 0 
+mad 		 0 
+SEM 		 426 
+MeanOverSEM 	 23 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 100 duration 10000 span 3 lifem 30 copies 2 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 36
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 0000000000000000000
+
+shockfreq 30000 impact 100 duration 10000 span 3 lifem 30 copies 2 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 9090 
+stddev 		 2874 
+IQR 		 0 
+mad 		 0 
+SEM 		 627 
+MeanOverSEM 	 14 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 100 duration 10000 span 3 lifem 30 copies 3 N 21  ====== 
+
+  The decimal point is 4 digit(s) to the right of the |
+
+  1 | 000000000000000000000
+
+shockfreq 30000 impact 100 duration 10000 span 3 lifem 30 copies 3 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 10000 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 Inf 
+LogMeanOverSEM 	 Inf 
+
+======  shockfreq 30000 impact 100 duration 10000 span 3 lifem 30 copies 4 N 21  ====== 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  0 | 00
+  1 | 1222233
+  2 | 2233446
+  3 | 566
+  4 | 17
+
+shockfreq 30000 impact 100 duration 10000 span 3 lifem 30 copies 4 N 21 
+median 		 220 
+trimean 	 206 
+midmean 	 195 
+mean 		 211 
+stddev 		 127 
+IQR 		 143 
+mad 		 148 
+SEM 		 28 
+MeanOverSEM 	 8 
+LogMeanOverSEM 	 0.9 
+
+======  shockfreq 30000 impact 100 duration 10000 span 3 lifem 30 copies 5 N 21  ====== 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  0 | 000000000000001
+  0 | 
+  1 | 11223
+  1 | 
+  2 | 4
+
+shockfreq 30000 impact 100 duration 10000 span 3 lifem 30 copies 5 N 21 
+median 		 3 
+trimean 	 30 
+midmean 	 13 
+mean 		 41 
+stddev 		 68 
+IQR 		 112 
+mad 		 4 
+SEM 		 15 
+MeanOverSEM 	 3 
+LogMeanOverSEM 	 0.4 
+
+======  shockfreq 30000 impact 100 duration 10000 span 3 lifem 50 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 7
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 00000000000000000000
+
+shockfreq 30000 impact 100 duration 10000 span 3 lifem 50 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 9555 
+stddev 		 2038 
+IQR 		 0 
+mad 		 0 
+SEM 		 445 
+MeanOverSEM 	 21 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 100 duration 10000 span 3 lifem 50 copies 2 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 23
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 0000000000000000000
+
+shockfreq 30000 impact 100 duration 10000 span 3 lifem 50 copies 2 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 9074 
+stddev 		 2923 
+IQR 		 0 
+mad 		 0 
+SEM 		 638 
+MeanOverSEM 	 14 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 100 duration 10000 span 3 lifem 50 copies 3 N 21  ====== 
+
+  The decimal point is 4 digit(s) to the right of the |
+
+  1 | 000000000000000000000
+
+shockfreq 30000 impact 100 duration 10000 span 3 lifem 50 copies 3 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 10000 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 Inf 
+LogMeanOverSEM 	 Inf 
+
+======  shockfreq 30000 impact 100 duration 10000 span 3 lifem 50 copies 4 N 21  ====== 
+
+  The decimal point is 4 digit(s) to the right of the |
+
+  0 | 00000000000000000000
+  0 | 
+  1 | 0
+
+shockfreq 30000 impact 100 duration 10000 span 3 lifem 50 copies 4 N 21 
+median 		 128 
+trimean 	 136 
+midmean 	 140 
+mean 		 607 
+stddev 		 2154 
+IQR 		 144 
+mad 		 111 
+SEM 		 470 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 0.1 
+
+======  shockfreq 30000 impact 100 duration 10000 span 3 lifem 50 copies 5 N 21  ====== 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  0 | 000000000000000
+  0 | 67777
+  1 | 
+  1 | 5
+
+shockfreq 30000 impact 100 duration 10000 span 3 lifem 50 copies 5 N 21 
+median 		 1 
+trimean 	 15 
+midmean 	 7 
+mean 		 24 
+stddev 		 41 
+IQR 		 59 
+mad 		 1 
+SEM 		 9 
+MeanOverSEM 	 3 
+LogMeanOverSEM 	 0.4 
+
+======  shockfreq 30000 impact 100 duration 10000 span 3 lifem 100 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 3
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 00000000000000000000
+
+shockfreq 30000 impact 100 duration 10000 span 3 lifem 100 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 9539 
+stddev 		 2114 
+IQR 		 0 
+mad 		 0 
+SEM 		 461 
+MeanOverSEM 	 21 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 100 duration 10000 span 3 lifem 100 copies 2 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 12
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 0000000000000000000
+
+shockfreq 30000 impact 100 duration 10000 span 3 lifem 100 copies 2 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 9061 
+stddev 		 2964 
+IQR 		 0 
+mad 		 0 
+SEM 		 647 
+MeanOverSEM 	 14 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 100 duration 10000 span 3 lifem 100 copies 3 N 21  ====== 
+
+  The decimal point is 4 digit(s) to the right of the |
+
+  1 | 000000000000000000000
+
+shockfreq 30000 impact 100 duration 10000 span 3 lifem 100 copies 3 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 10000 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 Inf 
+LogMeanOverSEM 	 Inf 
+
+======  shockfreq 30000 impact 100 duration 10000 span 3 lifem 100 copies 4 N 21  ====== 
+
+  The decimal point is 2 digit(s) to the right of the |
+
+  0 | 0033334
+  0 | 5667788
+  1 | 0011222
+
+shockfreq 30000 impact 100 duration 10000 span 3 lifem 100 copies 4 N 21 
+median 		 66 
+trimean 	 65 
+midmean 	 65 
+mean 		 65 
+stddev 		 38 
+IQR 		 68 
+mad 		 53 
+SEM 		 8 
+MeanOverSEM 	 8 
+LogMeanOverSEM 	 0.9 
+
+======  shockfreq 30000 impact 100 duration 10000 span 3 lifem 100 copies 5 N 21  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 0000000000000001112
+  1 | 
+  2 | 
+  3 | 1
+  4 | 3
+
+shockfreq 30000 impact 100 duration 10000 span 3 lifem 100 copies 5 N 21 
+median 		 0 
+trimean 	 0.2 
+midmean 	 0.09 
+mean 		 4 
+stddev 		 11 
+IQR 		 1 
+mad 		 0 
+SEM 		 2 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.2 
+
+======  shockfreq 30000 impact 100 duration 10000 span 3 lifem 200 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 1
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 00000000000000000000
+
+shockfreq 30000 impact 100 duration 10000 span 3 lifem 200 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 9531 
+stddev 		 2150 
+IQR 		 0 
+mad 		 0 
+SEM 		 469 
+MeanOverSEM 	 20 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 100 duration 10000 span 3 lifem 200 copies 2 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 01
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 0000000000000000000
+
+shockfreq 30000 impact 100 duration 10000 span 3 lifem 200 copies 2 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 9053 
+stddev 		 2990 
+IQR 		 0 
+mad 		 0 
+SEM 		 652 
+MeanOverSEM 	 14 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 100 duration 10000 span 3 lifem 200 copies 3 N 21  ====== 
+
+  The decimal point is 4 digit(s) to the right of the |
+
+  1 | 000000000000000000000
+
+shockfreq 30000 impact 100 duration 10000 span 3 lifem 200 copies 3 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 10000 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 Inf 
+LogMeanOverSEM 	 Inf 
+
+======  shockfreq 30000 impact 100 duration 10000 span 3 lifem 200 copies 4 N 21  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 0017788
+  2 | 6770257
+  4 | 02678
+  6 | 4
+  8 | 3
+
+shockfreq 30000 impact 100 duration 10000 span 3 lifem 200 copies 4 N 21 
+median 		 30 
+trimean 	 30 
+midmean 	 30 
+mean 		 32 
+stddev 		 21 
+IQR 		 24 
+mad 		 18 
+SEM 		 5 
+MeanOverSEM 	 7 
+LogMeanOverSEM 	 0.8 
+
+======  shockfreq 30000 impact 100 duration 10000 span 3 lifem 200 copies 5 N 21  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 0000000000000000000
+  0 | 5
+  1 | 
+  1 | 5
+
+shockfreq 30000 impact 100 duration 10000 span 3 lifem 200 copies 5 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 1 
+stddev 		 3 
+IQR 		 0 
+mad 		 0 
+SEM 		 0.7 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 0.1 
+
+======  shockfreq 30000 impact 100 duration 10000 span 3 lifem 300 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 1
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 00000000000000000000
+
+shockfreq 30000 impact 100 duration 10000 span 3 lifem 300 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 9528 
+stddev 		 2163 
+IQR 		 0 
+mad 		 0 
+SEM 		 472 
+MeanOverSEM 	 20 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 100 duration 10000 span 3 lifem 300 copies 2 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 01
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 0000000000000000000
+
+shockfreq 30000 impact 100 duration 10000 span 3 lifem 300 copies 2 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 9052 
+stddev 		 2994 
+IQR 		 0 
+mad 		 0 
+SEM 		 653 
+MeanOverSEM 	 14 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 100 duration 10000 span 3 lifem 300 copies 3 N 21  ====== 
+
+  The decimal point is 4 digit(s) to the right of the |
+
+  1 | 000000000000000000000
+
+shockfreq 30000 impact 100 duration 10000 span 3 lifem 300 copies 3 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 10000 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 Inf 
+LogMeanOverSEM 	 Inf 
+
+======  shockfreq 30000 impact 100 duration 10000 span 3 lifem 300 copies 4 N 21  ====== 
+
+  The decimal point is 4 digit(s) to the right of the |
+
+  0 | 0000000000000000000
+  0 | 
+  1 | 00
+
+shockfreq 30000 impact 100 duration 10000 span 3 lifem 300 copies 4 N 21 
+median 		 20 
+trimean 	 21 
+midmean 	 21 
+mean 		 971 
+stddev 		 3002 
+IQR 		 14 
+mad 		 10 
+SEM 		 655 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 0.2 
+
+======  shockfreq 30000 impact 100 duration 10000 span 3 lifem 300 copies 5 N 21  ====== 
+
+  The decimal point is 1 digit(s) to the right of the |
+
+  0 | 0000000000000001
+  0 | 
+  1 | 22
+  1 | 556
+
+shockfreq 30000 impact 100 duration 10000 span 3 lifem 300 copies 5 N 21 
+median 		 0 
+trimean 	 0.2 
+midmean 	 0.09 
+mean 		 3 
+stddev 		 6 
+IQR 		 1 
+mad 		 0 
+SEM 		 1 
+MeanOverSEM 	 3 
+LogMeanOverSEM 	 0.4 
+
+======  shockfreq 30000 impact 100 duration 10000 span 3 lifem 500 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 1
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 00000000000000000000
+
+shockfreq 30000 impact 100 duration 10000 span 3 lifem 500 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 9527 
+stddev 		 2169 
+IQR 		 0 
+mad 		 0 
+SEM 		 473 
+MeanOverSEM 	 20 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 100 duration 10000 span 3 lifem 500 copies 2 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 00
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 0000000000000000000
+
+shockfreq 30000 impact 100 duration 10000 span 3 lifem 500 copies 2 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 9051 
+stddev 		 2998 
+IQR 		 0 
+mad 		 0 
+SEM 		 654 
+MeanOverSEM 	 14 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 100 duration 10000 span 3 lifem 500 copies 3 N 21  ====== 
+
+  The decimal point is 4 digit(s) to the right of the |
+
+  1 | 000000000000000000000
+
+shockfreq 30000 impact 100 duration 10000 span 3 lifem 500 copies 3 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 10000 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 Inf 
+LogMeanOverSEM 	 Inf 
+
+======  shockfreq 30000 impact 100 duration 10000 span 3 lifem 500 copies 4 N 21  ====== 
+
+  The decimal point is 4 digit(s) to the right of the |
+
+  0 | 00000000000000000000
+  0 | 
+  1 | 0
+
+shockfreq 30000 impact 100 duration 10000 span 3 lifem 500 copies 4 N 21 
+median 		 14 
+trimean 	 14 
+midmean 	 14 
+mean 		 490 
+stddev 		 2179 
+IQR 		 9 
+mad 		 7 
+SEM 		 476 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 0.01 
+
+======  shockfreq 30000 impact 100 duration 10000 span 3 lifem 500 copies 5 N 21  ====== 
+
+  The decimal point is at the |
+
+  0 | 0000000000000000000
+  2 | 
+  4 | 
+  6 | 0
+  8 | 0
+
+shockfreq 30000 impact 100 duration 10000 span 3 lifem 500 copies 5 N 21 
+median 		 0 
+trimean 	 0 
+midmean 	 0 
+mean 		 0.7 
+stddev 		 2 
+IQR 		 0 
+mad 		 0 
+SEM 		 0.5 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.2 
+
+======  shockfreq 30000 impact 100 duration 10000 span 3 lifem 1000 copies 1 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 0
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 00000000000000000000
+
+shockfreq 30000 impact 100 duration 10000 span 3 lifem 1000 copies 1 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 9525 
+stddev 		 2175 
+IQR 		 0 
+mad 		 0 
+SEM 		 475 
+MeanOverSEM 	 20 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 100 duration 10000 span 3 lifem 1000 copies 2 N 21  ====== 
+
+  The decimal point is 3 digit(s) to the right of the |
+
+   0 | 00
+   2 | 
+   4 | 
+   6 | 
+   8 | 
+  10 | 0000000000000000000
+
+shockfreq 30000 impact 100 duration 10000 span 3 lifem 1000 copies 2 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 9049 
+stddev 		 3003 
+IQR 		 0 
+mad 		 0 
+SEM 		 655 
+MeanOverSEM 	 14 
+LogMeanOverSEM 	 1 
+
+======  shockfreq 30000 impact 100 duration 10000 span 3 lifem 1000 copies 3 N 21  ====== 
+
+  The decimal point is 4 digit(s) to the right of the |
+
+  1 | 000000000000000000000
+
+shockfreq 30000 impact 100 duration 10000 span 3 lifem 1000 copies 3 N 21 
+median 		 10000 
+trimean 	 10000 
+midmean 	 10000 
+mean 		 10000 
+stddev 		 0 
+IQR 		 0 
+mad 		 0 
+SEM 		 0 
+MeanOverSEM 	 Inf 
+LogMeanOverSEM 	 Inf 
+
+======  shockfreq 30000 impact 100 duration 10000 span 3 lifem 1000 copies 4 N 21  ====== 
+
+  The decimal point is 4 digit(s) to the right of the |
+
+  0 | 00000000000000000000
+  0 | 
+  1 | 0
+
+shockfreq 30000 impact 100 duration 10000 span 3 lifem 1000 copies 4 N 21 
+median 		 6 
+trimean 	 6 
+midmean 	 6 
+mean 		 483 
+stddev 		 2181 
+IQR 		 6 
+mad 		 4 
+SEM 		 476 
+MeanOverSEM 	 1 
+LogMeanOverSEM 	 0.006 
+
+======  shockfreq 30000 impact 100 duration 10000 span 3 lifem 1000 copies 5 N 21  ====== 
+
+  The decimal point is at the |
+
+  0 | 00000000000000000
+  2 | 000
+  4 | 
+  6 | 
+  8 | 0
+
+shockfreq 30000 impact 100 duration 10000 span 3 lifem 1000 copies 5 N 21 
+median 		 0 
+trimean 	 0.2 
+midmean 	 0.09 
+mean 		 0.9 
+stddev 		 2 
+IQR 		 1 
+mad 		 0 
+SEM 		 0.4 
+MeanOverSEM 	 2 
+LogMeanOverSEM 	 0.3 
+

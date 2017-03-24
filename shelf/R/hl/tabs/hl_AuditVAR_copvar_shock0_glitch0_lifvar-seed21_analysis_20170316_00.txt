@@ -1,0 +1,47 @@
+HL copies=var Audit=var Glitch=0 Shock=0 lifem=var seedXXX 
+(test of summ-audit.r with shortlogs data) 
+
+Input data from  ../hl/data/GiantOutput_af10000s1_ShortLogs_00.txt 
+Output analysis into  ../hl/tabs/hl_AuditVAR_copvar_shock0_glitch0_lifvar-seed21_analysis_20170316_00.txt 
+
+analysis tables by  ./ShelfAnalyze.r 
+and summarize script ./summ-audit-test1.r 
+ at  20170316_152550 EDT 
+
+Summary losses (midmeans)
+  auditfreq auditseg    lifem   c1     c2  c3 c4 c5 c8
+1     10000        1       10 2933 113.25 3.7  0  0  0
+2     10000        1       20 1596  29.12 0.2  0  0  0
+3     10000        1       30 1091  13.67 0.0  0  0  0
+4     10000        1       50  672   4.73 0.0  0  0  0
+5     10000        1      100  342   1.16 0.0  0  0  0
+6     10000        1      200  171   0.06 0.0  0  0  0
+7     10000        1      300  115   0.00 0.0  0  0  0
+8     10000        1      500   70   0.00 0.0  0  0  0
+9     10000        1     1000   34   0.00 0.0  0  0  0
+
+Summary losses (medians)
+  auditfreq auditseg    lifem   c1  c2 c3 c4 c5 c8
+1     10000        1       10 2933 113  4  0  0  0
+2     10000        1       20 1597  29  0  0  0  0
+3     10000        1       30 1091  14  0  0  0  0
+4     10000        1       50  673   5  0  0  0  0
+5     10000        1      100  343   1  0  0  0  0
+6     10000        1      200  170   0  0  0  0  0
+7     10000        1      300  115   0  0  0  0  0
+8     10000        1      500   69   0  0  0  0  0
+9     10000        1     1000   34   0  0  0  0  0
+
+Summary losses (trimeans)
+  auditfreq auditseg    lifem   c1    c2  c3 c4 c5 c8
+1     10000        1       10 2933 112.8 4.0  0  0  0
+2     10000        1       20 1596  29.0 0.2  0  0  0
+3     10000        1       30 1092  13.8 0.0  0  0  0
+4     10000        1       50  672   4.8 0.0  0  0  0
+5     10000        1      100  342   1.0 0.0  0  0  0
+6     10000        1      200  171   0.2 0.0  0  0  0
+7     10000        1      300  115   0.0 0.0  0  0  0
+8     10000        1      500   69   0.0 0.0  0  0  0
+9     10000        1     1000   34   0.0 0.0  0  0  0
+
+

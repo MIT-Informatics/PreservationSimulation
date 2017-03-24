@@ -22,3 +22,4 @@ shelf/R/.R*
 *.big
 *.toobig
 *.RData
+*.Rhistory
