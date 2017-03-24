@@ -21,3 +21,4 @@ searchspacedb
 shelf/R/.R*
 *.big
 *.toobig
+*.RData
