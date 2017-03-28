@@ -6,9 +6,9 @@ Output analysis into 	 ../hl/tabs/shocktest3_freq2yr_lenvar_seed21_analysis_2017
 
 analysis tables by 		 ./ShelfAnalyze.r 	 20170324_172725EDT 
 and summarize script 	 ./summ-shock-3.r 	 20170324_133203EDT 
-at 	 20170324_215919EDT 
+at 	 20170326_213132EDT 
 
-../hl/tabs/shocktest3_freq2yr_lenvar_seed21_analysis_20170324_00.txt 20170324_215919EDT 
+../hl/tabs/shocktest3_freq2yr_lenvar_seed21_analysis_20170324_00.txt 20170326_213132EDT 
 shocktest3 HL copies=var Audit=1yr Glitch=0 Shock=2yr len=1yr lifem=var seed21 
 
 Summary losses (midmeans)
@@ -285,7 +285,7 @@ Summary losses (midmeans)
 269     20000    100    10000    3  1000      4        12.64     14    21
 270     20000    100    10000    3  1000      5         1.27      0    21
 
-../hl/tabs/shocktest3_freq2yr_lenvar_seed21_analysis_20170324_00.txt 20170324_215919EDT 
+../hl/tabs/shocktest3_freq2yr_lenvar_seed21_analysis_20170324_00.txt 20170326_213132EDT 
 shocktest3 HL copies=var Audit=1yr Glitch=0 Shock=2yr len=1yr lifem=var seed21 
 
 Percentage losses (midmeans)
