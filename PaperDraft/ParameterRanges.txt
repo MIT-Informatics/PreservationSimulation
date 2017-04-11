@@ -1,0 +1,52 @@
+Ranges for simulation parameters, for publication
+                                RBL 20170410
+
+Number of servers
+- for calibration only, no backup: 1
+- normal range: 2-5
+- extended range, for high-shock areas: 2-8
+
+Sector lifetime (h-l)
+- deadly low: 2-10 Mhrs
+- low: 10-100
+- normal: 100-1000
+
+GLITCH freq (h-l yrs)
+- L: 1
+- M: 1/3
+- H: d              RBL SWAG
+GLITCH impact (pct)
+- L: 10-33
+- M: d              RBL SWAG
+- H: 33-90
+GLITCH duration
+- L: 1w - 1mo
+- M: 1mo - 1yr
+- H: 1yr - 3yr
+GLITCH span (servers)
+- L: 1
+- M: d              RBL SWAG
+- H: d              RBL SWAG
+
+SHOCK freq (h-l yrs)
+- L: 5 - 20yr
+- M: d              RBL SWAG
+- H: 1 - 5yr
+SHOCK impact (pct)
+- L: 20-50          RBL SWAG
+- M: 67-90          RBL SWAG
+- H: 100 = instant death
+SHOCK duration
+- L: 1/2 - 1yr      RBL SWAG
+- M: 1 - 2yr        RBL SWAG
+- H: 2 - 5yr        RBL SWAG
+SHOCK span (servers)
+- L: 1
+- M: 2              RBL SWAG
+- H: 1/2 of servers (=3of5 or 4of8)
+    
+Key: 
+d = don't care
+h-l = half-life
+RBL SWAG = guess to fill in the blanks.  
+
