@@ -3,7 +3,7 @@
 sAuditType
 Auditing Strategy
 value,label,selected
-TOTAL,"TOTAL",Y
+TOTAL,"TOTAL",SELECTED
 SYSTEMATIC,"SYSTEMATIC",0
 #RANDOM,"RANDOM",0
 #ZIPF,"ZIPF",0

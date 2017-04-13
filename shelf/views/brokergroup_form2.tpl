@@ -156,10 +156,6 @@
                     <option value="300">&nbsp;&nbsp;300&nbsp;</option>
                     <option value="500">&nbsp;&nbsp;500&nbsp;</option>
                     <option value="1000">&nbsp;&nbsp;1000&nbsp;</option>
-                    <option value="2000">&nbsp;&nbsp;2000&nbsp;</option>
-                    <option value="3000">&nbsp;&nbsp;3000&nbsp;</option>
-                    <option value="5000">&nbsp;&nbsp;5000&nbsp;</option>
-                    <option value="10000">&nbsp;&nbsp;10000&nbsp;</option>
                     </select>
             </td></tr>
         </table>
@@ -185,10 +181,6 @@
                     <option value="300">&nbsp;&nbsp;300&nbsp;</option>
                     <option value="500">&nbsp;&nbsp;500&nbsp;</option>
                     <option value="1000" selected>&nbsp;&nbsp;1000&nbsp;</option>
-                    <option value="2000">&nbsp;&nbsp;2000&nbsp;</option>
-                    <option value="3000">&nbsp;&nbsp;3000&nbsp;</option>
-                    <option value="5000">&nbsp;&nbsp;5000&nbsp;</option>
-                    <option value="10000">&nbsp;&nbsp;10000&nbsp;</option>
                     </select>
             </td></tr>
         </table>
@@ -216,7 +208,7 @@
                     <option value="1000">&nbsp;&nbsp;1000&nbsp;</option>
                     <option value="2500">&nbsp;&nbsp;2500&nbsp;</option>
                     <option value="5000">&nbsp;&nbsp;5000&nbsp;</option>
-                    <option value="10000">&nbsp;&nbsp;10000&nbsp;</option>
+                    <option value="10000" selected>&nbsp;&nbsp;10000&nbsp;</option>
                     <option value="20000">&nbsp;&nbsp;20000&nbsp;</option>
                     </select>
             </td></tr>
@@ -276,6 +268,7 @@
             <tr><td>
                 <select name="nShockFreq">
                     <option value="0">&nbsp;&nbsp;0&nbsp;</option>
+                    <option value="10000">&nbsp;&nbsp;10000&nbsp;</option>
                     <option value="20000">&nbsp;&nbsp;20000&nbsp;</option>
                     <option value="30000">&nbsp;&nbsp;30000&nbsp;</option>
                     <option value="50000">&nbsp;&nbsp;50000&nbsp;</option>
@@ -294,10 +287,10 @@
             </th></tr>
             <tr><td>
                 <select name="nShockImpact">
+                    <option value="20">&nbsp;&nbsp;20&nbsp;</option>
                     <option value="33">&nbsp;&nbsp;33&nbsp;</option>
                     <option value="50" selected>&nbsp;&nbsp;50&nbsp;</option>
                     <option value="67">&nbsp;&nbsp;67&nbsp;</option>
-                    <option value="80">&nbsp;&nbsp;80&nbsp;</option>
                     <option value="90">&nbsp;&nbsp;90&nbsp;</option>
                     <option value="100">&nbsp;&nbsp;100&nbsp;</option>
                     </select>
@@ -314,9 +307,11 @@
             <tr><td>
                 <select name="nShockMaxlife">
                     <option value="0">&nbsp;&nbsp;0&nbsp;</option>
+                    <option value="5000">&nbsp;&nbsp;5000&nbsp;</option>
                     <option value="10000" selected>&nbsp;&nbsp;10000&nbsp;</option>
                     <option value="20000">&nbsp;&nbsp;20000&nbsp;</option>
                     <option value="30000">&nbsp;&nbsp;30000&nbsp;</option>
+                    <option value="50000">&nbsp;&nbsp;50000&nbsp;</option>
                     </select>
             </td></tr>
         </table>
@@ -334,7 +329,6 @@
                     <option value="2">&nbsp;&nbsp;2&nbsp;</option>
                     <option value="3">&nbsp;&nbsp;3&nbsp;</option>
                     <option value="4">&nbsp;&nbsp;4&nbsp;</option>
-                    <option value="5">&nbsp;&nbsp;5&nbsp;</option>
                     </select>
             </td></tr>
         </table>
@@ -350,7 +344,7 @@
                 <select name="nServerDefaultLife">
                     <option value="0">&nbsp;&nbsp;0=infinite&nbsp;</option>
                     <option value="50000">&nbsp;&nbsp;50000=5yrs&nbsp;</option>
-                    <option value="100000">&nbsp;&nbsp;100000=10yrs&nbsp;</option>
+                    <option value="100000" selected>&nbsp;&nbsp;100000=10yrs&nbsp;</option>
                     <option value="200000">&nbsp;&nbsp;200000=20yrs&nbsp;</option>
                     <option value="500000">&nbsp;&nbsp;500000=50yrs&nbsp;</option>
                     </select>
@@ -385,7 +379,7 @@
             <tr><td>
                 <select name="nGlitchFreq">
                     <option value="0">&nbsp;&nbsp;0&nbsp;</option>
-                    <option value="2500">&nbsp;&nbsp;2500&nbsp;</option>
+                    <option value="3333" selected>&nbsp;&nbsp;3333&nbsp;</option>
                     <option value="10000">&nbsp;&nbsp;10000&nbsp;</option>
                     <option value="20000">&nbsp;&nbsp;20000&nbsp;</option>
                     <option value="30000">&nbsp;&nbsp;30000&nbsp;</option>
@@ -404,11 +398,11 @@
             </th></tr>
             <tr><td>
                 <select name="nGlitchImpact">
+                    <option value="10">&nbsp;&nbsp;10&nbsp;</option>
+                    <option value="33">&nbsp;&nbsp;33&nbsp;</option>
                     <option value="50">&nbsp;&nbsp;50&nbsp;</option>
                     <option value="67">&nbsp;&nbsp;67&nbsp;</option>
-                    <option value="80">&nbsp;&nbsp;80&nbsp;</option>
                     <option value="90">&nbsp;&nbsp;90&nbsp;</option>
-                    <option value="100">&nbsp;&nbsp;100&nbsp;</option>
                     </select>
             </td></tr>
         </table>
@@ -423,8 +417,11 @@
             <tr><td>
                 <select name="nGlitchMaxlife">
                     <option value="0">&nbsp;&nbsp;0&nbsp;</option>
-                    <option value="250">&nbsp;&nbsp;250&nbsp;</option>
+                    <option value="250" selected>&nbsp;&nbsp;250&nbsp;</option>
                     <option value="1000">&nbsp;&nbsp;1000&nbsp;</option>
+                    <option value="5000">&nbsp;&nbsp;5000&nbsp;</option>
+                    <option value="10000">&nbsp;&nbsp;10000&nbsp;</option>
+                    <option value="30000">&nbsp;&nbsp;30000&nbsp;</option>
                     </select>
             </td></tr>
         </table>
@@ -439,8 +436,6 @@
             <tr><td>
                 <select name="nGlitchSpan">
                     <option value="1">&nbsp;&nbsp;1&nbsp;</option>
-                    <option value="2">&nbsp;&nbsp;2&nbsp;</option>
-                    <option value="3">&nbsp;&nbsp;3&nbsp;</option>
                     </select>
             </td></tr>
         </table>
@@ -455,8 +450,6 @@
             <tr><td>
                 <select name="nGlitchDecay">
                     <option value="0" selected>&nbsp;&nbsp;0&nbsp;</option>
-                    <option value="200">&nbsp;&nbsp;200&nbsp;</option>
-                    <option value="1000">&nbsp;&nbsp;1000&nbsp;</option>
                     </select>
             </td></tr>
         </table>

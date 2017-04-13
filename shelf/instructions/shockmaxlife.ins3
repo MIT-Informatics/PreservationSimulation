@@ -4,7 +4,9 @@ nShockMaxlife
 Shock Duration (hrs) (0=infinite)
 value,label,selected
 0,0,0
-10000,10000,yes
+5000,5000,0
+10000,10000,SELECTED
 20000,20000,0
 30000,30000,0
-
+50000,50000,0
+100000,100000,0

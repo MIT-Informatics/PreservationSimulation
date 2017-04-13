@@ -3,9 +3,9 @@
 nGlitchDecay 
 Decay Half-life of Glitch Impact (hrs) (0=infinite)
 value,label,selected
-0,0,1
+0,0,SELECTED
 #100,100,0
-200,200,0
+#200,200,0
 #300,300,0
-1000,1000,0
+#1000,1000,0
 

@@ -3,7 +3,7 @@
 # 
 # 
 """
-NewTraceFac13 trace module
+NewTraceFac14 trace module
                                 RBLandau 20080226
                                 updated  20080830
                                 updated  20081003
@@ -17,6 +17,7 @@ NewTraceFac13 trace module
                                 updated  20150112
                                 updated  20160921
                                 updated  20170127
+                                updated  20170129
                                 
   Copyright (C) 2008,2009,2014,2015,2016,2017 Richard Landau.  All rights reserved.
   
