@@ -348,10 +348,11 @@
             </th></tr>
             <tr><td>
                 <select name="nServerDefaultLife">
-                    <option value="0">&nbsp;&nbsp;0&nbsp;</option>
-                    <option value="50000">&nbsp;&nbsp;50000&nbsp;</option>
-                    <option value="100000">&nbsp;&nbsp;100000&nbsp;</option>
-                    <option value="200000">&nbsp;&nbsp;200000&nbsp;</option>
+                    <option value="0">&nbsp;&nbsp;0=infinite&nbsp;</option>
+                    <option value="50000">&nbsp;&nbsp;50000=5yrs&nbsp;</option>
+                    <option value="100000">&nbsp;&nbsp;100000=10yrs&nbsp;</option>
+                    <option value="200000">&nbsp;&nbsp;200000=20yrs&nbsp;</option>
+                    <option value="500000">&nbsp;&nbsp;500000=50yrs&nbsp;</option>
                     </select>
             </td></tr>
         </table>
@@ -470,9 +471,9 @@
         </td>
         <td colspan="5">
         <b>Other General Parameters</b>
-        <br/><b>General Parameters.  Slightly dangerous.  One probably should 
+        <br/><em>General Parameters.  Slightly dangerous.  One probably should 
             not mess with these, except Short Log, unless one is really
-            sure and moderately adventurous.  </b>
+            sure and moderately adventurous.  </em>
 
         </td>
     </tr>

@@ -4,9 +4,10 @@
 nServerDefaultLife
 Expected Half-life of Servers (hrs) (0=infinite)
 value,label,selected
-0,0,0
-#20000,20000,0
-#30000,30000,0
-50000,50000,0
-100000,100000,0
-200000,200000,0
+0,0=infinite,0
+#20000,20000=2yrs,0
+#30000,30000=3yrs,0
+50000,50000=5yrs,0
+100000,100000=10yrs,0
+200000,200000=20yrs,0
+500000,500000=50yrs,0
