@@ -49,7 +49,7 @@ fi
 
 # Do we have all the instruction files?
 sTargetDir="$sInstructionDir"
-for needfile in simlen.ins3 glitchignorelevel.ins3 audittype.ins3 auditsegments.ins3 docsize.ins3 shelfsize.ins3 glitchmaxlife.ins3 glitchimpact.ins3 glitchfreq.ins3 glitchdecay.ins3 glitchspan.ins3 auditfreq.ins3 lifem.ins3 ncopies.ins3  
+for needfile in simlen.ins3 glitchignorelevel.ins3 auditfreq.ins3 audittype.ins3 auditsegments.ins3 docsize.ins3 shelfsize.ins3 glitchmaxlife.ins3 glitchimpact.ins3 glitchfreq.ins3 glitchdecay.ins3 glitchspan.ins3 lifemmax.ins3 lifemmin.ins3 ncopiesmax.ins3 ncopiesmin.ins3 serverdefaultlife.ins3 shockfreq.ins3 shockimpact.ins3 shockmaxlife.ins3 shockspan.ins3
 do
     if [ ! -f "$sTargetDir/$needfile" ]
     then
@@ -60,7 +60,7 @@ done
 
 # Do we have the db manipulation files?
 sTargetDir="$sShelfDir"
-for needfile in dbclearcollection.py dbdumpcollection.py dbdumpdonekeys.py mongolib.py searchspace.py searchdatabase.py searchdatabasemongo.py NewTraceFac.py 
+for needfile in dbclearcollection.py dbdeletedatabase.py dbdumpcollection.py dbdumpdonekeys.py dblistcollections.py dblistdatabases.py mongolib.py searchspace.py searchdatabase.py searchdatabasemongo.py NewTraceFac.py 
 do
     if [ ! -f "$sTargetDir/$needfile" ]
     then
@@ -83,7 +83,7 @@ done
 
 # Do we have all the simulation files?
 sTargetDir="$sShelfDir"
-for needfile in audit2.py client2.py cliparse.py collection.py command.py doccopy.py document.py dumpparams.py dumpuse.py getcliargs.py getparams.py globaldata.py logoutput.py main.py catchex.py NewTraceFac.py logoutput.py readin.py repair.py server.py shelf.py shock.py util.py 
+for needfile in audit2.py bottle.py broker.py brokercli.py brokergroup_makeform.py brokergroupform.py catchex.py client2.py cliparse.py collection.py command.py datacleanup.py doccopy.py document.py dumpparams.py dumpuse.py getcliargs.py getparams.py globaldata.py logoutput.py main.py NewTraceFac.py logoutput.py readin.py repair.py server.py shelf.py shock.py util.py  
 do
     if [ ! -f "$needfile" ]
     then
