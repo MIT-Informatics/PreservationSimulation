@@ -146,7 +146,7 @@ fi
 
 # B R O K E R   T E S T   1 
 # Broker should find exactly one test case to run.
-python broker.py installtest done --familydir=../hl --specificdir=a0 --serverdefaultlife=0 --glitchfreq=0 --shockfreq=0 --ncopies=1 --lifem=1000 --auditfreq=0 --docsize=50 --shelfsize=1 --nseeds=1 --redo --listonly   >tmp/brokertest.log 2>&1
+python broker.py installtest done --familydir=../hl --specificdir=a0 --serverdefaultlife=0 --glitchfreq=0 --shockfreq=0 --ncopies=1 --lifem=1000 --auditfreq=0 --docsize=50 --shelfsize=1 --nseeds=1 --redo --listonly > tmp/brokertest.log 2>&1
 # The number of the last case should be "1.1".
 sTestCases=$(grep "run|" tmp/brokertest.log | tail -1 | sed 's/.*run|//' | sed 's/|.*//')
 if [ -n "$sTestCases" -a "$sTestCases" = "1.1" ]
