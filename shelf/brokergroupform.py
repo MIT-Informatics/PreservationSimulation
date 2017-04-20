@@ -15,6 +15,7 @@ import subprocess
 @get('/')
 @get('/broker')
 @get('/mainsim')
+@ntrace
 def mainsim_get():
     sMakeformCmd = ('python brokergroup_makeform.py '
                         'brokergroup_form_insert.j2 '
@@ -25,6 +26,7 @@ def mainsim_get():
 
 @post('/broker')
 @post('/mainsim')
+@ntrace
 def mainsim_post():
 #   C O L L E C T   D A T A 
     # Collect all the bloody data, one item at a time, grumble.
@@ -98,6 +100,7 @@ def mainsim_post():
                 
                 msg=msg
                 )
+    NTRC.ntrace(3,"proc first dict|%s|" % (dVals))
 #  A D D   E X T R A   S P E C I F I C   S T R I N G S 
     # If the user asks for a shortlog, add the option to the command.
     dVals["xshortlog"] = "--shortlog" if bShortLog else ""
@@ -112,12 +115,14 @@ def mainsim_post():
     # Format the Mongo range expression for nLifem
     sRange = sRangeTemplate % (nLifemMin, nLifemMax)
     dVals["xlifem"] = sRange
+    NTRC.ntrace(3,"proc expanded dict|%s|" % (dVals))
 
 #  S E L E C T   C O M M A N D  A N D   F O R M A T  I T
     # Do something with the form data
     sActualCli = cCmd.mGentlyFormat(sMainCommandStringToStdout, dVals)
 #    sActualCli = cCmd.mGentlyFormat(sMainCommandStringTestOnly, dVals)
 #    sActualCli = cCmd.mGentlyFormat(sMainCommandStringDumbTest, dVals)
+    NTRC.ntrace(3,"proc actual cli|%s|" % (sActualCli))
     sPrefix = '''<html><body>
         <font face="Courier">\n
     '''
@@ -146,6 +151,7 @@ def mainsim_post():
 
 
 # f n V a l i d a t e D i r e c t o r i e s 
+@ntrace
 def fnValidateDirectories(dVals):
     sFamily = dVals["sFamilyDir"]
     sSpecific = dVals["sSpecificDir"]
@@ -259,6 +265,7 @@ class CCommand(object):
         return sCmd
 
 # m G e n t l y F o r m a t ( )
+    @ntrace
     def mGentlyFormat(self, mysCmd, mydVals):
         '''
         Like string.format() but does not raise exception if the string
@@ -285,6 +292,7 @@ class CCommand(object):
         return sOut
 
 
+@ntrace
 def runme():
     port = int(os.environ.get('PORT', 8080))
     run(host='0.0.0.0', port=port, debug=True, reloader=True)
@@ -305,6 +313,7 @@ if __name__ == '__main__':
 #                from .ins3 instruction files using Jinja2 template processor.
 #               Call the makeform program to, guess what, make the form.  
 # 20170318  RBL Validate directories before issuing broker command.
+# 20170420  RBL Add tracing.
 # 
 # 
 

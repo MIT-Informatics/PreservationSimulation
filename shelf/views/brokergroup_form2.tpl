@@ -271,7 +271,7 @@
                     <option value="10000">&nbsp;&nbsp;10000&nbsp;</option>
                     <option value="20000">&nbsp;&nbsp;20000&nbsp;</option>
                     <option value="30000">&nbsp;&nbsp;30000&nbsp;</option>
-                    <option value="50000">&nbsp;&nbsp;50000&nbsp;</option>
+                    <option value="50000" selected>&nbsp;&nbsp;50000&nbsp;</option>
                     <option value="100000">&nbsp;&nbsp;100000&nbsp;</option>
                     <option value="200000">&nbsp;&nbsp;200000&nbsp;</option>
                     </select>
@@ -312,6 +312,7 @@
                     <option value="20000">&nbsp;&nbsp;20000&nbsp;</option>
                     <option value="30000">&nbsp;&nbsp;30000&nbsp;</option>
                     <option value="50000">&nbsp;&nbsp;50000&nbsp;</option>
+                    <option value="100000">&nbsp;&nbsp;100000&nbsp;</option>
                     </select>
             </td></tr>
         </table>
@@ -399,7 +400,7 @@
             <tr><td>
                 <select name="nGlitchImpact">
                     <option value="10">&nbsp;&nbsp;10&nbsp;</option>
-                    <option value="33">&nbsp;&nbsp;33&nbsp;</option>
+                    <option value="33" selected>&nbsp;&nbsp;33&nbsp;</option>
                     <option value="50">&nbsp;&nbsp;50&nbsp;</option>
                     <option value="67">&nbsp;&nbsp;67&nbsp;</option>
                     <option value="90">&nbsp;&nbsp;90&nbsp;</option>

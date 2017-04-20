@@ -59,9 +59,14 @@
 #               Add calc of number of cores to startup.sh script.
 #               Add broker test3 that looks for correct resultof a single run,
 #                from broker command all the way through to GiantOutput data.
-# 
+# 20170420  RBL Add comments about not running this script with sudo.
+#               Add setting NPOLITE to startup.  
+#               
 # 
  
+echo "========================================"
+echo "   DO *NOT* RUN THIS SCRIPT WITH SUDO   "
+echo "========================================"
 
 echo "**************************************** Beginning installation"
 echo ""
@@ -230,6 +235,7 @@ then
     export NUMBER_OF_PROCESSORS=$(cat /proc/cpuinfo | grep processor | wc -l)
 fi
 . shelfenv/bin/activate
+export NPOLITE=1
 cd working/shelf
 bash start_brokerform.sh & 
 

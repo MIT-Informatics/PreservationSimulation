@@ -118,8 +118,8 @@ class CLifetime(object):
             (fNow, self.sShelfID, self.nGlitchFreq, self.fShelfLife, 
             self.fShelfInterval))
         self.mGlitchHappens(fNow)
-        lg.logInfo("LIFETIME","glitchnow t|%6.0f| for shelf|%s| end" %
-            (fNow, self.sShelfID))
+        lg.logInfo("LIFETIME","glitchnow t|%6.0f| for shelf|%s| active|%s|" %
+            (fNow, self.sShelfID, self.bGlitchActive))
 
 # L i f e t i m e . m C o r r F a i l H a p p e n s T o M e 
     @catchex
@@ -181,7 +181,7 @@ class CLifetime(object):
         self.fDecayRate = self.fLn2 / self.fDecayHalflife
         self.fMaxlife = float(mynGlitchMaxlife)
         TRC.tracef(3,"LIFE","proc inject reduct|%s| decayhalflife|%s| " 
-            "decayrate|%s| maxlife|%s|" % (self.nRecuctionPercentage, 
+            "decayrate|%s| maxlife|%s|" % (self.nReductionPercentage, 
             self.fDecayHalflife, self.fDecayRate, self.fMaxlife))
         return self.fDecayRate
 
@@ -342,6 +342,8 @@ def fnlGetGlitchParams(mysShelfID):
 #                but affects multiple servers, this code is a bit of a swamp 
 #                to avoid recursion.  
 # 20160224  RBL Correct calling sequence and invocation of mInjectError.
+# 20170420  RBL Fix fatal typo in trace.
+#               Change log wording slightly to indicate glitch active.
 # 
 # 
 
