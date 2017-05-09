@@ -96,6 +96,7 @@ main <- function(){
     #  (There ought to be a way to introspect this, a la $0, but I can't find it 
     #  in StackOverflow or Rblogs, rats.)
     sMynameIs <- sAnalyzeFilename   # Dumb, dumb, dumb.
+    assign("sMynameIs", sMynameIs, envir=globalenv())
 
     # I N P U T 
     dat <- data.frame(read.table(sInputFilename, header=TRUE))
@@ -208,6 +209,7 @@ main <- function(){
 # 20170324  RBL More changes to accommodate new new new summary code.
 #               Add page headings between long tables.
 #               Export main data tables to global for later use.
+# 20170507  RBL Turn detailed stats back on, if I can get it to work right.  
 # 
 # 
 

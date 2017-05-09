@@ -6,11 +6,11 @@
 # - select all (ctrl-A), and 
 # - execute the script (ctrl-Enter).
 
-sInputFilename  <- "../hl/data/GiantOutput_shock2yr_len1yr_00.txt"
-sOutputFilename <- "../hl/tabs/shocktest3_freq2yr_lenvar_seed21_analysis_20170324_00.txt"
-sTitle <- "shocktest3 HL copies=var Audit=1yr Glitch=0 Shock=2yr len=1yr lifem=var seed21"
-sSubtitle <- "(impact=50,100pct len=1yr; copies grouped vertically)"
-sSummarizeFilename <- "./summ-shock-3.r"
+sInputFilename  <- "../hl/data/GiantOutput_gl3333andhilocomplete_dur1000impvar_copyvar_lifvar_00.txt"
+sOutputFilename <- "../hl/tabs/glitchtest_f3333andhilocomplete_d1000ivar_analysis_20170421_00.txt"
+sTitle <- "glitchtest4 HL copies=var Audit=1yr Glitch=3333 len=1000 imp=var lifem=var seed21"
+sSubtitle <- "(impact=10,33,67,90pct len=1mo; copies grouped vertically)"
+sSummarizeFilename <- "./summ-glitch-4.r"
 sAnalyzeFilename <- "./ShelfAnalyze.r"
 bTablesOnly <- 0
 options(max.print=9999)
