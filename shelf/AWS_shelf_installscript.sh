@@ -229,7 +229,7 @@ echo "**************************************** Done initial tests"
 
 echo "**************************************** Create startup.sh script in ~"
 cd ~
-cat >startup.sh <<EOF
+cat >startup.sh <<\EOF
 if [ -z "$NUMBER_OF_PROCESSORS" ]
 then
     export NUMBER_OF_PROCESSORS=$(cat /proc/cpuinfo | grep processor | wc -l)

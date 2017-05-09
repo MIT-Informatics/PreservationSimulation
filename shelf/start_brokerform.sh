@@ -1,14 +1,29 @@
 #!/bin/bash
 # start_brokerform.sh
 #                       RBLandau 20170318
+#                       revised  20170424
 # Script to launch the broker web form.
-# THIS MAY BE LAUNCHED WITH . OR source OR sh OR bash.  
+# You must already be in the shelf directory with the 
+#  'shelfenv' virtualenv activated, wherever that is.
+
+# THIS SCRIPT MAY BE LAUNCHED WITH . OR source OR sh OR bash.  
+
+# Accommodate Linux versions that do not specify NUMBER_OF_PROCESSORS.
+if [ -z "$NUMBER_OF_PROCESSORS" ]
+then
+    export NUMBER_OF_PROCESSORS=$(cat /proc/cpuinfo | grep processor | wc -l)
+fi
 
 # Turn debug tracing off completely to save CPU time.
 export TRACE_LEVEL=
 export TRACE_PRODUCTION=YES
+# And start new runs as quickly as possible.  
+export NPOLITE=1
 
 echo "Browse to localhost:8080 to access the broker form."
-python brokergroupform.py
+python brokergroupform.py &
+# NOTE WELL: The ampersand runs the form program in a subprocess.
+#  To terminate the program, you must first bring it forward with 
+#  'fg' and then issue the control-C.
 
 #END

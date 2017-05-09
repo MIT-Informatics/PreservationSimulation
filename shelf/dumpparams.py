@@ -90,10 +90,10 @@ def dumpParamsIntoLog():
 
 #-----------------------------------------------------------
     # G l i t c h  params.
-    lg.logInfo("PARAMS","GLITCH freq|%d| impact|%d| decay|%d| "
+    lg.logInfo("PARAMS","GLITCH freq|%d| impact|%d| span|%d| decay|%d| "
         "maxlife|%d| ignorelimit|%.3f|" 
-        % (G.nGlitchFreq, G.nGlitchImpact, G.nGlitchDecay, G.nGlitchMaxlife, 
-        G.fGlitchIgnoreLimit))
+        % (G.nGlitchFreq, G.nGlitchImpact, G.nGlitchSpan, G.nGlitchDecay, 
+        G.nGlitchMaxlife, G.fGlitchIgnoreLimit))
 
 #-----------------------------------------------------------
     # S h o c k   params.
@@ -108,6 +108,7 @@ def dumpParamsIntoLog():
 # 20161222  RBL Add maxlife to shock param output.
 # 20170109  RBL Add shock type to report line.  
 #               PEP8-ify long lines.  
+# 20170421  RBL Add span to glitch params log line.
 # 
 # 
 
