@@ -81,6 +81,21 @@ WhateverSampleSadisticsYouWant <- function(headerline,vect)
 trimean <-  function(vect)  { foo <- fivenum(vect); ans <- 0.5*foo[3] + 0.25*foo[2] + 0.25*foo[4]; ans }
 midmean <-  function(vect)  { ans <- mean(vect,trim=0.25,na.rm=TRUE); ans }
 
+# f n C h e c k F i l e 
+# If the file exists, return true; else spit out an error message and false.  
+fnCheckFile <- function(filename){
+    if (!file.exists(filename))
+    {
+        cat("Error, file not found: ", filename, "\n")
+        result <- FALSE
+    }
+    else
+    {
+        result = TRUE
+    }
+    return(result)
+}
+
 # s u m m a r i z e 
 # Summarize function removed to separate file because it is extremely
 #  grouping-dependent.  
@@ -97,6 +112,15 @@ main <- function(){
     #  in StackOverflow or Rblogs, rats.)
     sMynameIs <- sAnalyzeFilename   # Dumb, dumb, dumb.
     assign("sMynameIs", sMynameIs, envir=globalenv())
+
+    if (!
+        ( fnCheckFile(sInputFilename)
+        & fnCheckFile(sAnalyzeFilename)
+        )
+       )
+    {
+        stop("Correct filenames and rerun.")
+    }
 
     # I N P U T 
     dat <- data.frame(read.table(sInputFilename, header=TRUE))
@@ -210,6 +234,7 @@ main <- function(){
 #               Add page headings between long tables.
 #               Export main data tables to global for later use.
 # 20170507  RBL Turn detailed stats back on, if I can get it to work right.  
+# 20170510  RBL Validate input filenames before proceeding.
 # 
 # 
 

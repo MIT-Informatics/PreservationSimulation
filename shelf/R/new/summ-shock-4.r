@@ -1,5 +1,5 @@
-# summ-glitch-4.r
-#                   RBL 20170421
+# summ-shock-4.r
+#                   RBL 20170509
 # Take the tons of output from simulations, in suitably small bites, 
 #  and make summary tables of them.  
 # Grouping function used is ddply from plyr package, 
@@ -22,7 +22,7 @@ library(plyr)
 
 fnTableMid <- function(dat)
 {
-    # REQUIREMENT: there are no confounding variables outside this list, 
+    # REQUIREMENT: there shall be no confounding variables outside this list, 
     #  e.g., no variations in auditing strategies, frequencies, glitches, etc.
     #  If there is anything else in the data that varies, it MUST be included 
     #  in this list of things to be grouped, or the combined data will be
@@ -30,19 +30,19 @@ fnTableMid <- function(dat)
  
     # E D I T M E :  C O L U M N S   T O   B E   G R O U P E D    
     column.list <- .(
-         glitchfreq
-        ,glitchimpact
-        ,glitchmaxlife
-#        ,glitchspan
+         shockfreq
+        ,shockimpact
+        ,shockmaxlife
+#        shockspan
         ,lifem
         ,copies
     )
     # E D I T M E :  C O L U M N   L A B E L S   F O R   H U M A N S 
     column.labels <- c(
-         "glitch frequency (hrs)"
-        ,"glitch impact (pct)"
-        ,"glitch duration (hrs)"
-#        ,"# servers affected"
+         "shock frequency (hrs)"
+        ,"shock impact (pct)"
+        ,"shock duration (hrs)"
+#        "# servers affected"
         ,"sector half-life (megahours)"
         ,"# of copies"
         ,"lost midmean"
@@ -53,10 +53,10 @@ fnTableMid <- function(dat)
 
     # E D I T M E :  C O L U M N   L A B E L S   F O R   P R I N T I N G 
     column.shortlabels <- c(
-         "glitchfreq"
+         "shockfreq"
         ,"impact"
         ,"duration"
-#        ,"span"
+#        "span"
         ,"lifem"
         ,"copies"
         ,"lost midmean"
@@ -77,43 +77,43 @@ fnTableMid <- function(dat)
     # Reorder data rows for easier comparisons.
     head.reorder1 <- "Summary losses (midmeans), reordering 1: copies impact freq life "
     summ.reorder1 <- arrange(summ.first 
-                ,glitchmaxlife
                 ,copies
-                ,glitchimpact
-                ,glitchfreq
+                ,shockimpact
+                ,shockfreq
                 ,lifem
-#                ,glitchspan
+                ,shockmaxlife
+                ,shockspan
                 )
     head.reorder2 <- "Summary losses (midmeans), reordering 2: copies impact life freq "
     summ.reorder2 <- arrange(summ.first
-                ,glitchmaxlife
                 ,copies
-                ,glitchimpact
-#                ,glitchspan
+                ,shockimpact
+                ,shockspan
                 ,lifem
-                ,glitchfreq
+                ,shockfreq
+                ,shockmaxlife
                 )
     head.reorder3 <- "Summary losses (midmeans), reordering 3: freq copies impact life "
     summ.reorder3 <- arrange(summ.first
-                ,glitchmaxlife
-                ,glitchfreq
+                ,shockfreq
                 ,copies
-                ,glitchimpact
+                ,shockimpact
                 ,lifem
-#                ,glitchspan
+                ,shockspan
+                ,shockmaxlife
                 )
     head.reorder4 <- "Summary losses (midmeans), reordering 4: freq copies life impact "
     summ.reorder4 <- arrange(summ.first
-                ,glitchmaxlife
-                ,glitchfreq
+                ,shockfreq
                 ,copies
                 ,lifem
-                ,glitchimpact
-#                ,glitchspan
+                ,shockimpact
+                ,shockspan
+                ,shockmaxlife
                 )
 
     # How do we make this printing similar to the old style???
-    sink("../hl/tabs/summ-glitch-4_reordering.txt")
+    sink("../hl/tabs/summ-shock-4_reordering.txt")
 
     fnPageHeading(first=TRUE)
     cat("\nReordered tables based on \n")
@@ -182,7 +182,7 @@ while (sink.number() > 0) {sink()}
 #  all the summarization and detailed stats functions below.
 fnSelectColumns <- function(dat)
 {
-    datn <- data.frame(dat$glitchfreq,dat$glitchimpact,dat$glitchmaxlife,dat$lifem,dat$copies,dat$lost,dat$docsize)
+    datn <- data.frame(dat$shockfreq,dat$shockimpact,dat$shockmaxlife,dat$lifem,dat$copies,dat$lost,dat$docsize)
     return(datn)
 }
 
@@ -200,15 +200,15 @@ if(0){ # comment out to do nothing.
             for (cp in levels(factor(tmp2$dat.copies)))
             {
                 tmp3 <- tmp2[tmp2$dat.copies==cp,]
-                for (gi in levels(factor(tmp3$dat.glitchimpact)))
+                for (gi in levels(factor(tmp3$dat.shockimpact)))
                 {
-                    tmp4 <- tmp3[tmp3$dat.glitchimpact==gi,]
-#                    WhateverSampleSadisticsYouWant(c("docsize",ds,"lifem",lfm,"copies",cp,"glitchimpact",gi), tmp4$dat.lost))
+                    tmp4 <- tmp3[tmp3$dat.shockimpact==gi,]
+#                    WhateverSampleSadisticsYouWant(c("docsize",ds,"lifem",lfm,"copies",cp,"shockimpact",gi), tmp4$dat.lost))
                 }
             }
         }
     }
-}#ENDIF0
+}#ENDIFFALSE
 }#ENDFN fnDetailedSampleStats
 
 
@@ -230,6 +230,8 @@ if(0){ # comment out to do nothing.
 # 20170507  RBL Remove meaningful names from reordering table names.
 #               And add another reordering just in case we need it.
 #               Put fnDetailedSampleStats function back in, I hope.  
+# 20170509  RBL Change back from glitch to shock after many improvements
+#                in the glitch version.  Still need to change vars.
 # 
 # 
 

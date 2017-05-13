@@ -4,11 +4,11 @@ glitchtest4 HL copies=var Audit=1yr Glitch=3333 len=1000 imp=var lifem=var seed2
 Input data from 		 ../hl/data/GiantOutput_gl3333andhilocomplete_dur1000impvar_copyvar_lifvar_00.txt 
 Output analysis into 	 ../hl/tabs/glitchtest_f3333andhilocomplete_d1000ivar_analysis_20170421_00.txt 
 
-analysis tables by 		 ./ShelfAnalyze.r 	 20170509_113112EDT 
-and summarize script 	 ./summ-glitch-4.r 	 20170509_113722EDT 
-at 	 20170509_113728EDT 
+analysis tables by 		 ./ShelfAnalyze.r 	 20170510_125712EDT 
+and summarize script 	 ./summ-glitch-4.r 	 20170510_121859EDT 
+at 	 20170510_125832EDT 
 
-../hl/tabs/glitchtest_f3333andhilocomplete_d1000ivar_analysis_20170421_00.txt 20170509_113728EDT 
+../hl/tabs/glitchtest_f3333andhilocomplete_d1000ivar_analysis_20170421_00.txt 20170510_125832EDT 
 glitchtest4 HL copies=var Audit=1yr Glitch=3333 len=1000 imp=var lifem=var seed21 
 
 Summary losses (midmeans)
@@ -245,7 +245,7 @@ Summary losses (midmeans)
 229     100000     10     1000  1000      4         0.00      0    21
 230     100000     10     1000  1000      5         0.00      0    21
 
-../hl/tabs/glitchtest_f3333andhilocomplete_d1000ivar_analysis_20170421_00.txt 20170509_113728EDT 
+../hl/tabs/glitchtest_f3333andhilocomplete_d1000ivar_analysis_20170421_00.txt 20170510_125832EDT 
 glitchtest4 HL copies=var Audit=1yr Glitch=3333 len=1000 imp=var lifem=var seed21 
 
 Percentage losses (midmeans)
