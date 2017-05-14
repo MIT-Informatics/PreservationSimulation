@@ -81,9 +81,9 @@ WhateverSampleSadisticsYouWant <- function(headerline,vect)
 trimean <-  function(vect)  { foo <- fivenum(vect); ans <- 0.5*foo[3] + 0.25*foo[2] + 0.25*foo[4]; ans }
 midmean <-  function(vect)  { ans <- mean(vect,trim=0.25,na.rm=TRUE); ans }
 
-# f n C h e c k F i l e 
+# f n b C h e c k F i l e 
 # If the file exists, return true; else spit out an error message and false.  
-fnCheckFile <- function(filename){
+fnbCheckFile <- function(filename){
     if (!file.exists(filename))
     {
         cat("Error, file not found: ", filename, "\n")
@@ -114,8 +114,8 @@ main <- function(){
     assign("sMynameIs", sMynameIs, envir=globalenv())
 
     if (!
-        ( fnCheckFile(sInputFilename)
-        & fnCheckFile(sAnalyzeFilename)
+        ( fnbCheckFile(sInputFilename)
+        & fnbCheckFile(sAnalyzeFilename)
         )
        )
     {
