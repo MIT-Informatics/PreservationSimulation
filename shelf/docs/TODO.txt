@@ -25,7 +25,10 @@ TODO: instruction generation
 DONE - new searchspace facility to generate cross-product instructions.
 DONE - unittests for searchspace.
 DONE - adapt broker to new instruction ifc.
-
+MAYBE - if shockfreq==0, should we coerce serverdefaultlifetime=0?
+    not doing this got us into trouble once with servers expiring and losing
+    all docs even when there were no shocks.  hmmm.  
+    
 
 TODO: status bookkeeping database
 DONE - write searchdb status database based on json files.
@@ -110,15 +113,22 @@ DONE - add commentary about how this should have been done with
 DONE - add new fields for shock and serverlife.
 DONE - test with --shortlog.  may have to adjust logging and/or extract
     rules.  
+FIXME - add values to extract line: deadserversactive, maybe deadserversall.
+    also maybe /proc/cpuinfo vendor_id, cpu family, model.
+FIXME - print extracted line to stdout, too, so it gets into log.
+FIXME - BUG glitchdecay and glitchmaxlife not found for copies=1,2, and
+    glitchfreq=0.
 
 
 TODO: R 
-FIXME - can the ugly nested loop be restructured to run from a list of vars
+DONE - can the ugly nested loop be restructured to run from a list of vars
     in the order we want them nested?
+    done using plyr package, ddply function and arrange function.  wonderful.
 FIXME - learn Pandas, which is supposed to be equivalent to the R data.frame
     data structure.  this might make it easier to do the nested loop in 
     a more easily maintainable way.  
 FIXME - need new versions of table summary with glitch y/n and shock y/n.
+    partially done.  
 
 
 TODO: 100% glitch impact
