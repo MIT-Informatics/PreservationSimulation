@@ -56,7 +56,7 @@ class CG(object):
     sQuery = None
     nCores = 8          # Default, overridden by NCORES env var
     nCoreTimer = 10     # Wait for a free core,
-    nPoliteTimer = 2    # Shorter wait between sequential launches.
+    nPoliteTimer = 1    # Shorter wait between sequential launches.
     nStuckLimit = 600   # Max nr of CoreTimer waits before giving up.
     nTestLimit = 0      # Max nr of runs executed for a test run, 0=infinite.
     sTestCommand = "N"  # Should just echo commands instead of executing them?
@@ -95,7 +95,7 @@ class CG(object):
         'af{nAuditFreq}s{nAuditSegments}t{sAuditType}_'
         'gf{nGlitchFreq}i{nGlitchImpact}d{nGlitchDecay}m{nGlitchMaxlife}_'
         'sh{nShockFreq}i{nShockImpact}s{nShockSpan}m{nShockMaxlife}_'
-        'seed{nRandomseed}'
+        'sdl{nServerDefaultLife}_seed{nRandomseed}'
         )
     sShelfLogFileName = None
 
@@ -171,6 +171,8 @@ class CG(object):
     dat - the combined output from appending all the extract files (less 
           redundant headers)
     '''
+    
+    sBrokerCommandLogFile = "tmp/BrokerCommands.log"
 
 #===========================================================
 
@@ -267,6 +269,7 @@ def fnbWaitForOpening(mynProcessMax, mysProcessName, mynWaitTime, mynWaitLimit):
 # c l a s s   C F o r m a t 
 class CFormat(object):
 
+# m s G e n t l y F o r m a t 
     @ntracef("FMT")
     def msGentlyFormat(self, mysCmd, mydVals):
         '''
@@ -297,6 +300,7 @@ class CFormat(object):
         sOut = mysCmd.format(**dNames)
         return sOut
 
+# f n d F o r m a t Q u e r y 
     @ntracef("FMT")
     def fndFormatQuery(self, mydCli):
         '''
@@ -345,6 +349,8 @@ class CFormat(object):
         # Allow only attribs that appear in the database, else will get 
         #  no results due to implied AND of all items in query dict.  
         dOutSafe = {k:v for k,v in dOut.items() if k in g.lSearchables}
+        # Allow only selector attribs that have non-None values; they 
+        #  would also queer the query.
         dOutNotNone = {k:v for k,v in dOutSafe.items() if v is not None}
         NTRC.ntracef(3,"FMT","proc dict b4|%s| \nsafe|%s|\nclean|%s|" 
             % (dOut,dOutSafe,dOutNotNone))
@@ -356,6 +362,7 @@ class CFormat(object):
             dOutNotNone.update(dTmp)
         return dOutNotNone
 
+# f n s M a y b e T e s t 
     @ntracef("FMT")
     def fnsMaybeTest(self, mysCommand):
         '''
@@ -391,6 +398,7 @@ def fndMaybeEnhanceInstruction(mydRawInstruction):
     return dInstruction
 
 #===========================================================
+#===========================================================
 
 # M A I N 
 @catchex
@@ -398,22 +406,34 @@ def fndMaybeEnhanceInstruction(mydRawInstruction):
 def main():
     '''
     Process:
+    - Parse the CLI command into g.various data items.
+    - Validate user-supplied directories; get environment variables.
     - Query the searchspace for the stream of instructions
     - For each instruction from database selection, get dict for line
     - Using dict args, construct plausible command lines, into file
     - Check to see that there aren't too many similar processes 
-      running already; wait if so.
+      already running; if too many, then wait.
     - Launch ListActor process to execute commands.
     - Wait a polite interval before launching another.
     '''
     NTRC.ntracef(0, "MAIN", "Begin.")
     NTRC.ntracef(0, "MAIN", "TRACE  traceproduction|%s|" % NTRC.isProduction())
 
+    sBrokerCommand = fnsReconstituteCommand(sys.argv)
+    fnbMaybeLogCommand(sBrokerCommand)
+    NTRC.ntracef(0, "MAIN", "command=|%s|" % (sBrokerCommand.rstrip()))
+
     # Get args from CLI and put them into the global data
     dCliDict = brokercli.fndCliParse("")
     # Carefully insert any new CLI values into the Global object.
     dCliDictClean = {k:v for k,v in dCliDict.items() if v is not None}
     g.__dict__.update(dCliDictClean)
+
+    # Validate that the user-specified directories exist.
+    if not fnbValidateDir(g.sFamilyDir):
+        raise ValueError("FamilyDir \"%s\" not found" % (g.sFamilyDir))
+    if not fnbValidateDir("%s/%s" % (g.sFamilyDir, g.sSpecificDir)):
+        raise ValueError("SpecificDir \"%s\" not found" % (g.sSpecificDir))
 
     # Get command templates from external file.
     fnGetCommandTemplates(g.sCommandListFilename)
@@ -447,6 +467,7 @@ def fnnProcessAllInstructions(myitInstructionIterator):
     ''' 
     Get the set of instructions that match the user's criteria for this batch,
      and run them one by one.
+    Each instruction (run) is executed once for each random seed value.
     Count the number of runs, and don't exceed the user's limit, if any.
     If the execution reports a serious error, stop the loop.
     '''
@@ -455,6 +476,7 @@ def fnnProcessAllInstructions(myitInstructionIterator):
     # Is this a completely fake test run?  Replace templates.
     if g.sTestFib.startswith("Y"):
         g.lTemplates = g.lFibTemplates
+
     # Process each instruction in turn.
     for dRawInstruction in myitInstructionIterator: 
         NTRC.ntracef(3,"MAIN","proc main raw instruction\n|%s|" 
@@ -463,6 +485,7 @@ def fnnProcessAllInstructions(myitInstructionIterator):
         NTRC.ntracef(3,"MAIN","proc main enhanced instruction\n|%s|" 
             % (dInstruction))
 
+        # Execute each instruction once for each random seed value.
         nRunNumber += 1
         nStatus = fnstProcessOneInstructionManyTimes(nRunNumber, dInstruction)
         if nStatus > 0:     # Some major error, stop loop right now.  
@@ -481,6 +504,8 @@ def fnstProcessOneInstructionManyTimes(mynRunNumber, mydInstruction):
     ''' 
     Process a single instruction (set of params) once for each of a
      predetermined number and sequence of random seeds.
+    Assign an id to each run that consists of the instruction hash (_id)
+     followed by _<seed number>.  
     '''
     lSeedsToUse = fnlGetRandomSeeds(fnIntPlease(g.nRandomSeeds), 
                     g.sRandomSeedFile)
@@ -518,6 +543,8 @@ def fnstProcessOneInstruction(mysRunNumber, mydInstruction, mynSeed):
     if g.sRedo.startswith("Y"):
         NTRC.ntracef(0,"MAIN","proc force redo for item id|%s|" 
             % (sInstructionId))
+        # Delete the done record for this run, if there is one, 
+        #  to make it appear that the run is new this time.  
         g.mdb.fndDeleteDoneRecord(sInstructionId)
 
     # If this instruction has already been processed skip it.
@@ -527,7 +554,6 @@ def fnstProcessOneInstruction(mysRunNumber, mydInstruction, mynSeed):
             "id|%s| copies|%s| lifem|%s|" 
             % (mysRunNumber, sInstructionId, mydInstruction["nCopies"],
             mydInstruction["nLifem"]))
-        #continue    # Skip this iteration of the loop.
 
     elif g.sListOnly.startswith("Y"):
         # Testing: Just dump out the instruction dictionary for this item.
@@ -574,15 +600,43 @@ def fnstProcessOneInstruction(mysRunNumber, mydInstruction, mynSeed):
             g.mdb.fndInsertProgressRecord(mydInstruction["_id"], mydInstruction)
             # Launch the actor to perform main runs.  
             cCmd = command.CCommand()
+            NTRC.ntracef(3, "MAIN", "proc actor cmd run|%s|\n|%s|"
+                % (mysRunNumber, g.sActorCommand)) 
             sResult = cCmd.doCmdStr(g.sActorCommand)
             time.sleep(g.nPoliteTimer)    
 
         else:
+            # If bContinue comes back false, then there is no room at the inn.
+            #  The system is too crowded and we would have to wait too long 
+            #  for an opening.  This usually means that something is stuck.  
             NTRC.tracef(0, "MAIN", "OOPS, Stuck!  Too many python "
                 "processes running forever.")
             #break
             return 1
     return 0
+
+
+#===========================================================
+# Utility functions:
+# - Get list of random seeds
+# - Get environment vars that control timing
+# - Keep text log of commands to broker
+# - Check for valid dirs
+
+# f n l G e t R a n d o m S e e d s 
+@catchex
+@ntracef("MAIN")
+def fnlGetRandomSeeds(mynHowMany, mysFilename):
+    '''
+    Return a list of the first mynHowMany random seeds from the 
+     file specified.  
+    This is the primitive version that does not permit blank lines, 
+     comments, or other detritus in the list of seed numbers.  
+    '''
+    with open(mysFilename, "r") as fhSeeds:
+        lsSeeds = [(fhSeeds.next()) for _ in range(mynHowMany)]
+        lnSeeds = [fnIntPlease(_) for _ in lsSeeds]
+    return lnSeeds
 
 # f n v G e t E n v i r o n m e n t O v e r r i d e s 
 @catchex
@@ -606,20 +660,28 @@ def fnvGetEnvironmentOverrides():
     except (ValueError, TypeError):
         raise TypeError('Environment variable NPOLITE must be an integer.')
 
-# f n l G e t R a n d o m S e e d s 
-@catchex
-@ntracef("MAIN")
-def fnlGetRandomSeeds(mynHowMany, mysFilename):
-    '''
-    Return a list of the first mynHowMany random seeds from the 
-     file specified.  
-    This is the primitive version that does not permit blank lines, 
-     comments, or other detritus in the list of seed numbers.  
-    '''
-    with open(mysFilename, "r") as fhSeeds:
-        lsSeeds = [(fhSeeds.next()) for _ in range(mynHowMany)]
-        lnSeeds = [fnIntPlease(_) for _ in lsSeeds]
-    return lnSeeds
+# f n s R e c o n s t i t u t e C o m m a n d 
+@ntrace
+def fnsReconstituteCommand(lArgs):
+    sOut = "python " + " ".join(lArgs)
+    return sOut
+
+# f n b M a y b e L o g C o m m a n d 
+@ntrace
+def fnbMaybeLogCommand(sCommand):
+    if os.path.isfile(g.sBrokerCommandLogFile):
+        sTime = util.fnsGetTimeStamp() + "\n"
+        with open(g.sBrokerCommandLogFile, "a") as fhBrokerCommandLog:
+            fhBrokerCommandLog.write(sTime)
+            fhBrokerCommandLog.write(sCommand)
+        return True
+    else:
+        return False
+
+# f n b V a l i d a t e D i r 
+@ntrace
+def fnbValidateDir(sPath):
+    return os.path.isdir(sPath)
 
 
 #===========================================================
@@ -706,6 +768,11 @@ foreach single-line file in holding dir
 # 20170201  RBL Dump traceproduction y/n in trace-0.
 # 20170317  RBL Repair logfilename template, which had the shock maxlife
 #                on the wrong side of the underscore, duh.  
+# 20170520  RBL Add serverdefaultlife to logfilename, duh.  Different values
+#                resulted in the same logfilename, which then was overwritten.  
+#               Reorder code slightly for clarity (I hope).  
+#               Reduce default polite timer to one second.
+# 
 # 
 
 #END

@@ -64,6 +64,7 @@ def mainsim_post():
     nSimLength = request.forms.get("nSimLength")
     nBandwidthMbps = request.forms.get("nBandwidthMbps")
 
+    bRedo = request.forms.get("bRedo")
     bTestOnly = request.forms.get("bTestOnly")
     sDatabaseName = request.forms.get("sDatabaseName")
 
@@ -95,6 +96,7 @@ def mainsim_post():
 
                 nDocSize=nDocSize, nShelfSize=nShelfSize, 
 
+                bRedo=bRedo,
                 bTestOnly=bTestOnly, 
                 sDatabaseName=sDatabaseName, 
                 
@@ -107,6 +109,9 @@ def mainsim_post():
 
     # If the user asks for a test list only, add that option to the command.
     dVals["xtestonly"] = "--listonly" if bTestOnly else ""
+
+    # If the user asks for a rematch, add that option to the command.
+    dVals["xredo"] = "--redo" if bRedo else ""
 
     # Format the Mongo range expression for nCopies
     sRange = sRangeTemplate % (nCopiesMin, nCopiesMax)
@@ -158,10 +163,11 @@ def fnValidateDirectories(dVals):
     sPath = sFamily + "/" + sSpecific
     sValidationErrorMsg = ("<h2>"
                         "ERROR: directory not found: "
-                        "%s"
+                        "\"%s\""
                         "</h2>"
                         % (sPath))
-    if os.path.exists(sPath) and os.path.isdir(sPath):
+    if (sFamily and sSpecific
+    and os.path.exists(sPath) and os.path.isdir(sPath)):
         return ""
     else:
         return sValidationErrorMsg
@@ -181,7 +187,7 @@ sMainCommandStringToStdout = ('python broker.py inprogress done '
             '--shockspan={nShockSpan} --shockmaxlife={nShockMaxlife} '
             '--docsize={nDocSize} --shelfsize={nShelfSize} '
             '--nseeds={nRandomSeeds} '
-            '{xshortlog} {xtestonly}  '
+            '{xshortlog} {xtestonly} {xredo} '
             '2>&1 '
 #            '--help'
             )
@@ -314,7 +320,8 @@ if __name__ == '__main__':
 #               Call the makeform program to, guess what, make the form.  
 # 20170318  RBL Validate directories before issuing broker command.
 # 20170420  RBL Add tracing.
-# 
+# 20170520  RBL Add Redo checkbox.
+# 7
 # 
 
 #END

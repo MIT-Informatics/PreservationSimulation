@@ -15,11 +15,12 @@ import util
 def dumpServerUseStats():
     for sKey in sorted(G.dID2Shelf.keys()):
         cShelf = G.dID2Shelf[sKey]
-        # Get vector of stats.
+        # Get vector of stats from shelf.
         (sID,sServerID,nQual,fExpolife,nCapacity,nHiWater,nCurrentUse) = \
             cShelf.mReportUseStats()
-        lg.logInfo("MAIN", "SERVERUSE shelf|%s-%s| qual|%d| expolife|%.0f| "
-            "size|%d| hiwater|%d| currentuse|%d| full%%|%d|" 
+        lg.logInfo("MAIN", "SERVERUSE shelf|%s-%s| qual|%d| "
+            "sectorexpolife|%.0f| size|%d| hiwater|%d| currentuse|%d| "
+            "full%%|%d|" 
             % (sServerID, sID, nQual, fExpolife, nCapacity, nHiWater, 
             nCurrentUse, 100*nCurrentUse/nCapacity))
     return sServerID+"+"+sID
@@ -147,6 +148,7 @@ def dumpCollectionStats(mysCollID):
 # 20170102  RBL Add more shock stats.  
 #               PEP8-ify some more lines.  
 # 20170109  RBL Improve reporting of dead servers.  
+# 20170520  RBL Clarify that shelf expolife is sector life.
 # 
 # 
 

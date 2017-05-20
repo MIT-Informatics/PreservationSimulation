@@ -1,0 +1,105 @@
+How to run on AWS
+                RBL 20170519
+
+START AWS EC2 MACHINE
+
+
+Start EC2 machine
+- browse to console.aws.amazon.com or similar
+- account = mitescience
+- name = rlandau (NOTE: no b)
+- password
+- EC2
+- instances
+- RBL07A 32core c3.8xl 200GB 20160228
+- examine State Transition: want last instance you closed
+- right click, Start, yes I'm sure
+- wait for IP addr to show up under IPv4 Public IP
+- there is some magic setting that one needs to use in the security section
+    that enables an outside browser to access the EC2 system.
+    I forget what setting, sorry.  ask stackoverflow.  I did.  
+
+
+CONNECT
+
+with WinSCP
+- select session RBL07A(1)
+- protocol SFTP
+- Edit
+- change IP address
+- user ubuntu is okay
+- Save
+- Login
+- accept unknown cert from server IP
+- enter passphrase
+- remember that ctrl-R refreshes only the currently viewed remote dir.
+
+
+with putty
+- session RBL07A something
+- Load
+- change IP address
+- Save
+- OK
+- login as: ubuntu
+- enter passphrase
+
+- if you want more than one session, ask for New Session and repeat.
+
+
+with ssh
+- Cygwin window
+- SSH -i aws/<whatever id file> ubuntu@<IP-addr>
+
+
+LOAD SOFTWARE
+
+Erase old software
+- cd ~  (should be /home/ubuntu)
+- if working dir exists, nuke it: rm -rf working
+- might as well nuke shelfenv, too: rm -rf shelfenv
+
+Copy AWS install script
+- in WinSCP or FileZilla or whatever
+- copy file shelf/AWS_shelf_installscript.sh from a development system
+- make sure that the source has a recent pull from github on it
+- copy the install script onto ~
+- sh AWS_shelf_installscript.sh
+- wait a couple minutes
+- if the script goes right to the end, saying that it has written the startup
+    script, then everything worked.
+
+
+Create a directory tree for test results
+- cd working/shelf
+- sh setupfamilydir.sh <familydir> <specificdir>
+
+
+Start software
+- the console session should still be in ~; go back if necessary with cd
+- . startup.sh  (yes, dot space startup.sh)
+- mongod should already be running
+- this starts up the 
+- browse from your system to <ip-addr>:8080
+- fill in the form and submit
+
+
+Run broker for large series of cases
+- cd working/shelf
+- python broker.py -h and read the help on all the options
+- best way to do this is use the form, look at the command issued by the form 
+    on a test-only case, copy the CLI command to an editor, and change 
+    the params you want there.  
+- trying to type the entire command with twenty or thirty options is doomed
+    to disappointment.
+- be sure to aim the broker output entirely to a log file, so that your 
+    session does not need to remain connected the entire time.
+- be sure to remember the ampersand after the broker command so that 
+    it runs in a subshell, leaving your session free to tail the dat file.
+- e.g., 
+python broker.py inprogress done --familydir=../hl --specificdir=glitchvslifeAWS --ncopies='{"$gte":1, "$lte":5}' --lifem='{"$gte":10, "$lte":1000}' --serverdefaultlife='[0,100000]' --auditfreq=10000 --auditsegments=1 --audittype=TOTAL --glitchfreq='[0,3333]' --glitchimpact='[33,50,90]' --glitchdecay=0 --glitchmaxlife='[250,1000]' --glitchspan=1 --shockfreq=0 --shockimpact=50 --shockspan=1 --shockmaxlife=10000 --docsize=50 --shelfsize=1 --nseeds=21 --shortlog --listonly 2>&1  > tmp/broker_bigjob_201705191800.log 
+- check the form's broker output listing to see that the number of cores is 
+    maxed out for your configuration.
+
+
+

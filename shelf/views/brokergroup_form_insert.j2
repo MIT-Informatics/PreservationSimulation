@@ -161,6 +161,12 @@
    {{inserttextvar("sSpecificDir", "Specific Directory", 10, required=true)}}
 {% endblock %}
 
+<!-- empty placeholders -->
+{% block bRedo scoped %}
+{% endblock %}
+
+{% block bTestOnly scoped %}
+{% endblock %}
 
 
 {%block ignoreme1%}
@@ -231,6 +237,9 @@ The same applies to nLifem.  And any other range-type params you were
 20170221    RBL Enhance macros and invocations to permit overriding
                  headings, adding "required" notices, etc.  
 20170222    RBL Add some comments and this history.  
+20170520    RBL Add Redo.
+                Add dummy blocks for Redo and TestOnly.
+
 
 -->
 

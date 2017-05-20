@@ -31,6 +31,8 @@ MAYBE - if shockfreq==0, should we coerce serverdefaultlifetime=0?
     
 
 TODO: status bookkeeping database
+DONE - add server default half-life, and any other vagrant parameters 
+    you find lying about, to the hash for done-detection.  
 DONE - write searchdb status database based on json files.
 DONE - unittests for searchdb.
 DONE - adapt broker to new done and progress ifcs.
@@ -50,6 +52,9 @@ DONE - need new utils: list databases, list collections in db.
 
 
 TODO: web interface to select instructions for broker run
+DONE - add --redo option to form and command.
+DONE - ensure that the python/bottle program always runs in a detachable
+    subprocess, i.e., with >logfile 2>&1 &.
 DONE - let web server read from any address so it can be controlled remotely.  
 DONE - validate directories before launching broker.py.
 DONOTDO - maybe add button for Production Mode.  broker runs should *always*
@@ -96,13 +101,13 @@ DONE - recode entirely to force filter first thing, to reduce the size
     of the internal lists required, and speed things up.  
     dramatic improvement.  
 DEFER - Is there some place here where memoizing can help further?
-FIXME - Extract and include at the right end of the data the 
+DONOTDO - Extract and include at the right end of the data the 
   loss statistics for all individual servers.  Yes, this will make 
   the total dataset potentially non-rectangular for high-failure 
   cases where different numbers of servers may be used for 
   different seeds, yikes, and therefore it will complicate some 
   post-processing. 
-FIXME - add ability to store server-specific values for audit and 
+DONOTDO - add ability to store server-specific values for audit and 
   error stats.  Today, all the lines use the same error code and the 
   server id is in a data item.  Don't know how to store this in dict
   yet; either the item name or the value will have to be tuples, or both.
@@ -113,11 +118,12 @@ DONE - add commentary about how this should have been done with
 DONE - add new fields for shock and serverlife.
 DONE - test with --shortlog.  may have to adjust logging and/or extract
     rules.  
-FIXME - add values to extract line: deadserversactive, maybe deadserversall.
-    also maybe /proc/cpuinfo vendor_id, cpu family, model.
-FIXME - print extracted line to stdout, too, so it gets into log.
-FIXME - BUG glitchdecay and glitchmaxlife not found for copies=1,2, and
-    glitchfreq=0.
+DONE - add values to extract line: deadserversactive, maybe deadserversall.
+FIXME - also add /proc/cpuinfo vendor_id, cpu family, model.
+DONE - print extracted line to stdout, too, so it gets into actor log.
+DONE - BUG glitchdecay and glitchmaxlife not found for copies=1,2, and
+    glitchfreq=0.  huh?
+FIXME - why did i ever remove glitchspan?  put it back.
 
 
 TODO: R 
@@ -129,6 +135,7 @@ FIXME - learn Pandas, which is supposed to be equivalent to the R data.frame
     a more easily maintainable way.  
 FIXME - need new versions of table summary with glitch y/n and shock y/n.
     partially done.  
+FIXME - add serverdefaultlife to datn and arrangeable fields.
 
 
 TODO: 100% glitch impact
@@ -161,17 +168,19 @@ DONE - slow down after extractvalues, too.
 
 TODO: broker.py
 FIXME - harden against missing env var for NUMBER_OF_PROCESSORS.  and then
-    remove the crap added to AWSinstall.
-FIXME - log all broker commands into some file.
+    maybe remove the crap added to AWSinstall.
+DONE - log all broker commands into some file.
 FIXME - write a utility to reconstitute the main.py command line 
     from a result line in GiantOutput.  
-FIXME - put out the command line, or at least the arg list, as trace-0
+DONE - put out the command line, or at least the arg list, as trace-0
     so that it gets recorded into a tee file.  
-FIXME - dump the instruction dictionary as trace-0 before or just after
+DONE - dump the instruction dictionary as trace-0 before or just after
     getting iterator from searchspace.  
 FIXME - add a cleanstart shell script to empty the dirs that need to 
     be empty, set a clean GiantOutput file.
-FIXME - validate directories before doing anything else.
+DONE - validate directories before doing anything else.
+DONE - add serverdefaultlife to done-hash, to logfilename, and anywhere
+    else that seems appropriate.  (REDUNDANT)
 DONE - emptygiantoutput shell script should rescue any data
   that was left over in a previous GiantOutput file into
   the done dir.  
@@ -203,6 +212,8 @@ FIXME - add examples of obscure mongodb syntax in the --query command (and other
   to howto broker doc.
 FIXME - Add a help file about using mongoshell to examine database 
   of instructions, in case you think anything is funny about the database.  
+  In particular, how to shut down MongoDB and how to repair it if it 
+  complains that the lock file is not empty.  
 MAYBE - add a script to dump out some sample stats from a mongo db, such as names of
   all dbs, number of elements and varnames for each, like that.  
 
@@ -213,7 +224,7 @@ FIXME - log stats at end of each audit cycle: lost, minority repairs,
   add per-server figures, too.  Goal is to see if the user could 
   possibly detect server glitch less than fatal.  
 DONE - log per-server total losses and hits at end of run.  
-FIXME - log stats at end of each audit cycle: lost, minority repairs, majority 
+DUP - log stats at end of each audit cycle: lost, minority repairs, majority 
   repairs.  These are all cross-server figures; don't know if we need 
   per-server figures.
 DONE - fix long-standing bug: when reprovision new server to replace dead one, 
@@ -267,6 +278,9 @@ FIXME - after container install, run broker tests
 
 
 TODO: AWS deployment
+FIXME - be sure to export NUMBER_OF_PROCESSORS for broker to use in the 
+    installed session.  broker should take care of this, too, just in case
+    it is run from another session that does not have the env var.  
 FIXME - add broker test that runs and check the loss number.
 DONE - change newinstructions section of script to create flat instructions 
   and database from the ins files pulled.  
@@ -397,6 +411,13 @@ DONE - what numbers to compute?
 
 TODO: same for November presentation to iPRES at UNC
 DONE - write slides for Micah to use, update from September's.
+
+
+TODO: report to UltraEdit
+BUG - Highlight All Selected (ctrl-.) does not work inside strings, and there
+    is no option to turn that on.  there are similar options for, e.g., 
+    brace matching and brace completion in strings.
+
 
 
 #END
