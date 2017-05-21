@@ -167,7 +167,7 @@ DONE - slow down after extractvalues, too.
 
 
 TODO: broker.py
-FIXME - harden against missing env var for NUMBER_OF_PROCESSORS.  and then
+DONE - harden against missing env var for NUMBER_OF_PROCESSORS.  and then
     maybe remove the crap added to AWSinstall.
 DONE - log all broker commands into some file.
 FIXME - write a utility to reconstitute the main.py command line 

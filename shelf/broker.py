@@ -16,6 +16,7 @@ import  brokercli
 import  command
 import  copy
 import  brokerformat
+import  brokergetcores
 
 
 #===========================================================
@@ -533,16 +534,9 @@ def fnlGetRandomSeeds(mynHowMany, mysFilename):
 @ntracef("MAIN")
 def fnvGetEnvironmentOverrides():
     # Allow user to override number of cores to use today.
-    # First, find out how many cores there are that we could possibly use.
-    nMaxCores = int(os.getenv("NUMBER_OF_PROCESSORS", 2))
-    g.nCores = nMaxCores if nMaxCores else g.nCores
-    # If the user specifies a number, larger or smaller, take it.
-    try:
-        g.nCores = int(os.getenv("NCORES", CG.nCores))
-        g.nCores = min(g.nCores, nMaxCores)
-        NTRC.ntracef(0, "MAIN", "proc ncores|%s|" % (g.nCores))
-    except (ValueError, TypeError):
-        raise TypeError('Environment variable NCORES must be an integer.')
+    # Utility routine looks at HW and possible user envir override.
+    g.nCores = brokergetcores.fnnGetResolvedCores()
+    NTRC.ntracef(0, "MAIN", "proc ncores|%s|" % (g.nCores))
     # Allow user to override the polite interval to use today.
     try:
         g.nPoliteTimer = int(os.getenv("NPOLITE", CG.nPoliteTimer))
@@ -663,6 +657,8 @@ foreach single-line file in holding dir
 #               Reorder code slightly for clarity (I hope).  
 #               Reduce default polite timer to one second.
 #               Move CFormat class to separate file.  
+# 20170521  RBL Get real number of hardware cores from OS /proc/cpuinfo
+#                and then maybe user limitation in NCORES env var.  
 # 
 # 
 
