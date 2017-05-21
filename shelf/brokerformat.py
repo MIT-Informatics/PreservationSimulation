@@ -15,6 +15,7 @@
 from catchex import catchex
 from NewTraceFac import NTRC, ntrace, ntracef
 import re
+import  json
 
 
 #===========================================================
@@ -55,7 +56,7 @@ class CFormat(object):
 
 # f n d F o r m a t Q u e r y 
     @ntracef("FMT")
-    def fndFormatQuery(self, mydCli):
+    def fndFormatQuery(self, mydCli, myg):
         '''
         Take all the CLI options that might specify a searchable attribute, and 
          construct a MongoDB or searchspace query dictionary.  
@@ -78,8 +79,8 @@ class CFormat(object):
                         #  that isn't just Y/N or a mandatory string?  
                         #  Rule out dict values that are already formatted.
                         if (isinstance(sValue, str)
-                            and sAttrib not in g.lYesNoOptions
-                            and sAttrib not in g.lMandatoryArgs
+                            and sAttrib not in myg.lYesNoOptions
+                            and sAttrib not in myg.lMandatoryArgs
                             and '{' not in sValue
                             and '}' not in sValue
                             and ':' not in sValue
@@ -101,7 +102,7 @@ class CFormat(object):
 
         # Allow only attribs that appear in the database, else will get 
         #  no results due to implied AND of all items in query dict.  
-        dOutSafe = {k:v for k,v in dOut.items() if k in g.lSearchables}
+        dOutSafe = {k:v for k,v in dOut.items() if k in myg.lSearchables}
         dOutNotNone = {k:v for k,v in dOutSafe.items() if v is not None}
         NTRC.ntracef(3,"FMT","proc dict b4|%s| \nsafe|%s|\nclean|%s|" 
             % (dOut,dOutSafe,dOutNotNone))
