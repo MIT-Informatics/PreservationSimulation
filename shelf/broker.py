@@ -563,7 +563,7 @@ def fnbMaybeLogCommand(sCommand):
         sTime = util.fnsGetTimeStamp() + "\n"
         with open(g.sBrokerCommandLogFile, "a") as fhBrokerCommandLog:
             fhBrokerCommandLog.write(sTime)
-            fhBrokerCommandLog.write(sCommand)
+            fhBrokerCommandLog.write(sCommand + "\n")
         return True
     else:
         return False
