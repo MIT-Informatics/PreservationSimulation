@@ -119,7 +119,7 @@ DONE - add new fields for shock and serverlife.
 DONE - test with --shortlog.  may have to adjust logging and/or extract
     rules.  
 DONE - add values to extract line: deadserversactive, maybe deadserversall.
-FIXME - also add /proc/cpuinfo vendor_id, cpu family, model.
+FIXME - also add /proc/cpuinfo vendor_id, cpu family, model, speed.
 DONE - print extracted line to stdout, too, so it gets into actor log.
 DONE - BUG glitchdecay and glitchmaxlife not found for copies=1,2, and
     glitchfreq=0.  huh?
