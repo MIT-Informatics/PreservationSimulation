@@ -53,6 +53,7 @@ import  csv
 from    NewTraceFac     import NTRC,ntrace,ntracef
 import  argparse
 from    time            import clock,localtime
+import  extractcpuinfo
 
 
 #===========================================================
@@ -323,7 +324,9 @@ def fndGetSyntheticVars():
         % (yr,mo,da,hr,mins,sec)
     dTemp["todaysdatetime"] = sAsciiT
 
-    dTemp["extractorversion"] = "0.5"
+    dTemp["extractorversion"] = "0.6_20170522"
+
+    dTemp["cpuinfo"] = extractcpuinfo.fnsGetCpuIdString("short")
 
     return dTemp
 
@@ -362,6 +365,11 @@ if "__main__" == __name__:
 #               After testing, this is about 2x faster than the original 
 #                version, and uses an almost fixed <10MB of memory.  
 # 20161018  RBL Add comments about future extension needed.  
+# 20170522  RBL Add synthetic var for cpuinfo so one can 
+#                maybe examine compute speed.  Just more crud
+#                in the output line.  
+#               And bump version number.  
+# 
 # 
 
 #END

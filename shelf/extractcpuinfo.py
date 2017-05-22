@@ -18,7 +18,7 @@ import command
 @ntrace
 def fndGetCpuinfo():
     cmd = command.CCommand()
-    sGetCpuinfo = "cat /proc/cpuinfo | head -25"
+    sGetCpuinfo = "cat /proc/cpuinfo"
     lInfo = cmd.doCmdLst(sGetCpuinfo)
 
     dInfo = dict()
@@ -32,16 +32,18 @@ def fndGetCpuinfo():
 
 # f n s G e t C p u I d S t r i n g 
 @ntrace
-def fnsGetCpuIdString():
+def fnsGetCpuIdString(length="short"):
     dInfo = fndGetCpuinfo()
-    sOut = ("{vendor_id},speed={cpu MHz}"
-            ",family={cpu family},model={model},step={stepping}"
-            ",cores={cpu cores}"
-            .format(**dInfo))
-    sOut = ("{vendor_id}"
-            "_f{cpu family}m{model}st{stepping}"
-            "c{cpu cores}sp{cpu MHz}"
-            .format(**dInfo))
+    if length == "long":
+        sOut = ("{vendor_id},speed={cpu MHz}"
+                ",family={cpu family},model={model},step={stepping}"
+                ",cores={cpu cores}"
+                .format(**dInfo))
+    else:
+        sOut = ("{vendor_id}_"
+                "fam{cpu family}mod{model}step{stepping}"
+                "cor{cpu cores}spd{cpu MHz}"
+                .format(**dInfo))
     return sOut
 
 # f n I n t P l e a s e 
@@ -56,7 +58,8 @@ def fnIntPlease(myString):
 # m a i n 
 @ntrace
 def main():
-    sCpuId = fnsGetCpuIdString()
+    sArglen = sys.argv[1] if len(sys.argv)>1 else ""
+    sCpuId = fnsGetCpuIdString(sArglen)
     print sCpuId
     return 0
 

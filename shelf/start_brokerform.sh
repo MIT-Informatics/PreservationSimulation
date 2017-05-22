@@ -27,5 +27,8 @@ python brokergroupform.py >tmp/brokergroupform.log 2<&1 &
 #  'fg' and then issue the control-C.
 # Sending the output to a log file makes the process detachable, I hope.
 #
+echo "Use ctrl-z, fg, bg, and jobs to manipulate the web server."
+echo "And ctrl-c to terminate it when it is the foreground job."
+jobs
 
 #END
