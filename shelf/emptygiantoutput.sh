@@ -3,6 +3,8 @@
 # Must be run from shelf directory.  
 # familydir required, but specific defaults to .
 
+# Save any data, if any, in the old GiantOutput file
+
 if [ -z "$1" -o "$1" = "-h" -o "$1" = "--help" ]
 then
     echo "Usage: $0 [<familydir> [<specificdir>]]"
@@ -24,10 +26,12 @@ if [ -f "$sFamilyDir/$sSpecificDir/dat/GiantOutput_00.txt" ]
 then
     echo "Appending previous GiantOutput data to backup file."
     touch "$sFamilyDir/$sSpecificDir/dat/GiantOutput_00.txt.prev"
+    touch "$sFamilyDir/$sSpecificDir/dat/GiantOutput_00.txt"
     cat "$sFamilyDir/$sSpecificDir/dat/GiantOutput_00.txt" \
      >> "$sFamilyDir/$sSpecificDir/dat/GiantOutput_00.txt.prev"
 fi
-echo "Placing new blank GiantOutput file."
-cp -v ./GiantOutput_HeaderOnly.txt "$sFamilyDir/$sSpecificDir/dat/GiantOutput_00.txt"
+echo "Making new empty GiantOutput file."
+#cp -v ./GiantOutput_HeaderOnly.txt "$sFamilyDir/$sSpecificDir/dat/GiantOutput_00.txt"
+rm -fv "$sFamilyDir/$sSpecificDir/dat/GiantOutput_00.txt"
 
 #END

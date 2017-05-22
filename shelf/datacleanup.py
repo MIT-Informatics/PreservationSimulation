@@ -49,7 +49,7 @@ def fndCliParse(mysArglist):
                         , metavar='sINPUTFILENAME'
                         , help='Input file containing output of a single '
                                 'simulation run as one huge header line '
-                                'and data line.'
+                                'and one data line.'
                         )
         
     cParse.add_argument("sGiantOutputFilename", type=str
@@ -171,24 +171,32 @@ def main():
     sLineOut = g.sSeparator.join(lValues)
     NTRC.tracef(0,"DCLN","proc looking for done recd|%s|" 
         % (sInstructionId))
-    # Is this extract already stored in the database?
+
+    # If this extract is already stored in the database, don't do it again.  
     bIsItDone = g.mdb.fnbIsItDone(sInstructionId)
     if not bIsItDone:
-        # Always add a line of data to the giant output file.
-        NTRC.tracef(0, "DCLN", "proc line appended to output \nsLineOut|%s|" 
-            % (sLineOut))
+        # If case not already done, add data line to the giant output file.
+        # But first, ...
+        # If the output file does not exist, or is empty, write the header line
+        #  in first before the data line.  
+        # (If the file does not exist, open mode=a will create an empty one.)
         with open(g.sGiantOutputFilename,'a') as fhOutput:
+            if not os.stat(g.sGiantOutputFilename).st_size:
+                sHeaderLine = g.sSeparator.join(lHeader)
+                fhOutput.write(sHeaderLine + "\n")
+                NTRC.tracef(3, "DCLN", "proc wroteheaderline|%s|" 
+                    % (sHeaderLine))
             fhOutput.write(sLineOut + "\n")
-            NTRC.tracef(3, "DCLN", "proc wroteline|%s|" 
+            NTRC.tracef(0, "DCLN", "proc line appended to output \nsLineOut|%s|" 
                 % (sLineOut))
 
-        # Maybe record the done record in db.
+        # Probably record the done record in db.
         if g.sDoNotRecord.startswith("Y"):
             NTRC.tracef(0, "DCLN", "proc Done not recorded.")
         else:
             dResult = g.mdb.fndInsertDoneRecord(sInstructionId, dValues)
 
-        # Maybe delete the extract file.
+        # Probably delete the extract file.
         if g.sDoNotDelete.startswith("Y"):
             NTRC.tracef(0, "DCLN", "proc Input file not deleted.")
         else:
@@ -212,24 +220,18 @@ if __name__ == "__main__":
     g = CG()
     sys.exit(main())
 
+
 # Edit history:
 # 2016xxxx  RBL Original version.
 # 20170121  RBL Adapt to new searchdatabasae to hold done and progress records.
 # 20170124  RBL Change ntrace facility name to DCLN to make some post-process
 #                bug-checking easier.  
 # 20170128  RBL Change over to searchdatabasemongo.
+# 20170522  RBL If output file is absent or empty, put header into output
+#                before the data line.  This is done to prevent the header
+#                line getting out of sync with the extracted data items, 
+#                which happened twice already this year.  
 # 
 # 
 
 #END
-
-'''
-
-cleaner:
-foreach two-line extract file in holding dir
-  append data line to combined results file
-    if that has not already been done
-  add _id to done tbl of db
-  delete one-liner
-  delete progress record
-'''
