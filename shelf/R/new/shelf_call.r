@@ -6,11 +6,11 @@
 # - select all (ctrl-A), and 
 # - execute the script (ctrl-Enter).
 
-sInputFilename  <- "../hl/data/GiantOutput_cop12-a10000-lifvar-gf0-sf0_00.txt"
-sOutputFilename <- "../hl/tabs/calibtest_c1+2-a10000-lifvar-gf0-sf0_analysis_20170514_00.txt"
-sTitle <- "glitchtest4 HL copies=1,2 Audit=1yr Glitch=none lifem=var seed21"
-sSubtitle <- "(no glitch, no shock, calibrarion; calibrarion c=1,2 only)"
-sSummarizeFilename <- "./summ-glitch-4.r"
+sInputFilename  <- "../hl/data/GiantOutput_glitchvslife_20170522_edited_03.txt"
+sOutputFilename <- "../hl/tabs/analysis_glitchvslife_20170524_edited_03.txt"
+sTitle <- "glitchvslife tests HL copies=var Audit=1yr Glitch=0,3333, dur=250,1000 lifem=var svrdeflife=0,100000 seed21"
+sSubtitle <- "(is bad glitch worse than server finite life?)(data merged and subsetted)"
+sSummarizeFilename <- "./summ-glitchvslife-4.r"
 sAnalyzeFilename <- "./ShelfAnalyze.r"
 bTablesOnly <- 0
 options(max.print=9999)
