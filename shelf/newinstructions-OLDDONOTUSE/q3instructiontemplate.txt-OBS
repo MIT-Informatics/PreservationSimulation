@@ -1,7 +1,0 @@
-# Template for Q3 instruction strings
-
-nAuditFreq nAuditSegments sAuditType nDocSize nGlitchDecay nGlitchFreq nGlitchIgnorelevel nGlitchImpact nGlitchMaxlife nLifem nCopies nRandomseed nShelfSize nSimlen
-
-{nAuditFreq} {nAuditSegments} {sAuditType} {nDocSize} {nGlitchDecay} {nGlitchFreq} {nGlitchIgnorelevel} {nGlitchImpact} {nGlitchMaxlife} {nLifem} {nCopies} {nRandomseed} {nShelfSize} {nSimlen}
-
-

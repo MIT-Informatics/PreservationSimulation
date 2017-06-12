@@ -61,7 +61,9 @@
 #                from broker command all the way through to GiantOutput data.
 # 20170420  RBL Add comments about not running this script with sudo.
 #               Add setting NPOLITE to startup.  
-#               
+# 20170610  RBL Fix broker test 3 to wait for the GiantOutput file to
+#                contain something before trying to tail and analyze
+#                the last line.  
 # 
  
 echo "========================================"
@@ -185,17 +187,28 @@ sudo rm --force --recursive ../hl
 bash setupfamilydir.sh ../hl installtest
 bash pretestchecklist.sh ../hl installtest
 python dbclearcollection.py installtest done
-python broker.py installtest done --familydir=../hl --specificdir=installtest --ncopies=1 --lifem=1000 --auditfreq=0 --auditsegments=0 --audittype=TOTAL --glitchfreq=0 --glitchimpact=0 --glitchdecay=0 --glitchmaxlife=0 --glitchspan=0 --serverdefaultlife=0 --shockfreq=0 --shockimpact=0 --shockmaxlife=0 --shockspan=0 --shelfsize=1 --docsize=50 --nseeds=1 --redo 
+python broker.py installtest done --familydir=../hl --specificdir=installtest \
+    --ncopies=1 --lifem=1000 --auditfreq=0 --auditsegments=0 \
+    --audittype=TOTAL --glitchfreq=0 --glitchimpact=0 \
+    --glitchdecay=0 --glitchmaxlife=0 --glitchspan=0 \
+    --serverdefaultlife=0 --shockfreq=0 --shockimpact=0 \
+    --shockmaxlife=0 --shockspan=0 --shelfsize=1 \
+    --docsize=50 --nseeds=1 --redo 
+sResultFile="../hl/installtest/dat/GiantOutput_00.txt"
+nWaitTime=5
 while true
 do
-    sDataLine=$(tail -1 ../hl/installtest/dat/GiantOutput_00.txt)
-    sField1=$(echo $sDataLine | cut -d " " -f 1)
-    if [ "$sField1" = "timestamp" ]
+    if [ -s "$sResultFile" ]
     then
-        echo "Waiting. . . "
-        sleep 5
+        sDataLine=$(tail -1 "$sResultFile")
+        sField1=$(echo $sDataLine | cut -d " " -f 1)
+        if [ ! "$sField1" = "timestamp" ]
+        then
+            break               # Data line has been written.
+        fi
     else
-        break
+        echo "Waiting $nWaitTime sec. . . "
+        sleep "$nWaitTime"
     fi
 done
 sSeed=$(echo $sDataLine | cut -d " " -f 7)
@@ -214,13 +227,18 @@ fi
 python dbclearcollection.py installtest done
 # And set up new working directories for these runs.  
 bash setupfamilydir.sh ../hl testing
-python broker.py installtest done --familydir=../hl --specificdir=testing --serverdefaultlife=0 --glitchfreq=0 --ncopies='{"$gte":1,"$lte":5}' --lifem='[100,200,300]' --auditfreq=10000 --audittype=TOTAL --auditsegments=1 --docsize=50 --shelfsize=1 --nseeds=2 --redo --testlimit=4 
+python broker.py installtest done --familydir=../hl \
+    --specificdir=testing --serverdefaultlife=0 --glitchfreq=0 \
+    --ncopies='{"$gte":1,"$lte":5}' --lifem='[100,200,300]' \
+    --auditfreq=10000 --audittype=TOTAL --auditsegments=1 \
+    --docsize=50 --shelfsize=1 --nseeds=2 \
+    --redo --testlimit=4 
 
 # If everything looks okay, remove or raise the --testlimit, 
 #  raise the NCORES limit, and probably lower the NPOLITE interval,
 #  and let 'er rip.  
 #export NCORES=32       # Max 32 cores on Amazon.
-#export NPOLITE=2       # Wait 2 seconds between process end and start another. 
+#export NPOLITE=1       # Wait 2 seconds between process end and start another. 
 # This command will run thirty individual simulation tests, which will take
 #  more than a couple minutes. 
 #python broker.py inprogress done --familydir=../hl --specificdir=testing --serverdefaultlife=0 --glitchfreq=0 --ncopies='{"$gte":1,"$lte":5}' --lifem='[100,200,300]' --auditfreq=10000 --audittype=TOTAL --auditsegments=1 --nseeds=20 --redo 
