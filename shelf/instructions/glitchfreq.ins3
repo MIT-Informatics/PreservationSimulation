@@ -4,10 +4,10 @@
 nGlitchFreq
 Frequency Half-life of Glitches (hrs) (0=never)
 value,label,selected
-0,0,0
+0,0,SELECTED
 #1000,1000,0
 #2500,2500,0
-3333,3333,SELECTED
+3333,3333,0
 10000,10000,0
 20000,20000,0
 30000,30000,0

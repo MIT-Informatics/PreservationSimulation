@@ -4,8 +4,8 @@ nAuditFreq
 Frequency of Scheduled Audit Cycles (hrs) (0=never)
 value,label,selected
 0,0,0
-1000,1000,0
-2500,2500,0
-5000,5000,0
-10000,10000,SELECTED
-20000,20000,0
+1000,1000 (month),0
+2500,2500 (quarter),0
+5000,5000 (half-year),0
+10000,10000 (year),SELECTED
+20000,20000 (two year),0
