@@ -4,4 +4,4 @@
 nSimlen
 Length of Simulation (hrs)
 value,label,selected
-100000,100000,0
+100000,100000 (10 years),0

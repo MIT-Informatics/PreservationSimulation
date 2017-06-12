@@ -4,10 +4,10 @@
 nShockFreq
 Frequency Half-life of Economic Shocks (hrs) (0=never)
 value,label,selected
-0,0,SELECTED
-10000,10000,0
-20000,20000,0
-30000,30000,0
-50000,50000,0
-100000,100000,0
-200000,200000,0
+0,0 (never),SELECTED
+10000,10000 (1 year),0
+20000,20000 (2 years),0
+30000,30000 (3 years),0
+50000,50000 (5 years),0
+100000,100000 (10 years),0
+200000,200000 (20 years),0
