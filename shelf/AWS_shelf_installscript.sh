@@ -194,8 +194,8 @@ python broker.py installtest done --familydir=../hl --specificdir=installtest \
     --serverdefaultlife=0 --shockfreq=0 --shockimpact=0 \
     --shockmaxlife=0 --shockspan=0 --shelfsize=1 \
     --docsize=50 --nseeds=1 --redo 
-sResultFile = "../hl/installtest/dat/GiantOutput_00.txt"
-nWaitTime = 5
+sResultFile="../hl/installtest/dat/GiantOutput_00.txt"
+nWaitTime=5
 while true
 do
     if [ -s "$sResultFile" ]
@@ -208,7 +208,7 @@ do
         fi
     else
         echo "Waiting $nWaitTime sec. . . "
-        sleep $nWaitTime
+        sleep "$nWaitTime"
     fi
 done
 sSeed=$(echo $sDataLine | cut -d " " -f 7)
