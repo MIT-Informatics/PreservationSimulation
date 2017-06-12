@@ -32,7 +32,7 @@ then
 fi
 echo "Making new empty GiantOutput file."
 # Make an empty file, which datacleanup will populate with the correct header.
+rm -f "$sFamilyDir/$sSpecificDir/dat/GiantOutput_00.txt"
 touch "$sFamilyDir/$sSpecificDir/dat/GiantOutput_00.txt"
-rm -fv "$sFamilyDir/$sSpecificDir/dat/GiantOutput_00.txt"
 
 #END
