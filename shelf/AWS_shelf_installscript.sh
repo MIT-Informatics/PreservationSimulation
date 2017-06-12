@@ -186,6 +186,7 @@ bash setupfamilydir.sh ../hl installtest
 bash pretestchecklist.sh ../hl installtest
 python dbclearcollection.py installtest done
 python broker.py installtest done --familydir=../hl --specificdir=installtest --ncopies=1 --lifem=1000 --auditfreq=0 --auditsegments=0 --audittype=TOTAL --glitchfreq=0 --glitchimpact=0 --glitchdecay=0 --glitchmaxlife=0 --glitchspan=0 --serverdefaultlife=0 --shockfreq=0 --shockimpact=0 --shockmaxlife=0 --shockspan=0 --shelfsize=1 --docsize=50 --nseeds=1 --redo 
+sleep 15
 while true
 do
     sDataLine=$(tail -1 ../hl/installtest/dat/GiantOutput_00.txt)
