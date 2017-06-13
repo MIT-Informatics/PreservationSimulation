@@ -174,6 +174,7 @@ class CG(object):
           redundant headers)
     '''
     
+    # If this file exists, broker will append its command to the file.
     sBrokerCommandLogFile = "tmp/BrokerCommands.log"
 
 #===========================================================
@@ -659,6 +660,8 @@ foreach single-line file in holding dir
 #               Move CFormat class to separate file.  
 # 20170521  RBL Get real number of hardware cores from OS /proc/cpuinfo
 #                and then maybe user limitation in NCORES env var.  
+# 20170612  RBL Note that broker will append each command to a 
+#                log file, if that file already exists.  
 # 
 # 
 

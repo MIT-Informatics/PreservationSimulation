@@ -213,6 +213,10 @@ DONE - adapt the pretestchecklist and other scripts to the new instruction
 
 
 TODO: broker docs
+FIXME - warn the user in strong language always to setupfamilydir for their
+    runs, which is a console activity.  hmmm, maybe that could be added
+    as an option to the broker form, eh?  so they don't have to use any 
+    nasty old CLI commands.  
 FIXME - add examples of obscure mongodb syntax in the --query command (and others?) 
   to howto broker doc.
 FIXME - Add a help file about using mongoshell to examine database 
@@ -283,10 +287,12 @@ FIXME - after container install, run broker tests
 
 
 TODO: AWS deployment
-FIXME - be sure to export NUMBER_OF_PROCESSORS for broker to use in the 
+FIXME - create a broker command log file for the user, and warn the 
+    user that it will grow and grow.  
+DONE - be sure to export NUMBER_OF_PROCESSORS for broker to use in the 
     installed session.  broker should take care of this, too, just in case
     it is run from another session that does not have the env var.  
-FIXME - add broker test that runs and check the loss number.
+DONE - add broker test that runs and check the loss number.
 DONE - change newinstructions section of script to create flat instructions 
   and database from the ins files pulled.  
 DONE - change newinstructions section of script to be way simpler with
