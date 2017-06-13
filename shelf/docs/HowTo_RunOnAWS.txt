@@ -5,14 +5,17 @@ START AWS EC2 MACHINE
 
 
 Start EC2 machine
-- browse to console.aws.amazon.com or similar
+- browse to https://mitescience.signin.aws.amazon.com/console or similar
+  maybe something like rlandau@mitescience dot idontknowwhat.
 - account = mitescience
 - name = rlandau (NOTE: no b)
 - password
 - EC2
 - instances
 - RBL07A 32core c3.8xl 200GB 20160228
-- examine State Transition: want last instance you closed
+    (not the copy nor the spare).
+- examine State Transition: you want the last instance you closed:
+    when launched, when shut down.
 - right click, Start, yes I'm sure
 - wait for IP addr to show up under IPv4 Public IP
 - there is some magic setting that one needs to use in the security section
@@ -50,7 +53,7 @@ with putty
 with ssh
 - Cygwin window
 - SSH -i aws/<whatever id file> ubuntu@<IP-addr>
-
+(Something's wrong with file permissions today; SSH will not take private key.)
 
 LOAD SOFTWARE
 
@@ -79,10 +82,11 @@ Start software
 - the console session should still be in ~; go back if necessary with cd
 - . startup.sh  (yes, dot space startup.sh)
 - mongod should already be running
-- this starts up the 
+- this creates a new form and starts up the bottle web server with it.
 - browse from your system to <ip-addr>:8080
 - fill in the form and submit
-
+- be sure to check all the fields, esp. server default life, numbers of copies,
+   lifetimes, shock and glitch frequencies, impacts, durations.  
 
 Run broker for large series of cases
 - cd working/shelf

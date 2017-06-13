@@ -22,6 +22,8 @@ DONE - do a thorough testing and maybe even filecomp on RICKS9, after
 
 
 TODO: instruction generation
+DONE - add comments for users to value labels for fields in hours, e.g., 
+    auditfreq: "0 (never)", "2500 (quarter)", "10000 (year)", etc.
 DONE - new searchspace facility to generate cross-product instructions.
 DONE - unittests for searchspace.
 DONE - adapt broker to new instruction ifc.
