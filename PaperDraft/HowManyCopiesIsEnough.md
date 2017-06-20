@@ -39,14 +39,14 @@ This article addresses the problem of ensuring information integrity over long p
 2.	Environmental failures that accelerate document rot.
 3.	Server failures that destroy sets of documents.
 4.	Lack of independence of servers. 
-1. Business failures: a single business failure may affect more than one server, due, e.g., to consolidation or cross-financing.  That is, servers that appeared to be independent may not be financially independent in practice.  
+1. Business failures: a single business failure may affect more than one server, due, e.g., to consolidation or cross-financing.  That is, servers that appear to be independent may not be financially independent in practice.  
 2. Economic failures.
 5.	Attack on collection, institution, subject matter.
 <!-- END:TODO:MICAH--> 
 
 
-e
 # Motivation
+
 - Information production is rapidly increasing.
 - The vast majority of the world's data is stored on rotating disks, 90% in 2007 and not changing very rapidly.
 - Digital store changes the goal of preservation, from maintaining a constant optimal physical environment for documents to continual curation in order to maintain document integrity and understanding.
@@ -75,7 +75,7 @@ e
 2.	Environmental failures that accelerate document rot.
 3.	Server failures that destroy sets of documents.
 4.	Lack of independence of servers. 
-    1. Business failures: a single business failure may affect more than one server, due, e.g., to consolidation or cross-financing.  That is, servers that appeared to be independent may not be financially independent in practice.  
+    1. Business failures: a single business failure may affect more than one server, due, e.g., to consolidation or cross-financing.  That is, servers that appear to be independent may not be financially independent in practice.  
     2. Economic failures.
 5.	Attack on collection, institution, subject matter.
 <!-- END:TODO:MICAH--> 
@@ -181,6 +181,19 @@ Some features of the results are apparent.
 - *Observation*: The effectiveness of auditing is robust across a wide spectrum of storage quality (i.e., document error rates) and short term variations in storage quality.  
 
 - However, auditing strategies are not robust to associated failures that compromise multiple servers over short periods.  Associated server failures -- whether due to disasters, economic downturns, clerical errors, or lack of independence of servers -- can remove more than one server from service between audit cycles.  This reduces the number of active replications of the collection, leaving the collection more vulnerable to minor errors until it is repaired by auditing.  
+
+
+## Pictures Needed
+
+Basic calibration and demonstrations of equivalence
+
+- straight Poisson: copies=1 losses y over sector half-lives x.
+- document size scales with sector half-life.  life 10 size 5 = life 100 size 50 = life 1000 size 500; or did i get that backwards?  do all these with copies=1 and no auditing.  
+- annual audit with 5 copies reduces losses to negligible, maybe zero, over very large range of sector lifetimes.
+- quarterly or faster auditing not noticeably better than annual.
+- glitches equivalent to slightly shorter sector lifetime.
+- even minor shocks equivalent to very large glitches.
+- and more.
 
 
 ## Illustration

@@ -6,11 +6,11 @@
 # - select all (ctrl-A), and 
 # - execute the script (ctrl-Enter).
 
-sInputFilename  <- "../hl/data/GiantOutput_glitchvslife_20170522_edited_03.txt"
-sOutputFilename <- "../hl/tabs/analysis_glitchvslife_20170524_edited_03.txt"
-sTitle <- "glitchvslife tests HL copies=var Audit=1yr Glitch=0,3333, dur=250,1000 lifem=var svrdeflife=0,100000 seed21"
-sSubtitle <- "(is bad glitch worse than server finite life?)(data merged and subsetted)"
-sSummarizeFilename <- "./summ-glitchvslife-4.r"
+sInputFilename  <- "../shock/data/5yr/GiantOutput_shk50000durvarimpvarspan1_20170612_00.txt"
+sOutputFilename <- "../shock/tabs/5yr/analysis_shockvslife_5yr_20170619_00.txt"
+sTitle <- "shockvslife tests SHOCK copies=var Audit=1yr Shock=50000, dur=var lifem=var svrdeflife=100000 seed21"
+sSubtitle <- "(how bad is medium shock?)"
+sSummarizeFilename <- "./summ-shockvslife-4.r"
 sAnalyzeFilename <- "./ShelfAnalyze.r"
 bTablesOnly <- 0
 options(max.print=9999)

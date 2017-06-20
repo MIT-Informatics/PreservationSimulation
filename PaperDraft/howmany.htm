@@ -36,12 +36,21 @@ border-collapse: collapse;
 <li>Environmental failures that accelerate document rot.</li>
 <li>Server failures that destroy sets of documents.</li>
 <li>Lack of independence of servers.</li>
-<li>Business failures: a single business failure may affect more than one server, due, e.g., to consolidation or cross-financing. That is, servers that appeared to be independent may not be financially independent in practice.<br />
+<li>Business failures: a single business failure may affect more than one server, due, e.g., to consolidation or cross-financing. That is, servers that appear to be independent may not be financially independent in practice.<br />
 </li>
 <li>Economic failures.</li>
 <li>Attack on collection, institution, subject matter. <!-- END:TODO:MICAH--></li>
 </ol>
-<p>e # Motivation - Information production is rapidly increasing. - The vast majority of the world's data is stored on rotating disks, 90% in 2007 and not changing very rapidly. - Digital store changes the goal of preservation, from maintaining a constant optimal physical environment for documents to continual curation in order to maintain document integrity and understanding. - Information systems are generally designed for immediate use, not for long term access and understanding. Much of the information generated is at risk. - The changing economics of digital production make it difficult for any one institution to safeguard everything it uses. - The changing economics also provide opportunities for preservation: replication, cloud services, auditing, and a variety of storage options. - Curators are faced with a set of choices: storage media, replication, cloud vendors, auditing strategy, encryption, compression. There is currently no systematic guidance based on quantitative models.</p>
+<h1 id="motivation">Motivation</h1>
+<ul>
+<li>Information production is rapidly increasing.</li>
+<li>The vast majority of the world's data is stored on rotating disks, 90% in 2007 and not changing very rapidly.</li>
+<li>Digital store changes the goal of preservation, from maintaining a constant optimal physical environment for documents to continual curation in order to maintain document integrity and understanding.</li>
+<li>Information systems are generally designed for immediate use, not for long term access and understanding. Much of the information generated is at risk.</li>
+<li>The changing economics of digital production make it difficult for any one institution to safeguard everything it uses.</li>
+<li>The changing economics also provide opportunities for preservation: replication, cloud services, auditing, and a variety of storage options.</li>
+<li>Curators are faced with a set of choices: storage media, replication, cloud vendors, auditing strategy, encryption, compression. There is currently no systematic guidance based on quantitative models.</li>
+</ul>
 <h1 id="fifty-thousand-foot-view">Fifty-Thousand Foot View</h1>
 <!-- START:TODO:MICAH-->
 <h2 id="problem-definition">Problem Definition</h2>
@@ -63,7 +72,7 @@ border-collapse: collapse;
 <li>Server failures that destroy sets of documents.</li>
 <li>Lack of independence of servers.
 <ol style="list-style-type: decimal">
-<li>Business failures: a single business failure may affect more than one server, due, e.g., to consolidation or cross-financing. That is, servers that appeared to be independent may not be financially independent in practice.<br />
+<li>Business failures: a single business failure may affect more than one server, due, e.g., to consolidation or cross-financing. That is, servers that appear to be independent may not be financially independent in practice.<br />
 </li>
 <li>Economic failures.</li>
 </ol></li>
@@ -144,6 +153,18 @@ We note also that auditing in a number of segments has two additional advantages
 <li><p><em>Observation</em>: Across a wide range of document error rates, increasing auditing frequency beyond a certain point shows little improvement.</p></li>
 <li><p><em>Observation</em>: The effectiveness of auditing is robust across a wide spectrum of storage quality (i.e., document error rates) and short term variations in storage quality.</p></li>
 <li><p>However, auditing strategies are not robust to associated failures that compromise multiple servers over short periods. Associated server failures -- whether due to disasters, economic downturns, clerical errors, or lack of independence of servers -- can remove more than one server from service between audit cycles. This reduces the number of active replications of the collection, leaving the collection more vulnerable to minor errors until it is repaired by auditing.</p></li>
+</ul>
+<h2 id="pictures-needed">Pictures Needed</h2>
+<p>Basic calibration and demonstrations of equivalence</p>
+<ul>
+<li>straight Poisson: copies=1 losses y over sector half-lives x.</li>
+<li>document size scales with sector half-life. life 10 size 5 = life 100 size 50 = life 1000 size 500; or did i get that backwards? do all these with copies=1 and no auditing.<br />
+</li>
+<li>annual audit with 5 copies reduces losses to negligible, maybe zero, over very large range of sector lifetimes.</li>
+<li>quarterly or faster auditing not noticeably better than annual.</li>
+<li>glitches equivalent to slightly shorter sector lifetime.</li>
+<li>even minor shocks equivalent to very large glitches.</li>
+<li>and more.</li>
 </ul>
 <h2 id="illustration">Illustration</h2>
 <h1 id="simple-case----independent-failures-just-plain-copies">Simple Case -- Independent Failures &amp; Just Plain Copies</h1>
