@@ -86,6 +86,9 @@ DONE - add routine to tell if production mode is on, so it can be logged.
 
 
 TODO: general
+FIXME - create brokercommandlog_enable.sh and ..._disable.sh files to 
+    enable the user easily to turn broker command logging on and off.
+    the disable should preserve any info already in the log.
 DONE - stop accepting or rescheduling sector errors on dead shelf.  
 DONE - at end, report servers that died and were in use at the time; 
   currently reports all servers that died, even if not used by client.  
