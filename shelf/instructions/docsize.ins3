@@ -3,7 +3,7 @@
 nDocSize
 Size of Documents (MB)
 value,label,selected
-5,5 (typical, text),0
-50,50 (large, audio),selected
-500,500 (very large, video),0
-#5000,5000,0
+5,"5 (typical, text)",0
+50,"50 (large, audio)",selected
+500,"500 (very large, video)",0
+#5000,"5000 (giant, movie)",0
