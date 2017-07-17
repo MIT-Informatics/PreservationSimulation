@@ -22,6 +22,8 @@ DONE - do a thorough testing and maybe even filecomp on RICKS9, after
 
 
 TODO: instruction generation
+DONE - BUG - actually put quotes around the value label fields to prevent
+    future editing errors that insert a comma somewhere in the field.
 DONE - add comments for users to value labels for fields in hours, e.g., 
     auditfreq: "0 (never)", "2500 (quarter)", "10000 (year)", etc.
 DONE - new searchspace facility to generate cross-product instructions.
@@ -86,9 +88,9 @@ DONE - add routine to tell if production mode is on, so it can be logged.
 
 
 TODO: general
-FIXME - create brokercommandlog_enable.sh and ..._disable.sh files to 
+DONE - create brokercommandlog_enable.sh and ..._disable.sh files to 
     enable the user easily to turn broker command logging on and off.
-    the disable should preserve any info already in the log.
+    both should preserve any info already in the log.
 DONE - stop accepting or rescheduling sector errors on dead shelf.  
 DONE - at end, report servers that died and were in use at the time; 
   currently reports all servers that died, even if not used by client.  
@@ -126,9 +128,9 @@ DONE - test with --shortlog.  may have to adjust logging and/or extract
 DONE - add values to extract line: deadserversactive, maybe deadserversall.
 DONE - also add /proc/cpuinfo vendor_id, cpu family, model, speed.
 DONE - print extracted line to stdout, too, so it gets into actor log.
-DONE - BUG glitchdecay and glitchmaxlife not found for copies=1,2, and
+DONE - BUG - glitchdecay and glitchmaxlife not found for copies=1,2, and
     glitchfreq=0.  huh?
-FIXME - why did i ever remove glitchspan?  put it back.
+DONE - why did i ever remove glitchspan?  put it back.
 
 
 TODO: R 
@@ -140,7 +142,7 @@ FIXME - learn Pandas, which is supposed to be equivalent to the R data.frame
     a more easily maintainable way.  
 FIXME - need new versions of table summary with glitch y/n and shock y/n.
     partially done.  
-FIXME - add serverdefaultlife to datn and arrangeable fields.
+DONE - add serverdefaultlife to datn and arrangeable fields.
 
 
 TODO: 100% glitch impact
@@ -244,7 +246,7 @@ DONE - fix long-standing bug: when reprovision new server to replace dead one,
   the full set; some may already have been lost.  
 
 
-TODO: newinstructions
+ABANDON: newinstructions
 DON'T - Add a squash function to reduce blank sequences to single blanks
   in flat files, in case someone created instructions in fixed columns.
 DONE - write filter for instructions as they are being generated flat
@@ -267,7 +269,7 @@ DONE - Remove random seeds from the instruction db; add them in broker
   and shorten the instruction Cartesian product by a factor of ten or twenty.  
   Important when we want to do samples of 100 or 1000.  
 FIXME - move some of the utilities up to shelf or maybe to a util dir.  
-FIXME - remove the shelf/newinstructions directory.  
+DONE - remove the shelf/newinstructions directory.  
 FIXME - document new procedure for generating instructions: simpler, just edit
     the shelf/instructions/*.ins files.  
 
@@ -290,7 +292,7 @@ FIXME - after container install, run broker tests
 
 
 TODO: AWS deployment
-FIXME - create a broker command log file for the user, and warn the 
+DONE - create a broker command log file for the user, and warn the 
     user that it will grow and grow.  
 DONE - be sure to export NUMBER_OF_PROCESSORS for broker to use in the 
     installed session.  broker should take care of this, too, just in case
@@ -373,6 +375,7 @@ FIXME - QUESTION: the last audit cycle is always left open. Is this problem?  So
 TODO: unittests
 FIXME - fix the numbers in the current tests so they match what the new 
     new new instructions put out.  and find a way to fix this permanently.
+FIXME - add a pile more unit tests, some small and some large.
 
 
 TODO: R reporting
