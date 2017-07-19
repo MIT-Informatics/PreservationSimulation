@@ -12,7 +12,7 @@ Start EC2 machine
 - password
 - EC2
 - instances
-- RBL07A 32core c3.8xl 200GB 20160228
+- RBL07A 32core c3.8xl 200GB 20160228 USEME
     (not the copy nor the spare).
 - examine State Transition: you want the last instance you closed:
     when launched, when shut down.
@@ -55,12 +55,14 @@ with ssh
 - SSH -i aws/<whatever id file> ubuntu@<IP-addr>
 (Something's wrong with file permissions today; SSH will not take private key.)
 
+
 LOAD SOFTWARE
 
 Erase old software
 - cd ~  (should be /home/ubuntu)
 - if working dir exists, nuke it: rm -rf working
 - might as well nuke shelfenv, too: rm -rf shelfenv
+
 
 Copy AWS install script
 - in WinSCP or FileZilla or whatever
@@ -74,8 +76,13 @@ Copy AWS install script
 
 
 Create a directory tree for test results
-- cd working/shelf
+- cd working/shelf (probably in another SSH session)
 - sh setupfamilydir.sh <familydir> <specificdir>
+
+
+Turn on broker logging
+- in shelf dir
+- sh brokercommandlog_enable.sh
 
 
 Start software
@@ -83,36 +90,45 @@ Start software
 - . startup.sh  (yes, dot space startup.sh)
 - mongod should already be running
 - this creates a new form and starts up the bottle web server with it.
+
+
+Run broker for a single range of cases
 - browse from your system to <ip-addr>:8080
 - fill in the form and submit
 - be sure to check all the fields, esp. server default life, numbers of copies,
    lifetimes, shock and glitch frequencies, impacts, durations.  
 
+
 Run broker for large series of cases
 - cd working/shelf
 - python broker.py -h and read the help on all the options
 - best way to do this is use the form, look at the command issued by the form 
-    on a test-only case, copy the CLI command to an editor, and change 
-    the params you want there.  
+    on a test-only case (--listonly), copy the CLI command to an editor, 
+    and change the params you want there.  
+- typical editing changes to add cases (use JSON syntax):
+    range: '{"$gte" : 1 , "$lte" : 5}'
+    list: '[5000, 10000, 20000]'
+    spacing optional, i think
 - trying to type the entire command with twenty or thirty options is doomed
     to disappointment.
-- remember to remove the --listonly when you finally want to run.
-- be sure to aim the broker output entirely to a log file, so that your 
+- BE SURE to specify short logs (--shortlog) for production runs; 
+    long log files consume 2x the cputime and walltime and tons of disk space.
+- REMEMBER to remove the --listonly when you finally want to run.
+- BE SURE to aim the broker output entirely to a log file, so that your 
     session does not need to remain connected the entire time.
-- be sure to remember the ampersand '&' after the broker command so that 
+- BE SURE to remember the ampersand '&' after the broker command so that 
     it runs in a subshell, leaving your session free to tail the dat file.
 - e.g., 
-python broker.py inprogress done --familydir=../hl \
-    --specificdir=glitchvslifeAWS --ncopies='{"$gte":1, "$lte":5}' \
-    --lifem='{"$gte":10, "$lte":1000}' --serverdefaultlife='[0,100000]' \
-    --auditfreq=10000 --auditsegments=1 --audittype=TOTAL \
-    --glitchfreq='[0,3333]' --glitchimpact='[33,50,90]' \
-    --glitchdecay=0 --glitchmaxlife='[250,1000]' --glitchspan=1 \
-    --shockfreq=0 --shockimpact=50 --shockspan=1 --shockmaxlife=10000 \
-    --docsize=50 --shelfsize=1 --nseeds=21 --shortlog \
-    --listonly 2>&1  > tmp/broker_bigjob_201705191800.log 
-    
-    but without all the backslashes; just one line.
+    python broker.py inprogress done --familydir=../hl \
+        --specificdir=glitchvslifeAWS --ncopies='{"$gte":1, "$lte":5}' \
+        --lifem='{"$gte":10, "$lte":1000}' --serverdefaultlife='[0,100000]' \
+        --auditfreq=10000 --auditsegments=1 --audittype=TOTAL \
+        --glitchfreq='[0,3333]' --glitchimpact='[33,50,90]' \
+        --glitchdecay=0 --glitchmaxlife='[250,1000]' --glitchspan=1 \
+        --shockfreq=0 --shockimpact=50 --shockspan=1 --shockmaxlife=10000 \
+        --docsize=50 --shelfsize=1 --nseeds=21 --shortlog \
+        --listonly 2>&1  > tmp/broker_bigjob_201705191800.log 
+    but without all the backslashes; just one extremely long line.
 - check the form's broker output listing to see that the number of cores is 
     maxed out for your configuration.
 

@@ -15,9 +15,9 @@ border-collapse: collapse;
 </head>
 
 <!-- author block, doesn't seem to work per spec with *my* pandoc, phooey! -->
-% How Many Copies Is Enough?
-% Micah Altman; Richard Landau
-% 2016-08-15
+% How Many Copies Is Enough?  
+% Micah Altman; Richard Landau  
+% 2016-08-15  
 
 # Information Integrity Over the Long Term -- How Many Copies Is Enough?   {#title .unnumbered}
 
@@ -28,7 +28,7 @@ border-collapse: collapse;
 
 > How to protect a large, valuable, digital document collection?
 
-This article addresses the problem of ensuring information integrity over long periods, and against a diverse range of real-world legal, organizational, technical, and economic threats. Rapid advances information technology have shifted the economics of information production, transmission, and storage -- resulting in a vast amount of information that is increasing stored online or near-line. This shift in information storage changes both the profile of threat to integrity, and the set of feasible methods for mitigating these threats. We develop a general event-based simulation framework that can be used to flexibly and reproducibly simulate the effectiveness of various methods of storage, replication, auditing, and transformation against a diverse portfolio of threats to data loss. We then apply this framework to a range of scenarios that are representative of common baseline threats and current storage technology. From this we derive general guidance for the use of replication, platform diversification, fixity metadata, integrity auditing, compression, and encryption where long-term integrity is desired. 
+> This article addresses the problem of ensuring information integrity over long periods, and against a diverse range of real-world legal, organizational, technical, and economic threats. Rapid advances information technology have shifted the economics of information production, transmission, and storage -- resulting in a vast amount of information that is increasing stored online or near-line. This shift in information storage changes both the profile of threat to integrity, and the set of feasible methods for mitigating these threats. We develop a general event-based simulation framework that can be used to flexibly and reproducibly simulate the effectiveness of various methods of storage, replication, auditing, and transformation against a diverse portfolio of threats to data loss. We then apply this framework to a range of scenarios that are representative of common baseline threats and current storage technology. From this we derive general guidance for the use of replication, platform diversification, fixity metadata, integrity auditing, compression, and encryption where long-term integrity is desired. 
 
 <!-- START:TODO--> 
 <!-- Add a summary of specific recommendations. -->
