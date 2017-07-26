@@ -1,0 +1,55 @@
+
+
+assertion: random auditing less effective than total or segmented total.
+
+assertion: increasing audit freq beyond some point gives little improvement across a wide range of error rates.
+
+assertion: auditing more frequently than annually does not confer much additional protective benefit.
+
+assertion: random auditing that does not cover the collection, i.e., with replacement, is less effective than strategy that touches every document.
+
+assertion: auditing robust across range of error rates.
+
+assertion: auditing robust across short term variations in storage quality. (glitches)
+
+question: auding robustness in the face of shocks that kill multiple servers.
+
+assertion: without auditing, many copies needed to prevent perm losses.
+
+picture: straight Poisson: copies=1 losses y over sector half-lives x.
+
+picture: document size scales with sector half-life. life 10 size 5 = life 100 size 50 = life 1000 size 500; or did i get that backwards? do all these with copies=1 and no auditing.
+
+picture: annual audit with 5 copies reduces losses to negligible, maybe zero, over very large range of sector lifetimes.  compare with 2, 3, 4 copies, i think.
+
+picture: quarterly or faster auditing not noticeably better than annual.
+
+picture: glitches equivalent to slightly shorter sector lifetime.
+even minor shocks equivalent to very large glitches.
+
+table: disk drive error rates from backblaze, google, et al., just samples of numbers all over the place.
+
+table: Poisson theoretical vs simulated numbers of errors for range of sector lifetime, sector size, document size, simulation length.
+
+model: billing failure or government takedown: shock with 100% impact (instantly fatal); short frequency; span 1, 2, 3.
+
+model: financial recession: shocks with various frequencies; various impacts < 100%; various spans.
+
+model: low resource external adversary: dunno.
+
+model: HVAC failures, flaky power: glitches with frequency high; impact low to medium; lifetimes medium.  
+
+model: environmental catastrophe: shocks; frequency low; impact high or fatal; span low.
+
+model: local software failure: shocks; freq med; impact med; duration long.
+
+model: administrator error: 
+
+model: hardware batch poor quality: 
+
+
+
+
+
+
+
