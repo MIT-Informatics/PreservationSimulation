@@ -1,3 +1,6 @@
+Assertions that will require pictures, tables of data, or lengthy discussions to convince the reader.
+
+                RBLandau 20170723
 
 
 assertion: random auditing less effective than total or segmented total.
@@ -37,16 +40,55 @@ model: financial recession: shocks with various frequencies; various impacts < 1
 
 model: low resource external adversary: dunno.
 
-model: HVAC failures, flaky power: glitches with frequency high; impact low to medium; lifetimes medium.  
+model: HVAC failures, flaky power: glitches with frequency high; impact low to medium; span 1; lifetimes medium.  
 
-model: environmental catastrophe: shocks; frequency low; impact high or fatal; span low.
+model: environmental catastrophe: shocks; frequency low; impact high or fatal; span low; duration med.  
 
-model: local software failure: shocks; freq med; impact med; duration long.
+model: local software failure: shocks; freq med; impact med; span high; duration long.
 
-model: administrator error: 
+model: administrator error: shocks; freq med; impact med; span low; duration med.
 
-model: hardware batch poor quality: 
+model: hardware batch poor quality: glitches; freq med; impact med; span 1; duration long.
 
+model: institutional failure or redirection: shocks; freq low; impact fatal; span 1; duration n/a.
+
+model: institutional merger: shocks; freq med; impact fatal; span 1; duration n/a.
+
+model: document compression or encryption: smaller doc size; otherwise same.  Since doc size and sector lifetime are linearly related, this can be calculated rather than simulated.  
+
+model: collection size: loss *rate* is independent of number of docs, so linear scaling is appropriate.  Could adjust the ndocs param and spend more computer time to verify.  
+
+model: more vs less important docs: calc for two separate collections, one small with no losses permitted, and one large with some acceptable loss rate.  Adjust number of copies and audit rate accordingly for each collection.  
+
+assertion: doc size and failure rate scale linearly against each other.  need simple Poisson formula and tables for copies=1.  also need table or graph for multiple copies with auditing, to show similar relationship.  
+
+model: docs of different sizes: calc with different sizes and combine results.  
+
+assertion: losses for different doc sizes are additive. 
+
+picture or table: increased size of doc vs number of copies for fixed loss rate.
+
+table: calibration against pure Poisson for copies=1 with no auditing.  use large sample size (400? 1000?) to minimize variance.  Can we find a closed form calculation for copies=2?
+
+assertion: five copies with annual auditing is enough across huge range of failure rate.  table and picture.
+
+assertion: don't trust MTBF.
+
+assertion: use compression to minimize target size.  great for txt, html, xls.  unfortunately doesn't help much with jpg, mpeg, pdf, exe.  
+
+assertion: storage structure size irrelevant, affects only the miss rate for random errors.  
+
+assertion: sector size is irrelevant, scales linearly as part of Poisson calculation.  
+
+assertion: doc size, error rate, and storage extent size all scale linearly.  
+
+assertion: fixed set of random seeds.  
+
+assertion: median, trimean, midmean suffice.  
+
+assertion: collection size irrelevant, only concerned with fraction of docs that fail, e.g., 1%, 0.1%, 0.01%, etc.
+
+model: no audit, annual audit, biennial audit, quarterly audit, monthly audit; annual audit segmented quarterly or monthly.
 
 
 
