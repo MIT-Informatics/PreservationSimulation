@@ -3,36 +3,53 @@ Assertions that will require pictures, tables of data, or lengthy discussions to
                 RBLandau 20170723
 
 
-assertion: random auditing less effective than total or segmented total.
+assertion: without auditing, many copies needed to prevent perm losses.  
+needs picture to show loss rates, without auditing, at 2, 5, 20, 20 copies.  
+- picture: straight Poisson: copies=1 losses y over sector half-lives x.
+- table: calibration against pure Poisson for copies=1 with no auditing, showing percentage error.  use large sample size (400? 1000?) to minimize variance.  Can we find a closed form calculation for copies=2?
+- table: calibration, pointing out that order of magnitude increases in lifetime generate order of magnitude decreases in losses, nice and linear.
 
-assertion: increasing audit freq beyond some point gives little improvement across a wide range of error rates.
+assertion: random auditing less effective than total or segmented total.  
+- needs picture of random vs total over same ranges.
 
-assertion: auditing more frequently than annually does not confer much additional protective benefit.
+assertion: increasing audit freq beyond some point gives little improvement across a wide range of error rates.  
+- needs picture of biennial, annual, semiannual, quarterly, monthly, maybe even weekly.
+- picture: quarterly or faster auditing not noticeably better than annual.  
+- picture: auditing with many segments, down to weekly.
 
-assertion: random auditing that does not cover the collection, i.e., with replacement, is less effective than strategy that touches every document.
+assertion: auditing more frequently than annually does not confer much additional protective benefit.  
+- needs picture, probably same or subset of above.  
 
-assertion: auditing robust across range of error rates.
+assertion: random auditing that does not cover the collection, i.e., with replacement, is less effective than strategy that touches every document.  
+- needs picture comparing random with total with lots of segments.
 
-assertion: auditing robust across short term variations in storage quality. (glitches)
+assertion: auditing robust across range of error rates.  
+- needs pictures of annual auditing for copies 3, 4, and 5 across at least two orders of magnitude.  
 
-question: auding robustness in the face of shocks that kill multiple servers.
+assertion: five copies with auditing suffices over wide range.
+- picture: annual audit with 5 copies reduces losses to negligible, maybe zero, over very large range of sector lifetimes.  compare with 2, 3, 4 copies, i think.
 
-assertion: without auditing, many copies needed to prevent perm losses.
+assertion: auditing robust across short term variations in storage quality. (glitches)  
+- needs picture, dunno what yet.  
 
-picture: straight Poisson: copies=1 losses y over sector half-lives x.
+question: auditing robustness in the face of shocks that kill multiple servers.  
+- get numbers. 
 
-picture: document size scales with sector half-life. life 10 size 5 = life 100 size 50 = life 1000 size 500; or did i get that backwards? do all these with copies=1 and no auditing.
+assertion: document size and error rate scale together linearly.
+- picture: document size scales with sector half-life. life 10 size 5 = life 100 size 50 = life 1000 size 500; or did i get that backwards? do all these with copies=1 and no auditing.
+- related assertion: use compression to minimize target size.  great for txt, html, xls.  unfortunately doesn't help much with jpg, mpeg, pdf, exe.  
 
-picture: annual audit with 5 copies reduces losses to negligible, maybe zero, over very large range of sector lifetimes.  compare with 2, 3, 4 copies, i think.
 
-picture: quarterly or faster auditing not noticeably better than annual.
+assertion: glitches equivalent to slightly shorter sector lifetime.  
+- picture or table of very minor increments in losses with smallish glitches.  
 
-picture: glitches equivalent to slightly shorter sector lifetime.
-even minor shocks equivalent to very large glitches.
+assertion: minor shocks equivalent to very large glitches.
 
-table: disk drive error rates from backblaze, google, et al., just samples of numbers all over the place.
+table: disk drive error rates from backblaze, Google, et al., just samples of numbers all over the place.
 
 table: Poisson theoretical vs simulated numbers of errors for range of sector lifetime, sector size, document size, simulation length.
+
+how to model
 
 model: billing failure or government takedown: shock with 100% impact (instantly fatal); short frequency; span 1, 2, 3.
 
@@ -68,21 +85,20 @@ assertion: losses for different doc sizes are additive.
 
 picture or table: increased size of doc vs number of copies for fixed loss rate.
 
-table: calibration against pure Poisson for copies=1 with no auditing.  use large sample size (400? 1000?) to minimize variance.  Can we find a closed form calculation for copies=2?
-
 assertion: five copies with annual auditing is enough across huge range of failure rate.  table and picture.
 
 assertion: don't trust MTBF.
 
-assertion: use compression to minimize target size.  great for txt, html, xls.  unfortunately doesn't help much with jpg, mpeg, pdf, exe.  
-
 assertion: storage structure size irrelevant, affects only the miss rate for random errors.  
+- argument: bigger target merely has more empty space for errors to hit.  small storage structures or big docs merely make more structures (shelves) available for errors, but the error rate is constant.
 
 assertion: sector size is irrelevant, scales linearly as part of Poisson calculation.  
+- argument: show the arithmetic.  have an xls that does this.  
 
 assertion: doc size, error rate, and storage extent size all scale linearly.  
 
-assertion: fixed set of random seeds.  
+assertion: fixed set of random seeds sufficient. 
+- argument: well, it's certainly good for reproducibility and repeatability.  
 
 assertion: median, trimean, midmean suffice.  
 
