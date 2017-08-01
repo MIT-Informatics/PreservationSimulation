@@ -9,10 +9,12 @@ needs picture to show loss rates, without auditing, at 2, 5, 20, 20 copies.
 - table: calibration against pure Poisson for copies=1 with no auditing, showing percentage error.  use large sample size (400? 1000?) to minimize variance.  Can we find a closed form calculation for copies=2?
 - table: calibration, pointing out that order of magnitude increases in lifetime generate order of magnitude decreases in losses, nice and linear.
 
-assertion: random auditing less effective than total or segmented total.  
+assertion: random auditing less effective than total or segmented total. 
 - needs picture of random vs total over same ranges.
+- Variant: compare to 5 copies, systematic auditing, how much random auditing to generate loss
+- Variant: lose some substantial part of the collection (e.g. 10%) even if auditing up to  X% monthly
 
-assertion: increasing audit freq beyond some point gives little improvement across a wide range of error rates.  
+assertion: conditioned on 5 copies; increasing audit freq beyond some point gives little improvement across a wide range of error rates.  
 - needs picture of biennial, annual, semiannual, quarterly, monthly, maybe even weekly.
 - picture: quarterly or faster auditing not noticeably better than annual.  
 - picture: auditing with many segments, down to weekly.
@@ -37,7 +39,7 @@ question: auditing robustness in the face of shocks that kill multiple servers.
 
 assertion: document size and error rate scale together linearly.
 - picture: document size scales with sector half-life. life 10 size 5 = life 100 size 50 = life 1000 size 500; or did i get that backwards? do all these with copies=1 and no auditing.
-- related assertion: use compression to minimize target size.  great for txt, html, xls.  unfortunately doesn't help much with jpg, mpeg, pdf, exe.  
+- related assertion: use compression to minimize target size. (compare with fragility -- number of docs doc size) great for txt, html, xls.  Note: that jpg, mpeg, pdf, exe -- compression choices are often internal.
 
 
 assertion: glitches equivalent to slightly shorter sector lifetime.  
@@ -45,11 +47,13 @@ assertion: glitches equivalent to slightly shorter sector lifetime.
 
 assertion: minor shocks equivalent to very large glitches.
 
-table: disk drive error rates from backblaze, Google, et al., just samples of numbers all over the place.
+table: disk drive error rates from backblaze, Google, et al., just samples of numbers all over the place. 
+- Connect to rusty-garbage-can-lid spectrum.  Eg if sector error rate > disk drive error * K, how small does K have to be before you can turn off auditing and not worried?  
 
 table: Poisson theoretical vs simulated numbers of errors for range of sector lifetime, sector size, document size, simulation length.
 
 how to model
+- corollary -- how to mitigate -- if the baseline is 5 copies + quarterly auditing, how many more copies would you need to keep to ensure zero loss in the face of these threats
 
 model: billing failure or government takedown: shock with 100% impact (instantly fatal); short frequency; span 1, 2, 3.
 
