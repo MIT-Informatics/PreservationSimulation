@@ -3,8 +3,8 @@
 sAuditType
 Auditing Strategy
 value,label,selected
-TOTAL,"TOTAL",SELECTED
-SYSTEMATIC,"SYSTEMATIC",0
+TOTAL,"TOTAL (every doc every cycle)",SELECTED
+SYSTEMATIC,"SYSTEMATIC (doc subset each segment)",0
 #RANDOM,"RANDOM",0
-#ZIPF,"ZIPF",0
+#ZIPF,"ZIPF (NYI!)",0
 

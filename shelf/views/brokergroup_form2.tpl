@@ -111,7 +111,14 @@
                     <option value="3">&nbsp;&nbsp;3&nbsp;</option>
                     <option value="4">&nbsp;&nbsp;4&nbsp;</option>
                     <option value="5">&nbsp;&nbsp;5&nbsp;</option>
+                    <option value="6">&nbsp;&nbsp;6&nbsp;</option>
+                    <option value="7">&nbsp;&nbsp;7&nbsp;</option>
                     <option value="8">&nbsp;&nbsp;8&nbsp;</option>
+                    <option value="9">&nbsp;&nbsp;9&nbsp;</option>
+                    <option value="10">&nbsp;&nbsp;10&nbsp;</option>
+                    <option value="14">&nbsp;&nbsp;14&nbsp;</option>
+                    <option value="16">&nbsp;&nbsp;16&nbsp;</option>
+                    <option value="20">&nbsp;&nbsp;20&nbsp;</option>
                     </select>
             </td></tr>
         </table>
@@ -130,7 +137,14 @@
                     <option value="3">&nbsp;&nbsp;3&nbsp;</option>
                     <option value="4">&nbsp;&nbsp;4&nbsp;</option>
                     <option value="5" selected>&nbsp;&nbsp;5&nbsp;</option>
+                    <option value="6">&nbsp;&nbsp;6&nbsp;</option>
+                    <option value="7">&nbsp;&nbsp;7&nbsp;</option>
                     <option value="8">&nbsp;&nbsp;8&nbsp;</option>
+                    <option value="9">&nbsp;&nbsp;9&nbsp;</option>
+                    <option value="10">&nbsp;&nbsp;10&nbsp;</option>
+                    <option value="14">&nbsp;&nbsp;14&nbsp;</option>
+                    <option value="16">&nbsp;&nbsp;16&nbsp;</option>
+                    <option value="20">&nbsp;&nbsp;20&nbsp;</option>
                     </select>
             </td></tr>
         </table>
@@ -219,13 +233,15 @@
     <td>
         <table>
             <tr><th align="left">
-                <b>Number of Audit Segments per Cycle                    </b>
+                <b>Number of Audit Segments per Cycle (assuming annual)                    </b>
             </th></tr>
             <tr><td>
                 <select name="nAuditSegments">
-                    <option value="1" selected>&nbsp;&nbsp;1&nbsp;</option>
-                    <option value="2">&nbsp;&nbsp;2&nbsp;</option>
-                    <option value="4">&nbsp;&nbsp;4&nbsp;</option>
+                    <option value="1" selected>&nbsp;&nbsp;1 (annual)&nbsp;</option>
+                    <option value="2">&nbsp;&nbsp;2 (semi-annual)&nbsp;</option>
+                    <option value="4">&nbsp;&nbsp;4 (quarter)&nbsp;</option>
+                    <option value="10">&nbsp;&nbsp;10 (month)&nbsp;</option>
+                    <option value="50">&nbsp;&nbsp;50 (week)&nbsp;</option>
                     </select>
             </td></tr>
         </table>
@@ -239,8 +255,8 @@
             </th></tr>
             <tr><td>
                 <select name="sAuditType">
-                    <option value="TOTAL" selected>&nbsp;&nbsp;TOTAL&nbsp;</option>
-                    <option value="SYSTEMATIC">&nbsp;&nbsp;SYSTEMATIC&nbsp;</option>
+                    <option value="TOTAL" selected>&nbsp;&nbsp;TOTAL (every doc every cycle)&nbsp;</option>
+                    <option value="SYSTEMATIC">&nbsp;&nbsp;SYSTEMATIC (doc subset each segment)&nbsp;</option>
                     </select>
             </td></tr>
         </table>
@@ -476,10 +492,10 @@
         <td>
             <b>Short Log:</b> <br/>
             (includes only params and stats, 
-             no details of sector errors)<br/> 
-             <font size="+1">You may want this turned on 
-            production runs.</font> <br/>
-            <input type="checkbox" name="bShortLog" value="true">
+             no details of sector errors, audits, repairs)<br/> 
+             <font size="+1">You want this turned on 
+            for production runs.</font> <br/>
+            <input type="checkbox" name="bShortLog" value="true" checked>
         </td>
 
 <!--  g e n e r a l  -->
@@ -504,9 +520,10 @@
             </th></tr>
             <tr><td>
                 <select name="nDocSize">
-                    <option value="5">&nbsp;&nbsp;5 (typical, text)&nbsp;</option>
+                    <option value="5">&nbsp;&nbsp;5 (small, text/photo)&nbsp;</option>
                     <option value="50" selected>&nbsp;&nbsp;50 (large, audio)&nbsp;</option>
                     <option value="500">&nbsp;&nbsp;500 (very large, video)&nbsp;</option>
+                    <option value="5000">&nbsp;&nbsp;5000 (giant, movie)&nbsp;</option>
                     </select>
             </td></tr>
         </table>
@@ -520,8 +537,8 @@
             </th></tr>
             <tr><td>
                 <select name="nShelfSize">
-                    <option value="1" selected>&nbsp;&nbsp;1&nbsp;</option>
-                    <option value="10">&nbsp;&nbsp;10&nbsp;</option>
+                    <option value="1" selected>&nbsp;&nbsp;1 (normal)&nbsp;</option>
+                    <option value="10">&nbsp;&nbsp;10 (large)&nbsp;</option>
                     </select>
             </td></tr>
         </table>
