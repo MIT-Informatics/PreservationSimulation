@@ -1,0 +1,25 @@
+data to be collected
+
+af0 gf0 sf0 sdl0
+cop1-8
+lif1-10000
+
+af0 
+gf2500 gl250,1000 gi33,50,67
+gf5000 gl1000,2500 gi33,50,67
+gf10000,20000 
+sf0 sdl0
+cop1-8
+lif1-10000
+
+
+
+
+af10000 s1,2,4,10
+gf0 sf0 sdl0
+cop1-5
+lif1-1000
+
+
+
+
