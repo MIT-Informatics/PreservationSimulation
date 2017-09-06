@@ -5,8 +5,8 @@
 nShockImpact
 Shock Impact, Reduction in Server Expected Lifetime (pct)
 value,label,selected
-#10,10,0
-20,20,0
+10,10,0
+#20,20,0
 33,33,0
 50,50,SELECTED
 67,67,0
