@@ -37,7 +37,7 @@ simulation length: 100000
 groupings of data to collect:
 
 Q: how many copies needed if no auditing
-BASELINE_NOAUDIT
+BASELINE NOAUDIT
 af0 
 gf0 sf0 sdl0
 cop1-10
@@ -45,25 +45,28 @@ lif1-10000
 
 Q: how many copies needed with annual auditing
 Q: with annual auditing, five copies suffice over wide range of lifetimes
-BASELINE_AUDITANNUALLY
+BASELINE AUDITANNUALLY
 af10000 TOTAL s1
 gf0 sf0 sdl0
 cop1-8
 lif1-10000
 
 Q: effectiveness of more frequent total auditing
+AUDIT FREQUENCY
 af1000,2500,5000,10000 TOTAL s1
 gf0 sf0 sdl0
 cop2-5
 lif10-1000
 
 Q: effectiveness of segmented auditing
+AUDIT SEGMENTS
 af10000 TOTAL s1,2,4,10,50
 gf0 sf0 sdl0
 cop2-5
 lif10-1000
 
 Q: ineffectiveness of random auditing with replacement
+AUDIT RANDOM
 af10000 TOTAL s1,2,4,10
 af10000 RANDOM s1,2,4,10
 gf0 sf0 sdl0
@@ -71,6 +74,7 @@ cop2-5
 lif10-1000
 
 Q: docsize and error rate scale linearly against each other
+SCALING DOCSIZE
 af0
 gf0 sf0 sdl0
 cop1
@@ -78,6 +82,7 @@ docsize5,50,500,5000
 lif1-10000
 
 Q: shelfsize irrelevant, only wastes time
+SCALING SHELFSIZE
 af10000 TOTAL s1
 gf0 sf0 sdl0
 cop3-5
@@ -85,6 +90,7 @@ shelfsize1,10,100
 extract hits, misses per shelf, cputime
 
 Q: glitches are just like short-term increased error rate
+GLITCHES LARGE
 af10000 TOTAL s1
 gf2500 gl250,1000 gi33,50,67
 gf5000 gl1000,2500 gi33,50,67
@@ -94,15 +100,26 @@ lif10-1000
 sf0 sdl0
 
 Q: low-rate shocks are a lot like large glitches
+SHOCKS LOW
 
 
 Q: large shocks and dependencies are dangerous
+SHOCKS HIGH
 
 
 Q: median, trimean, midmean suffice
+LOCATION SMALLSAMPLE
+
+
+LOCATION MEDIUMSAMPLE
+
+
+LOCATION LARGESAMPLE
 
 
 Q: collection size irrelevant, care only about percentage losses
+SCALING COLLECTIONSIZE
+
 
 
 

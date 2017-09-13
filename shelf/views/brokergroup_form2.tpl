@@ -158,6 +158,7 @@
             </th></tr>
             <tr><td>
                 <select name="nLifemMin">
+                    <option value="1">&nbsp;&nbsp;1&nbsp;</option>
                     <option value="2">&nbsp;&nbsp;2&nbsp;</option>
                     <option value="3">&nbsp;&nbsp;3&nbsp;</option>
                     <option value="5">&nbsp;&nbsp;5&nbsp;</option>
@@ -195,6 +196,7 @@
                     <option value="300">&nbsp;&nbsp;300&nbsp;</option>
                     <option value="500">&nbsp;&nbsp;500&nbsp;</option>
                     <option value="1000" selected>&nbsp;&nbsp;1000&nbsp;</option>
+                    <option value="10000">&nbsp;&nbsp;10000&nbsp;</option>
                     </select>
             </td></tr>
         </table>
@@ -303,7 +305,7 @@
             </th></tr>
             <tr><td>
                 <select name="nShockImpact">
-                    <option value="20">&nbsp;&nbsp;20&nbsp;</option>
+                    <option value="10">&nbsp;&nbsp;10&nbsp;</option>
                     <option value="33">&nbsp;&nbsp;33&nbsp;</option>
                     <option value="50" selected>&nbsp;&nbsp;50&nbsp;</option>
                     <option value="67">&nbsp;&nbsp;67&nbsp;</option>
@@ -396,6 +398,8 @@
             <tr><td>
                 <select name="nGlitchFreq">
                     <option value="0" selected>&nbsp;&nbsp;0 (never)&nbsp;</option>
+                    <option value="1000">&nbsp;&nbsp;1000 (month)&nbsp;</option>
+                    <option value="2500">&nbsp;&nbsp;2500 (quarter)&nbsp;</option>
                     <option value="3333">&nbsp;&nbsp;3333 (1/3 year)&nbsp;</option>
                     <option value="10000">&nbsp;&nbsp;10000 (year)&nbsp;</option>
                     <option value="20000">&nbsp;&nbsp;20000 (2 years)&nbsp;</option>

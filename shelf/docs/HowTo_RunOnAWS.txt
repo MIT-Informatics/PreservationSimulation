@@ -1,12 +1,15 @@
 How to run on AWS
                 RBL 20170519
+                updated, most recently 20170913
+
 
 START AWS EC2 MACHINE
 
 
 Start EC2 machine
-- browse to https://mitescience.signin.aws.amazon.com/console or similar
-  maybe something like rlandau@mitescience dot idontknowwhat.
+- browse to 
+    https://mitescience.signin.aws.amazon.com/console 
+  or similar, maybe something like rlandau@mitescience dot idontknowwhat.
 - account = mitescience
 - name = rlandau (NOTE: no b)
 - password
@@ -29,7 +32,8 @@ with WinSCP
 - select session RBL07A(1)
 - protocol SFTP
 - Edit
-- change IP address
+- change IP address; you probably have to use the entire DNS address, 
+    something like ec2-107-21-158-226.compute-1.amazonaws.com
 - user ubuntu is okay
 - Save
 - Login
@@ -43,17 +47,19 @@ with putty
 - Load
 - change IP address
 - Save
-- OK
-- login as: ubuntu
+- Open
+- login as: ubuntu (not as ec2-user, as some suggest)
 - enter passphrase
 
-- if you want more than one session, ask for New Session and repeat.
+- if you want more than one session, ask for Duplicate Session and login, or
+    ask for New Session and repeat these steps.
 
 
 with ssh
 - Cygwin window
 - SSH -i aws/<whatever id file> ubuntu@<IP-addr>
-(Something's wrong with file permissions today; SSH will not take private key.)
+- yes, continue and accept new fingerprint
+- be sure to use correct key file, currently aws/RBL20150827_kp01.pem.
 
 
 LOAD SOFTWARE
@@ -73,10 +79,12 @@ Copy AWS install script
 - wait a couple minutes
 - if the script goes right to the end, saying that it has written the startup
     script, then everything worked.
+- if it stops somewhere in the middle, well, then we have some investigation
+    to do.
 
 
 Create a directory tree for test results
-- cd working/shelf (probably in another SSH session)
+- cd working/shelf (probably in another SSH or putty session)
 - sh setupfamilydir.sh <familydir> <specificdir>
 
 
@@ -87,7 +95,8 @@ Turn on broker logging
 
 Start software
 - the console session should still be in ~; go back if necessary with cd
-- . startup.sh  (yes, dot space startup.sh)
+- . startup.sh  (yes,  dot space startup.sh  ) (Ubuntu appears not to have
+    the "source" shell command.)
 - mongod should already be running
 - this creates a new form and starts up the bottle web server with it.
 
@@ -97,6 +106,8 @@ Run broker for a single range of cases
 - fill in the form and submit
 - be sure to check all the fields, esp. server default life, numbers of copies,
    lifetimes, shock and glitch frequencies, impacts, durations.  
+- useful trick: set seeds=1 and TEST mode on to count the number of cases, then 
+    set seeds=21 or whatever and TEST mode off to do the actual run.  
 
 
 Run broker for large series of cases
