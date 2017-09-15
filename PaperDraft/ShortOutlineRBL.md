@@ -42,17 +42,19 @@
 ### The Approach
 
 - Library clients make several copies of all documents in the collection.  
-- Copies may be stored on commercial cloud storage services or private datacenters.  
-- Clients audit documents on a regular schedule.  This may involve retrieving the full content of document copies, or other convincing fixity information,  from the servers.
-- Auditing will be done in repeated cycles.  Each cycle may contain all documents, or several systematically chosen subsets, or several random subsets sampled with or without replacement.  
+- Copies are stored on commercial cloud storage services or private datacenters.  
+- Copies may suffer errors that corrupt a single document, and storage services may suffer errors that destroy all documents stored there.  In either case, such losses are silent, latent errors that are not signaled to the client.  The client must actively discover the error.  
+- Clients audit documents on a regular schedule.  The auditing process actively patrols for document errors by retrieving the full content of document copies, or other convincing fixity information, from the servers.  
+- Auditing will be done in repeated cycles.  Each cycle may contain all documents, or several systematically chosen subsets, or several random subsets sampled with or without replacement.  For example, an annual audit cycle may be broken into quarterly segments, with a different quarter of the collection being visited each calendar quarter.  
 - Auditing in several segments per cycle can even out the bandwidth requirements for retrieving documents.  
 - Any documents found to be corrupted or missing during an auditing cycle will be repaired by refreshing the copy from other extant copies.  
+- Note that it is also possible that copies could be stored on offline media, such as tape or optical disk.  Such media are not fundamentally different from the online media that we are concerned with here; they have their own rates of bit rot and total loss, but auditing and repairing documents stored on such media is operationally very different.  This investigation does not attempt to cover offline media.  
 
 ### The Simulations
 
 - The discrete event simulations operate on a collection of fixed size for a fixed duration.  
 - Clients place document copies on multiple servers.  For any single simulation, all servers have the same statistical characteristics: sector lifetime, server lifetime, glitch rates, shock rates.  
-- Documents suffer sector errors that occur at random times and locations.  These errors corrupt the document content.  The base rate of arrival of errors is constant during the simulation.  The rate may be varied over a wide range to represent a variety of physical disks and operating conditions.  
+- Documents suffer sector errors that occur at random times and locations.  These errors corrupt the document content.  The base rate of arrival of errors is usually constant during the simulation, though it may be increased for short periods by glitches (q.v.).  The rate may be varied over a wide range to represent a variety of physical disks and operating conditions.  
 - Servers may suffer "glitches" that increase the local sector error rate for a short time in a single server.  Glitches are intended to represent temporary operational problems such as HVAC failures, noisy AC power and such.  Glitches arrive randomly at a tunable rate.  
 - Servers may also suffer from "shocks" that reduce their expected lifetime.  Shocks are intended to represent economic downturns, floods, wars and such.  Shocks arrive randomly at a tunable rate.  
 - Random events in the simulations all independent and identically distributed Poisson arrivals.  The arrival rates are all expressed in terms of half-lives rather than mean exponential lifetime or bit error rate.  
@@ -80,16 +82,28 @@
 
 ### Details: Variations Tested for Robustness
 
+- A number of simplifying assumptions have been used to reduce the sample space to manageable size.  Most are simply choices of scale and discrete values for the many tunable parameters.  
 - Vary the number of copies allocated to independent storage services.
 - Vary sector error rates for small disk errors.  
 - Vary auditing strategy, from none to frequent, number of segments per cycle, and whether segment sampling is done with or without replacement.  
 - Vary glitches, frequent or rare, minor or major, short or long, affecting the document error rates on single servers.
 - Vary shocks, frequent or rare, minor or major, short or long, affecting the survival rate(s) of one or more servers at a time.  
 - Vary document size and error rate together: larger docs should predictably represent bigger targets for random errors.  
-- Repeated simulations are performed with modest sample sizes.  Some cases may be subsampled with much larger sample sizes for validation.
+- Each simulation cycle is repeated a number of times with different seeds for the pseudorandom number generator.  It is initially performed with a modest sample size, approximately twenty; some cases have been sampled with much larger sample sizes for validation.  
 - Simulations are performed with repeatable seeds for the pseudorandom number generator, to enable accurate replication of the experiments.  
 - Document size and sector error rate scale linearly and predictably against each other: larger documents are larger targets for randomly placed errors.  
 - The size of a storage shelf scales linearly and predictably with the hit/miss rate of randomly placed errors: errors on a full shelf will rarely miss an occupied area; errors on a partially occupied shelf may land in unoccupied areas.  
+
+### What Is Not Modeled
+
+- Deliberate attacks on collections or parts of collections.  
+- Attacks on the auditing mechanism.  
+- Media or format obsolescence.  
+- Operational mistakes and bad practices.  
+- Partial document loss and manual repair from minor damage.  
+- Characterization of individual disk drives, models, or error correction or storage technologies.  
+- Operational considerations of RAID, erasure coding, or other redundancy by storage services.  
+- Hardware or software failures of storage controllers.  
 
 ### Future Work
 

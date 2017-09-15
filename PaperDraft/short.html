@@ -30,14 +30,19 @@
 <ul>
 <li>Library clients make several copies of all documents in the collection.<br />
 </li>
-<li>Copies may be stored on commercial cloud storage services or private datacenters.<br />
+<li>Copies are stored on commercial cloud storage services or private datacenters.<br />
 </li>
-<li>Clients audit documents on a regular schedule. This may involve retrieving the full content of document copies, or other convincing fixity information, from the servers.</li>
-<li>Auditing will be done in repeated cycles. Each cycle may contain all documents, or several systematically chosen subsets, or several random subsets sampled with or without replacement.<br />
+<li>Copies may suffer errors that corrupt a single document, and storage services may suffer errors that destroy all documents stored there. In either case, such losses are silent, latent errors that are not signaled to the client. The client must actively discover the error.<br />
+</li>
+<li>Clients audit documents on a regular schedule. The auditing process actively patrols for document errors by retrieving the full content of document copies, or other convincing fixity information, from the servers.<br />
+</li>
+<li>Auditing will be done in repeated cycles. Each cycle may contain all documents, or several systematically chosen subsets, or several random subsets sampled with or without replacement. For example, an annual audit cycle may be broken into quarterly segments, with a different quarter of the collection being visited each calendar quarter.<br />
 </li>
 <li>Auditing in several segments per cycle can even out the bandwidth requirements for retrieving documents.<br />
 </li>
-<li>Any documents found to be corrupted or missing during an auditing cycle will be repaired by refreshing the copy from other extant copies.</li>
+<li>Any documents found to be corrupted or missing during an auditing cycle will be repaired by refreshing the copy from other extant copies.<br />
+</li>
+<li>Note that it is also possible that copies could be stored on offline media, such as tape or optical disk. Such media are not fundamentally different from the online media that we are concerned with here; they have their own rates of bit rot and total loss, but auditing and repairing documents stored on such media is operationally very different. This investigation does not attempt to cover offline media.</li>
 </ul>
 <h3 id="the-simulations">The Simulations</h3>
 <ul>
@@ -45,7 +50,7 @@
 </li>
 <li>Clients place document copies on multiple servers. For any single simulation, all servers have the same statistical characteristics: sector lifetime, server lifetime, glitch rates, shock rates.<br />
 </li>
-<li>Documents suffer sector errors that occur at random times and locations. These errors corrupt the document content. The base rate of arrival of errors is constant during the simulation. The rate may be varied over a wide range to represent a variety of physical disks and operating conditions.<br />
+<li>Documents suffer sector errors that occur at random times and locations. These errors corrupt the document content. The base rate of arrival of errors is usually constant during the simulation, though it may be increased for short periods by glitches (q.v.). The rate may be varied over a wide range to represent a variety of physical disks and operating conditions.<br />
 </li>
 <li>Servers may suffer &quot;glitches&quot; that increase the local sector error rate for a short time in a single server. Glitches are intended to represent temporary operational problems such as HVAC failures, noisy AC power and such. Glitches arrive randomly at a tunable rate.<br />
 </li>
@@ -86,6 +91,8 @@
 </ul>
 <h3 id="details-variations-tested-for-robustness">Details: Variations Tested for Robustness</h3>
 <ul>
+<li>A number of simplifying assumptions have been used to reduce the sample space to manageable size. Most are simply choices of scale and discrete values for the many tunable parameters.<br />
+</li>
 <li>Vary the number of copies allocated to independent storage services.</li>
 <li>Vary sector error rates for small disk errors.<br />
 </li>
@@ -96,12 +103,31 @@
 </li>
 <li>Vary document size and error rate together: larger docs should predictably represent bigger targets for random errors.<br />
 </li>
-<li>Repeated simulations are performed with modest sample sizes. Some cases may be subsampled with much larger sample sizes for validation.</li>
+<li>Each simulation cycle is repeated a number of times with different seeds for the pseudorandom number generator. It is initially performed with a modest sample size, approximately twenty; some cases have been sampled with much larger sample sizes for validation.<br />
+</li>
 <li>Simulations are performed with repeatable seeds for the pseudorandom number generator, to enable accurate replication of the experiments.<br />
 </li>
 <li>Document size and sector error rate scale linearly and predictably against each other: larger documents are larger targets for randomly placed errors.<br />
 </li>
 <li>The size of a storage shelf scales linearly and predictably with the hit/miss rate of randomly placed errors: errors on a full shelf will rarely miss an occupied area; errors on a partially occupied shelf may land in unoccupied areas.</li>
+</ul>
+<h3 id="what-is-not-modeled">What Is Not Modeled</h3>
+<ul>
+<li>Deliberate attacks on collections or parts of collections.<br />
+</li>
+<li>Attacks on the auditing mechanism.<br />
+</li>
+<li>Media or format obsolescence.<br />
+</li>
+<li>Operational mistakes and bad practices.<br />
+</li>
+<li>Partial document loss and manual repair from minor damage.<br />
+</li>
+<li>Characterization of individual disk drives, models, or error correction or storage technologies.<br />
+</li>
+<li>Operational considerations of RAID, erasure coding, or other redundancy by storage services.<br />
+</li>
+<li>Hardware or software failures of storage controllers.</li>
 </ul>
 <h3 id="future-work">Future Work</h3>
 <ul>
