@@ -5,17 +5,17 @@
 
 ## Executive Summary: 
 
-- (assertion) Digital document collections cannot be safeguarded simply by making a few copies; too many copies are required.  The curator needs to audit the integrity of the several copies at intervals.  
+- (assertion) Digital document collections cannot be safeguarded simply by making a few copies; too many copies are required for adequate protection in real-world situations.  The curator needs to audit the integrity of the several copies at intervals.  
 
 - (technique) If a copy of a document is corrupted or lost, it can be repaired from other extant copies.  A document is permanently lost only when all of its copies have been damaged or lost.  
 
-- (assertion) It is important that the several copies of documents be stored independently, so that no single incident -- natural disaster, regional conflict, local terrorist attack, government censorship, local economic downturn, business failure, business realignment, etc. -- is likely to affect multiple copies.  
+- (assertion) It is important that the several copies of documents be stored independently, so that no single incident is likely to affect multiple copies.  Such incidents include natural disaster, regional conflict, local terrorist attack, government censorship, local economic downturn, business failure, business realignment, etc.  
 
 - (scope assertion) This paper does not deal explicitly with threats posed by inimical or incompetent human agencies.  Deliberate hacking and poor management practices are beyond our current scope.  
 
 - (motivation) The quality of digital storage media is highly variable, particularly over long periods of time.  Stored data may deteriorate slowly, in small pieces such as disk sectors, or may fail in large blocks, such as disks, disk arrays, or entire storage services.  Redundant storage techniques such as RAID protect against only some such failures.  
 
-- (assertion) A curator cannot always assess the reliability of storage of a particular type or location.  A strategy to preserve digital documents must be robust over a wide range of reliability and physical conditions.  
+- (assertion) A curator cannot always assess the reliability of a storage vendor of a particular type or location.  A strategy to preserve digital documents must be robust over a wide range of reliability and physical conditions.  
 
 - (assertion) This paper presents simulation results that suggest that a reasonably small number of copies, audited and repaired regularly, suffice to preserve digital document collections over a very wide range of error conditions.  
 
@@ -37,64 +37,65 @@
 
 - Most digital data is stored on disks.  Disks fail, a little at a time or all at once.  Disk storage services can also fail, slightly or totally.  
 - Large collections of digital documents need to be preserved perfectly, or almost perfectly, for long periods of time.  
-- There is little empirical guidance available to help curators plan how to preserve their collections.
+- There is little empirical guidance available to help curators plan how to preserve their collections at reasonable cost.
 
 ### The Approach
 
 - Library clients make several copies of all documents in the collection.  
-- Copies may be stored on commercial (cloud) storage services or private datacenters.  
-- Clients audit documents on a regular schedule.  This may involve retrieving the full content of document copies, orother convincing fixity information,  from the servers.
+- Copies may be stored on commercial cloud storage services or private datacenters.  
+- Clients audit documents on a regular schedule.  This may involve retrieving the full content of document copies, or other convincing fixity information,  from the servers.
 - Auditing will be done in repeated cycles.  Each cycle may contain all documents, or several systematically chosen subsets, or several random subsets sampled with or without replacement.  
 - Auditing in several segments per cycle can even out the bandwidth requirements for retrieving documents.  
-- Any documents found to be corrupted or missing during an auditing cycle will be repaired by replacing the copy from other extant copies.  
-
+- Any documents found to be corrupted or missing during an auditing cycle will be repaired by refreshing the copy from other extant copies.  
 
 ### The Simulations
 
-- The discrete event simulations operate on a collection of fixed size.  The duration of the simulation is also fixed.  
+- The discrete event simulations operate on a collection of fixed size for a fixed duration.  
 - Clients place document copies on multiple servers.  For any single simulation, all servers have the same statistical characteristics: sector lifetime, server lifetime, glitch rates, shock rates.  
-- Documents suffer sector errors that occur at random times and locations.  These errors corrupt the document content.  The rate of arrival of errors is constant during the simulation.  The rate may be varied over a wide range to represent a variety of physical disks and operating conditions.  
-- Servers may suffer "glitches" that increase the local sector error rate for a while in a single server.  Glitches are intended to represent temporary operational problems such as HVAC failures, noisy AC power and such.  Glitches arrive randomly at a tunable rate.  
+- Documents suffer sector errors that occur at random times and locations.  These errors corrupt the document content.  The base rate of arrival of errors is constant during the simulation.  The rate may be varied over a wide range to represent a variety of physical disks and operating conditions.  
+- Servers may suffer "glitches" that increase the local sector error rate for a short time in a single server.  Glitches are intended to represent temporary operational problems such as HVAC failures, noisy AC power and such.  Glitches arrive randomly at a tunable rate.  
 - Servers may also suffer from "shocks" that reduce their expected lifetime.  Shocks are intended to represent economic downturns, floods, wars and such.  Shocks arrive randomly at a tunable rate.  
 - Random events in the simulations all independent and identically distributed Poisson arrivals.  The arrival rates are all expressed in terms of half-lives rather than mean exponential lifetime or bit error rate.  
+- Document losses are assessed as the fraction of the collection that is permanently lost during the simulation period.  
 
-### Simulation Parameters
+### Results and Conclusions
 
-- doc size can vary but scales linearly, predictably
-- storage shelf size can vary but scales linearly, predictably
-- range of independent copies
-- wide range of error rates, to account for disk technology, manufacturing, and batch variations; reliable, or even plausible, numbers are very difficult to obtain from industry
-- variety of auditing strategies: frequency, segmentation, sampling without or with replacement
-- minor glitches for short term physical problems that increase bit error rates on disks, e.g., HVAC: frequency, impact level, duration
-- shocks for large scale problems that affect entire services: frequency, impact level, duration.
+- Auditing is essential to reduce the number of copies needed to limit permanent document losses.  
+- Auditing should be regularly scheduled and should examine every document during every auditing cycle.  
+- The recommended baseline for preserving collections over a very wide range of operational conditions: five copies, annual auditing, total auditing (i.e., all copies examined each cycle).  The auditing cycles may be segmented to reduce variations in bandwidth required for auditing, so long as the sampling for segments is done without replacement.  
+- Excessively frequent auditing, e.g., weekly or monthly, is unnecessary overkill.  
+- Glitches of moderate frequency and moderate impact appear similar to increased local sector error rate.  
+- Baseline auditing can protect even against moderately frequent and severe shocks.  For major, severe shocks -- e.g., non-regional wars, the sinking of Atlantis -- other steps may be necessary.  
 
-### Variations to Test for Robustness
+### Details: Simulation Parameters
 
-- vary number of copies allocated to independent storage services
-- vary error rates for small disk errors
-- vary auditing strategy
-- vary glitches, frequent or rare, minor or major, short or long, affecting the document error rates on single servers
-- vary shocks, frequent or rare, minor or major, short or long, affecting the survival of one or more servers at a time
-- vary doc size and error rate together: larger docs should predictably represent bigger targets for random errors
-- simulations performed with modest sample sizes; occasionally subsampled with much larger sample sizes for validation
-- simulations performed with repeatable seeds for pseudorandom number generator
+- Document size can vary, but is not a factor in the results (document losses as a percentage of the collection size).  
+- Storage shelf size can vary but, again, is not a factor in the results.
+- The number of independent copies can vary from 1 to 20.
+- Sector error rates vary over a wide range to account for disk technologies, and manufacturing and batch variations.  Reliable, or even plausible, numbers are very difficult to obtain from industry.  
+- The strategies for auditing cycles can vary: frequency of auditing cycles, segmentation of a cycle, and sampling without or with replacement.  
+- Minor glitches are intended to model short term physical problems that increase bit error rates on disks, e.g., HVAC failures.  These vary by frequency, impact level, and duration.
+- Major shocks are intended to model large scale problems that affect entire services or groups of services.  These vary in frequency, impact level, duration, and span of impact.  
+- In an attempt to simplify understanding of many parameters, all the time-related parameters -- sector error rates for disks, arrival rates for glitches and shocks, expected server lifetime -- are expressed as half-lives of the relevant objects rather than error rates or mean exponential lifetimes.  
 
-### Results
+### Details: Variations Tested for Robustness
 
-- auditing essential to limit copies
-- auditing should be regular and complete
-- baseline auditing: five copies, annual, total (all copies each cycle), may be segmented
-- excessive auditing is overkill
-- moderate glitches are similar to increased error rate
-- baseline auditing can protect even against moderate shocks
+- Vary the number of copies allocated to independent storage services.
+- Vary sector error rates for small disk errors.  
+- Vary auditing strategy, from none to frequent, number of segments per cycle, and whether segment sampling is done with or without replacement.  
+- Vary glitches, frequent or rare, minor or major, short or long, affecting the document error rates on single servers.
+- Vary shocks, frequent or rare, minor or major, short or long, affecting the survival rate(s) of one or more servers at a time.  
+- Vary document size and error rate together: larger docs should predictably represent bigger targets for random errors.  
+- Repeated simulations are performed with modest sample sizes.  Some cases may be subsampled with much larger sample sizes for validation.
+- Simulations are performed with repeatable seeds for the pseudorandom number generator, to enable accurate replication of the experiments.  
+- Document size and sector error rate scale linearly and predictably against each other: larger documents are larger targets for randomly placed errors.  
+- The size of a storage shelf scales linearly and predictably with the hit/miss rate of randomly placed errors: errors on a full shelf will rarely miss an occupied area; errors on a partially occupied shelf may land in unoccupied areas.  
 
 ### Future Work
 
-- Develop standards for 
+- Develop standards for auditing protocols between clients and servers.  
+
 
 ### Software Available Soon (RSN)
-
-
-
 
 
