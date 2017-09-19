@@ -64,7 +64,7 @@
 
 - Auditing is essential to reduce the number of copies needed to limit permanent document losses.  
 - Auditing should be regularly scheduled and should examine every document during every auditing cycle.  
-- The recommended baseline for preserving collections over a very wide range of operational conditions: five copies, annual auditing, total auditing (i.e., all copies examined each cycle).  The auditing cycles may be segmented to reduce variations in bandwidth required for auditing, so long as the sampling for segments is done without replacement.  
+- We recommend this baseline for preserving collections over a very wide range of operational conditions: five copies, annual auditing, total auditing (i.e., all copies examined each cycle).  The auditing cycles may be segmented to reduce variations in bandwidth required for auditing, so long as the sampling for segments is done without replacement.  
 - Excessively frequent auditing, e.g., weekly or monthly, is unnecessary overkill.  
 - Glitches of moderate frequency and moderate impact appear similar to increased local sector error rate.  
 - Baseline auditing can protect even against moderately frequent and severe shocks.  For major, severe shocks -- e.g., non-regional wars, the sinking of Atlantis -- other steps may be necessary.  
@@ -86,10 +86,10 @@
 - Vary the number of copies allocated to independent storage services.
 - Vary sector error rates for small disk errors.  
 - Vary auditing strategy, from none to frequent, number of segments per cycle, and whether segment sampling is done with or without replacement.  
-- Vary glitches, frequent or rare, minor or major, short or long, affecting the document error rates on single servers.
-- Vary shocks, frequent or rare, minor or major, short or long, affecting the survival rate(s) of one or more servers at a time.  
+- Vary glitches, from frequent to rare, minor to major, short to long, affecting the document error rates on single servers.
+- Vary shocks, from frequent to rare, minor to major, short to long, affecting the survival rate(s) of one or more servers at a time.  
 - Vary document size and error rate together: larger docs should predictably represent bigger targets for random errors.  
-- Each simulation cycle is repeated a number of times with different seeds for the pseudorandom number generator.  It is initially performed with a modest sample size, approximately twenty; some cases have been sampled with much larger sample sizes for validation.  
+- Each simulation cycle is repeated a number of times with different seeds for the pseudorandom number generator.  It is initially performed with a modest sample size, approximately twenty; some cases have been computed using much larger sample sizes for validation.  
 - Simulations are performed with repeatable seeds for the pseudorandom number generator, to enable accurate replication of the experiments.  
 - Document size and sector error rate scale linearly and predictably against each other: larger documents are larger targets for randomly placed errors.  
 - The size of a storage shelf scales linearly and predictably with the hit/miss rate of randomly placed errors: errors on a full shelf will rarely miss an occupied area; errors on a partially occupied shelf may land in unoccupied areas.  
