@@ -94,16 +94,28 @@
 - Document size and sector error rate scale linearly and predictably against each other: larger documents are larger targets for randomly placed errors.  
 - The size of a storage shelf scales linearly and predictably with the hit/miss rate of randomly placed errors: errors on a full shelf will rarely miss an occupied area; errors on a partially occupied shelf may land in unoccupied areas.  
 
-### What Is Not Modeled
+### What is not directly modeled (and why this is ignorable)
 
-- Deliberate attacks on collections or parts of collections.  
-- Attacks on the auditing mechanism.  
-- Media or format obsolescence.  
-- Operational mistakes and bad practices.  
-- Partial document loss and manual repair from minor damage.  
-- Characterization of individual disk drives, models, or error correction or storage technologies.  
-- Operational considerations of RAID, erasure coding, or other redundancy by storage services.  
-- Hardware or software failures of storage controllers.  
+-  Uncorrectable large volume corruption; (e.g.  silent controller failure causing corruption; multiple raid failures erasing all copies in a server simultaneously)
+     - Why is this ignorable: this is more sever than block level, but less sever than server level shocks -- so being robust to sever shocks, provides protection
+
+-  Characterization of silent errors cause by variation of individual disk drives, models, or error correction or storage technologies; aging drives:
+     - Why this is ignorable: Are within the range of modeled block-level failure rates?
+
+- Disk failure in a raid set. Noisy controller failure. 
+     - Why this is ignorable: Invisible to the client but visible to server. Repairs are made by server with certainty.
+
+- Media obsolescence.
+    - Why it is ignorable. Subsumed into shock rates no need to model mechanism. Effects visible as a server failure/shock -- and include in model through that mechanism.
+    
+- Partial document loss and manual repair from minor damage. 
+    - Why it is ignorable. Equivalent to same total-bit sized to collection of more numerous smaller documents.
+
+### What Should be Modeled Separately 
+
+- Attacks on the auditing mechanism - requires an orthogonal analysis, modeling of adversary capability, important for high-resource adversary, 
+- Format obsolescence -- orthogonal analyis/concern -- need to preserve bits & manage formats
+ 
 
 ### Future Work
 
