@@ -1,0 +1,10 @@
+# baseline auditannually
+python broker.py inprogress done --familydir=../baseline --specificdir=auditannually --ncopies='{"$gte":1, "$lte":6}' --lifem='{"$gte":1, "$lte":1000}' --serverdefaultlife=0 --auditfreq=10000 --auditsegments=1 --audittype=TOTAL --glitchfreq=0 --glitchimpact=33 --glitchdecay=0 --glitchmaxlife=250 --glitchspan=1 --shockfreq=0 --shockimpact=50 --shockspan=1 --shockmaxlife=10000 --docsize=50 --shelfsize=1 --nseeds=21 2>&1 
+
+#audit frequency
+python broker.py inprogress done --familydir=../audit --specificdir=frequency --ncopies='{"$gte":3, "$lte":5}' --lifem='{"$gte":10, "$lte":1000}' --serverdefaultlife=0 --auditfreq='[10000,5000,2500,1000]' --auditsegments=1 --audittype=TOTAL --glitchfreq=0 --glitchimpact=33 --glitchdecay=0 --glitchmaxlife=250 --glitchspan=1 --shockfreq=0 --shockimpact=50 --shockspan=1 --shockmaxlife=10000 --docsize=50 --shelfsize=1 --nseeds=21 2>&1 
+
+# audit segments
+python broker.py inprogress done --familydir=../audit --specificdir=segments --ncopies='{"$gte":3, "$lte":5}' --lifem='{"$gte":10, "$lte":1000}' --serverdefaultlife=0 --auditfreq=10000 --auditsegments='[1,2,4,10,50]' --audittype=TOTAL --glitchfreq=0 --glitchimpact=33 --glitchdecay=0 --glitchmaxlife=250 --glitchspan=1 --shockfreq=0 --shockimpact=50 --shockspan=1 --shockmaxlife=10000 --docsize=50 --shelfsize=1 --nseeds=21 2>&1 
+
+
