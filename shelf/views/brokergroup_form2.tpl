@@ -105,7 +105,7 @@
                 <b>Minimum Number of Copies of Documents                    </b>
             </th></tr>
             <tr><td>
-                <select name="nCopiesMin">
+                <select name="nCopiesMin" multiple size=5>
                     <option value="1" selected>&nbsp;&nbsp;1&nbsp;</option>
                     <option value="2">&nbsp;&nbsp;2&nbsp;</option>
                     <option value="3">&nbsp;&nbsp;3&nbsp;</option>
@@ -125,31 +125,6 @@
     </td>
 
                
-    <td>
-        <table>
-            <tr><th align="left">
-                <b>Maximum Number of Copies of Documents                    </b>
-            </th></tr>
-            <tr><td>
-                <select name="nCopiesMax">
-                    <option value="1">&nbsp;&nbsp;1&nbsp;</option>
-                    <option value="2">&nbsp;&nbsp;2&nbsp;</option>
-                    <option value="3">&nbsp;&nbsp;3&nbsp;</option>
-                    <option value="4">&nbsp;&nbsp;4&nbsp;</option>
-                    <option value="5" selected>&nbsp;&nbsp;5&nbsp;</option>
-                    <option value="6">&nbsp;&nbsp;6&nbsp;</option>
-                    <option value="7">&nbsp;&nbsp;7&nbsp;</option>
-                    <option value="8">&nbsp;&nbsp;8&nbsp;</option>
-                    <option value="9">&nbsp;&nbsp;9&nbsp;</option>
-                    <option value="10">&nbsp;&nbsp;10&nbsp;</option>
-                    <option value="14">&nbsp;&nbsp;14&nbsp;</option>
-                    <option value="16">&nbsp;&nbsp;16&nbsp;</option>
-                    <option value="20">&nbsp;&nbsp;20&nbsp;</option>
-                    </select>
-            </td></tr>
-        </table>
-    </td>
-
                
     <td>
         <table>
@@ -157,7 +132,7 @@
                 <b>Minimum Half-life of Storage Logical Blocks (megahours)                    </b>
             </th></tr>
             <tr><td>
-                <select name="nLifemMin">
+                <select name="nLifemMin" multiple>
                     <option value="1">&nbsp;&nbsp;1&nbsp;</option>
                     <option value="2">&nbsp;&nbsp;2&nbsp;</option>
                     <option value="3">&nbsp;&nbsp;3&nbsp;</option>
@@ -176,32 +151,24 @@
         </table>
     </td>
 
-               
     <td>
         <table>
             <tr><th align="left">
-                <b>Maximum Half-life of Storage Logical Blocks (megahours)                    </b>
+                <b>Expected Half-life of Servers (hrs) (0=infinite)                    </b>
             </th></tr>
             <tr><td>
-                <select name="nLifemMax">
-                    <option value="2">&nbsp;&nbsp;2&nbsp;</option>
-                    <option value="3">&nbsp;&nbsp;3&nbsp;</option>
-                    <option value="5">&nbsp;&nbsp;5&nbsp;</option>
-                    <option value="10">&nbsp;&nbsp;10&nbsp;</option>
-                    <option value="20">&nbsp;&nbsp;20&nbsp;</option>
-                    <option value="30">&nbsp;&nbsp;30&nbsp;</option>
-                    <option value="50">&nbsp;&nbsp;50&nbsp;</option>
-                    <option value="100">&nbsp;&nbsp;100&nbsp;</option>
-                    <option value="200">&nbsp;&nbsp;200&nbsp;</option>
-                    <option value="300">&nbsp;&nbsp;300&nbsp;</option>
-                    <option value="500">&nbsp;&nbsp;500&nbsp;</option>
-                    <option value="1000" selected>&nbsp;&nbsp;1000&nbsp;</option>
-                    <option value="10000">&nbsp;&nbsp;10000&nbsp;</option>
+                <select name="nServerDefaultLife">
+                    <option value="0">&nbsp;&nbsp;0 (infinite)&nbsp;</option>
+                    <option value="50000">&nbsp;&nbsp;50000 (5 years)&nbsp;</option>
+                    <option value="100000" selected>&nbsp;&nbsp;100000 (10 years)&nbsp;</option>
+                    <option value="200000">&nbsp;&nbsp;200000 (20 years)&nbsp;</option>
+                    <option value="500000">&nbsp;&nbsp;500000 (50 years)&nbsp;</option>
                     </select>
             </td></tr>
         </table>
     </td>
 
+               
     </tr>
  
  <!--  a u d i t i n g  -->   
@@ -219,31 +186,13 @@
                 <b>Frequency of Scheduled Audit Cycles (hrs) (0=never)                    </b>
             </th></tr>
             <tr><td>
-                <select name="nAuditFreq">
+                <select name="nAuditFreq" >
                     <option value="0">&nbsp;&nbsp;0 (never)&nbsp;</option>
                     <option value="1000">&nbsp;&nbsp;1000 (month)&nbsp;</option>
                     <option value="2500">&nbsp;&nbsp;2500 (quarter)&nbsp;</option>
                     <option value="5000">&nbsp;&nbsp;5000 (1/2 year)&nbsp;</option>
                     <option value="10000" selected>&nbsp;&nbsp;10000 (year)&nbsp;</option>
                     <option value="20000">&nbsp;&nbsp;20000 (two years)&nbsp;</option>
-                    </select>
-            </td></tr>
-        </table>
-    </td>
-
-                
-    <td>
-        <table>
-            <tr><th align="left">
-                <b>Number of Audit Segments per Cycle (assuming annual)                    </b>
-            </th></tr>
-            <tr><td>
-                <select name="nAuditSegments">
-                    <option value="1" selected>&nbsp;&nbsp;1 (annual)&nbsp;</option>
-                    <option value="2">&nbsp;&nbsp;2 (semi-annual)&nbsp;</option>
-                    <option value="4">&nbsp;&nbsp;4 (quarter)&nbsp;</option>
-                    <option value="10">&nbsp;&nbsp;10 (month)&nbsp;</option>
-                    <option value="50">&nbsp;&nbsp;50 (week)&nbsp;</option>
                     </select>
             </td></tr>
         </table>
@@ -264,6 +213,24 @@
         </table>
     </td>
 
+    <td>
+        <table>
+            <tr><th align="left">
+                <b>Number of Audit Segments per Cycle (assuming annual)                    </b>
+            </th></tr>
+            <tr><td>
+                <select name="nAuditSegments" multiple>
+                    <option value="1" selected>&nbsp;&nbsp;1 (annual)&nbsp;</option>
+                    <option value="2">&nbsp;&nbsp;2 (semi-annual)&nbsp;</option>
+                    <option value="4">&nbsp;&nbsp;4 (quarter)&nbsp;</option>
+                    <option value="10">&nbsp;&nbsp;10 (month)&nbsp;</option>
+                    <option value="50">&nbsp;&nbsp;50 (week)&nbsp;</option>
+                    </select>
+            </td></tr>
+        </table>
+    </td>
+
+                
         <td>&nbsp;</td>
     </tr>
 
@@ -300,7 +267,7 @@
                
     <td>
         <table>
-            <tr><th align="left">
+            <tr><th align="left" multiple>
                 <b>Shock Impact, Reduction in Server Expected Lifetime (pct)                    </b>
             </th></tr>
             <tr><td>
@@ -323,7 +290,7 @@
                 <b>Shock Duration (hrs) (0=infinite)                    </b>
             </th></tr>
             <tr><td>
-                <select name="nShockMaxlife">
+                <select name="nShockMaxlife" multiple>
                     <option value="0">&nbsp;&nbsp;0 (forever)&nbsp;</option>
                     <option value="5000">&nbsp;&nbsp;5000 (1/2 year)&nbsp;</option>
                     <option value="10000" selected>&nbsp;&nbsp;10000 (1 year)&nbsp;</option>
@@ -354,23 +321,6 @@
     </td>
 
                
-    <td>
-        <table>
-            <tr><th align="left">
-                <b>Expected Half-life of Servers (hrs) (0=infinite)                    </b>
-            </th></tr>
-            <tr><td>
-                <select name="nServerDefaultLife">
-                    <option value="0">&nbsp;&nbsp;0 (infinite)&nbsp;</option>
-                    <option value="50000">&nbsp;&nbsp;50000 (5 years)&nbsp;</option>
-                    <option value="100000" selected>&nbsp;&nbsp;100000 (10 years)&nbsp;</option>
-                    <option value="200000">&nbsp;&nbsp;200000 (20 years)&nbsp;</option>
-                    <option value="500000">&nbsp;&nbsp;500000 (50 years)&nbsp;</option>
-                    </select>
-            </td></tr>
-        </table>
-    </td>
-
     </tr>
 
     <tr bgcolor="#ffaaaa">
@@ -418,7 +368,7 @@
                 <b>Glitch Impact, Reduction in Logical Block Lifetime (pct)                    </b>
             </th></tr>
             <tr><td>
-                <select name="nGlitchImpact">
+                <select name="nGlitchImpact" multiple>
                     <option value="10">&nbsp;&nbsp;10&nbsp;</option>
                     <option value="33" selected>&nbsp;&nbsp;33&nbsp;</option>
                     <option value="50">&nbsp;&nbsp;50&nbsp;</option>
@@ -436,7 +386,7 @@
                 <b>Duration of Glitch (hrs) (0=infinite)                    </b>
             </th></tr>
             <tr><td>
-                <select name="nGlitchMaxlife">
+                <select name="nGlitchMaxlife" multiple>
                     <option value="0">&nbsp;&nbsp;0 (forever)&nbsp;</option>
                     <option value="250" selected>&nbsp;&nbsp;250 (week)&nbsp;</option>
                     <option value="1000">&nbsp;&nbsp;1000 (month)&nbsp;</option>
@@ -523,7 +473,7 @@
                 <b>Size of Documents (MB)                    </b>
             </th></tr>
             <tr><td>
-                <select name="nDocSize">
+                <select name="nDocSize" multiple>
                     <option value="5">&nbsp;&nbsp;5 (small, text/photo)&nbsp;</option>
                     <option value="50" selected>&nbsp;&nbsp;50 (large, audio)&nbsp;</option>
                     <option value="500">&nbsp;&nbsp;500 (very large, video)&nbsp;</option>
@@ -540,9 +490,10 @@
                 <b>Size of Storage Shelf (TB)                    </b>
             </th></tr>
             <tr><td>
-                <select name="nShelfSize">
+                <select name="nShelfSize" multiple>
                     <option value="1" selected>&nbsp;&nbsp;1 (normal)&nbsp;</option>
                     <option value="10">&nbsp;&nbsp;10 (large)&nbsp;</option>
+                    <option value="100">&nbsp;&nbsp;10 (really big)&nbsp;</option>
                     </select>
             </td></tr>
         </table>

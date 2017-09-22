@@ -56,6 +56,10 @@ DONE - need new utils: list databases, list collections in db.
 
 
 TODO: web interface to select instructions for broker run
+FIXME - permit multiple-select for most options.  single select renders just 
+    the simple value; multiselect renders json list in quotes '[1,2,3]'.
+FIXME - move some items around in the interface to fill in gaps left by
+    multiselect.
 DONE - add --redo option to form and command.
 DONE - ensure that the python/bottle program always runs in a detachable
     subprocess, i.e., with >logfile 2>&1 &.
@@ -65,7 +69,7 @@ DONOTDO - maybe add button for Production Mode.  broker runs should *always*
     be in production mode, so have the script set that.  
 DONE - add startup shell script with easy name.  maybe that script sets
     production mode before starting?  maybe opt-out of production?
-WRONG - learn kivy and remi, decide which to use.
+DONOTDO - learn kivy and remi, decide which to use.
 DONE - build static web interface to permit choosing instructions for 
     a single run using bottle.
 DONE - add server default halflife to web interface and CLI.
@@ -79,6 +83,8 @@ DONE - generate the HTML from the instruction db.  not simple.
 
 
 TODO: newtrace
+FIXME - write unit tests for all common cases.  
+FIXME - update to run under python2 and python3.
 DONE - make new ntrace, ntracef the default inner routines for efficiency.  
 MAYBE - for trace level zero, do not check facility codes.
 DONE - do null version of trace decorators for production use
@@ -88,6 +94,15 @@ DONE - add routine to tell if production mode is on, so it can be logged.
 
 
 TODO: general
+FIXME - updata deadly out of date comments in, e.g., main.py.  check all 
+    such modules.
+FIXME - do we want to wrap this up as a python package?  not at all clear.
+    given that it has to be installed on a linux, a zip with readmefirst and 
+    instruction docs would be more suitable.  
+FIXME - update all the python shebang strings to "#!/usr/bin/env python"
+    like a good boy.  or maybe not: modules that are always imported and 
+    never executed alone do not need the shebang.
+DONOTDO - convert the entire corpus to python3?  no way.  
 DONE - create brokercommandlog_enable.sh and ..._disable.sh files to 
     enable the user easily to turn broker command logging on and off.
     both should preserve any info already in the log.
@@ -134,6 +149,13 @@ DONE - why did i ever remove glitchspan?  put it back.
 
 
 TODO: R 
+FIXME - think about a way to rename the columns at the last instant, 
+    just before they go into R processing, with the style of names
+    suggested by Altman, e.g., i_foo for inputs and o_bar for outputs.
+    maybe p for params and r for results?  
+FIXME - learn what to do more simply, using Altman's style of R.
+FIXME - for every table and picture, preserve the entire R code alongside
+    the data.
 DONE - can the ugly nested loop be restructured to run from a list of vars
     in the order we want them nested?
     done using plyr package, ddply function and arrange function.  wonderful.
@@ -162,8 +184,9 @@ DONE - BUG, NEEDS FIXING: when client provisions a new server, it must
   this might be just a nit for most failures, but for 200% or 300% 
   correlated failures, this is a real concern.  
 FIXME - QUESTION: when provisioning a new server to replace a failed one, 
-  should the client mark the re-provisioning as majority or minority 
-  repairs?
+    should the client mark the re-provisioning as majority or minority 
+    repairs?  resolution: state the problem and point future developers to 
+    where they can correct the counters.  
 DONE - optimize auditing: when it finds a dead server, don't bother checking 
   any more documents on that particular server, and don't attempt any
   repairs to that server.  should speed up auditing considerably.  
@@ -222,12 +245,16 @@ FIXME - warn the user in strong language always to setupfamilydir for their
     runs, which is a console activity.  hmmm, maybe that could be added
     as an option to the broker form, eh?  so they don't have to use any 
     nasty old CLI commands.  
+FIXME - add an option to setupfamilydir.sh to clear the directories.
 FIXME - add examples of obscure mongodb syntax in the --query command (and others?) 
   to howto broker doc.
 FIXME - Add a help file about using mongoshell to examine database 
   of instructions, in case you think anything is funny about the database.  
   In particular, how to shut down MongoDB and how to repair it if it 
   complains that the lock file is not empty.  
+FIXME - add a hint in broker docs that one can formulate 99% of the command
+    with the form with listonly turned on, then cut and paste that command, 
+    edit it a little to add more options, and then feed that to the shell.  
 MAYBE - add a script to dump out some sample stats from a mongo db, such as names of
   all dbs, number of elements and varnames for each, like that.  
 
@@ -292,6 +319,8 @@ FIXME - after container install, run broker tests
 
 
 TODO: AWS deployment
+FIXME - turn the simple-minded tests at the end of deployment into real
+    unit test modules so they are easier to maintain, add to, etc.  
 DONE - create a broker command log file for the user, and warn the 
     user that it will grow and grow.  
 DONE - be sure to export NUMBER_OF_PROCESSORS for broker to use in the 
@@ -319,6 +348,7 @@ DONE - change newinstructions db to something smaller and more useful.
 
 
 TODO: rationalize time constants so that people can understand them
+FIXME - note that Rosenthal uses half-life in his article.
 DONE - change main.py sector lifetime to half-life.
   (this will change ALL the existing numbers; recompute everything)
 DONE - update the AWS install script single-run test for the new half-life 
@@ -345,6 +375,7 @@ DONE - Update SERVERUSE log lines and some other lines, too, at end to state hal
 
 
 TODO: calibration
+FIXME - turn this into a formal, publishable table.  probably in md.  
 DONE - do spreadsheet of a0 numbers compared with simple Poisson theoretical results.  
   Completed for samples of 21 and 101.  
 DONE: do spreadsheet of a0 numbers compared with simple Poisson 
