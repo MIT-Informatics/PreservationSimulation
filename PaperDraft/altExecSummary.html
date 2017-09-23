@@ -1,0 +1,60 @@
+<h2 id="keeping-information-safe-in-uncertain-times-how-many-copies-is-enough">Keeping Information Safe in Uncertain Times: How many copies is enough?</h2>
+<ol style="list-style-type: decimal">
+<li>Why should you care?
+<ul>
+<li>Digital information can disappear -- either on purpose or by accident
+<ul>
+<li>horror story: Gitlab</li>
+<li>horror story: ...</li>
+<li>horror story: ...</li>
+</ul></li>
+<li>Traditional durability strategies fail: Cannot rely on offline storage for durability
+<ul>
+<li>No storage media is reliable enough to store and forget</li>
+<li>Media obsolecence is also a threat to this strategy</li>
+</ul></li>
+<li>In practice the reliability of your storage technology is uncertain
+<ul>
+<li>Many threats to digital content can wipe out multiple copies simultaneously, and underlying connected risks are hard to observe</li>
+<li>No good data to establish reliability of cloud services</li>
+<li>Data on disk reliability is limited -- and in practice implies that caution is warranted</li>
+</ul></li>
+<li>Good practice -- keep multiple copies in different places</li>
+</ul></li>
+<li>The problem
+<ul>
+<li>Maintaining multiple copies costs $$ -- and there are lots of options -- number of copies, distribution, storage services, compression, verification strategies</li>
+<li>What combinations of choices is most cost effective to prevent loss?</li>
+<li>Formally -- for a certain risk of loss -- what's the optimal budget (or for a fixed budget, how much loss can you prevent with the right choices?)</li>
+</ul></li>
+<li>The solution
+<ul>
+<li>Quantitative simulation framework</li>
+<li>Allows exploration of a wide range of strategies</li>
+<li>Using a wide range of threat models -- from bit-rot to floods to financial collapse, using a hierarchical event based model</li>
+<li>Calibrated to real-world threat levels</li>
+</ul></li>
+<li>What curators should know (rewrite in terms of clickbait titles?)
+<ul>
+<li>&quot;three ain't enough&quot; - for a wide range of threats want 4-6 copies</li>
+<li>&quot;trust, but verify&quot; - copies don't help much unless you check (and repair); more copies aren't needed if you do</li>
+<li>&quot;leave no stone unturned&quot; - audit systematically, not randomly or on-use</li>
+<li>&quot;size matters -- but not as much as think&quot; -- how to deal with document size</li>
+<li>&quot;everybody let's get small&quot; -- compression is a win, most of the time</li>
+<li>&quot;two strange tips to &quot; -- how to insure against correlated failure</li>
+<li>&quot;lock your house but keep keys with the neighbors&quot; -- how to encrypt without losing it all</li>
+</ul></li>
+<li>What vendors should know
+<ul>
+<li>It's not enough to &quot;go up to 11&quot; -- the problem with 11 nines - unitless numbers, meaningless measures, and no money where there mouth is</li>
+<li>&quot;Sunshine is the best disinfectant&quot; -- how to report failure rates meaningfully</li>
+<li>&quot;a crowd pleaser for your customers&quot; -- providing verifiable fixity without tears</li>
+</ul></li>
+<li>What researchers should try to learn
+<ul>
+<li>Cryptographic/sophisticated adversary models</li>
+<li>Estimating failure rates from observed data</li>
+<li>Remote verification</li>
+<li>Cost modeling of complex auditing strategies and n</li>
+</ul></li>
+</ol>
