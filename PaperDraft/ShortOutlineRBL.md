@@ -60,7 +60,7 @@
 - Random events in the simulations all independent and identically distributed Poisson arrivals.  The arrival rates are all expressed in terms of half-lives rather than mean exponential lifetime or bit error rate.  
 - Document losses are assessed as the fraction of the collection that is permanently lost during the simulation period.  
 
-### Results and Conclusions
+### Results and Recommendations for Curators
 
 - Auditing is essential to reduce the number of copies needed to limit permanent document losses.  
 - Auditing should be regularly scheduled and should examine every document during every auditing cycle.  
@@ -69,16 +69,39 @@
 - Glitches of moderate frequency and moderate impact appear similar to increased local sector error rate.  
 - Baseline auditing can protect even against moderately frequent and severe shocks.  For major, severe shocks -- e.g., non-regional wars, the sinking of Atlantis -- other steps may be necessary.  
 
+### Recommendations for vendors
+  - It's not enough to "go up to 11"  -- the problem with 11 nines - unitless numbers, meaningless measures, and no money where there mouth is
+  - "Sunshine is the best disinfectant" -- how to report failure rates meaningfully
+  - "a crowd pleaser for your customers" -- providing verifiable fixity without tears
+
+
+
+### Future Research Questions
+- Cryptographic/sophisticated adversary models
+    - Estimating failure rates from observed data
+    - Remote verification
+    - Cost modeling of complex auditing strategies
+
 ### Details: Simulation Parameters
 
 - Document size can vary, but is not a factor in the results (document losses as a percentage of the collection size).  
+    -	FIGURE: (above -- suppose we increas doc size by 10, by 100, by 1000 -- how many expected doc lossed in the same period)
+    
 - Storage shelf size can vary but, again, is not a factor in the results.
 - The number of independent copies can vary from 1 to 20.
+      - Figure -- lots of copies still lossy wiithout auditing 
 - Sector error rates vary over a wide range to account for disk technologies, and manufacturing and batch variations.  Reliable, or even plausible, numbers are very difficult to obtain from industry.  
+    -  FIGURE: How long for failure of 1% as error rate increases? (TODO:RBL: Q: Sounds like a one-way table, for fixed document size, IV = error rate, DV = hours before loss exceeds 1%.)
 - The strategies for auditing cycles can vary: frequency of auditing cycles, segmentation of a cycle, and sampling without or with replacement.  
+    - Figure: systematic vs. random auditing at yearly and quarterly, monthly rates... 
+    - FIgure: 5 copies & yearly (?) systematic auditing is enough across range of error rates. 
 - Minor glitches are intended to model short term physical problems that increase bit error rates on disks, e.g., HVAC failures.  These vary by frequency, impact level, and duration.
-- Major shocks are intended to model large scale problems that affect entire services or groups of services.  These vary in frequency, impact level, duration, and span of impact.  
+- Major shocks are intended to model large scale problems that affect entire services or groups of services.  These vary in frequency, impact level, duration, and span of impact.
+    - Figure: how many additional copies needed to be robust across range of shocks  
 - In an attempt to simplify understanding of many parameters, all the time-related parameters -- sector error rates for disks, arrival rates for glitches and shocks, expected server lifetime -- are expressed as half-lives of the relevant objects rather than error rates or mean exponential lifetimes.  
+-   compression is a win, most of the time -- model repairabiity via smaller doc size
+     - figure -- compressability vs. repairability -- in which regions is compression a win?  
+-   how to encrypt without losing it all -- model loss of encryption key as shocks that cause multiple server failures
 
 ### Details: Variations Tested for Robustness
 
