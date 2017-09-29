@@ -41,6 +41,18 @@ fnSelectCopies <- function(dfIn, nCopies)
 safelog <- function(x) {return(log10(x+1))}
 safe    <- function(x) {return(x+0.5)}
 
+# Shock tabulation functions.
+fntShockTab <- function(input, freq, impact, duration) {
+    res4 <- input[which(input$copies>1),]
+    res3 <- res4[which(res4$shockfreq==freq),]
+    res2 <- res3[which(res3$shockimpact==impact),]
+    res1 <- res2[which(res2$shockmaxlife==duration),]
+    assign("res.shocktdat", res1, envir=globalenv())
+    #print(paste("res.shockdat",length(res.shockdat$copies)))
+    restab <- dcast(res1, copies~lifem, value.var="mdmlosspct")
+    return(restab)
+}
+
 # L O A D   F I L E S 
 
 # Load & merge all files in directory
@@ -77,15 +89,31 @@ selectedresults <- results[which(results[["copies"]]!=1),]
 library(reshape2)
 basicdata <- data.frame(cbind(results$copies,results$lifem,results$mdmlosspct))
 colnames(basicdata)<-c("copies","lifem","lossp")
-#basictable <- dcast(basicdata, copies~lifem, FUN=identity(basicdata$lossp))
-basictable <- dcast(results, copies~lifem,  value.var="mdmlosspct")
+#basictable <- dcast(basicdata, copies~lifem, 
+#                    FUN=identity(basicdata$lossp))
+#basictable <- dcast(results, copies~lifem,  
+#            fun.aggregate=max, value.var="mdmlosspct")
 #audittable <- basictable <- dcast(results, auditfrequency+copies~lifem,  value.var="mdmlosspct")
+
+# Specific to shock analyses: 
+lNamesIWant <- c("copies","lifem","mdmlosspct",
+                "shockfreq","shockimpact","shockmaxlife","shockspan")
+shockresults <- results[lNamesIWant]
+# Tabulate the various impact levels of shocks.
+# Sorry this is kinda manual; this is still exploratory.
+param.shockmaxlife <- 10000
+param.shockfreq <- 20000
+for (xLevel in levels(factor(shockresults$shockimpact))){
+    sName <- paste0("restab", xLevel)
+    tmptable <- fntShockTab(shockresults, param.shockfreq, xLevel, param.shockmaxlife)
+    assign(sName, tmptable)
+}
 
 # P L O T S 
 
 library(ggplot2)
 
-nCopies <- 3
+nCopies <- 5
 gp<-(ggplot(fnSelectCopies(results, nCopies), 
     aes(x=(lifem), y=(safelog(mdmlosspct))))
     + geom_point(color="red",size=4)
@@ -133,7 +161,7 @@ ggpairs(res,columns=c("copies", "mdmlosspct", "shockimpact", "lifem"))
 #                in any case.  Need three dimensions: life, copies, losses.
 #                Concentrate on getting the data in for later processing.  
 # 20170924  RBL Move all functions to the top
+# 20170929  RBL Remove basictable until I learn dcast.  
+#               Add function to tabulate shock loss values.
 # 
-
-
-
+# 
