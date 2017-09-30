@@ -148,3 +148,22 @@
 ### Software Available Soon (RSN)
 
 
+
+
+if you did what company a suggests, you would have only 20% of servers left alive after five years.
+
+ed likes cutesy headings
+
+in approach, give table of what we are going to look at.
+trade-off between copies and auditing.  hypothetical as statement of problem.
+
+really distinguish glitches from shocks.  
+
+simulation sections go on way too long, find a way to shorten, condense, relate more easily, before the audience nods off.  
+
+
+
+
+
+
+
