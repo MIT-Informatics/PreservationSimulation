@@ -94,6 +94,7 @@ colnames(basicdata)<-c("copies","lifem","lossp")
 #basictable <- dcast(results, copies~lifem,  
 #            fun.aggregate=max, value.var="mdmlosspct")
 #audittable <- basictable <- dcast(results, auditfrequency+copies~lifem,  value.var="mdmlosspct")
+losstable <- with(basicdata, tapply(lossp, list(copies, lifem), FUN=identity))
 
 # Specific to shock analyses: 
 lNamesIWant <- c("copies","lifem","mdmlosspct",
