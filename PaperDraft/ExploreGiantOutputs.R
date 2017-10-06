@@ -48,5 +48,9 @@ plot(gp)
 library(GGally)
 ggpairs(res,columns=c("copies","mnlossfrac","shockimpact","lifem"))
 
-
+# Example Reshaping
+library(reshape2)
+res.sm<-res[,c("copies","lifem","mnlossfrac")]
+mresm<-melt(res.sm,id=c("copies","lifem"))
+dc<-dcast(mresm,copies~lifem)
 
