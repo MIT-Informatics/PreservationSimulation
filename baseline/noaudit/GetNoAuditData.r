@@ -18,12 +18,14 @@ foo<-(with(dat.noaudit,
 foo2<-cbind(as.numeric(levels(factor(results$copies))), foo)
 tbl2<-data.frame(foo2)
 colnames(tbl2)<-c("copies",as.numeric(colnames(foo2[,2:ncol(foo2)])))
+# Pretty-print this to a file with explanatory headings.
 #print(tbl2)
 
-# Micah bent dcast to his will; see email.
-#library(reshape2)
-#bar.melted<-melt something
-#bar.recast<-dcast something
+# Micah finally bent dcast to his will, thanks; see email.
+library(reshape2)
+bar.small <- dat.noaudit[,c("copies", "lifem", "mdmlosspct")]
+bar.melted <- melt(bar.small, id=c("copies", "lifem"))
+bar.recast <- dcast(bar.melted, copies~lifem)
 
 # Plot something.
 library(ggplot2)
