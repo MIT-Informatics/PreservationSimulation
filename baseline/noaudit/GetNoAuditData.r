@@ -2,10 +2,13 @@
 
 source("./DataUtil.r")
 
+# G E T   D A T A  
 rm(results)
 results <- fndfGetGiantData("./")
 # Get fewer columns to work with, easier to see.
 dat.noaudit <- fndfGetAuditData(results)
+
+# T A B U L A T E   D A T A 
 # Tabulate columns by copies and sector lifetime.
 tbl.noaudit <- data.frame(with(dat.noaudit, 
             tapply(mdmlosspct, list(copies, lifem), FUN=identity)))
@@ -18,16 +21,29 @@ foo<-(with(dat.noaudit,
 foo2<-cbind(as.numeric(levels(factor(results$copies))), foo)
 tbl2<-data.frame(foo2)
 colnames(tbl2)<-c("copies",as.numeric(colnames(foo2[,2:ncol(foo2)])))
+
 # Pretty-print this to a file with explanatory headings.
-#print(tbl2)
+sOutputFilename <- "./Data_NoAudit.txt"
+sTitle <- "Document losses with multiple copies and no auditing"
+sSubtitle <- "Table of percentage loss of collection tabulated\n" %+% 
+    "by number of copies and sector half-lifetime"
+sink(sOutputFilename)
+cat("MIT Preservation Simulation Project", "\n\n")
+cat(sOutputFilename, format(Sys.time(),"%Y%m%d_%H%M%S%Z"), "\n\n")
+cat(sTitle, "\n\n")
+cat(sSubtitle, "\n\n")
+cat("\n")
+print(tbl2)
+sink()
 
 # Micah finally bent dcast to his will, thanks; see email.
+# Gets the same answer for this simple case.
 library(reshape2)
 bar.small <- dat.noaudit[,c("copies", "lifem", "mdmlosspct")]
 bar.melted <- melt(bar.small, id=c("copies", "lifem"))
 bar.recast <- dcast(bar.melted, copies~lifem)
 
-# Plot something.
+# P L O T   D A T A 
 library(ggplot2)
 
 nCopies <- 1
@@ -82,5 +98,7 @@ gp <- gp + theme(
             )
 
 plot(gp)
-
 fnPlotMakeFile(gp, "baseline-noaudit.png")
+
+# Unwind any remaining sink()s to close output files.  
+while (sink.number() > 0) {sink()}

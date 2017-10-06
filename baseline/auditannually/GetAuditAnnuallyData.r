@@ -2,10 +2,13 @@
 
 source("./DataUtil.r")
 
+# G E T   D A T A  
 rm(results)
 results <- fndfGetGiantData("./")
 # Get fewer columns to work with, easier to see.
 dat.auditannually <- fndfGetAuditData(results)
+
+# T A B U L A T E   D A T A 
 # Tabulate columns by copies and sector lifetime.
 tbl.auditannually <- data.frame(with(dat.auditannually, 
             tapply(mdmlosspct, list(copies, lifem), FUN=identity)))
@@ -24,7 +27,7 @@ bar.small <- dat.auditannually[,c("copies", "lifem", "mdmlosspct")]
 bar.melted <- melt(bar.small, id=c("copies", "lifem"))
 bar.recast <- dcast(bar.melted, copies~lifem)
 
-# Plot something.
+# P L O T   D A T A 
 library(ggplot2)
 
 # Show lines for 3, 4, 5 copies, with annual total auditing, over wiiiide range.
@@ -67,5 +70,7 @@ gp <- gp + theme(
             )
 
 plot(gp)
-
 fnPlotMakeFile(gp, "baseline-auditannually.png")
+
+# Unwind any remaining sink()s to close output files.  
+while (sink.number() > 0) {sink()}

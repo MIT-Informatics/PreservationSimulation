@@ -6,12 +6,21 @@
 
 library(tidyverse)
 
+# H A C K S 
+
 # Absurd hack in here to make lifem print reasonably.
 #  Increase the penalty for printing in scientific 
 #  (exponential) format, and limit the number of digits
 #  so that there are no places after the radix point.  
 options("scipen"=100, "digits"=1)
 # End of absurd hack.  
+
+# Enable printing wide tables.
+options("width"=120)
+
+# Add an infix concatenation operator for strings.
+`%+%` <- function(a,b) paste0(a,b)
+
 
 # U T I L I T Y   F U N C T I O N S 
 
