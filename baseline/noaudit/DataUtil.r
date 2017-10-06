@@ -1,5 +1,5 @@
-# GetData.r
-# Functions to get data for analysis and plotting.
+# DataUtil.r
+# Functions to get data for selection and analysis.
 
 # From Micah Altman 20170726
 # Adapted RBLlandau 20171002
@@ -112,8 +112,9 @@ fndfGetAuditData <- function(results)
                     "auditfrequency","auditsegments",    
                                             #"audittype", too, needs fixed
                     "docsize","shelfsize")
-    auditresults <- fndfGetSubsetData(results, lNamesIWant)
-    return(auditresults)
+    results.narrow <- fndfGetSubsetData(results, lNamesIWant)
+    results.plausible <- results.narrow[results.narrow$lifem>=2,]
+    return(results.plausible)
 }
 
 # f n d f G e t S h o c k D a t a 
@@ -142,7 +143,7 @@ fndfGetGlitchData <- function(results)
 fndfGetDocsizeData <- function(results)
 {
     lNamesIWant <- c("copies","lifem","mdmlosspct",
-                    "auditfreq","auditsegments",                                            #"audittype", too, needs fixed
+                    "auditfreq","auditsegments", 
                                             #"audittype", too, needs fixed
                     "docsize","shelfsize")
 }
