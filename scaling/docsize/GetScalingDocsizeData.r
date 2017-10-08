@@ -19,7 +19,7 @@ foo2<-cbind(as.numeric(levels(factor(results$docsize))), foo)
 tbl2<-data.frame(foo2)
 colnames(tbl2)<-c("docsize",as.numeric(colnames(foo2[,2:ncol(foo2)])))
 
-# Pretty-print this to a file with explanatory headings.
+# Pretty-print a table to a file with explanatory headings.
 sOutputFilename <- "./Data_ScalingDocsize.txt"
 sTitle <- "Document losses with single copy and varying document size"
 sSubtitle <- "Table of percentage loss of collection tabulated\n" %+% 
@@ -40,22 +40,23 @@ bar.recast <- dcast(bar.melted, docsize~lifem)
 print(bar.recast)
 sink()
 
+# Also print the raw table for use in a spreadsheet of comparisons.
+sComparisonDataFilename <- "Data_Scaling_DocsizeSpreadsheetData.txt"
+sink(sComparisonDataFilename)
+print(bar.small, n=nrow(bar.small))
+sink()
 
-
-
-
-
-#if(0){
 # P L O T   D A T A 
 library(ggplot2)
 
-# Show lines for 3, 4, 5 copies, with annual total auditing, over wiiiide range.
+# Show lines for docsizes 5, 50, 500, 5000 MB; copies=1; over wiiiide range.
 nDocsize <- 5; trows <- dat.docsize[dat.docsize$docsize==nDocsize,]
 gp <- ggplot(data=trows,aes(x=lifem,y=safe(mdmlosspct))) 
 gp <- gp + 
         scale_x_log10() + scale_y_log10() +
         annotation_logticks()
 
+# docsize 5 MB
 gp <- gp + 
         aes(trows, x=(lifem), y=(safe(mdmlosspct))) +
         geom_point(data=trows, 
@@ -63,6 +64,7 @@ gp <- gp +
         geom_line(data=trows, 
             linetype="dashed", color="blue", size=1)
 
+# docsize 50 MB
 nDocsize <- 50; trows <- dat.docsize[dat.docsize$docsize==nDocsize,]
 gp <- gp + 
         aes(trows, x=(lifem), y=(safe(mdmlosspct))) +
@@ -70,6 +72,7 @@ gp <- gp +
             color="red", size=5, shape=("B")) +
         geom_line(data=trows, linetype="dashed", color="blue", size=1) 
 
+# docsize 500 MB
 nDocsize <- 500; trows <- dat.docsize[dat.docsize$docsize==nDocsize,]
 gp <- gp + 
         aes(trows, x=(lifem), y=(safe(mdmlosspct))) +
@@ -77,6 +80,7 @@ gp <- gp +
             color="red", size=5, shape=("C")) +
         geom_line(data=trows, linetype="dashed", color="black", size=1) 
 
+# docsize 5000 MB
 nDocsize <- 5000; trows <- dat.docsize[dat.docsize$docsize==nDocsize,]
 gp <- gp + 
         aes(trows, x=(lifem), y=(safe(mdmlosspct))) +
@@ -98,8 +102,6 @@ gp <- gp + theme(
 
 plot(gp)
 fnPlotMakeFile(gp, "baseline-scalingdocsize.png")
-#}
-
 
 
 

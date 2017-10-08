@@ -1,6 +1,6 @@
 MIT Preservation Simulation Project 
 
-./Data_ScalingDocsize.txt 20171008_183029EDT 
+./Data_ScalingDocsize.txt 20171008_192855EDT 
 
 Document losses with single copy and varying document size 
 
