@@ -6,21 +6,21 @@ Q2
 Q3
 Q4
 hl
-shock*
 logs
 *.zip
 *.tmp
 *.pyc
 *.bak
 *.wbk
+*.cmds
 articles
 test
 tmp
 results
 searchspacedb
 
-shelf/R/.R*
 *.big
 *.toobig
 *.RData
 *.Rhistory
+

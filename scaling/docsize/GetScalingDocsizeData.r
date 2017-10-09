@@ -1,4 +1,4 @@
-# GetAuditAnnuallyData.r
+# GetScalingDocsizeData.r
 
 source("./DataUtil.r")
 
