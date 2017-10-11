@@ -1,3 +1,5 @@
+XXX Document losses with single copy and varying document size 
+
 # A tibble: 864 x 3
     lifem copies mdmlosspct
     <int>  <int>      <dbl>

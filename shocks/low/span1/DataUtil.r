@@ -19,8 +19,10 @@ options("scipen"=100, "digits"=1)
 options("width"=120)
 
 # Add an infix concatenation operator for strings.
-`%+%` <- function(a,b) paste0(a,b)
+`%+%` <- function(a,b) {paste0(a,b)}
 
+# Tired of saying levels(factor(foo))?  I am.
+lf <- function(v) {levels(factor(v))}
 
 # U T I L I T Y   F U N C T I O N S 
 
@@ -50,17 +52,7 @@ fnSelectCopies <- function(dfIn, nCopies)
 safelog <- function(x) {return(log10(x+1))}
 safe    <- function(x) {return(x+0.5)}
 
-# Shock tabulation functions.
-fntShockTab <- function(input, freq, impact, duration) {
-    res1 <- input[input$copies>1 & 
-                input$shockfreq==freq & 
-                input$shockimpact==impact & 
-                input$shockmaxlife==duration,]
-    assign("res.shocktdat", res1, envir=globalenv())
-    #print(paste("res.shockdat",length(res.shockdat$copies)))
-    restab <- dcast(res1, copies~lifem, value.var="mdmlosspct")
-    return(restab)
-}
+# D A T A   M A N I P U L A T I O N 
 
 # f n d f G e t G i a n t D a t a 
 fndfGetGiantData <- function(dir.string)
@@ -171,5 +163,7 @@ fndfGetShelfsizeData <- function(results)
 # Edit history:
 # 20171002  RBL Copy from Altman original ExploreGiantOutputs.r.
 #               Add functions to select data for specific analyses.
+# 20171007  RBL Add hacks to make data look better.  
+# 20171008  RBL Add convenience functions for strings and factors.
 # 
 # 

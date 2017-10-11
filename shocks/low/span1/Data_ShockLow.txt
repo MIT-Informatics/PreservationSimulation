@@ -1,6 +1,6 @@
 MIT Preservation Simulation Project 
 
-./Data_ShockLow.txt 20171009_193555EDT 
+./Data_ShockLow.txt 20171011_124137EDT 
 
 XXX Document losses with single copy and varying document size 
 

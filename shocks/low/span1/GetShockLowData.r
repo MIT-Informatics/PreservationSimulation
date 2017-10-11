@@ -12,16 +12,50 @@ results <- fndfGetGiantData("./")
 # Get fewer columns to work with, easier to see.
 dat.shock <- fndfGetShockData(results)
 
+# S U B D I V I D E   D A T A 
+
+# Shock selection functions.
+fndfShockDat <- function(input, freq, impact, duration) {
+    res1 <- input[input$copies>1 & 
+                input$shockfreq==freq & 
+                input$shockimpact==impact & 
+                input$shockmaxlife==duration,]
+}
+
+f <- dat.shock
+
+# Freq 1 yr
+f1i50dh <- fndfShockDat(f, 10000, 50, 5000)
+f1i90dh <- fndfShockDat(f, 10000, 90, 5000)
+f1i100dh <- fndfShockDat(f, 10000, 100, 5000)
+f1i50d1 <- fndfShockDat(f, 10000, 50, 10000)
+f1i90d1 <- fndfShockDat(f, 10000, 90, 10000)
+f1i100d1 <- fndfShockDat(f, 10000, 100, 10000)
+
+# Freq 2 yr
+f2i50dh <- fndfShockDat(f, 20000, 50, 5000)
+f2i90dh <- fndfShockDat(f, 20000, 90, 5000)
+f2i100dh <- fndfShockDat(f, 20000, 100, 5000)
+f2i50d1 <- fndfShockDat(f, 20000, 50, 10000)
+f2i90d1 <- fndfShockDat(f, 20000, 90, 10000)
+f2i100d1 <- fndfShockDat(f, 20000, 100, 10000)
+f2i50d1 <- fndfShockDat(f, 20000, 50, 20000)
+f2i90d1 <- fndfShockDat(f, 20000, 90, 20000)
+f2i100d1 <- fndfShockDat(f, 20000, 100, 20000)
+
+# Freq 5 yr
+f5i50dh <- fndfShockDat(f, 50000, 50, 5000)
+f5i90dh <- fndfShockDat(f, 50000, 90, 5000)
+f5i100dh <- fndfShockDat(f, 50000, 100, 5000)
+f5i50d1 <- fndfShockDat(f, 50000, 50, 10000)
+f5i90d1 <- fndfShockDat(f, 50000, 90, 10000)
+f5i100d1 <- fndfShockDat(f, 50000, 100, 10000)
+f5i50dh <- fndfShockDat(f, 50000, 50, 20000)
+f5i90dh <- fndfShockDat(f, 50000, 90, 20000)
+f5i100dh <- fndfShockDat(f, 50000, 100, 20000)
+
 # T A B U L A T E   D A T A 
 # Tabulate columns by copies and sector lifetime.
-tbl.shock <- data.frame(with(dat.shock, 
-            tapply(mdmlosspct, list(copies, lifem), FUN=identity)))
-# Re-form the data into a table for printing.  
-foo<-(with(dat.shock, 
-       tapply(mdmlosspct, list(copies, lifem), FUN=identity)))
-foo2<-cbind(as.numeric(levels(factor(results$copies))), foo)
-tbl2<-data.frame(foo2)
-colnames(tbl2)<-c("copies",as.numeric(colnames(foo2[,2:ncol(foo2)])))
 
 # Pretty-print a table to a file with explanatory headings.
 sOutputFilename <- "./Data_ShockLow.txt"
@@ -40,16 +74,19 @@ cat("\n")
 library(reshape2)
 bar.small <- dat.shock[,c("lifem", "copies", "mdmlosspct")]
 bar.melted <- melt(bar.small, id=c("copies", "lifem"))
-bar.recast <- dcast(bar.melted, copies~lifem)
+bar.recast <- dcast(bar.melted, copies~lifem, fun.aggregate=max)
 print(bar.recast)
 sink()
 
 # Also print the raw table for use in a spreadsheet of comparisons.
 sComparisonDataFilename <- "XXX Data_Scaling_shockSpreadsheetData.txt"
 sink(sComparisonDataFilename)
+cat(sTitle, "\n\n")
 print(bar.small, n=nrow(bar.small))
 sink()
 
+
+if(0){
 # P L O T   D A T A 
 library(ggplot2)
 
@@ -99,7 +136,7 @@ gp <- gp + theme(
 
 plot(gp)
 fnPlotMakeFile(gp, "baseline-shocklow.png")
-
+}
 
 
 # Unwind any remaining sink()s to close output files.  
