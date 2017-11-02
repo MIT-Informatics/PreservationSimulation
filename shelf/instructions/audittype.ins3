@@ -5,6 +5,6 @@ Auditing Strategy
 value,label,selected
 TOTAL,"TOTAL (every doc every cycle)",SELECTED
 SYSTEMATIC,"SYSTEMATIC (doc subset each segment)",0
-#RANDOM,"RANDOM",0
+UNIFORM,"RANDOM (uniform random subset each segment)",0
 #ZIPF,"ZIPF (NYI!)",0
 
