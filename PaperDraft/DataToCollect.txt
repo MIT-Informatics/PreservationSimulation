@@ -105,6 +105,15 @@ SHOCKS LOW
 
 Q: large shocks and dependencies are dangerous
 SHOCKS HIGH
+af10000 TOTAL s1
+sf10000 sml500,100 si50,90,100
+sf20000,30000 sml5000,10000 si50,90,100
+sf50000 sml10000,20000 si50,90,100
+sf10000,20000 sml10000,20000
+cop3,4,5
+lif10-1000
+sf0 sdl10000
+
 
 
 Q: median, trimean, midmean suffice

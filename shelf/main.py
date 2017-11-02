@@ -235,6 +235,8 @@ def main():
     # ---------------------------------------------------------------
     # Now get the rest of the CLI options that may override whatever.  
     getcliargs.getCliArgsForEverythingElse()
+    #  and try to weed out some arg combinations that won't work.
+    bResult = getcliargs.fnbCheckBadCombinations()
 
     # ---------------------------------------------------------------
     # Start the Python logging facility.
@@ -360,7 +362,7 @@ if __name__ == "__main__":
 #               Remove extraneous imports.  
 # 20161221  RBL Add optional monkeypatch inclusion.
 #               Fix some over-long lines.  
-# 
+# 20171101  RBL Add check for nonsensical combinations of arguments.
 # 
 
 

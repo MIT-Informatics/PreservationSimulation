@@ -207,13 +207,23 @@ def fnMaybeOverride(mysArg,mydDict,mycClass):
                 setattr( mycClass, mysArg, None )
     return getattr(mycClass,mysArg,"XXXXX")
 
+#----------------------------------------------------
+# fnbCheckBadCombinations
+def fnbCheckBadCombinations():
+    ''' Test some param combinations that don't make sense or would lead
+        to misleading results.
+    '''
+    if G.sAuditStrategy == "TOTAL" and G.nAuditSegments > 1:
+        raise ValueError("Audit params inconsistent: strategy, segments")
+
+    return True
 
 # Edit History:
 # 20160920  RBL Move these routines out of main.py.
 # 20161221  RBL Remember to include serverdefaultlife value in G, duh.
 #               Fix some of the overlong lines.  
 #               Allow MaybeOverride to place zero values.
-# 
+# 20171101  RBL Add routine to check for nonsensical or dangerous params.
 # 
 
 #END

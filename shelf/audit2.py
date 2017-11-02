@@ -174,7 +174,7 @@ class CAudit2(object):
          Python 2, one cannot yield from a vanilla function, only
          from a generator, so all that crap, and its convoluted 
          conditional logic, is in here.  
-         This is the meanest, nastiest, ugliest father-raper of them all.
+         *This* is the meanest, nastiest, ugliest father-raper of them all.
         '''
 
         lg.logInfo("AUDIT2", "begin segmt t|%10.3f| auditid|%s| cycle|%s| "
@@ -740,10 +740,16 @@ class CAudit_Uniform(CAudit):
                         nDocsRemaining
                         )
         # Use set() to ensure that a doc is not sampled twice in a segment.
-        #  This is sampling WITHOUT replacement.
+        #  This is sampling WITHOUT replacement for a segment only, to 
+        #  ensure that the right portion of the population gets audited.  
+        #  (I don't know what people who say, "audit one quarter of the 
+        #  population every quarter" actually mean.  This is a plausible
+        #  but optimistic guess.)
+        #  Note that the cycle is still sampled WITH repacement overall, so 
+        #  that some docs may be missed, say, quarter to quarter.  
         # For sampling with replacement, use a list and just append doc IDs
         #  to the list.  Then a doc might be sampled > once per segment, 
-        #  which would be useless.  
+        #  which would be even more useless.  
         # Also, beware the case where there are no docs remaining.  
         #  Carefully return an empty list.
         setDocsThisSegment = set()
@@ -1003,6 +1009,13 @@ TODO (x=done):
 # 20161231  RBL Call CShock routine to check for dead servers before each 
 #                segment of audit.
 # 20160102  RBL PIP8-ify most of the trace and log lines. 
+# 20171101  RBL Clarify comments about uniform random auditing: the several
+#                segments are sampled WITH replacement across segments, but
+#                each segment is sampled WITHOUT replacement so that the
+#                segment size does match the naive arithmetic; e.g., each
+#                quarter, one-quarter of the documents will be examined, but 
+#                from quarter to quarter documents may be sampled more than
+#                one time or zero times, depending on random choice.  
 # 
 
 #END
