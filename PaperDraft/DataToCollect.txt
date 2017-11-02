@@ -68,10 +68,10 @@ lif10-1000
 Q: ineffectiveness of random auditing with replacement
 AUDIT RANDOM
 af10000 TOTAL s1,2,4,10
-af10000 RANDOM s1,2,4,10
+af10000 RANDOM s2,4,10
 gf0 sf0 sdl0
 cop2-5
-lif10-1000
+lif3-1000
 
 Q: docsize and error rate scale linearly against each other
 SCALING DOCSIZE

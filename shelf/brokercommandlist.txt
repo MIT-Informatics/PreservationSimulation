@@ -57,11 +57,23 @@ python main.py {sFamilyDir} {sSpecificDir} {nSimlen} {nRandomseed} --ncopies={nC
 #  that no one would ever actually use.  
 # Adjust the time delays so that nothing is a multiple of anything else, easier
 #  to find in the logs.  
-# 
+# 20171102  RBL Premature extraction occurred 8 times out of the first 60 runs
+#                this morning.  In all cases, the log file length was reported
+#                as either zero or very small, and the timestamps were completely
+#                messed up.  Intolerably high error rate.  
+#                It should be impossible for this to happen, but it is not.
+#                Note: errors were on Win10+Cygwin; still, should be impossible.
+#               Add an extra layer of is-this-file-complete
+#                paranoia to the waiting before extracting values.  Look for
+#                the absolute last line after the time-stats line.
+#               And slow down the waiting after the extract and before cleanup.
+#
 
 date +%Y%m%d_%H%M%S.%3N
 
 while true; do if [ -z $(tail -3 {sFamilyDir}/{sSpecificDir}/log/{sShelfLogFileName}.log | grep "End time stats" | wc -l) ]; then sleep 19; else sleep 7; break; fi; done 
+
+while true; do if [ -z $(tail -3 {sFamilyDir}/{sSpecificDir}/log/{sShelfLogFileName}.log | grep "ENDENDEND" | wc -l) ]; then sleep 31; else sleep 23; break; fi; done 
 
 # Data extraction command.  Header must be forced here so that the 
 #  cleanup program can label the data fields correctly.
@@ -76,7 +88,7 @@ date +%Y%m%d_%H%M%S.%3N
 #  buffers have not yet been written to disk?  Or something?  
 #  Should one always flush() before exiting? 
 
-while true; do if [ 2 -gt $(wc -l {sFamilyDir}/{sSpecificDir}/ext/{sShelfLogFileName}.ext | awk '{print $1}') ]; then sleep 13; else sleep 7; break; fi; done 
+while true; do if [ 2 -gt $(wc -l {sFamilyDir}/{sSpecificDir}/ext/{sShelfLogFileName}.ext | awk '{print $1}') ]; then sleep 37; else sleep 29; break; fi; done 
 
 # Again, slow the pace a little.
 

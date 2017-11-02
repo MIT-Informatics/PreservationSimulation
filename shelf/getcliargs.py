@@ -214,7 +214,11 @@ def fnbCheckBadCombinations():
         to misleading results.
     '''
     if G.sAuditStrategy == "TOTAL" and G.nAuditSegments > 1:
-        raise ValueError("Audit params inconsistent: strategy, segments")
+        raise ValueError("Audit params inconsistent: strategy=%s, segments=%s"
+                        % (G.sAuditStrategy, G.nAuditSegments))
+    if G.sAuditStrategy == "UNIFORM" and G.nAuditSegments == 1:
+        raise ValueError("Audit params inconsistent: strategy=%s, segments=%s"
+                        % (G.sAuditStrategy, G.nAuditSegments))
 
     return True
 
