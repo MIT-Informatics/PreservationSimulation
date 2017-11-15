@@ -6,7 +6,7 @@ fnPlotRandomMonthlyVsBaseline <- function(nCopies){
 
     #  M O N T H L Y  ( M )
     trows <- fnSelectCopies(dat.auditrandom.monthly, nCopies)
-    gp <- ggplot(data=trows,aes(x=lifem,y=safe(mdmlosspct))) 
+    gp <- ggplot(data=trows, aes(trows,x=(lifem),y=safe(mdmlosspct))) 
     gp <- gp +  
             scale_x_continuous() + scale_y_continuous() + 
             scale_x_log10("sector half-life (megahours) A") + 
@@ -23,7 +23,7 @@ fnPlotRandomMonthlyVsBaseline <- function(nCopies){
 
     # B A S E L I N E   T O T A L   A U D I T  ( number ) 
     trows <- fnSelectCopies(dat.auditbaseline, nCopies)
-    gp <- gp + aes(data=trows,aes(x=lifem,y=safe(mdmlosspct))) 
+    gp <- gp +  aes(trows, x=(lifem), y=(safe(mdmlosspct))) 
     gp <- gp + 
             scale_x_continuous() + scale_y_continuous() + 
             scale_x_log10("sector half-life (megahours) C") + 
@@ -59,7 +59,7 @@ fnPlotRandomVariousSegments <- function(nCopies){
 
     #  M O N T H L Y  ( M )
     trows <- fnSelectCopies(dat.auditrandom.monthly, nCopies)
-    gp <- ggplot(data=trows,aes(x=lifem,y=safe(mdmlosspct))) 
+    gp <- ggplot(data=trows,aes(trows, x=(lifem), y=(safe(mdmlosspct)))) 
     gp <- gp + 
             scale_x_log10("sector half-life (megahours) G") + 
             scale_y_log10("% permanent document losses H") +
@@ -75,7 +75,7 @@ fnPlotRandomVariousSegments <- function(nCopies){
 
     # Q U A R T E R L Y  ( Q ) 
     trows <- fnSelectCopies(dat.auditrandom.quarterly, nCopies)
-    gp <- gp + aes(data=trows,aes(x=lifem,y=safe(mdmlosspct))) 
+    gp <- gp +  aes(trows, x=(lifem), y=(safe(mdmlosspct))) 
     gp <- gp + 
             scale_x_log10("sector half-life (megahours) I") + 
             scale_y_log10("% permanent document losses J") +
@@ -90,7 +90,7 @@ fnPlotRandomVariousSegments <- function(nCopies){
 
     # S E M I A N N U A L L Y  ( S ) 
     trows <- fnSelectCopies(dat.auditrandom.semiannually, nCopies)
-    gp <- gp + aes(data=trows,aes(x=lifem,y=safe(mdmlosspct))) 
+    gp <- gp +  aes(trows, x=(lifem), y=(safe(mdmlosspct))) 
     gp <- gp + 
             scale_x_log10("sector half-life (megahours) K") + 
             scale_y_log10("% permanent document losses L") +
