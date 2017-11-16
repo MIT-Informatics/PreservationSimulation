@@ -48,7 +48,7 @@ fnSelectCopies <- function(dfIn, nCopies)
 # Safe functions for plotting.
 # Note that safelog(0) returns 0, as needed for sensible axis labeling.  
 safelog <- function(x) {return(log10(x+1))}
-safe    <- function(x) {return(x+0.5)}
+safe    <- function(x) {return(x+0.001)}
 
 # Shock tabulation functions.
 fntShockTab <- function(input, freq, impact, duration) {

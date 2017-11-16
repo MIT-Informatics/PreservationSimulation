@@ -55,13 +55,15 @@ fnPlotTitles <- function(gp, titleline, titlesize=22, xlabel, ylabel, labelsize=
 }
 
 # f n P l o t M a k e F i l e 
-fnPlotMakeFile <- function(plotname, sFilename, sSize="small") {
+fnPlotMakeFile <- function(plotname, sFilename, sSize="mediumsmall") {
 # Capture graph in 16:9 aspect and reasonable size.
     if (is.null(plotname)) {print("ERROR: missing first argument = plot in progress")}
     if (sSize == "large")
         { png(sFilename,width=1600,height=900) }
-    else if (sSize == "medium")
+    else if (sSize == "mediumlarge")
         { png(sFilename,width=1200,height=675) }
+    else if (sSize == "mediumsmall")
+        { png(sFilename,width=960,height=540) }
     else
         { png(sFilename,width=800,height=450) } 
       print(plotname)

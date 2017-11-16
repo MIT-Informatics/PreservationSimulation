@@ -17,7 +17,7 @@ dat.auditrandom.monthly <- dat.auditrandom[dat.auditrandom$auditsegments==10,]
 dat.auditrandom.quarterly <- dat.auditrandom[dat.auditrandom$auditsegments==4,]
 dat.auditrandom.semiannually <- dat.auditrandom[dat.auditrandom$auditsegments==2,]
 
-source("RandomTables.r")
+source("./RandomTables.r")
 
 # T A B U L A T E   D A T A  A S   T E X T 
 
@@ -61,7 +61,7 @@ library(ggplot2)
 
 # Compare random qtly and monthly against total annual.
 
-source("RandomPlots.r")
+source("./RandomPlots.r")
 
 # R A N D O M   V S   B A S E L I N E 
 
