@@ -1,0 +1,37 @@
+# getting closer with color=factor(something)
+# leaves 9 rows of missing data
+# and missing lifem=3,5 for copies=3
+
+# thanks to 
+# http://zevross.com/blog/2014/08/04/beautiful-plotting-in-r-a-ggplot2-cheatsheet-3/
+
+trows<-dat.auditrandom[dat.auditrandom$copies>=3 & 
+                         dat.auditrandom$copies<=5,]
+trows<-trows[dat.auditrandom$auditsegments==10,]
+x <- ggplot(trows, aes(x=lifem, y=safe(mdmlosspct), color=factor(copies)))
+x<-x+geom_line(data=trows)
+x<-x+geom_point(data=trows, shape=(48+nCopies))
+x<-x+scale_x_log10()+scale_y_log10()
+plot(x)
+
+
+trows<-dat.auditrandom[dat.auditrandom$copies>=3 & 
+                         dat.auditrandom$copies<=5,]
+trows<-trows[dat.auditrandom$auditsegments==10,]
+x <- ggplot(trows, aes(x=lifem, y=safe(mdmlosspct), color=factor(copies)))
+x<-x+geom_line(data=trows)
+x<-x+geom_point(data=trows, shape=(48))
+x<-x+scale_x_log10()+scale_y_log10()
+plot(x)
+
+
+trows<-dat.auditrandom[dat.auditrandom$copies>=3 & 
+                         dat.auditrandom$copies<=5,]
+trows<-trows[dat.auditrandom$auditsegments==4,]
+x <- ggplot(trows, aes(x=lifem, y=safe(mdmlosspct), color=factor(copies)))
+x<-x+geom_line(data=trows)
+x<-x+geom_point(data=trows, shape=('o'), size=3, color='black')
+x<-x+scale_x_log10()+scale_y_log10()
+plot(x)
+
+

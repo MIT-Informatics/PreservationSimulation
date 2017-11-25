@@ -241,6 +241,8 @@ DONE - adapt the pretestchecklist and other scripts to the new instruction
 
 
 TODO: broker docs
+FIXME - add -p option to mkdir so that user can use specificdir more 
+    than one level deep, e.g., ../shocks/low/span1.
 FIXME - warn the user in strong language always to setupfamilydir for their
     runs, which is a console activity.  hmmm, maybe that could be added
     as an option to the broker form, eh?  so they don't have to use any 

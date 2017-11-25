@@ -1,4 +1,5 @@
-How to run on AWS
+'
+/.How to run on AWS
                 RBL 20170519
                 updated, most recently 20170913
 
@@ -72,10 +73,14 @@ Erase old software
 
 Copy AWS install script
 - in WinSCP or FileZilla or whatever
+- make sure that the source dir has a recent pull from github on it
 - copy file shelf/AWS_shelf_installscript.sh from a development system
-- make sure that the source has a recent pull from github on it
+- yes, overwrite
 - copy the install script onto ~
-- sh AWS_shelf_installscript.sh
+
+
+Run AWS install script to install all the software
+- sh AWS_shelf_installscript.sh   or maybe   sh -x Aws_shelf_installscript.sh
 - wait a couple minutes
 - if the script goes right to the end, saying that it has written the startup
     script, then everything worked.
@@ -83,9 +88,22 @@ Copy AWS install script
     to do.
 
 
+Remove pulled directories of moldy, old results
+- below working/ remove any directories that have names you want to use
+- rm -rf working/shocks   for instance
+
+
 Create a directory tree for test results
 - cd working/shelf (probably in another SSH or putty session)
 - sh setupfamilydir.sh <familydir> <specificdir>
+
+
+Remove old history from MongoDB
+- python dblistdatabases.py   to get names of dbs.  The one used for 
+    all UI-launched simulations is   brokeradmin.
+- python dblistcollections brokeradmin
+- python dbclearcollection brokeradmin done
+- python dbdumpdonekeys brokeradmin   just to be sure.
 
 
 Turn on broker logging
@@ -108,6 +126,14 @@ Run broker for a single range of cases
    lifetimes, shock and glitch frequencies, impacts, durations.  
 - useful trick: set seeds=1 and TEST mode on to count the number of cases, then 
     set seeds=21 or whatever and TEST mode off to do the actual run.  
+
+
+Pick up the results
+- cd familydir/specificdir/dat
+- check that the GiantOutput file does not have any nolinefound errors in it
+- rename the GiantOutput_00.txt file appropriately to reflect its contents
+- zip samenameusedforgiantoutput_logs.zip ../log/*.log
+- copy the output and logzip files back to dirs on the home system
 
 
 Run broker for large series of cases

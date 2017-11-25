@@ -9,6 +9,7 @@
 #  subdirs needed by the broker.  Also copies the default CSV 
 #  parameter files into the family dir.
 # familydir required, but specific defaults to "." for convenience.
+# both familydir and specificdir may be more than one dir level deep.
 
 if [ -z "$1" -o -z "$2" -o "$1" = "-h" -o "$1" = "--help" ]
 then
@@ -32,7 +33,7 @@ then
     echo "Family Dir $sFamilyDir already exists."
 else
     echo "Creating dir $sFamilyDir"
-    mkdir "$sFamilyDir"
+    mkdir -p "$sFamilyDir"
 fi
 
 if [ -d "$sFamilyDir/$sSpecificDir" ] 
@@ -40,7 +41,7 @@ then
     echo "Specific Dir $sFamilyDir/$sSpecificDir already exists."
 else
     echo "Creating dir $sFamilyDir/$sSpecificDir"
-    mkdir "$sFamilyDir/$sSpecificDir"
+    mkdir -p "$sFamilyDir/$sSpecificDir"
 fi
 
 for dd in act cmd dat ext log 'done'
