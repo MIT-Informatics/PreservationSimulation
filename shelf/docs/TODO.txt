@@ -2,6 +2,8 @@ TODO list for PreservationSimulation SHELF project
 
 
 TODO: shock
+FIXME - increase number of servers available to 50 or 60.
+FIXME - sort end-audit server list for easier reading.  
 DONE - add server default lifespan to param files and CLI, zero = infinite.
 DONE - server default lifespan is random, not fixed.  currently expo.
 DONE - add server default lifespan to main CLI and broker.
@@ -94,7 +96,7 @@ DONE - add routine to tell if production mode is on, so it can be logged.
 
 
 TODO: general
-FIXME - updata deadly out of date comments in, e.g., main.py.  check all 
+FIXME - update deadly out of date comments in, e.g., main.py.  check all 
     such modules.
 FIXME - do we want to wrap this up as a python package?  not at all clear.
     given that it has to be installed on a linux, a zip with readmefirst and 
@@ -200,8 +202,8 @@ TODO: broker.py
 DONE - harden against missing env var for NUMBER_OF_PROCESSORS.  and then
     maybe remove the crap added to AWSinstall.
 DONE - log all broker commands into some file.
-FIXME - write a utility to reconstitute the main.py command line 
-    from a result line in GiantOutput.  
+FIXME - write a utility to reconstitute the main.py and broker.py command lines 
+    from a result line in GiantOutput and from the dump in the log.  
 DONE - put out the command line, or at least the arg list, as trace-0
     so that it gets recorded into a tee file.  
 DONE - dump the instruction dictionary as trace-0 before or just after
@@ -241,7 +243,7 @@ DONE - adapt the pretestchecklist and other scripts to the new instruction
 
 
 TODO: broker docs
-FIXME - add -p option to mkdir so that user can use specificdir more 
+DONE - add -p option to mkdir so that user can use specificdir more 
     than one level deep, e.g., ../shocks/low/span1.
 FIXME - warn the user in strong language always to setupfamilydir for their
     runs, which is a console activity.  hmmm, maybe that could be added
@@ -366,8 +368,8 @@ DONE - update main.py to accept both lifek and lifem, where lifek takes
 DONE - BUG: fix main.py arg parsing to make all the positional params mandatory.  
   and bump the CLI version number.  
 DONE - remove the requirement for a Y/N value from --shortlog.
-FIXME - BUG: fix main.py default values in G so that is doesn't fail if there are
-  no param files in the familydir or specificdir; always fails for the list
+FIXME - BUG: fix main.py default values in G so that it doesn't fail if there 
+  are no param files in the familydir or specificdir; always fails for the list
   items, such as ncopies, I think because the list items in the dictionaries
   should be one level deeper.  
 DONE - Update SERVERUSE log lines and some other lines, too, at end to state 
@@ -402,7 +404,8 @@ FIXME - QUESTION: the last audit cycle is always left open. Is this problem?  So
   random offset is no longer necessary.  The open, unaudited period
   at the end of the simulation would seem to add a touch of reality to it: 
   losses may occur at any time in the auditing cycle, and you never know when
-  you will need access to a particular document.  
+  you will need access to a particular document.  And, btw, finishing the 
+  last audit would not change the permanent losses at all.  
 
 
 TODO: unittests

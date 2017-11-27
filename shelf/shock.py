@@ -204,7 +204,7 @@ class CShock(object):
         Before each audit cycle, check to see if any servers
          have exceeded their lifetimes.
         '''
-        for (sServerID, cServer) in G.dID2Server.items():
+        for (sServerID, cServer) in (util.fnttSortIDDict(G.dID2Server)):
             fCurrentLife = cServer.mfGetMyCurrentLife()
             bServerAlive = not cServer.mbIsServerDead()
 

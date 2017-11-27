@@ -56,14 +56,14 @@ AUDIT FREQUENCY
 af1000,2500,5000,10000 TOTAL s1
 gf0 sf0 sdl0
 cop2-5
-lif10-1000
+lif3-1000
 
 Q: effectiveness of segmented auditing
 AUDIT SEGMENTS
 af10000 TOTAL s1,2,4,10,50
 gf0 sf0 sdl0
 cop2-5
-lif10-1000
+lif3-1000
 
 Q: ineffectiveness of random auditing with replacement
 AUDIT RANDOM
@@ -79,7 +79,7 @@ af0
 gf0 sf0 sdl0
 cop1
 docsize5,50,500,5000
-lif1-10000
+lif3-10000
 
 Q: shelfsize irrelevant, only wastes time
 SCALING SHELFSIZE
@@ -96,23 +96,29 @@ gf2500 gl250,1000 gi33,50,67
 gf5000 gl1000,2500 gi33,50,67
 gf10000,20000 gi?
 cop5
-lif10-1000
+lif3-1000
 sf0 sdl0
 
 Q: low-rate shocks are a lot like large glitches
 SHOCKS LOW
+af10000 TOTAL s1
+sf20000,30000 sml5000,10000 si50,90
+sf50000 sml10000,20000 si50,90
+sf10000,20000 sml10000,20000  si50,90
+cop3,4,5
+lif3-1000
 
 
 Q: large shocks and dependencies are dangerous
 SHOCKS HIGH
 af10000 TOTAL s1
-sf10000 sml500,100 si50,90,100
+sf10000 sml5000 si50,90,100
 sf20000,30000 sml5000,10000 si50,90,100
 sf50000 sml10000,20000 si50,90,100
 sf10000,20000 sml10000,20000
 cop3,4,5
-lif10-1000
-sf0 sdl10000
+lif3-1000
+sf0 sdl100000 baseline case
 
 
 

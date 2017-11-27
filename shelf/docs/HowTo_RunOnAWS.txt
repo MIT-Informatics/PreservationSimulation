@@ -1,7 +1,6 @@
-'
-/.How to run on AWS
+How to run on AWS
                 RBL 20170519
-                updated, most recently 20170913
+                updated many times, most recently 20171126
 
 
 START AWS EC2 MACHINE
@@ -16,7 +15,7 @@ Start EC2 machine
 - password
 - EC2
 - instances
-- RBL07A 32core c3.8xl 200GB 20160228 USEME
+- select   RBL07A 32core c3.8xl 200GB 20160228 USEME
     (not the copy nor the spare).
 - examine State Transition: you want the last instance you closed:
     when launched, when shut down.
@@ -40,7 +39,10 @@ with WinSCP
 - Login
 - accept unknown cert from server IP
 - enter passphrase
-- remember that ctrl-R refreshes only the currently viewed remote dir.
+- remember that ctrl-R refreshes only the currently viewed remote dir, and
+    does not include its children.  this is a real pain.
+- remember that some result directories and files may have been pulled along
+    with the source code, so delete any result dirs that you will not use.
 
 
 with putty
@@ -130,29 +132,49 @@ Run broker for a single range of cases
 
 Pick up the results
 - cd familydir/specificdir/dat
-- check that the GiantOutput file does not have any nolinefound errors in it
+- check that the GiantOutput file does not have any nolinefound errors in it.
+    the nolinefound errors are usually caused by running out of servers
+    due to deaths related to shocks.  the set of servers has already 
+    been increased twice, and is now beyond a plausible scenario: are there
+    really sixty -- or even thirty or forty -- cloud storage vendors
+    to choose from?  if you see these errors, check the log files.
 - rename the GiantOutput_00.txt file appropriately to reflect its contents
 - zip samenameusedforgiantoutput_logs.zip ../log/*.log
 - copy the output and logzip files back to dirs on the home system
 
 
-Run broker for large series of cases
+To run broker for large series of cases
+
+Prepare the environment for a long broker run
 - cd working/shelf
+- BE SURE to activate shelfenv: from ~   . shelfenv/bin/activate  
+- BE SURE to specify   export TRACE_PRODUCTION=YES   for efficiency.
+- ENSURE that you have enough disk space.  WARNING: long log files for a 
+    few thousand runs will consume 50-100GB of disk space, and you don't
+    want to run out in the middle of a long sequence of runs.  
+
+
+Prepare a broker command
 - python broker.py -h and read the help on all the options
 - best way to do this is use the form, look at the command issued by the form 
     on a test-only case (--listonly), copy the CLI command to an editor, 
     and change the params you want there.  
-- typical editing changes to add cases (use JSON syntax):
-    range: '{"$gte" : 1 , "$lte" : 5}'
-    list: '[5000, 10000, 20000]'
-    spacing optional, i think
 - trying to type the entire command with twenty or thirty options is doomed
     to disappointment.
-- BE SURE to specify short logs (--shortlog) for production runs; 
+- check the form's broker output listing to see that the number of cores is 
+    maxed out for your configuration.
+- typical editing changes to add cases (use JSON syntax): examples:
+    range: --ncopies='{"$gte" : 1 , "$lte" : 5}'
+    list: --shockfreq='[5000, 10000, 20000]'
+    spacing optional, i think
+- BE SURE to specify short logs (--shortlog) for most production runs; 
     long log files consume 2x the cputime and walltime and tons of disk space.
 - REMEMBER to remove the --listonly when you finally want to run.
 - BE SURE to aim the broker output entirely to a log file, so that your 
     session does not need to remain connected the entire time.
+- use --nseeds=1 to assess how many cases there are with a short listing.
+- BE SURE to correct the number of seeds to 21 or 101 or whatever
+    before running production.
 - BE SURE to remember the ampersand '&' after the broker command so that 
     it runs in a subshell, leaving your session free to tail the dat file.
 - e.g., 
@@ -166,8 +188,6 @@ Run broker for large series of cases
         --docsize=50 --shelfsize=1 --nseeds=21 --shortlog \
         --listonly 2>&1  > tmp/broker_bigjob_201705191800.log 
     but without all the backslashes; just one extremely long line.
-- check the form's broker output listing to see that the number of cores is 
-    maxed out for your configuration.
 
 
 
