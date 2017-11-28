@@ -1,6 +1,7 @@
 # extract instruction file for extractvalues.py
 # RBLandau 20141125, revised 20141130, revised 20150609, revised 20160216,
-#  revised 20170109 and 20170110 and 20170121 and 2017013 and 20170514.
+#  revised 20170109 and 20170110 and 20170121 and 2017013 and 20170514
+#  and 20171127.
 
 # O U T P U T   L I N E   T E M P L A T E 
 # In the template line, all the variable names must be extracted (successfully)
@@ -9,14 +10,12 @@
 #  can use a different separator if the user wishes.  
 
 =template
-{timestamp} {docsize} {shelfsize} {copies} {lifem} {simlength} {seed} {lost} {docstotal} {docsokay} {docsrepairedmajority} {docsrepairedminority} {docslost} {auditcycles} {auditfrequency} {auditsegments} {auditrepairs} {auditmajority} {auditminority} {auditlost} {glitchfreq} {glitchimpact} {glitchdecay} {glitchmaxlife} {nglitches} {serverdefaultlife} {shockfreq} {shockimpact} {shockmaxlife} {shockspan} {shocktype} {nshocks} {deadserversactive} {deadserversall} {walltime} {cputime} {logfilename} {logfilesize} {instructionfilename} {todaysdatetime} {extractorversion} {cpuinfo} {mongoid}
+{timestamp} {docsize} {shelfsize} {copies} {lifem} {simlength} {seed} {lost} {docstotal} {docsokay} {docsrepairedmajority} {docsrepairedminority} {docslost} {auditcycles} {auditfrequency} {auditsegments} {audittype} {auditrepairs} {auditmajority} {auditminority} {auditlost} {glitchfreq} {glitchimpact} {glitchdecay} {glitchmaxlife} {nglitches} {serverdefaultlife} {shockfreq} {shockimpact} {shockmaxlife} {shockspan} {shocktype} {nshocks} {deadserversactive} {deadserversall} {walltime} {cputime} {logfilename} {logfilesize} {instructionfilename} {todaysdatetime} {extractorversion} {cpuinfo} {mongoid}
 
 # The header line will be output or not, depending on the 
 #  --header CLI option or the "header" environment variable.  
-# Bzzzt: new news: the header spec here is now irrelevant.  The 
+# Bzzzt: new news: a header spec here is now irrelevant.  The 
 #  header output will be just the template with the braces stripped.  
-#=header
-#asdf asdf xyzzy qwerty iou jkl mnop 
 
 # R U L E S   F O R   R E G E X E S 
 # BE VERY CAREFUL constructing the regular expressions for this file.
@@ -102,6 +101,7 @@ docsrepairedminority,COLLECTIONTOTALS,12,nminority.(\d+)
 docslost,COLLECTIONTOTALS,13,nlost.(\d+)
 
 # A U D I T S 
+audittype,PARAMS INFO.*AUDIT.*type,9,type.([A-Za-z]+)
 auditcycles,AUDITTOTALS,6,ncycles.(\d+)
 auditfrequency,AUDITTOTALS,7,nfrequency.(\d+)
 auditsegments,AUDITTOTALS,8,nsegments.(\d+)

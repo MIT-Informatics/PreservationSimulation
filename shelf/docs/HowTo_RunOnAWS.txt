@@ -188,6 +188,7 @@ Prepare a broker command
         --docsize=50 --shelfsize=1 --nseeds=21 --shortlog \
         --listonly 2>&1  > tmp/broker_bigjob_201705191800.log 
     but without all the backslashes; just one extremely long line.
+- DON'T FORGET THE AMPERSAND!  or you'll have to use ctrl-Z and bg.
 
 
 

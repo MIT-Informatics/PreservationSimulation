@@ -114,6 +114,10 @@ DONE - at end, report servers that died and were in use at the time;
 
 
 TODO: extractvalues.py
+FIXME - add audittype field to output.  this may require changes
+    to other modules as well, but I can't think why at the moment.
+    probably change only the instruction file to add the
+    two regexes and the augmented header line.
 DONE - add optional arg for --separator=','
 DONE - default should still be space
 DONE - if i use comma, then datacleanup can use DictReader.  

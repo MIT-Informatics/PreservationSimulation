@@ -220,19 +220,23 @@ def fnttSortIDDict(mydIn):
     Sort a dictionary with keys of the form <letter><number>.
     Return a tuple of tuples (key,value) from the dict.
     
-    Get a list of tuples: (letterprefix, number).
-    Sort the list of tuples by number.
-    Paste the prefix back onto the sorted numbers, forming keys.
-    Make tuple of tuples of keys and values from dict.  
+    Get a list of tuples: (sortkey, dictitemstuple).
+    Sort the list of tuples by number key.
+    Make tuple of just the dictitemtuples.  
     Yes, we could do this in a single expression that was several lines long
      and, btw, completely unreadable.  
+     E.g., as a not-very-maintainable one-liner:
+     return tuple((z[1] 
+                    for z in sorted(
+                        [(fnIntPlease(x[0][1:]), x) 
+                            for x in dd.items()],
+                        key=lambda y: y[0])
+                    ))
     '''
-    ltmp1 = ((x[0], x[1:]) for x in mydIn.keys())
-    ltmp2 = sorted(ltmp1, key=lambda s: fnIntPlease(s[1]))
-    sPrefix = ltmp2[0][0]
-    ltmp3 = ((lambda y: sPrefix + str(y))(x[1]) for x in ltmp2)
-    ltmp4 = ((x, mydIn[x]) for x in ltmp3)
-    return tuple(ltmp4)
+    ltmp1 = ((fnIntPlease(x[0][1:]), x) for x in mydIn.items())
+    ltmp2 = sorted(ltmp1, key=lambda y: y[0])
+    ltmp3 = (z[1] for z in ltmp2)
+    return tuple(ltmp3)
 
 
 # f n i N u m b e r F r o m I D 
