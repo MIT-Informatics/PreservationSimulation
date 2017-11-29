@@ -2,8 +2,8 @@ TODO list for PreservationSimulation SHELF project
 
 
 TODO: shock
-FIXME - increase number of servers available to 50 or 60.
-FIXME - sort end-audit server list for easier reading.  
+DONE - increase number of servers available to 50 or 60.
+DONE - sort end-audit server list for easier reading.  
 DONE - add server default lifespan to param files and CLI, zero = infinite.
 DONE - server default lifespan is random, not fixed.  currently expo.
 DONE - add server default lifespan to main CLI and broker.
@@ -37,6 +37,7 @@ DONOTDO - if shockfreq==0, should we coerce serverdefaultlifetime=0?
 
 
 TODO: status bookkeeping database
+FIXME - move to SQLite instead of the current MongoDB.
 DONE - add server default half-life, and any other vagrant parameters 
     you find lying about, to the hash for done-detection.  
 DONE - write searchdb status database based on json files.
@@ -114,7 +115,9 @@ DONE - at end, report servers that died and were in use at the time;
 
 
 TODO: extractvalues.py
-FIXME - add audittype field to output.  this may require changes
+FIXME - do not use the same lineregex more than once.  if a lineregex 
+    has already been used on a line, hit or miss, don't bother asking again.  
+DONE - add audittype field to output.  this may require changes
     to other modules as well, but I can't think why at the moment.
     probably change only the instruction file to add the
     two regexes and the augmented header line.
@@ -155,6 +158,7 @@ DONE - why did i ever remove glitchspan?  put it back.
 
 
 TODO: R 
+FIXME - add audittype to the list of don't-care columns.
 FIXME - think about a way to rename the columns at the last instant, 
     just before they go into R processing, with the style of names
     suggested by Altman, e.g., i_foo for inputs and o_bar for outputs.
@@ -400,7 +404,7 @@ FIXME - Add comments somewhere about the hits and losses numbers reported at the
   nonemptyhits=758 but repairs=587; the difference is 171 missing nonempty hits.
   Well, there were 171 nonempty hits in the log after the last audit finished 
   at t=80026.  So there.  
-FIXME - QUESTION: the last audit cycle is always left open. Is this problem?  Some 
+DONE - QUESTION: the last audit cycle is always left open. Is this problem?  Some 
   arithmetic could cause it to be completed before the end of simulated time.  
   However, we used to have a random offset for the beginning of audits to prevent
   multiple clients from having synchronized audits and clogging the network.  
@@ -419,7 +423,7 @@ FIXME - add a pile more unit tests, some small and some large.
 
 
 TODO: R reporting
-FIXME - state tables both as loss numbers and as percentage losses of collection.
+DONE - state tables both as loss numbers and as percentage losses of collection.
 
 
 TODO: lifetimes: correlated institutional failures

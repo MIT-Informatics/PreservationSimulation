@@ -1,0 +1,20 @@
+Work needed for MULTI-SELECT broker form
+
+brokergroupform.py
+- change many of the attributes to request.form.getall("name")
+    result comes back as a list
+- if list is one item, format as a scalar, num or string
+- if list is a list, format as [a,b,c] in single quotes
+
+base template
+- replace max/min items with single item
+
+insert template
+- write new macro for multiselect items.  may need separate ones 
+    for numeric and string items.
+
+instructions ins3 files
+- remove max/min files
+- update the middle files
+
+
