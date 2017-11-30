@@ -1,4 +1,5 @@
 <!-- brokergroup_form_base.j2 -->
+{# This really is the base file.  This comment is for the generated file.#}
 <!-- THIS .tpl FORM IS AUTOMATICALLY GENERATED.  DO NOT EDIT. -->
 
 <html>
@@ -48,11 +49,13 @@
     </tr>
 
 <!--  c o p i e s ,   s e c t o r   l i f e  -->
-    <tr bgcolor="#ffffbb">
-        {% block nCopiesMin %}{% endblock %}
-        {% block nCopiesMax %}{% endblock %}
-        {% block nLifemMin %}{% endblock %}
-        {% block nLifemMax %}{% endblock %}
+    <tr bgcolor="#ffffbb" colspan="4">
+        {% block nCopies %}{% endblock %}
+        {% block nLifem %}{% endblock %}
+        <!-- blank separator -->
+        <td>&nbsp;</td>
+        <!-- blank separator -->
+        <td>&nbsp;</td>
     </tr>
  
  <!--  a u d i t i n g  -->   
@@ -250,6 +253,7 @@
 20170520    RBL Add bRedo checkbox.
                 Correct missing </td> for bTestOnly.
 20170913    RBL Widen the table w.r.t. the window.  
+20171129    RBL Remove min/max vars in favor of multi-select ones.
 
 -->
 

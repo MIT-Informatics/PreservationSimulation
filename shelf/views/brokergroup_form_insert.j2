@@ -33,6 +33,25 @@
     </td>
 {% endmacro %}
 
+{# Macro for multiple select var #}
+{% macro insertmultivar(data, heading=none, required=none) %}    
+    <td>
+        <table>
+            <tr><th align="left">
+                <b>{%if heading%}{{heading}}{%else%}{{data.heading}}{%endif%}
+                    {%if required%}<font color="red">* required</font>{%endif%}</b>
+            </th></tr>
+            <tr><td>
+                <select name="{{data.varname}}" multiple size="6">
+    {% for item in data.lValueList %}
+                <option value="{{ item.value }}"{% if item.selected != '0' %} selected{%endif%}>&nbsp;&nbsp;{{item.label}}&nbsp;</option>
+    {% endfor %}
+                </select>
+            </td></tr>
+        </table>
+    </td>
+{% endmacro %}
+
 {# Macro for text var, similar table. #}
 {% macro inserttextvar(name, heading, size, value="", required=none, extra=none) %}
     <td>
@@ -49,6 +68,7 @@
     </td>
 {%endmacro%}
 
+{# Macro for checkbox #}
 {% macro insertcheckvar(name, heading, value="", required=none, extra=none) %}
     <td>
         <table>
@@ -77,12 +97,8 @@
     {{insertmyvar(dVars.sAuditType)}}
 {% endblock %}
 
-{% block nCopiesMax scoped %}
-   {{insertmyvar(dVars.nCopiesMax)}}
-{% endblock %}
-
-{% block nCopiesMin scoped %}
-   {{insertmyvar(dVars.nCopiesMin)}}
+{% block nCopies scoped %}
+   {{insertmultivar(dVars.nCopies)}}
 {% endblock %}
 
 {% block nDocSize scoped %}
@@ -94,7 +110,7 @@
 {% endblock %}
 
 {% block nGlitchFreq scoped %}
-    {{insertmyvar(dVars.nGlitchFreq)}}
+    {{insertmultivar(dVars.nGlitchFreq)}}
 {% endblock %}
 
 {% block nGlitchIgnorelevel scoped %}
@@ -102,23 +118,19 @@
 {% endblock %}
 
 {% block nGlitchImpact scoped %}
-    {{insertmyvar(dVars.nGlitchImpact)}}
+    {{insertmultivar(dVars.nGlitchImpact)}}
 {% endblock %}
 
 {% block nGlitchMaxlife scoped %}
-    {{insertmyvar(dVars.nGlitchMaxlife)}}
+    {{insertmultivar(dVars.nGlitchMaxlife)}}
 {% endblock %}
 
-{% block nGlitchSpan scoped %}
-    {{insertmyvar(dVars.nGlitchSpan)}}
+{% block nGlitchSpanMulti scoped %}
+    {{insertmultivar(dVars.nGlitchSpan)}}
 {% endblock %}
 
-{% block nLifemMax scoped %}
-   {{insertmyvar(dVars.nLifemMax)}}
-{% endblock %}
-
-{% block nLifemMin scoped %}
-   {{insertmyvar(dVars.nLifemMin)}}
+{% block nLifem scoped %}
+   {{insertmultivar(dVars.nLifem)}}
 {% endblock %}
 
 {% block nRandomSeeds scoped %}
@@ -134,19 +146,19 @@
 {% endblock %}
 
 {% block nShockImpact scoped %}
-   {{insertmyvar(dVars.nShockImpact)}}
+   {{insertmultivar(dVars.nShockImpact)}}
 {% endblock %}
 
 {% block nShockMaxlife scoped %}
-   {{insertmyvar(dVars.nShockMaxlife)}}
+   {{insertmultivar(dVars.nShockMaxlife)}}
 {% endblock %}
 
 {% block nShockFreq scoped %}
-   {{insertmyvar(dVars.nShockFreq)}}
+   {{insertmultivar(dVars.nShockFreq)}}
 {% endblock %}
 
 {% block nShockSpan scoped %}
-   {{insertmyvar(dVars.nShockSpan)}}
+   {{insertmultivar(dVars.nShockSpan)}}
 {% endblock %}
 
 {% block sDatabaseName scoped %}
@@ -231,6 +243,11 @@ A notable kludge occurs here.  For params that have a min and max value
  Yes, kludge.  You were warned.  
 The same applies to nLifem.  And any other range-type params you were 
  thinking of adding.  Don't do it.  
+BZZZT!  New news: the min/max inputs hae been removed in favor of 
+    multi-select option boxes.  If the form is being used by the 
+    bottle web server, one must use the request.form.getall() function
+    to retrieve the value as a list.
+
 
 <!-- Edit history:
 20170220    RBL Original version.
@@ -239,6 +256,7 @@ The same applies to nLifem.  And any other range-type params you were
 20170222    RBL Add some comments and this history.  
 20170520    RBL Add Redo.
                 Add dummy blocks for Redo and TestOnly.
+20171129    RBL Add multi-select var macro to be used for some vars.  
 
 
 -->
