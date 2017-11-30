@@ -5,11 +5,13 @@
 # Runs the program and may collect the results to show on the page.
 
 import os
-from bottle import route, run, template, request, get, post, static_file, view, response
+from bottle import route, run, template, request, get, post, \
+    static_file, view, response
 from catchex import catchex
 from NewTraceFac import NTRC, ntrace, ntracef
 import re
 import subprocess
+import util
 
 
 @get('/')
@@ -33,27 +35,25 @@ def mainsim_post():
     sFamilyDir = request.forms.get("sFamilyDir")
     sSpecificDir = request.forms.get("sSpecificDir")
 
-    nCopiesMin= request.forms.get("nCopiesMin")
-    nCopiesMax= request.forms.get("nCopiesMax")
+    lCopies= request.forms.getall("nCopies")
 
-    nLifemMin = request.forms.get("nLifemMin")
-    nLifemMax = request.forms.get("nLifemMax")
+    lLifem = request.forms.getall("nLifem")
     nServerDefaultLife = request.forms.get("nServerDefaultLife")
 
     nAuditFreq = request.forms.get("nAuditFreq")
     nAuditSegments = request.forms.get("nAuditSegments")
     sAuditType = request.forms.get("sAuditType")
 
-    nGlitchFreq = request.forms.get("nGlitchFreq")
-    nGlitchImpact = request.forms.get("nGlitchImpact")
-    nGlitchMaxlife = request.forms.get("nGlitchMaxlife")
+    lGlitchFreq = request.forms.getall("nGlitchFreq")
+    lGlitchImpact = request.forms.getall("nGlitchImpact")
+    lGlitchMaxlife = request.forms.getall("nGlitchMaxlife")
     nGlitchSpan = request.forms.get("nGlitchSpan")
     nGlitchDecay = request.forms.get("nGlitchDecay")
 
-    nShockFreq = request.forms.get("nShockFreq")
-    nShockImpact = request.forms.get("nShockImpact")
-    nShockSpan = request.forms.get("nShockSpan")
-    nShockMaxlife = request.forms.get("nShockMaxlife")
+    lShockFreq = request.forms.getall("nShockFreq")
+    lShockImpact = request.forms.getall("nShockImpact")
+    lShockSpan = request.forms.getall("nShockSpan")
+    lShockMaxlife = request.forms.getall("nShockMaxlife")
 
     nDocSize = request.forms.get("nDocSize")
     nShelfSize = request.forms.get("nShelfSize")
@@ -74,16 +74,18 @@ def mainsim_post():
     # Make a dictionary to use to substitute params into CLI command.
     dVals = dict(sFamilyDir=sFamilyDir, sSpecificDir=sSpecificDir,
 
-                nCopiesMin=nCopiesMin, nCopiesMax=nCopiesMax, 
+                sCopies=fnsQuoteMulti(lCopies),
                 nServerDefaultLife=nServerDefaultLife, 
 
-                nLifemMin=nLifemMin, nLifemMax=nLifemMax,
+                sLifem=fnsQuoteMulti(lLifem), 
 
                 nAuditFreq=nAuditFreq, nAuditSegments=nAuditSegments, 
                 sAuditType=sAuditType,
 
-                nGlitchFreq=nGlitchFreq, nGlitchImpact=nGlitchImpact, 
-                nGlitchMaxlife=nGlitchMaxlife, nGlitchSpan=nGlitchSpan, 
+                sGlitchFreq=fnsQuoteMulti(lGlitchFreq), 
+                sGlitchImpact=fnsQuoteMulti(lGlitchImpact), 
+                sGlitchMaxlife=fnsQuoteMulti(lGlitchMaxlife), 
+                nGlitchSpan=nGlitchSpan, 
                 nGlitchDecay=nGlitchDecay, 
 
                 bShortLog=bShortLog, 
@@ -91,8 +93,10 @@ def mainsim_post():
                 nSimLength=nSimLength, nBandwidthMbps=nBandwidthMbps, 
                 nRandomSeeds=nRandomSeeds, 
 
-                nShockFreq=nShockFreq, nShockImpact=nShockImpact, 
-                nShockSpan=nShockSpan, nShockMaxlife=nShockMaxlife, 
+                sShockFreq=fnsQuoteMulti(lShockFreq), 
+                sShockImpact=fnsQuoteMulti(lShockImpact), 
+                sShockSpan=fnsQuoteMulti(lShockSpan), 
+                sShockMaxlife=fnsQuoteMulti(lShockMaxlife), 
 
                 nDocSize=nDocSize, nShelfSize=nShelfSize, 
 
@@ -114,12 +118,10 @@ def mainsim_post():
     dVals["xredo"] = "--redo" if bRedo else ""
 
     # Format the Mongo range expression for nCopies
-    sRange = sRangeTemplate % (nCopiesMin, nCopiesMax)
-    dVals["xcopies"] = sRange
+    dVals["xcopies"] = dVals["sCopies"]
 
     # Format the Mongo range expression for nLifem
-    sRange = sRangeTemplate % (nLifemMin, nLifemMax)
-    dVals["xlifem"] = sRange
+    dVals["xlifem"] = dVals["sLifem"]
     NTRC.ntrace(3,"proc expanded dict|%s|" % (dVals))
 
 #  S E L E C T   C O M M A N D  A N D   F O R M A T  I T
@@ -172,6 +174,16 @@ def fnValidateDirectories(dVals):
     else:
         return sValidationErrorMsg
 
+# f n s Q u o t e M u l t i 
+@ntrace
+def fnsQuoteMulti(mylMultiList):
+    '''
+    Render list from multi-select input box into list syntax
+     acceptable to json.
+    '''
+    return '\'' + str([util.fnIntPlease(s) for s in mylMultiList]) + '\''
+
+
 # CLI commands to run the main program.
 sMainCommandStringToStdout = ('python broker.py inprogress done '
             '--familydir={sFamilyDir} '
@@ -180,11 +192,11 @@ sMainCommandStringToStdout = ('python broker.py inprogress done '
             '--serverdefaultlife={nServerDefaultLife} '
             '--auditfreq={nAuditFreq} --auditsegments={nAuditSegments} '
             '--audittype={sAuditType} '
-            '--glitchfreq={nGlitchFreq} --glitchimpact={nGlitchImpact} '
-            '--glitchdecay={nGlitchDecay} --glitchmaxlife={nGlitchMaxlife} '
+            '--glitchfreq={sGlitchFreq} --glitchimpact={sGlitchImpact} '
+            '--glitchdecay={nGlitchDecay} --glitchmaxlife={sGlitchMaxlife} '
             '--glitchspan={nGlitchSpan} '
-            '--shockfreq={nShockFreq} --shockimpact={nShockImpact} '
-            '--shockspan={nShockSpan} --shockmaxlife={nShockMaxlife} '
+            '--shockfreq={sShockFreq} --shockimpact={sShockImpact} '
+            '--shockspan={sShockSpan} --shockmaxlife={sShockMaxlife} '
             '--docsize={nDocSize} --shelfsize={nShelfSize} '
             '--nseeds={nRandomSeeds} '
             '{xshortlog} {xtestonly} {xredo} '
@@ -321,7 +333,10 @@ if __name__ == '__main__':
 # 20170318  RBL Validate directories before issuing broker command.
 # 20170420  RBL Add tracing.
 # 20170520  RBL Add Redo checkbox.
-# 7
+# 20171130  RBL Accept multi-select inputs, format as json lists. 
+#                Affects nCopies, nLifem, 
+#                nGlitchFreq, nGlitchImpact, nGlitchMaxlife, 
+#                nShockFreq, nShockImpact, nShockMaxlife, nShockSpan.
 # 
 
 #END

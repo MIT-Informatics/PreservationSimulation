@@ -1,7 +1,8 @@
 <!-- brokergroup_form_base.j2 -->
-{# This really is the base file.  This comment is for the generated file.#}
+{# Yes, this file really is the base file.  
+    The misleading comment below will appear in the generated file.#}
 <!-- THIS .tpl FORM IS AUTOMATICALLY GENERATED.  DO NOT EDIT. -->
-
+{# End of misleading comment.#}
 <html>
     <!-- brokergroup_form_base.tpl - template for bottle to present options
         for a broker.py run of hundreds or thousands of individual simulation
@@ -25,6 +26,10 @@
                 <strong>Use the TEST button to see exactly 
                 how many cases will be chosen with your parameter choices.
                 </strong>
+                </p>
+                <p>For many options, multiple choices are permitted.  Be careful
+                    when selecting multiple choices: the combinations can 
+                    generate a very large number of cases.
                 </p><br/>
             </td></tr>
             <p></p>
@@ -51,10 +56,8 @@
 <!--  c o p i e s ,   s e c t o r   l i f e  -->
     <tr bgcolor="#ffffbb" colspan="4">
         {% block nCopies %}{% endblock %}
+        <td>&nbsp;</td>        <!-- blank separator -->
         {% block nLifem %}{% endblock %}
-        <!-- blank separator -->
-        <td>&nbsp;</td>
-        <!-- blank separator -->
         <td>&nbsp;</td>
     </tr>
  
@@ -254,6 +257,7 @@
                 Correct missing </td> for bTestOnly.
 20170913    RBL Widen the table w.r.t. the window.  
 20171129    RBL Remove min/max vars in favor of multi-select ones.
+20171130    RBL Narrow formatting a little.  
 
 -->
 

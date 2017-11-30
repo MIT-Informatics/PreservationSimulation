@@ -2,7 +2,7 @@
 # Remember: all frequencies are now half-lives.
 
 nServerDefaultLife
-Expected Half-life of Servers (hrs) (0=infinite)
+Expected Half-life of Servers (hrs) (0=infinite), must be nonzero for shocks
 value,label,selected
 0,"0 (infinite)",SELECTED
 #20000,"20000 (2 years)",0
