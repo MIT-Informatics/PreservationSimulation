@@ -1,9 +1,10 @@
 #!/usr/bin/python
 # util.py
-# Recovered, we hope, after commit/delete screw-up.  
+# Dinky utility functions used all over the place.
+# Includes all time and size calculcations, sorting, etc.
 
 import random
-from NewTraceFac import TRC,trace,tracef,NTRC,ntrace,ntracef
+from NewTraceFac import NTRC, ntrace, ntracef
 from math import sqrt, log
 import itertools
 from globaldata import *
@@ -17,7 +18,7 @@ from time import localtime
 
 
 # m a k e e x p o 
-@tracef("UTIL", level=4)
+@ntracef("UTIL", level=4)
 def makeexpo(mean):
     ''' fn makeexpo(mean)
         return integer from exponential distribution with mean
@@ -28,7 +29,7 @@ def makeexpo(mean):
 
 
 # m a k e u n i f 
-@tracef("UTIL", level=4)
+@ntracef("UTIL", level=4)
 def makeunif(lo,hi):
     ''' fn makeinfo(lo,hi)
         return integer from uniform distribution in range
@@ -38,7 +39,7 @@ def makeunif(lo,hi):
 
     
 # m a k e n n n o r m 
-@tracef("UTIL", level=4)
+@ntracef("UTIL", level=4)
 def makennnorm(mean, sdev=0):
     ''' makennnorm(mean)
         Return non-neg gaussian with mean and sd sqrt(mean)
@@ -55,7 +56,7 @@ def makennnorm(mean, sdev=0):
 
 
 # m a k e s o m e r a n d 
-@tracef("UTIL", level=4)
+@ntracef("UTIL", level=4)
 def makesomerand(mysDistn, myParam1, myParam2=0):
     '''
     Make a random number of some kind, specified by first arg.
@@ -71,7 +72,7 @@ def makesomerand(mysDistn, myParam1, myParam2=0):
             
 
 # m a k e s e r v e r l i f e 
-@tracef("UTIL", level=4)
+@ntracef("UTIL", level=4)
 def makeserverlife(mynHalf, myParam=0):
     '''
     Today, server lifetimes are exponential.
@@ -80,7 +81,7 @@ def makeserverlife(mynHalf, myParam=0):
 
 
 # m a k e s e c t o r l i f e 
-@tracef("UTIL", level=4)
+@ntracef("UTIL", level=4)
 def makesectorlife(mynHalf, myParam=0):
     '''
     Today, sector lifetimes are exponential.
@@ -89,7 +90,7 @@ def makesectorlife(mynHalf, myParam=0):
 
 
 # m a k e g l i t c h l i f e 
-@tracef("UTIL", level=4)
+@ntracef("UTIL", level=4)
 def makeglitchlife(mynHalf, myParam=0):
     '''
     Today, glitch lifetimes are exponential.
@@ -98,7 +99,7 @@ def makeglitchlife(mynHalf, myParam=0):
 
 
 # m a k e s h o c k l i f e 
-@tracef("UTIL", level=4)
+@ntracef("UTIL", level=4)
 def makeshocklife(mynHalf, myParam=0):
     '''
     Today, shock lifetimes are exponential.
@@ -110,7 +111,7 @@ def makeshocklife(mynHalf, myParam=0):
 
 
 # f n I n t P l e a s e 
-@tracef("UTIL", level=5)
+@ntracef("UTIL", level=5)
 def fnIntPlease(oldval):
     ''' fnIntPlease()
         If it looks like an integer and walks like an integer, . . . 
@@ -123,7 +124,7 @@ def fnIntPlease(oldval):
 
 
 # f n n C a l c D o c S i z e ( ) 
-@tracef("UTIL", level=4)
+@ntracef("UTIL", level=4)
 def fnnCalcDocSize(mynLevel):
     lPercents = G.dDocParams[mynLevel]
     nPctRandom = makeunif(0,100)
@@ -133,13 +134,15 @@ def fnnCalcDocSize(mynLevel):
         nPctCum += nPercent
         if nPctRandom <= nPctCum:
             nDocSize = int(makennnorm(nMean, nSdev))
-            TRC.tracef(3,"DOC","proc CalcDocSize rand|%s| cum|%s| pct|%s| mean|%s| sd|%s| siz|%s|" % (nPctRandom,nPctCum,nPercent,nMean,nSdev,nDocSize))
+            NTRC.ntracef(3,"DOC","proc CalcDocSize rand|%s| cum|%s| pct|%s| "
+            "mean|%s| sd|%s| siz|%s|" 
+            % (nPctRandom,nPctCum,nPercent,nMean,nSdev,nDocSize))
             break
     return nDocSize
 
 
 #  f n f C a l c B l o c k L i f e t i m e 
-@tracef("UTIL", level=4)
+@ntracef("UTIL", level=4)
 def fnfCalcBlockLifetime(mynSectorLife, mynCapacity):
     ''' Because of the funny way we handle small errors, we have to
         calculate the aggregate block error rate for the shelf.  
@@ -171,7 +174,7 @@ def fnfCalcBlockLifetime(mynSectorLife, mynCapacity):
 
 
 # f n f H a l f l i f e 2 E x p o n e n t i a l l i f e 
-@tracef("UTIL", level=5)
+@ntracef("UTIL", level=5)
 def fnfHalflife2Exponentiallife(myfHalflife):
     ''' Convert half-life number to mean exponential lifetime
         for use by makeexpo().
@@ -181,7 +184,7 @@ def fnfHalflife2Exponentiallife(myfHalflife):
 
 
 # f n f C a l c T r a n s f e r T i m e 
-@tracef("UTIL", level=5)
+@ntracef("UTIL", level=5)
 def fnfCalcTransferTime(mynDocSize, mynBandwidth):
     ''' Convert doc size in MB and bandwidth in Mb/s 
         to part of an hour that it takes to transmit.  
@@ -195,7 +198,7 @@ def fnfCalcTransferTime(mynDocSize, mynBandwidth):
 
 
 #  f n l S o r t I D L i s t 
-@tracef("UTIL")
+@ntracef("UTIL")
 def fnlSortIDList(mylIDs):
     '''\
     Sort a list of IDs of the sort we use here.
@@ -214,7 +217,7 @@ def fnlSortIDList(mylIDs):
 
 
 # f n l t S o r t I D D i c t 
-@tracef("UTIL")
+@ntracef("UTIL")
 def fnttSortIDDict(mydIn):
     '''
     Sort a dictionary with keys of the form <letter><number>.
@@ -232,6 +235,7 @@ def fnttSortIDDict(mydIn):
                             for x in dd.items()],
                         key=lambda y: y[0])
                     ))
+    Some perverted functional programming junkies would actually prefer that.
     '''
     ltmp1 = ((fnIntPlease(x[0][1:]), x) for x in mydIn.items())
     ltmp2 = sorted(ltmp1, key=lambda y: y[0])
@@ -240,7 +244,7 @@ def fnttSortIDDict(mydIn):
 
 
 # f n i N u m b e r F r o m I D 
-@tracef("UTIL", level=5)
+@ntracef("UTIL", level=5)
 def fniNumberFromID(sSomeID):
     '''\
     All IDs are one letter followed by an integer.
@@ -254,7 +258,7 @@ def fniNumberFromID(sSomeID):
 
 
 # f n s G e t T i m e S t a m p 
-@tracef("UTIL", level=5)
+@ntracef("UTIL", level=5)
 def fnsGetTimeStamp():
     vecT = localtime()
     (year, month, day, hrs, mins, secs, _, _, _) = vecT
@@ -266,6 +270,7 @@ def fnsGetTimeStamp():
 # 20170121  RBL Add GetTimeStamp.
 # 20171127  RBL Add fnttSortIDDict function.
 #               PEP8-ify the spacing of some of the code.
+# 20171206  RBL Change all @trace to @ntrace.
 # 
 
 
