@@ -19,10 +19,8 @@ options("scipen"=100, "digits"=1)
 options("width"=120)
 
 # Add an infix concatenation operator for strings.
-`%+%` <- function(a,b) {paste0(a,b)}
+`%+%` <- function(a,b) paste0(a,b)
 
-# Tired of saying levels(factor(foo))?  I am.
-lf <- function(v) {levels(factor(v))}
 
 # U T I L I T Y   F U N C T I O N S 
 
@@ -32,6 +30,7 @@ lf <- function(v) {levels(factor(v))}
 # midmean is just a trimmed mean of the middle half of the sample.
 # trimean is a less efficient but easier trimmed central measure, 
 #  and was a JWT favorite.  
+# trimmedmean is a 10% trimmed mean, i.e., mean of the middle 80% of the data.
 trimean <-  function(vect)  
 {   foo <- fivenum(vect); 
     ans <- 0.5*foo[3] + 0.25*foo[2] + 0.25*foo[4]; 
@@ -39,6 +38,10 @@ trimean <-  function(vect)
 }
 midmean <-  function(vect)  
 {   ans <- mean(vect, trim=0.25, na.rm=TRUE); 
+    ans 
+}
+trimmedmean <-  function(vect)  
+{   ans <- mean(vect, trim=0.10, na.rm=TRUE); 
     ans 
 }
 
@@ -50,24 +53,33 @@ fnSelectCopies <- function(dfIn, nCopies)
 # Safe functions for plotting.
 # Note that safelog(0) returns 0, as needed for sensible axis labeling.  
 safelog <- function(x) {return(log10(x+1))}
-safe    <- function(x) {return(x+0.5)}
+safe    <- function(x) {return(x+0.001)}
 
-# D A T A   M A N I P U L A T I O N 
+# Shock tabulation functions.
+fntShockTab <- function(input, freq, impact, duration) {
+    res1 <- input[input$copies>1 & 
+                input$shockfreq==freq & 
+                input$shockimpact==impact & 
+                input$shockmaxlife==duration,]
+    assign("res.shocktdat", res1, envir=globalenv())
+    #print(paste("res.shockdat",length(res.shockdat$copies)))
+    restab <- dcast(res1, copies~lifem, value.var="mdmlosspct")
+    return(restab)
+}
 
 # f n d f G e t G i a n t D a t a 
 fndfGetGiantData <- function(dir.string)
 {
     # L O A D   F I L E S 
-
     # Load & merge all files in directory
     if (dir.string == "") {dir.string <- "./"}
     filesList <- grep(pattern="^Giant.*\\.txt$", dir(dir.string), 
                 perl=TRUE, value = TRUE)
 # !!! I need to get fully qualified names out of grep here.  How?  
 # !!! As it is, works only for current directory.  
-    sims.df.ls = lapply( filesList, 
-          function(x)read.table(x,
-                                header=TRUE,sep=" ", na.strings="nolinefound")
+    sims.df.ls <- lapply( filesList, 
+                        function(x)read.table(x,
+                            header=TRUE,sep=" ", na.strings="nolinefound")
     ) # NOTE MISSING PARAMETER ENTRIES in na.strings
     sims.merged.df <- bind_rows(sims.df.ls)
 
@@ -76,16 +88,16 @@ fndfGetGiantData <- function(dir.string)
     allVarNames <- colnames(sims.merged.df)
     ignoreVarNames <- c("timestamp","seed","walltime","cputime","logfilename",
         "logfilesize","instructionfilename","todaysdatetime","extractorversion",
-        "cpuinfo","mongoid")
+        "cpuinfo","mongoid","audittype")
     resultVarNames <- c("docslost","docsrepairedmajority","docsrepairedminority",
         "lost","nshocks","nglitches","deadserversactive","deadserversall",
         "docsokay","auditmajority","auditminority","auditlost","auditrepairs",
         "auditcycles")
-    coreResultVarNames<- c("docslost","docsrepairedmajority",
+    coreResultVarNames <- c("docslost","docsrepairedmajority",
         "docsrepairedminority")
-    paramVarNames<- setdiff(setdiff(allVarNames, resultVarNames), ignoreVarNames)
-    testVarNames<-c("copies", "lifem")
-    nonIgnoreVarNames<-setdiff(allVarNames, ignoreVarNames)
+    paramVarNames <- setdiff(setdiff(allVarNames, resultVarNames), ignoreVarNames)
+    testVarNames <- c("copies", "lifem")
+    nonIgnoreVarNames <- setdiff(allVarNames, ignoreVarNames)
 
     # Select, group, and aggregate.
     sims.selected.df <- sims.merged.df[nonIgnoreVarNames]
@@ -111,7 +123,7 @@ fndfGetAuditData <- function(results)
     # Specific to audit analyses: 
     lNamesIWant <- c("copies","lifem","mdmlosspct",
                     "auditfrequency","auditsegments",    
-                                            #"audittype", too, needs fixed
+                    #"audittype", too, needs fixed, but is not in data!
                     "docsize","shelfsize")
     results.narrow <- fndfGetSubsetData(results, lNamesIWant)
     results.plausible <- results.narrow[results.narrow$lifem>=2,]
@@ -123,11 +135,10 @@ fndfGetShockData <- function(results)
 {
     # Specific to shock analyses: 
     lNamesIWant <- c("copies","lifem","mdmlosspct",
-                    "shockfreq","shockimpact","shockmaxlife","shockspan",
-                    "docsize","shelfsize")
-    shock.results <- results[lNamesIWant]
-    shock.plausible <- shock.results[shock.results$copies>1,]
-    return(shock.plausible)
+                    "shockfreq","shockimpact","shockmaxlife","shockspan"
+                    )
+    shockresults <- results[lNamesIWant]
+    return(shockresults)
 }
 
 # f n d f G e t G l i t c h D a t a 
@@ -145,10 +156,9 @@ fndfGetGlitchData <- function(results)
 fndfGetDocsizeData <- function(results)
 {
     lNamesIWant <- c("copies","lifem","mdmlosspct",
+                    "auditfreq","auditsegments", 
+                                            #"audittype", too, needs fixed
                     "docsize","shelfsize")
-    results.narrow <- results[lNamesIWant]
-    results.plausible <- results.narrow[results.narrow$lifem>=2,]
-    return(results.plausible)
 }
 
 # f n d f G e t S h e l f s i z e D a t a 
@@ -163,7 +173,13 @@ fndfGetShelfsizeData <- function(results)
 # Edit history:
 # 20171002  RBL Copy from Altman original ExploreGiantOutputs.r.
 #               Add functions to select data for specific analyses.
-# 20171007  RBL Add hacks to make data look better.  
-# 20171008  RBL Add convenience functions for strings and factors.
+# 20171103  RBL Start on audit work.  
+#               TODO: Add audittype to the extracted data in GiantOutput files,
+#                and then we can use it here.
+# 20171129  RBL Add audittype to ignore column list.
+#               Add 10% trimmed mean as a stat.
+# 20171211  RBL Narrow the list of columns for shock data.
 # 
 # 
+
+#END
