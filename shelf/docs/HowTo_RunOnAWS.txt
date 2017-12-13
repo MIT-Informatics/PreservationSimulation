@@ -143,7 +143,11 @@ Pick up the results
 - copy the output and logzip files back to dirs on the home system
 
 
-To run broker for large series of cases
+To run broker for large series of cases:
+(Note: The new UI permits multiple selection for many of the 
+parameters.  This should make it less likely that you will have to issue
+a broker command through the CLI.)
+
 
 Prepare the environment for a long broker run
 - cd working/shelf

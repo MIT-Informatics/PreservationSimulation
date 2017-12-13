@@ -7,7 +7,7 @@ source("./DataUtil.r")
 source("./PlotUtil.r")
 
 # G E T   D A T A  
-rm(results)
+if exists("results") {rm(results)} 
 results <- fndfGetGiantData("./")
 # Get fewer columns to work with, easier to see.
 dat.shockall <- as.data.frame(fndfGetShockData(results))
