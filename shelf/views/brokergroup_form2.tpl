@@ -9,6 +9,17 @@
     <title>Broker Form</title>
 </head>
 <body>
+
+<style type="text/css">
+<!--
+input.largerCheckbox
+{
+width: 16px;
+height: 16px;
+}
+//-->
+</style>
+
 <form action="mainsim" method="post">
     <font size="+1">
         <title>PreservationSimulation broker.py batch run</title>
@@ -52,7 +63,7 @@
                     <font color="red">* required</font></b>
             </td></tr>
             <tr><td>
-                <input type="text" name=sFamilyDir size="10" value=""
+                <input type="text" name=sFamilyDir size="15" value=""
                 >
             </td></tr>
         </table>
@@ -65,7 +76,7 @@
                     <font color="red">* required</font></b>
             </td></tr>
             <tr><td>
-                <input type="text" name=sSpecificDir size="10" value=""
+                <input type="text" name=sSpecificDir size="15" value=""
                 >
             </td></tr>
         </table>
@@ -459,7 +470,7 @@
              no details of sector errors, audits, repairs)<br/> 
              <font size="+1">You want this turned on 
             for production runs.</font> <br/>
-            <input type="checkbox" name="bShortLog" value="true" checked>
+            <input type="checkbox" name="bShortLog" value="true" checked class="largerCheckbox" >
         </td>
 
 <!--  g e n e r a l  -->
@@ -516,19 +527,31 @@
         <td>            <b>Redo</b><br/>
             Force recalculation of these cases
             even if they have been done recently.<br/>
-            <input type="checkbox" name="bRedo" value="true"><br/><br/>
+            <input type="checkbox" name="bRedo" value="true" class="largerCheckbox"><br/><br/>
         </td>
 
-<!-- blank separator -->
-        <td>&nbsp;</td>
-
 <!-- test mode warning button -->
-                <td><strong><font size="+2">TEST only!</font> </strong>
+                <td colspan="2" centered><strong><font size="+2">TEST only!</font> </strong>
             Print instructions, but
             <em>do not run</em> simulations.<br />
             <font size="+1">Uncheck me for production run!</font><br/>
-            <input type="checkbox" name="bTestOnly" value="true" checked><br/><br/>
+            <input type="checkbox" name="bTestOnly" value="true" checked class="largerCheckbox" ><br/><br/>
         </td>
+
+<!-- Checkbox for running detached -->
+                <td>
+            <strong>Run detached process?</strong><br />
+            Results go to logfile, and you may log out.<br />
+            <input type="checkbox" name="bRunDetached" value="true" scale=10 class="largerCheckbox" ><br /><br />
+        </td>
+        
+<!-- Logfilename for running detached -->
+                <td>
+            <strong>Logfile name for detached running</strong><br />
+            Data will be appended to an existing file.<br />
+            <input type="text" name="sDetachedLogfile", size=15, value="">
+        </td>
+
     </tr>
 
     </table>

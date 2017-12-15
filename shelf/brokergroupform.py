@@ -34,6 +34,8 @@ def mainsim_post():
     # Collect all the bloody data, one item at a time, grumble.
     sFamilyDir = request.forms.get("sFamilyDir")
     sSpecificDir = request.forms.get("sSpecificDir")
+    sDatabaseName = request.forms.get("sDatabaseName")
+    nRandomSeeds = request.forms.get("nRandomSeeds")
 
     lCopies= request.forms.getall("nCopies")
 
@@ -60,13 +62,14 @@ def mainsim_post():
 
     bShortLog = request.forms.get("bShortLog")
 
-    nRandomSeeds = request.forms.get("nRandomSeeds")
     nSimLength = request.forms.get("nSimLength")
     nBandwidthMbps = request.forms.get("nBandwidthMbps")
 
     bRedo = request.forms.get("bRedo")
     bTestOnly = request.forms.get("bTestOnly")
-    sDatabaseName = request.forms.get("sDatabaseName")
+    
+    bRunDetached = request.forms.get("bRunDetached")
+    sDetachedLogfile = request.forms.get("sDetachedLogfile")
 
     msg = "mainsim_post: NOT YET IMPLEMENTED"
 
@@ -103,10 +106,28 @@ def mainsim_post():
                 bRedo=bRedo,
                 bTestOnly=bTestOnly, 
                 sDatabaseName=sDatabaseName, 
-                
+
+                bRunDetached=bRunDetached,
+                sDetachedLogfile=sDetachedLogfile,
+
                 msg=msg
                 )
     NTRC.ntrace(3,"proc first dict|%s|" % (dVals))
+
+#  S P E C I A L   C A S E S   O F   I N T E R D E P E N D E N C E 
+    # If the user specified a logfile for detached running, then 
+    #  pretend that he remembered to check the box, too.
+    if dVals["sDetachedLogfile"]:
+        dVals["bRunDetached"] = True
+    # If the user wants to run detached, we may have to supply 
+    #  a default filename.
+    # Be sure to add today's date to the default filename.
+    if dVals["bRunDetached"] and not dVals["sDetachedLogfile"]:
+        dVals["sDetachedLogfile"] = ("./BrokerDetachedLogfile"
+                                + "_"
+                                + util.fnsGetTimeStamp().split("_")[0]
+                                + ".log")
+
 #  A D D   E X T R A   S P E C I F I C   S T R I N G S 
     # If the user asks for a shortlog, add the option to the command.
     dVals["xshortlog"] = "--shortlog" if bShortLog else ""
@@ -123,6 +144,15 @@ def mainsim_post():
     # Format the Mongo range expression for nLifem
     dVals["xlifem"] = dVals["sLifem"]
     NTRC.ntrace(3,"proc expanded dict|%s|" % (dVals))
+
+    # If running detached with output to a log file, 
+    #  specify append to file and detach process.
+    if dVals["sDetachedLogfile"]:
+        dVals["xLogfileExpr"] = (" >> " 
+                                + dVals["sDetachedLogfile"]
+                                + " &")
+    else:
+        dVals["xLogfileExpr"] = ""
 
 #  S E L E C T   C O M M A N D  A N D   F O R M A T  I T
     # Do something with the form data
@@ -201,6 +231,7 @@ sMainCommandStringToStdout = ('python broker.py inprogress done '
             '--nseeds={nRandomSeeds} '
             '{xshortlog} {xtestonly} {xredo} '
             '2>&1 '
+            '{xLogfileExpr} '
 #            '--help'
             )
 # Itsy bitsy test versions

@@ -33,7 +33,7 @@
     </td>
 {% endmacro %}
 
-{# Macro for multiple select var #}
+{# Macro for   m u l t i p l e   s e l e c t   var #}
 {% macro insertmultivar(data, heading=none, required=none) %}    
     <td>
         <table>
@@ -52,7 +52,7 @@
     </td>
 {% endmacro %}
 
-{# Macro for text var, similar table. #}
+{# Macro for   t e x t   v a r .  A similar table. #}
 {% macro inserttextvar(name, heading, size, value="", required=none, extra=none) %}
     <td>
         <table>
@@ -68,7 +68,7 @@
     </td>
 {%endmacro%}
 
-{# Macro for checkbox #}
+{# Macro for   c h e c k b o x   #}
 {% macro insertcheckvar(name, heading, value="", required=none, extra=none) %}
     <td>
         <table>
@@ -166,18 +166,24 @@
 {% endblock %}
 
 {% block sFamilyDir scoped %}
-   {{inserttextvar("sFamilyDir", "Family Directory", 10, required=true)}}
+   {{inserttextvar("sFamilyDir", "Family Directory", 15, required=true)}}
 {% endblock %}
 
 {% block sSpecificDir scoped %}
-   {{inserttextvar("sSpecificDir", "Specific Directory", 10, required=true)}}
+   {{inserttextvar("sSpecificDir", "Specific Directory", 15, required=true)}}
 {% endblock %}
 
 <!-- empty placeholders -->
 {% block bRedo scoped %}
 {% endblock %}
 
+{% block bRunDetached scoped %}
+{% endblock %}
+
 {% block bTestOnly scoped %}
+{% endblock %}
+
+{% block sDetachedLogfile scoped %}
 {% endblock %}
 
 
@@ -237,6 +243,7 @@ BZZZT!  New news: the min/max inputs hae been removed in favor of
 20170520    RBL Add Redo.
                 Add dummy blocks for Redo and TestOnly.
 20171129    RBL Add multi-select var macro to be used for some vars.  
+20171215    RBL Add check and logfilename for Run Detached.
 
 
 -->
