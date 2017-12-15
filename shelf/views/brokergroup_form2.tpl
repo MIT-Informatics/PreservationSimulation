@@ -11,13 +11,11 @@
 <body>
 
 <style type="text/css">
-<!--
-input.largerCheckbox
-{
-width: 16px;
-height: 16px;
-}
-//-->
+    input.largerCheckbox
+    {
+        width: 18px;
+        height: 18px;
+    }
 </style>
 
 <form action="mainsim" method="post">
