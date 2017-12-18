@@ -14,6 +14,7 @@ from time import localtime
 # U t i l i t i e s 
 #------------------
 
+
 # Functions to generate random deviates for several distributions.
 
 
@@ -50,6 +51,7 @@ def makennnorm(mean, sdev=0):
          the tail.  
     '''
     return abs(random.gauss(mean, sdev) if sdev > 0 else mean)
+
 
 # Functions to random deviates for various event streams:
 #  sector, server, glitch, and shock lifetimes.  
@@ -117,10 +119,9 @@ def fnIntPlease(oldval):
         If it looks like an integer and walks like an integer, . . . 
     '''
     try:
-        newval = int(oldval)
-    except:
-        newval = oldval
-    return newval
+        return int(myString)
+    except ValueError:
+        return myString
 
 
 # f n n C a l c D o c S i z e ( ) 
@@ -265,14 +266,26 @@ def fnsGetTimeStamp():
     ascT = "%4d%02d%02d_%02d%02d%02d" % (year, month, day, hrs, mins, secs)
     return ascT
 
+
+# f n b D o N o t I g n o r e L i n e 
+@ntrace("UTIL", level=5)
+def fnbDoNotIgnoreLine(mysLine):
+    '''
+    True if not a comment or blank line.
+    '''
+    # Ignore comment and blank lines, but take all others.
+    return (not re.match("^\s*#", mysLine)) and (not re.match("^\s*$", mysLine))
+
+
 # Edit history:
 # 2014xxxx  RBL Original version.
 # 20170121  RBL Add GetTimeStamp.
 # 20171127  RBL Add fnttSortIDDict function.
 #               PEP8-ify the spacing of some of the code.
 # 20171206  RBL Change all @trace to @ntrace.
+# 20171217  RBL Move fnIntPlease and fnbDoNotIgnoreLine into here from broker.
 # 
-
+# 
 
 
 #END

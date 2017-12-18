@@ -179,6 +179,7 @@ class CG(object):
 
 #===========================================================
 
+
 # f n G e t C o m m a n d T e m p l a t e s 
 @ntrace
 def fnGetCommandTemplates(mysCommandFilename):
@@ -188,28 +189,12 @@ def fnGetCommandTemplates(mysCommandFilename):
     '''
     with open(mysCommandFilename, 'r') as fhIn:
         g.lTemplates = [line.rstrip() for line in fhIn 
-                        if fnbDoNotIgnoreLine(line)]
+                        if util.fnbDoNotIgnoreLine(line)]
         return g.lTemplates
 
-# f n b D o N o t I g n o r e L i n e 
-@ntrace
-def fnbDoNotIgnoreLine(mysLine):
-    '''
-    True if not a comment or blank line.
-    '''
-    # Ignore comment and blank lines, but take all others.
-    return (not re.match("^\s*#", mysLine)) and (not re.match("^\s*$", mysLine))
-
-# f n I n t P l e a s e 
-@ntracef("INT", level=5)
-def fnIntPlease(myString):
-    # If it looks like an integer, make it one.
-    try:
-        return int(myString)
-    except ValueError:
-        return myString
 
 #===========================================================
+
 
 # f n W a i t F o r O p e n i n g 
 @catchex
@@ -269,6 +254,7 @@ def fnbWaitForOpening(mynProcessMax, mysProcessName, mynWaitTime, mynWaitLimit):
 
 #===========================================================
 
+
 # f n d M a y b e E n h a n c e I n s t r u c t i o n 
 @catchex
 @ntracef("MAIN")
@@ -291,6 +277,7 @@ def fndMaybeEnhanceInstruction(mydRawInstruction):
 
 #===========================================================
 #===========================================================
+
 
 # M A I N 
 @catchex
@@ -352,6 +339,7 @@ def main():
     
     NTRC.ntracef(0,"MAIN","End.")
 
+
 # f n n P r o c e s s A l l I n s t r u c t i o n s 
 @catchex
 @ntracef("MAIN")
@@ -389,6 +377,7 @@ def fnnProcessAllInstructions(myitInstructionIterator):
 
     return nRunNumber
 
+
 # f n s t P r o c e s s O n e I n s t r u c t i o n M a n y T i m e s 
 @catchex
 @ntracef("MAIN")
@@ -399,7 +388,7 @@ def fnstProcessOneInstructionManyTimes(mynRunNumber, mydInstruction):
     Assign an id to each run that consists of the instruction hash (_id)
      followed by _<seed number>.  
     '''
-    lSeedsToUse = fnlGetRandomSeeds(fnIntPlease(g.nRandomSeeds), 
+    lSeedsToUse = fnlGetRandomSeeds(util.fnIntPlease(g.nRandomSeeds), 
                     g.sRandomSeedFile)
     mydInstruction["sBaseId"] = str(mydInstruction["_id"])
     for (nIdx, nMaybeSeed) in enumerate(lSeedsToUse):
@@ -419,6 +408,7 @@ def fnstProcessOneInstructionManyTimes(mynRunNumber, mydInstruction):
         if nStatus > 0:
             break
     return nStatus
+
 
 # f n v P r o c e s s O n e I n s t r u c t i o n 
 @catchex
@@ -515,6 +505,7 @@ def fnstProcessOneInstruction(mysRunNumber, mydInstruction, mynSeed):
 # - Keep text log of commands to broker
 # - Check for valid dirs
 
+
 # f n l G e t R a n d o m S e e d s 
 @catchex
 @ntracef("MAIN")
@@ -527,8 +518,9 @@ def fnlGetRandomSeeds(mynHowMany, mysFilename):
     '''
     with open(mysFilename, "r") as fhSeeds:
         lsSeeds = [(fhSeeds.next()) for _ in range(mynHowMany)]
-        lnSeeds = [fnIntPlease(_) for _ in lsSeeds]
+        lnSeeds = [util.fnIntPlease(_) for _ in lsSeeds]
     return lnSeeds
+
 
 # f n v G e t E n v i r o n m e n t O v e r r i d e s 
 @catchex
@@ -545,11 +537,13 @@ def fnvGetEnvironmentOverrides():
     except (ValueError, TypeError):
         raise TypeError('Environment variable NPOLITE must be an integer.')
 
+
 # f n s R e c o n s t i t u t e C o m m a n d 
 @ntrace
 def fnsReconstituteCommand(lArgs):
     sOut = "python " + " ".join(lArgs)
     return sOut
+
 
 # f n b M a y b e L o g C o m m a n d 
 @ntrace
@@ -562,6 +556,7 @@ def fnbMaybeLogCommand(sCommand):
         return True
     else:
         return False
+
 
 # f n b V a l i d a t e D i r 
 @ntrace
@@ -616,7 +611,6 @@ foreach single-line file in holding dir
 #                not True-False values.  Put back 90% of the code I changed.
 # 20160216  RBL Add --glitchspan option.
 #               Incr run counter before checking for already done.
-
 # 20161006  RBL Make familydir and specificdir mandatory options.
 #                BEWARE: if you say nargs=1 instead of nargs='?', 
 #                the value returned is a list containing the string, 
@@ -649,7 +643,9 @@ foreach single-line file in holding dir
 #                with some options that are not searchable and don't 
 #                appear in the instuctions but are still necessary, 
 #                e.g., --shortlog.  
-# 20170128  RBL Adapt to searchdatabasemongo instead of json version.  
+# 20170128  RBL Adapt to searchdatabasemongo instead of json version, 
+#                which DFW due to file locking shortcomings in Windows 
+#                and Linux.  At least, I couldn't get it to work reliably.  
 # 20170201  RBL Dump traceproduction y/n in trace-0.
 # 20170317  RBL Repair logfilename template, which had the shock maxlife
 #                on the wrong side of the underscore, duh.  
@@ -662,6 +658,7 @@ foreach single-line file in holding dir
 #                and then maybe user limitation in NCORES env var.  
 # 20170612  RBL Note that broker will append each command to a 
 #                log file, if that file already exists.  
+# 20171217  RBL Move a couple small functions to util.py.
 # 
 # 
 
