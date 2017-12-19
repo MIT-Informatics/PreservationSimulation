@@ -1,5 +1,5 @@
 # GetShockLowData_2yr_span1.r
-
+#                                       RBLandau 20171213
 # where to run?
 # setwd("C:/cygwin64/home/landau/working/PreservationSimulation/shocks/low/span1/2yr")
 
@@ -18,15 +18,15 @@ dat.shockall <- dat.shockallcopies[dat.shockallcopies$copies>=3
 
 # S U B S E T S 
 
-# P L O T   D A T A 
-library(ggplot2)
-source("./ShockLowPlots.r")
-
 # First, half-year durations.
 dat.shock <- dat.shockall[dat.shockall$lifem<=100 & dat.shockall$shockmaxlife==5000,]
 dat.shock50 <- dat.shock[dat.shock$shockimpact==50,]
 dat.shock90 <- dat.shock[dat.shock$shockimpact==90,]
 dat.shock100 <- dat.shock[dat.shock$shockimpact==100,]
+
+# P L O T   D A T A 
+library(ggplot2)
+source("./ShockLowPlots.r")
 gp <- fnPlotShock1(dat.shock90, 2, 6, 1, 90)
 fnPlotMakeFile(gp, "Shock_freq2dur5kspan1impact90.png")
 gp <- fnPlotShock1(dat.shock50, 2, 6, 1, 50)
@@ -34,11 +34,27 @@ fnPlotMakeFile(gp, "Shock_freq2dur5kspan1impact50.png")
 gp <- fnPlotShock1(dat.shock100, 2, 6, 1, 100)
 fnPlotMakeFile(gp, "Shock_freq2dur5kspan1impact100.png")
 
-# Next, full-year durations.
+# S U M M A R Y   T A B L E S 
+source("ShockLowTables.r")
+fnSaveSmallLossTable(dat.shock50, "ShockLow2yrdur5kspan1impact50.txt", 
+    "Percent Permanent Losses, Shock Low 2yr dur5k span1 impact 50% "
+    %+% "\n(percent loss by copies vs sector half-life in megahours)")
+fnSaveSmallLossTable(dat.shock90, "ShockLow2yrdur5kspan1impact90.txt", 
+    "Percent Permanent Losses, Shock Low 2yr dur5k span1 impact 90% "
+    %+% "\n(percent loss by copies vs sector half-life in megahours)")
+fnSaveSmallLossTable(dat.shock100, "ShockLow2yrdur5kspan1impact100.txt", 
+    "Percent Permanent Losses, Shock Low 2yr dur5k span1 impact 100% "
+    %+% "\n(percent loss by copies vs sector half-life in megahours)")
+
+# Then, full year durations.
 dat.shock <- dat.shockall[dat.shockall$lifem<=100 & dat.shockall$shockmaxlife==10000,]
 dat.shock50 <- dat.shock[dat.shock$shockimpact==50,]
 dat.shock90 <- dat.shock[dat.shock$shockimpact==90,]
 dat.shock100 <- dat.shock[dat.shock$shockimpact==100,]
+
+# P L O T   D A T A 
+library(ggplot2)
+#source("./ShockLowPlots.r")
 gp <- fnPlotShock1(dat.shock90, 2, 12, 1, 90)
 fnPlotMakeFile(gp, "Shock_freq2dur10kspan1impact90.png")
 gp <- fnPlotShock1(dat.shock50, 2, 12, 1, 50)
@@ -46,17 +62,18 @@ fnPlotMakeFile(gp, "Shock_freq2dur10kspan1impact50.png")
 gp <- fnPlotShock1(dat.shock100, 2, 12, 1, 100)
 fnPlotMakeFile(gp, "Shock_freq2dur10kspan1impact100.png")
 
-
-# not working yet
-#fnPlotShock2(dat.shock90)
-
-
-# Micah succeeded in bending dcast to his will, thanks; see email.
-library(reshape2)
-bar.small <- dat.shock90[,c("copies", "lifem", "mdmlosspct")]
-bar.melted <- melt(bar.small, id=c("copies", "lifem"))
-bar.recast <- dcast(bar.melted, copies~lifem)
-
+# S U M M A R Y   T A B L E S 
+# Print small summary tables.
+#source("ShockLowTables.r")
+fnSaveSmallLossTable(dat.shock50, "ShockLow2yrdur10kspan1impact50.txt", 
+    "Percent Permanent Losses, Shock Low 2yr dur10k span1 impact 50% "
+    %+% "\n(percent loss by copies vs sector half-life in megahours)")
+fnSaveSmallLossTable(dat.shock90, "ShockLow2yrdur10kspan1impact90.txt", 
+    "Percent Permanent Losses, Shock Low 2yr dur10k span1 impact 90% "
+    %+% "\n(percent loss by copies vs sector half-life in megahours)")
+fnSaveSmallLossTable(dat.shock100, "ShockLow2yrdur10kspan1impact100.txt", 
+    "Percent Permanent Losses, Shock Low 2yr dur10k span1 impact 100% "
+    %+% "\n(percent loss by copies vs sector half-life in megahours)")
 
 
 

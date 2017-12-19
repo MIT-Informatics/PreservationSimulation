@@ -1,11 +1,11 @@
-#RandomTables.r
-#                   RBLandau 20171113
+#ShockLowTables.r
+#                   RBLandau 20171217
 
 
-fnPrintTableRandom <- function(dfdat, sOutputFilename, sTitle, sSubtitle){
+fnPrintTableShockLow <- function(dfdat, sOutputFilename, sTitle, sSubtitle){
 
 # Tabulate columns by copies and sector lifetime.
-tbl.auditrandom <- data.frame(with(dfdat, 
+tbl.shocklow <- data.frame(with(dfdat, 
             tapply(mdmlosspct, list(copies, lifem), FUN=identity)))
 
 # Re-form the data into a table for printing.  
@@ -28,3 +28,28 @@ sink()
 return(tbl2)
 
 }
+
+
+# f n M a k e S m a l l L o s s T a b l e 
+fnMakeSmallLossTable <- function(dfIn) {
+    library(reshape2)
+    bar.small <- dfIn[,c("copies", "lifem", "mdmlosspct")]
+    bar.melted <- melt(bar.small, id=c("copies", "lifem"))
+    bar.recast <- dcast(bar.melted, copies~lifem)
+    return(bar.recast)
+}
+
+
+# f n S a v e S m a l l L o s s T a b l e 
+fnSaveSmallLossTable <- function(dfIn, sFilename, sHeading) {
+    dfTemp <- fnMakeSmallLossTable(dfIn)
+    sink(sFilename)
+    cat(sHeading, "\n\n")
+    print(dfTemp)
+    sink()
+}
+
+
+
+
+#END

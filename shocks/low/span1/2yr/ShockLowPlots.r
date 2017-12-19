@@ -7,8 +7,8 @@
 fnPlotShock1 <- function(trows, nLifem, nDuration, nSpan, nImpact) {
     p <- ggplot(trows, aes(x=lifem, y=safe(mdmlosspct), color=factor(copies)))
 
-    p <- p + geom_line(data=trows)
-    p <- p + geom_point(data=trows, shape=(16), size=3)
+    p <- p + geom_line(data=trows, size=2)
+    p <- p + geom_point(data=trows, shape=(16), size=5)
     p <- p + scale_x_log10() + scale_y_log10() + annotation_logticks()
     p <- p + scale_colour_discrete(name="Number \nof Copies", labels=c("3","4","5"))
     

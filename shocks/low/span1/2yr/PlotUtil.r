@@ -6,6 +6,7 @@
 source("./DataUtil.r")
 library(ggplot2)
 
+
 # f n P l o t B e g i n 
 #fnPlotBegin <- function(dat, xcol, ycol) {
 #    gp <- ggplot(data=trows,aes(x=xcol, y=ycol)) 
@@ -13,6 +14,7 @@ fnPlotBegin <- function(dat, xcol, ycol) {
     gp <- ggplot(data=dat, mapping=aes(x=(xcol), y=(ycol)))
     return(gp)
 }
+
 
 # f n P l o t A d d L i n e 
 fnPlotAddLine <- function(gp, dat, xcol, ycol, dotcolor, dotsize, dotshape, 
@@ -29,6 +31,7 @@ fnPlotAddLine <- function(gp, dat, xcol, ycol, dotcolor, dotsize, dotshape,
     return(gp)
 }
 
+
 # f n P l o t L o g S c a l e X 
 fnPlotLogScales <- function(gp, x=NULL, y=NULL) {
     if (is.null(gp)) {print("ERROR: missing first argument = plot in progress")}
@@ -40,6 +43,7 @@ fnPlotLogScales <- function(gp, x=NULL, y=NULL) {
     }
     return(gp)
 }
+
 
 # f n P l o t T i t l e s 
 fnPlotTitles <- function(gp, titleline, titlesize=22, xlabel, ylabel, labelsize=18) {
@@ -53,6 +57,7 @@ fnPlotTitles <- function(gp, titleline, titlesize=22, xlabel, ylabel, labelsize=
                 )
     return(gp)
 }
+
 
 # f n P l o t M a k e F i l e 
 fnPlotMakeFile <- function(plotname, sFilename, sSize="mediumsmall") {
