@@ -9,6 +9,7 @@ from math import sqrt, log
 import itertools
 from globaldata import *
 from time import localtime
+import re
 
 
 # U t i l i t i e s 
