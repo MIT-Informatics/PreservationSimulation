@@ -268,7 +268,7 @@ def fnsGetTimeStamp():
 
 
 # f n b D o N o t I g n o r e L i n e 
-@ntrace("UTIL", level=5)
+@ntracef("UTIL", level=5)
 def fnbDoNotIgnoreLine(mysLine):
     '''
     True if not a comment or blank line.
