@@ -114,7 +114,7 @@ def makeshocklife(mynHalf, myParam=0):
 
 # f n I n t P l e a s e 
 @ntracef("UTIL", level=5)
-def fnIntPlease(oldval):
+def fnIntPlease(myString):
     ''' fnIntPlease()
         If it looks like an integer and walks like an integer, . . . 
     '''
