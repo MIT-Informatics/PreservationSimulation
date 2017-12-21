@@ -442,8 +442,8 @@ def fnstProcessOneInstruction(mysRunNumber, mydInstruction, mynSeed):
         NTRC.ntracef(0,"MAIN","proc ListOnly, item run|%s| "
             "ncopies|%s| lifem|%s| id|%s| dict|%s|" 
             % (mysRunNumber, mydInstruction["nCopies"], mydInstruction["nLifem"],
-            sInstructionId, mydInstruction))
-    
+            sInstructionId, list(util.fngSortDictItemsByKeys(mydInstruction))))
+
     else:   # Real life: execute the instruction.
         bContinue = fnbWaitForOpening(g.nCores, "python", 
                     g.nCoreTimer, g.nStuckLimit)

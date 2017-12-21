@@ -278,6 +278,26 @@ def fnbDoNotIgnoreLine(mysLine):
     return (not re.match("^\s*#", mysLine)) and (not re.match("^\s*$", mysLine))
 
 
+# f n g S o r t D i c t I t e m s B y K e y s 
+@ntracef("UTIL", level=5)
+def fngSortDictItemsByKeys(mydIn):
+    '''
+    Return generator of tuples of dict, like .items() but sorted by key.  
+    Keys are ordered case-sensitive by string value in sorted().  
+    '''
+    return ((k, mydIn[k]) for k in sorted(mydIn.keys()))
+
+
+# f n g S o r t D i c t I t e m s B y V a l u e s 
+@ntracef("UTIL", level=5)
+def fngSortDictItemsByValues(mydIn):
+    '''
+    Return generator of tuples of dict, like .items() but sorted by value.  
+    Values are ordered case-sensitive by string value in sorted().  
+    '''
+    return (item for item in sorted(mydIn.items(), key=lambda x: x[1]))
+
+
 # Edit history:
 # 2014xxxx  RBL Original version.
 # 20170121  RBL Add GetTimeStamp.
@@ -285,6 +305,9 @@ def fnbDoNotIgnoreLine(mysLine):
 #               PEP8-ify the spacing of some of the code.
 # 20171206  RBL Change all @trace to @ntrace.
 # 20171217  RBL Move fnIntPlease and fnbDoNotIgnoreLine into here from broker.
+# 20171220  RBL Correct three, count 'em, three, errors in little imported 
+#                functions.
+#               Add function to sort dictionary by keys.
 # 
 # 
 

@@ -59,9 +59,12 @@ DONE - need new utils: list databases, list collections in db.
 
 
 TODO: web interface to select instructions for broker run
-FIXME - permit multiple-select for most options.  single select renders just 
+FIXME - add option to initialize the family/specific dirs.
+FIXME - add option to clear the done collection.
+DONE - add option for detached run with results to log file.
+DONE - permit multiple-select for most options.  single select renders just 
     the simple value; multiselect renders json list in quotes '[1,2,3]'.
-FIXME - move some items around in the interface to fill in gaps left by
+DONE - move some items around in the interface to fill in gaps left by
     multiselect.
 DONE - add --redo option to form and command.
 DONE - ensure that the python/bottle program always runs in a detachable
@@ -207,6 +210,9 @@ DONE - slow down after extractvalues, too.
 
 
 TODO: broker.py
+FIXME - ditch mongodb in favor of sqlite3.
+FIXME - in listonly listings, sort the dictionary dump.
+FIXME - in listonly listings, remove nLifeMax/Min, nCopiesMax/Min from dict.
 DONE - harden against missing env var for NUMBER_OF_PROCESSORS.  and then
     maybe remove the crap added to AWSinstall.
 DONE - log all broker commands into some file.
