@@ -61,9 +61,10 @@ fntShockTab <- function(input, freq, impact, duration) {
                 input$shockfreq==freq & 
                 input$shockimpact==impact & 
                 input$shockmaxlife==duration,]
-    assign("res.shocktdat", res1, envir=globalenv())
+    assign("res.shocktabdat", res1, envir=globalenv())
     #print(paste("res.shockdat",length(res.shockdat$copies)))
     restab <- dcast(res1, copies~lifem, value.var="mdmlosspct")
+    assign("res.shocktabcast", restab, envir=globalenv())
     return(restab)
 }
 
@@ -105,6 +106,7 @@ fndfGetGiantData <- function(dir.string)
         paste(collapse=",", paramVarNames),")")))
     results <- summarise(gp_sims.merged, 
                 mdmlosspct=round(midmean(docslost/docstotal)*100,1), n=n())
+#               mdmlosspct=round(trimmedmean(docslost/docstotal)*100,1), n=n())
     selectedresults <- results[which(results[["copies"]]!=1),]
 
     return(results)
@@ -177,8 +179,12 @@ fndfGetShelfsizeData <- function(results)
 #               TODO: Add audittype to the extracted data in GiantOutput files,
 #                and then we can use it here.
 # 20171129  RBL Add audittype to ignore column list.
-#               Add 10% trimmed mean as a stat.
+#               Add 10% trimmed mean as a stat for the faint of heart.
 # 20171211  RBL Narrow the list of columns for shock data.
+# 20171230  RBL Save shocktab in globalenv.
+#               Change summarization to trimmedmean instead of midmean?  
+#                Nope, go back to midmean; small sample artifacts are 
+#                much more pronounced with trimmedmean.
 # 
 # 
 
