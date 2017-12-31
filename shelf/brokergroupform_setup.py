@@ -10,6 +10,7 @@ from NewTraceFac import NTRC, ntrace, ntracef
 import re
 import subprocess
 import util
+import command
 
 
 #==============  S E T U P   P A G E  ===============
@@ -18,21 +19,50 @@ import util
 @get('/setup')
 @get('/mainsim/setup')
 @ntrace
-def mainsim_setup():
-    pass
-    return "Setup page says 'FOO!'"
-    if 0:
-        sMakeformCmd = ('python brokergroup_makeform.py '
-                            'brokergroup_form_insert.j2 '
-                            'views/brokergroup_form2.tpl '
-                            'instructions')
-        result = subprocess.check_output(sMakeformCmd, shell=True)
-        return template('brokergroup_form2')
+def mainsim_setup_get():
+    """ Make the form anew and display it."""
+    sMakeformCmd = ('python brokergroup_makeform.py '
+                        'brokergroup_setupform_insert.j2 '
+                        'views/brokergroup_setupform.tpl '
+                        'instructions')
+    result = subprocess.check_output(sMakeformCmd, shell=True)
+    return template('brokergroup_setupform')
+
+
+@post('/setup')
+@post('/mainsim/setup')
+@ntrace
+def mainsim_setup_post():
+    #   C O L L E C T   D A T A 
+    sFamilyDir = request.forms.get("sFamilyDir")
+    sSpecificDir = request.forms.get("sSpecificDir")
+    bClearDirs = request.forms.get("bClearDirs")
+    msg = "mainsim_setup_post: NOT YET IMPLEMENTED"
+
+    #   F O R M   D I C T I O N A R Y   O F   S U B S T I T U T I O N S 
+    # Make a dictionary to use to substitute params into CLI command.
+    dVals = dict(sFamilyDir=sFamilyDir, sSpecificDir=sSpecificDir
+                )
+    NTRC.ntrace(3,"proc first dict|%s|" % (dVals))
+
+    # If instructed to clear area, do that first.
+    
+    
+    # Use standard script to setup output dirs.
+
+
+    # Tell user it's done.
+    
+
+    # Return to previous form.
+
+
 
 
 #==============  D A T A  ===============
 
 
+cCmd = command.CCommand()
 # TBS
 
 

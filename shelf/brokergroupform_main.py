@@ -12,6 +12,7 @@ from NewTraceFac import NTRC, ntrace, ntracef
 import re
 import subprocess
 import util
+import command
 
 
 #==============  M A I N   P A G E  ===============
@@ -225,7 +226,7 @@ def fnsQuoteMulti(mylMultiList):
 
 
 # Make instance of Command class to use.
-#cCmd = CCommand()
+cCmd = command.CCommand()
 
 
 # CLI commands to run the main program.
@@ -278,6 +279,7 @@ sRangeTemplate = "'{\"$gte\":%s, \"$lte\":%s}'"
 # 20171230  RBL Add processing for setup page to establish 
 #                output directory structure, erase done records, etc.
 #               Separate page code from entry point and main line.
+# 20171231  RBL Import command from common module.  
 # 
 # 
 
