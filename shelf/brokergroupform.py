@@ -14,6 +14,9 @@ import subprocess
 import util
 
 
+#==============  M A I N   P A G E  ===============
+
+
 @get('/')
 @get('/broker')
 @get('/mainsim')
@@ -187,6 +190,15 @@ def mainsim_post():
                 sActualCli)
 
 
+#==============  S E T U P  P A G E  ===============
+
+
+# TBS
+
+
+#==============  U T I L I T I E S  ===============
+
+
 # f n V a l i d a t e D i r e c t o r i e s 
 @ntrace
 def fnValidateDirectories(dVals):
@@ -204,6 +216,7 @@ def fnValidateDirectories(dVals):
     else:
         return sValidationErrorMsg
 
+
 # f n s Q u o t e M u l t i 
 @ntrace
 def fnsQuoteMulti(mylMultiList):
@@ -212,6 +225,9 @@ def fnsQuoteMulti(mylMultiList):
      acceptable to json.
     '''
     return '\'' + str([util.fnIntPlease(s) for s in mylMultiList]) + '\''
+
+
+#==============  D A T A  ===============
 
 
 # CLI commands to run the main program.
@@ -244,7 +260,10 @@ sMainCommandStringDumbTest = '''ls -l
 # Note that only the quotes matching the outside quotes need to be escaped.  
 sRangeTemplate = "'{\"$gte\":%s, \"$lte\":%s}'"
 
+
 #=================================================
+
+
 # class   C C o m m a n d
 class CCommand(object):
     '''
@@ -252,6 +271,7 @@ class CCommand(object):
      using a regular expression supplied by the caller.  
     Nothing specific here, so should probably be a separate module.  
     '''
+
 
 # m D o C m d S t r ( )
     @catchex
@@ -264,6 +284,7 @@ class CCommand(object):
             sResult += sLine.strip()
         return sResult
 
+
 # m D o C m d L s t ( ) 
     @catchex
     @ntracef("CMD")
@@ -274,6 +295,7 @@ class CCommand(object):
         for sLine in os.popen(mysCommand):
             lResult.append(sLine.rstrip())
         return lResult
+
 
 # m D o C m d G e n ( ) 
     @catchex
@@ -292,6 +314,7 @@ class CCommand(object):
             yield mysLinePrefix + sLine + mysLineSuffix
         yield mysSuffix
 
+
 # m D o P a r s e ( )         
     @catchex
     @ntracef("CMD")
@@ -304,6 +327,7 @@ class CCommand(object):
             sResult = None
         return sResult
 
+
 # m M a k e C m d ( )
     @catchex
     @ntracef("CMD")
@@ -312,6 +336,7 @@ class CCommand(object):
         '''
         sCmd = mysCmd.format(**mydArgs)
         return sCmd
+
 
 # m G e n t l y F o r m a t ( )
     @ntrace
@@ -341,10 +366,17 @@ class CCommand(object):
         return sOut
 
 
+#==============  M A I N  ===============
+
+
 @ntrace
 def runme():
     port = int(os.environ.get('PORT', 8080))
     run(host='0.0.0.0', port=port, debug=True, reloader=True)
+
+
+#==============  E N T R Y   P O I N T  ===============
+
 
 if __name__ == '__main__':
     cCmd = CCommand()
@@ -368,6 +400,9 @@ if __name__ == '__main__':
 #                Affects nCopies, nLifem, 
 #                nGlitchFreq, nGlitchImpact, nGlitchMaxlife, 
 #                nShockFreq, nShockImpact, nShockMaxlife, nShockSpan.
+# 20171230  RBL Add processing for setup page to establish 
+#                output directory structure, erase done records, etc.
+# 
 # 
 
 #END

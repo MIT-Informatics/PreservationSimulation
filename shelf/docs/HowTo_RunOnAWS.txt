@@ -108,6 +108,10 @@ Remove old history from MongoDB
 - python dbdumpdonekeys brokeradmin   just to be sure.
 
 
+Or, just clear all the done records
+- sh dbcleardone.sh
+
+
 Turn on broker logging
 - in shelf dir
 - sh brokercommandlog_enable.sh

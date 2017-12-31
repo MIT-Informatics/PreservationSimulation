@@ -59,7 +59,7 @@ DONE - need new utils: list databases, list collections in db.
 
 
 TODO: web interface to select instructions for broker run
-FIXME - add option to initialize the family/specific dirs.
+FIXME - add option to initialize the family/specific dirs.  new page.  
 FIXME - add option to clear the done collection.
 DONE - add option for detached run with results to log file.
 DONE - permit multiple-select for most options.  single select renders just 
@@ -337,6 +337,7 @@ FIXME - after container install, run broker tests
 
 
 TODO: AWS deployment
+FIXME - always turn on brokercommandlog in startup.sh.
 FIXME - turn the simple-minded tests at the end of deployment into real
     unit test modules so they are easier to maintain, add to, etc.  
 DONE - create a broker command log file for the user, and warn the 
