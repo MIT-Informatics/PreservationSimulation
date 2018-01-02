@@ -7,7 +7,7 @@ source("./DataUtil.r")
 source("./PlotUtil.r")
 
 # G E T   D A T A  
-if exists("results") {rm(results)} 
+if (exists("results")) {rm(results)} 
 results <- fndfGetGiantData("./")
 # Get fewer columns to work with, easier to see.
 dat.shockall <- as.data.frame(fndfGetShockData(results))
@@ -28,13 +28,13 @@ bar.recast <- dcast(bar.melted, copies~lifem)
 library(ggplot2)
 source("./ShockLowPlots.r")
 
-gp <- fnPlotShock1(dat.shock90, 1, 1, 90)
+gp <- fnPlotShock1(dat.shock90, 1, 6, 1, 90)
 fnPlotMakeFile(gp, "Shock_freq1span1impact90.png")
 
-gp <- fnPlotShock1(dat.shock50, 1, 1, 50)
+gp <- fnPlotShock1(dat.shock50, 1, 6, 1, 50)
 fnPlotMakeFile(gp, "Shock_freq1span1impact50.png")
 
-gp <- fnPlotShock1(dat.shock100, 1, 1, 100)
+gp <- fnPlotShock1(dat.shock100, 1, 6, 1, 100)
 fnPlotMakeFile(gp, "Shock_freq1span1impact100.png")
 
 

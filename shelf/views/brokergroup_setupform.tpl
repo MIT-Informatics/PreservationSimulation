@@ -17,7 +17,7 @@
     }
 </style>
 
-<form action="mainsim/setup" method="post">
+<form action="setup" method="post">
     <font size="+1">
         <title>PreservationSimulation broker.py Setup for Output Dirs</title>
         <h1>MIT Library Preservation Simulation Project</h1>
@@ -25,8 +25,8 @@
         
         <table border="0" width="50%">
             <tr><td>
-                <p>Use this interface is used to setup a directory structure
-                    to hold the output of simulation runs.  Just specify 
+                <p>Use this interface is used to set up a directory structure
+                    to hold the output of simulation runs.  Specify 
                     the family and specific directories and whether you 
                     want them cleaned out completely before proceeding.  
                 </p>
@@ -77,7 +77,6 @@
 
         
         <!-- clear button -->
-    <tr bgcolor="#FF6666">
         <td>            <b>Clear directory structure?</b><br/>
             Completely erase and re-establish directory tree<br/>
             <input type="checkbox" name="bClearDirs" value="true" class="largerCheckbox"><br/><br/>

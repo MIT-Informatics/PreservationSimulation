@@ -27,6 +27,7 @@ class CShock(object):
      shortened by the shock.  If a server's shortened life has expired during
      the shock, well, that's life; gonzo.  
     '''
+    getID = itertools.count(1).next
 
     @catchex
     @ntracef("SHOK")
@@ -36,7 +37,7 @@ class CShock(object):
         self.nSpan = mynShockSpan
         self.nImpact = mynShockImpact
         self.nMaxlife = mynShockMaxlife
-        self.ID = "Z99"
+        self.ID = "Z" + str(self.getID())
         self.lsServersShocked = []
         
         # If there is to be any shockin' 'round here, start it.  

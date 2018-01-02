@@ -4,17 +4,18 @@
 
 # f n P l o t S h o c k 1 
 # Simple line plot for copies=3,4,5 (sorry, that's built in).
-fnPlotShock1 <- function(trows, nLifem, nDuration, nSpan, nImpact) {
+fnPlotShock1 <- function(trows, nFreq, nDuration, nSpan, nImpact) {
     p <- ggplot(trows, aes(x=lifem, y=safe(mdmlosspct), color=factor(copies)))
 
-    p <- p + geom_line(data=trows)
-    p <- p + geom_point(data=trows, shape=(16), size=3)
+    p <- p + geom_line(data=trows, size=2)
+    p <- p + geom_point(data=trows, shape=(16), size=5)
     p <- p + scale_x_log10() + scale_y_log10() + annotation_logticks()
     p <- p + scale_colour_discrete(name="Number \nof Copies", labels=c("3","4","5"))
+    p <- p + geom_hline(yintercept=1.0, linetype="dashed")
     
     sParams <- sprintf("freq(hl)=%syr, len=%smo, span=%s, impact=%s%%", 
-                    nLifem, nDuration, nSpan, nImpact)
-    p <- p + ggtitle("Shocks: " %+% sParams)
+                    nFreq, nDuration, nSpan, nImpact)
+    p <- p + ggtitle("Shocks " %+% sParams)
     p <- p + xlab("sector half-life (megahours)")
     p <- p + ylab("percent permanent document losses")
     p <- p + theme(

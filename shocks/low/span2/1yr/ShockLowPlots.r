@@ -15,7 +15,7 @@ fnPlotShock1 <- function(trows, nFreq, nDuration, nSpan, nImpact) {
     
     sParams <- sprintf("freq(hl)=%syr, len=%smo, span=%s, impact=%s%%", 
                     nFreq, nDuration, nSpan, nImpact)
-    p <- p + ggtitle("Shocks: " %+% sParams)
+    p <- p + ggtitle("Shocks " %+% sParams)
     p <- p + xlab("sector half-life (megahours)")
     p <- p + ylab("percent permanent document losses")
     p <- p + theme(

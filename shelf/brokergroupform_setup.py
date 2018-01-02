@@ -37,11 +37,15 @@ def mainsim_setup_post():
     sFamilyDir = request.forms.get("sFamilyDir")
     sSpecificDir = request.forms.get("sSpecificDir")
     bClearDirs = request.forms.get("bClearDirs")
+    sAction = request.forms.get("submit")
+    foo=request.forms.get("forms")
+    headers=request.forms.get("headers")
     msg = "mainsim_setup_post: NOT YET IMPLEMENTED"
 
     #   F O R M   D I C T I O N A R Y   O F   S U B S T I T U T I O N S 
     # Make a dictionary to use to substitute params into CLI command.
-    dVals = dict(sFamilyDir=sFamilyDir, sSpecificDir=sSpecificDir
+    dVals = dict(sFamilyDir=sFamilyDir, sSpecificDir=sSpecificDir,
+                bClearDirs=bClearDirs, msg=msg
                 )
     NTRC.ntrace(3,"proc first dict|%s|" % (dVals))
 
@@ -55,8 +59,9 @@ def mainsim_setup_post():
     
 
     # Return to previous form.
-
-
+    sOut = ("famdir|%s| specdir|%s| clr|%s| submitval|%s| foo|%s| hdrs|%s|" 
+            % (sFamilyDir, sSpecificDir, bClearDirs, sAction, foo, headers))
+    return sOut + "<br/>" + dVals["msg"]
 
 
 #==============  D A T A  ===============

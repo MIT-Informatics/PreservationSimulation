@@ -44,7 +44,10 @@ fnMakeSmallLossTable <- function(dfIn) {
 fnSaveSmallLossTable <- function(dfIn, sFilename, sHeading) {
     dfTemp <- fnMakeSmallLossTable(dfIn)
     sink(sFilename)
+    cat("MIT Preservation Simulation Project", "\n")
+    cat(sFilename, format(Sys.time(),"%Y%m%d_%H%M%S%Z"), "\n\n")
     cat(sHeading, "\n\n")
+    cat("        half-life-------------------->","\n")
     print(dfTemp)
     sink()
 }
