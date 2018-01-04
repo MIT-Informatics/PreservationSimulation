@@ -54,11 +54,18 @@
         {% block sFamilyDir %}{% endblock %}
         {% block sSpecificDir %}{% endblock %}
         
-        <!-- clear button -->
+        <!-- clear data button -->
         <td>{% block bClearDirs %}{% endblock %}
             <b>Clear directory structure?</b><br/>
             Completely erase and re-establish directory tree<br/>
             <input type="checkbox" name="bClearDirs" value="true" class="largerCheckbox"><br/><br/>
+        </td>
+
+        <!-- clear done records button -->
+        <td>{% block bClearDone %}{% endblock %}
+            <b>Clear done records?</b><br/>
+            Erase all done records from progress db<br/>
+            <input type="checkbox" name="bClearDone" value="true" class="largerCheckbox"><br/><br/>
         </td>
 
     </tr>
@@ -68,11 +75,11 @@
 <!--  a c t i o n   b u t t o n  -->
     <p>
         <center>    
-            <button type="submit" value="start" bgcolor="#ffaaaa">
+            <button type="submit" name="ok" value="start" bgcolor="#ffaaaa">
                 <strong><font face="Arial" size="+3">  OK  </font></strong>
             </button>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <button type="submit" value="cancel" bgcolor="#ffaaaa">
+            <button type="submit" name="cancel" value="stop" bgcolor="#ffaaaa">
                 <strong><font face="Arial" size="+3">  Cancel  </font></strong>
             </button>
         </center>
