@@ -11,6 +11,7 @@ import  util
 import  logoutput       as lg
 from    catchex         import  catchex
 import  server
+import  itertools
 
 
 #===========================================================
