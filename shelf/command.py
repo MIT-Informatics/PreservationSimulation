@@ -22,13 +22,13 @@ class CCommand(object):
 
     @catchex
     @ntracef("CMD")
-    def doCmdStr(self,mysCommand):
+    def doCmdStr(self, mysCommand):
         return self.mDoCmdStr(mysCommand)
 
     # m D o C m d S t r ( )
     @catchex
     @ntracef("CMD")
-    def mDoCmdStr(self,mysCommand):
+    def mDoCmdStr(self, mysCommand):
         ''' Return concatenated string of result lines with newlines stripped.  
         '''
         sResult = ""
@@ -39,13 +39,13 @@ class CCommand(object):
 
     @catchex
     @ntracef("CMD")
-    def doCmdLst(self,mysCommand):
+    def doCmdLst(self, mysCommand):
         return self.mDoCmdLst(mysCommand)
 
     # m D o C m d L s t ( ) 
     @catchex
     @ntracef("CMD")
-    def mDoCmdLst(self,mysCommand):
+    def mDoCmdLst(self, mysCommand):
         ''' Return list of result lines with newlines stripped.  
         '''
         lResult = list()
@@ -56,8 +56,10 @@ class CCommand(object):
 
     @catchex
     @ntracef("CMD")
-    def doCmdGen(self,mysCommand):
-        return self.mDoCmdGen(mysCommand)
+    def doCmdGen(self, mysPrefix, mysSuffix, 
+            mysLinePrefix, mysLineSuffix, mysCommand):
+        return self.mDoCmdGen(mysPrefix, mysSuffix, 
+            mysLinePrefix, mysLineSuffix, mysCommand)
 
     # m D o C m d G e n ( ) 
     @catchex
@@ -79,13 +81,13 @@ class CCommand(object):
 
     @catchex
     @ntracef("CMD")
-    def doParse(self,mysCommand):
-        return self.mDoParse(mysCommand)
+    def doParse(self, mysCommand, mysRegex):
+        return self.mDoParse(mysCommand, mysRegex)
 
     # m D o P a r s e ( )         
     @catchex
     @ntracef("CMD")
-    def mDoParse(self,mysCommand,mysRegex):
+    def mDoParse(self, mysCommand, mysRegex):
         sOutput = self.doCmd(mysCommand)
         mCheck = search(mysRegex,sOutput)
         if mCheck:
@@ -97,13 +99,13 @@ class CCommand(object):
 
     @catchex
     @ntracef("CMD")
-    def makeCmd(self,mysCommand):
-        return self.mMakeCmd(mysCommand)
+    def makeCmd(self, mysCommand, mydArgs):
+        return self.mMakeCmd(mysCommand, mydArgs)
 
     # m M a k e C m d ( )
     @catchex
     @ntracef("CMD")
-    def mMakeCmd(self,mysCmd,mydArgs):
+    def mMakeCmd(self, mysCmd, mydArgs):
         ''' Substitute arguments into command template string.  
         '''
         sCmd = mysCmd.format(**mydArgs)
@@ -145,6 +147,8 @@ class CCommand(object):
 #               And correctly only rstrips newlines from string and list.
 #               Oh, and catch all the old names that I changed, oops.
 # 20180104  RBL Remove old version, which had been commented out with if 0.
+# 20180105  RBL Fix all the call signatures that I messed up.  
+# 
 # 
 
 #END
