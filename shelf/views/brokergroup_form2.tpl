@@ -80,18 +80,9 @@
         </table>
     </td>
 
-               <td>
-        <table>
-            <tr><td>
-                <b>Database Name
-                    </b>
-            </td></tr>
-            <tr><td>
-                <input type="text" name=sDatabaseName size="10" value="brokeradmin"
-                disabled>
-            </td></tr>
-        </table>
-    </td>
+        <td>
+            <font size="+1"><a href="setup">Go to setup page</a></font>
+        </td>
 
                <td>
         <table>

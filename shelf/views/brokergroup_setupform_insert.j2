@@ -1,5 +1,6 @@
 <!-- brokergroup_form_insert.j2 file -->
 {% extends "brokergroup_setupform_base.j2" %}
+
 <!-- Child file for Jinja2 that defines almost all the blocks
       of menu items, particularly the multi-value select 
       option blocks.  The shelf/instructions/*.ins3 files
@@ -84,86 +85,25 @@
     </td>
 {%endmacro%}
 
+{# Macro for   s u b m i t   b u t t o n   #}
+{% macro insertsubmitbutton(name, heading, value, required=none, 
+            text="What do I say?", extra=none) %}
+    <td>
+        <table>
+            <tr><td>
+                <b>{{heading}}
+                    {%if required%}<font color="red">* required</font>{%endif%}</b>
+            </td></tr>
+            <tr><td>
+                <button type="submit" name={{name}} value={{value}} 
+                    {%if extra%}{{extra}}{%endif%}>
+                    <strong><font face="Arial" size="+3">  {{text}}  </font></strong>
+                </button>
+            </td></tr>
+        </table>
+    </td>
+{%endmacro%}
 
-{% block nAuditFreq scoped %}
-    {{insertmyvar(dVars.nAuditFreq)}}
-{% endblock %}
-
-{% block nAuditSegments scoped %}
-    {{insertmyvar(dVars.nAuditSegments)}}
-{% endblock %}
-
-{% block sAuditType scoped %}
-    {{insertmyvar(dVars.sAuditType)}}
-{% endblock %}
-
-{% block nCopies scoped %}
-   {{insertmultivar(dVars.nCopies)}}
-{% endblock %}
-
-{% block nDocSize scoped %}
-    {{insertmyvar(dVars.nDocSize)}}
-{% endblock %}
-
-{% block nGlitchDecay scoped %}
-    {{insertmyvar(dVars.nGlitchDecay)}}
-{% endblock %}
-
-{% block nGlitchFreq scoped %}
-    {{insertmultivar(dVars.nGlitchFreq)}}
-{% endblock %}
-
-{% block nGlitchIgnorelevel scoped %}
-    {{insertmyvar(dVars.nGlitchIgnorelevel)}}
-{% endblock %}
-
-{% block nGlitchImpact scoped %}
-    {{insertmultivar(dVars.nGlitchImpact)}}
-{% endblock %}
-
-{% block nGlitchMaxlife scoped %}
-    {{insertmultivar(dVars.nGlitchMaxlife)}}
-{% endblock %}
-
-{% block nGlitchSpan scoped %}
-    {{insertmyvar(dVars.nGlitchSpan)}}
-{% endblock %}
-
-{% block nLifem scoped %}
-   {{insertmultivar(dVars.nLifem)}}
-{% endblock %}
-
-{% block nRandomSeeds scoped %}
-   {{inserttextvar("nRandomSeeds", "Number of Replications with Random Seeds", 5, 21)}}
-{% endblock %}
-
-{% block nServerDefaultLife scoped %}
-   {{insertmyvar(dVars.nServerDefaultLife, required=true)}}
-{% endblock %}
-
-{% block nShelfSize scoped %}
-   {{insertmyvar(dVars.nShelfSize)}}
-{% endblock %}
-
-{% block nShockImpact scoped %}
-   {{insertmultivar(dVars.nShockImpact)}}
-{% endblock %}
-
-{% block nShockMaxlife scoped %}
-   {{insertmultivar(dVars.nShockMaxlife)}}
-{% endblock %}
-
-{% block nShockFreq scoped %}
-   {{insertmultivar(dVars.nShockFreq)}}
-{% endblock %}
-
-{% block nShockSpan scoped %}
-   {{insertmultivar(dVars.nShockSpan)}}
-{% endblock %}
-
-{% block sDatabaseName scoped %}
-   {{inserttextvar("sDatabaseName", "Database Name", 10, "brokeradmin", extra="disabled")}}
-{% endblock %}
 
 {% block sFamilyDir scoped %}
    {{inserttextvar("sFamilyDir", "Family Directory", 15, required=true)}}
@@ -173,73 +113,31 @@
    {{inserttextvar("sSpecificDir", "Specific Directory", 15, required=true)}}
 {% endblock %}
 
-<!-- empty placeholders -->
-{% block bRedo scoped %}
-{% endblock %}
-
-{% block bRunDetached scoped %}
-{% endblock %}
-
-{% block bTestOnly scoped %}
-{% endblock %}
-
-{% block sDetachedLogfile scoped %}
-{% endblock %}
-
 {% block bClearDirs scoped %}
+    <b>Clear directory structure?</b><br/>
+    Completely erase and re-establish directory tree<br/>
+    <input type="checkbox" name="bClearDirs" value="true" class="largerCheckbox"><br/><br/>
 {% endblock %}
 
 {% block bClearDone scoped %}
+    <b>Clear done records?</b><br/>
+    Erase all done records from progress db<br/>
+    <input type="checkbox" name="bClearDone" value="true" class="largerCheckbox"><br/><br/>
+{% endblock %}
+
+{% block buttonOK %}
+{{insertsubmitbutton(name="ok", heading="", 
+                value="start", text="OK", extra="bgcolor='#ffaaaa'" )}}
+{% endblock %}
+
+{% block buttonCancel %}
+    {{insertsubmitbutton(name="cancel", heading="", 
+                value="stop", text="Cancel", extra='bgcolor="#ffaaaa"' )}}
 {% endblock %}
 
 
 {%block ignoreme1%}
 -----------------------------
-
-each block calls macro with a different dict containing name, head, list
-
-nAuditSegments
-nDocSize
-
-nGlitchDecay
-nGlitchFreq
-nGlitchIgnorelevel
-nGlitchImpact
-nGlitchMaxlife
-nGlitchSpan
-nLifem
-
-nServerDefaultLife
-nShelfSize
-nShockImpact
-nShockMaxlife
-nShockFreq
-nShockSpan
-nSimlen
-
-A notable kludge occurs here.  For params that have a min and max value
- that the user selects from separate drop-down lists, three variables
- need to be defined and one special case added to the instruction
- expander, searchspace.py.  
- - The variable, e.g., nCopies, needs to have three such variables with 
-    identical values:
-    1.  nCopies
-    2.  nCopiesMax
-    3.  nCopiesMin
-    The max and min versions populate the pull-downs for those parameters.
-    The nCopies version is used by searchspace to check if the user's
-    selections have produced any valid values, i.e., a non-empty vector
-    of possibilities.  HOWEVER, it is also necessary for searchspace to
-    null out the max and min versions, empty their lists, before the 
-    actual combinatorial expansion takes place.  
- Yes, kludge.  You were warned.  
-The same applies to nLifem.  And any other range-type params you were 
- thinking of adding.  Don't do it.  
-BZZZT!  New news: the min/max inputs hae been removed in favor of 
-    multi-select option boxes.  If the form is being used by the 
-    bottle web server, one must use the request.form.getall() function
-    to retrieve the value as a list.
-
 
 <!-- Edit history:
 20170220    RBL Original version.
@@ -250,7 +148,8 @@ BZZZT!  New news: the min/max inputs hae been removed in favor of
                 Add dummy blocks for Redo and TestOnly.
 20171129    RBL Add multi-select var macro to be used for some vars.  
 20171215    RBL Add check and logfilename for Run Detached.
-
+20180103    RBL Move all the checkbox and button code into insert-blocks.  
+                Get rid of all old blocks not needed here.  
 
 -->
 

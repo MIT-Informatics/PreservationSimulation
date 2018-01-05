@@ -56,90 +56,32 @@
         
         <!-- clear data button -->
         <td>{% block bClearDirs %}{% endblock %}
-            <b>Clear directory structure?</b><br/>
-            Completely erase and re-establish directory tree<br/>
-            <input type="checkbox" name="bClearDirs" value="true" class="largerCheckbox"><br/><br/>
         </td>
 
         <!-- clear done records button -->
         <td>{% block bClearDone %}{% endblock %}
-            <b>Clear done records?</b><br/>
-            Erase all done records from progress db<br/>
-            <input type="checkbox" name="bClearDone" value="true" class="largerCheckbox"><br/><br/>
         </td>
 
     </tr>
 
     </table>
 
-<!--  a c t i o n   b u t t o n  -->
+<!--  a c t i o n   b u t t o n s  -->
     <p>
-        <center>    
-            <button type="submit" name="ok" value="start" bgcolor="#ffaaaa">
-                <strong><font face="Arial" size="+3">  OK  </font></strong>
-            </button>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <button type="submit" name="cancel" value="stop" bgcolor="#ffaaaa">
-                <strong><font face="Arial" size="+3">  Cancel  </font></strong>
-            </button>
+        <center>
+            <table>
+                    {% block buttonOK %}
+                    {% endblock %}
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    {% block buttonCancel %}
+                    {% endblock %}
+            </table>
         </center>
     </p>
     </font>
 </form>
 </body>
 
-
-
-<!--  d o c   a n d   s h e l f   s i z e  -->
-<!-- NONONO  But preserve this in case we ever need it again.  
-    <tr bgcolor="#999999">
-        <td colspan="5">
-            <b>Document size and shelf size (and doc size mixture, if any)</b>
-    </tr>
-
-    <tr bgcolor="#999999">
-        <td>
-            <b>Size of storage shelf:</b> <br/>
-            (terabytes) <br/>
-            <select name="nShelfSize">
-                <option value="1">1 TB</option>
-                <option value="10" selected>10 TB</option>
-            </select>
-        </td>
-        <td>
-            <b>Size of small document:</b> <br/>
-            (megabytes) <br/>
-            <select name="nSmallDoc">
-                <option value="5">5 MB</option>
-                <option value="50" selected>50 MB</option>
-                <option value=""500>500 MB</option>
-            </select>
-        </td>
-        <td>
-            <b>Size of large doc (if any):</b> <br/>
-            (megabytes) <br/>
-            <select name="nLargeDoc">
-                <option value="50" selected>50 MB</option>
-                <option value="500">500 MB</option>
-                <option value="5000">5000 MB</option>
-            </select>
-        </td>
-        <td>
-            <b>Percentage of small docs</b> <br/>
-            in the mix of docs: <br/>
-            <select name="nSmallDocPct">
-                <option value="100" selected>100%</option>
-                <option value="50">50%</option>
-                <option value="90">90%</option>
-            </select>
-        </td>
-        <td>
-            <b>Std dev of doc size:</b> <br/>
-            (if doc size if variable and not fixed)<br/>
-            <input type="text" name="nPctDocVar" value="0">
-        </td>
-    </tr>
--->
 
 <!-- Edit history:
 20170220    RBL Original version cribbed almost entirely from previous
@@ -152,6 +94,10 @@
 20170913    RBL Widen the table w.r.t. the window.  
 20171129    RBL Remove min/max vars in favor of multi-select ones.
 20171130    RBL Narrow formatting a little.  
+20180103    RBL Add names to buttons so the values can be retrieved 
+                 by the framework.  I should probably move the buttons
+                 entirely to the insert file.  
+                Remove moldy, old comments.
 
 -->
 
