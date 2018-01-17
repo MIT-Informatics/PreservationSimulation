@@ -33,19 +33,103 @@ fnPlotShock1 <- function(trows, nFreq, nDuration, nSpan, nImpact) {
 # f n P l o t S h o c k 2 
 # Slightly more subtle version.  Well, it would be if it worked.  
 fnPlotShock2 <- function(trows) {
-# This will offer much finer control when I get it to work.
+# Code to control legend from multiple plot lines, from 
+# https://stackoverflow.com/questions/10349206/add-legend-to-ggplot2-line-plot
+# but doesn't seem to work for me.  Says color=(...) is extraneous, and quits.
+# This would offer much finer control if I got it to work.
     t3 <- trows[trows$copies==3,]
     t4 <- trows[trows$copies==4,]
     t5 <- trows[trows$copies==5,]
     p <- ggplot(data=trows, aes(x=lifem))
-    p <- p + geom_line(data=t3, aes(x=t3$lifem, y=safe(t3$mdmlosspct)), color="red", size=2)
-    p <- p + geom_point(data=t3, aes(x=t3$lifem, y=safe(t3$mdmlosspct)), color="red", size=4)
-    p <- p + geom_line(data=t4, aes(x=t4$lifem, y=safe(t4$mdmlosspct)), color="green", size=2)
-    p <- p + geom_point(data=t4, aes(x=t4$lifem, y=safe(t4$mdmlosspct)), color="green", size=4)
-    p <- p + geom_line(data=t5, aes(x=t5$lifem, y=safe(t5$mdmlosspct)), color="blue", size=2)
-    p <- p + geom_point(data=t5, aes(x=t5$lifem, y=safe(t5$mdmlosspct)), color="blue", size=4)
-    p <- p + scale_x_log10() + scale_y_log10() + annotation_logticks()
+    p <- p + geom_line(aes(y=safe(t3$mdmlosspct, color="3 copies")))
+    p <- p + geom_line(aes(y=safe(t4$mdmlosspct, color="4 copies")))
+    p <- p + geom_line(aes(y=safe(t5$mdmlosspct, color="5 copies")))
+    p <- p + scale_color_manual("", 
+            breaks=c("3 copies", "4 copies", "5 copies"), 
+            values=c("red", "green", "blue"))
+
     plot(p)
+}
+
+
+# f n P l o t S h o c k 3 
+# Simple line plot for impact=50,80,100 (sorry, that's built in).
+fnPlotShock3 <- function(trows, nFreq, nDuration, nSpan, nCopies) {
+    p <- ggplot(trows, aes(x=lifem, y=safe(mdmlosspct), color=factor(shockimpact)))
+
+    p <- p + geom_line(data=trows, size=2)
+    p <- p + geom_point(data=trows, shape=(16), size=5)
+    p <- p + scale_x_log10() + scale_y_log10() + annotation_logticks()
+    p <- p + scale_colour_discrete(name="Impact\n(percent)", labels=c("50","80","100"))
+    p <- p + geom_hline(yintercept=1.0, linetype="dashed")
+    
+    sParams <- sprintf("freq(hl)=%syr, len=%smo, span=%s, copies=%s", 
+                    nFreq, nDuration, nSpan, nCopies)
+    p <- p + ggtitle("Shocks " %+% sParams)
+    p <- p + xlab("sector half-life (megahours)")
+    p <- p + ylab("percent permanent document losses")
+    p <- p + theme(
+            axis.text=element_text(size=10),
+            axis.title=element_text(size=14),
+            plot.title=element_text(size=16,face="bold"),
+            panel.border = element_rect(color = "black", fill=NA, size=1)
+            )
+
+    plot(p)
+    return(p)
+}
+
+
+# f n P l o t S h o c k 4 
+# Simple line plot for impact=50,80,100 (sorry, that's built in).
+# nCopies is in the data subset we are given, usually 5.
+# Try using the pieces/parts PlotUtil functions.
+fnPlotShock4 <- function(trows, nCopies) {
+
+    trows50 <- trows[trows$shockimpact==50,]
+    trows80 <- trows[trows$shockimpact==80,]
+    trows100 <- trows[trows$shockimpact==100,]
+
+    p <- fnPlotBegin(trows50, trows50$nLifem, trows50$mdmlosspct)
+    cat("begin done.\n")
+
+    p <- fnPlotAddLine(p, trows50, trows50$nLifem, trows50$mdmlosspct, 
+                dotcolor="blue", dotsize=3, dotshape=16, 
+                linecolor="blue", linesize=2, lineshape="solid")
+
+    plot(p)
+
+#    p <- fnPlotAddLine(p, trows80, trows80$nLifem, trows80$mdmlosspct, 
+#                dotcolor="green", dotsize=3, dotshape=16, 
+#                linecolor="green", linesize=2, lineshape="solid")
+#    p <- fnPlotAddLine(p, trows100, trows100$nLifem, trows100$mdmlosspct, 
+#                dotcolor="red", dotsize=3, dotshape=16, 
+#                linecolor="red", linesize=2, lineshape="solid")
+
+    p <- fnPlotLogScales(p, x='yes', y='yes')
+
+#    p <- p + scale_colour_discrete(name="Impact\n(percent)", labels=c("50","80","100"))
+    p <- p + geom_hline(yintercept=1.0, linetype="dashed")
+    
+    sParams <- sprintf("copies=%s", 
+                    nCopies)
+
+    p <- fnPlotTitles(p, title=("Shocks " %+% sParams), titlesize=16, 
+                xlabel="sector half-life (megahours)", 
+                ylabel="percent permanent document losses", 
+                labelsize=14) 
+
+#    p <- p + ggtitle("Shocks " %+% sParams)
+#    p <- p + xlab("sector half-life (megahours)")
+#    p <- p + ylab("percent permanent document losses")
+#    p <- p + theme(
+#            axis.text=element_text(size=10),
+#            axis.title=element_text(size=14),
+#            plot.title=element_text(size=16,face="bold"),
+#            panel.border = element_rect(color = "black", fill=NA, size=1)
+#            )
+
+
     return(p)
 }
 

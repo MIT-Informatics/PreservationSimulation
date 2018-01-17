@@ -59,8 +59,8 @@ DONE - need new utils: list databases, list collections in db.
 
 
 TODO: web interface to select instructions for broker run
-FIXME - add option to initialize the family/specific dirs.  new page.  
-FIXME - add option to clear the done collection.
+DONE - add option to initialize the family/specific dirs.  new page.  
+DONE - add option to clear the done collection.
 DONE - add option for detached run with results to log file.
 DONE - permit multiple-select for most options.  single select renders just 
     the simple value; multiselect renders json list in quotes '[1,2,3]'.
@@ -161,7 +161,7 @@ DONE - why did i ever remove glitchspan?  put it back.
 
 
 TODO: R 
-FIXME - add audittype to the list of don't-care columns.
+DONE - add audittype to the list of don't-care columns.
 FIXME - think about a way to rename the columns at the last instant, 
     just before they go into R processing, with the style of names
     suggested by Altman, e.g., i_foo for inputs and o_bar for outputs.
@@ -211,7 +211,7 @@ DONE - slow down after extractvalues, too.
 
 TODO: broker.py
 FIXME - ditch mongodb in favor of sqlite3.
-FIXME - in listonly listings, sort the dictionary dump.
+DONE - in listonly listings, sort the dictionary dump.
 FIXME - in listonly listings, remove nLifeMax/Min, nCopiesMax/Min from dict.
 DONE - harden against missing env var for NUMBER_OF_PROCESSORS.  and then
     maybe remove the crap added to AWSinstall.
@@ -259,7 +259,7 @@ DONE - adapt the pretestchecklist and other scripts to the new instruction
 TODO: broker docs
 DONE - add -p option to mkdir so that user can use specificdir more 
     than one level deep, e.g., ../shocks/low/span1.
-FIXME - warn the user in strong language always to setupfamilydir for their
+DONE - warn the user in strong language always to setupfamilydir for their
     runs, which is a console activity.  hmmm, maybe that could be added
     as an option to the broker form, eh?  so they don't have to use any 
     nasty old CLI commands.  

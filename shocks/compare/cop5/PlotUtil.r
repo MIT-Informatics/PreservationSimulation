@@ -11,7 +11,7 @@ library(ggplot2)
 #fnPlotBegin <- function(dat, xcol, ycol) {
 #    gp <- ggplot(data=trows,aes(x=xcol, y=ycol)) 
 fnPlotBegin <- function(dat, xcol, ycol) {
-    gp <- ggplot(data=dat, mapping=aes(x=(xcol), y=(ycol)))
+    gp <- ggplot(data=dat, aes(x=(xcol), y=(ycol)))
     return(gp)
 }
 
@@ -20,17 +20,20 @@ fnPlotBegin <- function(dat, xcol, ycol) {
 fnPlotAddLine <- function(gp, dat, xcol, ycol, dotcolor, dotsize, dotshape, 
                         linecolor, linesize, lineshape) {
     if (is.null(gp)) {print("ERROR: missing first argument = plot in progress")}
+    
+    cat("enter addline\n")
+    cat("addline: dat", dat$xcol)
+    
     gp <- gp + 
-            geom_point(data=dat, aes(x=(dat$xcol), y=(dat$ycol)), 
-                    color=dotcolor, size=dotsize, shape=dotshape) 
-    gp <- gp + 
-            geom_line(data=dat, aes(x=(dat$xcol), y=(dat$ycol)), 
-                    color=linecolor, size=linesize, linetype=lineshape)
+            geom_point(data=dat, aes(x=(xcol), y=(ycol)), 
+                    color=dotcolor, size=dotsize, shape=dotshape) +
+            geom_line(data=dat, aes(x=(xcol), y=(ycol)), 
+                    linetype=lineshape, color=linecolor, size=linesize)
     return(gp)
 }
 
 
-# f n P l o t L o g S c a l e X 
+# f n P l o t L o g S c a l e s 
 fnPlotLogScales <- function(gp, x=NULL, y=NULL) {
     if (is.null(gp)) {print("ERROR: missing first argument = plot in progress")}
     if (!is.null(x)) {
@@ -44,7 +47,8 @@ fnPlotLogScales <- function(gp, x=NULL, y=NULL) {
 
 
 # f n P l o t T i t l e s 
-fnPlotTitles <- function(gp, titleline, titlesize=22, xlabel, ylabel, labelsize=18) {
+fnPlotTitles <- function(gp, titleline, titlesize=22, xlabel, ylabel, 
+                    labelsize=18) {
     if (is.null(gp)) {print("ERROR: missing first argument = plot in progress")}
     gp <- gp + labs(title=titleline, x=xlabel, y=ylabel)
     gp <- gp + theme(

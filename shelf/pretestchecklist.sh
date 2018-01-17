@@ -2,7 +2,7 @@
 # pretestchecklist.sh
 
 # Check that all directories and files are in place for a run.  
-# familydir required, but specific defaults to .
+# familydir required, but specific defaults to ./ (dot, working dir)
 # 
 
 if [ -z "$1" -o "$1" = "-h" -o "$1" = "--help" ]
@@ -114,5 +114,5 @@ done
 
 
 
-echo "Looks okay!"
+echo "Pretest checklist: Looks okay!"
 #END
