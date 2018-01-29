@@ -25,10 +25,10 @@ if (nrow(dat.shockall) > 0)
 {
     source("./ShockLowPlots.r")
     
-    dat.shock5 <- dat.shockall[dat.shockall$copies==5 
+    dat.shock5.3 <- dat.shockall[dat.shockall$copies==5 
                             & dat.shockall$shockspan==3,]
-    gp <- fnPlotShock4(dat.shock5, nCopies=5)
-    fnPlotMakeFile(gp, "Shock_compare_cop5_freq2yr_dur1yr_span2.png")
+    gp <- fnPlotShock4(dat.shock5.3, nCopies=5)
+    fnPlotMakeFile(gp, "Shock_compare_cop5_freq2yr_dur1yr_span3.png")
 
 
 

@@ -87,17 +87,17 @@ fnPlotShock3 <- function(trows, nFreq, nDuration, nSpan, nCopies) {
 fnPlotShock4 <- function(trows, nCopies) {
 
     trows50 <- trows[trows$shockimpact==50,]
-    print(trows50)
     trows80 <- trows[trows$shockimpact==80,]
     trows100 <- trows[trows$shockimpact==100,]
-    p <- fnPlotBegin(dat=trows50, xcol=trows50$nLifem, ycol=trows50$mdmlosspct)
-#    p <- fnPlotBegin()
+
+    p <- fnPlotBegin(trows50, trows50$nLifem, trows50$mdmlosspct)
     cat("begin done.\n")
 
-    p <- fnPlotAddLine(p, dat=trows50, 
-                xcol=trows50$nLifem, ycol=trows50$mdmlosspct, 
+    p <- fnPlotAddLine(p, trows50, trows50$nLifem, trows50$mdmlosspct, 
                 dotcolor="blue", dotsize=3, dotshape=16, 
                 linecolor="blue", linesize=2, lineshape="solid")
+
+    plot(p)
 
 #    p <- fnPlotAddLine(p, trows80, trows80$nLifem, trows80$mdmlosspct, 
 #                dotcolor="green", dotsize=3, dotshape=16, 
@@ -128,6 +128,7 @@ fnPlotShock4 <- function(trows, nCopies) {
 #            plot.title=element_text(size=16,face="bold"),
 #            panel.border = element_rect(color = "black", fill=NA, size=1)
 #            )
+
 
     return(p)
 }
