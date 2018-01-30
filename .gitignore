@@ -1,3 +1,4 @@
+# really old directories
 OLDpy
 Q0
 Q0b
@@ -7,23 +8,36 @@ Q3
 Q4
 hl
 logs
+
+# files to ignore everywhere
 *.zip
 *.tmp
 *.pyc
 *.bak
 *.wbk
 *.cmds
+
+# 
 articles
 test
 tmp
+
+# moldy, old results and instructions
 results
 searchspacedb
 
+# but please backup any valid data anywhere
+!GiantOutput*
+
+# orphans from old instructions
 *.big
 *.toobig
+
+# R Studio detritus
 *.RData
 *.Rhistory
 
+# leftovers from Mac
 baseline/.DS_Store
 baseline/.DS_Store
 PaperDraft/.DS_Store
@@ -34,3 +48,4 @@ baseline/.DS_Store
 baseline/.DS_Store
 baseline/.DS_Store
 .DS_Store
+**/.DS_Store
