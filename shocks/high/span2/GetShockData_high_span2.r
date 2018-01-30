@@ -37,10 +37,10 @@ if (nrow(dat.shockall) > 0)
     dat.shockspan3 <- dat.shockall[dat.shockall$shockspan==2
                         & dat.shockall$shockfreq==10000
                         & dat.shockall$shockmaxlife==5000
-                        & dat.shockall$shockimpact==90,]
-    gp <- fnPlotShock1(dat.shockspan3, nFreq=1, nDuration=6, nSpan=2, nImpact=90)
+                        & dat.shockall$shockimpact==80,]
+    gp <- fnPlotShock1(dat.shockspan3, nFreq=1, nDuration=6, nSpan=2, nImpact=80)
     plot(gp)
-    fnPlotMakeFile(gp, "Shock_compare_copvar_freq1yr_dur6mo_span2_impact90.png")
+    fnPlotMakeFile(gp, "Shock_compare_copvar_freq1yr_dur6mo_span2_impact80.png")
     
     dat.shockspan3 <- dat.shockall[dat.shockall$shockspan==2
                         & dat.shockall$shockfreq==10000
@@ -63,10 +63,10 @@ if (nrow(dat.shockall) > 0)
     dat.shockspan3 <- dat.shockall[dat.shockall$shockspan==2
                         & dat.shockall$shockfreq==10000
                         & dat.shockall$shockmaxlife==10000
-                        & dat.shockall$shockimpact==90,]
-    gp <- fnPlotShock1(dat.shockspan3, nFreq=1, nDuration=12, nSpan=2, nImpact=90)
+                        & dat.shockall$shockimpact==80,]
+    gp <- fnPlotShock1(dat.shockspan3, nFreq=1, nDuration=12, nSpan=2, nImpact=80)
     plot(gp)
-    fnPlotMakeFile(gp, "Shock_compare_copvar_freq1yr_dur12mo_span2_impact90.png")
+    fnPlotMakeFile(gp, "Shock_compare_copvar_freq1yr_dur12mo_span2_impact80.png")
     
     dat.shockspan3 <- dat.shockall[dat.shockall$shockspan==2
                         & dat.shockall$shockfreq==10000

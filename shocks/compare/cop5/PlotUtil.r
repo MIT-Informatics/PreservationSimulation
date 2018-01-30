@@ -12,8 +12,11 @@ library(ggplot2)
 #    gp <- ggplot(data=trows,aes(x=xcol, y=ycol)) 
 fnPlotBegin <- function(dat, xcol, ycol) {
 #fnPlotBegin <- function() {
-    gp <- ggplot(data=dat, mapping=aes(x=xcol, y=ycol))
-#    gp <- ggplot()
+    if (is.null(dat))
+    {    gp <- ggplot(mapping=aes(x=xcol, y=ycol))
+    } else
+    {    gp <- ggplot(data=dat, mapping=aes(x=xcol, y=ycol))
+    }
     return(gp)
 }
 

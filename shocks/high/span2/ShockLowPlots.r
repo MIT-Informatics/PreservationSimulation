@@ -10,7 +10,7 @@ fnPlotShock1 <- function(trows, nFreq, nDuration, nSpan, nImpact) {
     p <- p + geom_line(data=trows, size=2)
     p <- p + geom_point(data=trows, shape=(16), size=5)
     p <- p + scale_x_log10() + scale_y_log10() + annotation_logticks()
-    p <- p + scale_colour_discrete(name="Number \nof Copies", labels=c("3","4","5"))
+    p <- p + scale_colour_discrete(name="Number \nof Copies", labels=c("3","4","5","6"))
     p <- p + geom_hline(yintercept=1.0, linetype="dashed")
     
     sParams <- sprintf("freq(hl)=%syr, len=%smo, span=%s, impact=%s%%", 
