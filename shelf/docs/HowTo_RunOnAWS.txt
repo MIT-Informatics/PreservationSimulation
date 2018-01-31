@@ -98,6 +98,7 @@ Remove pulled directories of moldy, old results
 Create a directory tree for test results
 - cd working/shelf (probably in another SSH or putty session)
 - sh setupfamilydir.sh <familydir> <specificdir>
+- OR use the setup page of the form, see below.
 
 
 Remove old history from MongoDB
@@ -125,10 +126,20 @@ Start software
 - this creates a new form and starts up the bottle web server with it.
 
 
+Get web form used to submit input parameters for runs
+- browse from your system to <aws-ip-addr>:8080
+
+
+Setup output directory tree for results
+- select "Go to setup page" option on form
+- fill in family and specific directory names
+- if needed, select option to clear output directory
+- if desired, select option to clear all "done" records from admin db
+
+
 Run broker for a single range of cases
-- browse from your system to <ip-addr>:8080
 - fill in the form and submit
-- be sure to check all the fields, esp. server default life, numbers of copies,
+- be sure to check ALL the fields, esp. server default life, numbers of copies,
    lifetimes, shock and glitch frequencies, impacts, durations.  
 - useful trick: set seeds=1 and TEST mode on to count the number of cases, then 
     set seeds=21 or whatever and TEST mode off to do the actual run.  
