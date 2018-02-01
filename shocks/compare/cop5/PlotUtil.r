@@ -10,10 +10,10 @@ library(ggplot2)
 # f n P l o t B e g i n 
 #fnPlotBegin <- function(dat, xcol, ycol) {
 #    gp <- ggplot(data=trows,aes(x=xcol, y=ycol)) 
-fnPlotBegin <- function(dat, xcol, ycol) {
+fnPlotBegin <- function(dat=NULL, xcol=NULL, ycol=NULL) {
 #fnPlotBegin <- function() {
     if (is.null(dat))
-    {    gp <- ggplot(mapping=aes(x=xcol, y=ycol))
+    {    gp <- ggplot()
     } else
     {    gp <- ggplot(data=dat, mapping=aes(x=xcol, y=ycol))
     }
@@ -22,17 +22,17 @@ fnPlotBegin <- function(dat, xcol, ycol) {
 
 
 # f n P l o t A d d L i n e 
-fnPlotAddLine <- function(gp=NULL, dat, xcol, ycol, dotcolor, dotsize, dotshape, 
+fnPlotAddLine <- function(gp=NULL, dat=NULL, xcol=NULL, ycol=NULL, dotcolor, dotsize, dotshape, 
                         linecolor, linesize, lineshape) {
     if (is.null(gp)) {print("ERROR: missing first argument = plot in progress")}
-    else {cat("enter addline\n")}
+    else {if (debugprint) cat("enter addline\n")}
     
     gp <- gp + 
-            geom_point(data=dat, aes(x=xcol, y=ycol), 
+            geom_point(data=dat, mapping=aes(x=xcol, y=ycol), 
                     color=dotcolor, size=dotsize, shape=dotshape) +
             geom_line(data=dat, aes(x=xcol, y=ycol), 
                     linetype=lineshape, color=linecolor, size=linesize)
-    cat("exit addline\n")
+    if (debugprint) cat("exit addline\n")
     return(gp)
 }
 
@@ -84,37 +84,4 @@ fnPlotMakeFile <- function(plotname, sFilename, sSize="4x3") {
 } #endfunction
 
 
-if (0){
-# TEST ONLY
-nCopies <- 1
-trows <- fnSelectCopies(dat.noaudit, nCopies)
-#g <- fnPlotBegin(dat=dat.noaudit, xcol=dat.noaudit$lifem, ycol=safe(dat.noaudit$mdmlosspct))
-g <- fnPlotBegin(dat=trows, xcol=trows$lifem, ycol=safe(trows$mdmlosspct))
-#g <- fnPlotBegin(dat=trows, xcol=lifem, ycol=safe(mdmlosspct))
-g <- fnPlotLogScales(g, x="yes", y="yes")
-g <- fnPlotAddLine(g, dat=trows, xcol=lifem, ycol=safe(mdmlosspct), 
-            dotcolor="red", dotsize=5, dotshape=(48+nCopies), 
-            linecolor="black", linesize=1, lineshape="dashed")
-g <- fnPlotTitles(g, titleline="Unaudited Permanent Losses", 
-                xlabel="sector half-life (megahours)", 
-                ylabel="percentage of collection permanently lost")
-nCopies <- 2; trows <- fnSelectCopies(dat.noaudit, nCopies)
-g <- fnPlotAddLine(g, dat=trows, xcol=lifem, ycol=safe(mdmlosspct), 
-            dotcolor="red", dotsize=5, dotshape=(48+nCopies), 
-            linecolor="black", linesize=1, lineshape="dashed")
-nCopies <- 3; trows <- fnSelectCopies(dat.noaudit, nCopies)
-g <- fnPlotAddLine(g, dat=trows, xcol=lifem, ycol=safe(mdmlosspct), 
-            dotcolor="red", dotsize=5, dotshape=(48+nCopies), 
-            linecolor="black", linesize=1, lineshape="dashed")
-nCopies <- 5; trows <- fnSelectCopies(dat.noaudit, nCopies)
-g <- fnPlotAddLine(g, dat=trows, xcol=lifem, ycol=safe(mdmlosspct), 
-            dotcolor="red", dotsize=5, dotshape=(48+nCopies), 
-            linecolor="black", linesize=1, lineshape="dashed")
-nCopies <- 9; trows <- fnSelectCopies(dat.noaudit, nCopies)
-g <- fnPlotAddLine(g, dat=trows, xcol=lifem, ycol=safe(mdmlosspct), 
-            dotcolor="red", dotsize=5, dotshape=(48+nCopies), 
-            linecolor="black", linesize=1, lineshape="dashed")
-
-plot(g)
-}
 

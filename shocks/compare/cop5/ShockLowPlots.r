@@ -87,28 +87,34 @@ fnPlotShock3 <- function(trows, nFreq, nDuration, nSpan, nCopies) {
 fnPlotShock4 <- function(trows, nCopies) {
 
     trows50 <- trows[trows$shockimpact==50,]
-    print(trows50)
     trows80 <- trows[trows$shockimpact==80,]
     trows100 <- trows[trows$shockimpact==100,]
-    p <- fnPlotBegin(dat=trows50, xcol=trows50$nLifem, ycol=trows50$mdmlosspct)
-#    p <- fnPlotBegin()
-    cat("begin done.\n")
 
-    p <- fnPlotAddLine(p, dat=trows50, 
-                xcol=trows50$nLifem, ycol=trows50$mdmlosspct, 
-                dotcolor="blue", dotsize=3, dotshape=16, 
+    p <- fnPlotBegin(dat=NULL, 
+                    xcol=trows50$lifem, 
+                    ycol=safe(trows80$mdmlosspct)
+                    )
+    if (debugprint) cat("begin done.\n")
+
+    p <- fnPlotAddLine(p, dat=trows50,
+                #xcol=trows50$lifem, 
+                ycol=safe(trows50$mdmlosspct), 
+                dotcolor="blue", dotsize=8, dotshape=16, 
                 linecolor="blue", linesize=2, lineshape="solid")
-
-#    p <- fnPlotAddLine(p, trows80, trows80$nLifem, trows80$mdmlosspct, 
-#                dotcolor="green", dotsize=3, dotshape=16, 
-#                linecolor="green", linesize=2, lineshape="solid")
-#    p <- fnPlotAddLine(p, trows100, trows100$nLifem, trows100$mdmlosspct, 
-#                dotcolor="red", dotsize=3, dotshape=16, 
-#                linecolor="red", linesize=2, lineshape="solid")
+    p <- fnPlotAddLine(p, dat=trows80,
+                #xcol=trows80$lifem, 
+                ycol=safe(trows80$mdmlosspct), 
+                dotcolor="green", dotsize=7, dotshape=17, 
+                linecolor="green", linesize=2, lineshape="solid")
+    p <- fnPlotAddLine(p, dat=trows100, 
+                #xcol=trows100$lifem, 
+                ycol=safe(trows100$mdmlosspct), 
+                dotcolor="red", dotsize=6, dotshape=18, 
+                linecolor="red", linesize=2, lineshape="solid")
 
     p <- fnPlotLogScales(p, x='yes', y='yes')
 
-#    p <- p + scale_colour_discrete(name="Impact\n(percent)", labels=c("50","80","100"))
+    p <- p + scale_colour_discrete(name="Impact\n(percent)", labels=c("50","80","100"))
     p <- p + geom_hline(yintercept=1.0, linetype="dashed")
     
     sParams <- sprintf("copies=%s", 
@@ -129,8 +135,12 @@ fnPlotShock4 <- function(trows, nCopies) {
 #            panel.border = element_rect(color = "black", fill=NA, size=1)
 #            )
 
+    plot(p)
+
+
     return(p)
 }
+
 
 
 # f n P l o t R a n d o m M o n t h l y V s B a s e l i n e 
@@ -248,6 +258,7 @@ fnPlotRandomVariousSegments <- function(nCopies){
 # Edit history
 # 20171211  RBL Copied from auditing in segments and modified.
 #               Added shock plot routines. 
+# 20180131  RBL Name all args in plot calls to force dorrect order of arguments.
 # 
 # 
 
