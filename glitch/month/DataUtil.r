@@ -146,12 +146,12 @@ fndfGetShockData <- function(results)
 # f n d f G e t G l i t c h D a t a 
 fndfGetGlitchData <- function(results)
 {
-    # Specific to shock analyses: 
+    # Specific to glitch analyses: 
     lNamesIWant <- c("copies","lifem","mdmlosspct",
-                    "glitchfreq","glitchimpact","glitchmaxlife","glitchspan",
+                    "glitchfreq","glitchimpact","glitchmaxlife",
                     "glitchdecay")
-    shockresults <- results[lNamesIWant]
-    return(shockresults)
+    glitchresults <- results[lNamesIWant]
+    return(glitchresults)
 }
 
 # f n d f G e t D o c s i z e D a t a 
