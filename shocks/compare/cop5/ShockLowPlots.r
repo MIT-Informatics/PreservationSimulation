@@ -84,30 +84,41 @@ fnPlotShock3 <- function(trows, nFreq, nDuration, nSpan, nCopies) {
 # Simple line plot for impact=50,80,100 (sorry, that's built in).
 # nCopies is in the data subset we are given, usually 5.
 # Try using the pieces/parts PlotUtil functions.
+#
+# Still cannot get this blankety-blank thing to work right:
+#  all the lines and points use the first y table mentioned in the 
+#  PlotBegin call.  And without that priming, we get the aesthetic 
+#  length problem error.  :-(  
+#
 fnPlotShock4 <- function(trows, nCopies) {
 
     trows50 <- trows[trows$shockimpact==50,]
     trows80 <- trows[trows$shockimpact==80,]
     trows100 <- trows[trows$shockimpact==100,]
 
-    p <- fnPlotBegin(dat=NULL, 
-                    xcol=trows50$lifem, 
-                    ycol=safe(trows80$mdmlosspct)
+    p <- fnPlotBegin(
+                    dat=NULL, 
+#                    dat=trows50, 
+                    xcol=trows50$lifem, ycol=safe(trows80$mdmlosspct)
+#                    xcol=NULL,ycol=NULL
                     )
     if (debugprint) cat("begin done.\n")
 
-    p <- fnPlotAddLine(p, dat=trows50,
+    p <- fnPlotAddLine(p, 
+                dat=trows50,
                 #xcol=trows50$lifem, 
                 ycol=safe(trows50$mdmlosspct), 
                 dotcolor="blue", dotsize=8, dotshape=16, 
                 linecolor="blue", linesize=2, lineshape="solid")
-    p <- fnPlotAddLine(p, dat=trows80,
-                #xcol=trows80$lifem, 
+    p <- fnPlotAddLine(p, 
+                dat=trows80,
+                xcol=trows80$lifem, 
                 ycol=safe(trows80$mdmlosspct), 
                 dotcolor="green", dotsize=7, dotshape=17, 
                 linecolor="green", linesize=2, lineshape="solid")
-    p <- fnPlotAddLine(p, dat=trows100, 
-                #xcol=trows100$lifem, 
+    p <- fnPlotAddLine(p, 
+                dat=trows100, 
+                xcol=trows100$lifem, 
                 ycol=safe(trows100$mdmlosspct), 
                 dotcolor="red", dotsize=6, dotshape=18, 
                 linecolor="red", linesize=2, lineshape="solid")
