@@ -98,15 +98,13 @@ fnPlotShock4 <- function(trows, nCopies) {
 
     p <- fnPlotBegin(
                     dat=NULL, 
-#                    dat=trows50, 
-                    xcol=trows50$lifem, ycol=safe(trows80$mdmlosspct)
-#                    xcol=NULL,ycol=NULL
+                    xcol=lifem, ycol=safe(mdmlosspct)
                     )
     if (debugprint) cat("begin done.\n")
 
     p <- fnPlotAddLine(p, 
                 dat=trows50,
-                #xcol=trows50$lifem, 
+                xcol=trows50$lifem, 
                 ycol=safe(trows50$mdmlosspct), 
                 dotcolor="blue", dotsize=8, dotshape=16, 
                 linecolor="blue", linesize=2, lineshape="solid")
