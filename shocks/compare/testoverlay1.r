@@ -17,7 +17,7 @@ trows <- dat.shock5.3
     trows80 <- trows[trows$shockimpact==80,]
     trows100 <- trows[trows$shockimpact==100,]
 
-    gp <- ggplot(mapping=aes(x=lifem, y=safelog(mdmlosspct))))
+    gp <- ggplot(mapping=aes(x=lifem, y=safelog(mdmlosspct)))
 
     gp <- gp + 
             geom_point(data=trows50, 
@@ -26,10 +26,10 @@ trows <- dat.shock5.3
                     linetype="solid", color="blue", size=2)
 
     gp <- gp + 
-            geom_point(data=trows50, 
-                    color="blue", size=8, shape=16) +
-            geom_line(data=trows50, 
-                    linetype="solid", color="blue", size=2)
+            geom_point(data=trows80, 
+                    color="red", size=8, shape=16) +
+            geom_line(data=trows80, 
+                    linetype="solid", color="red", size=2)
 
 
 p<-gp
