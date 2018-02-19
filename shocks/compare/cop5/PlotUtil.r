@@ -6,32 +6,39 @@
 source("./DataUtil.r")
 library(ggplot2)
 
+# Constants for ggplot point shapes.
+point.DOT       <- 16
+point.SQUARE    <- 15
+point.TRIANGLE  <- 17
+point.DIAMOND   <- 18
+point.HDOT       <- 0
+point.HSQUARE    <- 1
+point.HTRIANGLE  <- 2
+point.HDIAMOND   <- 5
+
 
 # f n P l o t B e g i n 
 #fnPlotBegin <- function(dat, xcol, ycol) {
 #    gp <- ggplot(data=trows,aes(x=xcol, y=ycol)) 
-fnPlotBegin <- function(dat=NULL, xcol=NULL, ycol=NULL) {
+fnPlotBegin <- function(dat=NULL, xcol=NULL, ycol=NULL, context=NULL) {
 #fnPlotBegin <- function() {
-    if (is.null(dat))
-    {    gp <- ggplot()
-    } else
-    {    gp <- ggplot(data=dat, mapping=aes(x=xcol, y=ycol))
-    }
+    gp <- ggplot(data=dat, mapping=aes(x=xcol, y=ycol))
     return(gp)
 }
 
 
 # f n P l o t A d d L i n e 
-fnPlotAddLine <- function(gp=NULL, dat=NULL, xcol=NULL, ycol=NULL, dotcolor, dotsize, dotshape, 
-                        linecolor, linesize, lineshape) {
+fnPlotAddLine <- function(gp=NULL, dat=NULL, 
+                        dotcolor="black", dotsize=2, dotshape=point.DOT, 
+                        linecolor="black", linesize=2, lineshape) {
     if (is.null(gp)) {print("ERROR: missing first argument = plot in progress")}
     else {if (debugprint) cat("enter addline\n")}
     
     gp <- gp + 
-            geom_point(data=dat, mapping=aes(x=xcol, y=ycol), 
+            geom_point(data=dat, 
                     color=dotcolor, size=dotsize, shape=dotshape) +
-            geom_line(data=dat, aes(x=xcol, y=ycol), 
-                    linetype=lineshape, color=linecolor, size=linesize)
+            geom_line(data=dat, 
+                    color=linecolor, size=linesize, linetype=lineshape)
     if (debugprint) cat("exit addline\n")
     return(gp)
 }
@@ -51,8 +58,8 @@ fnPlotLogScales <- function(gp, x=NULL, y=NULL) {
 
 
 # f n P l o t T i t l e s 
-fnPlotTitles <- function(gp, titleline, titlesize=22, xlabel, ylabel, 
-                    labelsize=18) {
+fnPlotTitles <- function(gp, titleline, titlesize=22, 
+                    xlabel="XXX", ylabel="YYY", labelsize=18) {
     if (is.null(gp)) {print("ERROR: missing first argument = plot in progress")}
     gp <- gp + labs(title=titleline, x=xlabel, y=ylabel)
     gp <- gp + theme(

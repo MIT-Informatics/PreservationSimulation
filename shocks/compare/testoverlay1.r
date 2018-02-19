@@ -17,18 +17,24 @@ trows <- dat.shock5.3
     trows80 <- trows[trows$shockimpact==80,]
     trows100 <- trows[trows$shockimpact==100,]
 
-    gp <- ggplot(mapping=aes(x=lifem, y=safelog(mdmlosspct)))
+    gp <- ggplot(data=NULL, mapping=aes(x=lifem, y=safe(mdmlosspct)))
 
     gp <- gp + 
             geom_point(data=trows50, 
-                    color="blue", size=8, shape=16) +
+                    color="green", size=8, shape=point.DOT) +
             geom_line(data=trows50, 
-                    linetype="solid", color="blue", size=2)
+                    linetype="solid", color="green", size=2)
 
     gp <- gp + 
             geom_point(data=trows80, 
-                    color="red", size=8, shape=16) +
+                    color="blue", size=5, shape=point.TRIANGLE) +
             geom_line(data=trows80, 
+                    linetype="solid", color="blue", size=2)
+
+    gp <- gp + 
+            geom_point(data=trows100, 
+                    color="red", size=3, shape=point.SQUARE) +
+            geom_line(data=trows100, 
                     linetype="solid", color="red", size=2)
 
 
@@ -42,9 +48,18 @@ p<-gp
     sParams <- sprintf("copies=%s", 
                     nCopies)
 
-    p <- fnPlotTitles(p, title=("Shocks " %+% sParams), titlesize=16, 
-                xlabel="sector half-life (megahours)", 
-                ylabel="percent permanent document losses", 
-                labelsize=14) 
+    p <- fnPlotTitles(p, title=("Shocks " %+% sParams 
+                %+% ", freq=2yr, dur=1yr"
+                %+% ", 50-80-100% G-B-R") 
+                ,titlesize=16 
+                ,xlabel="sector half-life (megahours)"
+                ,ylabel="percent permanent document losses"
+                ,labelsize=14
+                ) 
 
-    
+ plot(p)   
+ fnPlotMakeFile(p, "Shock_compare_cop5_freq2yr_dur1yr_span3_50-80-100.png")
+
+ 
+ 
+ 

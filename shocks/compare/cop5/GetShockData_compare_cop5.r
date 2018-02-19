@@ -29,6 +29,7 @@ if (nrow(dat.shockall) > 0)
                             & dat.shockall$shockspan==3,
                             ]
     gp <- fnPlotShock4(trows=dat.shock5.3, nCopies=5)
+    plot(gp)
     fnPlotMakeFile(gp, "Shock_compare_cop5_freq2yr_dur1yr_span3.png")
 
 

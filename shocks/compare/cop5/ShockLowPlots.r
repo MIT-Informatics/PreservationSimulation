@@ -86,39 +86,42 @@ fnPlotShock3 <- function(trows, nFreq, nDuration, nSpan, nCopies) {
 # Try using the pieces/parts PlotUtil functions.
 #
 # Still cannot get this blankety-blank thing to work right:
-#  all the lines and points use the first y table mentioned in the 
-#  PlotBegin call.  And without that priming, we get the aesthetic 
-#  length problem error.  :-(  
-#
+#  Now it seems that initializing the ggplot inside the function
+#  cannot get hold of the column names that will be used in the data.  
+#  When ggplot attempts to evaluate all the plot params, it cannot
+#  find the names lifem and mdmlosspct.  Puzzling.  
+#  Some lexical vs dynamic scoping problem that I don't get.  
+# 
 fnPlotShock4 <- function(trows, nCopies) {
 
     trows50 <- trows[trows$shockimpact==50,]
     trows80 <- trows[trows$shockimpact==80,]
     trows100 <- trows[trows$shockimpact==100,]
 
+if(1){  # If you do just this, it cannot find "lifem" and fails.
     p <- fnPlotBegin(
-                    dat=NULL, 
-                    xcol=lifem, ycol=safe(mdmlosspct)
+                    dat=NULL
+                    , xcol=lifem, ycol=safe(mdmlosspct)
+                    , context=trows
                     )
+} else
+{   # If you do this, alone or additionally, it can find "lifem" and works.
+    p <- ggplot(data=NULL, mapping=aes(x=lifem, y=safe(mdmlosspct)))
+}
+
     if (debugprint) cat("begin done.\n")
 
     p <- fnPlotAddLine(p, 
                 dat=trows50,
-                xcol=trows50$lifem, 
-                ycol=safe(trows50$mdmlosspct), 
-                dotcolor="blue", dotsize=8, dotshape=16, 
-                linecolor="blue", linesize=2, lineshape="solid")
-    p <- fnPlotAddLine(p, 
-                dat=trows80,
-                xcol=trows80$lifem, 
-                ycol=safe(trows80$mdmlosspct), 
-                dotcolor="green", dotsize=7, dotshape=17, 
+                dotcolor="green", dotsize=8, dotshape=point.DOT, 
                 linecolor="green", linesize=2, lineshape="solid")
     p <- fnPlotAddLine(p, 
+                dat=trows80,
+                dotcolor="blue", dotsize=5, dotshape=point.TRIANGLE, 
+                linecolor="blue", linesize=2, lineshape="solid")
+    p <- fnPlotAddLine(p, 
                 dat=trows100, 
-                xcol=trows100$lifem, 
-                ycol=safe(trows100$mdmlosspct), 
-                dotcolor="red", dotsize=6, dotshape=18, 
+                dotcolor="red", dotsize=3, dotshape=point.SQUARE, 
                 linecolor="red", linesize=2, lineshape="solid")
 
     p <- fnPlotLogScales(p, x='yes', y='yes')
@@ -129,28 +132,20 @@ fnPlotShock4 <- function(trows, nCopies) {
     sParams <- sprintf("copies=%s", 
                     nCopies)
 
-    p <- fnPlotTitles(p, title=("Shocks " %+% sParams), titlesize=16, 
-                xlabel="sector half-life (megahours)", 
-                ylabel="percent permanent document losses", 
-                labelsize=14) 
-
-#    p <- p + ggtitle("Shocks " %+% sParams)
-#    p <- p + xlab("sector half-life (megahours)")
-#    p <- p + ylab("percent permanent document losses")
-#    p <- p + theme(
-#            axis.text=element_text(size=10),
-#            axis.title=element_text(size=14),
-#            plot.title=element_text(size=16,face="bold"),
-#            panel.border = element_rect(color = "black", fill=NA, size=1)
-#            )
-
-    plot(p)
-
+    p <- fnPlotTitles(p, title=("Shocks " %+% sParams 
+                %+% ", freq=2yr, dur=1yr"
+                %+% ", 50-80-100% G-B-R") 
+                ,titlesize=16 
+                ,xlabel="sector half-life (megahours)"
+                ,ylabel="percent permanent document losses"
+                ,labelsize=14
+                ) 
 
     return(p)
 }
 
 
+# A U D I T   P l o t s 
 
 # f n P l o t R a n d o m M o n t h l y V s B a s e l i n e 
 fnPlotRandomMonthlyVsBaseline <- function(nCopies){
@@ -268,7 +263,8 @@ fnPlotRandomVariousSegments <- function(nCopies){
 # 20171211  RBL Copied from auditing in segments and modified.
 #               Added shock plot routines. 
 # 20180131  RBL Name all args in plot calls to force dorrect order of arguments.
-# 
+# 20180215  RBL Refashion ShockPlot4 to use separate data streams for
+#                the three shock levels. 
 # 
 
 #END
