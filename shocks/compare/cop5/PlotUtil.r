@@ -11,17 +11,16 @@ point.DOT       <- 16
 point.SQUARE    <- 15
 point.TRIANGLE  <- 17
 point.DIAMOND   <- 18
-point.HDOT       <- 0
-point.HSQUARE    <- 1
-point.HTRIANGLE  <- 2
-point.HDIAMOND   <- 5
+point.HDOT      <- 0
+point.HSQUARE   <- 1
+point.HTRIANGLE <- 2
+point.HDIAMOND  <- 5
 
 
 # f n P l o t B e g i n 
 #fnPlotBegin <- function(dat, xcol, ycol) {
 #    gp <- ggplot(data=trows,aes(x=xcol, y=ycol)) 
 fnPlotBegin <- function(dat=NULL, xcol=NULL, ycol=NULL, context=NULL) {
-#fnPlotBegin <- function() {
     gp <- ggplot(data=dat, mapping=aes(x=xcol, y=ycol))
     return(gp)
 }
@@ -36,9 +35,11 @@ fnPlotAddLine <- function(gp=NULL, dat=NULL,
     
     gp <- gp + 
             geom_point(data=dat, 
-                    color=dotcolor, size=dotsize, shape=dotshape) +
+                    color=dotcolor, size=dotsize, shape=dotshape
+                    , show.legend=TRUE) +
             geom_line(data=dat, 
-                    color=linecolor, size=linesize, linetype=lineshape)
+                    color=linecolor, size=linesize, linetype=lineshape
+                    , show.legend=TRUE)
     if (debugprint) cat("exit addline\n")
     return(gp)
 }

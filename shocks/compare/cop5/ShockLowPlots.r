@@ -94,21 +94,20 @@ fnPlotShock3 <- function(trows, nFreq, nDuration, nSpan, nCopies) {
 # 
 fnPlotShock4 <- function(trows, nCopies) {
 
-    trows50 <- trows[trows$shockimpact==50,]
-    trows80 <- trows[trows$shockimpact==80,]
-    trows100 <- trows[trows$shockimpact==100,]
+    trows50 <- subset(trows, shockimpact==50)
+    trows80 <- subset(trows, shockimpact==80)
+    trows100 <- subset(trows, shockimpact==100)
 
-if(1){  # If you do just this, it cannot find "lifem" and fails.
-    p <- fnPlotBegin(
-                    dat=NULL
-                    , xcol=lifem, ycol=safe(mdmlosspct)
-                    , context=trows
-                    )
-} else
-{   # If you do this, alone or additionally, it can find "lifem" and works.
-    p <- ggplot(data=NULL, mapping=aes(x=lifem, y=safe(mdmlosspct)))
-}
-
+    if(0){  # If you do just this, plot(p) later cannot find "lifem" and fails.
+        p <- fnPlotBegin(
+                        dat=NULL
+                        , xcol=lifem, ycol=safe(mdmlosspct)
+                        , context=trows
+                        )
+    } else
+    {   # If you do this, alone or additionally, it can find "lifem" and works.
+        p <- ggplot(data=NULL, mapping=aes(x=lifem, y=safe(mdmlosspct)))
+    }
     if (debugprint) cat("begin done.\n")
 
     p <- fnPlotAddLine(p, 
