@@ -273,6 +273,8 @@ fnPlotAuditFreq1 <- function(trows, nCopies){
                     nCopies)
 
     p <- fnPlotTitles(p, title=("Audit frequency comparisons, " %+% sParams 
+                            %+% "\nIncreasing auditing frequency beyond annually "
+                            %+% "yields only small benefits"
                             ) 
                 ,titlesize=16 
                 ,xlabel="sector half-life (megahours)"

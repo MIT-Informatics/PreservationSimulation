@@ -16,7 +16,7 @@ if (exists("results")) {rm(results)}
 results <- fndfGetGiantData("./")
 # Get fewer columns to work with, easier to see.
 dat.auditallcopies <- as.data.frame(fndfGetAuditData(results))
-dat.auditall <- dat.auditallcopies[dat.shockallcopies$copies>=3
+dat.auditall <- dat.auditallcopies[dat.auditallcopies$copies>=3
                 & dat.auditallcopies$copies<=5,]
 
 # S U B S E T S 
