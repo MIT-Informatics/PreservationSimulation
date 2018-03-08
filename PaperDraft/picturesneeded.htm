@@ -1,0 +1,192 @@
+<head>
+<style>
+th {
+background-color: yellow;
+font-family: sans-serif;
+}
+td {
+border: 1px solid black;
+}
+table {
+width: 80%;
+border-collapse: collapse;
+}
+</style>
+</head>
+<h1 id="pictures-we-need-for-the-paper">Pictures we need for the paper</h1>
+<hr />
+<p>(Note: the numbers are just for reference during discussions and editing.)</p>
+<table style="width:96%;">
+<colgroup>
+<col width="2%" />
+<col width="25%" />
+<col width="18%" />
+<col width="33%" />
+<col width="16%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>idea</th>
+<th>basics</th>
+<th>details</th>
+<th>wayzit</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>no audit requires too many copies</td>
+<td>losses by #copies</td>
+<td>copies=1,2,3,5,10, lifem2-1000</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>2a</td>
+<td>describe data plots</td>
+<td>#copies, losses, error injection</td>
+<td>log scales x and y, percent losses, trimmed means (25%=midmean, maybe only 10%) of sample size=21, colors=black or blue usually best case recommendation</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>2b</td>
+<td>describe model: boxes and lines picture</td>
+<td>client, collection, documents, servers, copies</td>
+<td>errors and failures injected by time, glitches, shocks</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>random auditing is less effective than total auditing</td>
+<td>total annual vs random</td>
+<td>random segments=4,10, dotted lines; total=solid line</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>4</td>
+<td>annual auditing suffices</td>
+<td>total annual vs total qtly</td>
+<td>copies=3,4,5</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>5</td>
+<td>segmented total auditing is slightly better</td>
+<td>annual with varying segments</td>
+<td>segments=1,2,4,10 show only marginal improvements</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>6</td>
+<td>5 copies and annual auditing is effective</td>
+<td>lifem-losses plot, losses show zero from 10 to 1000 mhr lifetimes</td>
+<td>notes about &quot;you wouldn't use a disk this bad&quot; for &lt;10 and &quot;you can't buy a disk this good&quot; for &gt;1000</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>7</td>
+<td>docsize and error rates scale together linearly</td>
+<td>lifem-losses plot</td>
+<td>separate lines and colors for various doc sizes</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>8</td>
+<td>glitches the same as increased error rates</td>
+<td>copies=3,4,5</td>
+<td>lines for no glitch, medium, and bad</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>9</td>
+<td>copies=1 losses over time</td>
+<td>copies=1 from garbage can lids to immortal disks</td>
+<td>lifem2-10000</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>10</td>
+<td>5 is enough but 4 is not</td>
+<td>lifem-losses copies4,5</td>
+<td>show errors down to 2 or 1 mhr</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>11a</td>
+<td>severe shocks may require 6 copies</td>
+<td>copies=4,5,6</td>
+<td>freq2yr dur1yr span3 imp50,80</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>11b</td>
+<td>severe shocks may require 6 copies</td>
+<td>copies=4,5,6</td>
+<td>freq2yr dur1yr span2 imp50,80</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>11c</td>
+<td>severe shocks may require 6 copies</td>
+<td>copies=4,5,6</td>
+<td>freq1yr dur0.5yr span2 imp50,80</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>12</td>
+<td>how long before lose 1% of collection</td>
+<td>lifem-losses plot</td>
+<td>separate lines for 5,10,15,20 years, copies3,4,5 with annual audit</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>13</td>
+<td>table: small vs large docs</td>
+<td>small matrix, cols=lifem, rows=5,50,500,5000MB</td>
+<td>losses in ppm</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>14</td>
+<td>table: calibration</td>
+<td>theoretical vs simulated results</td>
+<td>copies=1, 100 samples, vs straight Poisson, in ppm</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>15</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>16</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
