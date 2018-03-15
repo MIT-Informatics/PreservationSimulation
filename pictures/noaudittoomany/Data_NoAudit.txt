@@ -1,6 +1,6 @@
 MIT Preservation Simulation Project 
 
-./Data_NoAudit.txt 20171006_193815EDT 
+./Data_NoAudit.txt 20180313_131848EDT 
 
 Document losses with multiple copies and no auditing 
 

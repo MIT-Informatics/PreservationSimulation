@@ -73,6 +73,20 @@ fnPlotTitles <- function(gp, titleline, titlesize=22,
 }
 
 
+# f n P l o t P e r c e n t L i n e 
+# Seems a bizarre way to do this, to create a fake data point
+#  and then plot it using text centered there instead of just a dot.  
+fnPlotPercentLine <- function(gp, 
+                    xloc=log10(1.7), yloc=log10(1.2), 
+                    labeltext="1%", labelsize=4, 
+                    percent=1.0){
+    gp <- gp + geom_hline(yintercept=percent, linetype="dashed")
+    gp <- gp + geom_text(x=xloc, y=yloc, label=labeltext, size=labelsize, 
+                    fontface="plain", family="mono")
+    return(gp)
+}
+
+
 # f n P l o t M a k e F i l e 
 fnPlotMakeFile <- function(plotname, sFilename, sSize="4x3") {
 # Capture graph in 16:9 aspect and reasonable size.

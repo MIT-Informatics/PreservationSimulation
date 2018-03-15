@@ -45,6 +45,7 @@ bar.recast <- dcast(bar.melted, copies~lifem)
 
 # P L O T   D A T A 
 library(ggplot2)
+source("PlotUtil.r")
 
 nCopies <- 1
 trows <- fnSelectCopies(dat.noaudit, nCopies)
@@ -96,6 +97,7 @@ gp <- gp + theme(
             plot.title=element_text(size=22,face="bold"),
             panel.border = element_rect(color = "black", fill=NA, size=1)
             )
+gp <- fnPlotPercentLine(gp)
 
 plot(gp)
 fnPlotMakeFile(gp, "baseline-noaudit.png")
