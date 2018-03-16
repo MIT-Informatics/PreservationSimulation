@@ -1,6 +1,6 @@
 # GetNoAuditData.r
 
-source("./DataUtil.r")
+source("../common/DataUtil.r")
 
 # G E T   D A T A  
 rm(results)
@@ -45,7 +45,7 @@ bar.recast <- dcast(bar.melted, copies~lifem)
 
 # P L O T   D A T A 
 library(ggplot2)
-source("PlotUtil.r")
+source("../common/PlotUtil.r")
 
 nCopies <- 1
 trows <- fnSelectCopies(dat.noaudit, nCopies)

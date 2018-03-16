@@ -1,6 +1,6 @@
 # GetAuditAnnuallyData.r
 
-source("./DataUtil.r")
+source("../common/DataUtil.r")
 
 # G E T   D A T A  
 rm(results)

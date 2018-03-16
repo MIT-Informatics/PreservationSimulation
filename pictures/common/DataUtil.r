@@ -164,6 +164,9 @@ fndfGetDocsizeData <- function(results)
                     "auditfreq","auditsegments", 
                                             #"audittype", too, needs fixed
                     "docsize","shelfsize")
+    results.narrow <- results[lNamesIWant]
+    results.plausible <- results.narrow[results.narrow$lifem>=2,]
+    return(results.plausible)
 }
 
 # f n d f G e t S h e l f s i z e D a t a 

@@ -7,8 +7,8 @@
 # 
 
 
-source("./DataUtil.r")
-source("./PlotUtil.r")
+source("../common/DataUtil.r")
+source("../common/PlotUtil.r")
 
 
 # G E T   D A T A  
