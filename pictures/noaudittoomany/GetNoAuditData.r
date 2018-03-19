@@ -81,11 +81,11 @@ gp <- gp +
             color="red", size=5, shape=(48+nCopies)) +
         geom_line(data=trows, linetype="dashed", color="blue", size=1) 
 
-nCopies <- 9; trows <- fnSelectCopies(dat.noaudit, nCopies)
+nCopies <- 10; trows <- fnSelectCopies(dat.noaudit, nCopies)
 gp <- gp + 
         aes(trows, x=(lifem), y=(safe(mdmlosspct))) +
         geom_point(data=trows, 
-            color="red", size=5, shape=(48+nCopies)) +
+            color="red", size=5, shape=("A")) +
         geom_line(data=trows, linetype="dashed", color="blue", size=1) 
 
 gp <- gp + ggtitle("Without auditing, we need many copies\nto minimize permanent losses")
