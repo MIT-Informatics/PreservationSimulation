@@ -47,56 +47,59 @@ bar.recast <- dcast(bar.melted, copies~lifem)
 library(ggplot2)
 source("../common/PlotUtil.r")
 
+gp <- ggplot(data=trows,aes(x=lifem,y=safe(mdmlosspct))) 
+
 nCopies <- 1
 trows <- fnSelectCopies(dat.noaudit, nCopies)
-gp <- ggplot(data=trows,aes(x=lifem,y=safe(mdmlosspct))) 
-gp <- gp + 
-        scale_x_log10() + scale_y_log10() +
-        annotation_logticks()
 gp <- gp + 
         aes(trows, x=(lifem), y=(safe(mdmlosspct))) +
         geom_point(data=trows, 
-            color="red", size=5, shape=(48+nCopies)) +
+            color="black", size=5, shape=(48+nCopies)) +
         geom_line(data=trows, 
-            linetype="dashed", color="black", size=1)
+            linetype="dashed", color="red", size=1)
 
 nCopies <- 2; trows <- fnSelectCopies(dat.noaudit, nCopies)
 gp <- gp + 
         aes(trows, x=(lifem), y=(safe(mdmlosspct))) +
         geom_point(data=trows, 
-            color="red", size=5, shape=(48+nCopies)) +
+            color="black", size=5, shape=(48+nCopies)) +
         geom_line(data=trows, linetype="dashed", color="blue", size=1) 
 
 nCopies <- 3; trows <- fnSelectCopies(dat.noaudit, nCopies)
 gp <- gp + 
         aes(trows, x=(lifem), y=(safe(mdmlosspct))) +
         geom_point(data=trows, 
-            color="red", size=5, shape=(48+nCopies)) +
-        geom_line(data=trows, linetype="dashed", color="blue", size=1) 
+            color="black", size=5, shape=(48+nCopies)) +
+        geom_line(data=trows, linetype="dashed", color="purple", size=1) 
 
 nCopies <- 5; trows <- fnSelectCopies(dat.noaudit, nCopies)
 gp <- gp + 
         aes(trows, x=(lifem), y=(safe(mdmlosspct))) +
         geom_point(data=trows, 
-            color="red", size=5, shape=(48+nCopies)) +
-        geom_line(data=trows, linetype="dashed", color="blue", size=1) 
+            color="black", size=5, shape=(48+nCopies)) +
+        geom_line(data=trows, linetype="dashed", color="green", size=1) 
 
 nCopies <- 10; trows <- fnSelectCopies(dat.noaudit, nCopies)
 gp <- gp + 
         aes(trows, x=(lifem), y=(safe(mdmlosspct))) +
         geom_point(data=trows, 
-            color="red", size=5, shape=("A")) +
-        geom_line(data=trows, linetype="dashed", color="blue", size=1) 
+            color="black", size=5, shape=(point.DIAMOND)) +
+        geom_line(data=trows, linetype="dashed", color="black", size=1) 
 
-gp <- gp + ggtitle("Without auditing, we need many copies\nto minimize permanent losses")
-gp <- gp + xlab("sector half-life (megahours)")
-gp <- gp + ylab("percent permanent document losses")
-gp <- gp + theme(
-            axis.text=element_text(size=12),
-            axis.title=element_text(size=18),
-            plot.title=element_text(size=22,face="bold"),
-            panel.border = element_rect(color = "black", fill=NA, size=1)
-            )
+gp <- fnPlotLogScales(gp, x="YES", y="YES"
+        ,xbreaks=c(2,5,10,50,100,1000,10000)
+        )
+gp <- fnPlotTitles(gp 
+        ,titleline="Without auditing, we need many copies"
+            %+% "\nto minimize permanent losses, " 
+            %+% "even with high quality disks"
+            %+% "\n(shown for copies=1,2,3,5,10)"
+        ,titlesize=16
+        ,xlabel="1MB sector half-life (megahours)"
+            %+% "                     (lower error rate ====>)"
+        ,ylabel="permanent document losses (%)"
+        ,labelsize=14
+        )
 gp <- fnPlotPercentLine(gp)
 
 plot(gp)

@@ -86,13 +86,15 @@ gp <- gp +
         geom_line(data=trows, linetype="dashed", color="blue", size=1) 
 }#ENDIF0
 
-gp <- fnPlotLogScales(gp, x="YES", y="YES")
+gp <- fnPlotLogScales(gp, x="YES", y="YES", xbreaks=c(2,5,10,50,100,1000,10000))
 gp <- fnPlotTitles(gp, 
-                titleline="A single copy has unacceptable permanent losses,\n" 
-                %+% "even with very high quality disks", 
-                xlabel="sector half-life (megahours)",
-                ylabel="percent permanent document losses"
-                )
+        titleline="A single copy has unacceptable permanent losses,\n" 
+            %+% "even with very high quality disks", 
+        titlesize=18,
+        xlabel="sector half-life (megahours)"
+            %+% "              lower error rate ====>",
+        ylabel="permanent document losses (%)"
+        )
 gp <- fnPlotPercentLine(gp)
 
 plot(gp)

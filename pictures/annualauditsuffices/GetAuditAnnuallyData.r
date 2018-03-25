@@ -40,6 +40,7 @@ bar.recast <- dcast(bar.melted, copies~lifem)
 
 # P L O T   D A T A 
 library(ggplot2)
+source("../common/PlotUtil.r")
 
 # Show lines for 3, 4, 5 copies, with annual total auditing, over wiiiide range.
 nCopies <- 3

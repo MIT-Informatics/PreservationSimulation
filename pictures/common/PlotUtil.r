@@ -3,7 +3,7 @@
 # Helper functions to make using ggplot slightly less obscure --
 #  at the cost of passing way too many arguments to these functions.
 
-source("./DataUtil.r")
+source("../common/DataUtil.r")
 library(ggplot2)
 
 # Constants for ggplot point shapes.
@@ -46,13 +46,21 @@ fnPlotAddLine <- function(gp=NULL, dat=NULL,
 
 
 # f n P l o t L o g S c a l e s 
-fnPlotLogScales <- function(gp, x=NULL, y=NULL) {
+fnPlotLogScales <- function(gp, x=NULL, y=NULL, xbreaks=NULL, ybreaks=NULL) {
     if (is.null(gp)) {print("ERROR: missing first argument = plot in progress")}
     if (!is.null(x)) {
-        gp <- gp + scale_x_log10() + annotation_logticks()
+        if (!is.null(xbreaks)){
+            gp <- gp + scale_x_log10(breaks=xbreaks) + annotation_logticks()
+        }else{
+            gp <- gp + scale_x_log10() + annotation_logticks()
+        }
     }
     if (!is.null(y)) {
-        gp <- gp + scale_y_log10() + annotation_logticks()
+        if (!is.null(ybreaks)){
+            gp <- gp + scale_y_log10(breaks=ybreaks) + annotation_logticks()
+        }else{
+            gp <- gp + scale_y_log10() + annotation_logticks()
+        }
     }
     return(gp)
 }
