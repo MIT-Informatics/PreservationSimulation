@@ -75,6 +75,7 @@ gp <- fnPlotTitles(gp
             , ylabel="permanent document losses (%)"
             , labelsize=14
         ) 
+gp <- fnPlotPercentLine(gp)
 
 plot(gp)
 fnPlotMakeFile(gp, "baseline-auditannually.png")

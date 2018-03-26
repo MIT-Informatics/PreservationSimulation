@@ -117,5 +117,15 @@ fnPlotMakeFile <- function(plotname, sFilename, sSize="4x3") {
       dev.off()
 } #endfunction
 
+# Edit history: 
+# iforgetwhen   RBL Original common version.
+# 20180325  RBL Add function to draw the one-percent line.
+#               Change order of point and line: draw the line first
+#                and then the point symbol on top of it.
+#               Add x and y breaks options to the scale function.
+#               Add warning to PlotBegin function.
+#               Add symbolic constants for point shapes.
+# 
+# 
 
-
+#END

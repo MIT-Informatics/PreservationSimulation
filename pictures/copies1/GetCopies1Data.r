@@ -62,10 +62,11 @@ gp <- fnPlotTitles(gp,
         titleline="A single copy has unacceptable permanent losses,\n" 
             %+% "even with very high quality disks", 
         titlesize=18,
-        xlabel="sector half-life (megahours)"
-            %+% "               (lower error rate ====>)",
+        xlabel="1MB sector half-life (megahours)"
+            %+% "                   (lower error rate ===>)",
         ylabel="permanent document losses (%)"
         )
+
 gp <- fnPlotPercentLine(gp)
 
 plot(gp)
