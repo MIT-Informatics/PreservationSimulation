@@ -260,14 +260,29 @@ fnPlotRandomVariousSegments <- function(nCopies){
 
 fnPlotAuditFreq1 <- function(trows, nCopies){
 
-    p <- ggplot(trows, aes(x=lifem, y=safe(mdmlosspct), 
-                        color=factor(auditfrequency)))
+    p <- ggplot(data=trows
+                , mapping=aes(x=lifem, y=safe(mdmlosspct)
+                #    , color=factor(auditfrequency)
+                    )
+                )
 
-    p <- p + geom_line(data=trows, size=2)
-    p <- p + geom_point(data=trows, shape=(point.DOT), size=5)
+    p <- p + geom_line(data=trows, size=2
+                , mapping=aes(color=factor(auditfrequency))
+                )
+    p <- p + geom_point(data=trows, shape=(point.DOT), size=4
+#                , mapping=aes(color=factor(auditfrequency))
+                )
+    p <- p + theme(legend.position=c(1,0.8)
+                , legend.justification=c(1,0.5)
+                )
+    p <- p + labs(color="Audit frequency")
+    p <- p + scale_color_manual(
+                labels=c("week","month","quarter","half-year","year")
+                , values = c("black","blue","green","purple","red")
+                )
+
     p <- fnPlotLogScales(p, x='yes', y='yes')
-
-    p <- p + geom_hline(yintercept=1.0, linetype="dashed")
+    p <- fnPlotPercentLine(p)
 
     sParams <- sprintf("copies=%s", 
                     nCopies)
@@ -278,7 +293,8 @@ fnPlotAuditFreq1 <- function(trows, nCopies){
                             ) 
                 ,titlesize=16 
                 ,xlabel="sector half-life (megahours)"
-                ,ylabel="percent permanent document losses"
+                    %+% "            (lower error rate \u2192)"
+                ,ylabel="permanent document losses (%)"
                 ,labelsize=14
                 ) 
 
@@ -295,6 +311,11 @@ fnPlotAuditFreq1 <- function(trows, nCopies){
 # 20180215  RBL Refashion ShockPlot4 to use separate data streams for
 #                the three shock levels. 
 # 20180226  RBL Add audit frequency plot.
-# 
+# 20180326  RBL Put in unbelievably obscure and horrible syntax to control
+#                legend title, colors, labels.  Who would guess that 
+#                "scale_color_manual()" would be the function to control
+#                the line colors and the legend labels for the variable
+#                factor(auditfrequency)?  
+#
 
 #END

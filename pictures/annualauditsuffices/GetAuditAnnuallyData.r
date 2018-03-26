@@ -65,7 +65,7 @@ gp <- fnPlotAddLine(gp, dat=trows,
                     linecolor="green", linesize=2, lineshape="dashed")
 
 gp <- fnPlotTitles(gp
-            , titleline="With annual auditing (in a peaceful world), "
+            , titleline="With annual auditing (in an uneventful world), "
                 %+% "we need only a few copies"
                 %+% "\nto minimize permanent losses over a wide range"
                 %+% "\n(shown for copies=3,4,5)"
