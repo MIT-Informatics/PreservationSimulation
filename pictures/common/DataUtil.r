@@ -108,9 +108,10 @@ fndfGetGiantData <- function(dir.string)
     gp_sims.merged<-eval(parse(text=paste("group_by(sims.selected.df,",
         paste(collapse=",", paramVarNames),")")))
     results <- summarise(gp_sims.merged, 
-                mdmlosspct=round(midmean(docslost/docstotal)*100,1), n=n())
-#               mdmlosspct=round(trimmedmean(docslost/docstotal)*100,1), n=n())
+                mdmlosspct=round(midmean(docslost/docstotal)*100,2), n=n())
+#                mdmlosspct=round(trimmedmean(docslost/docstotal)*100,2), n=n())
     selectedresults <- results[which(results[["copies"]]!=1),]
+    assign("rawdata.df", sims.merged.df, envir=.GlobalEnv)
 
     return(results)
 }

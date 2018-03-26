@@ -6,6 +6,7 @@
 source("../common/DataUtil.r")
 library(ggplot2)
 
+
 # Constants for ggplot point shapes.
 point.DOT       <- 16
 point.SQUARE    <- 15
@@ -18,6 +19,8 @@ point.HDIAMOND  <- 5
 
 
 # f n P l o t B e g i n 
+# WARNING: DO NOT USE until we figure out why it doesn't work as expected.
+# Us the naked ggplot() call for the time being.  
 #fnPlotBegin <- function(dat, xcol, ycol) {
 #    gp <- ggplot(data=trows,aes(x=xcol, y=ycol)) 
 fnPlotBegin <- function(dat=NULL, xcol=NULL, ycol=NULL, context=NULL) {
@@ -34,18 +37,19 @@ fnPlotAddLine <- function(gp=NULL, dat=NULL,
     else {if (debugprint) cat("enter addline\n")}
     
     gp <- gp + 
-            geom_point(data=dat, 
-                    color=dotcolor, size=dotsize, shape=dotshape
-                    , show.legend=TRUE) +
             geom_line(data=dat, 
                     color=linecolor, size=linesize, linetype=lineshape
-                    , show.legend=TRUE)
+                    , show.legend=TRUE) +
+            geom_point(data=dat, 
+                    color=dotcolor, size=dotsize, shape=dotshape
+                    , show.legend=TRUE) 
     if (debugprint) cat("exit addline\n")
     return(gp)
 }
 
 
 # f n P l o t L o g S c a l e s 
+# Example: fnPlotLogScales(x="YES", xbreaks=c(2,3,5,10,100,1000))
 fnPlotLogScales <- function(gp, x=NULL, y=NULL, xbreaks=NULL, ybreaks=NULL) {
     if (is.null(gp)) {print("ERROR: missing first argument = plot in progress")}
     if (!is.null(x)) {

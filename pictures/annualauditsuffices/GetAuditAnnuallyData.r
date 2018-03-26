@@ -42,44 +42,39 @@ bar.recast <- dcast(bar.melted, copies~lifem)
 library(ggplot2)
 source("../common/PlotUtil.r")
 
-# Show lines for 3, 4, 5 copies, with annual total auditing, over wiiiide range.
-nCopies <- 3
-trows <- fnSelectCopies(dat.auditannually, nCopies)
 gp <- ggplot(data=trows,aes(x=lifem,y=safe(mdmlosspct))) 
-gp <- gp + 
-        scale_x_log10() + scale_y_log10() +
-        annotation_logticks()
+gp <- fnPlotLogScales(gp, x="YES", y="YES"
+                ,xbreaks=c(2,5,10,100,1000)
+                ,ybreaks=c(0.01,0.10,1.00)
+                )
 
-gp <- gp + 
-        aes(trows, x=(lifem), y=(safe(mdmlosspct))) +
-        geom_point(data=trows, 
-            color="red", size=5, shape=(48+nCopies)) +
-        geom_line(data=trows, 
-            linetype="dashed", color="blue", size=1)
+# Show lines for 3, 4, 5 copies, with annual total auditing, over wiiiide range.
+nCopies <- 3; trows <- fnSelectCopies(dat.auditannually, nCopies)
+gp <- fnPlotAddLine(gp, dat=trows, 
+                    dotcolor="black", dotsize=5, dotshape=(48+nCopies), 
+                    linecolor="red", linesize=1, lineshape="dashed")
 
 nCopies <- 4; trows <- fnSelectCopies(dat.auditannually, nCopies)
-gp <- gp + 
-        aes(trows, x=(lifem), y=(safe(mdmlosspct))) +
-        geom_point(data=trows, 
-            color="red", size=5, shape=(48+nCopies)) +
-        geom_line(data=trows, linetype="dashed", color="blue", size=1) 
+gp <- fnPlotAddLine(gp, dat=trows, 
+                    dotcolor="black", dotsize=5, dotshape=(48+nCopies), 
+                    linecolor="blue", linesize=1, lineshape="dashed")
 
 nCopies <- 5; trows <- fnSelectCopies(dat.auditannually, nCopies)
-gp <- gp + 
-        aes(trows, x=(lifem), y=(safe(mdmlosspct))) +
-        geom_point(data=trows, 
-            color="red", size=5, shape=(48+nCopies)) +
-        geom_line(data=trows, linetype="dashed", color="black", size=1) 
+gp <- fnPlotAddLine(gp, dat=trows, 
+                    dotcolor="black", dotsize=5, dotshape=(48+nCopies), 
+                    linecolor="green", linesize=2, lineshape="dashed")
 
-gp <- gp + ggtitle("With annual auditing, we need only a few copies\nto minimize permanent losses over a wide range")
-gp <- gp + xlab("sector half-life (megahours)")
-gp <- gp + ylab("percent permanent document losses")
-gp <- gp + theme(
-            axis.text=element_text(size=12),
-            axis.title=element_text(size=18),
-            plot.title=element_text(size=20,face="bold"),
-            panel.border = element_rect(color = "black", fill=NA, size=1)
-            )
+gp <- fnPlotTitles(gp
+            , titleline="With annual auditing (in a peaceful world), "
+                %+% "we need only a few copies"
+                %+% "\nto minimize permanent losses over a wide range"
+                %+% "\n(shown for copies=3,4,5)"
+            , titlesize=16
+            , xlabel="1MB sector half-life (megahours)"
+                %+% "                     (lower error rate ===>)"
+            , ylabel="permanent document losses (%)"
+            , labelsize=14
+        ) 
 
 plot(gp)
 fnPlotMakeFile(gp, "baseline-auditannually.png")

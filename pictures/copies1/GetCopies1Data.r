@@ -46,53 +46,24 @@ bar.recast <- dcast(bar.melted, copies~lifem)
 # P L O T   D A T A 
 library(ggplot2)
 
-nCopies <- 1
-trows <- fnSelectCopies(dat.noaudit, nCopies)
-gp <- ggplot(data=trows,aes(x=lifem,y=safe(mdmlosspct))) 
-gp <- gp + 
-        aes(trows, x=(lifem), y=(safe(mdmlosspct))) +
-        geom_point(data=trows, 
-            color="red", size=3, shape=(point.DOT)) +
-        geom_line(data=trows, 
-            linetype="dashed", color="black", size=1)
+gp <- ggplot(data=trows, aes(x=lifem,y=safe(mdmlosspct))) 
+gp <- fnPlotLogScales(gp, x="YES", y="YES"
+            , xbreaks=c(2,5,10,50,100,1000,10000)
+            , ybreaks=c(1,10,100)
+            )
 
-if(0){
-nCopies <- 2; trows <- fnSelectCopies(dat.noaudit, nCopies)
-gp <- gp + 
-        aes(trows, x=(lifem), y=(safe(mdmlosspct))) +
-        geom_point(data=trows, 
-            color="red", size=5, shape=(48+nCopies)) +
-        geom_line(data=trows, linetype="dashed", color="blue", size=1) 
+nCopies <- 1; trows <- fnSelectCopies(dat.noaudit, nCopies)
+gp <- fnPlotAddLine(gp, dat=trows
+                    , dotcolor="red", dotsize=3, dotshape=point.DOT
+                    , linecolor="black", linesize=1, lineshape="dashed"
+                    )
 
-nCopies <- 3; trows <- fnSelectCopies(dat.noaudit, nCopies)
-gp <- gp + 
-        aes(trows, x=(lifem), y=(safe(mdmlosspct))) +
-        geom_point(data=trows, 
-            color="red", size=5, shape=(48+nCopies)) +
-        geom_line(data=trows, linetype="dashed", color="blue", size=1) 
-
-nCopies <- 5; trows <- fnSelectCopies(dat.noaudit, nCopies)
-gp <- gp + 
-        aes(trows, x=(lifem), y=(safe(mdmlosspct))) +
-        geom_point(data=trows, 
-            color="red", size=5, shape=(48+nCopies)) +
-        geom_line(data=trows, linetype="dashed", color="blue", size=1) 
-
-nCopies <- 9; trows <- fnSelectCopies(dat.noaudit, nCopies)
-gp <- gp + 
-        aes(trows, x=(lifem), y=(safe(mdmlosspct))) +
-        geom_point(data=trows, 
-            color="red", size=5, shape=(48+nCopies)) +
-        geom_line(data=trows, linetype="dashed", color="blue", size=1) 
-}#ENDIF0
-
-gp <- fnPlotLogScales(gp, x="YES", y="YES", xbreaks=c(2,5,10,50,100,1000,10000))
 gp <- fnPlotTitles(gp, 
         titleline="A single copy has unacceptable permanent losses,\n" 
             %+% "even with very high quality disks", 
         titlesize=18,
         xlabel="sector half-life (megahours)"
-            %+% "              lower error rate ====>",
+            %+% "               (lower error rate ====>)",
         ylabel="permanent document losses (%)"
         )
 gp <- fnPlotPercentLine(gp)
