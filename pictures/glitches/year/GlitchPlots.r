@@ -1,6 +1,9 @@
 # GlitchPlots.r
 #               RBLandau 20180130
 
+if (debugprint) cat("Entering GlitchPlots.r\n")
+source("../../common/PlotUtil.r")
+if (debugprint) cat("got common/PlotUtil.r\n")
 
 # f n P l o t G l i t c h 1 
 # Simple line plot for copies=3,4,5 (sorry, that's built in).
@@ -8,22 +11,30 @@ fnPlotGlitch1 <- function(trows, nFreq, nDuration, nSpan=1, nImpact) {
     p <- ggplot(trows, aes(x=lifem, y=safe(mdmlosspct), color=factor(copies)))
 
     p <- p + geom_line(data=trows, size=2)
-    p <- p + geom_point(data=trows, shape=(16), size=5)
-    p <- p + scale_x_log10() + scale_y_log10() + annotation_logticks()
+    p <- p + geom_point(data=trows, shape=(point.SQUARE), size=5)
+    p <- fnPlotLogScales(p, x="YES", y="YES"
+            , xbreaks=c(2,5,10,50,100,1000)
+            , ybreaks=c(0.01,0.1,1)
+            )
     p <- p + scale_colour_discrete(name="Number \nof Copies", labels=c("3","4","5"))
     p <- p + geom_hline(yintercept=1.0, linetype="dashed")
     
-    sParams <- sprintf("freq(hl)=%shr, len=%shr, span=%s, impact=%s%%", 
-                    nFreq, nDuration, nSpan, nImpact)
+    sParams <- sprintf("freq(hl)=%shr, len=%shr, impact=%s%%", 
+                    nFreq, nDuration, nImpact)
     p <- p + ggtitle("Glitches " %+% sParams)
-    p <- p + xlab("sector half-life (megahours)")
-    p <- p + ylab("percent permanent document losses")
+    p <- p + xlab("1MB sector half-life (megahours)"
+                %+% "                  (lower error rate ===>)"
+                )
+    p <- p + ylab("permanent document losses (%)")
     p <- p + theme(
             axis.text=element_text(size=10),
             axis.title=element_text(size=14),
             plot.title=element_text(size=16,face="bold"),
             panel.border = element_rect(color = "black", fill=NA, size=1)
             )
+    p <- p + theme(legend.position=c(1.0,0.8)
+                , legend.justification=c(1.1,0.35)
+                )
 
     plot(p)
     return(p)
@@ -238,6 +249,7 @@ fnPlotRandomVariousSegments <- function(nCopies){
 # Edit history
 # 20171211  RBL Copied from auditing in segments and modified.
 #               Added shock plot routines. 
+# 20180403  RBL Call fnPlotLogScales to set up breaks.
 # 
 # 
 

@@ -47,6 +47,7 @@ bar.recast <- dcast(bar.melted, copies~lifem)
 library(ggplot2)
 source("../common/PlotUtil.r")
 
+trows <- dat.noaudit
 gp <- ggplot(data=trows,aes(x=lifem,y=safe(mdmlosspct))) 
 
 nCopies <- 1
@@ -87,7 +88,8 @@ gp <- gp +
         geom_line(data=trows, linetype="dashed", color="black", size=1) 
 
 gp <- fnPlotLogScales(gp, x="YES", y="YES"
-        ,xbreaks=c(2,5,10,50,100,1000,10000)
+        , xbreaks=c(2,5,10,50,100,1000,10000)
+        , ybreaks=c(0.1,1,10,100)
         )
 gp <- fnPlotTitles(gp 
         ,titleline="Without auditing, we need many copies"

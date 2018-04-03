@@ -49,18 +49,20 @@ library(ggplot2)
 gp <- ggplot(data=trows, aes(x=lifem,y=safe(mdmlosspct))) 
 gp <- fnPlotLogScales(gp, x="YES", y="YES"
             , xbreaks=c(2,5,10,50,100,1000,10000)
-            , ybreaks=c(1,10,100)
+            , ybreaks=c(0.1,1,10,100)
             )
 
 nCopies <- 1; trows <- fnSelectCopies(dat.noaudit, nCopies)
 gp <- fnPlotAddLine(gp, dat=trows
-                    , dotcolor="red", dotsize=3, dotshape=point.DOT
+                    , dotcolor="red", dotsize=3, dotshape=point.SQUARE
                     , linecolor="black", linesize=1, lineshape="dashed"
                     )
 
 gp <- fnPlotTitles(gp, 
         titleline="A single copy has unacceptable permanent losses,\n" 
-            %+% "even with very high quality disks", 
+            %+% "even with very high quality disks "
+            %+% "(losses over ten years)"
+            , 
         titlesize=18,
         xlabel="1MB sector half-life (megahours)"
             %+% "                   (lower error rate ===>)",

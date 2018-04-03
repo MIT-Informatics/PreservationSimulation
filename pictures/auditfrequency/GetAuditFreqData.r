@@ -39,7 +39,7 @@ fnPlotAuditFreq1 <- function(trows, nCopies){
                 )
     p <- p + labs(color="Audit frequency")
     p <- p + scale_color_manual(
-                labels=c("week","month","quarter","half-year","year")
+                labels=c("month","quarter","half-year","1 year", "2 years")
                 , values = c("black","purple","green","blue","red")
                 )
 

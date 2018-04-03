@@ -7,8 +7,7 @@
 # 
 
 
-source("./DataUtil.r")
-source("./PlotUtil.r")
+source("../../common/DataUtil.r")
 
 
 # G E T   D A T A  
@@ -23,10 +22,10 @@ dat.glitchall <- dat.glitchallcopies[
 
 # S U B S E T S 
 
+source("./GlitchPlots.r")
+    
 if (nrow(dat.glitchall) > 0)
 {
-    source("./GlitchPlots.r")
-    
     # freq 12mo dur 6mo
     dat.glitchspan1 <- data.frame(dat.glitchall[dat.glitchallcopies$glitchfreq>0
                         & dat.glitchall$glitchfreq==10000

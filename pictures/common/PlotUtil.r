@@ -3,9 +3,7 @@
 # Helper functions to make using ggplot slightly less obscure --
 #  at the cost of passing way too many arguments to these functions.
 
-source("../common/DataUtil.r")
 library(ggplot2)
-
 
 # Constants for ggplot point shapes.
 point.DOT       <- 16
@@ -125,6 +123,7 @@ fnPlotMakeFile <- function(plotname, sFilename, sSize="4x3") {
 #               Add x and y breaks options to the scale function.
 #               Add warning to PlotBegin function.
 #               Add symbolic constants for point shapes.
+# 20180403  RBL Remove source() of DataUtil.r, not needed.
 # 
 # 
 

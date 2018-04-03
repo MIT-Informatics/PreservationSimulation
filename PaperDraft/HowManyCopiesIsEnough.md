@@ -1,5 +1,9 @@
+<html>
 <head>
 <style>
+/*<!-- WARNING: No indent-left spacing permitted in style sheet in pandoc md.
+If you indent it, it becomes text and not HTML style sheet. 
+-->*/
 th {
 background-color: yellow;
 font-family: sans-serif;
@@ -8,8 +12,14 @@ td {
 border: 1px solid black;
 }
 table {
-width: 80%;
+width: 90%;
 border-collapse: collapse;
+}
+h1, h2, h3, h4 {
+font-family: Helvetica, Arial, sans-serif;
+}
+li {
+padding-bottom: 3px;
 }
 </style>
 </head>
@@ -18,10 +28,12 @@ border-collapse: collapse;
 % How Many Copies Is Enough?  
 % Micah Altman; Richard Landau  
 % 2016-08-15  
+% Revised 2018-04-03 RBL
+
 
 # Information Integrity Over the Long Term -- How Many Copies Is Enough?   {#title .unnumbered}
 
-**Assessing Long-term Durability of Collections Through A Flexible, Replicable Simulation**
+#### Assessing Long-term Durability of Collections Through A Flexible, Replicable Simulation
 
 
 >**Abstract**
@@ -33,6 +45,7 @@ border-collapse: collapse;
 <!-- START:TODO--> 
 <!-- Add a summary of specific recommendations. -->
 <!-- END:TODO--> 
+<!-- START:TODO:MICAH seems to be some duplication here. --> 
 ![Various Threats to Library Collections (in the square brackets)](threats.jpg "Various Threat Types (in quotes after the link addr)")
 
 1.	Document rot (bit rot) on disk.
@@ -42,7 +55,7 @@ border-collapse: collapse;
 1. Business failures: a single business failure may affect more than one server, due, e.g., to consolidation or cross-financing.  That is, servers that appear to be independent may not be financially independent in practice.  
 2. Economic failures.
 5.	Attack on collection, institution, subject matter.
-<!-- END:TODO:MICAH--> 
+<!-- END:TODO:MICAH --> 
 
 
 # Motivation
@@ -57,7 +70,7 @@ border-collapse: collapse;
 
 # Fifty-Thousand Foot View
 
-<!-- START:TODO:MICAH--> 
+<!-- START:TODO:MICAH --> 
 ## Problem Definition
 - Maintain understanding of large digital collections over time.
 - Choose strategy for collection storage quality, replication, auditing, repair, formatting.
@@ -75,43 +88,30 @@ border-collapse: collapse;
 2.	Environmental failures that accelerate document rot.
 3.	Server failures that destroy sets of documents.
 4.	Lack of independence of servers. 
+
     1. Business failures: a single business failure may affect more than one server, due, e.g., to consolidation or cross-financing.  That is, servers that appear to be independent may not be financially independent in practice.  
     2. Economic failures.
 5.	Attack on collection, institution, subject matter.
-<!-- END:TODO:MICAH--> 
+<!-- END:TODO:MICAH --> 
 
 ## Structure of the Model
 
 Our preservation model includes a few very simple objects and operations.  
 
 - A coherent aggregation of information is represented as a *document*.  A document may be of any size.  
-
 - A set of documents forms a *collection*. A collection may include any number of documents.  All documents in a single collection are treated equally by the owner of the collection and the service storing a copy of the collection.  
-
 - A collection belongs to a *client*, e.g., a library, that wishes to preserve it for the long term.  
-
 - The client has two strategies available to preserve the collection: to keep a small number of *copies* of the documents on very high quality storage, or to replicate many copies of the documents using available commercial data storage facilities.  Very high quality storage may be very expensive or actually unobtainable; multiple copies on commercial storage may also be expensive, but such storage services are available commodities.  
-
 - Documents are stored on *storage servers*, which currently reside largely on rotating disk memories.  Storage servers attempt to make their storage more reliable by themselves using a variety of techniques, including duplication, mirroring, RAID, error correction coding, erasure coding, and other technologies that may become available. 
-
 - A client may *audit* a collection to determine if all the copies of documents stored on the server(s) are still readable.  Such auditing may be accomplished in a variety of ways; see the section on Auditing Strategies.  
-
 - An error in storage may cause a document or some portion of it to become unreadable.  (For simplicity, we model that a single error in a document makes the document unreadable.)  If all copies of a document are unreadable, then the document is permanently lost. 
-
 - Errors causing individual document failures are *independent* of one another.  
-
 - Errors causing individual document failures are *silent*, that is, they are *latent errors*.  They can be discovered by the client only when the document is accessed for reading or for auditing.  
-
 - *Small data errors* that damage a single document are distinct from *larger storage failures* that damage an entire disk, RAID set, or storage server.  
-
 - Errors of disk data occur in small regions, e.g., blocks of data or small groups of blocks of data.  These data errors within a storage service occur randomly and independently among the disk resources of the storage server. 
-
 - Documents may occupy more or less storage depending on their *size*.  Since failures of blocks of storage are random and independent, a failure is more likely to be located within a large document than within a small one.  
-
 - A storage server may fail and cause all the data stored on that server to be lost.  Such failures are random and occur at some rate.  The rate may vary due to exogenous circumstances.  Major storage failures are very rare events compared with individual document failures.  
-
 - Storage servers are independent of each other.  Each server has a characteristic rate of failures of blocks of stored data.  Different storage servers may have different failure rates.  
-
 - It is possible that the failure rate within a server is not constant over time.  However, over suitably short intervals, a changing rate can be approximated by some mean value in the interval.  
 
 (Format obsolescence is not an inherent part of this model, but forms of it may be modeled through extensions involving associated failure. See below.)
@@ -148,13 +148,11 @@ In all cases, when a document copy is found to be absent (or corrupted), the aud
 Common auditing strategies: 
 
 - **Total auditing**: test all copies of all documents in the collection.  This *auditing cycle* is usually repeated at regular intervals, such as annually, quarterly, monthly, etc.  
-
 - **(Systematic) segmented auditing**: divide the collection into several segments, and test one segment at each interval.  The whole collection is visited during the audit cycle, but only one segment at a time.  For example, the collection may be divided into four segments; if each segment in turn is audited at quarterly intervals, then the entire collection will have been audited at the end of a yearly auditing cycle.  Of course, more or fewer segments can be used: with an annual frequency, one segment is the same as annual auditing; twelve for monthly segmented auditing, and so forth.  
 
     Note that segments need not be fixed portions of the collection.  Each segment of the collection might be selected at random when its turn comes, so long as the random selection is made *without* replacement over the audit cycle.  This ensures that every document in the collection will be audited exactly once during the complete cycle.  
-
+    
 - **Random auditing**: at some interval, audit a random subset of documents chosen from the collection.  This often is expressed as, for instance, "audit ten percent of the documents every month."  The difference between this random strategy and segmented auditing is that the random selection is chosen *with* replacement.  Thus it is likely that some documents will escape auditing entirely for long periods.  
-
 - **Auditing by popularity**: divide the collection into sub-collections that represent varying levels of document usage, e.g., small sub-collections for the documents most frequently accessed, medium size sub-collections for documents of intermediate popularity, and large sub-collections for documents rarely accessed.  Permanent losses in the popular sub-collections would have much greater negative impact on the customer base.  To reduce the likelihood of such expensive losses, the more popular (small) sub-collections of the collection can be audited more frequently than the others with little increased cost in bandwidth and time.  
 
 Our simulations include tests of many auditing strategies, including total, segmented, and random.  Tests differed in cycle frequency and in the parts of the collection audited during each segment or cycle.  
@@ -167,19 +165,15 @@ Our simulations include tests of many auditing strategies, including total, segm
 Some features of the results are apparent.
 
 - *Observation*: Total auditing of the collection is highly effective at reducing document losses.  
-
 - *Observation*: Auditing in multiple segments is very slightly more effective than auditing the entire collection as one segment; e.g., auditing a quarter of the collection each quarter is slightly more effective than a single annual audit of the whole collection. 
 
     We note also that auditing in a number of segments has two additional advantages: 
     1. It spreads the bandwidth requirements for auditing throughout the audit cycle.  This can reduce recurring (monthly, quarterly) egress charges for large audits.
-    1. It can find a dead server more quickly.  A dead server can be detected only during auditing when a document repair fails.  Since all servers are examined quarterly, for instance, rather than annually, documents are exposed less to permanent loss.  
-
+    1. It can find a dead server more quickly.  A dead server can be detected only during auditing when a document repair fails.  Since all servers are examined quarterly, for instance, rather than annually, documents are exposed less to permanent loss. 
+     
 - *Observation*: Random auditing, where segment contents are selected with replacement, is less effective than total auditing or, equivalently, segmented auditing *without* replacement. 
-
 - *Observation*: Across a wide range of document error rates, increasing auditing frequency beyond a certain point shows little improvement.  
-
 - *Observation*: The effectiveness of auditing is robust across a wide spectrum of storage quality (i.e., document error rates) and short term variations in storage quality.  
-
 - However, auditing strategies are not robust to associated failures that compromise multiple servers over short periods.  Associated server failures -- whether due to disasters, economic downturns, clerical errors, or lack of independence of servers -- can remove more than one server from service between audit cycles.  This reduces the number of active replications of the collection, leaving the collection more vulnerable to minor errors until it is repaired by auditing.  
 
 
@@ -254,8 +248,22 @@ Where, then, to search for information about the effectiveness of replication an
 
 The region of error rates that we investigate generates enough errors to evaluate the impact of storing multiple copies and the impact of various auditing strategies.  Our conclusions describe storage and auditing strategies that are robust over very wide ranges of error rates (and the corresponding ranges of bit/block/disk lifetimes), spanning approximately four orders of magnitude.  
 
-The supplementary material includes comparisons of theoretical and empirically observed loss rates for a wide range of error rates.  The theoretical figures are based on simple independent Poisson arrivals of document failures, based on sector lifetime, sector size, document size, and simulation length.  Empirical numbers are derived from repeated runs of simulations with the stated parameters, with simple document aging and no auditing.  Even with very small samples (twenty runs) the empirical numbers agree very well with the theoretical predictions.  
+A back-of-the-envelope calculation is called for here.  The scale (of disk quality) that we have used for most of the simulations ranges from a sector half-life of two or three megahours (2E6 or 3E6 hours) up to one thousand or ten thousand megahours (1E9 or 10E9 hours). 
 
+- A modest size disk today might contain one terabyte of data.  The "sector size" we have used is one megabyte (1MB).  Thus our hypothetical modest disk would contain about a million such "sectors".
+- At the extreme low end of the disk quality scale, the sector half-life is, say, two megahours.  1E6 sectors, each with a half-life of 2E6 hours, scaling down for legibility, is comparable to 1E3 sectors with a half-life of 2E3 hours.  Every 2,000 hours, about one half of the 1,000 sectors would incur an error.  That 2,000 hours is less than a quarter of a year.  A disk with a lifetime this low -- or an error rate this high -- would not be usable.
+- At the high end of the disk quality scale, the sector half-life is 1000E6 hours.  Performing the same scaling, the 1E6 disk sectors with half-lives of 1000E6 hours are comparable to 1E3 disk sectors with half-lives of 1E6 hours.  Every million hours -- about 110 years -- half of the sectors will incur an error.  In the first year, only xxx % of the sectors will have an error; after ten years, xxx %.  
+- In the middle of the scale, the sector half-life is 100E6 hours.  Again, performing the same scaling, the 1E6 disk sectors with half-lives of 100E6 hours are comparable to 1E3 sectors with half-lives of 100E3 hours.  Every 100,000 hours -- about 11 years -- half of the sectors will incur an error.  After the first year, about xxx % of the sectors would be expected to have an error.  
+- In a more realistic area, consider half-lives of 30E6 to 50E6 hours. See table below.  
+
+<!-- START:TODO:RICK--> 
+TODO:RBL: table goes here.  strictly poisson calculations.
+- horiz: sector half-life, 3, 10, 30, 50, 100, 1000 mh.
+- vert: pct sectors lost after 1 yr, 5, 10; asterisks for not usable.
+<!-- END:TODO:RICK--> 
+
+
+The supplementary material includes comparisons of theoretical and empirically observed loss rates for a wide range of error rates.  The theoretical figures are based on simple independent Poisson arrivals of document failures, based on sector lifetime, sector size, document size, and simulation length.  Empirical numbers are derived from repeated runs of simulations with the stated parameters, with simple document aging and no auditing.  Even with very small samples (twenty runs) the empirical numbers agree very well with the theoretical predictions.  
 
 ### Relationship of MTBF/MTTF to Block Error Rates
 
@@ -293,6 +301,18 @@ How is MTTF calculated before it is published?  Several methods might be used, i
 Most non-marketing literature considers MTBF estimates from manufacturers to be exaggerated considerably, by factors of three or four at best.  The annual failure rates of disk drives in large collections of drives are much higher than would be expected based on published MTBF estimates of 1E6 hours or more.  [citations]
 
 Even if we understood the source and accuracy of stated MTTF estimates for disk drives, we would still not have information about individual sector failures within a drive that cause document failures, nor the relative frequencies of sector failures versus drive failures.  
+
+## A Few Words About the Graphs
+
+The graphs are generally structured as follows:
+
+- The X axis is the sector lifetime expressed as half-life.  As half-life increases from left to right, the sector error rate, which is the inverse of lifetime, decreases.  Trying to express the sector life as an error rate was found to be confusing because they are generally small fractions.  
+- Sector half-life is stated in megahours.  The range is typically from 2 or 3 megahours to 1,000 or 10,000 megahours.  
+- The Y axis is the document failure rate, stated in percent of the collection size.  The collection size is 10,000 documents.  
+- The graphs include a horizontal line at the 1% level, that is, one per cent of the documents permanently lost in the simulation.  
+- Except as noted, the duration of the simulation is ten years, which is nominally 100,000 hours.  
+- Both axes on the graphs are drawn with logarithmic scales with base ten.  Because some of the sampled numbers are actually zero, we have biased the loss rate numbers away from zero by a small amount.  Typically, zero is rendered as 10 parts per million (ppm), which shows up as 0.001% on the graphs.  This can be modified with a simple change in the code that draws the graphs; we have tried 1 ppm, also, and the visual results are very similar.  
+
 
 
 (RBL: I don't feel comfortable writing any of the next several sections.)
@@ -691,9 +711,7 @@ For example, if I have a small collection that requires high safety and a large 
 
 
 - The simplest case: one collection of documents, one document size, servers all same quality, where "quality" is mean sector lifetime.  Generate instructions from the distributed *.ins files and select the run parameters you wish in the broker's CLI interface.  
-
 - Several collections of varying preservation requirements.  This scenario requires a combination of runs using different server lifetime values.  See the section on varying server quality.  
-
 - Varying collection size: Change the parameter count in the clients.csv file.  This parameter is not settable in the specific instructions for a run, but applies to all runs in a specific set.  
 
 >NOTE WELL: The size of a collection is not often relevant to the simulation results.  In almost all cases, we are interested in the *proportion* of failures of documents, and the size of the collection is used only to probe significant digits for very small numbers of failures.  That is, the proportion of document losses is the same in a collection of 1,000 and a collection of 1,000,000; however, the results for the larger collection should give more insight into small numbers of losses in the areas of long lifetimes (=low error rates).
@@ -704,33 +722,19 @@ ns.  Most, but not all, of the parameters in the CSV files can be overridden in 
 >Also note that varying collection size may be combined with varying preservation requirements and varying server quality.  
 
 - Varying document size: Change the parameter nDocSize in the file docsize.ins.  Currently the only value not commented out is 50 MB.  For most purposes, it is best to use only one document size in a set of simulation runs, so only one un-commented-out value should be present in this file.  
-
 - Varying the duration of simulated time: Change the parameter nSimlen in the file simlen.ins.  The current value is 100,000, which is ten metric years.  
-
 - Varying server quality: Change the values in the nLifem parameter list in the lifem.ins file.  The list includes a wide range of values to be placed in the instruction database.  The value or values used for a simulation run is specified in the --lifem option of the broker CLI.  A single run may specify one particular value or a range of values to be chosen from the list.  
-
 - Collections with several document sizes: 
-
 - One collection stored on several servers of different quality
-
 - Varying numbers of copies made:
-
 - No auditing
-
 - Simple annual total auditing
-
 - Annual total auditing segmented semiannually, quarterly, monthly
-
 - Quarterly total auditing
-
 - Random auditing in several segments with replacement
-
 - Non-fatal glitches of varying frequency, impact, and duration in servers
-
 - Fatal glitches of varying frequency in servers
-
 - Varying expected server lifetime
-
 - Shock to servers of some frequency and span
 
 
