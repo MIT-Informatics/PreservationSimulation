@@ -243,7 +243,7 @@ sMainCommandStringToStdout = ('python broker.py inprogress done '
             '--shockfreq={sShockFreq} --shockimpact={sShockImpact} '
             '--shockspan={sShockSpan} --shockmaxlife={sShockMaxlife} '
             '--docsize={nDocSize} --shelfsize={nShelfSize} '
-            '--nseeds={nRandomSeeds} '
+            '--nseeds={nRandomSeeds} --simlen={nSimLength}'
             '{xshortlog} {xtestonly} {xredo} '
             '2>&1 '
             '{xLogfileExpr} '
@@ -280,7 +280,8 @@ sRangeTemplate = "'{\"$gte\":%s, \"$lte\":%s}'"
 #                output directory structure, erase done records, etc.
 #               Separate page code from entry point and main line.
 # 20171231  RBL Import command from common module.  
-# 
+# 20180408  RBL Add --simlen option in command to broker.py.
+#
 # 
 
 #END

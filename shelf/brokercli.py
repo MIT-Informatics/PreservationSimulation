@@ -169,6 +169,15 @@ def fndCliParse(mysArglist):
                         'Range 1 to 1000.'
                         )
 
+    cParse.add_argument("--simlen", type=str
+                        , dest='nSimLength'
+                        , metavar='nSIMULATIONLENGTH'
+                        , nargs='?'
+                        , help='Length of simulated time in hours.  '
+                        'One year=10,000 hours; '
+                        'ten years (default) = 100,000 hours.  '
+                        )
+
     cParse.add_argument("--shelfsize", type=str
                         , dest='nShelfSize'
                         , metavar='nSHELFSIZE_TB'
@@ -251,14 +260,19 @@ def fndCliParse(mysArglist):
     dxx = vars(xx)
     NTRC.ntracef(3, "BCLI", "proc dict-var dxx|%s|" % (dxx))
     dxx1 = {k : (v.replace('u"', '"') 
-                if (v is not None) and ('{' in v) and ('}' in v) and ('u"' in v) 
-                else v)
-                for k, v in dxx.items()}
+                    if (v is not None) 
+                        and ('{' in v) and ('}' in v) 
+                        and ('u"' in v) 
+                    else v
+                )
+            for k, v in dxx.items()}
     return dxx1
 
 # Edit history:
 # 20170124  RBL Original version, removed from broker.py for legibility.  
 # 20170127  RBL Add --shortlog, which somehow was forgotten long ago.
+# 20180408  RBL Add --simlen option to catch simulation length from form
+#                and pass it to main.py.  
 # 
 # 
 

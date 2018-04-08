@@ -59,6 +59,10 @@ DONE - need new utils: list databases, list collections in db.
 
 
 TODO: web interface to select instructions for broker run
+DONE - BUG! Simulation length is not propagated downstream from form 
+    to bottle to broker to main.  
+FIXME - timestamp the form when it is generated so we can tell when 
+    it was last started up.  
 DONE - add option to initialize the family/specific dirs.  new page.  
 DONE - add option to clear the done collection.
 DONE - add option for detached run with results to log file.
@@ -210,7 +214,8 @@ DONE - slow down after extractvalues, too.
 
 
 TODO: broker.py
-FIXME - ditch mongodb in favor of sqlite3.
+DONE - BUG! add simlen to input CLI and output to main.  
+FIXME - MAYBE - ditch mongodb in favor of sqlite3.
 DONE - in listonly listings, sort the dictionary dump.
 FIXME - in listonly listings, remove nLifeMax/Min, nCopiesMax/Min from dict.
 DONE - harden against missing env var for NUMBER_OF_PROCESSORS.  and then
@@ -263,7 +268,7 @@ DONE - warn the user in strong language always to setupfamilydir for their
     runs, which is a console activity.  hmmm, maybe that could be added
     as an option to the broker form, eh?  so they don't have to use any 
     nasty old CLI commands.  
-FIXME - add an option to setupfamilydir.sh to clear the directories.
+FIXME - MAYBE - add an option to setupfamilydir.sh to clear the directories.
 FIXME - add examples of obscure mongodb syntax in the --query command (and others?) 
   to howto broker doc.
 FIXME - Add a help file about using mongoshell to examine database 

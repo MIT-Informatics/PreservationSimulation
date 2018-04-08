@@ -133,6 +133,10 @@
    {{insertmultivar(dVars.nLifem)}}
 {% endblock %}
 
+{% block nSimLength scoped %}
+   {{insertmultivar(dVars.nSimLength)}}
+{% endblock %}
+
 {% block nRandomSeeds scoped %}
    {{inserttextvar("nRandomSeeds", "Number of Replications with Random Seeds", 5, 21)}}
 {% endblock %}
@@ -209,7 +213,7 @@ nShockImpact
 nShockMaxlife
 nShockFreq
 nShockSpan
-nSimlen
+nSimLength
 
 A notable kludge occurs here.  For params that have a min and max value
  that the user selects from separate drop-down lists, three variables
@@ -244,6 +248,7 @@ BZZZT!  New news: the min/max inputs hae been removed in favor of
                 Add dummy blocks for Redo and TestOnly.
 20171129    RBL Add multi-select var macro to be used for some vars.  
 20171215    RBL Add check and logfilename for Run Detached.
+20180408    RBL Add multivar for nSimLength.
 
 
 -->

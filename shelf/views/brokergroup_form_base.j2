@@ -156,12 +156,15 @@
         </td>
 
 <!--  g e n e r a l  -->
+        {% block nSimLength %}{% endblock %}
+<!--
         <td>
             <b>Length of simulated time:</b> <br/>
             (10,000 hours = 1 year)<br/>
-            (0 = default = 10 years)<br/>
-            <input type="text" name="nSimLength" size="5" value="0">
+            (0 = default = 10 years = 100,000 hrs)<br/>
+            <input type="text" name="nSimLength" size="7" value="0">
         </td>
+-->
 
         <td>
             <b>Internet bandwith</b> <br/>
@@ -288,6 +291,9 @@
 20170913    RBL Widen the table w.r.t. the window.  
 20171129    RBL Remove min/max vars in favor of multi-select ones.
 20171130    RBL Narrow formatting a little.  
+20180408    RBL Check on simlen input, widen field, add comment. 
+                 Change nSimLength to multi-select pulldown. 
+
 
 -->
 

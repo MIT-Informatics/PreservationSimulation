@@ -49,6 +49,7 @@ class CG(object):
 
     nRandomSeeds = 21
     sRandomSeedFile = "1000Randoms.txt"
+    nSimLength = 0
 
     nShelfSize = None
     nDocSize = None
@@ -129,7 +130,7 @@ class CG(object):
                     'nGlitchImpact nGlitchMaxlife nGlitchSpan '
                     'nShockFreq nShockImpact nShockSpan nShockMaxlife '
                     'nLifem nServerDefaultLife '
-                    'nCopies nRandomseed nShelfSize nSimlen sQuery' 
+                    'nCopies nRandomseed nShelfSize nSimLength sQuery' 
                     ).split()
     # Special fake CPU-bound commands to test for proper parallel execution.  
     # These take about a minute (75s) and a third of a minute (22s) on an
@@ -659,6 +660,8 @@ foreach single-line file in holding dir
 # 20170612  RBL Note that broker will append each command to a 
 #                log file, if that file already exists.  
 # 20171217  RBL Move a couple small functions to util.py.
+# 20180408  RBL Add nSimLength var to take value from --simlen CLI option, 
+#                to be passed to main.py in cmd.  
 # 
 # 
 

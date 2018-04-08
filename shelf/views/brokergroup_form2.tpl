@@ -81,7 +81,11 @@
     </td>
 
         <td>
-            <font size="+1"><a href="setup">Go to setup page</a></font>
+            <font size="+2">
+                <a href="setup">
+                    <b>&nbsp;&nbsp;Go to setup page</b>
+                </a>
+            </font>
         </td>
 
                <td>
@@ -464,12 +468,32 @@
         </td>
 
 <!--  g e n e r a l  -->
+               
+    <td>
+        <table>
+            <tr><th align="left">
+                <b>Length of Simulation (hrs)                    </b>
+            </th></tr>
+            <tr><td>
+                <select name="nSimLength" multiple size="6">
+                    <option value="0" selected>&nbsp;&nbsp;(default)&nbsp;</option>
+                    <option value="100000">&nbsp;&nbsp;100000 (10 years)&nbsp;</option>
+                    <option value="150000">&nbsp;&nbsp;150000 (15 years)&nbsp;</option>
+                    <option value="200000">&nbsp;&nbsp;200000 (20 years)&nbsp;</option>
+                    <option value="300000">&nbsp;&nbsp;300000 (30 years)&nbsp;</option>
+                    </select>
+            </td></tr>
+        </table>
+    </td>
+
+<!--
         <td>
             <b>Length of simulated time:</b> <br/>
             (10,000 hours = 1 year)<br/>
-            (0 = default = 10 years)<br/>
-            <input type="text" name="nSimLength" size="5" value="0">
+            (0 = default = 10 years = 100,000 hrs)<br/>
+            <input type="text" name="nSimLength" size="7" value="0">
         </td>
+-->
 
         <td>
             <b>Internet bandwith</b> <br/>
@@ -622,6 +646,9 @@
 20170913    RBL Widen the table w.r.t. the window.  
 20171129    RBL Remove min/max vars in favor of multi-select ones.
 20171130    RBL Narrow formatting a little.  
+20180408    RBL Check on simlen input, widen field, add comment. 
+                 Change nSimLength to multi-select pulldown. 
+
 
 -->
 
