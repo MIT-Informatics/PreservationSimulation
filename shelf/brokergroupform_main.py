@@ -66,7 +66,7 @@ def mainsim_post():
 
     bShortLog = request.forms.get("bShortLog")
 
-    nSimLength = request.forms.get("nSimLength")
+    nSimLength = request.forms.getall("nSimLength")
     nBandwidthMbps = request.forms.get("nBandwidthMbps")
 
     bRedo = request.forms.get("bRedo")
@@ -97,7 +97,8 @@ def mainsim_post():
 
                 bShortLog=bShortLog, 
 
-                nSimLength=nSimLength, nBandwidthMbps=nBandwidthMbps, 
+                nSimLength=fnsQuoteMulti(nSimLength), 
+                nBandwidthMbps=nBandwidthMbps, 
                 nRandomSeeds=nRandomSeeds, 
 
                 sShockFreq=fnsQuoteMulti(lShockFreq), 
@@ -243,7 +244,7 @@ sMainCommandStringToStdout = ('python broker.py inprogress done '
             '--shockfreq={sShockFreq} --shockimpact={sShockImpact} '
             '--shockspan={sShockSpan} --shockmaxlife={sShockMaxlife} '
             '--docsize={nDocSize} --shelfsize={nShelfSize} '
-            '--nseeds={nRandomSeeds} --simlen={nSimLength}'
+            '--nseeds={nRandomSeeds} --simlen={nSimLength} '
             '{xshortlog} {xtestonly} {xredo} '
             '2>&1 '
             '{xLogfileExpr} '

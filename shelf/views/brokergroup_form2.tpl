@@ -476,7 +476,7 @@
             </th></tr>
             <tr><td>
                 <select name="nSimLength" multiple size="6">
-                    <option value="0" selected>&nbsp;&nbsp;(default)&nbsp;</option>
+                    <option value="0" selected>&nbsp;&nbsp;0 (default)&nbsp;</option>
                     <option value="100000">&nbsp;&nbsp;100000 (10 years)&nbsp;</option>
                     <option value="150000">&nbsp;&nbsp;150000 (15 years)&nbsp;</option>
                     <option value="200000">&nbsp;&nbsp;200000 (20 years)&nbsp;</option>

@@ -98,7 +98,7 @@ class CG(object):
         'af{nAuditFreq}s{nAuditSegments}t{sAuditType}_'
         'gf{nGlitchFreq}i{nGlitchImpact}d{nGlitchDecay}m{nGlitchMaxlife}_'
         'sh{nShockFreq}i{nShockImpact}s{nShockSpan}m{nShockMaxlife}_'
-        'sdl{nServerDefaultLife}_seed{nRandomseed}'
+        'svrdeflif{nServerDefaultLife}simlen{nSimLength}_seed{nRandomseed}'
         )
     sShelfLogFileName = None
 
