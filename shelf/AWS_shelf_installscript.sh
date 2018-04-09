@@ -75,17 +75,20 @@ then
     echo " in the working/ and shelfenv/ directory trees."
     echo " Use this option with extreme caution."
     echo " E.g., have you retrieved all the data and log files?"
+    exit 1
 fi
-if [ -n "$1" -a "$1" = "JUSTKIDDING"   -o   -n "$1" -a "$1" = "TESTING" ]
+if [ -n "$1" -a "$1" = "TESTING" ]
 then
     echo "rm -rf working/"
     echo "rm -rf shelfenv/"
     echo "You are now hosed.  Your data is gonzo."
+    exit 1
 fi
 if [ -n "$1" -a "$1" = "CLEAROLD" ]
 then
     rm -rf working/
     rm -rf shelfenv/
+    echo "Old installation cleared."
 fi
 
 echo "============================================"
