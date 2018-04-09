@@ -342,9 +342,10 @@ FIXME - after container install, run broker tests
 
 
 TODO: AWS deployment
-FIXME - always turn on brokercommandlog in startup.sh.
+DONE - always turn on brokercommandlog in startup.sh.
 FIXME - turn the simple-minded tests at the end of deployment into real
     unit test modules so they are easier to maintain, add to, etc.  
+DONE - add CLEAROLD option to clear out previous installation.
 DONE - create a broker command log file for the user, and warn the 
     user that it will grow and grow.  
 DONE - be sure to export NUMBER_OF_PROCESSORS for broker to use in the 

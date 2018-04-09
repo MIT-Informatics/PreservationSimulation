@@ -64,11 +64,33 @@
 # 20170610  RBL Fix broker test 3 to wait for the GiantOutput file to
 #                contain something before trying to tail and analyze
 #                the last line.  
+# 20180409  RBL Fix all broker tests to include new --simlen=0 option.
+#               Add new CLEAROLD option to erase previous installation.
 # 
- 
-echo "========================================"
-echo "   DO *NOT* RUN THIS SCRIPT WITH SUDO   "
-echo "========================================"
+
+if [ -n "$1" -a "$1" != "CLEAROLD" ]
+then
+    echo "Usage: $0 [CLEAROLD]    (note: upper case)"
+    echo "Optional CLEAROLD will completely erase any previous installation"
+    echo " in the working/ and shelfenv/ directory trees."
+    echo " Use this option with extreme caution."
+    echo " E.g., have you retrieved all the data and log files?"
+fi
+if [ -n "$1" -a "$1" = "JUSTKIDDING"   -o   -n "$1" -a "$1" = "TESTING" ]
+then
+    echo "rm -rf working/"
+    echo "rm -rf shelfenv/"
+    echo "You are now hosed.  Your data is gonzo."
+fi
+if [ -n "$1" -a "$1" = "CLEAROLD" ]
+then
+    rm -rf working/
+    rm -rf shelfenv/
+fi
+
+echo "============================================"
+echo "   DO ***NOT*** RUN THIS SCRIPT WITH SUDO   "
+echo "============================================"
 
 echo "**************************************** Beginning installation"
 echo ""
@@ -153,7 +175,11 @@ fi
 
 # B R O K E R   T E S T   1 
 # Broker should find exactly one test case to run.
-python broker.py installtest done --familydir=../hl --specificdir=a0 --serverdefaultlife=0 --glitchfreq=0 --shockfreq=0 --ncopies=1 --lifem=1000 --auditfreq=0 --docsize=50 --shelfsize=1 --nseeds=1 --redo --listonly > tmp/brokertest.log 2>&1
+python broker.py installtest done --familydir=../hl --specificdir=a0 \
+    --serverdefaultlife=0 --glitchfreq=0 --shockfreq=0 \
+    --ncopies=1 --lifem=1000 --auditfreq=0 \
+    --docsize=50 --shelfsize=1 --simlen=0 --nseeds=1 \
+    --redo --listonly > tmp/brokertest.log 2>&1
 # The number of the last case should be "1.1".
 sTestCases=$(grep "run|" tmp/brokertest.log | tail -1 | sed 's/.*run|//' | sed 's/|.*//')
 if [ -n "$sTestCases" -a "$sTestCases" = "1.1" ]
@@ -168,7 +194,12 @@ fi
 
 # B R O K E R   T E S T   2 
 # And fifteen cases here.
-python broker.py installtest done --familydir=../hl --specificdir=a0 --serverdefaultlife=0 --glitchfreq=0 --ncopies='{"$gte":1,"$lte":5}' --lifem='[100,200,300]' --auditfreq=10000 --audittype=TOTAL --auditsegments='[1]' --docsize=50 --shelfsize=1 --nseeds=1 --redo --listonly  >tmp/brokertest.log 2>&1
+python broker.py installtest done --familydir=../hl --specificdir=a0 \
+    --serverdefaultlife=0 --glitchfreq=0 \
+    --ncopies='{"$gte":1,"$lte":5}' --lifem='[100,200,300]' \
+    --auditfreq=10000 --audittype=TOTAL --auditsegments='[1]' \
+    --docsize=50 --shelfsize=1 --simlen=0 --nseeds=1 \
+    --redo --listonly  >tmp/brokertest.log 2>&1
 sTestCases=$(grep "run|" tmp/brokertest.log | tail -1 | sed 's/.*run|//' | sed 's/|.*//')
 if [ -n "$sTestCases" -a "$sTestCases" = "15.1" ]
 then
@@ -193,7 +224,7 @@ python broker.py installtest done --familydir=../hl --specificdir=installtest \
     --glitchdecay=0 --glitchmaxlife=0 --glitchspan=0 \
     --serverdefaultlife=0 --shockfreq=0 --shockimpact=0 \
     --shockmaxlife=0 --shockspan=0 --shelfsize=1 \
-    --docsize=50 --nseeds=1 --redo 
+    --docsize=50 --simlen=0 --nseeds=1 --redo 
 sResultFile="../hl/installtest/dat/GiantOutput_00.txt"
 nWaitTime=5
 while true
@@ -290,6 +321,8 @@ echo "*** HowTo info can be found in the 'docs' directory. ***"
 echo "********************************************************"
 echo ""
 EOF
+
+sh brokercommandlog_enable.sh
 
 echo "**************************************** "
 echo "*** To begin the shelf simulations,  *** "
