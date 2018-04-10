@@ -42,6 +42,7 @@ padding-bottom: 3px;
 <!-- START:TODO-->
 <!-- Add a summary of specific recommendations. -->
 <!-- END:TODO-->
+<!-- START:TODO:MICAH seems to be some duplication here. -->
 <div class="figure">
 <img src="threats.jpg" title="Various Threat Types (in quotes after the link addr)" alt="Various Threats to Library Collections (in the square brackets)" />
 <p class="caption">Various Threats to Library Collections (in the square brackets)</p>
@@ -54,7 +55,7 @@ padding-bottom: 3px;
 <li>Business failures: a single business failure may affect more than one server, due, e.g., to consolidation or cross-financing. That is, servers that appear to be independent may not be financially independent in practice.<br />
 </li>
 <li>Economic failures.</li>
-<li>Attack on collection, institution, subject matter. <!-- END:TODO:MICAH--></li>
+<li>Attack on collection, institution, subject matter. <!-- END:TODO:MICAH --></li>
 </ol>
 <h1 id="motivation">Motivation</h1>
 <ul>
@@ -67,7 +68,7 @@ padding-bottom: 3px;
 <li>Curators are faced with a set of choices: storage media, replication, cloud vendors, auditing strategy, encryption, compression. There is currently no systematic guidance based on quantitative models.</li>
 </ul>
 <h1 id="fifty-thousand-foot-view">Fifty-Thousand Foot View</h1>
-<!-- START:TODO:MICAH-->
+<!-- START:TODO:MICAH -->
 <h2 id="problem-definition">Problem Definition</h2>
 <ul>
 <li>Maintain understanding of large digital collections over time.</li>
@@ -91,7 +92,7 @@ padding-bottom: 3px;
 </li>
 <li>Economic failures.</li>
 </ol></li>
-<li><p>Attack on collection, institution, subject matter. <!-- END:TODO:MICAH--></p></li>
+<li><p>Attack on collection, institution, subject matter. <!-- END:TODO:MICAH --></p></li>
 </ol>
 <h2 id="structure-of-the-model">Structure of the Model</h2>
 <p>Our preservation model includes a few very simple objects and operations.</p>
@@ -149,6 +150,7 @@ padding-bottom: 3px;
 <h2 id="auditing-the-document-collection">Auditing the Document Collection</h2>
 <p>Auditing the collection to test the validity of remote copies of documents can greatly reduce permanent document losses over time. The auditing process actively patrols for errors before they cause permanent document losses, and corrects them whenever possible. A number of strategies for auditing are possible, and some are measurably better than others.</p>
 <p>In all cases, when a document copy is found to be absent (or corrupted), the auditing process attempts to replace the missing copy with a fresh copy obtained from another server. If there is an intact copy on another server, then the missing document is repaired and the process continues. If there is no other intact copy, then the document is considered permanently lost.</p>
+<p>Auditing is essential to maintaining the health of a collection. This is the method by which errors are detected and corrected. Without auditing, errors tend to build up in a collection and eventually cause some permanent document losses, regardless of how many copies of the documents we keep. We can think of the auditing process as health care for electronic documents: minor problems will be found and fixed before they cause permanent damage. Of course, it will always be possible for unlikely juxtapositions of errors to cause a document to be lost, but regular auditing of a modest number of copies can minimize permanent losses.</p>
 <p>Common auditing strategies:</p>
 <ul>
 <li><strong>Total auditing</strong>: test all copies of all documents in the collection. This <em>auditing cycle</em> is usually repeated at regular intervals, such as annually, quarterly, monthly, etc.<br />
@@ -165,20 +167,21 @@ padding-bottom: 3px;
 </li>
 <li>Auditing cycles varied from monthly to biennially.<br />
 </li>
-<li>Segment counts were either one, two, four, or ten (annual, semi-annual, quarterly, or monthly).</li>
-<li>Segments were chosen either systematically (the first quarter of the collection, the second quarter of the collection, etc.) or by uniform random selection. (This is currently NYI.)</li>
+<li>Segment counts were either one, two, four, ten, or fifty (corresponding to annual, semi-annual, quarterly, monthly, or weekly audits).</li>
+<li>Segments were chosen either systematically (the first quarter of the collection, the second quarter of the collection, etc.) or by uniform random selection with replacement. (This needs investigation; it has not been tested lately and thus may effectively be NYI.)</li>
 </ul>
 <p>Some features of the results are apparent.</p>
 <ul>
 <li><em>Observation</em>: Total auditing of the collection is highly effective at reducing document losses.<br />
 </li>
-<li><p><em>Observation</em>: Auditing in multiple segments is very slightly more effective than auditing the entire collection as one segment; e.g., auditing a quarter of the collection each quarter is slightly more effective than a single annual audit of the whole collection.</p>
+<li><p><em>Observation</em>: Auditing in multiple segments is very slightly more effective than auditing the entire collection as one segment with the same cyclic frequency; e.g., auditing a quarter of the collection each quarter is slightly more effective than a single annual audit of the whole collection.</p>
 We note also that auditing in a number of segments has two additional advantages:
 <ol style="list-style-type: decimal">
 <li>It spreads the bandwidth requirements for auditing throughout the audit cycle. This can reduce recurring (monthly, quarterly) egress charges for large audits.</li>
 <li>It can find a dead server more quickly. A dead server can be detected only during auditing when a document repair fails. Since all servers are examined quarterly, for instance, rather than annually, documents are exposed less to permanent loss.</li>
 </ol></li>
-<li><em>Observation</em>: Random auditing, where segment contents are selected with replacement, is less effective than total auditing or, equivalently, segmented auditing <em>without</em> replacement.</li>
+<li><em>Observation</em>: Random auditing, where segment contents are selected with replacement, is less effective than total auditing or, equivalently, segmented auditing <em>without</em> replacement. Selection of documents randomly <em>with replacement</em> will inevitably miss some documents entirely while sampling others more often than needed.<br />
+</li>
 <li><em>Observation</em>: Across a wide range of document error rates, increasing auditing frequency beyond a certain point shows little improvement.<br />
 </li>
 <li><em>Observation</em>: The effectiveness of auditing is robust across a wide spectrum of storage quality (i.e., document error rates) and short term variations in storage quality.<br />
@@ -670,15 +673,15 @@ loss due to raid/internal replication characteristics and failure
 <li>Generalizations: The model assumes a single failure within a document destroys it. Documents may be redundant -- such that multiple hits are needed to completely destroy them. (TODO:RBL: Q: If we want to present real numbers for this case, we will need some new code.) <!-- END:TODO:RICK--></li>
 </ul>
 <h2 id="compression">Compression</h2>
+<p>Documents stored on digital media are fragile; storage errors corrupt the content of a document. How much of a document is corrupted depends largely on the data format of the document. Even small errors in highly compressed or encrypted documents may render part or all of the document unusable.</p>
+<p>For documents that might not be fatally corrupted by a single sector error, lossless compression of the document involves a clear trade-off. A smaller document is a smaller target for a randomly occurring error, but a highly compressed document is more fragile. A small error in an audio or video file, or an uncompressed text file, might not be fatal to the document, but a highly compressed text document (or an encrypted document) might be lost.</p>
+<p>In these simulations, we have modeled documents as very fragile: one sector error causes the document to be judged as lost. In this model, at least these two considerations should be included in the decision to compress documents.</p>
 <ul>
-<li>Documents are fragile
-<ul>
-<li>Compressed, encrypted: small failure makes document unreadable</li>
-<li>Variation: Repairable documents</li>
-<li>Small failure damages only one segment</li>
-</ul></li>
-<li>Model this as a collection of smaller docs</li>
+<li><p>Smaller is safer. A smaller document presents a smaller target for random errors. If a document is compressed, say, by 90%, that is, to 10% of its original size, then a random error is only one-tenth as likely to strike that document. When placed on a storage medium of any given quality level, that smaller, compressed document is likely to persist without error ten times longer than the uncompressed version.</p></li>
+<li><p>Smaller is less expensive. A stored collection incurs costs for both storage of the document images and the bandwidth used in auditing and repair. Smaller documents consume less space and less bandwidth and therefore cost less to maintain. On a given budget, a compressed collection can be replicated into more copies and audited more frequently. Both the increased copy count and more frequent auditing contribute directly to reducing or eliminating permanent losses in the collection.</p></li>
 </ul>
+<p>Other discussion points? - Variation: Repairable documents - Small failure damages only one segment</p>
+<p>(Model this as a collection of smaller docs?)</p>
 <h2 id="encryption">Encryption</h2>
 <p>Deriving encryption key loss:</p>
 <ul>

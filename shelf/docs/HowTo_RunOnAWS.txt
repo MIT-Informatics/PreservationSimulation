@@ -1,6 +1,6 @@
 How to run on AWS
                 RBL 20170519
-                updated many times, most recently 20171126
+                updated many times, most recently 20180409
 
 
 START AWS EC2 MACHINE
@@ -13,9 +13,9 @@ Start EC2 machine
 - account = mitescience
 - name = rlandau (NOTE: no b)
 - password
-- EC2
-- instances
-- select   RBL07A 32core c3.8xl 200GB 20160228 USEME
+- select EC2
+- select instances
+- select the instance  "RBL07A 32core c3.8xl 200GB 20160228 USEME"
     (not the copy nor the spare).
 - examine State Transition: you want the last instance you closed:
     when launched, when shut down.
@@ -27,6 +27,7 @@ Start EC2 machine
 
 
 CONNECT
+
 
 with WinSCP
 - select session RBL07A(1)
@@ -60,17 +61,12 @@ with putty
 
 with ssh
 - Cygwin window
-- SSH -i aws/<whatever id file> ubuntu@<IP-addr>
+- SSH -i aws/<whatever-id-file.pem> ubuntu@<IP-addr>
 - yes, continue and accept new fingerprint
 - be sure to use correct key file, currently aws/RBL20150827_kp01.pem.
 
 
 LOAD SOFTWARE
-
-Erase old software
-- cd ~  (should be /home/ubuntu)
-- if working dir exists, nuke it: rm -rf working
-- might as well nuke shelfenv, too: rm -rf shelfenv
 
 
 Copy AWS install script
@@ -79,6 +75,18 @@ Copy AWS install script
 - copy file shelf/AWS_shelf_installscript.sh from a development system
 - yes, overwrite
 - copy the install script onto ~
+
+
+Erase old software
+- The AWS_shelf_installscript.sh has an option to do this for you
+        sh AWS_shelf_installscript.sh CLEAROLD
+  Note that the option name is all upper case.  Anything else will generate 
+  a Usage blurb and exit.
+  The script will continue with the installation after clearing the files.
+- If you wish to do this manually, here are the commands:
+        cd ~                    (the ~ dir should be /home/ubuntu)
+        rm -rf working
+        rm -rf shelfenv
 
 
 Run AWS install script to install all the software
@@ -90,7 +98,10 @@ Run AWS install script to install all the software
     to do.
 
 
-Remove pulled directories of moldy, old results
+PREPARING FOR A RUN
+
+
+Remove any pulled directories of moldy, old results that you don't want.
 - below working/ remove any directories that have names you want to use
 - rm -rf working/shocks   for instance
 
@@ -99,7 +110,7 @@ Create a directory tree for test results
 - cd working/shelf (probably in another SSH or putty session)
 - sh setupfamilydir.sh <familydir> <specificdir>
 - OR use the setup page of the form, see below.
-
+- (This can be done later with the Setup page of the web form.)
 
 Remove old history from MongoDB
 - python dblistdatabases.py   to get names of dbs.  The one used for 
@@ -111,11 +122,16 @@ Remove old history from MongoDB
 
 Or, just clear all the done records
 - sh dbcleardone.sh
+- (This can be done later with the Setup page of the web form.)
 
 
 Turn on broker logging
 - in shelf dir
 - sh brokercommandlog_enable.sh
+- (This is done automatically by the startup.sh script.)
+
+
+WEB-BASED OPERATION
 
 
 Start software
@@ -156,12 +172,51 @@ Pick up the results
 - rename the GiantOutput_00.txt file appropriately to reflect its contents
 - zip samenameusedforgiantoutput_logs.zip ../log/*.log
 - copy the output and logzip files back to dirs on the home system
+- also copy the broker log if you enabled it.
+- also copy the detached-run log if you used that.  
 
 
-To run broker for large series of cases:
-(Note: The new UI permits multiple selection for many of the 
-parameters.  This should make it less likely that you will have to issue
-a broker command through the CLI.)
+Things to note about the form:
+- The Setup page is accessible from the form.  That is the easy way
+    to create (and clear) the output directory tree, and to 
+    clear the "done" records from the run history database.  
+- Some of the fields are marked "Required" and they really are.  
+    If you don't do something sensible with those fields, the 
+    simulation will not run correctly if it runs at all.  
+- Many of the fields in the form are multi-select.  Control-click to 
+    select another item in addition to the current selection.  
+- Many of the fields have values selected by default.  These may or
+    may not be good values for your particular run.  
+- If you are simulating shocks, the "Expected half-life of servers" 
+    field must be non-zero.  This field is marked as required, but
+    that is easy to miss.  
+- "Short logs" include only the input parameters and results.  They do
+    not include any details during the simulation.  As a result, they 
+    are much shorter and faster.  However, if you need to see details
+    to understand why the results are what they are, or for (heaven 
+    forbid) debugging purposes, then turn off this option.  
+- The "TEST only" button will produce a listing of what *would* have 
+    occurred if this were a real simulation run.  This is useful to 
+    examine the range of parameters for oversights that might cause
+    too many or too few cases to be run.  
+- The simulation can be run offline so that your browser need not stay
+    connected to the AWS server all the time.  This is highly recommended
+    for long runs; otherwise a hiccup in communications can cause the 
+    sequence of runs to be truncated.  (Because the "done" history is 
+    kept up-to-date, simply restarting the run with the same parameters
+    will pick up where it left off in the sequence.)  You can specify a
+    name for the log file you in which you wish to collect results, or a
+    filename will be selected and the results appended to that file (in
+    shelf/tmp).  
+
+
+MANUAL OPERATION
+
+
+If you need to run broker manually for large series of cases:
+(Note: The new web UI permits multiple selection for almost all of the 
+parameters.  This should make it unlikely that you will ever have 
+to issue a broker command through the CLI.  But if you insist....)
 
 
 Prepare the environment for a long broker run
@@ -208,6 +263,5 @@ Prepare a broker command
         --listonly 2>&1  > tmp/broker_bigjob_201705191800.log 
     but without all the backslashes; just one extremely long line.
 - DON'T FORGET THE AMPERSAND!  or you'll have to use ctrl-Z and bg.
-
 
 
