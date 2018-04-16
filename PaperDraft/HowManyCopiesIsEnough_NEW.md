@@ -28,7 +28,7 @@ padding-bottom: 3px;
 % How Many Copies Is Enough?  
 % Micah Altman; Richard Landau  
 % 2016-08-15  
-% Revised 2018-04-15 RBL
+% Revised 2018-04-16 RBL
 
 
 # Information Integrity Over the Long Term -- How Many Copies Is Enough?   {#title .unnumbered}
@@ -53,12 +53,19 @@ structure of the model
 - basic testing process
 - data representation, units and scales, half-lives, logs
 
-auditing the document collection
-
-- simple case: no auditing
-- less simple case: total auditing, random, by popularity
+Simple and Complex Failures
+- simplest case: sector errors
 - similar case: glitches
 - complex case: shocks
+
+simple cost model
+
+auditing the document collection
+
+- why audit
+- simplest case: no auditing
+- less simple case: total auditing, random, by popularity
+- how many copies do we need with what auditing
 
 observations
 
@@ -81,7 +88,7 @@ for the collection owner
 - have a plan for associated server failures
 - be prepared with list of alternate storage vendors
 
-for the digital perservation commons
+for the digital preservation commons
 
 - develop standards
 - share experience of reliability of cloud vendors
@@ -137,7 +144,27 @@ where to these fit?
 > This article addresses the problem of ensuring information integrity over long periods, and against a diverse range of real-world legal, organizational, technical, and economic threats. Rapid advances information technology have shifted the economics of information production, transmission, and storage -- resulting in a vast amount of information that is increasing stored online or near-line. This shift in information storage changes both the profile of threat to integrity, and the set of feasible methods for mitigating these threats. We develop a general event-based simulation framework that can be used to flexibly and reproducibly simulate the effectiveness of various methods of storage, replication, auditing, and transformation against a diverse portfolio of threats to data loss. We then apply this framework to a range of scenarios that are representative of common baseline threats and current storage technology. From this we derive general guidance for the use of replication, platform diversification, fixity metadata, integrity auditing, compression, and encryption where long-term integrity is desired. 
 
 - summary of specific recommendations
-TODO
+<!-- START:TODO:MICAH -->
+
+> Thou shalt keep multiple copies of thy documents.  
+
+> Thou shalt audit thy documents fully and regularly, and keep them healthy.
+
+> Thou shalt lovingly squeeze and compress thy documents, that they may be better protected from the elements.
+
+> Thou shalt cloak thy documents, if they be shy, in secret robes to keep them from prying eyes.
+
+> Thou shalt not attend disk dealers who bear false witness of their reliability.
+
+> Thou shalt respect the independence of thy vendors.
+
+> Thou shalt befriend more vendors than thou currently doth engage, for they may be friends in lean years of woe and hardship.  
+
+> Thou shalt engage with thy community to develop standards for the benefit of all.  
+
+> Thou shalt foresee unforeseen circumstances.  
+ 
+<!-- END:TODO:MICAH -->
 
 # Motivation
 
@@ -168,8 +195,8 @@ TODO
 3.	Server failures that destroy sets of documents.
 4.	Lack of independence of servers. 
 
-    1. Business failures: a single business failure may affect more than one server, due, e.g., to consolidation or cross-financing.  That is, servers that appear to be independent may not be financially independent in practice.  
-    2. Economic failures.
+  1. Business failures: a single business failure may affect more than one server, due, e.g., to consolidation or cross-financing.  That is, servers that appear to be independent may not be financially independent in practice.  
+  2. Economic failures.
 5.	Attack on collection, institution, subject matter.
 <!-- END:TODO:MICAH --> 
 
@@ -203,6 +230,39 @@ The model permits great variety in the structuring of the simulations.  Not all 
 
 The model does not attempt to characterize individual disk drives, RAID sets, erasure code sets, or any other physical storage entities.  Our investigations have dealt only with small errors that corrupt stored documents and large failures that destroy entire storage servers.  
 
+## Simple and Complex Failures
+
+### simplest case: sector errors
+
+- error corrupts a document sector, random arrival, Poisson model, think cosmic ray
+- if the error occurs in a location occupied by a document, that document is gonzo
+- errors are silent, no one notices until someone tries to read the document and discovers that it is broken
+
+### similar case: glitches
+
+- what is considered a glitch: temporary, short-lived, impacts a single server, increases sector error rate for a while, goes away
+- types of glitches in server farms: HVAC weakness or failure, environmental contamination by chemicals, particles, radiation, electrical noise
+- effect: glitch just increases the error rate slightly for a while, hard to distinguish from random variations in performance
+
+### complex case: shocks
+
+- what is a shock: temporary, short-lived, increases likelihood of server death (taking all documents down with it), may kill immediately, can impact more than one server at a time
+- types of shocks: economic, natural disaster (fire, flood, earthquake, volcano, meteor, etc.), regional war, government interference, administrative error such as billing
+- shocks may be silent in the worst case, no one notices until someone tries to retrieve a document from a dead server, server death loses entire collection
+- effect: whole servers may be lost, even more than one, requiring finding a new server and populating it with the whole collection -- or the parts of the collection that can still be found on the remaining servers
+
+## A Very Simple Cost Model
+
+Many storage vendors available, each with charge schedules for storage and bandwidth.
+
+- charge per month per byte stored (usually gigabyte or petabyte)
+    - cost may vary by "quality" of storage
+- charge per month per byte sent in or out ("ingress" and "egress" charges)
+    - bytes sent include user access and administrative access
+    - cost may vary by reserved bandwidth (Mbps)
+- charge schedules may include quantity discounts for storage and transfer
+
+
 ---
 
 # Basic Testing Process
@@ -230,7 +290,7 @@ The likelihood of an error in a disk bit or sector, or even the failure of an en
 
 We note that, expressed that way, the example figure does seem to be excessively optimistic; the age of the universe is currently estimated to be only 14E9 years. Data on such a disk would be effectively immortal; that does not correlate with experience and would not require a protective strategy.  
 
-Because of the extremely wide range of lifetimes being considered here, we also choose always to plot lifetimes on logarithmic scales.  
+Because of the extremely wide range of lifetimes being considered here, we also choose to plot lifetimes on logarithmic scales.  
 
 ### Lifetime Expressed as Half-Life
 
@@ -245,14 +305,20 @@ For Poisson processes (with exponential arrivals), the relationship of half-life
 
 # Auditing the Document Collection
 
+## Why Audit?
+
 Auditing the collection to test the validity of remote copies of documents can greatly reduce permanent document losses over time.  The auditing process actively patrols for errors before they cause permanent document losses, and corrects them whenever possible.  A number of strategies for auditing are possible, and some are measurably better than others.  
 
 In all cases, when a document copy is found to be absent (or corrupted), the auditing process attempts to replace the missing copy with a fresh copy obtained from another server.  If there is an intact copy on another server, then the missing document is repaired and the process continues.  If there is no other intact copy, then the document is considered permanently lost.  
 
 Auditing is essential to maintaining the health of a collection.  This is the method by which errors are detected and corrected.  Without auditing, errors tend to build up in a collection and eventually cause some permanent document losses, regardless of how many copies of the documents we keep.  We can think of the auditing process as health care for electronic documents: minor problems will be found and fixed before they cause permanent damage.  Of course, it will always be possible for unlikely juxtapositions of errors to cause a document to be lost, but regular auditing of a modest number of copies can minimize permanent losses.  
 
+- simplest case: no auditing
 
-- simple case: no auditing
+Without auditing and repair, errors will always cause copies to be lost.  Multiple copies of a documents will reduce the likelihood of permanent loss, but the number of copies needed to forestall loss depends directly on the lifetime of storage sectors.  With high storage error rates, for instance, sector half-lives less than 10E6 hours, no reasonable number of copies can prevent large numbers of permanent losses.  Even with sector half-lives in the range of 10E6 hours, ten or more copies are needed to keep likely permanent losses near zero.  If the storage is much more reliable, with sector half-life in the range 100E6 or 1000E6 hours, still at least four or five copies are needed to minimize losses.  Given the uncertainty of storage error rates, particularly across servers and over time, the larger numbers of copies are probably required to protect collection documents.  
+
+Note that all the figures stated here for times and lifetimes are based on arbitrary scales chosen for the simulations.  The numbers should not be applied literally to your situations or experiences.  Please see the section on "Simplifying Assumptions" for details on time scales, error rates, storage and document sizes, etc.  
+
 
 # Simple Case -- Independent Failures & Just Plain Copies
 
@@ -262,20 +328,14 @@ Auditing is essential to maintaining the health of a collection.  This is the me
 TODO: Why did we choose this spectrum, which goes from rusty garbage-can lids to immortal disks.  
 <!-- END:TODO:RICK -->
 
+It must be stressed that a client should choose a strategy that works for *somewhere* on the broad spectrum of reliability, because one never knows where one is on that spectrum.  The service level agreements of cloud storage server vendors are not likely to specify precise bit error rates (nor liability for lost documents).  And error rates can change in the short term due to environmental glitches, bad disks, and such.  
+
 
 ## How many copies do you need if ...
 
-Without auditing and repair, errors will always cause copies to be lost.  Multiple copies of a documents will reduce the likelihood of permanent loss, but the number of copies needed to forestall loss depends directly on the lifetime of storage sectors.  With high storage error rates, for instance, sector half-lives less than 10E6 hours, no reasonable number of copies can prevent large numbers of permanent losses.  Even with sector half-lives in the range of 10E6 hours, ten or more copies are needed to keep likely permanent losses near zero.  If the storage is much more reliable, with half-life in the range 100E6 or 1000E6 hours, still at least four or five copies are needed to minimize losses.  Given the uncertainty of storage error rates, particularly across servers and over time, the larger numbers of copies are probably required to protect collection documents.  
-
-Note that all the figures stated here for times and lifetimes are based on arbitrary scales chosen for the simulations.  The numbers should not be applied literally to your situations or experiences.  Please see the section on "Simplifying Assumptions" for details on time scales, error rates, storage and document sizes, etc.  
-
 Auditing, even at relatively low rates, changes the picture entirely.  With a reasonable amount of auditing, five copies of a collection suffice to protect the collection from loss across a very wide range of error rates, starting with sector half-lives greater than 3E6 hours.  
 
-Auditing cycle rates may vary from quarterly (four times per year) to biennial (once every two years).  Auditing more frequently than annually does not seem to confer much additional protective benefit.  This depends, of course, on the number of copies of the collection that are placed on independent servers.  Please consult the tables in the supplementary material for details.  
 
-It is important that, during each audit cycle, every document copy be examined.  Auditing strategies that examine random subsets of the collection sampled with replacement, are not so effective at protecting the collection.  For example, a strategy sometimes suggested of auditing a random ten percent of the collection every month, where the random selection is made with replacement, is slightly less effective than a single, total audit once a year.  
-
-It must be stressed that a client should choose a strategy that works for *somewhere* on the broad spectrum of reliability, because one never knows where one is on that spectrum.  The service level agreements of cloud storage server vendors are not likely to specify precise bit error rates (nor liability for lost documents).  And error rates can change in the short term due to environmental glitches, bad disks, and such.  
 [FIGURE: FIVE COPIES ARE ENOUGH]
 
 [FIGURE: ANNUAL AUDITING IS ENOUGH]
@@ -285,11 +345,17 @@ It must be stressed that a client should choose a strategy that works for *somew
 Common auditing strategies: 
 
 - **Total auditing**: test all copies of all documents in the collection.  This *auditing cycle* is usually repeated at regular intervals, such as annually, quarterly, monthly, etc.  
+
 - **(Systematic) segmented auditing**: divide the collection into several segments, and test one segment at each interval.  The whole collection is visited during the audit cycle, but only one segment at a time.  For example, the collection may be divided into four segments; if each segment in turn is audited at quarterly intervals, then the entire collection will have been audited at the end of a yearly auditing cycle.  Of course, more or fewer segments can be used: with an annual frequency, one segment is the same as annual auditing; twelve for monthly segmented auditing, and so forth.  
 
-    Note that segments need not be fixed portions of the collection.  Each segment of the collection might be selected at random when its turn comes, so long as the random selection is made *without* replacement over the audit cycle.  This ensures that every document in the collection will be audited exactly once during the complete cycle.  
+> Auditing cycle rates may vary from quarterly (four times per year) to biennial (once every two years).  Auditing more frequently than annually does not seem to confer much additional protective benefit.  This depends, of course, on the number of copies of the collection that are placed on independent servers.  Please consult the tables in the supplementary material for details.  
+
+> Note that segments need not be fixed portions of the collection.  Each segment of the collection might be selected at random when its turn comes, so long as the random selection is made *without* replacement over the audit cycle.  This ensures that every document in the collection will be audited exactly once during the complete cycle.  
     
 - **Random auditing**: at some interval, audit a random subset of documents chosen from the collection.  This often is expressed as, for instance, "audit ten percent of the documents every month."  The difference between this random strategy and segmented auditing is that the random selection is chosen *with* replacement.  Thus it is likely that some documents will escape auditing entirely for long periods.  
+
+> It is important that, during each audit cycle, every document copy be examined.  Auditing strategies that examine random subsets of the collection sampled with replacement, are not so effective at protecting the collection.  For example, a strategy sometimes suggested of auditing a random ten percent of the collection every month, where the random selection is made with replacement, is slightly less effective than a single, total audit once a year.  
+
 - **Auditing by popularity**: divide the collection into sub-collections that represent varying levels of document usage, e.g., small sub-collections for the documents most frequently accessed, medium size sub-collections for documents of intermediate popularity, and large sub-collections for documents rarely accessed.  Permanent losses in the popular sub-collections would have much greater negative impact on the customer base.  To reduce the likelihood of such expensive losses, the more popular (small) sub-collections of the collection can be audited more frequently than the others with little increased cost in bandwidth and time.  
 
 Our simulations include tests of many auditing strategies, including total, segmented, and random.  Tests differed in cycle frequency and in the parts of the collection audited during each segment or cycle.  
@@ -299,20 +365,22 @@ Our simulations include tests of many auditing strategies, including total, segm
 - Segment counts were either one, two, four, ten, or fifty (corresponding to annual, semi-annual, quarterly, monthly, or weekly audits).
 - Segments were chosen either systematically (the first quarter of the collection, the second quarter of the collection, etc.) or by uniform random selection with replacement.  (This needs investigation; it has not been tested lately and thus may effectively be NYI.)
 
-## similar case: glitches
-## complex case: shocks
-
 --- 
 
 # observations
 
 ## large vs small collections (words)
+
 ## large vs small documents (picture)
+
 ## large vs small storage structures (words)
+
 ## total auditing is essential (picture)
 
 - *Observation*: Total auditing of the collection is highly effective at reducing document losses.  
+
 - *Observation*: The effectiveness of auditing is robust across a wide spectrum of storage quality (i.e., document error rates) and short term variations in storage quality.  
+
 - However, auditing strategies are not robust to associated failures that compromise multiple servers over short periods.  Associated server failures -- whether due to disasters, economic downturns, clerical errors, or lack of independence of servers -- can remove more than one server from service between audit cycles.  This reduces the number of active replications of the collection, leaving the collection more vulnerable to minor errors until it is repaired by auditing.  
 
 
@@ -324,30 +392,24 @@ Our simulations include tests of many auditing strategies, including total, segm
 
 - *Observation*: Auditing in multiple segments is very slightly more effective than auditing the entire collection as one segment with the same cyclic frequency; e.g., auditing a quarter of the collection each quarter is slightly more effective than a single annual audit of the whole collection. 
 
-    We note also that auditing in a number of segments has two additional advantages: 
+> We note also that auditing in a number of segments has two additional advantages: 
     1. It spreads the bandwidth requirements for auditing throughout the audit cycle.  This can reduce recurring (monthly, quarterly) egress charges for large audits.
     1. It can find a dead server more quickly.  A dead server can be detected only during auditing when a document repair fails.  Since all servers are examined quarterly, for instance, rather than annually, documents are exposed less to permanent loss. 
 
 - *Observation*: Across a wide range of document error rates, increasing auditing frequency beyond a certain point shows little improvement.  
      
 ## auditing robust across a wide range of quality (picture)
+
 ## finding dead servers (words)
-## sampling without and (random) with replacement
+
+## sampling without replacement (segmented) and with replacement (random) 
 
 --- 
 
-recommendations
-
-for the collection owner
-
-- five copies with annual auditing
-- beware lack of independence
-- have a plan for associated server failures
-- be prepared with list of alternate storage vendors
-
-# Recommendation
+# Recommendations
 
 ## For collection owner
+
 - Use at least 5 copies (section ## How many copies do you need if ...)
 - Use systematic quarterly auditing (section ## How many copies do you need if ..., section ## correlated failures)
 - Do not trust MTBF and other similar measures
@@ -358,19 +420,14 @@ for the collection owner
 - What can we say about increasing replicas in the face of particular correlated threats?
  
 
-for the digital perservation commons
-
-- develop standards
-- share experience of reliability of cloud vendors
-- share experience on correlated failures
-
 ## For digital preservation commons
+
 - Develop standards 
-    1.	with cloud vendors for cryptographic auditing that does not require data egress
-    2.	Reporting  of failure rates
+    1.	with cloud vendors for cryptographic auditing that reduces data egress
+    2.	Reporting of failure rates
 - Sharing reliability of cloud vendors
 - Sharing information on correlated failures?
-- Parralel between strategy of less-reliability + more auditing with original RAID (inexpensive disks); RAM error correction; FAST array of Wimpy Nodes; Google hardware-failure tolerant hadoop  architecture
+- Parallel between strategy of less-reliability + more auditing with original RAID (inexpensive disks); RAM error correction; FAST array of Wimpy Nodes; Google hardware-failure tolerant hadoop architecture
 
 ---
 
@@ -406,31 +463,30 @@ Where, then, to search for information about the effectiveness of replication an
 - Larger data is likely to encounter more errors.  
 - Error rates are not so high as to be crippling to normal usage. 
 
-
 The supplementary material includes comparisons of theoretical and empirically observed loss rates for a wide range of error rates.  The theoretical figures are based on simple independent Poisson arrivals of document failures, based on sector lifetime, sector size, document size, and simulation length.  Empirical numbers are derived from repeated runs of simulations with the stated parameters, with simple document aging and no auditing.  Even with very small samples (twenty runs) the empirical numbers agree very well with the theoretical predictions.  
 
 
-- why did we choose this range of error rates
+### why did we choose this range of error rates
 
 The region of error rates that we investigate generates enough errors to evaluate the impact of storing multiple copies and the impact of various auditing strategies.  Our conclusions describe storage and auditing strategies that are robust over very wide ranges of error rates (and the corresponding ranges of bit/block/disk lifetimes), spanning approximately four orders of magnitude.  
 
 A back-of-the-envelope calculation is called for here.  The scale (of disk quality) that we have used for most of the simulations ranges from a sector half-life of two or three megahours (2E6 or 3E6 hours) up to one thousand or ten thousand megahours (1E9 or 10E9 hours). 
 
 - A modest size disk today might contain one terabyte of data.  The "sector size" we have used is one megabyte (1MB).  Thus our hypothetical modest disk would contain about a million such "sectors".
+
+<!-- START:TODO:RICK--> 
+TODO:RBL: correct the numbers in these several bullets.
+
 - At the extreme low end of the disk quality scale, the sector half-life is, say, two megahours.  1E6 sectors, each with a half-life of 2E6 hours, scaling down for legibility, is comparable to 1E3 sectors with a half-life of 2E3 hours.  Every 2,000 hours, about one half of the 1,000 sectors would incur an error.  That 2,000 hours is less than a quarter of a year.  A disk with a lifetime this low -- or an error rate this high -- would not be usable.
 - At the high end of the disk quality scale, the sector half-life is 1000E6 hours.  Performing the same scaling, the 1E6 disk sectors with half-lives of 1000E6 hours are comparable to 1E3 disk sectors with half-lives of 1E6 hours.  Every million hours -- about 110 years -- half of the sectors will incur an error.  In the first year, only xxx % of the sectors will have an error; after ten years, xxx %.  
 - In the middle of the scale, the sector half-life is 100E6 hours.  Again, performing the same scaling, the 1E6 disk sectors with half-lives of 100E6 hours are comparable to 1E3 sectors with half-lives of 100E3 hours.  Every 100,000 hours -- about 11 years -- half of the sectors will incur an error.  After the first year, about xxx % of the sectors would be expected to have an error.  
 - In a more realistic area, consider half-lives of 30E6 to 50E6 hours. See table below.  
 
-<!-- START:TODO:RICK--> 
 TODO:RBL: table goes here.  strictly poisson calculations.
 - horiz: sector half-life, 3, 10, 30, 50, 100, 1000 mh.
-- vert: pct sectors lost after 1 yr, 5, 10; asterisks for not usable.
+- vert: pct sectors lost after 1 yr, 2 yrs, 5, 10; asterisks for not usable.
 <!-- END:TODO:RICK--> 
 
-
-- representation and scale of error rates, why half-life
-- relationship of MTBF to error rates
 
 ### Relationship of MTBF/MTTF to Block Error Rates
 
@@ -448,7 +504,6 @@ It must be stressed at this point that RAID and similar techniques protect only 
 
 The rate of deterioration of data is not directly related to the lifetime of the disk drive itself.  Drive failure may result from failures in the mechanisms of moving parts, the controller electronics, circuit boards, connectors, etc.  Data errors may result from surface wear, chemistry, radiation, lubrication, magnetic interference, and so forth, none of which seems very clearly related to the major causes of drive failure.  (Physical contamination from airborne dust, chemicals, or humidity may be an exception.)  
 
-- what is MTBF
 
 ##  What is MTBF, Really?
 
@@ -466,7 +521,6 @@ Most non-marketing literature considers MTBF estimates from manufacturers to be 
 Even if we understood the source and accuracy of stated MTTF estimates for disk drives, we would still not have information about individual sector failures within a drive that cause document failures, nor the relative frequencies of sector failures versus drive failures.  
 
 
-- the appearances of the graphs, x, y, logs, 1% line, where is zero
 
 ## A Few Words About the Graphs
 
