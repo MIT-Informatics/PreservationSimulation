@@ -28,7 +28,7 @@ padding-bottom: 3px;
 % How Many Copies Is Enough?  
 % Micah Altman; Richard Landau  
 % 2016-08-15  
-% Revised 2018-04-16 RBL
+% Revised 2018-04-29 RBL
 
 
 # Information Integrity Over the Long Term -- How Many Copies Is Enough?   {#title .unnumbered}
@@ -146,6 +146,8 @@ where to these fit?
 - summary of specific recommendations
 <!-- START:TODO:MICAH -->
 
+TBS
+
 > Thou shalt keep multiple copies of thy documents.  
 
 > Thou shalt audit thy documents fully and regularly, and keep them healthy.
@@ -185,6 +187,8 @@ where to these fit?
 - "Dual" problem: Keeping $ fixed,  what choices minimize risk?
 
 # Core Risks
+
+TBS
 
 - types and severity of threats
 <!-- START:TODO:MICAH --> 
@@ -230,34 +234,40 @@ Our preservation model includes a few very simple objects and operations.
 
 ### Simplest Case: Sector Errors
 
-- error corrupts a document sector, random arrival, Poisson model, think cosmic ray
-- if the error occurs in a location occupied by a document, that document is gonzo
-- errors are silent, no one notices until someone tries to read the document and discovers that it is broken
+- An error in the storage corrupts a document sector.  Errors arrive randomly in a Poisson process.  A cosmic ray striking a disk or memory cell is a good model for this type of error.  
+- If the error occurs in a sector occupied by a copy of a document, that copy is corrupted.  For the purposes of this study, we consider the copy to be lost.  Manual repair by human inspection is not considered here.
+- Errors are silent, that is, no one notices an error until someone tries to read the document and discovers that it is lost.  
 
 ### Similar Case: Glitches
 
-- what is considered a glitch: temporary, short-lived, impacts a single server, increases sector error rate for a while, goes away
-- types of glitches in server farms: HVAC weakness or failure, environmental contamination by chemicals, particles, radiation, electrical noise
-- effect: glitch just increases the error rate slightly for a while, hard to distinguish from random variations in performance
+- A *glitch* is a temporary, short-lived, condition that impacts a single server and increases the sector error rate on that server for some short interval.   
+- What types of glitches might occur in server farms?  HVAC weakness or failure; environmental contamination by chemicals or particulates; radiation; electrical noise; and similar.  In general, these conditions are not fatal to the server overall, but degrade the integrity of data storage.  
+- Glitches arrive at random intervals in a Poisson process, and have limited duration.  
+- Glitches are local phenomena, limited to a single server.  
+- The effect of a glitch is simply to increase the sector error rate for a short period.  Glitches, like the errors they induce, are silent.  In this study, we find that it is hard to distinguish glitch-induced increases in error rates from random variations in performance.  
 
 ### Complex Case: Shocks
 
-- what is a shock: temporary, short-lived, increases likelihood of server death (taking all documents down with it), may kill immediately, can impact more than one server at a time
-- types of shocks: economic, natural disaster (fire, flood, earthquake, volcano, meteor, etc.), regional war, government interference, administrative error such as billing
-- shocks may be silent in the worst case, no one notices until someone tries to retrieve a document from a dead server, server death loses entire collection
-- effect: whole servers may be lost, even more than one, requiring finding a new server and populating it with the whole collection -- or the parts of the collection that can still be found on the remaining servers
+- A *shock* is a more serious condition affecting storage servers.  This is a temporary, short-lived, or possibly permanent, increase in the likelihood of death of a server.  All servers are considered to have finite lives (of random length), though the lives may be very long.  A shock reduces that lifetime.  
+- A shock may kill a server immediately, or it may simply increase the likelihood of failure of that server.  
+- What types of shocks might occur?  Natural disasters, such as fire, flood, earthquake, volcano, meteor, etc.; economic downturnsin consumer and financial markets; regional wars; government interference; administrative errors such as billing and credit arrangements; and so forth.  
+- Shocks arrive at random intervals in a Poisson process, and may be immediately fatal to a set of servers or may simply reduce their life expectancies for a period.  
+- The impact of a shock is modeled as silent, that is, no one notices the death of a server until someone tries to retrieve a document from a dead server.  Note that a server failure results in the loss of all document copies stored on that server.  
+- Shocks may be regional or administrative phenomena that affect more than one server at a time.  One particularly subtle cause of a shock affecting multiple servers is lack of independence of the servers, due to corporate mergers, collocation of server farms, dependence on large power grids, etc.  
+- When a server is lost, the client is required to find a new server and populate it with the whole collection -- or at least the parts of the collection that can still be found on the remaining servers.  
 
 ## A Very Simple Cost Model
 
-Many storage vendors available, each with charge schedules for storage and bandwidth.
+Many storage vendors may be available to a client, each with charge schedules.  For the most part, vendors will charge for storage and bandwidth.
 
-- charge per month per byte stored (usually gigabyte or petabyte)
-    - cost may vary by "quality" of storage
-- charge per month per byte sent in or out ("ingress" and "egress" charges)
-    - bytes sent include user access and administrative access
-    - cost may vary by reserved bandwidth (Mbps)
-- charge schedules may include quantity discounts for storage and transfer
+- A charge per month per byte stored (usually gigabyte or petabyte).
+    - The cost of storage may vary by "quality" of storage, based on its typical error rate or perhaps on speed of retrieval access.  
+- A charge per month per byte sent in or out ("ingress" and "egress" charges).
+    - Bytes sent do not distinguish between user access for normal retrieval and administrative access for auditing.  
+    - The cost may vary by speed or reserved bandwidth (Mbps).
+- Charge schedules may include quantity discounts for storage and transfer
 
+For the purposes of this study, a client will store a collection on a set of servers of the same "quality" level.  Documents with differing quality requirements are considered separate collections and are stored and managed separately.  
 
 ---
 
@@ -290,6 +300,8 @@ The likelihood of an error in a disk bit or sector, or even the failure of an en
 
 We note that, expressed that way, the example figure does seem to be excessively optimistic; the age of the universe is currently estimated to be only 14E9 years. Data on such a disk would be effectively immortal; that does not correlate with experience and would not require a protective strategy.  
 
+Also, we do not consider bit error rates, but choose to nominal sector size of 1MB.  All lifetimes are expressed relative to such sectors.  
+
 Because of the extremely wide range of lifetimes being considered here, we also choose to plot lifetimes on logarithmic scales.  
 
 ### Lifetime Expressed as Half-Life
@@ -299,7 +311,6 @@ Also, we have chosen to use the half-life of objects (sectors, servers) rather t
 For Poisson processes (with exponential arrivals), the relationship of half-life to exponential lifetime is simply 
 
         (half-life) = (lifetime) * ln(2) 
-
 
 ---
 
@@ -325,10 +336,12 @@ Note that all the figures stated here for times and lifetimes are based on arbit
 Just make copies -- no auditing? TOO MANY COPIES REQUIRED
 
 <!-- START:TODO:RICK -->
+TBS
+
 TODO: Why did we choose this spectrum, which goes from rusty garbage-can lids to immortal disks.  
 <!-- END:TODO:RICK -->
 
-It must be stressed that a client should choose a strategy that works for *somewhere* on the broad spectrum of reliability, because one never knows where one is on that spectrum.  The service level agreements of cloud storage server vendors are not likely to specify precise bit error rates (nor liability for lost documents).  And error rates can change in the short term due to environmental glitches, bad disks, and such.  
+It must be stressed that a client should choose a strategy that works for *somewhere* on the broad spectrum of reliability, because one never knows where servers lie on that spectrum.  The service level agreements of cloud storage server vendors are not likely to specify precise bit error rates (nor liability for lost documents).  And error rates can change in the short term due to environmental glitches, bad disks, and such.  
 
 
 ## How many copies do you need if ...
@@ -361,75 +374,98 @@ Our simulations tested many auditing strategies, including total, segmented, and
 - All tests occurred on regular schedules.  
 - Auditing cycles varied from monthly to biennially.  
 - Segment counts were either one, two, four, ten, or fifty (corresponding to annual, semi-annual, quarterly, monthly, or weekly audits).
-- Segments were chosen either systematically (the first quarter of the collection, the second quarter of the collection, etc.) or by uniform random selection with replacement.  
+- Segments were chosen either systematically (the first quarter of the collection, the second quarter of the collection, etc.) or by uniform random selection, with replacement, of part of the collection.  
 
 --- 
 
 # Observations
 
-## large vs small collections (words)
+## Large vs Small Collections 
 
-## large vs small documents (picture)
+The simulations were done with a fixed collection size of 10,000 documents in a collection.  All the statistics we report are stated as percentage of the documents lost.  These proportions can be scaled to different collection sizes by linear extrapolation.  
 
-## large vs small storage structures (words)
+## Large vs Small Documents 
 
-## total auditing is essential (picture)
+Most of the simulations were done with documents of a fixed size.  Because document sizes may vary over a wide range depending on content, format, compression, etc., we ran additional tests over a wide range of document sizes.  Results matched expectations based on the Poisson distribution, that document size and error rate (i.e., sector lifetime) vary inversely.  Increasing document size by a factor of N and decreasing the error rate by the same factor of N (or, equivalently, increasing the sector lifetime by the same factor of N) result in the same distribution of errors and therefore the same document losses.  
 
-- *Observation*: Total auditing of the collection is highly effective at reducing document losses.  
+The table in Exhibit XX shows the results of tests over a wide range of document sizes, from 5MB to 5,000MB, and a comparable range of sector lifetimes, from 2E6 to 10E9 hours.  
+
+## Large vs Small Storage Structures 
+
+Storage servers will store documents on storage arrays of varying size, depending on disk size, RAID or erasure coding level, and other administrative factors.  We ran tests on storage structures varying in size by a factor of 10 and found no differences in document losses.  
+
+One minor note: using very large storage structures with small documents result in storage extents that are sparsely populated.  This reduces the efficiency of the simulation programs, because many of the simulated "cosmic ray" errors striking the disks land in unoccupied areas that do not affect any documents.  
+
+
+## Total Auditing is Essential 
+
+- *Observation*: Total auditing of the collection is highly effective at reducing document losses.  Without auditing and its attendant repair of damaged documents, minor errors will cause a stored collection to continue to decline over time with no barrier to extinction.  No number of redundant copies without auditing, certainly no *reasonable* number, will prevent significant document losses over a long period.  In addition, shocks to the system may cause servers to fail, thus reducing the actual number of active copies of a collection and accelerating further deterioration.
+
+Exhibit XX shows unaudited document losses over long periods with large numbers of redundant copies.  
+
+However, even a modest regimen of auditing and repair can minimize damage to a collection, across a huge range of server quality, long periods of time, and unpredictable adverse shock conditions.  
 
 - *Observation*: The effectiveness of auditing is robust across a wide spectrum of storage quality (i.e., document error rates) and short term variations in storage quality.  
 
-- However, auditing strategies are not robust to associated failures that compromise multiple servers over short periods.  Associated server failures -- whether due to disasters, economic downturns, clerical errors, or lack of independence of servers -- can remove more than one server from service between audit cycles.  This reduces the number of active replications of the collection, leaving the collection more vulnerable to minor errors until it is repaired by auditing.  
+Exhibit XX shows how annual total auditing of a small number of copies can keep a collection healthy across a very wide range of server quality.  
 
+- However, auditing strategies may not be robust to severe associated failures that compromise multiple servers over short periods.  Associated server failures -- whether due to disasters, economic downturns, clerical errors, or lack of independence of servers -- can remove more than one server from service between audit cycles.  This reduces the number of active replications of the collection, leaving the collection more vulnerable to minor errors until it is repaired by auditing.  If severe shock conditions are anticipated, it may be necessary to increase slightly the number of redundant copies or the frequency of auditing of the collection.  
 
-## other types of auditing (words)
+## Other Types Of Auditing 
 
 - *Observation*: Random auditing, where segment contents are selected with replacement, is less effective than total auditing or, equivalently, segmented auditing *without* replacement.  Selection of documents randomly *with replacement* will inevitably miss some documents entirely while sampling others more often than needed.  
 
-## segmented total auditing slightly better (words)
+Exhibit XX shows the higher loss rates for collections audited randomly with replacement as opposed to total auditing.  
 
-- *Observation*: Auditing in multiple segments is very slightly more effective than auditing the entire collection as one segment with the same cyclic frequency; e.g., auditing a quarter of the collection each quarter is slightly more effective than a single annual audit of the whole collection. 
+## Segmented Total Auditing Slightly Better 
 
-> We note also that auditing in a number of segments has two additional advantages: 
+- *Observation*: Total auditing in multiple segments is slightly more effective than auditing the entire collection as one segment with the same cyclic frequency; e.g., auditing a quarter of the collection each quarter is slightly more effective than a single annual audit of the whole collection. 
+
+> Note that auditing in a number of segments has two additional advantages: 
     1. It spreads the bandwidth requirements for auditing throughout the audit cycle.  This can reduce recurring (monthly, quarterly) egress charges for large audits.
     1. It can find a dead server more quickly.  A dead server can be detected only during auditing when a document repair fails.  Since all servers are examined quarterly, for instance, rather than annually, documents are exposed less to permanent loss. 
 
-- *Observation*: Across a wide range of document error rates, increasing auditing frequency beyond a certain point shows little improvement.  
-     
-## auditing robust across a wide range of quality (picture)
-
-## finding dead servers (words)
-
-## sampling without replacement (segmented) and with replacement (random) 
+- *Observation*: Across a wide range of document error rates, increasing auditing frequency beyond a certain point shows little improvement.  Segmented auditing with multiple segments per audit cycle can be advantageous, but returns may diminish with excessive frequency.  For example, in most environments, annual total auditing in four segments (quarterly) improves loss rates over one segment (annually).  However, the further improvement from monthly or weekly audit segments is minimal.  
 
 --- 
 
 # Recommendations
 
-## For collection owner
+TBS
 
-- Use at least 5 copies (section ## How many copies do you need if ...)
-- Use systematic quarterly auditing (section ## How many copies do you need if ..., section ## correlated failures)
-- Do not trust MTBF and other similar measures
-- Use compression, with known algorithms
+## For the Collection Owner
+
+- Maintain at least 5 copies of the document collection.  
+- Use systematic quarterly auditing, that is, audit the entire collection annually, but perform the audit in four segments per year.  
+- Use compression, with known algorithms, wherever possible on all documents.  
+- Do not trust MTBF and other similar measures stated by anyone.  Choose a strategy to protect your collection over a very wide range of storage quality and adverse future conditions.
+
+[Remaining questions]
 - What can we say about document size?
 - What can we say about collection size? (E.g. twitter corpus) Error rates matter either if collection is big or long-term? 
 - What can we say about encryption?
-- What can we say about increasing replicas in the face of particular correlated threats?
+- What can we say about increasing replication in the face of particular correlated threats?
  
+TBS
 
 ## For digital preservation commons
 
-- Develop standards 
-    1.	with cloud vendors for cryptographic auditing that reduces data egress
-    2.	Reporting of failure rates
-- Sharing reliability of cloud vendors
-- Sharing information on correlated failures?
+- Share experience on error rates discovered in auditing, across vendors, numbers of copies, auditing frequency, etc.  
+- Share experience information on the reliability of cloud storage vendors.  
+- Share information on experience of correlated failures, exogenous and endogenous.  
+- Develop standards to improve efficiency and reduce costs.
+    1.	Develop agreements with cloud vendors for cryptographic auditing that reduces data egress.
+    2.	Develop standards for reporting failure rates.
+
+TBS
+
 - Parallel between strategy of less-reliability + more auditing with original RAID (inexpensive disks); RAM error correction; FAST array of Wimpy Nodes; Google hardware-failure tolerant hadoop architecture
 
 ---
 
-# supplemental material
+# Supplemental Material
+
+ALL TBS
 
 - details of model
 - simplifying assumptions and scaling, Poisson IID, metric years, partitioning of simulations, non-repairable documents
@@ -464,7 +500,7 @@ Where, then, to search for information about the effectiveness of replication an
 The supplementary material includes comparisons of theoretical and empirically observed loss rates for a wide range of error rates.  The theoretical figures are based on simple independent Poisson arrivals of document failures, based on sector lifetime, sector size, document size, and simulation length.  Empirical numbers are derived from repeated runs of simulations with the stated parameters, with simple document aging and no auditing.  Even with very small samples (twenty runs) the empirical numbers agree very well with the theoretical predictions.  
 
 
-### why did we choose this range of error rates
+### Why Did We Choose This Range of Error Rates
 
 The region of error rates that we investigate generates enough errors to evaluate the impact of storing multiple copies and the impact of various auditing strategies.  Our conclusions describe storage and auditing strategies that are robust over very wide ranges of error rates (and the corresponding ranges of bit/block/disk lifetimes), spanning approximately four orders of magnitude.  
 
