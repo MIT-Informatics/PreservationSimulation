@@ -156,7 +156,7 @@ where to these fit?
 
 > Thou shalt not attend disk dealers who bear false witness of their reliability.
 
-> Thou shalt respect the independence of thy vendors.
+> Thou shalt respect and monitor the independence of thy vendors.
 
 > Thou shalt befriend more vendors than thou currently doth engage, for they may be friends in lean years of woe and hardship.  
 
@@ -212,7 +212,7 @@ Our preservation model includes a few very simple objects and operations.
 - A set of documents forms a *collection*. A collection may include any number of documents.  All documents in a single collection are treated equally by the owner of the collection and the service storing a copy of the collection.  
 - A collection belongs to a *client*, e.g., a library, that wishes to preserve it for the long term.  
 - The client has two strategies available to preserve the collection: to keep a small number of *copies* of the documents on very high quality storage, or to replicate many copies of the documents using available commercial data storage facilities.  Very high quality storage may be very expensive or actually unobtainable; multiple copies on commercial storage may also be expensive, but such storage services are available commodities.  
-- Documents are stored on *storage servers*, which currently reside largely on rotating disk memories.  Storage servers attempt to make their storage more reliable by themselves using a variety of techniques, including duplication, mirroring, RAID, error correction coding, erasure coding, and other technologies that may become available. 
+- Documents are stored on *storage servers*, and currently reside largely on rotating disk memories.  Storage servers attempt to make their storage more reliable by themselves using a variety of techniques, including duplication, mirroring, RAID, error correction coding, erasure coding, and other technologies that may become available. 
 - A client may *audit* a collection to determine if all the copies of documents stored on the server(s) are still readable.  Such auditing may be accomplished in a variety of ways; see the section on Auditing Strategies.  
 - An error in storage may cause a document or some portion of it to become unreadable.  (For simplicity, we model that a single error in a document makes the document unreadable.)  If all copies of a document are unreadable, then the document is permanently lost. 
 - Errors causing individual document failures are *independent* of one another.  
@@ -226,25 +226,21 @@ Our preservation model includes a few very simple objects and operations.
 
 (Format obsolescence is not an inherent part of this model, but forms of it may be modeled through extensions involving associated failure. See below.)
 
-The model permits great variety in the structuring of the simulations.  Not all possibilities have been used in the simulations reported here.  A number of simplifications were used to reduce substantially the size of the problem space to be searched.  For example, we report results for a single client library with a single collection of documents.  Given the assumptions that clients, collections, and documents all are independent of each other, results for multiple clients, multiple collections, and varying sizes of collections can be extrapolated from these results.  Similarly, early testing revealed that document size did not interact with other simulation parameters in any unforeseen ways; so we have reported results for a limited number of document sizes, along with guidelines for scaling document size relative to other adjustable parameters, such as sector error rate.  See the section on "Simplifying Assumptions."
-
-The model does not attempt to characterize individual disk drives, RAID sets, erasure code sets, or any other physical storage entities.  Our investigations have dealt only with small errors that corrupt stored documents and large failures that destroy entire storage servers.  
-
 ## Simple and Complex Failures
 
-### simplest case: sector errors
+### Simplest Case: Sector Errors
 
 - error corrupts a document sector, random arrival, Poisson model, think cosmic ray
 - if the error occurs in a location occupied by a document, that document is gonzo
 - errors are silent, no one notices until someone tries to read the document and discovers that it is broken
 
-### similar case: glitches
+### Similar Case: Glitches
 
 - what is considered a glitch: temporary, short-lived, impacts a single server, increases sector error rate for a while, goes away
 - types of glitches in server farms: HVAC weakness or failure, environmental contamination by chemicals, particles, radiation, electrical noise
 - effect: glitch just increases the error rate slightly for a while, hard to distinguish from random variations in performance
 
-### complex case: shocks
+### Complex Case: Shocks
 
 - what is a shock: temporary, short-lived, increases likelihood of server death (taking all documents down with it), may kill immediately, can impact more than one server at a time
 - types of shocks: economic, natural disaster (fire, flood, earthquake, volcano, meteor, etc.), regional war, government interference, administrative error such as billing
@@ -282,6 +278,10 @@ This entire simulation cycle is repeated a number of times using different value
 
 The model does not consider directly the costs of storage or bandwidth.  These factors vary widely and change rapidly.  Any conclusions based on specific numbers would become obsolete very quickly.  However, some possibilities for minimizing or smoothing bandwidth consumption are considered.  
  
+The model permits great variety in the structuring of the simulations.  Not all possibilities have been used in the simulations reported here.  A number of simplifications were used to reduce substantially the size of the problem space to be searched.  For example, we report results for a single client library with a single collection of documents.  Given the assumptions that clients, collections, and documents all are independent of each other, results for multiple clients, multiple collections, and varying sizes of collections can be extrapolated from these results.  Similarly, early testing revealed that document size did not interact with other simulation parameters in any unforeseen ways; so we have reported results for a limited number of document sizes, along with guidelines for scaling document size relative to other adjustable parameters, such as sector error rate.  See the section on "Simplifying Assumptions."
+
+The model does not attempt to characterize individual disk drives, RAID sets, erasure code sets, or any other physical storage entities.  Our investigations have dealt only with small errors that corrupt stored documents and large failures that destroy entire storage servers.  
+
 ---
 
 # Data Representation
@@ -313,16 +313,16 @@ In all cases, when a document copy is found to be absent (or corrupted), the aud
 
 Auditing is essential to maintaining the health of a collection.  This is the method by which errors are detected and corrected.  Without auditing, errors tend to build up in a collection and eventually cause some permanent document losses, regardless of how many copies of the documents we keep.  We can think of the auditing process as health care for electronic documents: minor problems will be found and fixed before they cause permanent damage.  Of course, it will always be possible for unlikely juxtapositions of errors to cause a document to be lost, but regular auditing of a modest number of copies can minimize permanent losses.  
 
-- simplest case: no auditing
+## Simplest Case: No Auditing
 
 Without auditing and repair, errors will always cause copies to be lost.  Multiple copies of a documents will reduce the likelihood of permanent loss, but the number of copies needed to forestall loss depends directly on the lifetime of storage sectors.  With high storage error rates, for instance, sector half-lives less than 10E6 hours, no reasonable number of copies can prevent large numbers of permanent losses.  Even with sector half-lives in the range of 10E6 hours, ten or more copies are needed to keep likely permanent losses near zero.  If the storage is much more reliable, with sector half-life in the range 100E6 or 1000E6 hours, still at least four or five copies are needed to minimize losses.  Given the uncertainty of storage error rates, particularly across servers and over time, the larger numbers of copies are probably required to protect collection documents.  
 
 Note that all the figures stated here for times and lifetimes are based on arbitrary scales chosen for the simulations.  The numbers should not be applied literally to your situations or experiences.  Please see the section on "Simplifying Assumptions" for details on time scales, error rates, storage and document sizes, etc.  
 
 
-# Simple Case -- Independent Failures & Just Plain Copies
+## Simple Case: Independent Failures & Just Plain Copies
 
-## Just make copies -- no auditing? TOO MANY COPIES REQUIRED
+Just make copies -- no auditing? TOO MANY COPIES REQUIRED
 
 <!-- START:TODO:RICK -->
 TODO: Why did we choose this spectrum, which goes from rusty garbage-can lids to immortal disks.  
@@ -340,9 +340,7 @@ Auditing, even at relatively low rates, changes the picture entirely.  With a re
 
 [FIGURE: ANNUAL AUDITING IS ENOUGH]
 
-# less simple case: total auditing, random, by popularity
-
-Common auditing strategies: 
+## Common Auditing Strategies
 
 - **Total auditing**: test all copies of all documents in the collection.  This *auditing cycle* is usually repeated at regular intervals, such as annually, quarterly, monthly, etc.  
 
@@ -358,16 +356,16 @@ Common auditing strategies:
 
 - **Auditing by popularity**: divide the collection into sub-collections that represent varying levels of document usage, e.g., small sub-collections for the documents most frequently accessed, medium size sub-collections for documents of intermediate popularity, and large sub-collections for documents rarely accessed.  Permanent losses in the popular sub-collections would have much greater negative impact on the customer base.  To reduce the likelihood of such expensive losses, the more popular (small) sub-collections of the collection can be audited more frequently than the others with little increased cost in bandwidth and time.  
 
-Our simulations include tests of many auditing strategies, including total, segmented, and random.  Tests differed in cycle frequency and in the parts of the collection audited during each segment or cycle.  
+Our simulations tested many auditing strategies, including total, segmented, and random.  Tests differed in cycle frequency and in the parts of the collection audited during each segment or cycle.  
 
 - All tests occurred on regular schedules.  
 - Auditing cycles varied from monthly to biennially.  
 - Segment counts were either one, two, four, ten, or fifty (corresponding to annual, semi-annual, quarterly, monthly, or weekly audits).
-- Segments were chosen either systematically (the first quarter of the collection, the second quarter of the collection, etc.) or by uniform random selection with replacement.  (This needs investigation; it has not been tested lately and thus may effectively be NYI.)
+- Segments were chosen either systematically (the first quarter of the collection, the second quarter of the collection, etc.) or by uniform random selection with replacement.  
 
 --- 
 
-# observations
+# Observations
 
 ## large vs small collections (words)
 
