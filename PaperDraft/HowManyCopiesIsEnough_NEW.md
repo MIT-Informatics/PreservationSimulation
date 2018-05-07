@@ -28,112 +28,13 @@ padding-bottom: 3px;
 % How Many Copies Is Enough?  
 % Micah Altman; Richard Landau  
 % 2016-08-15  
-% Revised 2018-04-29 RBL
+% Revised 2018-04-30 RBL
 
 
 # Information Integrity Over the Long Term -- How Many Copies Is Enough?   {#title .unnumbered}
 
 #### Assessing Long-term Durability of Collections Through A Flexible, Replicable Simulation
 
-
-# OUTLINE
-
-- abstract
-- summary of specific recommendations
-- motivation
-- problem definition
-
-core risks
-
-- types and severity of threats
-- range of error rates, wide, what's plausible
-
-structure of the model
-
-- basic testing process
-- data representation, units and scales, half-lives, logs
-
-Simple and Complex Failures
-- simplest case: sector errors
-- similar case: glitches
-- complex case: shocks
-
-simple cost model
-
-auditing the document collection
-
-- why audit
-- simplest case: no auditing
-- less simple case: total auditing, random, by popularity
-- how many copies do we need with what auditing
-
-observations
-
-- large vs small collections (words)
-- large vs small documents (picture)
-- large vs small storage structures (words)
-- total auditing is essential (picture)
-- other types of auditing (words)
-- segmented total auditing slightly better (words)
-- auditing robust across a wide range of quality (picture)
-- finding dead servers (words)
-- sampling without and (random) with replacement
-
-recommendations
-
-for the collection owner
-
-- five copies with annual auditing
-- beware lack of independence
-- have a plan for associated server failures
-- be prepared with list of alternate storage vendors
-
-for the digital preservation commons
-
-- develop standards
-- share experience of reliability of cloud vendors
-- share experience on correlated failures
-
-supplemental material
-
-- details of model
-- simplifying assumptions and scaling, Poisson IID, metric years, partitioning of simulations, non-repairable documents
-- Poisson assumption, calibration tests
-- words about error rates
-- why did we choose this range of error rates
-- representation and scale of error rates, why half-life
-- relationship of MTBF to error rates
-- what is MTBF
-- the appearances of the graphs, x, y, logs, 1% line, where is zero
-- overview of software architecture
-- installation on AWS
-- how to model various scenarios
-- pointers to software how-to docs
-
-where to these fit?
-
-- limitations
-- long term bit rot
-- medium term if error rates are uncertain
-- specific types of threats: finance, billing, adversaries internal and external, HVAC, environment, software failures, admin errors, hardware batches, government censorship, economics
-- modeling associated failures, types and ranges
-- things not modeled
-- threat matrix
-- extensions
-- parameter value ranges
-- large vs small collections
-- large vs small documents
-- compression
-- encryption
-- format obsolescence
-- adversaries
-- parallel between strategy of less reliability + more auditing, RAID, ECC RAM, FAST, Hadoop
-- recommendations for more research, cost models, strong adversaries, erasure codes, lower bandwidth for auditing
-
-
-# END OF OUTLINE
-
----
 
 # OUTLINE WITH TEXT IN IT
 
@@ -145,30 +46,50 @@ where to these fit?
 
 > We develop a general event-based simulation framework that can be used to flexibly and reproducibly simulate the effectiveness of various methods of storage, replication, auditing, and transformation against a diverse portfolio of threats to data loss. We then apply this framework to a range of scenarios that are representative of common baseline threats and current storage technology. From this we derive general guidance for the use of replication, platform diversification, fixity metadata, integrity auditing, compression, and encryption where long-term integrity is desired. 
 
-- summary of specific recommendations
+- Summary Of Specific Recommendations
 <!-- START:TODO:MICAH -->
 
 TBS
 
 > Thou shalt keep multiple copies of thy documents.  
 
-> Thou shalt audit thy documents fully and regularly, and keep them healthy.
+> Thou shalt visit thy documents fully and regularly, and keep them healthy.
 
 > Thou shalt lovingly squeeze and compress thy documents, that they may be better protected from the elements.
 
-> Thou shalt cloak thy documents, if they be shy, in secret robes to keep them from prying eyes.
-
-> Thou shalt not attend disk dealers who bear false witness of their reliability.
+> Thou shalt not heed disk dealers who bear false witness of their reliability.  Rather, thou shalt heed the measurement of thine own experience and that of thy neighbors.  
 
 > Thou shalt respect and monitor the independence of thy vendors.
 
-> Thou shalt befriend more vendors than thou currently doth engage, for they may be friends in lean years of woe and hardship.  
+> Thou shalt be wary that vendors are ephemeral.  Therefore shalt thou befriend more vendors than thou currently doth engage, for they may be friends in lean years of woe and hardship.  
+
+> Thou shalt cloak thy documents, if they be shy, in secret robes to keep them from prying eyes.
 
 > Thou shalt engage with thy community to develop standards for the benefit of all.  
 
-> Thou shalt foresee unforeseen circumstances.  
+> Thou shalt insure against unforeseen circumstances that thou canst not control.  
+
+> Yonder nor sorghum stenches shoe dentine tension beep aide tooth is.  
  
 <!-- END:TODO:MICAH -->
+
+<!-- BEGIN:TODO:RICK -->
+TBS: NOTES
+
+- Anything mentioned in a commandment should have a pretty clear target section.  
+
+- Minimize the intro text to what is needed to understand the commandments so far.  Example need only sector errors to motivate multiple copies and auditing. Introduce other types of errors and auditing later.  
+
+- Thou shalt measure and share error rates found in your disk farms, your vendors, your auditing experience.  
+
+- Don't sweat the small stuff, glitches are covered  by protection over a wide range. 
+
+- Don't trust published stats; early in the list.   
+
+- Groups of commandments.
+
+
+<!-- END:TODO:RICK -->
 
 # Motivation
 
@@ -181,6 +102,8 @@ TBS
 - Curators are faced with a set of choices: storage media, replication, cloud vendors, auditing strategy, encryption, compression.  There is currently no systematic guidance based on quantitative models.
 
 # Problem Definition
+
+TBS
 
 - Maintain understanding of large digital collections over time.
 - Choose strategy for collection storage quality, replication, auditing, repair, formatting.
@@ -210,7 +133,116 @@ TBS
 
 ---
 
-# Structure of the Model
+# Basic Model and Some Implications
+
+## Very Quick Outline of the Model
+
+A *client* (library) has a *collection* of *documents* in digital form.  A copy of the collection of documents is stored on a *server* somewhere.  If the client maintains multiple copies of the collection of documents, the several copies are stored on separate servers.  Customers retrieve documents from the server(s) to read them.  An error may occur that corrupts a copy of a document or makes that copy inaccessible.  In this case, we consider the copy to be *lost*.  Other copies may still persist.  If all copies of a document are lost, then the document itself is permanently lost.  
+
+
+## The Simplest Case: Sector Errors
+
+### Process
+
+- An error in the storage corrupts a document sector.  Errors arrive randomly in a Poisson process.  A cosmic ray striking a disk or memory cell is a good model for this type of error.  
+- If the error occurs in a sector occupied by a copy of a document, that copy is corrupted.  For the purposes of this study, we consider the copy to be lost.  Manual repair by human inspection is not considered here.
+- Errors are silent, that is, no one notices an error until someone tries to read the document and discovers that it is lost.  
+
+### Implications
+
+Errors accumulate over time.  Every now and then an error will occur in storage and, if the error occurs in a region of storage occupied by a document, the error destroys a document.  The rate at which documents are lost depends of course on the quality of the storage.  But even if the rate of error accumulation is very low, over a long period of time, many documents will be lost.  
+
+A single copy of a collection will deteriorate as predicted by the Poisson distribution.  A collection with multiple copies will deteriorate more slowly, but predictably; and, eventually, all the copies of a single document will be lost.  Since no copy of the document is then retrievable, the document is permanently lost.  
+
+The table of **Exhibit XX** shows the expected rates of document errors, theoretical and simulated, over a wide range of storage error rates.  
+
+**Exhibit XX** shows the deterioration of collections with multiple copies over long periods of time.  
+
+
+## Maintaining the Document Collection
+
+### Auditing and Repairing
+
+Auditing the collection to test the validity of remote copies of documents can greatly reduce permanent document losses over time.  Without auditing and its attendant repair of damaged documents, minor errors will cause a stored collection to continue to decline over time with no barrier to extinction.  No number of redundant copies without auditing, certainly no *reasonable* number, will prevent significant document losses over a long period.  In addition, shocks to the system may cause servers to fail, thus reducing the actual number of active copies of a collection and accelerating further deterioration.  
+
+Auditing is essential to maintaining the health of a collection.  This is the method by which errors are detected and corrected.  Without auditing, errors tend to build up in a collection and eventually cause some permanent document losses, regardless of how many copies of the documents we keep.  We can think of the auditing process as health care for electronic documents: minor problems will be found and fixed before they cause permanent damage.  Of course, it will always be possible for unlikely juxtapositions of errors to cause a document to be lost, but regular auditing of a modest number of copies can minimize permanent losses.  
+
+The auditing process actively patrols for errors before they cause permanent document losses, and corrects them whenever possible.  In all cases, when a document copy is found to be absent (or corrupted), the auditing process attempts to replace the missing copy with a fresh copy obtained from another server.  If there is an intact copy on another server, then the missing copy is repaired and the process continues.  If there is no other intact copy, then the document is considered permanently lost.  
+
+**Exhibit XX** shows the dratic reduction in document losses when using regular auditing on collections with a modest number of copies.  
+
+The most basic strategy for auditing is *total auditing*.  This involved examining every copy of every document on a regular schedule, and effecting repairs where necessary (and possible).  
+
+A number of other strategies for auditing are possible, and some are measurably better than others.  Various strategies will be described and evaluated below.  
+
+
+## How Many Copies to Keep With Auditing
+
+Over a very wide range of storage quality conditions (storage error rates or sector half-lives), our experiments show that five copies with annual total auditing reduce document loss rates to negligible levels.  
+
+**Exhibit XX** compares the effect of number of audited copies and storage error rates on document loss rates.  
+
+
+## Document Size, Compression, Encryption
+
+What are the effects of compressing and/or encrypting documents?
+
+### Compression Reduces the Target Area of a Document
+
+A large document occupies more storage than a small document.  If errors are striking storage uniformly randomly, then a large document is proportionally a larger target.  This effect is verified empirically by our experiments.  
+
+The drawings in **Exhibit XX** illustrate the effect of randomly placed errors on documents of varying sizes.  
+
+**Exhibit XX** shows the increase in document losses for larger documents across a range of storage error rates.  
+
+The table of **Exhibit XX** shows the linear relationship between document size and storage error rate.  (Error rate is expressed as sector half-life, as explained below.)
+
+Lossless compression is benign for a variety of reasons.
+
+- As already mentioned, smaller documents are smaller targets for errors.  
+- Compression of document copies reduces storage costs.  This permits a client to employ more copies for redundancy without increasing the price.  
+- Smaller documents consume lower bandwidth for retrieval and editing, lowering egress charges from the storage vendor.  This makes the auditing process less expensive.
+- A possible drawback is that some methods of compression may require decompression software at client end for retrieval.
+
+
+### Encryption
+
+Encryption of documents may be required for secrecy, digital rights management, or other reasons.  If a document is encrypted after it has been compressed, the encryption generally does not impose an additional size burden on the document.  Thus encryption does not compromise the advantage gained by compression, though it does have some impact on potential document losses.  
+
+- An encrypted document is more fragile in the sense that it, if damaged by an error, it may not be recoverable even with extraordinary efforts.  (Contrast with text documents, still photo, video, and audio files.)
+- A collection of encrypted documents is more subject to large shocks, associated failures where multiple servers are immediately affected.  E.g., losing the encryption keys can cause all the copies on several servers to be irretrievable.  
+
+
+## What Level of Storage Quality is Reasonable?
+
+TBS
+
+### Don't Believe Manufacturers
+
+### Don't Believe Tricky Statistics
+
+### Do Believe the Experience of Others
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Details of the Structure of the Model
 
 Our preservation model includes a few very simple objects and operations.  
 
@@ -232,13 +264,7 @@ Our preservation model includes a few very simple objects and operations.
 
 (Format obsolescence is not an inherent part of this model, but forms of it may be modeled through extensions involving associated failure. See below.)
 
-## Simple and Complex Failures
-
-### Simplest Case: Sector Errors
-
-- An error in the storage corrupts a document sector.  Errors arrive randomly in a Poisson process.  A cosmic ray striking a disk or memory cell is a good model for this type of error.  
-- If the error occurs in a sector occupied by a copy of a document, that copy is corrupted.  For the purposes of this study, we consider the copy to be lost.  Manual repair by human inspection is not considered here.
-- Errors are silent, that is, no one notices an error until someone tries to read the document and discovers that it is lost.  
+## More Complex Failures
 
 ### Similar Case: Glitches
 
@@ -316,17 +342,6 @@ For Poisson processes (with exponential arrivals), the relationship of half-life
 
 ---
 
-# Auditing the Document Collection
-
-## Why Audit?
-
-Auditing the collection to test the validity of remote copies of documents can greatly reduce permanent document losses over time.  Without auditing and its attendant repair of damaged documents, minor errors will cause a stored collection to continue to decline over time with no barrier to extinction.  No number of redundant copies without auditing, certainly no *reasonable* number, will prevent significant document losses over a long period.  In addition, shocks to the system may cause servers to fail, thus reducing the actual number of active copies of a collection and accelerating further deterioration.  
-
-Auditing is essential to maintaining the health of a collection.  This is the method by which errors are detected and corrected.  Without auditing, errors tend to build up in a collection and eventually cause some permanent document losses, regardless of how many copies of the documents we keep.  We can think of the auditing process as health care for electronic documents: minor problems will be found and fixed before they cause permanent damage.  Of course, it will always be possible for unlikely juxtapositions of errors to cause a document to be lost, but regular auditing of a modest number of copies can minimize permanent losses.  
-
-The auditing process actively patrols for errors before they cause permanent document losses, and corrects them whenever possible.  In all cases, when a document copy is found to be absent (or corrupted), the auditing process attempts to replace the missing copy with a fresh copy obtained from another server.  If there is an intact copy on another server, then the missing document is repaired and the process continues.  If there is no other intact copy, then the document is considered permanently lost.  
-
-A number of strategies for auditing are possible, and some are measurably better than others.  
 
 ## Simplest Case: No Auditing
 
@@ -405,13 +420,13 @@ One minor note: using very large storage structures with small documents result 
 
 - *Observation*: Total auditing of the collection is highly effective at reducing document losses.  
 
-Exhibit XX shows unaudited document losses over long periods with large numbers of redundant copies.  
+**Exhibit XX** shows unaudited document losses over long periods with large numbers of redundant copies.  
 
 However, even a modest regimen of auditing and repair can minimize damage to a collection, across a huge range of server quality, long periods of time, and unpredictable adverse shock conditions.  
 
 - *Observation*: The effectiveness of auditing is robust across a wide spectrum of storage quality (i.e., document error rates) and short term variations in storage quality.  
 
-Exhibit XX shows how annual total auditing of a small number of copies can keep a collection healthy across a very wide range of server quality.  
+**Exhibit XX** shows how annual total auditing of a small number of copies can keep a collection healthy across a very wide range of server quality.  
 
 - However, auditing strategies may not be robust to severe associated failures that compromise multiple servers over short periods.  Associated server failures -- whether due to disasters, economic downturns, clerical errors, or lack of independence of servers -- can remove more than one server from service between audit cycles.  This reduces the number of active replications of the collection, leaving the collection more vulnerable to minor errors until it is repaired by auditing.  If severe shock conditions are anticipated, it may be necessary to increase slightly the number of redundant copies or the frequency of auditing of the collection.  
 
@@ -419,7 +434,7 @@ Exhibit XX shows how annual total auditing of a small number of copies can keep 
 
 - *Observation*: Random auditing, where segment contents are selected with replacement, is less effective than total auditing or, equivalently, segmented auditing *without* replacement.  Selection of documents randomly *with replacement* will inevitably miss some documents entirely while sampling others more often than needed.  
 
-Exhibit XX shows the higher loss rates for collections audited randomly with replacement as opposed to total auditing.  
+**Exhibit XX** shows the higher loss rates for collections audited randomly with replacement as opposed to total auditing.  
 
 ## Segmented Total Auditing Slightly Better 
 
