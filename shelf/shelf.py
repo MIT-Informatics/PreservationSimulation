@@ -2,7 +2,7 @@
 # shelf.py
 
 import  simpy
-from    NewTraceFac     import  TRC, trace, tracef, NTRC, ntrace, ntracef
+from    NewTraceFac     import  NTRC, ntrace, ntracef
 import  itertools
 from    globaldata      import  G
 from    math            import  exp, log
@@ -21,7 +21,7 @@ from    lifetime        import  CLifetime, fnlGetGlitchParams
 class CShelf(object):
     getID = itertools.count(1).next
 
-    @tracef("SHLF")
+    @ntracef("SHLF")
     def __init__(self,mysServerID,mynQual,mynCapacity):
         self.ID = "H" + ("%02d" % self.getID())
         G.nShelfLastID = self.ID
@@ -79,7 +79,7 @@ class CShelf(object):
 
 # S h e l f . m A c c e p t D o c u m e n t 
     @catchex
-    @tracef("SHLF")
+    @ntracef("SHLF")
     def mAcceptDocument(self, mysDocID, mynDocSize, mysClientID):
         ''' If the shelf and the server are still alive and 
             there is room on the shelf, then add the document 
@@ -98,7 +98,7 @@ class CShelf(object):
 
 # S h e l f . m A d d D o c u m e n t 
     @catchex
-    @tracef("SHLF")
+    @ntracef("SHLF")
     def mAddDocument(self, mysDocID, mysClientID):
         ''' Add a document to this shelf and record some information
             in the document itself.
@@ -112,7 +112,7 @@ class CShelf(object):
         # Make a copy of the document and shelve that.  
         cCopy = CCopy(mysDocID, mysClientID, self.sServerID)
         sCopyID = cCopy.ID
-        TRC.tracef(3,"SHLF","proc mAddDocument made copy|%s| of doc|%s| "
+        NTRC.tracef(3,"SHLF","proc mAddDocument made copy|%s| of doc|%s| "
             "from client|%s|" 
             % (sCopyID, mysDocID, mysClientID))
 
@@ -135,7 +135,7 @@ class CShelf(object):
         self.lCopyTops.append(nBlkEnd)
 
         cDoc.mCopyPlacedOnServer(sCopyID, self.sServerID)
-        TRC.tracef(5,"SHLF","proc mAddDocument add doc|%s| to shelf|%s| "
+        NTRC.tracef(5,"SHLF","proc mAddDocument add doc|%s| to shelf|%s| "
             "size|%d| remaining|%d|" 
             % (mysDocID,self.ID,nSize,self.nFreeSpace))
         
@@ -146,7 +146,7 @@ class CShelf(object):
 
 # S h e l f . m A g e _ s e c t o r 
     @catchex
-    @tracef("SHLF")
+    @ntracef("SHLF")
     def mAge_sector(self):
         ''' A sector in the shelf fails.  This corrupts a document.
             For the moment, assume that it destroys the document.  
@@ -164,7 +164,7 @@ class CShelf(object):
             cLifetime = G.dID2Lifetime[self.sSectorLifetimeID]
             fLifetimeNow = cLifetime.mfCalcCurrentSectorLifetime(fNow)
             fSectorLifeInterval = util.makeexpo(fLifetimeNow)
-            TRC.tracef(3, "SHLF", "proc mAge_sector time|%d| shelf|%s| "
+            NTRC.tracef(3, "SHLF", "proc mAge_sector time|%d| shelf|%s| "
                 "next interval|%.3f|hr from life rate|%.3f|hr" 
                 % (G.env.now, self.ID, fSectorLifeInterval, fLifetimeNow))
             yield G.env.timeout(fSectorLifeInterval)
@@ -172,7 +172,7 @@ class CShelf(object):
             # S E C T O R  E R R O R
             self.nSectorHits += 1
             G.nTimeLastEvent = G.env.now
-            TRC.tracef(3, "SHLF", "proc mAge_sector time|%d| shelf|%s| "
+            NTRC.tracef(3, "SHLF", "proc mAge_sector time|%d| shelf|%s| "
                 "Sector_error hits|%d| emptyhits|%d|" 
                 % (G.env.now, self.ID, self.nSectorHits, self.nEmptySectorHits))
 
@@ -202,14 +202,14 @@ class CShelf(object):
                 lg.logInfo("SERVER", "small error t|%6.0f| svr|%s| "
                     "shelf|%s| hidden failure in copy|%s| doc|%s|" 
                     % (G.env.now,self.sServerID,self.ID,sCopyVictimID,sDocID))
-                TRC.tracef(3, "FAIL", "proc t|%d| sector failure server|%s| "
+                NTRC.tracef(3, "FAIL", "proc t|%d| sector failure server|%s| "
                     "qual|%d| shelf|%s| doc|%s| copy|%s|" 
                     % (G.env.now, self.sServerID, 
                     G.dID2Server[self.sServerID].nQual, self.ID, sDocID, 
                     sCopyVictimID))
             else:                           # No victim, hit empty space.
                 self.nEmptySectorHits += 1
-                TRC.tracef(3, "SHLF", "proc mAge_sector shelf|%s| "
+                NTRC.tracef(3, "SHLF", "proc mAge_sector shelf|%s| "
                     "sector error fell in empty space" 
                     % (self.ID))
                 if self.nConsecutiveMisses == 0:
@@ -217,7 +217,7 @@ class CShelf(object):
                         "shelf|%s| hidden failure in copy|%s|" 
                         % (G.env.now, self.sServerID, self.ID, sCopyVictimID))
                 self.nConsecutiveMisses += 1
-                TRC.tracef(3, "FAIL", "proc t|%d| sector failure server|%s| "
+                NTRC.tracef(3, "FAIL", "proc t|%d| sector failure server|%s| "
                     "qual|%d| shelf|%s| copy|%s|" 
                     % (G.env.now, self.sServerID, 
                     G.dID2Server[self.sServerID].nQual, self.ID, sCopyVictimID))
@@ -232,7 +232,7 @@ class CShelf(object):
 
 # S h e l f . m S e l e c t V i c t i m C o p y  
     @catchex
-    @tracef("SHLF")
+    @ntracef("SHLF")
     def mSelectVictimCopy(self, mynErrorSize):
         ''' Which doc copy on this shelf, if any, was hit by this error?
             Throw a uniform dart at all the docs on the shelf, see 
@@ -240,7 +240,7 @@ class CShelf(object):
         '''
         nRandomSpot = util.makeunif(1, self.nCapacity + mynErrorSize - 1)
         nLoc = 0
-        TRC.tracef(5, "SHLF", "proc SelectVictimCopy0 wherehit spot|%s| "
+        NTRC.tracef(5, "SHLF", "proc SelectVictimCopy0 wherehit spot|%s| "
             "hiwater|%s|  shelfid|%s| capacity|%s|" 
             % (nRandomSpot,self.nHiWater,self.ID,self.nCapacity))
         # First, check to see if the failure is maybe in an occupied region.  
@@ -253,7 +253,7 @@ class CShelf(object):
             nLen = len(self.lCopyIDsComplete)
             nDist = (nLen + 1) / 2
             nLoc = nDist
-            TRC.tracef(5, "SHLF", "proc SelectVictimCopy0 searchsetup len|%s| "
+            NTRC.tracef(5, "SHLF", "proc SelectVictimCopy0 searchsetup len|%s| "
                 "loc|%s| dist|%s|" 
                 % (nLen, nLoc, nDist))
             while 1:
@@ -272,14 +272,14 @@ class CShelf(object):
                     # Lower than top, look down.
                     if nRandomSpot >= nBottom:
                         # Found to left of nLoc.  
-                        TRC.tracef(5, "SHLF", "proc SelectVictimCopy5D "
+                        NTRC.tracef(5, "SHLF", "proc SelectVictimCopy5D "
                             "found victim id|%s| at spot|%s| in[%s,%s]| " 
                             "doc|%s|" 
                             % (sCopyID, nRandomSpot, nBottom, nTop, sDocID))
                         # Is this slot still occupied by a live copy?
                         if sCopyID in self.lCopyIDs:
                             sVictimID = sCopyID
-                            TRC.tracef(3, "SHLF", "proc mSelectVictimCopy "
+                            NTRC.tracef(3, "SHLF", "proc mSelectVictimCopy "
                                 "NEWD end shelf|%s| spot|%d| hits doc|%s| "
                                 "placed[%d,%d] size|%d| outof|%d|" 
                                 % (self.ID, nRandomSpot, sVictimID, 
@@ -288,14 +288,14 @@ class CShelf(object):
                                 self.nCapacity))
                         else:
                             sVictimID = None
-                            TRC.tracef(5, "SHLF", "proc SelectVictimCopy2D "
+                            NTRC.tracef(5, "SHLF", "proc SelectVictimCopy2D "
                                 "no longer valid copyid|%s| docid|%s|" 
                                 % (sCopyID, sDocID))
                             self.nMultipleHits += 1
                         break
                     else:
                         nLoc -= nDist
-                        TRC.tracef(5, "SHLF", "proc SelectVictimCopy3D "
+                        NTRC.tracef(5, "SHLF", "proc SelectVictimCopy3D "
                             "down spot|%s| intvl|[%s,%s| newloc|%s| newdist|%s|" 
                             % (nRandomSpot, nBottom, nTop, nLoc, nDist))
                 else:
@@ -309,13 +309,13 @@ class CShelf(object):
                         cCopy = G.dID2Copy[sCopyID]
                         nBottom = self.lCopyTops[nLoc+1-1]
                         sCopyID = self.lCopyIDsComplete[nLoc+1-1]
-                        TRC.tracef(5, "SHLF", "proc SelectVictimCopy5U "
+                        NTRC.tracef(5, "SHLF", "proc SelectVictimCopy5U "
                             "found victim id|%s| at spot|%s| in[%s,%s]| doc|%s|" 
                             % (sCopyID, nRandomSpot, nBottom, nTop, sDocID))
                         # Is this slot still occupied by a live copy?
                         if sCopyID in self.lCopyIDs:
                             sVictimID = sCopyID
-                            TRC.tracef(3, "SHLF", "proc mSelectVictimCopy NEWU "
+                            NTRC.tracef(3, "SHLF", "proc mSelectVictimCopy NEWU "
                                 "end shelf|%s| spot|%d| hits doc|%s| "
                                 "placed[%d,%d] size|%d| outof|%d|" 
                                 % (self.ID, nRandomSpot, sVictimID, 
@@ -324,19 +324,19 @@ class CShelf(object):
                                 self.nCapacity))
                         else:
                             sVictimID = None
-                            TRC.tracef(5, "SHLF", "proc SelectVictimCopy2U "
+                            NTRC.tracef(5, "SHLF", "proc SelectVictimCopy2U "
                                 "no longer valid copyid|%s| docid|%s|" 
                                 % (sCopyID, sDocID))
                             self.nMultipleHits += 1
                         break
                     else:
                         nLoc += nDist
-                        TRC.tracef(5, "SHLF", "proc SelectVictimCopy3U up   "
+                        NTRC.tracef(5, "SHLF", "proc SelectVictimCopy3U up   "
                             "spot|%s| intvl|[%s,%s| newloc|%s| newdist|%s|" 
                             % (nRandomSpot, nBottom, nTop, nLoc, nDist))
 
         else:   # Outside hiwater area, just count as a miss.
-            TRC.tracef(3, "SHLF", "proc mSelectVictimCopy shelf|%s| spot|%d| "
+            NTRC.tracef(3, "SHLF", "proc mSelectVictimCopy shelf|%s| spot|%d| "
                 "above hiwater|%s| empty" 
                 % (self.ID, nRandomSpot, self.nHiWater))
             sVictimID = None
@@ -345,12 +345,12 @@ class CShelf(object):
 
 # S h e l f . m D e s t r o y C o p y  
     @catchex
-    @tracef("SHLF",level=3)
+    @ntracef("SHLF",level=3)
     def mDestroyCopy(self,mysCopyID):
         try:
             nCopyIndex = self.lCopyIDs.index(mysCopyID)
         except ValueError:
-            TRC.tracef(0, "SHLF", "BUGCHECK copyID not found for removal|%s|" 
+            NTRC.tracef(0, "SHLF", "BUGCHECK copyID not found for removal|%s|" 
                 % (mysCopyID))
             return False
         # Remove doc and copy from current lists.  
@@ -367,7 +367,7 @@ class CShelf(object):
         # BZZZT: DO NOT put this region back into use.  It has already 
         # suffered an error once and caused a document to fail.  
         #self.nFreeSpace += cDoc.nSize
-        TRC.tracef(3, "SHLF", "proc mDestroyCopy remove doc|%s| copy|%s| "
+        NTRC.tracef(3, "SHLF", "proc mDestroyCopy remove doc|%s| copy|%s| "
             "idx|%d| size|%d| from shelf|%s| remainingdocs|%d| free|%d|" 
             % (cCopy.sDocID, mysCopyID, nCopyIndex, cDoc.nSize, self.ID, 
             len(self.lCopyIDs), self.nFreeSpace))
@@ -377,14 +377,14 @@ class CShelf(object):
 
 # S h e l f . m A g e _ s h e l f 
 # BZZZT: This isn't used anymore.  We now model server failures with glitches.
-    @tracef("SHLF",level=3)
+    @ntracef("SHLF",level=3)
     def mAge_shelf(self, mynLifeParam):
         ''' An entire shelf fails.  Remove all the docs it contained.
             Eventually, this will trigger a repair event and make the 
             collection more vulnerable during the repair.  
         '''
         fShelfLife = util.makeexpo(mynLifeParam)
-        TRC.tracef(3, "SHLF", "proc mAge_shelf  time|%d| shelf|%s| "
+        NTRC.tracef(3, "SHLF", "proc mAge_shelf  time|%d| shelf|%s| "
             "next lifetime|%.3f|khr" 
             % (G.env.now,self.ID,fShelfLife))
         yield G.env.timeout(fShelfLife)
@@ -392,13 +392,13 @@ class CShelf(object):
         # S H E L F  F A I L S 
         G.nTimeLastEvent = G.env.now
         self.bAlive = False         # Shelf can no longer be used to store docs.
-        TRC.tracef(3, "SHLF", "proc mAge_shelf  time|%d| shelf|%s| shelf_error" 
+        NTRC.tracef(3, "SHLF", "proc mAge_shelf  time|%d| shelf|%s| shelf_error" 
             % (G.env.now,self.ID))
         lg.logInfo("SERVER", "storage shelf failed time|%6q.0f| server|%s| "
             "shelf|%s| lost |%d| docs" 
             % (G.env.now,self.sServerID,self.ID,len(self.lCopyIDs)))
         # This whole shelf is a goner.  Kill it. 
-        TRC.tracef(5, "SHLF", "proc mAge_shelf kill contents ldocs|%s| "
+        NTRC.tracef(5, "SHLF", "proc mAge_shelf kill contents ldocs|%s| "
             "lcopies|%s|" 
             % (self.lDocIDs,self.lCopyIDs)) 
         # Note that we have to copy the list before modifying it and 
@@ -410,7 +410,7 @@ class CShelf(object):
             self.mDestroyCopy(sCopyID)
             G.dID2Server[self.sServerID].mDestroyDocument(sDocID,self.ID)
             self.mReportDocumentLost(sDocID)
-        TRC.tracef(3, "FAIL", "proc t|%d| shelf failure server|%s| qual|%d| "
+        NTRC.tracef(3, "FAIL", "proc t|%d| shelf failure server|%s| qual|%d| "
             "shelf|%s| docs|%d|" 
             % (G.env.now, self.sServerID, G.dID2Server[self.sServerID].nQual, 
             self.ID,len(templCopyIDs)))
@@ -423,13 +423,13 @@ class CShelf(object):
 
 # S h e l f . m I s S h e l f A l i v e 
     @catchex
-    @tracef("SHLF")
+    @ntracef("SHLF")
     def mbIsShelfAlive(self):
         return self.bAlive
 
 # S h e l f . m R e p o r t D o c u m e n t L o s t 
     @catchex
-    @tracef("SHLF")
+    @ntracef("SHLF")
     def mReportDocumentLost(self,mysDocID):
         cDoc = G.dID2Document[mysDocID]
         sClientID = cDoc.sClientID
@@ -439,7 +439,7 @@ class CShelf(object):
 
 # S h e l f . m R e p o r t U s e S t a t s 
     @catchex
-    @tracef("SHLF")
+    @ntracef("SHLF")
     def mReportUseStats(self):
         ''' Return ID,server ID,quality,capacity,high water mark,currently used
         '''
@@ -449,7 +449,7 @@ class CShelf(object):
 
 # S h e l f . m R e p o r t E r r o r S t a t s 
     @catchex
-    @tracef("SHLF")
+    @ntracef("SHLF")
     def mReportErrorStats(self):
         ''' 
         Return ID,server ID,quality,sector hits,empty sector hits,alive flag
@@ -468,12 +468,12 @@ class CShelf(object):
 
 # S h e l f . m D e s t r o y S h e l f 
     @catchex
-    @tracef("SHLF")
+    @ntracef("SHLF")
     def mDestroyShelf(self):
         ''' Nuke all the copies on the shelf.  
             Can't delete the CShelf object, however.
         '''
-        NTRC.ntracef(3, "SHLF", "proc mDestroyShelf1 shelf|%s| "
+        NNTRC.ntracef(3, "SHLF", "proc mDestroyShelf1 shelf|%s| "
             "has ncopies|%s|" 
             % (self.ID, len(self.lCopyIDs)))
         lg.logInfo("SHELF ", "t|%6.0f| destroy shelf|%s| "
@@ -487,7 +487,7 @@ class CShelf(object):
 
 # Shelf.mCorrFailHappensToMe
     @catchex
-    @tracef("SHLF")
+    @ntracef("SHLF")
     def mCorrFailHappensToMe(self):
         cLifetime = G.dID2Lifetime[self.sSectorLifetimeID]
         cLifetime.mCorrFailHappensToMe()
@@ -502,6 +502,8 @@ class CShelf(object):
 # 20170102  RBL Add routine to kill shelf and empty it of doc copies. 
 #               Add logging for several shelf-death events.   
 #               PEP8-ify most of the trace/log and comment lines.  
+# 20180516  RBL Update to use ntrace, ntracef, NTRC.
+# 
 # 
 
 #END

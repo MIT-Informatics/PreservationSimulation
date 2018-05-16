@@ -22,11 +22,11 @@ from sys            import argv
 from os             import popen
 from time           import localtime, sleep
 import re
-from NewTraceFac    import TRC,trace,tracef
+from NewTraceFac    import NTRC,ntrace,ntracef
 import argparse
 
 # C l i P a r s e 
-@tracef("CLI")
+@ntracef("CLI")
 def fndCliParse(mysArglist):
     ''' Parse the mandatory and optional positional arguments, and the 
         many options for this run from the command line.  
@@ -92,7 +92,7 @@ class CCommand(object):
     using a regular expression supplied by the caller.  
     '''
 
-    @trace
+    @ntrace
     def doCmdStr(self,mysCommand):
         ''' Return concatenated string of result lines with newlines stripped.  
         '''
@@ -101,7 +101,7 @@ class CCommand(object):
             sResult += sLine.strip()
         return sResult
         
-    @trace
+    @ntrace
     def doCmdLst(self,mysCommand):
         ''' Return list of result lines with newlines stripped.  
         '''
@@ -110,7 +110,7 @@ class CCommand(object):
             lResult.append(sLine.strip())
         return lResult
         
-    @trace
+    @ntrace
     def doParse(self,mysCommand,mysRegex):
         sOutput = self.doCmd(mysCommand)
         mCheck = search(mysRegex,sOutput)
@@ -120,7 +120,7 @@ class CCommand(object):
             sResult = None
         return sResult
 
-    @trace
+    @ntrace
     def makeCmd(self,mysCmd,mydArgs):
         ''' Substitute arguments into command template string.  
         '''
@@ -128,7 +128,7 @@ class CCommand(object):
         return sCmd
 
 # f n d P a r s e I n p u t 
-@trace
+@ntrace
 def fndParseInput(mysFilename):
     ''' Return tuple containing
         - the command template string, 
@@ -142,10 +142,10 @@ def fndParseInput(mysFilename):
         for sLine in lLines[:]:
             if re.match("^ *#",sLine) or re.match("^ *$",sLine.rstrip()):
                 lLines.remove(sLine)
-                TRC.trace(3,"proc ParseInput remove comment or blank line |%s|" % (sLine.strip()))
+                NTRC.trace(3,"proc ParseInput remove comment or blank line |%s|" % (sLine.strip()))
         # The first non-blank, non-comment line is the command template.
         sCmd = lLines.pop(0).strip()
-        TRC.trace(3,"proc ParseInput command line|%s|" % (sCmd))
+        NTRC.trace(3,"proc ParseInput command line|%s|" % (sCmd))
         # Now get the CSV args into a list of dictionaries.
         lRowDicts = csv.DictReader(lLines)
         for dRow in lRowDicts:
@@ -165,7 +165,7 @@ def fndParseInput(mysFilename):
                     dNewRow[fnIntPlease(xKey)] = fnIntPlease(sValue)
             # Put it back into a list, in order.
             lParams.append(dNewRow)
-            TRC.trace(5,"proc fndParseInput dRow|%s| dNewRow|%s| lParams|%s|" % (dRow,dNewRow,lParams))
+            NTRC.trace(5,"proc fndParseInput dRow|%s| dNewRow|%s| lParams|%s|" % (dRow,dNewRow,lParams))
     return (sCmd,lParams)
 
 # C G   c l a s s   f o r   g l o b a l   d a t a 
@@ -180,7 +180,7 @@ class CG(object):
     nPoliteTimer = 5
 
 # f n M a y b e O v e r r i d e 
-@trace
+@ntrace
 def fnMaybeOverride(mysCliArg,mydDict,mycClass):
     ''' Strange function to override a property in a global dictionary
         if there is a version in the command line dictionary.  
@@ -194,7 +194,7 @@ def fnMaybeOverride(mysCliArg,mydDict,mycClass):
     return getattr(mycClass,mysCliArg,"XXXXX")
 
 # f n W a i t F o r O p e n i n g 
-@trace
+@ntrace
 def fnWaitForOpening(mynProcessMax,mysProcessName,mynWaitTime,mynWaitLimit):
     ''' Wait for a small, civilized number of processes to be running.  
         If the number is too large, wait a while and look again.  
@@ -213,10 +213,10 @@ def fnWaitForOpening(mynProcessMax,mysProcessName,mynWaitTime,mynWaitLimit):
         sFullCmd = cCmd.makeCmd(sCmd,dParams)
         sResult = cCmd.doCmdStr(sFullCmd)
         nResult = int(sResult)
-        TRC.trace(3,"proc WaitForOpening1 idx|%d| cmd|%s| result|%s|" % (idx,sFullCmd,sResult))
+        NTRC.trace(3,"proc WaitForOpening1 idx|%d| cmd|%s| result|%s|" % (idx,sFullCmd,sResult))
         if nResult < mynProcessMax + 1 if (mysProcessName.find("python") >= 0) else 0:
             break
-        TRC.trace(3,"proc WaitForOpening2 sleep and do again idx|%d| nResult|%d|" % (idx,nResult))
+        NTRC.trace(3,"proc WaitForOpening2 sleep and do again idx|%d| nResult|%d|" % (idx,nResult))
         sleep(mynWaitTime)
     return (idx < mynWaitLimit-1)
 
@@ -234,7 +234,7 @@ process:
 '''
 
 # M A I N 
-@trace
+@ntrace
 def main():
     g = CG()                # One instance of the global data.
     
@@ -261,15 +261,15 @@ def main():
             sFullCmd = cCommand.makeCmd(sCommand,dParams)
             # Print something to let the user know there is progress.
             print '-----------------'
-            TRC.trace(0,sFullCmd)
+            NTRC.trace(0,sFullCmd)
             print '-----------------'
             lResult = cCommand.doCmdLst(sFullCmd)
             for sResult in lResult:
-                TRC.trace(0,sResult)
+                NTRC.trace(0,sResult)
             print '-----------------'
             sleep(g.nPoliteTimer)
         else:
-            TRC.trace(0,"OOPS, Stuck!  Too many python processes running forever.")
+            NTRC.trace(0,"OOPS, Stuck!  Too many python processes running forever.")
             break
 
 # E n t r y   p o i n t . 

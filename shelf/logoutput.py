@@ -17,23 +17,23 @@
 '''
 
 import logging
-from NewTraceFac import TRC,trace,tracef
+from NewTraceFac import NTRC,ntrace,ntracef
 from globaldata import G
 
 # Create a single logger instance for use all over the place.
 # Necessary because we use the same formatter and handler across modules.  
 logger = logging.getLogger("LGOU")
     
-@tracef("LGOU")
+@ntracef("LGOU")
 def logSetConfig(mysLogLevel,mysLogFile):
     lLogLevels = 'NOTSET CRITICAL ERROR WARNING INFO DEBUG'.split()
     sLogLevel = mysLogLevel.upper()
     if sLogLevel not in lLogLevels:
-        TRC.tracef(0,"LGOU","ERROR unrecognized logging level|%s|" % (mysLogLevel))
+        NTRC.tracef(0,"LGOU","ERROR unrecognized logging level|%s|" % (mysLogLevel))
         sLogLevel = "NOTSET"
 
     # Set the logging level for this session.
-    TRC.tracef(3,"LGOU","proc sLogLevel|%s|"%(sLogLevel))
+    NTRC.tracef(3,"LGOU","proc sLogLevel|%s|"%(sLogLevel))
     logger.setLevel(sLogLevel.upper())
 
     ''' Set the output file for logging.
@@ -49,7 +49,7 @@ def logSetConfig(mysLogLevel,mysLogFile):
         channel = logging.FileHandler(mysLogFile)
     else:
         channel = logging.StreamHandler()
-    TRC.tracef(3,"LGOU","proc set log handler mysLogFile|%s|" % (mysLogFile))
+    NTRC.tracef(3,"LGOU","proc set log handler mysLogFile|%s|" % (mysLogFile))
 
     ''' Adjust the format of log output to match the time stamps
         we have used in TRACE forever.  

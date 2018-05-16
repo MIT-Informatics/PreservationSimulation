@@ -51,42 +51,69 @@ padding-bottom: 3px;
 
 TBS
 
-> Thou shalt keep multiple copies of thy documents.  
+i. Thou shalt keep multiple copies of thy documents.  
 
-> Thou shalt visit thy documents fully and regularly, and keep them healthy.
+i. Thou shalt visit thy documents fully and regularly, and keep them healthy.
 
-> Thou shalt lovingly squeeze and compress thy documents, that they may be better protected from the elements.
+i. Thou shalt lovingly squeeze and compress thy documents, that they may be better protected from the elements.
 
-> Thou shalt not heed disk dealers who bear false witness of their reliability.  Rather, thou shalt heed the measurement of thine own experience and that of thy neighbors.  
+i. Thou shalt not heed disk dealers who bear false witness of their reliability.  Rather, thou shalt heed the measurement of thine own experience and that of thy neighbors.  
 
-> Thou shalt respect and monitor the independence of thy vendors.
+i. Thou shalt respect and monitor the independence of thy vendors.
 
-> Thou shalt be wary that vendors are ephemeral.  Therefore shalt thou befriend more vendors than thou currently doth engage, for they may be friends in lean years of woe and hardship.  
+i. Thou shalt be wary that vendors are ephemeral.  Therefore shalt thou befriend more vendors than thou currently doth engage, for they may be friends in lean years of woe and hardship.  
 
-> Thou shalt cloak thy documents, if they be shy, in secret robes to keep them from prying eyes.
+i. Thou shalt cloak thy documents, if they be shy, in secret robes to keep them from prying eyes.
 
-> Thou shalt engage with thy community to develop standards for the benefit of all.  
+i. Thou shalt engage with thy community to develop standards for the benefit of all.  
 
-> Thou shalt insure against unforeseen circumstances that thou canst not control.  
+i. Thou shalt insure against unforeseen circumstances that thou canst not control.  
 
-> Yonder nor sorghum stenches shoe dentine tension beep aide tooth is.  
+i. Yonder nor sorghum stenches shoe dentine tension beep aide tooth is.  
  
 <!-- END:TODO:MICAH -->
 
 <!-- BEGIN:TODO:RICK -->
 TBS: NOTES
 
-- Anything mentioned in a commandment should have a pretty clear target section.  
+- ref cmdmts in the recommendation paras.  have to number the commandments to do this.  
 
-- Minimize the intro text to what is needed to understand the commandments so far.  Example need only sector errors to motivate multiple copies and auditing. Introduce other types of errors and auditing later.  
+- multiple copies deteriorate unless you take action to repair errors.  how do you make repairs?  first, find them by auditing. 
 
-- Thou shalt measure and share error rates found in your disk farms, your vendors, your auditing experience.  
+- Be clearer about transition to multiple copies and auditing.  
+visit = audit, 
+multiple copies = multiple copies
+
+- trust but verify = audit
+
+- wide range described briefly here, more below
+either right before or right after.  
+how did we get this range
+
+- long period = what? 
+100 yrs will always lose some docs;
+10 years reasonable horizon for known technologies, who knows what will be invented in the meantime.  but if error rates don't change much, the same metrics apply.  
+
+- mfrs error rates are probably (?) per the service lifetime of the disk.  
+only if we read the bits or all bits?  
+suppose the 10E-14 refers to over service period, e.g., 3 yrs.  
+where is the high end of the of the sector halflife range?  
+
+- need a way to rule out one copy on a really good disk.
+
+- 2-3% of disks fail every year.  what does this say about sector error rate?  
+
+- suppose we had two copies on the best disks we can find and migrate them within the service period.  
+
+- justify if possible the choice of megabyte sectors and the range?  maybe a disk is just a 10tb sector and fails at one time; well oops does not fit the current model where sector is part of a single document
+
+
+
+
+
+
 
 - Don't sweat the small stuff, glitches are covered  by protection over a wide range. 
-
-- Don't trust published stats; early in the list.   
-
-- Groups of commandments.
 
 
 <!-- END:TODO:RICK -->
@@ -217,7 +244,7 @@ Encryption of documents may be required for secrecy, digital rights management, 
 
 TBS
 
-### Don't Believe Manufacturers
+### Don't Believe Manufacturers or Cloud Vendors
 
 ### Don't Believe Tricky Statistics
 

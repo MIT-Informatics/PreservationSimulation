@@ -93,8 +93,10 @@ DONE - generate the HTML from the instruction db.  not simple.
 
 
 TODO: newtrace
+DONE - update all trace calls to ntrace and NTRC.  confusing to read 
+    debug traces with two different styles of self.
 FIXME - write unit tests for all common cases.  
-FIXME - update to run under python2 and python3.
+DONE - update to run under python2 and python3.
 DONE - make new ntrace, ntracef the default inner routines for efficiency.  
 MAYBE - for trace level zero, do not check facility codes.
 DONE - do null version of trace decorators for production use

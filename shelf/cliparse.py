@@ -6,10 +6,10 @@
 
 sVersion = "0.0.11"
 import argparse
-from NewTraceFac import TRC,trace,tracef
+from NewTraceFac import NTRC,ntrace,ntracef
 
 
-@tracef("CLI")
+@ntracef("CLI")
 def fndCliParse(mysArglist):
     ''' \
     Parse the mandatory and optional positional arguments, and the 
@@ -276,6 +276,7 @@ def fndCliParse(mysArglist):
 #               Fix up some 80-character-ness.
 # 20161215  RBL Add maxlife to shock.  
 #               Add defaultlife to server.
+# 20180516  RBL Update to ntrace, ntracef, NTRC.
 # 
 # 
 

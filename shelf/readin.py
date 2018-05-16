@@ -7,7 +7,7 @@ Read the parameter files into dictionaries.
 
 import csv
 from globaldata import *
-from NewTraceFac import TRC,ntrace,ntracef
+from NewTraceFac import NTRC,ntrace,ntracef
 from util import fnIntPlease
 import re
 
@@ -83,7 +83,7 @@ def fdGetParams(mysFile,mylGuide):
         fh = open(mysFile,"r")
         fh.close()
     except (ValueError, IOError):
-        TRC.ntracef(3,"READ","proc fdGetParams1 file not found |%s|" % (mysFile))
+        NTRC.ntracef(3,"READ","proc fdGetParams1 file not found |%s|" % (mysFile))
         dParams = None
 
     # If there is such a file, then parse it and return its dictionary.
@@ -98,7 +98,7 @@ def fdGetParams(mysFile,mylGuide):
                 if re.match("^ *#",sLine) \
                 or re.match("^ *$",sLine.rstrip()):
                     lLines.remove(sLine)
-                    TRC.ntracef(3,"READ","proc fdGetParams3 remove comment or blank line |%s|" % (sLine.strip()))
+                    NTRC.ntracef(3,"READ","proc fdGetParams3 remove comment or blank line |%s|" % (sLine.strip()))
             # Now get the CSV args into a list of dictionaries.
             lRowDicts = csv.DictReader(lLines)
             for dRow in lRowDicts:
@@ -115,7 +115,7 @@ def fdGetParams(mysFile,mylGuide):
                     # Many of the values might be ints.
                     lVal.append(dNewRow[sCol])
                 dParams[intKey].append(lVal)
-                TRC.ntracef(5,"READ","proc fdGetParams2 mylGuide|%s|dRow|%s|intKey|%s|lVal|%s|dParams|%s|" % (mylGuide,dRow,intKey,lVal,dParams))
+                NTRC.ntracef(5,"READ","proc fdGetParams2 mylGuide|%s|dRow|%s|intKey|%s|lVal|%s|dParams|%s|" % (mylGuide,dRow,intKey,lVal,dParams))
     return dParams
 
 # END

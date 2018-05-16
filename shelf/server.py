@@ -2,7 +2,7 @@
 # server.py
 
 import  simpy
-from    NewTraceFac     import  TRC, trace, tracef, NTRC, ntrace, ntracef
+from    NewTraceFac     import  NTRC, ntrace, ntracef
 import  itertools
 from    globaldata      import  G
 from    math            import  exp, log
@@ -33,7 +33,7 @@ class CServer(object):
         self.lDocIDs = list()       # Docs that still live in this server.
         self.dDocIDs = dict()       # Dictionary version of alive doc IDs, 
                                     #  for faster checking.
-        self.lDocIDsComplete = list()   # All docs that were ever in this server.
+        self.lDocIDsComplete = list()  # All docs that were ever in this server.
         self.mListServer()
         G.nServerLastID = self.ID
         self.sClientID = None
@@ -236,8 +236,8 @@ class CServer(object):
             self.bInUse = True
             self.lDocIDs.append(mysDocID)
             self.dDocIDs[mysDocID] = mysClientID
-            TRC.tracef(3, "SERV", "proc mAddDocument serv|%s| id|%s| docid|%s| "
-                "size|%s| assigned to shelfid|%s| remaining|%s|" 
+            NTRC.tracef(3, "SERV", "proc mAddDocument serv|%s| id|%s| "
+                "docid|%s| size|%s| assigned to shelfid|%s| remaining|%s|" 
                 % (self.sName, self.ID, mysDocID, cDoc.nSize, sShelfID, 
                 cShelf.nFreeSpace))
     
@@ -268,7 +268,7 @@ class CServer(object):
     def mDestroyCopy(self,mysCopyID,mysDocID,mysShelfID):
         ''' Oops, a doc died, maybe just one or maybe the whole shelf.
         '''
-        TRC.tracef(3,"SERV","proc mDestroyCopy remove copy|%s| doc|%s| "
+        NTRC.tracef(3,"SERV","proc mDestroyCopy remove copy|%s| doc|%s| "
             "from shelf|%s|" 
             % (mysCopyID, mysDocID, mysShelfID))
         # Inform the client that the copy is gonzo.  
@@ -311,7 +311,8 @@ class CServer(object):
                 % (len(self.lDocIDs)))
 #            self.lDocIDs = list()
 #            self.dDocIDs = dict()
-            # Shall we destroy all the shelves, too, or will that cause a problem?
+            # Shall we destroy all the shelves, too, or will that also 
+            #  cause a problem?
             for sShelfID in self.lShelfIDs:
                 G.dID2Shelf[sShelfID].mDestroyShelf()
 #               TODO: #mark all shelves as not bAlive
@@ -396,6 +397,8 @@ def fnTimerInt(objTimer, xContext):
 # 20170101  RBL Return number of docs when placing collection. 
 # 20170102  RBL PEP8-ify most of the long lines.  
 # 20170109  RBL Track servers that die, active or otherwise.  
+# 20180516  RBL Update to ntrace, ntracef, NTRC.
+#               And PEP8-ify a few stragglers.  
 # 
 # 
 

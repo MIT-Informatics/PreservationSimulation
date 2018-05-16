@@ -10,7 +10,7 @@ from    globaldata      import  G
 import  itertools
 import  util
 import  logoutput       as lg
-from    NewTraceFac     import  TRC, trace, tracef, NTRC, ntrace, ntracef
+from    NewTraceFac     import  NTRC, ntrace, ntracef
 import  math
 import  collections     as cc
 from    catchex         import  catchex
@@ -29,7 +29,7 @@ class CAudit2(object):
     '''
     getID = itertools.count(1).next
 
-    @tracef("AUD2")
+    @ntracef("AUD2")
     def __init__(self, mysClientID, mysCollectionID, 
             mynInterval=G.nAuditCycleInterval):
         self.ID = "A" + str(self.getID())
@@ -66,7 +66,7 @@ class CAudit2(object):
 
 
 # C A u d i t 2 . m A u d i t C y c l e 
-    @tracef("AUD2")
+    @ntracef("AUD2")
     def mAuditCycle(self,mynCycleInterval,mynSegments):
         '''\
         SimPy generator to schedule audit cycles for this collection.
@@ -117,7 +117,7 @@ class CAudit2(object):
             yield G.env.timeout(tNextCycleStartTime - G.env.now)
 
 # C A u d i t 2 . m A u d i t C o l l e c t i o n 
-    @tracef("AUD2")
+    @ntracef("AUD2")
     def mAuditCollection(self, mynCycleInterval, mynSegments, mysCollectionID, 
             myeCallerSyncEvent):
         '''\
@@ -143,7 +143,7 @@ class CAudit2(object):
             # Wait for completion of segment and its allotted time.
             yield eSyncEvent
             tNextSegmentStartTime = tSegmentStartTime + nSegmentInterval
-            TRC.tracef(3, "AUD2", "proc AuditCollection1 now|%s| tstart|%s| "
+            NTRC.tracef(3, "AUD2", "proc AuditCollection1 now|%s| tstart|%s| "
                 "tnext|%s| tinterval|%s| blastseg|%s|" 
                 % (G.env.now, tSegmentStartTime, tNextSegmentStartTime, 
                 nSegmentInterval, bLastSegment))
@@ -163,7 +163,7 @@ class CAudit2(object):
 
 # C A u d i t 2 . m A u d i t S e g m e n t 
     @catchex
-    @tracef("AUD2")
+    @ntracef("AUD2")
     def mAuditSegment(self, mynThisSegment, mylDocs, mysCollectionID, 
             myeCallerSyncEvent):
         '''\
@@ -229,7 +229,7 @@ class CAudit2(object):
     
                     ###if okay
                     if fTransferTime:
-                        TRC.tracef(3, "AUD2", "proc AuditSegment3 retrieve "
+                        NTRC.tracef(3, "AUD2", "proc AuditSegment3 retrieve "
                             "t|%10.3f| doc|%s| svr|%s| xfrtim|%f|" 
                             % (G.env.now, sDocID, sServerID, fTransferTime))
                         ###yield timeout
@@ -241,7 +241,7 @@ class CAudit2(object):
                             # If copy is missing here, save server in 
                             #  lost-list for doc.
                             self.dlDocsDamagedOnServers[sDocID].append(sServerID)
-                            TRC.tracef(5, "AUD2", "proc AuditSegment2 doc|%s| "
+                            NTRC.tracef(5, "AUD2", "proc AuditSegment2 doc|%s| "
                                 "svr|%s| lost on|%s|" 
                                 % (sDocID, sServerID, 
                                 self.dlDocsDamagedOnServers[sDocID]))
@@ -283,7 +283,7 @@ class CAudit2(object):
                 nCopiesLost = len(lDocLostOnServers)
                 nCopiesLeft = nServers - nCopiesLost
                 # How many copies left: none, a lot, a few?
-                TRC.tracef(3, "AUD2", "proc AuditSegment1 doc|%s| nsvr|%s| "
+                NTRC.tracef(3, "AUD2", "proc AuditSegment1 doc|%s| nsvr|%s| "
                     "loston|%s| nleft|%s|" 
                     % (sDocID, nServers, lDocLostOnServers, nCopiesLeft))
 
@@ -343,7 +343,7 @@ class CAudit2(object):
                                 self.sCollectionID, sServerID))
                         else:
                             ###log repair effected
-                            TRC.tracef(3, "AUD2", "proc AuditSegment4 repair "
+                            NTRC.tracef(3, "AUD2", "proc AuditSegment4 repair "
                                 "t|%10.3f| doc|%s| svr|%s| xfrtim|%f| type|%s|" 
                                 % (G.env.now, sDocID, sServerID, fTransferTime, 
                                 sRepair))
@@ -391,7 +391,7 @@ class CAudit2(object):
     # end def
 
 # A u d i t . m R e c o r d D o c u m e n t L o s t 
-    @tracef("AUD2")
+    @ntracef("AUD2")
     def mRecordDocumentLost(self,mysDocID):
         self.nPermanentLosses += 1          # WARNING: not idempotent.
         cDoc = G.dID2Document[mysDocID]
@@ -399,13 +399,13 @@ class CAudit2(object):
         return self.nPermanentLosses
 
 # A u d i t . m I s D o c u m e n t L o s t 
-    @tracef("AUD2",level=5)
+    @ntracef("AUD2",level=5)
     def mIsDocumentLost(self,mysDocID):
         cDoc = G.dID2Document[mysDocID]
         return cDoc.mIsLost()
 
 # A u d i t . m R e c o r d D o c u m e n t M a j o r i t y R e p a i r
-    @tracef("AUD2")
+    @ntracef("AUD2")
     def mRecordDocumentMajorityRepair(self,mysDocID):
         self.nRepairsMajority += 1          # WARNING: not idempotent.
         cDoc = G.dID2Document[mysDocID]
@@ -413,7 +413,7 @@ class CAudit2(object):
         return self.nRepairsMajority
         
 # A u d i t . m R e c o r d D o c u m e n t M i n o r i t y R e p a i r
-    @tracef("AUD2")
+    @ntracef("AUD2")
     def mRecordDocumentMinorityRepair(self,mysDocID):
         self.nRepairsMinority += 1          # WARNING: not idempotent.
         cDoc = G.dID2Document[mysDocID]
@@ -421,7 +421,7 @@ class CAudit2(object):
         return self.nRepairsMinority
 
 # A u d i t . m R e s c i n d D o c u m e n t M a j o r i t y R e p a i r 
-    @tracef("AUD2")
+    @ntracef("AUD2")
     def mRescindDocumentMajorityRepair(self,mysDocID):
         self.nRepairsMajority -= 1          # WARNING: not idempotent.
         cDoc = G.dID2Document[mysDocID]
@@ -429,7 +429,7 @@ class CAudit2(object):
         return self.nRepairsMajority
         
 # A u d i t . m R e s c i n d D o c u m e n t M i n o r i t y R e p a i r 
-    @tracef("AUD2")
+    @ntracef("AUD2")
     def mRescindDocumentMinorityRepair(self,mysDocID):
         self.nRepairsMinority -= 1          # WARNING: not idempotent.
         cDoc = G.dID2Document[mysDocID]
@@ -437,13 +437,13 @@ class CAudit2(object):
         return self.nRepairsMinority
 
 # C A u d i t . m C a l c S e g m e n t I n t e r v a l  
-    @tracef("AUD2")
+    @ntracef("AUD2")
     def mCalcSegmentInterval(self,mynCycleInterval,mynSegments):
         result = int(math.floor((1.0*mynCycleInterval-1.0)/mynSegments))
         return result
 
 # C A u d i t 2 . m C a l c S e g m e n t S i z e 
-    @tracef("AUD2")
+    @ntracef("AUD2")
     def mCalcSegmentSize(self,mysCollectionID,mynSegments):
         cCollection = G.dID2Collection[mysCollectionID]
         nCollectionLength = len(cCollection.lDocIDs)
@@ -451,7 +451,7 @@ class CAudit2(object):
         return result
 
 # C A u d i t 2 . m I d e n t i f y S e g m e n t 
-    @tracef("AUD2")
+    @ntracef("AUD2")
     def mIdentifySegment(self,mysCollectionID,nSegments,nCurrentSegment):
         '''\
         Return list of document IDs in the collection.
@@ -462,7 +462,7 @@ class CAudit2(object):
         return lDocIDs
 
 # C A u d i t . m R e t r i e v e D o c 
-    @tracef("AUD2")
+    @ntracef("AUD2")
     def mRetrieveDoc(self,mysDocID,mysServerID):
         '''\
         Get (copy of) doc back from server, if possible.
@@ -501,7 +501,7 @@ class CAudit2(object):
 
         
 # C A u d i t . m R e p a i r D o c 
-    @tracef("AUD2")
+    @ntracef("AUD2")
     def mRepairDoc(self,mysDocID,mysServerID):
         ''' \
         Repair by sending new copy of original doc
@@ -527,7 +527,7 @@ class CAudit2(object):
             return False
 
 # C A u d i t . m R e p o r t A u d i t S t a t s 
-    @tracef("AUD2")
+    @ntracef("AUD2")
     def mReportAuditStats(self):
         '''\
         Return list of stats.  Yes, you have to know the order.
@@ -537,7 +537,7 @@ class CAudit2(object):
             ,self.nPermanentLosses,self.nRepairsMinority)
 
 # C A u d i t 2 . m d R e p o r t A u d i t S t a t s 
-    @tracef("AUD2")
+    @ntracef("AUD2")
     def mdReportAuditStats(self):
         '''\
         Return a dictionary of relevant stats.  Not positional crap anymore.
@@ -656,7 +656,7 @@ class CAudit_Total(CAudit):
 
 # C A u d i t _ T o t a l . m I d e n t i f y S e g m e n t 
     ''' don't need it!
-    @tracef("AUD2")
+    @ntracef("AUD2")
     def mIdentifySegment(self,collectionid,nsegments,currentsegment):
         # Get list of document IDs in the collection
         cCollection = G.dID2Collection[mysCollectionID]
@@ -689,7 +689,7 @@ class CAudit_Systematic(CAudit):
         self.TYPE = "CAudit_Systematic"
 
 # C A u d i t _ S y s t e m a t i c . m I d e n t i f y S e g m e n t 
-    @tracef("AUD2")
+    @ntracef("AUD2")
     def mIdentifySegment(self, mysCollectionID, mynSegments, iCurrentSegment):
         # Get list of document IDs in the collection
         cCollection = G.dID2Collection[mysCollectionID]
@@ -727,7 +727,7 @@ class CAudit_Uniform(CAudit):
         self.TYPE = "CAudit_Uniform"
 
 # C A u d i t _ U n i f o r m . m I d e n t i f y S e g m e n t 
-    @tracef("AUD2")
+    @ntracef("AUD2")
     def mIdentifySegment(self, mysCollectionID, mynSegments, iCurrentSegment):
         # Get list of document IDs in the collection
         cCollection = G.dID2Collection[mysCollectionID]
@@ -779,7 +779,7 @@ class CAudit_Zipf(CAudit):
         raise ValueError, "Unimplemented Audit strategy: %s" % ("ZIPF")
 
 # C A u d i t _ Z i p f . m C a l c S e g m e n t S i z e 
-    @tracef("AUD2")
+    @ntracef("AUD2")
     def mIdentifySegment(self, mysCollectionID, mynSegments, iCurrentSegment):
         # Get list of document IDs in the collection
         cCollection = G.dID2Collection[mysCollectionID]
@@ -792,7 +792,7 @@ class CAudit_Zipf(CAudit):
         return 0
 
 # C A u d i t _ Z i p f . m I d e n t i f y S e g m e n t 
-    @tracef("AUD2")
+    @ntracef("AUD2")
     def mIdentifySegment(self, mysCollectionID, mynSegments, iCurrentSegment):
         # Get list of document IDs in the collection
         cCollection = G.dID2Collection[mysCollectionID]
@@ -805,7 +805,7 @@ class CAudit_Zipf(CAudit):
 
 # f A u d i t _ S e l e c t 
 # Stupid factory function to create the right class for this audit strategy.
-@tracef("AUD2")
+@ntracef("AUD2")
 def fAudit_Select(mysStrategy, mysClientID, mysCollectionID, mynCycleInterval):
     if mysStrategy == "TOTAL" or mysStrategy == "OFF":
         thing = CAudit_Total(mysClientID, mysCollectionID, mynCycleInterval)
@@ -1016,6 +1016,8 @@ TODO (x=done):
 #                quarter, one-quarter of the documents will be examined, but 
 #                from quarter to quarter documents may be sampled more than
 #                one time or zero times, depending on random choice.  
+# 20180516  RBL Update to use only ntrace, ntracef, NTRC.
+# 
 # 
 
 #END

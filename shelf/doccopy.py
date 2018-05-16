@@ -1,10 +1,10 @@
 #!/usr/bin/python
 # doccopy.py
-# NOTE: we have to call this fil esomething other than copy.py because of the 
+# NOTE: we have to call this file something other than copy.py because of the 
 #  standard library "copy" module.  The classname, however, is okay.  
 
 import  simpy
-from    NewTraceFac     import  TRC, trace, tracef, NTRC, ntrace, ntracef
+from    NewTraceFac     import  NTRC, ntrace, ntracef
 import  itertools
 from    globaldata      import  G
 from    math            import  exp, log
@@ -21,7 +21,7 @@ from    catchex         import  catchex
 class CCopy(object):
     getID = itertools.count(1).next
 
-    @tracef("COPY")
+    @ntracef("COPY")
     def __init__(self,mysDocID,mysClientID,mysServerID):
         self.ID = "X" + str(self.getID())
         G.dID2Copy[self.ID] = self
@@ -52,7 +52,7 @@ class CCopy(object):
     def cServer(self):
         return G.dID2Shelf[self.sShelfID]
 
-    @tracef("COPY")
+    @ntracef("COPY")
     def mShelveCopy(self,mysServerID,mysShelfID,mynBlkBegin,mynBlkEnd):
         self.sServerID = mysServerID
         self.sShelfID = mysShelfID
@@ -60,13 +60,14 @@ class CCopy(object):
         self.nBlkEnd = mynBlkEnd
         return self.ID+"+"+mysServerID+"+"+mysShelfID+"+" + "["+str(mynBlkBegin)+","+str(mynBlkEnd)+"]"
 
-    @tracef("COPY")
+    @ntracef("COPY")
     def mGetDocID(self):
         return self.sDocID
 
 
 # Edit history:
 # 20150812  RBL Move CCopy from server.py to its own file.  
+# 20180516  RBL Update to use only ntrace, ntracef, NTRC.
 # 
 
 #END

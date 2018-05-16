@@ -2,7 +2,7 @@
 # lifetime.py
 
 import  simpy
-from    NewTraceFac     import  TRC, trace, tracef, NTRC, ntrace, ntracef
+from    NewTraceFac     import  NTRC, ntrace, ntracef
 import  itertools
 from    globaldata      import  G
 from    math            import  exp, log
@@ -17,7 +17,7 @@ from    catchex         import  catchex
 
 class CLifetime(object):
 
-    @tracef("LIFE")
+    @ntracef("LIFE")
     def __init__(self,mysShelfID, myfLifetime, mynGlitchFreq, mynGlitchImpact, mynGlitchHalflife, mynGlitchMaxlife, mynGlitchSpan):
         self.fOriginalLifetime = float(myfLifetime)
         self.fCurrentLifetime = float(self.fOriginalLifetime)
@@ -54,14 +54,14 @@ class CLifetime(object):
 
 # L i f e t i m e . m S c h e d u l e G l i t c h 
     @catchex
-    @tracef("LIFE")
+    @ntracef("LIFE")
     def mScheduleGlitch(self):
         '''Wait for a glitch lifetime on this shelf.
         If the shelf died as a result of the glitch, stop
         rescheduling.  
         '''
         fNow = G.env.now
-        TRC.tracef(3,"LIFE","proc schedule glitch t|%d| shelf|%s| alive|%s|" %
+        NTRC.tracef(3,"LIFE","proc schedule glitch t|%d| shelf|%s| alive|%s|" %
             (fNow, self.sShelfID, self.cShelf.mbIsShelfAlive()))
         while 1:
             fNow = G.env.now
@@ -74,7 +74,7 @@ class CLifetime(object):
                         "interval|%.3f| freq|%d| life|%.3f|" % 
                         (fNow, self.sShelfID, self.fShelfInterval, 
                         self.nGlitchFreq, self.fShelfLife))
-                    TRC.tracef(3,"LIFE","proc schedule glitch shelf|%s| "
+                    NTRC.tracef(3,"LIFE","proc schedule glitch shelf|%s| "
                         "interval|%.3f| based on life|%.3f| alive|%s| "
                         "waiting..." % 
                         (self.sShelfID, self.fShelfInterval, 
@@ -107,7 +107,7 @@ class CLifetime(object):
 
 # L i f e t i m e . m G l i t c h H a p p e n s N o w 
     @catchex
-    @tracef("LIFE")
+    @ntracef("LIFE")
     def mGlitchHappensNow(self):
         """Start a glitch happening right now.
         May be invoked from outside a CLifetime instance as well as 
@@ -123,13 +123,13 @@ class CLifetime(object):
 
 # L i f e t i m e . m C o r r F a i l H a p p e n s T o M e 
     @catchex
-    @tracef("LIFE")
+    @ntracef("LIFE")
     def mCorrFailHappensToMe(self):
         self.mGlitchHappensNow()
 
 # L i f e t i m e . m G l i t c h H a p p e n s 
     @catchex
-    @tracef("LIFE")
+    @ntracef("LIFE")
     def mGlitchHappens(self,myfNow):
         self.bGlitchActive = True
         self.nGlitches += 1
@@ -140,7 +140,7 @@ class CLifetime(object):
             self.nImpactReductionPct, self.nGlitchDecayHalflife, 
             self.nGlitchSpan, self.nGlitchMaxlife, G.nGlitchesTotal))
         self.fGlitchBegin = float(G.env.now)
-        TRC.tracef(3,"LIFE","proc happens1 t|%.3f| shelf|%s| num|%s| impact|%d| "
+        NTRC.tracef(3,"LIFE","proc happens1 t|%.3f| shelf|%s| num|%s| impact|%d| "
             "decayhalflife|%d| span|%d| maxlife|%d|" % (myfNow, 
             self.sShelfID, self.nGlitches, self.nImpactReductionPct, 
             self.nGlitchDecayHalflife, self.nGlitchSpan, self.nGlitchMaxlife))
@@ -170,7 +170,7 @@ class CLifetime(object):
 
 # L i f e t i m e . m I n j e c t E r r o r 
     @catchex
-    @tracef("LIFE")
+    @ntracef("LIFE")
     def mInjectError(self, mynReduction, mynDecayHalflife, mynGlitchMaxlife):
         '''\
         When a glitch occurs, decrease lifetime by some amount, percentage.
@@ -180,13 +180,13 @@ class CLifetime(object):
         self.fDecayHalflife = float(mynDecayHalflife)
         self.fDecayRate = self.fLn2 / self.fDecayHalflife
         self.fMaxlife = float(mynGlitchMaxlife)
-        TRC.tracef(3,"LIFE","proc inject reduct|%s| decayhalflife|%s| " 
+        NTRC.tracef(3,"LIFE","proc inject reduct|%s| decayhalflife|%s| " 
             "decayrate|%s| maxlife|%s|" % (self.nReductionPercentage, 
             self.fDecayHalflife, self.fDecayRate, self.fMaxlife))
         return self.fDecayRate
 
 # L i f e t i m e . m f C a l c C u r r e n t S e c t o r L i f e t i m e 
-    @tracef("LIFE")
+    @ntracef("LIFE")
     def mfCalcCurrentSectorLifetime(self,myfNow):
         '''
         if glitch in progress
@@ -205,7 +205,7 @@ class CLifetime(object):
             fDuration = (float(self.nGlitchMaxlife))
             # If the glitch lifetime has expired, turn it off.
             if fTimeDiff > fDuration:
-                TRC.tracef(3,"LIFE","proc glitch lifetime expired "
+                NTRC.tracef(3,"LIFE","proc glitch lifetime expired "
                     "id|%s| num|%s| start|%.3f| now|%.3f| maxlife|%s|" % 
                     (self.ID, self.nGlitches, self.fGlitchBegin, myfNow, 
                     self.nGlitchMaxlife))
@@ -226,7 +226,7 @@ class CLifetime(object):
                 fReductionFraction= 1.0 * self.nReductionPercentage / 100.0
                 self.fCurrentLifetime = (1.0 * self.fOriginalLifetime * 
                     (1.0 - fReductionFraction * fExponentialDecay))
-                TRC.tracef(3,"LIFE","proc calcsectorlife num|%s| "
+                NTRC.tracef(3,"LIFE","proc calcsectorlife num|%s| "
                     "started|%.3f| age|%.3f| decay|%.3f| reduct|%.3f| "
                     "currlife|%.3f|" % 
                     (self.nGlitches, self.fGlitchBegin, fAgeInHalflives, 
@@ -237,7 +237,7 @@ class CLifetime(object):
                 if fExponentialDecay < G.fGlitchIgnoreLimit:
                     self.bGlitchActive = False
                     self.fGlitchTime += fTimeDiff
-                    TRC.tracef(3,"LIFE","proc glitch turned off lifeid|%s| "
+                    NTRC.tracef(3,"LIFE","proc glitch turned off lifeid|%s| "
                         "num|%s| started|%.3f| age|%.3f| decay|%.3f|" % 
                         (self.ID, self.nGlitches, self.fGlitchBegin, 
                         fAgeInHalflives, fExponentialDecay))
@@ -248,12 +248,12 @@ class CLifetime(object):
 
 # L i f e t i m e . m f C a l c C u r r e n t G l i t c h L i f e t i m e 
     @catchex
-    @tracef("LIFE")
+    @ntracef("LIFE")
     def mfCalcCurrentGlitchLifetime(self,myfNow):
         """
         fDuration = (float(self.nGlitchMaxlife) 
             if self.nGlitchMaxlife > 0 else float(G.fInfinity))
-        TRC.tracef(3,"LIFE","proc glitchlife num|%d| now|%.3f| "
+        NTRC.tracef(3,"LIFE","proc glitchlife num|%d| now|%.3f| "
             "begin|%.3f| duration|%.3f|" % 
             (self.nGlitches, myfNow, self.fGlitchBegin, fDuration))
         if (myfNow - self.fGlitchBegin) < fDuration:
@@ -261,7 +261,7 @@ class CLifetime(object):
         else:
             fLifetime = 0
             if self.bGlitchActive:
-                TRC.tracef(3,"LIFE","proc glitch lifetime expired id|%s| num|%s| start|%.3f| now|%.3f| maxlife|%s|" % (self.ID, self.nGlitches, self.fGlitchBegin, myfNow, self.nGlitchMaxlife))
+                NTRC.tracef(3,"LIFE","proc glitch lifetime expired id|%s| num|%s| start|%.3f| now|%.3f| maxlife|%s|" % (self.ID, self.nGlitches, self.fGlitchBegin, myfNow, self.nGlitchMaxlife))
                 lg.logInfo("LIFETIME","expired   t|%6.0f| shelf|%s| id|%s| num|%s| start|%.3f| now|%.3f| maxlife|%s|" % (myfNow, self.sShelfID, self.ID, self.nGlitches, self.fGlitchBegin, myfNow, self.nGlitchMaxlife))
             self.bGlitchActive = False
         """
@@ -298,7 +298,7 @@ class CLifetime(object):
 
 # L i f e t i m e . m R e p o r t G l i t c h S t a t s 
     @catchex
-    @tracef("LIFE")
+    @ntracef("LIFE")
     def mReportGlitchStats(self):
         dd = dict()
         dd["sShelfID"] = self.sShelfID
@@ -313,7 +313,7 @@ class CLifetime(object):
         return dd
  
 @catchex   
-@tracef("LIFE")
+@ntracef("LIFE")
 def fnlGetGlitchParams(mysShelfID):
     '''\
     Do this through a function in case some calculation is 
@@ -344,6 +344,7 @@ def fnlGetGlitchParams(mysShelfID):
 # 20160224  RBL Correct calling sequence and invocation of mInjectError.
 # 20170420  RBL Fix fatal typo in trace.
 #               Change log wording slightly to indicate glitch active.
+# 20180516  RBL Update to use ntrace, ntracef, NTRC.
 # 
 # 
 
