@@ -1,19 +1,21 @@
 <html>
 <head>
 <style>
-/*<!-- WARNING: No indent-left spacing permitted in style sheet in pandoc md.
+/*<!-- WARNING: No indent-left spacing is permitted in a style sheet in pandoc md.
 If you indent it, it becomes text and not HTML style sheet. 
 -->*/
 th {
 background-color: yellow;
 font-family: sans-serif;
 }
-td {
-border: 1px solid black;
-}
 table {
 width: 90%;
 border-collapse: collapse;
+padding: 20px; 
+}
+td {
+border: 1px solid black;
+padding: 1ex;
 }
 h1, h2, h3, h4 {
 font-family: Helvetica, Arial, sans-serif;
@@ -28,7 +30,7 @@ padding-bottom: 3px;
 % How Many Copies Is Enough?  
 % Micah Altman; Richard Landau  
 % 2016-08-15  
-% Revised 2018-04-30 RBL
+% Revised 2018-05-22 RBL
 
 
 # Information Integrity Over the Long Term -- How Many Copies Is Enough?   {#title .unnumbered}
@@ -69,7 +71,7 @@ i. Thou shalt engage with thy community to develop standards for the benefit of 
 
 i. Thou shalt insure against unforeseen circumstances that thou canst not control.  
 
-i. Yonder nor sorghum stenches shoe dentine tension beep aide tooth is.  
+i. Yonder nor sorghum stenches shoe dentine tension beep aide toothies.  
  
 <!-- END:TODO:MICAH -->
 
@@ -81,23 +83,23 @@ TBS: NOTES
 - multiple copies deteriorate unless you take action to repair errors.  how do you make repairs?  first, find them by auditing. 
 
 - Be clearer about transition to multiple copies and auditing.  
-visit = audit, 
-multiple copies = multiple copies
+    - visit = audit, 
+    - multiple copies = multiple copies
 
 - trust but verify = audit
 
 - wide range described briefly here, more below
-either right before or right after.  
-how did we get this range
+    - either right before or right after.  
+    - how did we get this range
 
 - long period = what? 
-100 yrs will always lose some docs;
-10 years reasonable horizon for known technologies, who knows what will be invented in the meantime.  but if error rates don't change much, the same metrics apply.  
+    - 100 yrs will always lose some docs;
+    - 10 years reasonable horizon for known technologies, who knows what will be invented in the meantime.  but if error rates don't change much, the same metrics apply.  
 
 - mfrs error rates are probably (?) per the service lifetime of the disk.  
-only if we read the bits or all bits?  
-suppose the 10E-14 refers to over service period, e.g., 3 yrs.  
-where is the high end of the of the sector halflife range?  
+    - only if we read the bits or all bits?  
+    - suppose the 10E-14 refers to over service period, e.g., 3 yrs.  
+    - where is the high end of the of the sector halflife range?  
 
 - need a way to rule out one copy on a really good disk.
 
@@ -105,12 +107,7 @@ where is the high end of the of the sector halflife range?
 
 - suppose we had two copies on the best disks we can find and migrate them within the service period.  
 
-- justify if possible the choice of megabyte sectors and the range?  maybe a disk is just a 10tb sector and fails at one time; well oops does not fit the current model where sector is part of a single document
-
-
-
-
-
+- justify if possible the choice of megabyte sectors and the range?  maybe a disk is just a 10TB sector and fails at one time; well oops does not fit the current model where sector is part of a single document
 
 
 - Don't sweat the small stuff, glitches are covered  by protection over a wide range. 
@@ -146,14 +143,14 @@ TBS
 <!-- START:TODO:MICAH --> 
 ![Various Threats to Library Collections (in the square brackets)](threats.jpg "Various Threat Types (in quotes after the link addr)")
 
-1.	Document rot (bit rot) on disk.
-2.	Environmental failures that accelerate document rot.
-3.	Server failures that destroy sets of documents.
-4.	Lack of independence of servers. 
+1.  Document rot (bit rot) on disk.
+2.  Environmental failures that accelerate document rot.
+3.  Server failures that destroy sets of documents.
+4.  Lack of independence of servers. 
 
   1. Business failures: a single business failure may affect more than one server, due, e.g., to consolidation or cross-financing.  That is, servers that appear to be independent may not be financially independent in practice.  
   2. Economic failures.
-5.	Attack on collection, institution, subject matter.
+5.  Attack on collection, institution, subject matter.
 <!-- END:TODO:MICAH --> 
 
 - range of error rates, wide, what's plausible
@@ -183,12 +180,88 @@ A single copy of a collection will deteriorate as predicted by the Poisson distr
 
 The table of **Exhibit XX** shows the expected rates of document errors, theoretical and simulated, over a wide range of storage error rates.  
 
-**Exhibit XX** shows the deterioration of collections with multiple copies over long periods of time.  
+### Keep Multiple Copies
+
+Even if errors in a collection do not accumulate at a significant rate, a single copy of a collection is vulnerable to large-scale or total loss if that single copy is victim of a disaster, natural or man-made (e.g., earthquake, flood, war, economic depression, etc.).  Multiple copies in multiple independent locations are necessary to safeguard documents against this type of large-scale loss.  Thomas Jefferson noted this danger to valuable documents long ago. 
+
+>"Time and accident are committing daily havoc on the originals deposited in our public offices.  The late war has done the work of centuries in this business.  The lost cannot be recovered; but let us save what remains: not by vaults and locks which fence them from the public eye and use, in consigning them to the waste of time, but by such a multiplication of copies, as shall place them beyond the reach of accident."
+^[From the National Archives, "https://founders.archives.gov/documents/Jefferson/01-19-02-0059".]
+
+But even multiple copies of collections deteriorate over time, from small erosions of individual documents or larger losses from external shocks.  **Exhibit XX** shows the deterioration of collections with multiple copies over long periods of time.  A strategy that includes monitoring and repair of documents is required for long-term preservation.  
 
 
-## Maintaining the Document Collection
+## Protect Against a Wide Range of Conditions
 
-### Auditing and Repairing
+### What Range of Storage Error Rates Should We Consider?
+
+One basic question should be answered before embarking on such simulations: what is the failure rate of stored documents? This is a difficult question due to a lack of real data.
+
+There is data on the failure rate of individual disk drives over time. Thanks to Backblaze, Google, and others, there is some published empirical data on failure rates of disk drives of recent technology vintages. [citations] These figures refer to replacements of entire disk drives during the useful life and wear-out periods of device use. That is, they exclude infant failures but include mid-life and senescence. Unfortunately, we do not get any direct information on the rates of sector failures, bad block replacements, and so forth.  
+
+There is some data on the failure rate of individual disk drives over time. Thanks to Backblaze, Google, and others, there is some published empirical data on failure rates of disk drives of recent technology vintages. [citations] These figures refer to replacements of entire disk drives during the useful life and wear-out periods of device use. That is, they exclude infant failures but include mid-life and senescence. Unfortunately, we do not get much information on the rates of sector failures, bad block replacements, and so forth.
+
+We have not encountered data on the performance of disk drives or blocks in RAID and erasure coding configurations, the effect of pre-emptive data scrubbing, etc.  Perhaps bounds on the failure of sectors can be extrapolated from the failure of drives.  Example: a 4TB disk drive contains 4E6 "sectors" of size 1MB.  Backblaze, on the basis of experience with hundreds of thousands of disk drives, has estimated the failure rates of drives for the first four years.  
+
+##### Exhibit nnn: Disk failure rates from measured experience
+
+| Year | Drives failed % | Cumulative drives failed % | Drives survived % | Equivalent Poisson sector half-life (megahours) |
+|-----|-----|-----|-----|-|
+| 1 | 3 | 3 |97| ? |
+| 2 | 2.5 | 6 |94| ? | 
+| 3 | 1 | 7 |93| ? |
+| 4 | 12 | 20 |80| ? |
+| 5 | 12 | 30 |68| ? |
+
+TBS
+
+(Numbers are approximate, and include interpolations and rounding.)  Overall, they estimated that 22% of all drives would fail in the first four years, and that the expected half-life of disk drives is about six years.  Based on the estimated half-life of disk drives, the numbers aren't all that different.
+
+##### Exhibit nnn: Disk failure rates based on estimated drive half-life = 6 years
+
+| Year || Cumulative drives failed % | Drives survived % | Equivalent Poisson sector half-life (megahours) |
+|-----|-----|-----|-----|-|
+| 1 |  | 11 |89| ? |
+| 2 |  | 21 |79| ? | 
+| 3 |  | 29 |71| ? |
+| 4 |  | 37 |63| ? |
+| 5 |  | 44 |56| ? |
+| 6 |  | 50 |50| ? |
+
+TBS
+
+Obviously, RAID implementation dramatically reduces the loss of data.  Still, there is the possibility with RAID5 that a second drive fails while a previously failed drive is being rebuilt.  Suppose that it takes about one day (metric day = 25 hours) to rebuild a drive.  
+
+##### Exhibit nnn: Disk failures during RAID5 rebuild
+
+| Size of RAID5 array | Time to rebuild (hours) | Pr{2nd failure during rebuild } |
+|-|-|-|
+| 5 | 20 | ? |
+| 10 | 20 | ? |
+| 15 | 20 | ? |
+| 20 | 20 | ? |
+
+TBS
+
+Note also that, since documents typically occupy more than one disk sector, even the large sectors we use for these calculations, they are larger targets and therefore considerably more vulnerable.
+
+TBS
+
+### How Far Into the Future Should We Look?
+
+TBS
+
+### Exceptional but Realistic Conditions
+
+- shocks that weaken or kill whole servers, multiple servers
+- regional: depression, war, earthquake, flood, etc.
+- human: admin failures, payment arrangements, hostile or government action
+
+TBS
+
+
+## Audit and Repair the Multiple Copies
+
+### The Process Auditing and Repairing
 
 Auditing the collection to test the validity of remote copies of documents can greatly reduce permanent document losses over time.  Without auditing and its attendant repair of damaged documents, minor errors will cause a stored collection to continue to decline over time with no barrier to extinction.  No number of redundant copies without auditing, certainly no *reasonable* number, will prevent significant document losses over a long period.  In addition, shocks to the system may cause servers to fail, thus reducing the actual number of active copies of a collection and accelerating further deterioration.  
 
@@ -212,7 +285,7 @@ Over a very wide range of storage quality conditions (storage error rates or sec
 
 ## Document Size, Compression, Encryption
 
-What are the effects of compressing and/or encrypting documents?
+What are the effects of compressing and/or encrypting documents?  Lossless compression is almost always a good strategy for long-term storage of documents.
 
 ### Compression Reduces the Target Area of a Document
 
@@ -246,12 +319,34 @@ TBS
 
 ### Don't Believe Manufacturers or Cloud Vendors
 
-### Don't Believe Tricky Statistics
+#### Don't Believe Tricky Statistics
+
+- be wary of marketing numbers
+- mtbf, mttf, and such are particularly hard to grasp
 
 ### Do Believe the Experience of Others
 
+- attend the experience of other similar users
+- Trust Your Experience
 
 
+## Storage Vendors May be Ephemeral
+
+- plan for failures
+- plan ahead for replacements
+
+## Storage Vendors and Locations Must be Independent
+
+- financial dependence through mergers
+- location dependence through common facilities
+- keeping multiple copies in one vacility
+
+
+## Make Auditing More Efficient
+
+- consumes much time, bandwidth, egress charges
+- what is needed: cryptographic verification, checksum with nonce
+- work to develop standards for all vendors and clients to use
 
 
 
@@ -500,8 +595,8 @@ TBS
 - Share experience information on the reliability of cloud storage vendors.  
 - Share information on experience of correlated failures, exogenous and endogenous.  
 - Develop standards to improve efficiency and reduce costs.
-    1.	Develop agreements with cloud vendors for cryptographic auditing that reduces data egress.
-    2.	Develop standards for reporting failure rates.
+    1.  Develop agreements with cloud vendors for cryptographic auditing that reduces data egress.
+    2.  Develop standards for reporting failure rates.
 
 TBS
 
@@ -649,23 +744,23 @@ The graphs are generally structured as follows:
 
     o Using Poisson closed form -- if expectation loss is just less than .5 doc in 10 years . Expect not to see any doc loss in 10 years ... how long to see a doc lost... how long to see 1% failure. 
 
-    o	Interaction  -- fragility of big documents 
+    o   Interaction  -- fragility of big documents 
     
-    o	[FIGURE] (above -- suppose we increase doc size by 10, by 100, by 1000 -- how many expected doc lossed in the same period)
+    o   [FIGURE] (above -- suppose we increase doc size by 10, by 100, by 1000 -- how many expected doc lossed in the same period)
     
-    o	Cite to Rosenthal previous results on this
+    o   Cite to Rosenthal previous results on this
     
 
 - medium term if error rates are uncertain
 
 - Medium term -- if storage error rates are uncertain
 
-    o	Storage error rates are difficult to verify
+    o   Storage error rates are difficult to verify
     
-    o	[FIGURE] How long for failure of 1% as error rate increases?
+    o   [FIGURE] How long for failure of 1% as error rate increases?
     (TODO:RBL: Q: Sounds like a one-way table, for fixed document size, IV = error rate, DV = hours before loss exceeds 1%.)
     
-    o	How to interpret claimed storage error rates
+    o   How to interpret claimed storage error rates
     
         - What are the limitations of how MTBF is measured? 
         - Given an MTBF, what is the possible bounded range of half-lives?
@@ -698,14 +793,14 @@ The graphs are generally structured as follows:
 Sources of failures are modeled as a stochastic processes, in a hierarchical  model
 
 
-|  |	Logical Block |	Server (Provider) Glitch |	Global Shock |
+|  |    Logical Block | Server (Provider) Glitch |  Global Shock |
 |-----|--------------|--------------|--------------|
 | Represents | failure of logical block within physically raided storage | event affecting reliability of single provider -- increase logical block error rate | event affecting reliability of multiple providers -- increase server failure rate|
-| Distribution | Poisson IID | Poisson IID	| Poisson IID |
-| Duration	| Instantaneous and permanent | Possibly bounded Duration %GLITCH_MAX_LIFE%, Exponential Decay | bounded duration | 
+| Distribution | Poisson IID | Poisson IID  | Poisson IID |
+| Duration  | Instantaneous and permanent | Possibly bounded Duration %GLITCH_MAX_LIFE%, Exponential Decay | bounded duration | 
 |Effect | loss of single block of single copy of document | Increases logical block failure rate -- parameterized level of impact | increase likelihood of death of k servers |
-| Detection | Loss is detected on audit	| Server error itself detected on audit iff. block error rate > %CLIENT_SENSITIVITY (not yet implemented) | Invisible (detected only through effects) |
-| Notes	| Failure rate is not known precisely to client	| Induces additional block failures, induces non-stationary errors (temporal clusters).  | Induces server deaths, and temporal cluster of server failures among  |
+| Detection | Loss is detected on audit | Server error itself detected on audit iff. block error rate > %CLIENT_SENSITIVITY (not yet implemented) | Invisible (detected only through effects) |
+| Notes | Failure rate is not known precisely to client | Induces additional block failures, induces non-stationary errors (temporal clusters).  | Induces server deaths, and temporal cluster of server failures among  |
 
 
 - things not modeled
@@ -738,7 +833,7 @@ A wide range of real-world threats may be modeled through varying the parameteri
 | Model Level | Real World Threat Source | Used to predict ... | Use to derive ... |
 |------|-------------------------|--------------------------|------------------------|
 
-| Logical Block	| <ul><li>loss due to media failure</li><li>loss due to raid/internal replication characteristics and failure</li></ul> | Document loss rate as a function of \{number of replicas, auditing strategy, auditing frequency, block error rate\} | Document loss as a function of 
+| Logical Block | <ul><li>loss due to media failure</li><li>loss due to raid/internal replication characteristics and failure</li></ul> | Document loss rate as a function of \{number of replicas, auditing strategy, auditing frequency, block error rate\} | Document loss as a function of 
     * document size
     * format fragility
 - file compression
@@ -750,9 +845,9 @@ A wide range of real-world threats may be modeled through varying the parameteri
 - Unanticipated Environmental Catastrophe (including local war)
 - Local software failure
 - Admin failure
-- Hardware batch quality | Document loss rate rate as a function of server error characteristics, given a fixed choice of {replicas, auditing, block error}	Increased redundancy needed to maintain fixed loss rate in presence of server errors, given recommended auditing and repair strategy |
+- Hardware batch quality | Document loss rate rate as a function of server error characteristics, given a fixed choice of {replicas, auditing, block error} Increased redundancy needed to maintain fixed loss rate in presence of server errors, given recommended auditing and repair strategy |
 
-| Global	|- Formal Government Action
+| Global    |- Formal Government Action
 - Legal action
 - Economic Recession
 - Limited Internal Adversary
@@ -765,21 +860,21 @@ Tradeoff between regional diversification and adding servers.
 
 Server Error Parameterizations
 
-| Type	| frequency	| Impact	| lifetime	| Notes |
+| Type  | frequency | Impact    | lifetime  | Notes |
 |----------|-------------|------------|------------|------------|
-| Server Billing/Government Takedown	| Medium	| High (> sensitivity rate)	| Instantaneous	| Shock. Loss of entire collection on server |
-| Financial (recession)	| Low | High	| Permanent -> simulation period	|Shock. Loss of entire collection on server |
-|Low Resource External Adversary	| Low	| Medium	| Medium	| Assume that adversary does not subvert audit |
-| HVAC/power glitch	| high	| low	| low	| |
-|Unanticipated Environmental Catastrophe	| low	| high 	| instantaneous	| shock |
-| Local Software	| medium	| medium	| long	| |
-|Administrator Error	| medium	| medium	| medium	| |
-| Hardware batch quality	| Medium 	| Medium	| Long | |
+| Server Billing/Government Takedown    | Medium    | High (> sensitivity rate) | Instantaneous | Shock. Loss of entire collection on server |
+| Financial (recession) | Low | High    | Permanent -> simulation period    |Shock. Loss of entire collection on server |
+|Low Resource External Adversary    | Low   | Medium    | Medium    | Assume that adversary does not subvert audit |
+| HVAC/power glitch | high  | low   | low   | |
+|Unanticipated Environmental Catastrophe    | low   | high  | instantaneous | shock |
+| Local Software    | medium    | medium    | long  | |
+|Administrator Error    | medium    | medium    | medium    | |
+| Hardware batch quality    | Medium    | Medium    | Long | |
 
 Specific Parameter Value Ranges
 
 Parameter | Range | Cause(s) | Low End | High End | 
-|---------|------|---------------------------------|-------|-------|	
+|---------|------|---------------------------------|-------|-------|    
 Frequency|Low|Financial, Low Resource External Adversary, Unanticipated Environment Catastrophe; |5 years|20 years
 Frequency|Medium|Local Software; Administrator Error; Hardware Batch Quality Defect, Server Billing/Government|1 year|5 year
 Frequency|High|HVAC|0.3 years|1 year
@@ -826,9 +921,7 @@ Lifetime|High|Hardware Batch|1 Year|3 year
 <!-- END:TODO:RICK--> 
 
 
-- large vs small documents
-
-## Large vs Small documents
+## Large vs Small Documents
 <!-- START:TODO:RICK--> 
 - Assumptions: Without any additional assumptions needed, the relationship between document size and failure rate can derived, and follows the  formula : [equation]  (TODO:RBL: Q: Simple Poisson with clear list of parameters?)
 - Additional simulation: No additional simulation is needed, however this formulation may be checked using simulations: [figure]  (TODO:RBL: Q: Or a table, given that the errors are so small?)
@@ -836,8 +929,6 @@ Lifetime|High|Hardware Batch|1 Year|3 year
 - Generalizations: The model assumes a single failure within a document destroys it. Documents may be redundant -- such that multiple hits are needed to completely destroy them.  (TODO:RBL: Q: If we want to present real numbers for this case, we will need some new code.)
 <!-- END:TODO:RICK--> 
  
-
-- compression
 
 ## Compression
 
@@ -855,12 +946,11 @@ Other discussion points?
     - Variation: Repairable documents
     - Small failure damages only one segment
 
+TBS 
 
 (Model this as a collection of smaller docs?)
 
 
-
-- encryption
 
 ## Encryption
 
@@ -871,7 +961,7 @@ Deriving encryption key loss:
 - Assume loss of all keys yields 100% loss of collection
 - Assume availability and integrity of key is verified on audit
 
-	For example:
+    For example:
 
 Suppose there are only 2 copies of keys. Is the expected document rate due to encryption key loss is equivalent to the expected document loss in the following scenario?
 - there are two servers 
@@ -884,8 +974,6 @@ Suppose there are only 2 copies of keys. Is the expected document rate due to en
 
 
 
-
-- format obsolescence
 
 ## Format Obsolescence
 
@@ -902,8 +990,6 @@ Suppose there are only 2 copies of keys. Is the expected document rate due to en
 - excludes interaction between format and document failure rate
     - e.g., if a particular format is extremely fragile, or extremely large
 
-
-- adversaries
 
 ## Adversaries
 - Assumptions: 
