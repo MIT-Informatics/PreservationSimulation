@@ -104,13 +104,23 @@ TBS: NOTES
 - need a way to rule out one copy on a really good disk.
 
 - 2-3% of disks fail every year.  what does this say about sector error rate?  
+- [Backblaze stats a lot more complicated than that.  Aggregate half-life of disks seems to be 6-7 years, but that is heavily influenced by infant failures.  If a drive survives infancy, then its wear-out half-life is more like 10-12 years.  See spreadsheets I did on this topic.]
+- [backblaze numbers: 
+    - infant failures first 1.5 years: 5%/yr
+    - adulthood very reliable up to 3 years: 1.4%/yr
+    - wear-out rate high after 3 years: 12%/yr]
+- [they have published more recent stats, but not broken it down this way.]
 
 - suppose we had two copies on the best disks we can find and migrate them within the service period.  
 
 - justify if possible the choice of megabyte sectors and the range?  maybe a disk is just a 10TB sector and fails at one time; well oops does not fit the current model where sector is part of a single document
 
+- try to swag the failure rate of a second drive during raid5 rebuild.
+- [how long does a rebuild take these days?  how many of the mongo disks in a raid5 array?]
+- [What is the typical disk size these days?  new backblaze number say 8TB or more.]
+- [do people still use raid5 or have they migrated to erasure coding controllers that can tolerate >1 failure so rebuild is not vulnerable to a second failure?]
 
-- Don't sweat the small stuff, glitches are covered  by protection over a wide range. 
+- Don't sweat the small stuff, glitches are covered by protection over a wide range. 
 
 
 <!-- END:TODO:RICK -->
@@ -250,7 +260,7 @@ TBS
 
 TBS
 
-### Exceptional but Realistic Conditions
+### Exceptional but Realistic Conditions: Major Shocks
 
 - shocks that weaken or kill whole servers, multiple servers
 - regional: depression, war, earthquake, flood, etc.
@@ -261,7 +271,7 @@ TBS
 
 ## Audit and Repair the Multiple Copies
 
-### The Process Auditing and Repairing
+### The Process of Auditing and Repairing
 
 Auditing the collection to test the validity of remote copies of documents can greatly reduce permanent document losses over time.  Without auditing and its attendant repair of damaged documents, minor errors will cause a stored collection to continue to decline over time with no barrier to extinction.  No number of redundant copies without auditing, certainly no *reasonable* number, will prevent significant document losses over a long period.  In addition, shocks to the system may cause servers to fail, thus reducing the actual number of active copies of a collection and accelerating further deterioration.  
 
@@ -283,7 +293,7 @@ Over a very wide range of storage quality conditions (storage error rates or sec
 **Exhibit XX** compares the effect of number of audited copies and storage error rates on document loss rates.  
 
 
-## Document Size, Compression, Encryption
+## The Impacts of Document Size, Compression, Encryption
 
 What are the effects of compressing and/or encrypting documents?  Lossless compression is almost always a good strategy for long-term storage of documents.
 
@@ -313,7 +323,7 @@ Encryption of documents may be required for secrecy, digital rights management, 
 - A collection of encrypted documents is more subject to large shocks, associated failures where multiple servers are immediately affected.  E.g., losing the encryption keys can cause all the copies on several servers to be irretrievable.  
 
 
-## What Level of Storage Quality is Reasonable?
+## How to Judge Level of Storage Quality
 
 TBS
 
@@ -335,6 +345,7 @@ TBS
 - plan for failures
 - plan ahead for replacements
 
+
 ## Storage Vendors and Locations Must be Independent
 
 - financial dependence through mergers
@@ -347,20 +358,6 @@ TBS
 - consumes much time, bandwidth, egress charges
 - what is needed: cryptographic verification, checksum with nonce
 - work to develop standards for all vendors and clients to use
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
