@@ -111,6 +111,8 @@ TBS: NOTES
     - wear-out rate high after 3 years: 12%/yr]
 - [they have published more recent stats, but not broken it down this way.]
 
+- look at the numbers in Beyond MTTF paper 2014.  
+
 - suppose we had two copies on the best disks we can find and migrate them within the service period.  
 
 - justify if possible the choice of megabyte sectors and the range?  maybe a disk is just a 10TB sector and fails at one time; well oops does not fit the current model where sector is part of a single document
@@ -119,6 +121,10 @@ TBS: NOTES
 - [how long does a rebuild take these days?  how many of the mongo disks in a raid5 array?]
 - [What is the typical disk size these days?  new backblaze number say 8TB or more.]
 - [do people still use raid5 or have they migrated to erasure coding controllers that can tolerate >1 failure so rebuild is not vulnerable to a second failure?]
+
+- multiple copies, raided or otherwise, in independent locations is very similar to raid5: what is the likelihood that all the other copies will die while i am rebuilding this one?  
+
+- wide range of *sector* error rates.
 
 - Don't sweat the small stuff, glitches are covered by protection over a wide range. 
 
@@ -359,6 +365,9 @@ TBS
 - what is needed: cryptographic verification, checksum with nonce
 - work to develop standards for all vendors and clients to use
 
+
+# END OF NEW OUTLINE
+# MATERIAL FROM HERE DOWN WILL BE RELOCATED TO THE PROPER PLACE IN THE NEW OUTLINE, OR TO SUPPLEMENTRY MATERIAL.  
 
 
 # Details of the Structure of the Model
