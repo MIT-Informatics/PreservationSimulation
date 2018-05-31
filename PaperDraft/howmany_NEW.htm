@@ -101,12 +101,15 @@ padding-bottom: 3px;
 <li>wear-out rate high after 3 years: 12%/yr]</li>
 </ul></li>
 <li><p>[they have published more recent stats, but not broken it down this way.]</p></li>
+<li><p>look at the numbers in Beyond MTTF paper 2014.</p></li>
 <li><p>suppose we had two copies on the best disks we can find and migrate them within the service period.</p></li>
 <li><p>justify if possible the choice of megabyte sectors and the range? maybe a disk is just a 10TB sector and fails at one time; well oops does not fit the current model where sector is part of a single document</p></li>
 <li>try to swag the failure rate of a second drive during raid5 rebuild.</li>
 <li>[how long does a rebuild take these days? how many of the mongo disks in a raid5 array?]</li>
 <li>[What is the typical disk size these days? new backblaze number say 8TB or more.]</li>
 <li><p>[do people still use raid5 or have they migrated to erasure coding controllers that can tolerate &gt;1 failure so rebuild is not vulnerable to a second failure?]</p></li>
+<li><p>multiple copies, raided or otherwise, in independent locations is very similar to raid5: what is the likelihood that all the other copies will die while i am rebuilding this one?</p></li>
+<li><p>wide range of <em>sector</em> error rates.</p></li>
 <li><p>Don't sweat the small stuff, glitches are covered by protection over a wide range.</p></li>
 </ul>
 <!-- END:TODO:RICK -->
@@ -410,6 +413,8 @@ padding-bottom: 3px;
 <li>what is needed: cryptographic verification, checksum with nonce</li>
 <li>work to develop standards for all vendors and clients to use</li>
 </ul>
+<h1 id="end-of-new-outline">END OF NEW OUTLINE</h1>
+<h1 id="material-from-here-down-will-be-relocated-to-the-proper-place-in-the-new-outline-or-to-supplementry-material.">MATERIAL FROM HERE DOWN WILL BE RELOCATED TO THE PROPER PLACE IN THE NEW OUTLINE, OR TO SUPPLEMENTRY MATERIAL.</h1>
 <h1 id="details-of-the-structure-of-the-model">Details of the Structure of the Model</h1>
 <p>Our preservation model includes a few very simple objects and operations.</p>
 <ul>

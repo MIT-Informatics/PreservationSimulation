@@ -1,0 +1,18 @@
+# Number of document copies to be maintained
+
+nCopies
+Number of Copies of Documents
+value,label,selected
+1,1,0
+2,2,0
+3,3,SELECTED
+4,4,SELECTED
+5,5,SELECTED
+6,6,0
+7,7,0
+8,8,0
+9,9,0
+10,10,0
+14,14,0
+16,16,0
+20,20,0

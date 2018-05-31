@@ -1,0 +1,9 @@
+20180531
+Because I don't yet grasp correctly how Python3 import works, 
+programs here must be run as follows:
+
+cd <directory above shelf3 here>
+python3 -m shelf3.programname <other arguments>
+
+Relative imports will work if approached this way.  Otherwise, YOYO.  
+

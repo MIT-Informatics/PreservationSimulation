@@ -175,10 +175,11 @@ TBS
 
 # Basic Model and Some Implications
 
-## Very Quick Outline of the Model
+## Very Brief Outline of the Model
 
-A *client* (library) has a *collection* of *documents* in digital form.  A copy of the collection of documents is stored on a *server* somewhere.  If the client maintains multiple copies of the collection of documents, the several copies are stored on separate servers.  Customers retrieve documents from the server(s) to read them.  An error may occur that corrupts a copy of a document or makes that copy inaccessible.  In this case, we consider the copy to be *lost*.  Other copies may still persist.  If all copies of a document are lost, then the document itself is permanently lost.  
+A *client* (library) has a *collection* of *documents* in digital form.  A copy of the collection of documents is stored on a *server* somewhere.  If the client maintains multiple *copies* of the collection of documents, the several copies are stored on separate servers.  Customers retrieve documents from the server(s) to read them.  An *error* may occur that corrupts a copy of a document or makes that copy inaccessible.  In this case, we consider the copy to be *lost*.  Other copies may still persist.  If all copies of a document are lost, then the document itself is permanently lost.  
 
+(All the italicized words are terms of art that are discussed in detail later.)
 
 ## The Simplest Case: Sector Errors
 

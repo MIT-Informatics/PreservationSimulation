@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # main.py
+from __future__ import absolute_import
 
 ''' ToDo:
 - Eliminate all the onesy MaybeOverride calls with a 
@@ -99,21 +100,22 @@ Implemented in the short term:
 
 import simpy
 import random
-from NewTraceFac import NTRC,ntrace,ntracef
-from globaldata import G,P
-from client2 import CClient
-from server import CServer
+from .NewTraceFac import NTRC,ntrace,ntracef
+from .globaldata import G,P
+from .client2 import CClient
+from .server import CServer
 from os import environ
-import logoutput as lg
-from cliparse import fndCliParse
+from . import logoutput as lg
+from .cliparse import fndCliParse
 from time import clock, time
 import profile
-import getparams
-import getcliargs
-import dumpparams
-import dumpuse
-import makethings
-from shock import CShock
+import cProfile
+from . import getparams
+from . import getcliargs
+from . import dumpparams
+from . import dumpuse
+from . import makethings
+from .shock import CShock
 
 
 #-----------------------------------------------------------
@@ -281,7 +283,7 @@ def main():
     G.bDoNotLogInfo = False
     G.tSimCpuLen = tSimEnd - tSimBegin
 
-    NTRC.ntracef(0,"MAIN","proc End simulation1 timenow|%d| cpusecs|%s| lastevent|%d| " 
+    NTRC.ntracef(0,"MAIN","proc End simulation1 timenow|%d| cpusecs|%.6f| lastevent|%d| " 
         % (env.now,G.tSimCpuLen,G.nTimeLastEvent))
     NTRC.ntracef(0,"MAIN","proc End simulation2 hidoc|%s| hicoll|%s| hishelf|%s|" 
         % (G.nDocLastID,G.nCollLastID,G.nShelfLastID))
@@ -317,7 +319,7 @@ def mainmain():
 
     tWallEnd = time()
     G.tWallLen = tWallEnd - tWallBegin
-    NTRC.ntracef(0,"MAIN","proc End time stats: wall|%8.3f| cpu|%s|" 
+    NTRC.ntracef(0,"MAIN","proc End time stats: wall|%8.3f| cpu|%8.3f|" 
         % (G.tWallLen,G.tSimCpuLen))
     NTRC.ntracef(0,"MAIN","ENDENDEND" 
         % ())
@@ -327,14 +329,19 @@ def mainmain():
 if __name__ == "__main__":
 
     if environ.get("MONKEYPATCH", "NO") == "YES":
-        import monkeypatch
+        from . import monkeypatch
 
-    if environ.get("PROFILE","NO") == "YES":
-        NTRC.ntracef(0,"MAIN","proc PROFILE=YES for this ssslllooowww run " 
+    if environ.get("CPROFILE","NO") == "YES":
+        NTRC.ntracef(0,"MAIN","proc CPROFILE=YES for this slow run " 
             % ())
-        profile.run('mainmain()')
+        cProfile.run('mainmain()')
     else:
-        mainmain()
+        if environ.get("PROFILE","NO") == "YES":
+            NTRC.ntracef(0,"MAIN","proc PROFILE=YES for this ssslllooowww run " 
+                % ())
+            profile.run('mainmain()')
+        else:
+            mainmain()
 
 
 # Edit History:
@@ -364,7 +371,8 @@ if __name__ == "__main__":
 #               Fix some over-long lines.  
 # 20171101  RBL Add check for nonsensical combinations of arguments.
 # 20180529  RBL Remove ancient "<>" from code, yikes.  
+# 20180531  RBL Add cProfile use.
 # 
-
+# 
 
 # END

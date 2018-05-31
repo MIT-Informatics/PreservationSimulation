@@ -1,0 +1,256 @@
+<!-- brokergroup_form_insert.j2 file -->
+{% extends "brokergroup_form_base.j2" %}
+<!-- Child file for Jinja2 that defines almost all the blocks
+      of menu items, particularly the multi-value select 
+      option blocks.  The shelf/instructions/*.ins3 files
+      contain the various option values for the many 
+      variable parameters.  They are processed and 
+      dictionary-ified to be suitable for use by Jinja.  
+     The parent HTML form file contains all the structure,
+      including table layout, placement, commentary, 
+      color fields, and so forth.  A small attempt, at
+      any rate, to separate form from content.  -->
+
+{# Macro to insert 2x1 table element for var, 
+    top for heading, bottom for values. 
+    All Values found in the dictionary 
+    passed in. #}
+{% macro insertmyvar(data, heading=none, required=none) %}    
+    <td>
+        <table>
+            <tr><th align="left">
+                <b>{%if heading%}{{heading}}{%else%}{{data.heading}}{%endif%}
+                    {%if required%}<font color="red">* required</font>{%endif%}</b>
+            </th></tr>
+            <tr><td>
+                <select name="{{data.varname}}">
+    {% for item in data.lValueList %}
+                <option value="{{ item.value }}"{% if item.selected != '0' %} selected{%endif%}>&nbsp;&nbsp;{{item.label}}&nbsp;</option>
+    {% endfor %}
+                </select>
+            </td></tr>
+        </table>
+    </td>
+{% endmacro %}
+
+{# Macro for   m u l t i p l e   s e l e c t   var #}
+{% macro insertmultivar(data, heading=none, required=none) %}    
+    <td>
+        <table>
+            <tr><th align="left">
+                <b>{%if heading%}{{heading}}{%else%}{{data.heading}}{%endif%}
+                    {%if required%}<font color="red">* required</font>{%endif%}</b>
+            </th></tr>
+            <tr><td>
+                <select name="{{data.varname}}" multiple size="6">
+    {% for item in data.lValueList %}
+                <option value="{{ item.value }}"{% if item.selected != '0' %} selected{%endif%}>&nbsp;&nbsp;{{item.label}}&nbsp;</option>
+    {% endfor %}
+                </select>
+            </td></tr>
+        </table>
+    </td>
+{% endmacro %}
+
+{# Macro for   t e x t   v a r .  A similar table. #}
+{% macro inserttextvar(name, heading, size, value="", required=none, extra=none) %}
+    <td>
+        <table>
+            <tr><td>
+                <b>{{heading}}
+                    {%if required%}<font color="red">* required</font>{%endif%}</b>
+            </td></tr>
+            <tr><td>
+                <input type="text" name={{name}} size="{{size}}" value="{{value}}"
+                {%if extra%}{{extra}}{%endif%}>
+            </td></tr>
+        </table>
+    </td>
+{%endmacro%}
+
+{# Macro for   c h e c k b o x   #}
+{% macro insertcheckvar(name, heading, value="", required=none, extra=none) %}
+    <td>
+        <table>
+            <tr><td>
+                <b>{{heading}}
+                    {%if required%}<font color="red">* required</font>{%endif%}</b>
+            </td></tr>
+            <tr><td>
+                <input type="checkbox" name={{name}} value="{value}}"
+                {%if extra%}{{extra}}{%endif%}>
+            </td></tr>
+        </table>
+    </td>
+{%endmacro%}
+
+
+{% block nAuditFreq scoped %}
+    {{insertmyvar(dVars.nAuditFreq)}}
+{% endblock %}
+
+{% block nAuditSegments scoped %}
+    {{insertmyvar(dVars.nAuditSegments)}}
+{% endblock %}
+
+{% block sAuditType scoped %}
+    {{insertmyvar(dVars.sAuditType)}}
+{% endblock %}
+
+{% block nCopies scoped %}
+   {{insertmultivar(dVars.nCopies)}}
+{% endblock %}
+
+{% block nDocSize scoped %}
+    {{insertmyvar(dVars.nDocSize)}}
+{% endblock %}
+
+{% block nGlitchDecay scoped %}
+    {{insertmyvar(dVars.nGlitchDecay)}}
+{% endblock %}
+
+{% block nGlitchFreq scoped %}
+    {{insertmultivar(dVars.nGlitchFreq)}}
+{% endblock %}
+
+{% block nGlitchIgnorelevel scoped %}
+    {{insertmyvar(dVars.nGlitchIgnorelevel)}}
+{% endblock %}
+
+{% block nGlitchImpact scoped %}
+    {{insertmultivar(dVars.nGlitchImpact)}}
+{% endblock %}
+
+{% block nGlitchMaxlife scoped %}
+    {{insertmultivar(dVars.nGlitchMaxlife)}}
+{% endblock %}
+
+{% block nGlitchSpan scoped %}
+    {{insertmyvar(dVars.nGlitchSpan)}}
+{% endblock %}
+
+{% block nLifem scoped %}
+   {{insertmultivar(dVars.nLifem)}}
+{% endblock %}
+
+{% block nSimLength scoped %}
+   {{insertmultivar(dVars.nSimLength)}}
+{% endblock %}
+
+{% block nRandomSeeds scoped %}
+   {{inserttextvar("nRandomSeeds", "Number of Replications with Random Seeds", 5, 21)}}
+{% endblock %}
+
+{% block nServerDefaultLife scoped %}
+   {{insertmyvar(dVars.nServerDefaultLife, required=true)}}
+{% endblock %}
+
+{% block nShelfSize scoped %}
+   {{insertmyvar(dVars.nShelfSize)}}
+{% endblock %}
+
+{% block nShockImpact scoped %}
+   {{insertmultivar(dVars.nShockImpact)}}
+{% endblock %}
+
+{% block nShockMaxlife scoped %}
+   {{insertmultivar(dVars.nShockMaxlife)}}
+{% endblock %}
+
+{% block nShockFreq scoped %}
+   {{insertmultivar(dVars.nShockFreq)}}
+{% endblock %}
+
+{% block nShockSpan scoped %}
+   {{insertmultivar(dVars.nShockSpan)}}
+{% endblock %}
+
+{% block sDatabaseName scoped %}
+   {{inserttextvar("sDatabaseName", "Database Name", 10, "brokeradmin", extra="disabled")}}
+{% endblock %}
+
+{% block sFamilyDir scoped %}
+   {{inserttextvar("sFamilyDir", "Family Directory", 15, required=true)}}
+{% endblock %}
+
+{% block sSpecificDir scoped %}
+   {{inserttextvar("sSpecificDir", "Specific Directory", 15, required=true)}}
+{% endblock %}
+
+<!-- empty placeholders -->
+{% block bRedo scoped %}
+{% endblock %}
+
+{% block bRunDetached scoped %}
+{% endblock %}
+
+{% block bTestOnly scoped %}
+{% endblock %}
+
+{% block sDetachedLogfile scoped %}
+{% endblock %}
+
+
+{%block ignoreme1%}
+-----------------------------
+
+each block calls macro with a different dict containing name, head, list
+
+nAuditSegments
+nDocSize
+
+nGlitchDecay
+nGlitchFreq
+nGlitchIgnorelevel
+nGlitchImpact
+nGlitchMaxlife
+nGlitchSpan
+nLifem
+
+nServerDefaultLife
+nShelfSize
+nShockImpact
+nShockMaxlife
+nShockFreq
+nShockSpan
+nSimLength
+
+A notable kludge occurs here.  For params that have a min and max value
+ that the user selects from separate drop-down lists, three variables
+ need to be defined and one special case added to the instruction
+ expander, searchspace.py.  
+ - The variable, e.g., nCopies, needs to have three such variables with 
+    identical values:
+    1.  nCopies
+    2.  nCopiesMax
+    3.  nCopiesMin
+    The max and min versions populate the pull-downs for those parameters.
+    The nCopies version is used by searchspace to check if the user's
+    selections have produced any valid values, i.e., a non-empty vector
+    of possibilities.  HOWEVER, it is also necessary for searchspace to
+    null out the max and min versions, empty their lists, before the 
+    actual combinatorial expansion takes place.  
+ Yes, kludge.  You were warned.  
+The same applies to nLifem.  And any other range-type params you were 
+ thinking of adding.  Don't do it.  
+BZZZT!  New news: the min/max inputs hae been removed in favor of 
+    multi-select option boxes.  If the form is being used by the 
+    bottle web server, one must use the request.form.getall() function
+    to retrieve the value as a list.
+
+
+<!-- Edit history:
+20170220    RBL Original version.
+20170221    RBL Enhance macros and invocations to permit overriding
+                 headings, adding "required" notices, etc.  
+20170222    RBL Add some comments and this history.  
+20170520    RBL Add Redo.
+                Add dummy blocks for Redo and TestOnly.
+20171129    RBL Add multi-select var macro to be used for some vars.  
+20171215    RBL Add check and logfilename for Run Detached.
+20180408    RBL Add multivar for nSimLength.
+
+
+-->
+
+{%endblock%}

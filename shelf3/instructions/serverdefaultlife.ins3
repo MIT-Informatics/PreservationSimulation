@@ -1,0 +1,13 @@
+# Half-life of servers at birth, in hours
+# Remember: all frequencies are now half-lives.
+
+nServerDefaultLife
+Expected Half-life of Servers (hrs) (0=infinite), must be nonzero for shocks
+value,label,selected
+0,"0 (infinite)",SELECTED
+#20000,"20000 (2 years)",0
+#30000,"30000 (3 years)",0
+50000,"50000 (5 years)",0
+100000,"100000 (10 years)",0
+200000,"200000 (20 years)",0
+500000,"500000 (50 years)",0
