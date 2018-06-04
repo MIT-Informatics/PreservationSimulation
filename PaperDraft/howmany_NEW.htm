@@ -48,23 +48,21 @@ padding-bottom: 3px;
 </ul>
 <p>TBS</p>
 <ol style="list-style-type: lower-roman">
-<li><p>Thou shalt keep multiple copies of thy documents.</p></li>
-<li><p>Thou shalt visit thy documents fully and regularly, and keep them healthy.</p></li>
-<li><p>Thou shalt lovingly squeeze and compress thy documents, that they may be better protected from the elements.</p></li>
-<li><p>Thou shalt not heed disk dealers who bear false witness of their reliability. Rather, thou shalt heed the measurement of thine own experience and that of thy neighbors.</p></li>
-<li><p>Thou shalt respect and monitor the independence of thy vendors.</p></li>
-<li><p>Thou shalt be wary that vendors are ephemeral. Therefore shalt thou befriend more vendors than thou currently doth engage, for they may be friends in lean years of woe and hardship.</p></li>
-<li><p>Thou shalt cloak thy documents, if they be shy, in secret robes to keep them from prying eyes.</p></li>
-<li><p>Thou shalt engage with thy community to develop standards for the benefit of all.</p></li>
-<li><p>Thou shalt insure against unforeseen circumstances that thou canst not control.</p></li>
+<li><p>Thou shalt <strong>keep multiple copies</strong> of thy documents.</p></li>
+<li><p>Thou shalt <strong>visit thy documents</strong> fully and regularly, and keep them healthy.</p></li>
+<li><p>Thou shalt lovingly squeeze and <strong>compress thy documents</strong>, that they may be better protected from the elements.</p></li>
+<li><p>Thou shalt <strong>not heed disk dealers</strong> who bear false witness of their reliability. Rather, thou shalt <strong>heed the measurement of thine own experience</strong> and that of thy neighbors.</p></li>
+<li><p>Thou shalt respect and <strong>monitor the independence of thy vendors</strong>.</p></li>
+<li><p>Thou shalt be wary that <strong>vendors are ephemeral</strong>. Therefore shalt thou befriend more vendors than thou currently doth engage, for they may be friends in lean years of woe and hardship.</p></li>
+<li><p>Thou shalt <strong>cloak thy documents</strong>, if they be shy, in secret robes to keep them from prying eyes.</p></li>
+<li><p>Thou shalt engage with thy community to <strong>develop standards for the benefit of all</strong>.</p></li>
+<li><p>Thou shalt <strong>protect thy documents against many dangerous circumstances</strong> that thou canst not control, for life is uncertain.</p></li>
 <li><p>Yonder nor sorghum stenches shoe dentine tension beep aide toothies.</p></li>
 </ol>
 <!-- END:TODO:MICAH -->
 <!-- BEGIN:TODO:RICK -->
 <p>TBS: NOTES</p>
 <ul>
-<li><p>ref cmdmts in the recommendation paras. have to number the commandments to do this.</p></li>
-<li><p>multiple copies deteriorate unless you take action to repair errors. how do you make repairs? first, find them by auditing.</p></li>
 <li>Be clearer about transition to multiple copies and auditing.
 <ul>
 <li>visit = audit,</li>
@@ -105,7 +103,7 @@ padding-bottom: 3px;
 <li><p>suppose we had two copies on the best disks we can find and migrate them within the service period.</p></li>
 <li><p>justify if possible the choice of megabyte sectors and the range? maybe a disk is just a 10TB sector and fails at one time; well oops does not fit the current model where sector is part of a single document</p></li>
 <li>try to swag the failure rate of a second drive during raid5 rebuild.</li>
-<li>[how long does a rebuild take these days? how many of the mongo disks in a raid5 array?]</li>
+<li>[how long does a rebuild take these days? how many of the mongo disks in a raid5 array?] [as of 2010, no major storage vendor recommends RAID5; they all suggest RAID6, which tolerates two failures.] [info from zdnet says optimistic estimate is 5hr/TB; more likely 10-14hrs/TB. so an 8TB disk takes 40-80 or 90 hours to rebuild. likelihood of another disk failure during that time is xx.x% given drive half-life of 7 years (Backblaze estimate).]</li>
 <li>[What is the typical disk size these days? new backblaze number say 8TB or more.]</li>
 <li><p>[do people still use raid5 or have they migrated to erasure coding controllers that can tolerate &gt;1 failure so rebuild is not vulnerable to a second failure?]</p></li>
 <li><p>multiple copies, raided or otherwise, in independent locations is very similar to raid5: what is the likelihood that all the other copies will die while i am rebuilding this one?</p></li>
@@ -152,8 +150,9 @@ padding-bottom: 3px;
 </ul>
 <hr />
 <h1 id="basic-model-and-some-implications">Basic Model and Some Implications</h1>
-<h2 id="very-quick-outline-of-the-model">Very Quick Outline of the Model</h2>
-<p>A <em>client</em> (library) has a <em>collection</em> of <em>documents</em> in digital form. A copy of the collection of documents is stored on a <em>server</em> somewhere. If the client maintains multiple copies of the collection of documents, the several copies are stored on separate servers. Customers retrieve documents from the server(s) to read them. An error may occur that corrupts a copy of a document or makes that copy inaccessible. In this case, we consider the copy to be <em>lost</em>. Other copies may still persist. If all copies of a document are lost, then the document itself is permanently lost.</p>
+<h2 id="very-brief-outline-of-the-model">Very Brief Outline of the Model</h2>
+<p>A <em>client</em> (library) has a <em>collection</em> of <em>documents</em> in digital form. A copy of the collection of documents is stored on a <em>server</em> somewhere. If the client maintains multiple <em>copies</em> of the collection of documents, the several copies are stored on separate servers. Customers retrieve documents from the server(s) to read them. An <em>error</em> may occur that corrupts a copy of a document or makes that copy inaccessible. In this case, we consider the copy to be <em>lost</em>. Other copies may still persist. If all copies of a document are lost, then the document itself is permanently lost.</p>
+<p>(All the italicized words are terms of art that are discussed in detail later.)</p>
 <h2 id="the-simplest-case-sector-errors">The Simplest Case: Sector Errors</h2>
 <h3 id="process">Process</h3>
 <ul>
@@ -166,16 +165,15 @@ padding-bottom: 3px;
 <p>Errors accumulate over time. Every now and then an error will occur in storage and, if the error occurs in a region of storage occupied by a document, the error destroys a document. The rate at which documents are lost depends of course on the quality of the storage. But even if the rate of error accumulation is very low, over a long period of time, many documents will be lost.</p>
 <p>A single copy of a collection will deteriorate as predicted by the Poisson distribution. A collection with multiple copies will deteriorate more slowly, but predictably; and, eventually, all the copies of a single document will be lost. Since no copy of the document is then retrievable, the document is permanently lost.</p>
 <p>The table of <strong>Exhibit XX</strong> shows the expected rates of document errors, theoretical and simulated, over a wide range of storage error rates.</p>
-<h3 id="keep-multiple-copies">Keep Multiple Copies</h3>
+<h1 id="keep-multiple-copies">Keep Multiple Copies</h1>
 <p>Even if errors in a collection do not accumulate at a significant rate, a single copy of a collection is vulnerable to large-scale or total loss if that single copy is victim of a disaster, natural or man-made (e.g., earthquake, flood, war, economic depression, etc.). Multiple copies in multiple independent locations are necessary to safeguard documents against this type of large-scale loss. Thomas Jefferson noted this danger to valuable documents long ago.</p>
 <blockquote>
 <p>&quot;Time and accident are committing daily havoc on the originals deposited in our public offices. The late war has done the work of centuries in this business. The lost cannot be recovered; but let us save what remains: not by vaults and locks which fence them from the public eye and use, in consigning them to the waste of time, but by such a multiplication of copies, as shall place them beyond the reach of accident.&quot; <a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
 </blockquote>
 <p>But even multiple copies of collections deteriorate over time, from small erosions of individual documents or larger losses from external shocks. <strong>Exhibit XX</strong> shows the deterioration of collections with multiple copies over long periods of time. A strategy that includes monitoring and repair of documents is required for long-term preservation.</p>
-<h2 id="protect-against-a-wide-range-of-conditions">Protect Against a Wide Range of Conditions</h2>
+<h1 id="protect-against-a-wide-range-of-conditions">Protect Against a Wide Range of Conditions</h1>
 <h3 id="what-range-of-storage-error-rates-should-we-consider">What Range of Storage Error Rates Should We Consider?</h3>
 <p>One basic question should be answered before embarking on such simulations: what is the failure rate of stored documents? This is a difficult question due to a lack of real data.</p>
-<p>There is data on the failure rate of individual disk drives over time. Thanks to Backblaze, Google, and others, there is some published empirical data on failure rates of disk drives of recent technology vintages. [citations] These figures refer to replacements of entire disk drives during the useful life and wear-out periods of device use. That is, they exclude infant failures but include mid-life and senescence. Unfortunately, we do not get any direct information on the rates of sector failures, bad block replacements, and so forth.</p>
 <p>There is some data on the failure rate of individual disk drives over time. Thanks to Backblaze, Google, and others, there is some published empirical data on failure rates of disk drives of recent technology vintages. [citations] These figures refer to replacements of entire disk drives during the useful life and wear-out periods of device use. That is, they exclude infant failures but include mid-life and senescence. Unfortunately, we do not get much information on the rates of sector failures, bad block replacements, and so forth.</p>
 <p>We have not encountered data on the performance of disk drives or blocks in RAID and erasure coding configurations, the effect of pre-emptive data scrubbing, etc. Perhaps bounds on the failure of sectors can be extrapolated from the failure of drives. Example: a 4TB disk drive contains 4E6 &quot;sectors&quot; of size 1MB. Backblaze, on the basis of experience with hundreds of thousands of disk drives, has estimated the failure rates of drives for the first four years.</p>
 <h5 id="exhibit-nnn-disk-failure-rates-from-measured-experience">Exhibit nnn: Disk failure rates from measured experience</h5>
@@ -343,27 +341,29 @@ padding-bottom: 3px;
 <p>TBS</p>
 <h3 id="how-far-into-the-future-should-we-look">How Far Into the Future Should We Look?</h3>
 <p>TBS</p>
-<h3 id="exceptional-but-realistic-conditions-major-shocks">Exceptional but Realistic Conditions: Major Shocks</h3>
-<ul>
-<li>shocks that weaken or kill whole servers, multiple servers</li>
-<li>regional: depression, war, earthquake, flood, etc.</li>
-<li>human: admin failures, payment arrangements, hostile or government action</li>
-</ul>
-<p>TBS</p>
-<h2 id="audit-and-repair-the-multiple-copies">Audit and Repair the Multiple Copies</h2>
+<h1 id="visit-your-documents-regularly">Visit Your Documents Regularly</h1>
+<p>Verify and repair the multiple copies.</p>
 <h3 id="the-process-of-auditing-and-repairing">The Process of Auditing and Repairing</h3>
-<p>Auditing the collection to test the validity of remote copies of documents can greatly reduce permanent document losses over time. Without auditing and its attendant repair of damaged documents, minor errors will cause a stored collection to continue to decline over time with no barrier to extinction. No number of redundant copies without auditing, certainly no <em>reasonable</em> number, will prevent significant document losses over a long period. In addition, shocks to the system may cause servers to fail, thus reducing the actual number of active copies of a collection and accelerating further deterioration.</p>
+<p>Auditing the collection to verify the validity of remote copies of documents, and to repair discovered errors, can greatly reduce permanent document losses over time. Without auditing and its attendant repair of damaged documents, minor errors will continually erode a stored collection; the collection will to continue to decline over time with no barrier to extinction. No number of redundant copies without auditing, certainly no <em>reasonable</em> number, will prevent significant document losses over a long period. In addition, major shocks to the system may cause servers to fail, thus reducing the actual number of active copies of a collection and accelerating further deterioration.</p>
 <p>Auditing is essential to maintaining the health of a collection. This is the method by which errors are detected and corrected. Without auditing, errors tend to build up in a collection and eventually cause some permanent document losses, regardless of how many copies of the documents we keep. We can think of the auditing process as health care for electronic documents: minor problems will be found and fixed before they cause permanent damage. Of course, it will always be possible for unlikely juxtapositions of errors to cause a document to be lost, but regular auditing of a modest number of copies can minimize permanent losses.</p>
-<p>The auditing process actively patrols for errors before they cause permanent document losses, and corrects them whenever possible. In all cases, when a document copy is found to be absent (or corrupted), the auditing process attempts to replace the missing copy with a fresh copy obtained from another server. If there is an intact copy on another server, then the missing copy is repaired and the process continues. If there is no other intact copy, then the document is considered permanently lost.</p>
+<p>The auditing process actively patrols for errors before they cause permanent document losses, and corrects them when possible. In all cases, when a document copy is found to be absent (or corrupted), the auditing process attempts to replace the missing copy with a fresh copy obtained from another server. If there is an intact copy on another server, then the missing copy is repaired and the process continues. If there is no other intact copy, then the document is considered permanently lost.</p>
 <p><strong>Exhibit XX</strong> shows the dratic reduction in document losses when using regular auditing on collections with a modest number of copies.</p>
 <p>The most basic strategy for auditing is <em>total auditing</em>. This involved examining every copy of every document on a regular schedule, and effecting repairs where necessary (and possible).</p>
 <p>A number of other strategies for auditing are possible, and some are measurably better than others. Various strategies will be described and evaluated below.</p>
-<h2 id="how-many-copies-to-keep-with-auditing">How Many Copies to Keep With Auditing</h2>
+<h3 id="how-many-copies-to-keep-with-auditing">How Many Copies to Keep With Auditing?</h3>
 <p>Over a very wide range of storage quality conditions (storage error rates or sector half-lives), our experiments show that five copies with annual total auditing reduce document loss rates to negligible levels.</p>
 <p><strong>Exhibit XX</strong> compares the effect of number of audited copies and storage error rates on document loss rates.</p>
-<h2 id="the-impacts-of-document-size-compression-encryption">The Impacts of Document Size, Compression, Encryption</h2>
+<h1 id="compress-your-documents">Compress Your Documents</h1>
+<p>The impacts of document size, compression, encryption.</p>
 <p>What are the effects of compressing and/or encrypting documents? Lossless compression is almost always a good strategy for long-term storage of documents.</p>
 <h3 id="compression-reduces-the-target-area-of-a-document">Compression Reduces the Target Area of a Document</h3>
+<p>Documents stored on digital media are fragile; storage errors corrupt the content of a document. How much of a document is corrupted depends largely on the data format of the document. Even small errors in highly compressed or encrypted documents may render part or all of the document unusable.</p>
+<p>For documents that might not be fatally corrupted by a single sector error, lossless compression of the document involves a clear trade-off. A smaller document is a smaller target for a randomly occurring error, but a highly compressed document is more fragile. A small error in an audio or video file, or an uncompressed text file, might not be fatal to the document, but a highly compressed text document (or an encrypted document) might be lost.</p>
+<p>In these simulations, we have modeled documents as very fragile: one sector error causes the document to be judged as lost. In this model, at least these two considerations should be included in the decision to compress documents.</p>
+<ul>
+<li><p>Smaller is safer. A smaller document presents a smaller target for random errors. If a document is compressed, say, by 90%, that is, to 10% of its original size, then a random error is only one-tenth as likely to strike that document. When placed on a storage medium of any given quality level, that smaller, compressed document is likely to persist without error ten times longer than the uncompressed version.</p></li>
+<li><p>Smaller is less expensive. A stored collection incurs costs for both storage of the document images and the bandwidth used in auditing and repair. Smaller documents consume less space and less bandwidth and therefore cost less to maintain. On a given budget, a compressed collection can be replicated into more copies and audited more frequently. Both the increased copy count and more frequent auditing contribute directly to reducing or eliminating permanent losses in the collection.</p></li>
+</ul>
 <p>A large document occupies more storage than a small document. If errors are striking storage uniformly randomly, then a large document is proportionally a larger target. This effect is verified empirically by our experiments.</p>
 <p>The drawings in <strong>Exhibit XX</strong> illustrate the effect of randomly placed errors on documents of varying sizes.</p>
 <p><strong>Exhibit XX</strong> shows the increase in document losses for larger documents across a range of storage error rates.</p>
@@ -377,37 +377,69 @@ padding-bottom: 3px;
 <li>Smaller documents consume lower bandwidth for retrieval and editing, lowering egress charges from the storage vendor. This makes the auditing process less expensive.</li>
 <li>A possible drawback is that some methods of compression may require decompression software at client end for retrieval.</li>
 </ul>
-<h3 id="encryption">Encryption</h3>
+<h1 id="cloak-your-documents-encryption">Cloak Your Documents: Encryption</h1>
 <p>Encryption of documents may be required for secrecy, digital rights management, or other reasons. If a document is encrypted after it has been compressed, the encryption generally does not impose an additional size burden on the document. Thus encryption does not compromise the advantage gained by compression, though it does have some impact on potential document losses.</p>
 <ul>
 <li>An encrypted document is more fragile in the sense that it, if damaged by an error, it may not be recoverable even with extraordinary efforts. (Contrast with text documents, still photo, video, and audio files.)</li>
 <li>A collection of encrypted documents is more subject to large shocks, associated failures where multiple servers are immediately affected. E.g., losing the encryption keys can cause all the copies on several servers to be irretrievable.</li>
 </ul>
-<h2 id="how-to-judge-level-of-storage-quality">How to Judge Level of Storage Quality</h2>
-<p>TBS</p>
+<h1 id="a-very-simple-cost-model">A Very Simple Cost Model</h1>
+<p>Many storage vendors may be available to a client, each with charge schedules. For the most part, vendors will charge for storage and bandwidth.</p>
+<ul>
+<li>A charge per month per byte stored (usually gigabyte or petabyte).
+<ul>
+<li>The cost of storage may vary by &quot;quality&quot; of storage, based on its typical error rate or perhaps on speed of retrieval access.<br />
+</li>
+</ul></li>
+<li>A charge per month per byte sent in or out (&quot;ingress&quot; and &quot;egress&quot; charges).
+<ul>
+<li>Bytes sent do not distinguish between user access for normal retrieval and administrative access for auditing.<br />
+</li>
+<li>The cost may vary by speed or reserved bandwidth (Mbps).</li>
+</ul></li>
+<li>Charge schedules may include quantity discounts for storage and transfer</li>
+</ul>
+<p>For the purposes of this study, a client will store a collection on a set of servers of the same &quot;quality&quot; level. Documents with differing quality requirements are considered separate collections and are stored and managed separately.</p>
+<h1 id="judge-the-level-of-storage-quality">Judge the Level of Storage Quality</h1>
+<p>Do not blindly believe reliability estimates from storage vendors.</p>
 <h3 id="dont-believe-manufacturers-or-cloud-vendors">Don't Believe Manufacturers or Cloud Vendors</h3>
 <h4 id="dont-believe-tricky-statistics">Don't Believe Tricky Statistics</h4>
 <ul>
 <li>be wary of marketing numbers</li>
 <li>mtbf, mttf, and such are particularly hard to grasp</li>
 </ul>
+<p>The likelihood of an error in a disk bit or sector, or even the failure of an entire disk, is a very small number with many zeroes before the first significant digit. We choose to invert the error rate into a function of lifetime of that bit (or sector containing many bits). Thus a probability of a bit failing in a year of 10E-15 becomes a mean lifetime of 100E12 years. Expressed that way, the figure seems excessively optimistic. (The age of the universe is currently estimated to be 14E9 years.) Data on such a disk would be effectively immortal, and that does not correlate with experience.</p>
+<p>We agree with Rosenthal (2010) and others that such estimates are merely marketing projections that are not based on empirical data. Using simulations to investigate such nearly immortal disks would be expensive and fruitless. If there are no errors, then no protective strategy is needed. However, the statement &quot;no errors&quot; does not correlate well with practical experience.</p>
+<p>The inverse of error rate is usually expressed in terms of MTBF or MTTF, and, initially, we expressed all parameters as mean exponential lifetime. But MTBF and MTTF are hard even for most experts to grasp, and uninformative or misleading for non-experts.</p>
+<p>The disk manufacturing industry tends to express the device lifetime as MTBF or MTTF. This is an expected (mean) exponential lifetime for the device, but that does not give much information about the lifetime of data in individual files, blocks, or bits on the disk. There are several layers of error detection and correction in storage systems that tend to mask small errors in disk data and obscure the relationship between small data errors and drive failures.</p>
+<p>MTBF, Mean Time Between Failures, is a slippery notion, much touted by marketing departments and viewed warily by users. If the object in question is removed from service after only one failure, as is the case here with documents, it is perhaps more appropriate to speak of MTTF, Mean Time To Failure. MTTF is intended to be equivalent to the mean lifetime (before failure) of the object, and, if one assumes that failures are a Poisson process, then MTTF is the mean exponential lifetime of the object.</p>
+<p>Most non-marketing literature considers MTBF estimates from manufacturers to be exaggerated considerably, by factors of three or four at best. The annual failure rates of disk drives in large collections of drives are much higher than would be expected based on published MTBF estimates of 1E6 hours or more. [citations]</p>
+<p>Even if we understood the source and accuracy of stated MTTF estimates for disk drives, we would still not have information about individual sector failures within a drive that cause document failures, nor the relative frequencies of sector failures versus drive failures.</p>
 <h3 id="do-believe-the-experience-of-others">Do Believe the Experience of Others</h3>
 <ul>
 <li>attend the experience of other similar users</li>
 <li>Trust Your Experience</li>
 </ul>
-<h2 id="storage-vendors-may-be-ephemeral">Storage Vendors May be Ephemeral</h2>
+<h1 id="storage-vendors-may-be-ephemeral">Storage Vendors May be Ephemeral</h1>
 <ul>
 <li>plan for failures</li>
 <li>plan ahead for replacements</li>
 </ul>
-<h2 id="storage-vendors-and-locations-must-be-independent">Storage Vendors and Locations Must be Independent</h2>
+<h3 id="exceptional-but-realistic-conditions-major-shocks">Exceptional but Realistic Conditions: Major Shocks</h3>
+<ul>
+<li>shocks that weaken or kill whole servers, multiple servers</li>
+<li>regional: depression, war, earthquake, flood, etc.</li>
+<li>human: admin failures, payment arrangements, hostile or government action</li>
+</ul>
+<p>TBS</p>
+<h1 id="storage-vendors-and-locations-must-be-independent">Storage Vendors and Locations Must be Independent</h1>
 <ul>
 <li>financial dependence through mergers</li>
 <li>location dependence through common facilities</li>
 <li>keeping multiple copies in one vacility</li>
 </ul>
-<h2 id="make-auditing-more-efficient">Make Auditing More Efficient</h2>
+<h1 id="develop-standards-for-the-benefit-of-all">Develop Standards for the Benefit of All</h1>
+<h3 id="make-auditing-more-efficient.">Make auditing more efficient.</h3>
 <ul>
 <li>consumes much time, bandwidth, egress charges</li>
 <li>what is needed: cryptographic verification, checksum with nonce</li>
@@ -446,8 +478,8 @@ padding-bottom: 3px;
 <li>It is possible that the failure rate within a server is not constant over time. However, over suitably short intervals, a changing rate can be approximated by some mean value in the interval.</li>
 </ul>
 <p>(Format obsolescence is not an inherent part of this model, but forms of it may be modeled through extensions involving associated failure. See below.)</p>
-<h2 id="more-complex-failures">More Complex Failures</h2>
-<h3 id="similar-case-glitches">Similar Case: Glitches</h3>
+<h2 id="small-and-large-failures">Small and Large Failures</h2>
+<h3 id="small-simple-case-glitches">Small, Simple Case: Glitches</h3>
 <ul>
 <li>A <em>glitch</em> is a temporary, short-lived, condition that impacts a single server and increases the sector error rate on that server for some short interval.<br />
 </li>
@@ -459,7 +491,7 @@ padding-bottom: 3px;
 </li>
 <li>The effect of a glitch is simply to increase the sector error rate for a short period. Glitches, like the errors they induce, are silent. In this study, we find that it is hard to distinguish glitch-induced increases in error rates from random variations in performance.</li>
 </ul>
-<h3 id="complex-case-shocks">Complex Case: Shocks</h3>
+<h3 id="large-complex-case-shocks">Large, Complex Case: Shocks</h3>
 <ul>
 <li>A <em>shock</em> is a more serious condition affecting storage servers. This is a temporary, short-lived, or possibly permanent, increase in the likelihood of death of a server. All servers are considered to have finite lives (of random length), though the lives may be very long. A shock reduces that lifetime.<br />
 </li>
@@ -475,23 +507,6 @@ padding-bottom: 3px;
 </li>
 <li>When a server is lost, the client is required to find a new server and populate it with the whole collection -- or at least the parts of the collection that can still be found on the remaining servers.</li>
 </ul>
-<h2 id="a-very-simple-cost-model">A Very Simple Cost Model</h2>
-<p>Many storage vendors may be available to a client, each with charge schedules. For the most part, vendors will charge for storage and bandwidth.</p>
-<ul>
-<li>A charge per month per byte stored (usually gigabyte or petabyte).
-<ul>
-<li>The cost of storage may vary by &quot;quality&quot; of storage, based on its typical error rate or perhaps on speed of retrieval access.<br />
-</li>
-</ul></li>
-<li>A charge per month per byte sent in or out (&quot;ingress&quot; and &quot;egress&quot; charges).
-<ul>
-<li>Bytes sent do not distinguish between user access for normal retrieval and administrative access for auditing.<br />
-</li>
-<li>The cost may vary by speed or reserved bandwidth (Mbps).</li>
-</ul></li>
-<li>Charge schedules may include quantity discounts for storage and transfer</li>
-</ul>
-<p>For the purposes of this study, a client will store a collection on a set of servers of the same &quot;quality&quot; level. Documents with differing quality requirements are considered separate collections and are stored and managed separately.</p>
 <hr />
 <h1 id="basic-testing-process">Basic Testing Process</h1>
 <p>Simulations of the aging of document collections are done in several <em>runs</em> through the simulation program. The process is approximately as follows.</p>
@@ -572,7 +587,7 @@ padding-bottom: 3px;
 <li>Segments were chosen either systematically (the first quarter of the collection, the second quarter of the collection, etc.) or by uniform random selection, with replacement, of part of the collection.</li>
 </ul>
 <hr />
-<h1 id="observations">Observations</h1>
+<h1 id="observations-scale-independence">Observations: Scale Independence</h1>
 <h2 id="large-vs-small-collections">Large vs Small Collections</h2>
 <p>The simulations were done with a fixed collection size of 10,000 documents in a collection. All the statistics we report are stated as percentage of the documents lost. These proportions can be scaled to different collection sizes by linear extrapolation.</p>
 <h2 id="large-vs-small-documents">Large vs Small Documents</h2>
@@ -581,6 +596,7 @@ padding-bottom: 3px;
 <h2 id="large-vs-small-storage-structures">Large vs Small Storage Structures</h2>
 <p>Storage servers will store documents on storage arrays of varying size, depending on disk size, RAID or erasure coding level, and other administrative factors. We ran tests on storage structures varying in size by a factor of 10 and found no differences in document losses.</p>
 <p>One minor note: using very large storage structures with small documents result in storage extents that are sparsely populated. This reduces the efficiency of the simulation programs, because many of the simulated &quot;cosmic ray&quot; errors striking the disks land in unoccupied areas that do not affect any documents.</p>
+<h1 id="observations-auditing-is-essential">Observations: Auditing is Essential</h1>
 <h2 id="total-auditing-is-essential">Total Auditing is Essential</h2>
 <ul>
 <li><em>Observation</em>: Total auditing of the collection is highly effective at reducing document losses.</li>
@@ -737,23 +753,7 @@ padding-bottom: 3px;
 <hr />
 <p>where to these fit?</p>
 <ul>
-<li>limitations</li>
-</ul>
-<h2 id="a-few-words-about-the-graphs-1">A Few Words About the Graphs</h2>
-<p>The graphs are generally structured as follows:</p>
-<ul>
-<li>The X axis is the sector lifetime expressed as half-life. As half-life increases from left to right, the sector error rate, which is the inverse of lifetime, decreases. Trying to express the sector life as an error rate was found to be confusing because they are generally small fractions.<br />
-</li>
-<li>Sector half-life is stated in megahours. The range is typically from 2 or 3 megahours to 1,000 or 10,000 megahours.<br />
-</li>
-<li>The Y axis is the document failure rate, stated in percent of the collection size. The collection size is 10,000 documents.<br />
-</li>
-<li>The graphs include a horizontal line at the 1% level, that is, one per cent of the documents permanently lost in the simulation.<br />
-</li>
-<li>Except as noted, the duration of the simulation is ten years, which is nominally 100,000 hours.<br />
-</li>
-<li><p>Both axes on the graphs are drawn with logarithmic scales with base ten. Because some of the sampled numbers are actually zero, we have biased the loss rate numbers away from zero by a small amount. Typically, zero is rendered as 10 parts per million (ppm), which shows up as 0.001% on the graphs. This can be modified with a simple change in the code that draws the graphs; we have tried 1 ppm, also, and the visual results are very similar.</p></li>
-<li><p>long term bit rot</p></li>
+<li><p>limitations</p></li>
 <li><p>Long term -- bit rot</p>
 <p>o Using Poisson closed form -- if expectation loss is just less than .5 doc in 10 years . Expect not to see any doc loss in 10 years ... how long to see a doc lost... how long to see 1% failure.</p>
 <p>o Interaction -- fragility of big documents</p>
@@ -1118,7 +1118,7 @@ loss due to raid/internal replication characteristics and failure
 <p>Other discussion points? - Variation: Repairable documents - Small failure damages only one segment</p>
 <p>TBS</p>
 <p>(Model this as a collection of smaller docs?)</p>
-<h2 id="encryption-1">Encryption</h2>
+<h2 id="encryption">Encryption</h2>
 <p>Deriving encryption key loss:</p>
 <ul>
 <li>Assume that your expected collection loss with N_S servers is L% , without encryption</li>
