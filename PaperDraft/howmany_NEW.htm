@@ -29,7 +29,7 @@ padding-bottom: 3px;
 <p>% How Many Copies Is Enough?<br />
 % Micah Altman; Richard Landau<br />
 % 2016-08-15<br />
-% Revised 2018-05-22 RBL</p>
+% Revised 2018-06-04 RBL</p>
 <h1 id="title" class="unnumbered">Information Integrity Over the Long Term -- How Many Copies Is Enough?</h1>
 <h4 id="assessing-long-term-durability-of-collections-through-a-flexible-replicable-simulation">Assessing Long-term Durability of Collections Through A Flexible, Replicable Simulation</h4>
 <h1 id="outline-with-text-in-it">OUTLINE WITH TEXT IN IT</h1>
@@ -55,7 +55,7 @@ padding-bottom: 3px;
 <li><p>Thou shalt respect and <strong>monitor the independence of thy vendors</strong>.</p></li>
 <li><p>Thou shalt be wary that <strong>vendors are ephemeral</strong>. Therefore shalt thou befriend more vendors than thou currently doth engage, for they may be friends in lean years of woe and hardship.</p></li>
 <li><p>Thou shalt <strong>cloak thy documents</strong>, if they be shy, in secret robes to keep them from prying eyes.</p></li>
-<li><p>Thou shalt engage with thy community to <strong>develop standards for the benefit of all</strong>.</p></li>
+<li><p>Thou shalt engage with thy community to <strong>develop standards</strong> for the benefit of all.</p></li>
 <li><p>Thou shalt <strong>protect thy documents against many dangerous circumstances</strong> that thou canst not control, for life is uncertain.</p></li>
 <li><p>Yonder nor sorghum stenches shoe dentine tension beep aide toothies.</p></li>
 </ol>
@@ -89,7 +89,7 @@ padding-bottom: 3px;
 <li>where is the high end of the of the sector halflife range?</li>
 </ul></li>
 <li><p>need a way to rule out one copy on a really good disk.</p></li>
-<li>2-3% of disks fail every year. what does this say about sector error rate?<br />
+<li>2-3% of disks fail every year? what does this say about sector error rate?<br />
 </li>
 <li>[Backblaze stats a lot more complicated than that. Aggregate half-life of disks seems to be 6-7 years, but that is heavily influenced by infant failures. If a drive survives infancy, then its wear-out half-life is more like 10-12 years. See spreadsheets I did on this topic.]</li>
 <li>[backblaze numbers:
@@ -401,20 +401,44 @@ padding-bottom: 3px;
 </ul>
 <p>For the purposes of this study, a client will store a collection on a set of servers of the same &quot;quality&quot; level. Documents with differing quality requirements are considered separate collections and are stored and managed separately.</p>
 <h1 id="judge-the-level-of-storage-quality">Judge the Level of Storage Quality</h1>
-<p>Do not blindly believe reliability estimates from storage vendors.</p>
-<h3 id="dont-believe-manufacturers-or-cloud-vendors">Don't Believe Manufacturers or Cloud Vendors</h3>
+<p>Do not blindly believe reliability estimates from vendors.</p>
+<h3 id="doubt-statistics-of-manufacturers-and-cloud-vendors">Doubt Statistics of Manufacturers and Cloud Vendors</h3>
 <h4 id="dont-believe-tricky-statistics">Don't Believe Tricky Statistics</h4>
 <ul>
 <li>be wary of marketing numbers</li>
 <li>mtbf, mttf, and such are particularly hard to grasp</li>
 </ul>
 <p>The likelihood of an error in a disk bit or sector, or even the failure of an entire disk, is a very small number with many zeroes before the first significant digit. We choose to invert the error rate into a function of lifetime of that bit (or sector containing many bits). Thus a probability of a bit failing in a year of 10E-15 becomes a mean lifetime of 100E12 years. Expressed that way, the figure seems excessively optimistic. (The age of the universe is currently estimated to be 14E9 years.) Data on such a disk would be effectively immortal, and that does not correlate with experience.</p>
-<p>We agree with Rosenthal (2010) and others that such estimates are merely marketing projections that are not based on empirical data. Using simulations to investigate such nearly immortal disks would be expensive and fruitless. If there are no errors, then no protective strategy is needed. However, the statement &quot;no errors&quot; does not correlate well with practical experience.</p>
+<p>We agree with Rosenthal (2010) and others that such estimates are merely marketing projections that are not based on empirical data. Using simulations to investigate such nearly immortal disks would be expensive and fruitless. If there are no errors at all, then no protective strategy is needed. However, the statement &quot;no errors&quot; does not correlate well with practical experience.</p>
+<h4 id="lifetime-easier-to-understand-than-error-rate">Lifetime Easier to Understand Than Error Rate</h4>
 <p>The inverse of error rate is usually expressed in terms of MTBF or MTTF, and, initially, we expressed all parameters as mean exponential lifetime. But MTBF and MTTF are hard even for most experts to grasp, and uninformative or misleading for non-experts.</p>
+<h4 id="be-skeptical-of-mtbf">Be Skeptical of MTBF</h4>
 <p>The disk manufacturing industry tends to express the device lifetime as MTBF or MTTF. This is an expected (mean) exponential lifetime for the device, but that does not give much information about the lifetime of data in individual files, blocks, or bits on the disk. There are several layers of error detection and correction in storage systems that tend to mask small errors in disk data and obscure the relationship between small data errors and drive failures.</p>
 <p>MTBF, Mean Time Between Failures, is a slippery notion, much touted by marketing departments and viewed warily by users. If the object in question is removed from service after only one failure, as is the case here with documents, it is perhaps more appropriate to speak of MTTF, Mean Time To Failure. MTTF is intended to be equivalent to the mean lifetime (before failure) of the object, and, if one assumes that failures are a Poisson process, then MTTF is the mean exponential lifetime of the object.</p>
 <p>Most non-marketing literature considers MTBF estimates from manufacturers to be exaggerated considerably, by factors of three or four at best. The annual failure rates of disk drives in large collections of drives are much higher than would be expected based on published MTBF estimates of 1E6 hours or more. [citations]</p>
 <p>Even if we understood the source and accuracy of stated MTTF estimates for disk drives, we would still not have information about individual sector failures within a drive that cause document failures, nor the relative frequencies of sector failures versus drive failures.</p>
+<h3 id="reliability-varies-over-time">Reliability Varies Over Time</h3>
+<h4 id="infant-and-aging-failures">Infant and Aging Failures</h4>
+<ul>
+<li>bathtub curve
+<ul>
+<li>declining infant failures</li>
+<li>stable maturity</li>
+<li>rising senescence failures, wear-out</li>
+</ul></li>
+</ul>
+<h4 id="small-changes-in-error-rates-glitches">Small Changes in Error Rates: Glitches</h4>
+<ul>
+<li>A <em>glitch</em> is a temporary, short-lived, condition that impacts a single server and increases the sector error rate on that server for some short interval.<br />
+</li>
+<li>What types of glitches might occur in server farms? HVAC weakness or failure; environmental contamination by chemicals or particulates; radiation; electrical noise; and similar. In general, these conditions are not fatal to the server overall, but degrade the integrity of data storage.<br />
+</li>
+<li>Glitches arrive at random intervals in a Poisson process, and have limited duration.<br />
+</li>
+<li>Glitches are local phenomena, limited to a single server.<br />
+</li>
+<li>The effect of a glitch is simply to increase the sector error rate for a short period. Glitches, like the errors they induce, are silent. In this study, we find that it is hard to distinguish glitch-induced increases in error rates from random variations in performance.</li>
+</ul>
 <h3 id="do-believe-the-experience-of-others">Do Believe the Experience of Others</h3>
 <ul>
 <li>attend the experience of other similar users</li>
@@ -429,14 +453,27 @@ padding-bottom: 3px;
 <ul>
 <li>shocks that weaken or kill whole servers, multiple servers</li>
 <li>regional: depression, war, earthquake, flood, etc.</li>
-<li>human: admin failures, payment arrangements, hostile or government action</li>
+<li><p>human: admin failures, payment arrangements, hostile or government action</p></li>
+<li>A <em>shock</em> is a more serious condition affecting storage servers. This is a temporary, short-lived, or possibly permanent, increase in the likelihood of death of a server. All servers are considered to have finite lives (of random length), though the lives may be very long. A shock reduces that lifetime.<br />
+</li>
+<li>A shock may kill a server immediately, or it may simply increase the likelihood of failure of that server.<br />
+</li>
+<li>What types of shocks might occur? Natural disasters, such as fire, flood, earthquake, volcano, meteor, etc.; economic downturnsin consumer and financial markets; regional wars; government interference; administrative errors such as billing and credit arrangements; and so forth.<br />
+</li>
+<li>Shocks arrive at random intervals in a Poisson process, and may be immediately fatal to a set of servers or may simply reduce their life expectancies for a period.<br />
+</li>
+<li>The impact of a shock is modeled as silent, that is, no one notices the death of a server until someone tries to retrieve a document from a dead server. Note that a server failure results in the loss of all document copies stored on that server.<br />
+</li>
+<li>Shocks may be regional or administrative phenomena that affect more than one server at a time. One particularly subtle cause of a shock affecting multiple servers is lack of independence of the servers, due to corporate mergers, collocation of server farms, dependence on large power grids, etc.<br />
+</li>
+<li><p>When a server is lost, the client is required to find a new server and populate it with the whole collection -- or at least the parts of the collection that can still be found on the remaining servers.</p></li>
 </ul>
 <p>TBS</p>
 <h1 id="storage-vendors-and-locations-must-be-independent">Storage Vendors and Locations Must be Independent</h1>
 <ul>
 <li>financial dependence through mergers</li>
-<li>location dependence through common facilities</li>
-<li>keeping multiple copies in one vacility</li>
+<li>accidental location dependence through common facilities</li>
+<li>don't keep multiple copies in one facility</li>
 </ul>
 <h1 id="develop-standards-for-the-benefit-of-all">Develop Standards for the Benefit of All</h1>
 <h3 id="make-auditing-more-efficient.">Make auditing more efficient.</h3>
@@ -447,6 +484,8 @@ padding-bottom: 3px;
 </ul>
 <h1 id="end-of-new-outline">END OF NEW OUTLINE</h1>
 <h1 id="material-from-here-down-will-be-relocated-to-the-proper-place-in-the-new-outline-or-to-supplementry-material.">MATERIAL FROM HERE DOWN WILL BE RELOCATED TO THE PROPER PLACE IN THE NEW OUTLINE, OR TO SUPPLEMENTRY MATERIAL.</h1>
+<h1 id="end-end-end-end-end-end-end-end-end-end-end-end-end">END END END END END END END END END END END END END</h1>
+<h1 id="end-end-end-end-end-end-end-end-end-end-end-end-end-1">END END END END END END END END END END END END END</h1>
 <h1 id="details-of-the-structure-of-the-model">Details of the Structure of the Model</h1>
 <p>Our preservation model includes a few very simple objects and operations.</p>
 <ul>
@@ -479,34 +518,7 @@ padding-bottom: 3px;
 </ul>
 <p>(Format obsolescence is not an inherent part of this model, but forms of it may be modeled through extensions involving associated failure. See below.)</p>
 <h2 id="small-and-large-failures">Small and Large Failures</h2>
-<h3 id="small-simple-case-glitches">Small, Simple Case: Glitches</h3>
-<ul>
-<li>A <em>glitch</em> is a temporary, short-lived, condition that impacts a single server and increases the sector error rate on that server for some short interval.<br />
-</li>
-<li>What types of glitches might occur in server farms? HVAC weakness or failure; environmental contamination by chemicals or particulates; radiation; electrical noise; and similar. In general, these conditions are not fatal to the server overall, but degrade the integrity of data storage.<br />
-</li>
-<li>Glitches arrive at random intervals in a Poisson process, and have limited duration.<br />
-</li>
-<li>Glitches are local phenomena, limited to a single server.<br />
-</li>
-<li>The effect of a glitch is simply to increase the sector error rate for a short period. Glitches, like the errors they induce, are silent. In this study, we find that it is hard to distinguish glitch-induced increases in error rates from random variations in performance.</li>
-</ul>
 <h3 id="large-complex-case-shocks">Large, Complex Case: Shocks</h3>
-<ul>
-<li>A <em>shock</em> is a more serious condition affecting storage servers. This is a temporary, short-lived, or possibly permanent, increase in the likelihood of death of a server. All servers are considered to have finite lives (of random length), though the lives may be very long. A shock reduces that lifetime.<br />
-</li>
-<li>A shock may kill a server immediately, or it may simply increase the likelihood of failure of that server.<br />
-</li>
-<li>What types of shocks might occur? Natural disasters, such as fire, flood, earthquake, volcano, meteor, etc.; economic downturnsin consumer and financial markets; regional wars; government interference; administrative errors such as billing and credit arrangements; and so forth.<br />
-</li>
-<li>Shocks arrive at random intervals in a Poisson process, and may be immediately fatal to a set of servers or may simply reduce their life expectancies for a period.<br />
-</li>
-<li>The impact of a shock is modeled as silent, that is, no one notices the death of a server until someone tries to retrieve a document from a dead server. Note that a server failure results in the loss of all document copies stored on that server.<br />
-</li>
-<li>Shocks may be regional or administrative phenomena that affect more than one server at a time. One particularly subtle cause of a shock affecting multiple servers is lack of independence of the servers, due to corporate mergers, collocation of server farms, dependence on large power grids, etc.<br />
-</li>
-<li>When a server is lost, the client is required to find a new server and populate it with the whole collection -- or at least the parts of the collection that can still be found on the remaining servers.</li>
-</ul>
 <hr />
 <h1 id="basic-testing-process">Basic Testing Process</h1>
 <p>Simulations of the aging of document collections are done in several <em>runs</em> through the simulation program. The process is approximately as follows.</p>
