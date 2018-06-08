@@ -175,7 +175,8 @@ padding-bottom: 3px;
 <h3 id="what-range-of-storage-error-rates-should-we-consider">What Range of Storage Error Rates Should We Consider?</h3>
 <p>One basic question should be answered before embarking on such simulations: what is the failure rate of stored documents? This is a difficult question due to a lack of real data.</p>
 <p>There is some data on the failure rate of individual disk drives over time. Thanks to Backblaze, Google, and others, there is some published empirical data on failure rates of disk drives of recent technology vintages. [citations] These figures refer to replacements of entire disk drives during the useful life and wear-out periods of device use. That is, they exclude infant failures but include mid-life and senescence. Unfortunately, we do not get much information on the rates of sector failures, bad block replacements, and so forth.</p>
-<p>We have not encountered data on the performance of disk drives or blocks in RAID and erasure coding configurations, the effect of pre-emptive data scrubbing, etc. Perhaps bounds on the failure of sectors can be extrapolated from the failure of drives. Example: a 4TB disk drive contains 4E6 &quot;sectors&quot; of size 1MB. Backblaze, on the basis of experience with hundreds of thousands of disk drives, has estimated the failure rates of drives for the first four years.</p>
+<p>We can try to estimate bounds on the failure of sectors by extrapolating from the failure of drives. Example: If disks are allowed to run until the drive fails, then the life of all the sectors on the disk cannot be longer than the life of the entire drive. That is, the half-life of the drive is an upper bound on the half-life of sectors contained on that drive.</p>
+<p>Backblaze, on the basis of experience with hundreds of thousands of disk drives, has estimated the failure rates of drives for the first four years. [citation] Exhibit nnn shows the estimated drive lifetimes based on that experience.</p>
 <h5 id="exhibit-nnn-disk-failure-rates-from-measured-experience">Exhibit nnn: Disk failure rates from measured experience</h5>
 <table style="width:36%;">
 <colgroup>
@@ -188,157 +189,131 @@ padding-bottom: 3px;
 <thead>
 <tr class="header">
 <th>Year</th>
-<th>Drives failed %</th>
 <th>Cumulative drives failed %</th>
+<th>Annualized Failure Rate (AFR) %</th>
 <th>Drives survived %</th>
-<th>Equivalent Poisson sector half-life (megahours)</th>
+<th>Equivalent half-life (yrs)</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>1</td>
-<td>3</td>
-<td>3</td>
-<td>97</td>
-<td>?</td>
+<td>1.5</td>
+<td>8</td>
+<td>5.1</td>
+<td>92.4</td>
+<td>13.1</td>
 </tr>
 <tr class="even">
-<td>2</td>
-<td>2.5</td>
-<td>6</td>
-<td>94</td>
-<td>?</td>
+<td>3</td>
+<td>10</td>
+<td>1.4</td>
+<td>90.3</td>
+<td>20.3</td>
 </tr>
 <tr class="odd">
-<td>3</td>
-<td>1</td>
-<td>7</td>
-<td>93</td>
-<td>?</td>
-</tr>
-<tr class="even">
 <td>4</td>
+<td>22</td>
 <td>12</td>
-<td>20</td>
-<td>80</td>
-<td>?</td>
-</tr>
-<tr class="odd">
-<td>5</td>
-<td>12</td>
-<td>30</td>
-<td>68</td>
-<td>?</td>
+<td>78.5</td>
+<td>11.4</td>
 </tr>
 </tbody>
 </table>
-<p>TBS</p>
-<p>(Numbers are approximate, and include interpolations and rounding.) Overall, they estimated that 22% of all drives would fail in the first four years, and that the expected half-life of disk drives is about six years. Based on the estimated half-life of disk drives, the numbers aren't all that different.</p>
-<h5 id="exhibit-nnn-disk-failure-rates-based-on-estimated-drive-half-life-6-years">Exhibit nnn: Disk failure rates based on estimated drive half-life = 6 years</h5>
-<table style="width:36%;">
-<colgroup>
-<col width="8%" />
-<col width="8%" />
-<col width="8%" />
-<col width="8%" />
-<col width="2%" />
-</colgroup>
+<p>(Numbers are approximate, and include interpolations and rounding.) Overall, they estimated that 22% of all drives would fail in the first four years, and that the expected half-life of disk drives is more than six years. Apparently, there is a bathtub effect present here: infant failures are high for the first year and a half, then mature drives fail at a much lower rate for another year or so, and finally wear-out failures increase after three years.</p>
+<p>If the half-life of a disk drive in production use is, say, between six and twelve years according to their experience figures, then the half-life of a sector on that disk cannot be longer than that same six to twelve years. On the other hand, if the arrays of disks are managed with conservative hygiene, e.g., replacing most drives after some &quot;usable&quot; lifetime but before they fail and rebuilding redundant arrays of disks, then the drive lifetime may not be the dominant factor in sector lifetime. Failures of individual sectors will occur all the time, albeit at a much lower rate, but they are silent and will accumulate if they are not actively uncovered and repaired.</p>
+<h5 id="exhibit-nnn-disk-failure-rates-based-on-drive-half-life-11-years-calculated">Exhibit nnn: Disk failure rates based on drive half-life = 11 years (calculated)</h5>
+<table>
 <thead>
 <tr class="header">
 <th>Year</th>
-<th></th>
 <th>Cumulative drives failed %</th>
 <th>Drives survived %</th>
-<th>Equivalent Poisson sector half-life (megahours)</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>1</td>
-<td></td>
-<td>11</td>
-<td>89</td>
-<td>?</td>
+<td>6</td>
+<td>94</td>
 </tr>
 <tr class="even">
 <td>2</td>
-<td></td>
-<td>21</td>
-<td>79</td>
-<td>?</td>
+<td>12</td>
+<td>88</td>
 </tr>
 <tr class="odd">
 <td>3</td>
-<td></td>
-<td>29</td>
-<td>71</td>
-<td>?</td>
+<td>17</td>
+<td>83</td>
 </tr>
 <tr class="even">
 <td>4</td>
-<td></td>
-<td>37</td>
-<td>63</td>
-<td>?</td>
+<td>22</td>
+<td>78</td>
 </tr>
 <tr class="odd">
 <td>5</td>
-<td></td>
-<td>44</td>
-<td>56</td>
-<td>?</td>
-</tr>
-<tr class="even">
-<td>6</td>
-<td></td>
-<td>50</td>
-<td>50</td>
-<td>?</td>
+<td>27</td>
+<td>73</td>
 </tr>
 </tbody>
 </table>
-<p>TBS</p>
-<p>Obviously, RAID implementation dramatically reduces the loss of data. Still, there is the possibility with RAID5 that a second drive fails while a previously failed drive is being rebuilt. Suppose that it takes about one day (metric day = 25 hours) to rebuild a drive.</p>
-<h5 id="exhibit-nnn-disk-failures-during-raid5-rebuild">Exhibit nnn: Disk failures during RAID5 rebuild</h5>
-<table style="width:8%;">
-<colgroup>
-<col width="2%" />
-<col width="2%" />
-<col width="2%" />
-</colgroup>
+<p>Based on the experience of Backblaze, at least, the drive survival rate is much lower than is shown here after the third year of production use.</p>
+<p>We have not encountered data on the performance of disk drives or blocks in RAID and erasure coding arrays, the effect of pre-emptive data scrubbing or active patrolling, etc.</p>
+<p>Obviously, redundant implementation such as RAID dramatically reduces the loss of data. Still, there is the possibility with RAID5 that a second drive fails while a previously failed drive is being rebuilt. RAID6, with two redundant drives, is a partial solution to this problem, but storage experts now do not view even this as a long-term solution as disk sizes increase.</p>
+<p>Given . . . [appropriate hand-waving here]</p>
+<h5 id="sector-losses-in-permille-over-the-first-few-years-of-drive-use-across-a-wide-range-of-sector-half-lives.-sectors-1mb-sector-half-lives-in-megahours.">Sector losses in permille over the first few years of drive use, across a wide range of sector half-lives. Sectors 1MB, sector half-lives in megahours.</h5>
+<table>
 <thead>
 <tr class="header">
-<th>Size of RAID5 array</th>
-<th>Time to rebuild (hours)</th>
-<th>Pr{2nd failure during rebuild }</th>
+<th>Year</th>
+<th>10</th>
+<th>30</th>
+<th>100</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>5</td>
-<td>20</td>
-<td>?</td>
+<td>1</td>
+<td>0.7</td>
+<td>0.2</td>
+<td>0.07</td>
 </tr>
 <tr class="even">
-<td>10</td>
-<td>20</td>
-<td>?</td>
+<td>2</td>
+<td>1.4</td>
+<td>0.5</td>
+<td>0.13</td>
 </tr>
 <tr class="odd">
-<td>15</td>
-<td>20</td>
-<td>?</td>
+<td>3</td>
+<td>2.1</td>
+<td>0.7</td>
+<td>0.21</td>
 </tr>
 <tr class="even">
-<td>20</td>
-<td>20</td>
-<td>?</td>
+<td>5</td>
+<td>3.5</td>
+<td>1.2</td>
+<td>0.35</td>
+</tr>
+<tr class="odd">
+<td>10</td>
+<td>7.0</td>
+<td>2.3</td>
+<td>0.69</td>
 </tr>
 </tbody>
 </table>
-<p>TBS</p>
 <p>Note also that, since documents typically occupy more than one disk sector, even the large sectors we use for these calculations, they are larger targets and therefore considerably more vulnerable.</p>
-<p>TBS</p>
+<h5 id="document-losses-in-percent-over-the-first-few-years-across-a-wide-range-of-sector-half-lives">Document losses in percent over the first few years, across a wide range of sector half-lives</h5>
+<h5 id="sectors-1mb-documents-50mb-sector-half-lives-in-megahours.">Sectors 1MB, documents 50MB, sector half-lives in megahours.</h5>
+<p>Year | 10 | 30 | 100 |<br />
+1 | 3.4 | 1.1 | 0.3 |<br />
+2 | 6.7 | 2.3 | 0.7 |<br />
+3 | 9.9 | 3.4 | 1.0 |<br />
+5 | 15.9 | 5.6 | 1.7 |<br />
+10 | 19.3 | 10.9 | 3.4 |</p>
 <h3 id="how-far-into-the-future-should-we-look">How Far Into the Future Should We Look?</h3>
 <p>TBS</p>
 <h1 id="visit-your-documents-regularly">Visit Your Documents Regularly</h1>

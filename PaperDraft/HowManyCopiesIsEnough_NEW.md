@@ -209,53 +209,65 @@ But even multiple copies of collections deteriorate over time, from small erosio
 
 One basic question should be answered before embarking on such simulations: what is the failure rate of stored documents? This is a difficult question due to a lack of real data.
 
-There is some data on the failure rate of individual disk drives over time. Thanks to Backblaze, Google, and others, there is some published empirical data on failure rates of disk drives of recent technology vintages. [citations] These figures refer to replacements of entire disk drives during the useful life and wear-out periods of device use. That is, they exclude infant failures but include mid-life and senescence. Unfortunately, we do not get much information on the rates of sector failures, bad block replacements, and so forth.
+There is some data on the failure rate of individual disk drives over time. Thanks to Backblaze, Google, and others, there is some published empirical data on failure rates of disk drives of recent technology vintages. [citations]  These figures refer to replacements of entire disk drives during the useful life and wear-out periods of device use. That is, they exclude infant failures but include mid-life and senescence. Unfortunately, we do not get much information on the rates of sector failures, bad block replacements, and so forth.
 
-We have not encountered data on the performance of disk drives or blocks in RAID and erasure coding configurations, the effect of pre-emptive data scrubbing, etc.  Perhaps bounds on the failure of sectors can be extrapolated from the failure of drives.  Example: a 4TB disk drive contains 4E6 "sectors" of size 1MB.  Backblaze, on the basis of experience with hundreds of thousands of disk drives, has estimated the failure rates of drives for the first four years.  
+We can try to estimate bounds on the failure of sectors by extrapolating from the failure of drives.  Example: If disks are allowed to run until the drive fails, then the life of all the sectors on the disk cannot be longer than the life of the entire drive.  That is, the half-life of the drive is an upper bound on the half-life of sectors contained on that drive.  
+
+Backblaze, on the basis of experience with hundreds of thousands of disk drives, has estimated the failure rates of drives for the first four years. [citation]  Exhibit nnn shows the estimated drive lifetimes based on that experience.  
 
 ##### Exhibit nnn: Disk failure rates from measured experience
 
-| Year | Drives failed % | Cumulative drives failed % | Drives survived % | Equivalent Poisson sector half-life (megahours) |
+| Year | Cumulative drives failed % | Annualized Failure Rate (AFR) % | Drives survived % | Equivalent half-life (yrs)|
 |-----|-----|-----|-----|-|
-| 1 | 3 | 3 |97| ? |
-| 2 | 2.5 | 6 |94| ? | 
-| 3 | 1 | 7 |93| ? |
-| 4 | 12 | 20 |80| ? |
-| 5 | 12 | 30 |68| ? |
+| 1.5 |8| 5.1 | 92.4 | 13.1 | 
+| 3 |10| 1.4 | 90.3 | 20.3 |
+| 4 |22| 12 | 78.5 | 11.4 |
 
-TBS
+(Numbers are approximate, and include interpolations and rounding.)  Overall, they estimated that 22% of all drives would fail in the first four years, and that the expected half-life of disk drives is more than six years.  Apparently, there is a bathtub effect present here: infant failures are high for the first year and a half, then mature drives fail at a much lower rate for another year or so, and finally wear-out failures increase after three years.
 
-(Numbers are approximate, and include interpolations and rounding.)  Overall, they estimated that 22% of all drives would fail in the first four years, and that the expected half-life of disk drives is about six years.  Based on the estimated half-life of disk drives, the numbers aren't all that different.
+If the half-life of a disk drive in production use is, say, between six and twelve years according to their experience figures, then the half-life of a sector on that disk cannot be longer than that same six to twelve years.  On the other hand, if the arrays of disks are managed with conservative hygiene, e.g., replacing most drives after some "usable" lifetime but before they fail and rebuilding redundant arrays of disks, then the drive lifetime may not be the dominant factor in sector lifetime.  Failures of individual sectors will occur all the time, albeit at a much lower rate, but they are silent and will accumulate if they are not actively uncovered and repaired.  
 
-##### Exhibit nnn: Disk failure rates based on estimated drive half-life = 6 years
+##### Exhibit nnn: Disk failure rates based on drive half-life = 11 years (calculated)
 
-| Year || Cumulative drives failed % | Drives survived % | Equivalent Poisson sector half-life (megahours) |
-|-----|-----|-----|-----|-|
-| 1 |  | 11 |89| ? |
-| 2 |  | 21 |79| ? | 
-| 3 |  | 29 |71| ? |
-| 4 |  | 37 |63| ? |
-| 5 |  | 44 |56| ? |
-| 6 |  | 50 |50| ? |
+|Year|Cumulative drives failed %|Drives survived %|
+|-----|-----|-----|
+| 1 | 6 | 94 |
+| 2 | 12 | 88 | 
+| 3 | 17 | 83 |
+| 4 | 22 | 78 |
+| 5 | 27 | 73 |
 
-TBS
+Based on the experience of Backblaze, at least, the drive survival rate is much lower than is shown here after the third year of production use.
 
-Obviously, RAID implementation dramatically reduces the loss of data.  Still, there is the possibility with RAID5 that a second drive fails while a previously failed drive is being rebuilt.  Suppose that it takes about one day (metric day = 25 hours) to rebuild a drive.  
+We have not encountered data on the performance of disk drives or blocks in RAID and erasure coding arrays, the effect of pre-emptive data scrubbing or active patrolling, etc.  
 
-##### Exhibit nnn: Disk failures during RAID5 rebuild
+Obviously, redundant implementation such as RAID dramatically reduces the loss of data.  Still, there is the possibility with RAID5 that a second drive fails while a previously failed drive is being rebuilt.  RAID6, with two redundant drives, is a partial solution to this problem, but storage experts now do not view even this as a long-term solution as disk sizes increase.
 
-| Size of RAID5 array | Time to rebuild (hours) | Pr{2nd failure during rebuild } |
-|-|-|-|
-| 5 | 20 | ? |
-| 10 | 20 | ? |
-| 15 | 20 | ? |
-| 20 | 20 | ? |
+Given . . . [appropriate hand-waving here]
 
-TBS
+##### Sector losses in permille over the first few years of drive use, across a wide range of sector half-lives.  Sectors 1MB, sector half-lives in megahours.
+
+| Year | 10 | 30 | 100|  
+|-----|-----|-----|-----|
+| 1 | 0.7 | 0.2 | 0.07 |
+| 2 | 1.4 | 0.5 | 0.13 |
+| 3 | 2.1 | 0.7 | 0.21 |
+| 5 | 3.5 | 1.2 | 0.35 |
+| 10 | 7.0 | 2.3 | 0.69 |
 
 Note also that, since documents typically occupy more than one disk sector, even the large sectors we use for these calculations, they are larger targets and therefore considerably more vulnerable.
 
-TBS
+##### Document losses in percent over the first few years, across a wide range of sector half-lives
+##### Sectors 1MB, documents 50MB, sector half-lives in megahours.
+
+| Year | 10 | 30 | 100 |  
+| 1 | 3.4 | 1.1 | 0.3 |
+| 2 | 6.7 | 2.3 | 0.7 |
+| 3 | 9.9 | 3.4 | 1.0 |
+| 5 | 15.9 | 5.6 | 1.7 |
+| 10 | 19.3 | 10.9 | 3.4 |
+
+
 
 ### How Far Into the Future Should We Look?
 
