@@ -26,11 +26,14 @@ padding-bottom: 3px;
 </style>
 </head>
 
-<!-- author block, doesn't seem to work per spec with *my* pandoc, phooey! -->
+<!-- author block, doesn't seem to work per spec with *my* pandoc, phooey!  Maybe it will work with knitr or something. -->
 % How Many Copies Is Enough?  
 % Micah Altman; Richard Landau  
 % 2016-08-15  
 % Revised 2018-06-04 RBL
+
+[[Text blocks in double-square-brackets, such as this is, are editorial notes for the authors to clean up.]]
+
 
 
 # Information Integrity Over the Long Term -- How Many Copies Is Enough?   {#title .unnumbered}
@@ -51,8 +54,6 @@ padding-bottom: 3px;
 - Summary Of Specific Recommendations
 <!-- START:TODO:MICAH -->
 
-TBS
-
 i. Thou shalt **keep multiple copies** of thy documents.  
 
 i. Thou shalt **visit thy documents** fully and regularly, and keep them healthy.
@@ -65,7 +66,7 @@ i. Thou shalt respect and **monitor the independence of thy vendors**.
 
 i. Thou shalt be wary that **vendors are ephemeral**.  Therefore shalt thou befriend more vendors than thou currently doth engage, for they may be friends in lean years of woe and hardship.  
 
-i. Thou shalt **cloak thy documents**, if they be shy, in secret robes to keep them from prying eyes.
+i. Thou shalt **cloak thy documents** in secret robes, if they be shy, to keep them from prying eyes.
 
 i. Thou shalt engage with thy community to **develop standards** for the benefit of all.  
 
@@ -76,51 +77,14 @@ i. Yonder nor sorghum stenches shoe dentine tension beep aide toothies.
 <!-- END:TODO:MICAH -->
 
 <!-- BEGIN:TODO:RICK -->
+
 TBS: NOTES
-
-- Be clearer about transition to multiple copies and auditing.  
-    - visit = audit, 
-    - multiple copies = multiple copies
-
-- trust but verify = audit
-
-- wide range described briefly here, more below
-    - either right before or right after.  
-    - how did we get this range
-
-- long period = what? 
-    - 100 yrs will always lose some docs;
-    - 10 years reasonable horizon for known technologies, who knows what will be invented in the meantime.  but if error rates don't change much, the same metrics apply.  
-
-- mfrs error rates are probably (?) per the service lifetime of the disk.  
-    - only if we read the bits or all bits?  
-    - suppose the 10E-14 refers to over service period, e.g., 3 yrs.  
-    - where is the high end of the of the sector halflife range?  
-
-- need a way to rule out one copy on a really good disk.
-
-- 2-3% of disks fail every year?  what does this say about sector error rate?  
-- [Backblaze stats a lot more complicated than that.  Aggregate half-life of disks seems to be 6-7 years, but that is heavily influenced by infant failures.  If a drive survives infancy, then its wear-out half-life is more like 10-12 years.  See spreadsheets I did on this topic.]
-- [backblaze numbers: 
-    - infant failures first 1.5 years: 5%/yr
-    - adulthood very reliable up to 3 years: 1.4%/yr
-    - wear-out rate high after 3 years: 12%/yr]
-- [they have published more recent stats, but not broken it down this way.]
 
 - look at the numbers in Beyond MTTF paper 2014.  
 
+- suppose i have one disk that is immortal.
+
 - suppose we had two copies on the best disks we can find and migrate them within the service period.  
-
-- justify if possible the choice of megabyte sectors and the range?  maybe a disk is just a 10TB sector and fails at one time; well oops does not fit the current model where sector is part of a single document
-
-- try to swag the failure rate of a second drive during raid5 rebuild.
-- [how long does a rebuild take these days?  how many of the mongo disks in a raid5 array?]  [as of 2010, no major storage vendor recommends RAID5; they all suggest RAID6, which tolerates two failures.]  [info from zdnet says optimistic estimate is 5hr/TB; more likely 10-14hrs/TB.  so an 8TB disk takes 40-80 or 90 hours to rebuild. likelihood of another disk failure during that time is xx.x% given drive half-life of 7 years (Backblaze estimate).]
-- [What is the typical disk size these days?  new backblaze number say 8TB or more.]
-- [do people still use raid5 or have they migrated to erasure coding controllers that can tolerate >1 failure so rebuild is not vulnerable to a second failure?]
-
-- multiple copies, raided or otherwise, in independent locations is very similar to raid5: what is the likelihood that all the other copies will die while i am rebuilding this one?  
-
-- wide range of *sector* error rates.
 
 - Don't sweat the small stuff, glitches are covered by protection over a wide range. 
 
@@ -191,16 +155,16 @@ Errors accumulate over time.  Every now and then an error will occur in storage 
 
 A single copy of a collection will deteriorate as predicted by the Poisson distribution.  A collection with multiple copies will deteriorate more slowly, but predictably; and, eventually, all the copies of a single document will be lost.  Since no copy of the document is then retrievable, the document is permanently lost.  
 
-The table of **Exhibit XX** shows the expected rates of document errors, theoretical and simulated, over a wide range of storage error rates.  
+The table of **Exhibit nnn** shows the expected rates of document errors, theoretical and simulated, over a wide range of storage error rates.  [[calibration for ncopies=1 in shelf/docs/PoissonFailures.xls]]
 
 # Keep Multiple Copies
 
-Even if errors in a collection do not accumulate at a significant rate, a single copy of a collection is vulnerable to large-scale or total loss if that single copy is victim of a disaster, natural or man-made (e.g., earthquake, flood, war, economic depression, etc.).  Multiple copies in multiple independent locations are necessary to safeguard documents against this type of large-scale loss.  Thomas Jefferson noted this danger to valuable documents long ago. 
+Even if errors in a collection do not accumulate at a significant rate, a single copy of a collection is vulnerable to large-scale or total loss if that single copy is victim of a disaster, natural or man-made (e.g., earthquake, flood, war, economic depression, administrative error, etc.).  Multiple copies in multiple independent locations are necessary to safeguard documents against this type of large-scale loss.  Thomas Jefferson noted this danger to valuable documents long ago. 
 
->"Time and accident are committing daily havoc on the originals deposited in our public offices.  The late war has done the work of centuries in this business.  The lost cannot be recovered; but let us save what remains: not by vaults and locks which fence them from the public eye and use, in consigning them to the waste of time, but by such a multiplication of copies, as shall place them beyond the reach of accident."
+>"Time and accident are committing daily havoc on the originals deposited in our public offices. . . .  The lost cannot be recovered; but let us save what remains: not by vaults and locks which fence them from the public eye and use, in consigning them to the waste of time, but by such a multiplication of copies, as shall place them beyond the reach of accident."
 ^[From the National Archives, "https://founders.archives.gov/documents/Jefferson/01-19-02-0059".]
 
-But even multiple copies of collections deteriorate over time, from small erosions of individual documents or larger losses from external shocks.  **Exhibit XX** shows the deterioration of collections with multiple copies over long periods of time.  A strategy that includes monitoring and repair of documents is required for long-term preservation.  
+But even multiple copies of collections deteriorate over time, from small erosions of individual documents or larger losses from external shocks.  **Exhibit nnn** shows the deterioration of collections with multiple copies over long periods of time.  A strategy that includes monitoring and repair of documents is required for long-term preservation.  [[RBL: find the results for this case.]]
 
 
 # Protect Against a Wide Range of Conditions
@@ -209,28 +173,30 @@ But even multiple copies of collections deteriorate over time, from small erosio
 
 One basic question should be answered before embarking on such simulations: what is the failure rate of stored documents? This is a difficult question due to a lack of real data.
 
-There is some data on the failure rate of individual disk drives over time. Thanks to Backblaze, Google, and others, there is some published empirical data on failure rates of disk drives of recent technology vintages. [citations]  These figures refer to replacements of entire disk drives during the useful life and wear-out periods of device use. That is, they exclude infant failures but include mid-life and senescence. Unfortunately, we do not get much information on the rates of sector failures, bad block replacements, and so forth.
+There is some data on the failure rate of individual disk drives over time. Thanks to Backblaze, Google, and others, there is some published empirical data on failure rates of disk drives of recent technology vintages. [[citations needed]]  These figures refer to replacements of entire disk drives during the useful life and wear-out periods of device use. That is, they exclude infant failures but include mid-life and senescence. Unfortunately, we do not get much information on the rates of sector failures, bad block replacements, and so forth.
+
+#### Drive Failures May Place Limits on Sector Lifetime
 
 We can try to estimate bounds on the failure of sectors by extrapolating from the failure of drives.  Example: If disks are allowed to run until the drive fails, then the life of all the sectors on the disk cannot be longer than the life of the entire drive.  That is, the half-life of the drive is an upper bound on the half-life of sectors contained on that drive.  
 
-Backblaze, on the basis of experience with hundreds of thousands of disk drives, has estimated the failure rates of drives for the first four years. [citation]  Exhibit nnn shows the estimated drive lifetimes based on that experience.  
+Backblaze, on the basis of experience with hundreds of thousands of disk drives, has estimated the failure rates of drives for the first four years. [[citation needed]]  **Exhibit nnn** shows the estimated drive lifetimes based on that experience.  [[Source spreadsheet = PaperDraft/DiskFailuresDuringRAIDRebuild.xls sheet Survival2Halflife]]
 
 ##### Exhibit nnn: Disk failure rates from measured experience
 
-| Year | Cumulative drives failed % | Annualized Failure Rate (AFR) % | Drives survived % | Equivalent half-life (yrs)|
-|-----|-----|-----|-----|-|
+| Years in service | Cumulative drives failed % | Annualized Failure Rate (AFR) % | Drives survived % | Equivalent half-life (yrs)|
+|-----:|-----:|-----:|-----:|-----:|
 | 1.5 |8| 5.1 | 92.4 | 13.1 | 
 | 3 |10| 1.4 | 90.3 | 20.3 |
 | 4 |22| 12 | 78.5 | 11.4 |
 
 (Numbers are approximate, and include interpolations and rounding.)  Overall, they estimated that 22% of all drives would fail in the first four years, and that the expected half-life of disk drives is more than six years.  Apparently, there is a bathtub effect present here: infant failures are high for the first year and a half, then mature drives fail at a much lower rate for another year or so, and finally wear-out failures increase after three years.
 
-If the half-life of a disk drive in production use is, say, between six and twelve years according to their experience figures, then the half-life of a sector on that disk cannot be longer than that same six to twelve years.  On the other hand, if the arrays of disks are managed with conservative hygiene, e.g., replacing most drives after some "usable" lifetime but before they fail and rebuilding redundant arrays of disks, then the drive lifetime may not be the dominant factor in sector lifetime.  Failures of individual sectors will occur all the time, albeit at a much lower rate, but they are silent and will accumulate if they are not actively uncovered and repaired.  
+If the half-life of a disk drive in production use is, say, between six and twelve years according to their experience figures, then the half-life of a sector on that disk cannot be longer than that same six to twelve years.   
 
 ##### Exhibit nnn: Disk failure rates based on drive half-life = 11 years (calculated)
 
-|Year|Cumulative drives failed %|Drives survived %|
-|-----|-----|-----|
+| Years of use | Cumulative drives failed by end of period % | Drives survived at end of period % |
+|-----:|-----:|-----:|
 | 1 | 6 | 94 |
 | 2 | 12 | 88 | 
 | 3 | 17 | 83 |
@@ -239,43 +205,70 @@ If the half-life of a disk drive in production use is, say, between six and twel
 
 Based on the experience of Backblaze, at least, the drive survival rate is much lower than is shown here after the third year of production use.
 
+#### Reducing Disk Drive Failures in Production
+
+Some storage installations may choose to preempt wear-out drive failures by replacing drives at the end of some "service lifetime."  From the Backblaze numbers (see **Exhibit nnn**) that service lifetime would probably be not much more than three years.  Such an "error-avoidance" strategy would truncate the sharply rising end of the bathtub curve where drives pass from maturity to senescence.  
+
 We have not encountered data on the performance of disk drives or blocks in RAID and erasure coding arrays, the effect of pre-emptive data scrubbing or active patrolling, etc.  
 
-Obviously, redundant implementation such as RAID dramatically reduces the loss of data.  Still, there is the possibility with RAID5 that a second drive fails while a previously failed drive is being rebuilt.  RAID6, with two redundant drives, is a partial solution to this problem, but storage experts now do not view even this as a long-term solution as disk sizes increase.
+Obviously, redundant implementation such as RAID dramatically reduces the loss of data.  Still, there is the possibility with RAID5 that a second drive fails while a previously failed drive is being rebuilt.  RAID6, with two redundant drives, is a partial solution to this problem, but storage experts now do not view even this as a long-term solution as disk sizes increase.  Discussion of this situation is beyond the scope of this paper.  
 
-Given . . . [appropriate hand-waving here]
+However, we do have to consider the effects on document loss of redundant implementations and error detection and repair.  If drive failures are absent or significantly delayed due to early replacement or redundant configurations, we have to look at the rate of sector errors.  The loss of disk sectors is a combination of two processes: drive failure, as just discussed, in which many sectors are lost at one time, and individual sector failures, which may be due to particulate contamination, physical shocks, cosmic rays, etc.  
 
-##### Sector losses in permille over the first few years of drive use, across a wide range of sector half-lives.  Sectors 1MB, sector half-lives in megahours.
+#### Consider Sector Failures Independent of Drive Failures
 
-| Year | 10 | 30 | 100|  
-|-----|-----|-----|-----|
-| 1 | 0.7 | 0.2 | 0.07 |
-| 2 | 1.4 | 0.5 | 0.13 |
-| 3 | 2.1 | 0.7 | 0.21 |
-| 5 | 3.5 | 1.2 | 0.35 |
-| 10 | 7.0 | 2.3 | 0.69 |
+If arrays of disks are managed with conservative hygiene, e.g., replacing most drives after some "usable" lifetime but before they fail, and rebuilding redundant arrays of disks, then the drive lifetime may not be the dominant factor in sector survival.  Failures of individual sectors will occur all the time, albeit at a much lower rate, but they are silent and will accumulate if they are not actively uncovered and repaired. 
 
-Note also that, since documents typically occupy more than one disk sector, even the large sectors we use for these calculations, they are larger targets and therefore considerably more vulnerable.
+An oft-cited number about disk error rates is "uncorrectable error rate = one bit in 10e-14."  Note several things about this number.  
 
-##### Document losses in percent over the first few years, across a wide range of sector half-lives
-##### Sectors 1MB, documents 50MB, sector half-lives in megahours.
+1. It is not a statistic in the usual sense; that is, it has not been derived from any referenced empirical data.  It is a hypothesis from the manufacturing industry, perhaps derived from collective experience.
+1. It is not stated as time-dependent; that is, it is not an *arrival* rate of errors, it is a constant.  It also does not seem to increase with the size of the drive.  Most analyses using this number treat it as a given fact for any disk drives, for example, as perhaps a rate of manufacturing defects.  
+1. Disk sizes have increased dramatically since that number was first published, but the UER rate remains constant.  A typical (today) drive of 8TB capacity, ignoring recording overhead, has probably 0.6 unrecoverable bits on the drive, or only a 53% likelihood of being error-free.  
+1. It is an *unrecoverable* error that is not repaired by the error-correction coding in the actual recording on the disk.  
+1. A single-bit unrecoverable error may invalidate a sector, currently 4KiB on disk, and invalidate any document stored including that sector.  Because documents are large and more vulnerable, document losses will always be large multiples of bit error rates.  
 
-| Year | 10 | 30 | 100 |  
-| 1 | 3.4 | 1.1 | 0.3 |
-| 2 | 6.7 | 2.3 | 0.7 |
-| 3 | 9.9 | 3.4 | 1.0 |
-| 5 | 15.9 | 5.6 | 1.7 |
-| 10 | 19.3 | 10.9 | 3.4 |
+In the absence of either experimental or experiential data on sector failure rates, we are attempting to provide simulated data as guidelines for policies regarding data storage, redundancy, auditing and repair.  We have assumed that sector errors arrive randomly in a Poisson process.  The question is, what is the arrival rate of sector errors on a disk or disk array?  There is no single, even approximate answer to that question.  Consequently, we have looked at document losses over a wide range of error arrival rates and amelioration strategies.  
+
+**Exhibits nnn and nnn+1** show theoretical sector and document losses, based solely on error arrival rate (expressed as half-life), over the first few years of a disk drive's life.  
 
 
+##### Exhibit nnn: Sector losses in **permille** over the first few years of drive use, across a wide range of sector half-lives.  Sectors 1MB, sector half-lives in megahours (Mhr).
 
-### How Far Into the Future Should We Look?
+| Sector losses (**permille**) by sector half-life (megahours) |
 
-TBS
+| Years in service | Sector half-life = 10Mhr | 30Mhr | 100Mhr | 300Mhr |
+|-----:|-----:|-----:|-----:|-----:|
+| 1 | 0.7 | 0.2 | 0.07 |0.02|
+| 2 | 1.4 | 0.5 | 0.13 |0.05|
+| 3 | 2.1 | 0.7 | 0.21 |0.07|
+| 5 | 3.5 | 1.2 | 0.35 |0.12|
+| 10 | 7.0 | 2.3 | 0.69 |0.23|
+
+Note also that, since documents typically occupy more than one disk sector, even the large sectors we use for these calculations, they are larger targets and therefore considerably more vulnerable to random errors.
+
+##### Exhibit nnn: Document losses in **percent** over the first few years, across a wide range of sector half-lives
+##### Sectors 1MB, documents 50MB, sector half-lives in megahours .
+
+| Years in service | Sector half-life = 10Mhr | 30Mhr | 100Mhr | 300Mhr | 1000Mhr |
+|-----:|-----:|-----:|-----:|-----:|-----:|
+| 1 | 3.4 | 1.1 | 0.3 |0.1 | 0.0 | 
+| 2 | 6.7 | 2.3 | 0.7 |0.2 | 0.1 |
+| 3 | 9.9 | 3.4 | 1.0 |0.3 | 0.1 |
+| 5 | 15.9 | 5.6 | 1.7 |0.6 | 0.2 |
+| 10 | 19.3 | 10.9 | 3.4 | 1.1 | 0.3 |
+
+[[Source spreadsheet: FailureRatesBackOfTheEnvelope.xls, sheet PrintMe]]
+
+Clearly, at the low end of the range, where sector lifetime is in the range of 10 million hours, document losses would be unacceptably high.  If you lost 3 percent of all your documents in the first year, you would take immediate action to find a more reliable storage environment.  Even up to 30 million hours (sector half-life), such disks would be classified as "rusty garbage can lids" that are not suitable for archival storage.  Better disks might still accumulate errors at a significant rate, but permanent losses can be avoided wtih suitable auditing and repair regimes, as discussed below.  
+
+#### If You Can't Control It, Buy Insurance Against It
+
+We do not have good information on the sector error rates of our storage media, particularly if we are buying a service from an outside vendor.  Since such factors are beyond our control, we should choose strategies to protect our document collections from a *wide* range of circumstances that we might encounter.  
+
 
 # Visit Your Documents Regularly 
 
-Verify and repair the multiple copies.
+Verify and repair the multiple copies.  In general, we will use the term "auditing" to refer to checking documents for validity and repairing any errors discovered, wherever possible.  
 
 ### The Process of Auditing and Repairing
 
@@ -285,7 +278,7 @@ Auditing is essential to maintaining the health of a collection.  This is the me
 
 The auditing process actively patrols for errors before they cause permanent document losses, and corrects them when possible.  In all cases, when a document copy is found to be absent (or corrupted), the auditing process attempts to replace the missing copy with a fresh copy obtained from another server.  If there is an intact copy on another server, then the missing copy is repaired and the process continues.  If there is no other intact copy, then the document is considered permanently lost.  
 
-**Exhibit XX** shows the dratic reduction in document losses when using regular auditing on collections with a modest number of copies.  
+**Exhibit nnn** shows the dratic reduction in document losses when using regular auditing on collections with a modest number of copies.  [[Picture of results for copies=3,4,5, total annual audit.]]
 
 The most basic strategy for auditing is *total auditing*.  This involved examining every copy of every document on a regular schedule, and effecting repairs where necessary (and possible).  
 
@@ -296,7 +289,8 @@ A number of other strategies for auditing are possible, and some are measurably 
 
 Over a very wide range of storage quality conditions (storage error rates or sector half-lives), our experiments show that five copies with annual total auditing reduce document loss rates to negligible levels.  
 
-**Exhibit XX** compares the effect of number of audited copies and storage error rates on document loss rates.  
+**Exhibit nnn** compares the effect of number of audited copies and storage error rates on document loss rates.  
+[[This may refer to the preceding exhibit, if that picture is clear enough.]]
 
 
 # Compress Your Documents
@@ -312,20 +306,20 @@ Documents stored on digital media are fragile; storage errors corrupt the conten
 
 For documents that might not be fatally corrupted by a single sector error, lossless compression of the document involves a clear trade-off.  A smaller document is a smaller target for a randomly occurring error, but a highly compressed document is more fragile.  A small error in an audio or video file, or an uncompressed text file, might not be fatal to the document, but a highly compressed text document (or an encrypted document) might be lost.  
 
-In these simulations, we have modeled documents as very fragile: one sector error causes the document to be judged as lost.  In this model, at least these two considerations should be included in the decision to compress documents.   
+In these simulations, we have modeled documents as *very fragile*: one sector error causes the document to be judged as lost.  In this model, at least these two considerations should be included in the decision to compress documents.   
 
 - Smaller is safer.  A smaller document presents a smaller target for random errors.  If a document is compressed, say, by 90%, that is, to 10% of its original size, then a random error is only one-tenth as likely to strike that document.  When placed on a storage medium of any given quality level, that smaller, compressed document is likely to persist without error ten times longer than the uncompressed version. 
-
 - Smaller is less expensive.  A stored collection incurs costs for both storage of the document images and the bandwidth used in auditing and repair.  Smaller documents consume less space and less bandwidth and therefore cost less to maintain.  On a given budget, a compressed collection can be replicated into more copies and audited more frequently.  Both the increased copy count and more frequent auditing contribute directly to reducing or eliminating permanent losses in the collection.  
-
 
 A large document occupies more storage than a small document.  If errors are striking storage uniformly randomly, then a large document is proportionally a larger target.  This effect is verified empirically by our experiments.  
 
-The drawings in **Exhibit XX** illustrate the effect of randomly placed errors on documents of varying sizes.  
+The drawings in **Exhibit nnn** illustrate the effect of randomly placed errors on documents of varying sizes.  [[Picture from old presentation of doc blocks with Xs in them, with maybe a couple more Xs added to make it clearer that large = big target.]]
 
-**Exhibit XX** shows the increase in document losses for larger documents across a range of storage error rates.  
+**Exhibit nnn** shows the increase in document losses for larger documents across a range of storage error rates.  
+[[Picture in pictures/largerdocs, but it needs to be redone.]]
 
-The table of **Exhibit XX** shows the linear relationship between document size and storage error rate.  (Error rate is expressed as sector half-life, as explained below.)
+The table of **Exhibit nnn** shows the linear relationship between document size and storage error rate.  (Error rate is expressed as sector half-life, as explained below.)
+[[PDF captured from spreadsheet, in pictures/docsizevserrorrate/Data_Scaling_DocsizeSpreadsheet-2.pdf]]
 
 Lossless compression is benign for a variety of reasons.
 
@@ -349,6 +343,7 @@ Many storage vendors may be available to a client, each with charge schedules.  
 
 - A charge per month per byte stored (usually gigabyte or petabyte).
     - The cost of storage may vary by "quality" of storage, based on its typical error rate or perhaps on speed of retrieval access.  
+    - Storage is charged per copy; multiple copies cost more.
 - A charge per month per byte sent in or out ("ingress" and "egress" charges).
     - Bytes sent do not distinguish between user access for normal retrieval and administrative access for auditing.  
     - The cost may vary by speed or reserved bandwidth (Mbps).
@@ -365,12 +360,14 @@ Do not blindly believe reliability estimates from vendors.
 
 #### Don't Believe Tricky Statistics
 
+TBS
+
 - be wary of marketing numbers
 - mtbf, mttf, and such are particularly hard to grasp
 
 The likelihood of an error in a disk bit or sector, or even the failure of an entire disk, is a very small number with many zeroes before the first significant digit.  We choose to invert the error rate into a function of lifetime of that bit (or sector containing many bits).  Thus a probability of a bit failing in a year of 10E-15 becomes a mean lifetime of 100E12 years.  Expressed that way, the figure seems excessively optimistic.  (The age of the universe is currently estimated to be 14E9 years.)  Data on such a disk would be effectively immortal, and that does not correlate with experience.  
 
-We agree with Rosenthal (2010) and others that such estimates are merely marketing projections that are not based on empirical data.  Using simulations to investigate such nearly immortal disks would be expensive and fruitless.  If there are no errors at all, then no protective strategy is needed.  However, the statement "no errors" does not correlate well with practical experience.  
+We agree with Rosenthal (2010) [[citation needed]] and others that such estimates are merely marketing projections that are not based on empirical data.  Using simulations to investigate such nearly immortal disks would be expensive and fruitless.  If there are no errors at all, then no protective strategy is needed.  However, the statement "no errors" does not correlate well with practical experience.  
 
 
 #### Lifetime Easier to Understand Than Error Rate
@@ -381,11 +378,9 @@ The inverse of error rate is usually expressed in terms of MTBF or MTTF, and, in
 
 The disk manufacturing industry tends to express the device lifetime as MTBF or MTTF. This is an expected (mean) exponential lifetime for the device, but that does not give much information about the lifetime of data in individual files, blocks, or bits on the disk. There are several layers of error detection and correction in storage systems that tend to mask small errors in disk data and obscure the relationship between small data errors and drive failures.
 
-
 MTBF, Mean Time Between Failures, is a slippery notion, much touted by marketing departments and viewed warily by users. If the object in question is removed from service after only one failure, as is the case here with documents, it is perhaps more appropriate to speak of MTTF, Mean Time To Failure. MTTF is intended to be equivalent to the mean lifetime (before failure) of the object, and, if one assumes that failures are a Poisson process, then MTTF is the mean exponential lifetime of the object.
 
-
-Most non-marketing literature considers MTBF estimates from manufacturers to be exaggerated considerably, by factors of three or four at best. The annual failure rates of disk drives in large collections of drives are much higher than would be expected based on published MTBF estimates of 1E6 hours or more. [citations]
+Most non-marketing literature considers MTBF estimates from manufacturers to be exaggerated considerably, by factors of three or four at best. The annual failure rates of disk drives in large collections of drives are much higher than would be expected based on published MTBF estimates of 1E6 hours or more. [[citations needed]]
 
 Even if we understood the source and accuracy of stated MTTF estimates for disk drives, we would still not have information about individual sector failures within a drive that cause document failures, nor the relative frequencies of sector failures versus drive failures.
 
@@ -394,12 +389,18 @@ Even if we understood the source and accuracy of stated MTTF estimates for disk 
 
 #### Infant and Aging Failures
 
+TBS
+
 - bathtub curve
     - declining infant failures
     - stable maturity
     - rising senescence failures, wear-out
 
+[[Do we draw our own picture, or steal one, or just cite literature on the topic?]]
+
 #### Small Changes in Error Rates: Glitches
+
+TBS
 
 - A *glitch* is a temporary, short-lived, condition that impacts a single server and increases the sector error rate on that server for some short interval.   
 - What types of glitches might occur in server farms?  HVAC weakness or failure; environmental contamination by chemicals or particulates; radiation; electrical noise; and similar.  In general, these conditions are not fatal to the server overall, but degrade the integrity of data storage.  
@@ -416,10 +417,14 @@ Even if we understood the source and accuracy of stated MTTF estimates for disk 
 
 # Storage Vendors May be Ephemeral
 
+TBS
+
 - plan for failures
 - plan ahead for replacements
 
 ### Exceptional but Realistic Conditions: Major Shocks
+
+TBS
 
 - shocks that weaken or kill whole servers, multiple servers
 - regional: depression, war, earthquake, flood, etc.
@@ -433,10 +438,10 @@ Even if we understood the source and accuracy of stated MTTF estimates for disk 
 - Shocks may be regional or administrative phenomena that affect more than one server at a time.  One particularly subtle cause of a shock affecting multiple servers is lack of independence of the servers, due to corporate mergers, collocation of server farms, dependence on large power grids, etc.  
 - When a server is lost, the client is required to find a new server and populate it with the whole collection -- or at least the parts of the collection that can still be found on the remaining servers.  
 
-TBS
-
 
 # Storage Vendors and Locations Must be Independent
+
+TBS
 
 - financial dependence through mergers
 - accidental location dependence through common facilities
@@ -446,6 +451,8 @@ TBS
 # Develop Standards for the Benefit of All
 
 ### Make auditing more efficient.
+
+TBS
 
 - consumes much time, bandwidth, egress charges
 - what is needed: cryptographic verification, checksum with nonce
@@ -555,9 +562,9 @@ It must be stressed that a client should choose a strategy that works for *somew
 Auditing, even at relatively low rates, changes the picture entirely.  With a reasonable amount of auditing, five copies of a collection suffice to protect the collection from loss across a very wide range of error rates, starting with sector half-lives greater than 3E6 hours.  
 
 
-[FIGURE: FIVE COPIES ARE ENOUGH]
+[[FIGURE: FIVE COPIES ARE ENOUGH]]
 
-[FIGURE: ANNUAL AUDITING IS ENOUGH]
+[[FIGURE: ANNUAL AUDITING IS ENOUGH]]
 
 ## Common Auditing Strategies
 
@@ -594,7 +601,7 @@ The simulations were done with a fixed collection size of 10,000 documents in a 
 
 Most of the simulations were done with documents of a fixed size.  Because document sizes may vary over a wide range depending on content, format, compression, etc., we ran additional tests over a wide range of document sizes.  Results matched expectations based on the Poisson distribution, that document size and error rate (i.e., sector lifetime) vary inversely.  Increasing document size by a factor of N and decreasing the error rate by the same factor of N (or, equivalently, increasing the sector lifetime by the same factor of N) result in the same distribution of errors and therefore the same document losses.  
 
-The table in Exhibit XX shows the results of tests over a wide range of document sizes, from 5MB to 5,000MB, and a comparable range of sector lifetimes, from 2E6 to 10E9 hours.  
+The table in **Exhibit nnn** shows the results of tests over a wide range of document sizes, from 5MB to 5,000MB, and a comparable range of sector lifetimes, from 2E6 to 10E9 hours.  
 
 ## Large vs Small Storage Structures 
 
@@ -608,13 +615,13 @@ One minor note: using very large storage structures with small documents result 
 
 - *Observation*: Total auditing of the collection is highly effective at reducing document losses.  
 
-**Exhibit XX** shows unaudited document losses over long periods with large numbers of redundant copies.  
+**Exhibit nnn** shows unaudited document losses over long periods with large numbers of redundant copies.  
 
 However, even a modest regimen of auditing and repair can minimize damage to a collection, across a huge range of server quality, long periods of time, and unpredictable adverse shock conditions.  
 
 - *Observation*: The effectiveness of auditing is robust across a wide spectrum of storage quality (i.e., document error rates) and short term variations in storage quality.  
 
-**Exhibit XX** shows how annual total auditing of a small number of copies can keep a collection healthy across a very wide range of server quality.  
+**Exhibit nnn** shows how annual total auditing of a small number of copies can keep a collection healthy across a very wide range of server quality.  
 
 - However, auditing strategies may not be robust to severe associated failures that compromise multiple servers over short periods.  Associated server failures -- whether due to disasters, economic downturns, clerical errors, or lack of independence of servers -- can remove more than one server from service between audit cycles.  This reduces the number of active replications of the collection, leaving the collection more vulnerable to minor errors until it is repaired by auditing.  If severe shock conditions are anticipated, it may be necessary to increase slightly the number of redundant copies or the frequency of auditing of the collection.  
 
@@ -622,7 +629,7 @@ However, even a modest regimen of auditing and repair can minimize damage to a c
 
 - *Observation*: Random auditing, where segment contents are selected with replacement, is less effective than total auditing or, equivalently, segmented auditing *without* replacement.  Selection of documents randomly *with replacement* will inevitably miss some documents entirely while sampling others more often than needed.  
 
-**Exhibit XX** shows the higher loss rates for collections audited randomly with replacement as opposed to total auditing.  
+**Exhibit nnn** shows the higher loss rates for collections audited randomly with replacement as opposed to total auditing.  
 
 ## Segmented Total Auditing Slightly Better 
 
@@ -647,7 +654,7 @@ TBS
 - Use compression, with known algorithms, wherever possible on all documents.  
 - Do not trust MTBF and other similar measures stated by anyone.  Choose a strategy to protect your collection over a very wide range of storage quality and adverse future conditions.
 
-[Remaining questions]
+[[Remaining questions]]
 - What can we say about document size?
 - What can we say about collection size? (E.g. twitter corpus) Error rates matter either if collection is big or long-term? 
 - What can we say about encryption?
@@ -683,9 +690,9 @@ ALL TBS
 
 One basic question should be answered before embarking on such simulations: what is the failure rate of stored documents?  This is a difficult question due to a lack of real data.  
 
-There is data on the failure rate of individual disk drives over time.  Thanks to Backblaze, Google, and others, there is some published empirical data on failure rates of disk drives of recent technology vintages.  [citations]  These figures refer to replacements of entire disk drives during the useful life and wear-out periods of device use.  That is, they exclude infant failures but include mid-life and senescence.  Unfortunately, we do not get much information on the rates of sector failures, bad block replacements, and so forth.  
+There is data on the failure rate of individual disk drives over time.  Thanks to Backblaze, Google, and others, there is some published empirical data on failure rates of disk drives of recent technology vintages.  [[citations needed]]  These figures refer to replacements of entire disk drives during the useful life and wear-out periods of device use.  That is, they exclude infant failures but include mid-life and senescence.  Unfortunately, we do not get much information on the rates of sector failures, bad block replacements, and so forth.  
 
-There is an estimate of unrecoverable failures on consumer-grade SATA drives that is often mentioned in the industry: Pr{a bit fails during a year} = 10E-15.  This looks like a small number until one calculates that a single 4TB drive, very commonly deployed today, contains about 40E12 bits of data, plus essential metadata.  [I'm pretty sure that this figure is for SCSI and FC disks; the number quoted for consumer grade SATA disks is 1E-14, which is very different.  And these numbers probably are not per year, but just per bit.] [Have to find the reference for this number, and have to check the accuracy, too.]  Even ignoring the magnitude of the storage involved, it is hard to grasp that the average lifetime of a bit is a thousand times longer than the age of the universe.  
+There is an estimate of unrecoverable failures on consumer-grade SATA drives that is often mentioned in the industry: Pr{a bit fails} = 10E-15.  This looks like a small number until one calculates that a single 4TB drive, very commonly deployed today, contains about 40E12 bits of data, plus essential metadata.  [[I'm pretty sure that this figure is for SCSI and FC disks; the number quoted for consumer grade SATA disks is 1E-14, which is very different.  And these numbers are not per year, but just per bit.]] [[Have to find the reference for this number, and have to check the accuracy, too.]]  Even ignoring the magnitude of the storage involved, it is hard to grasp that the average lifetime of a bit is a thousand times longer than the age of the universe.  
 
 We have not encountered data on the performance of disk drives or blocks in RAID and erasure coding configurations, the effect of pre-emptive data scrubbing, etc.  
 
@@ -718,14 +725,14 @@ A back-of-the-envelope calculation is called for here.  The scale (of disk quali
 <!-- START:TODO:RICK--> 
 TODO:RBL: correct the numbers in these several bullets.
 
-- At the extreme low end of the disk quality scale, the sector half-life is, say, two megahours.  1E6 sectors, each with a half-life of 2E6 hours, scaling down for legibility, is comparable to 1E3 sectors with a half-life of 2E3 hours.  Every 2,000 hours, about one half of the 1,000 sectors would incur an error.  That 2,000 hours is less than a quarter of a year.  A disk with a lifetime this low -- or an error rate this high -- would not be usable.
-- At the high end of the disk quality scale, the sector half-life is 1000E6 hours.  Performing the same scaling, the 1E6 disk sectors with half-lives of 1000E6 hours are comparable to 1E3 disk sectors with half-lives of 1E6 hours.  Every million hours -- about 110 years -- half of the sectors will incur an error.  In the first year, only xxx % of the sectors will have an error; after ten years, xxx %.  
-- In the middle of the scale, the sector half-life is 100E6 hours.  Again, performing the same scaling, the 1E6 disk sectors with half-lives of 100E6 hours are comparable to 1E3 sectors with half-lives of 100E3 hours.  Every 100,000 hours -- about 11 years -- half of the sectors will incur an error.  After the first year, about xxx % of the sectors would be expected to have an error.  
-- In a more realistic area, consider half-lives of 30E6 to 50E6 hours. See table below.  
+- At the extreme low end of the disk quality scale, the sector half-life is, say, two megahours.  In the first year, 0.35% of sectors would incur an error, that is, 3.5 sectors per thousand.  A disk with a lifetime this low -- or an error rate this high -- would not be usable.
+- At the high end of the disk quality scale, the sector half-life is, say, 1000E6 hours.  In the first year, only 0.0007% of the sectors will have an error; after ten years, 0.007%.  
+- In the middle of the scale, the sector half-life is 100E6 hours.  Every 100,000,000 hours -- about 11,000 years -- half of the sectors will incur an error.  After the first year, about 0.007% of the sectors would be expected to have an error.  
 
 TODO:RBL: table goes here.  strictly poisson calculations.
 - horiz: sector half-life, 3, 10, 30, 50, 100, 1000 mh.
 - vert: pct sectors lost after 1 yr, 2 yrs, 5, 10; asterisks for not usable.
+- Table is in the PrintMe sheet of FailureRatesBackOfTheEnvelope.xls, and has already been included above in the section on Protect Against a Wide Range of Conditions.  
 <!-- END:TODO:RICK--> 
 
 
@@ -739,7 +746,7 @@ The disk manufacturing industry tends to express the device lifetime as MTBF or 
 1. Bad block remapping in disk controllers.  Smart disk controllers can take unreliable sectors out of service, replacing them with more reliable sectors from a pool of spares.  Such remapping is usually transparent to most software, but it may or may not be able to rescue the data residing on the bad blocks.  
 1. RAID and similar redundant recording of sector data.  Sector data may be recorded redundantly in mirror sets, or recorded partially in multiple versions using parity techniques, and so forth.  
 
-The use of any or all of these techniques makes it very difficult to assess the relationship between drive failure statistics and block level errors.  Small correlations have been found between S.M.A.R.T. error reporting statistics and subsequent drive failures, but there is no clear causal connection.  [cite Wikipedia article on S.M.A.R.T.]
+The use of any or all of these techniques makes it very difficult to assess the relationship between drive failure statistics and block level errors.  Small correlations have been found between S.M.A.R.T. error reporting statistics and subsequent drive failures, but there is no clear causal connection.  [[cite Wikipedia article on S.M.A.R.T.]]
 
 It must be stressed at this point that RAID and similar techniques protect only against *drive* failure; they do not protect against bad bits, blocks, or tracks when reading from a drive.  If a disk drive fails completely, RAID and erasure code techniques can rebuild the data on that drive from redundant data stored on other drives.  However, while a drive is still in operation, individual bad blocks on a drive will still read as bad blocks until the drive is removed from service and its data recovered, *if possible*, from the remaining drives in the redundancy set.  The data on a disk drive, even in a redundancy set, can deteriorate incrementally over time and cause documents (in our case documents, but files in general) to be altered badly.  If deteriorated data cannot be repaired by block error correction techniques in the disk controller, then the data of the file or document may be permanently lost or corrupted.
 
@@ -757,7 +764,7 @@ How is MTTF calculated before it is published?  Several methods might be used, i
 1. Failure data from accelerated life testing.  It is often assumed that operation under high temperature or thermal cycling or high speeds or other stress conditions will cause devices to fail predictably prematurely.  For some classes of devices, accelerated life testing has proved to be useful and accurate.  
 1. Failure data from warranty failures returned during a service period.  This may be assessed by the manufacturer or by users of large numbers of devices.  
 
-Most non-marketing literature considers MTBF estimates from manufacturers to be exaggerated considerably, by factors of three or four at best.  The annual failure rates of disk drives in large collections of drives are much higher than would be expected based on published MTBF estimates of 1E6 hours or more.  [citations]
+Most non-marketing literature considers MTBF estimates from manufacturers to be exaggerated considerably, by factors of three or four at best.  The annual failure rates of disk drives in large collections of drives are much higher than would be expected based on published MTBF estimates of 1E6 hours or more.  [[citations needed]]
 
 Even if we understood the source and accuracy of stated MTTF estimates for disk drives, we would still not have information about individual sector failures within a drive that cause document failures, nor the relative frequencies of sector failures versus drive failures.  
 
@@ -798,7 +805,7 @@ where to these fit?
 
     o   Interaction  -- fragility of big documents 
     
-    o   [FIGURE] (above -- suppose we increase doc size by 10, by 100, by 1000 -- how many expected doc lossed in the same period)
+    o   [[FIGURE]] (above -- suppose we increase doc size by 10, by 100, by 1000 -- how many expected doc lossed in the same period)
     
     o   Cite to Rosenthal previous results on this
     
@@ -809,7 +816,7 @@ where to these fit?
 
     o   Storage error rates are difficult to verify
     
-    o   [FIGURE] How long for failure of 1% as error rate increases?
+    o   [[FIGURE]] How long for failure of 1% as error rate increases?
     (TODO:RBL: Q: Sounds like a one-way table, for fixed document size, IV = error rate, DV = hours before loss exceeds 1%.)
     
     o   How to interpret claimed storage error rates
@@ -879,7 +886,7 @@ What we are not modeling
 ## Threat Matrix
 A wide range of real-world threats may be modeled through varying the parameterization of the model
 
-[Well, I'm fairly convinced that pandoc markdown cannot do complex lists inside tables, so we will have to render this sort of table in raw HTML.]
+[[Well, I'm fairly convinced that pandoc markdown cannot do complex lists inside tables, so we will have to render this sort of table in raw HTML.]]
 
 
 | Model Level | Real World Threat Source | Used to predict ... | Use to derive ... |
@@ -966,7 +973,7 @@ Lifetime|High|Hardware Batch|1 Year|3 year
 
 ## Large vs Small collections
 <!-- START:TODO:RICK--> 
-- Assumptions: No additional assumptions needed. Percentage of failure is independent of number of documents in collection. However, given a low percentage expected document loss, the probability that at least one document will be lost depends on the number of douments in the collection: [formula]
+- Assumptions: No additional assumptions needed. Percentage of failure is independent of number of documents in collection. However, given a low percentage expected document loss, the probability that at least one document will be lost depends on the number of douments in the collection: [[formula]]
 - Additional Simulation: Formulation may be checked using simulations.
 - Implications: For collections with huge numbers of documents, and where the absolute integrity of the collection neeeds to be maintained (for example, legal evidence) very low loss rates are desired
 - Generalizations: document size
@@ -975,9 +982,9 @@ Lifetime|High|Hardware Batch|1 Year|3 year
 
 ## Large vs Small Documents
 <!-- START:TODO:RICK--> 
-- Assumptions: Without any additional assumptions needed, the relationship between document size and failure rate can derived, and follows the  formula : [equation]  (TODO:RBL: Q: Simple Poisson with clear list of parameters?)
-- Additional simulation: No additional simulation is needed, however this formulation may be checked using simulations: [figure]  (TODO:RBL: Q: Or a table, given that the errors are so small?)
-- Implications: You can mitgate the risk of increasing size by a factor of [X] by adding [Y] additional copies.  (TODO:RBL: Not a closed form calculation, requires actual tests.)
+- Assumptions: Without any additional assumptions needed, the relationship between document size and failure rate can derived, and follows the  formula : [[equation]]  (TODO:RBL: Q: Simple Poisson with clear list of parameters?)
+- Additional simulation: No additional simulation is needed, however this formulation may be checked using simulations: [[figure]]  (TODO:RBL: Q: Or a table, given that the errors are so small?)
+- Implications: You can mitgate the risk of increasing size by a factor of [[X]] by adding [[Y]] additional copies.  (TODO:RBL: Not a closed form calculation, requires actual tests.)
 - Generalizations: The model assumes a single failure within a document destroys it. Documents may be redundant -- such that multiple hits are needed to completely destroy them.  (TODO:RBL: Q: If we want to present real numbers for this case, we will need some new code.)
 <!-- END:TODO:RICK--> 
  
@@ -1048,10 +1055,10 @@ Suppose there are only 2 copies of keys. Is the expected document rate due to en
     - Weak adversary
 - Simulations:
 - Implications:
-    - Weak adversary -> add [x] copies
-    - Open government adversary using legal takedowns -> add [y] copies
-    - Clandestine strong adversary, subverting auditing system. Must use distributed auditing. [z] c
-- Generalizations: formal crypto models -- see [cite]
+    - Weak adversary -> add [[x]] copies
+    - Open government adversary using legal takedowns -> add [[y]] copies
+    - Clandestine strong adversary, subverting auditing system. Must use distributed auditing. [[z]] c
+- Generalizations: formal crypto models -- see [[citation needed]]
 
 
 - parallel between strategy of less reliability + more auditing, RAID, ECC RAM, FAST, Hadoop
