@@ -16,6 +16,7 @@ logs
 *.bak
 *.wbk
 *.cmds
+*logs*.zip
 
 # 
 articles
