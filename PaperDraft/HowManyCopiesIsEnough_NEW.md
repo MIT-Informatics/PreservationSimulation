@@ -88,6 +88,28 @@ TBS: NOTES
 
 - Don't sweat the small stuff, glitches are covered by protection over a wide range. 
 
+Get two refs for 1e-14 number.  
+
+MTBF discussion: cite returns and other bases for the numbers.
+
+Is a combo of two Poissons itself Poisson? 
+
+The high end of lifetime is hard to assess.  
+
+Argue that the same hygiene regime serves for both: crappier disks and less wonderul independence.  Still need multiples, audit, repair.  
+
+Check Azure erasure code stats.
+
+Multiple copies, error correction, repair are used at all levels: bits, sectors, files, drives, services.  We are adding files to the usual mix.  
+
+Audit whatever the fundamental unit of failure is: bit, sector, disk, file, server.  
+
+Acknowledge immortal data services; then audit what?
+
+Six copies if broad span correlated failures.  
+
+RS(m,n) and repair-when-fail has vastly longer data life than multiple independent disks however reliable.  
+
 
 <!-- END:TODO:RICK -->
 
