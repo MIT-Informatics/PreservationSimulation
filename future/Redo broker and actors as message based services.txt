@@ -1,0 +1,166 @@
+Shelf-broker scheduling with message broker, probably RabbitMQ
+                                        RBLandau 20180616
+
+Today, an actor script is a shell script that is processed by a single shell process, one per available CPU (core).  The script goes thru half a dozen steps with timing loops in the middle to ensure that each step is complete before proceeding to the next one.  
+
+Here's the first idea.  
+
+This could be done in a sort of Linda-ish fashion using a message broker with some scheduling capabilities, e.g., queue all the steps, each with a unique id, each dependent on the previous one, so that each step is held until the blocking id of the previous step is asserted.  
+
+Unfortunately, RabbitMQ, at least, is not capable of holding messages conditionally in that fashion.  One could build the scheduler externally and have it requeue messages when they are unblocked.  Not good, not a clean design, and generating a lot of excess message traffic.  
+
+[I wonder if the RabbitMQ community or developers would be open to such an idea.  I don't think I could add it myself; I don't feel like learning Erlang.]
+
+Here's the second idea.  
+
+Put the steps from the current script into a list of steps in data structures, where each step forwards the message to a queue specified in the step data with parameters also in the step data.  When a step processor completes, it adds its exit status and timestamp to the done vector in the message and forwards the message to the next queue in line.  (The done vector just grows until all steps have been completed, so it's sort of semi-stateless.)
+
+Well, maybe an oops; can a consumer also produce messages?  Probably yes.  Consumers have to register, but I don't think producers have to.  
+
+The step processor will have to be a small program that receives the message and launches the requested program in a subshell.
+
+
+message:
+    for each step:
+        step number, 
+        processname (=queue name?),
+        command line to run step
+        ...
+    progress vector:
+        step done, timestarted, timeended, status
+        ...
+    params:
+        dunno what else goes here
+
+
+message: dict
+    steps: list
+        step: dict
+            number
+            process name
+            queue name
+            command line
+        ...
+    progress: list
+        stepdone: dict
+            number
+            status
+            start time
+            end time
+        ...
+    params: dict
+        ...
+
+
+No, this doesn't really improve anything.  It simply translates the actor script from plain shell script into a sequence of instructions in the message that gets passed around.
+
+
+Here's the third idea.  
+
+Reorganize into function-specific processes. 
+
+- Broker process produces sets of instructions.
+    - Single stream of instructions for each work block (simulation case).
+
+- Move all the scheduling logic to a separate process.  
+    - If there is no work in the queue, send message requesting work.
+    - Receive the list of instruction blocks.  
+    - Dole out the work steps in sequence.  For each instruction in sequence, send any unblocked instruction to the named function-specific destination queue.  
+    - Receive Done messages from worker processes.
+    - Unblock sequence for any Done message, and release the next step in line.  
+    - If there is a work block with an unblocked step, start that step.
+    - If no unblocked work block, send message asking for more work.  
+
+- Worker process are specific to functions.  
+    - main, extract, datacleanup, etc.
+    - For each function, start up a pool of worker processes.  Pool limited to number of CPUs available for very CPU-intensive functions.  
+    - Directly receive instruction message from the message broker. 
+    - Process whatever the instruction says.  Carefully wait for procedure to end and close all resources, flush all buffers.  
+    - Send a Done message to the queue for those.  
+    - Ack the previous instruction that just finished.  
+    - Go back and receive more instructions.  
+
+- Startup process:
+    - Read overall commands describing range of blocks to be executed.
+    - Start producer process.
+    - Start pool of worker processes.
+    - Give producer the set of blocks to be done.
+
+
+Pros:
+- Dead simple, synchronous logic.  
+- Externalizes scheduling logic into single process.
+- Worker processes specific to function, limited, easy to write.
+- No overhead of process startup from shell scripts.
+- Scheduler can be completely generalized, not at all specific to the particular application area.  
+- No chance of shell prematurely sensing the end of subprocess.  
+- Multiprocessor-safe, thread-safe messaging system at the core.
+
+Cons: 
+- Yet another daemon in the system -- the message broker itself -- that has to be installed, started, etc.  RabbitMQ and pika are not completely painless.  
+- Additional message traffic to/from scheduler.  But this overhead is trivial compared to process startup overhead from the current shell scripts: tens of microseconds vs tens of milliseconds.  
+
+Neutral:
+- Broker generates instructions in data structure format instead of shell script with all the crappy time delay logic.  
+
+
+Data for each step in sequence:
+- Step ID.
+    - Unique serial number for work block sequence.  (string)
+    - Step number 1..n.  (int)
+- Destination queue name for worker.  (string)
+- Block of instructions for worker for this step.  (bytes)
+
+Queues:
+- General:
+    - Get new work block    general.Block.GetWork
+    - Incoming work block   schedule.Block.IncomingWork
+    - Done                  schedule.StepDone
+    - Environment info      general.GetEnvirInfo
+    - End logging           general.GetEndInfo
+- Specific to this application:
+    - main                  shelf.main
+    - extract               shelf.extract
+    - cleanup               shelf.cleanup
+
+Incoming work block:
+- List of Step data for all steps, in sequence.
+- Probably in json.
+
+Done message:
+- Step ID.
+- Step number.
+- Start timestamp.
+- End timestamp.
+- Exit status.
+- Block of data to be logged.
+
+I like it.  Very general, suitable for almost any application, in any language, that can use poor man's parallelism.  
+
+Messaging functions:
+- producer
+    - Create queue.
+    - Send message to queue.
+- worker
+    - Bind to queue.
+    - Receive message.
+    - Send message to queue.
+    - Ack message.
+- scheduler
+    - (same as worker)
+
+
+Questions (probably specific to pika+RabbitMQ):
+
+- Can a process consume messages and produce messages?  Can it do both using the same channel or is another channel required?
+
+- Consumers declare the queues?  Producers declare exchanges and bind them to queues?  Do the queues have to exist before the binding?  Who's on first?
+
+- How does a consumer server multiple queues?  And wait for the first message on any of them?  Scheduler must wait for more work and done messages from processing current work.  
+
+- Worker queues should be nonexclusive so that multiple workers can serve them?  But the scheduler queue should be specific so that only one copy can exist?  Probably the same for the gimme-work queue from the scheduler to the shelf-broker?  
+
+- Don't want the message system to persist messages on disk, but the scheduler probably should?  Not a huge overhead burden, since the work items are long.  
+
+
+

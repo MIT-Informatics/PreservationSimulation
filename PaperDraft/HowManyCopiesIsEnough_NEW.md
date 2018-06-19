@@ -30,7 +30,7 @@ padding-bottom: 3px;
 % How Many Copies Is Enough?  
 % Micah Altman; Richard Landau  
 % 2016-08-15  
-% Revised 2018-06-04 RBL
+% Revised 2018-06-18 RBL
 
 [[Text blocks in double-square-brackets, such as this is, are editorial notes for the authors to clean up.]]
 
@@ -186,7 +186,7 @@ Even if errors in a collection do not accumulate at a significant rate, a single
 >"Time and accident are committing daily havoc on the originals deposited in our public offices. . . .  The lost cannot be recovered; but let us save what remains: not by vaults and locks which fence them from the public eye and use, in consigning them to the waste of time, but by such a multiplication of copies, as shall place them beyond the reach of accident."
 ^[From the National Archives, "https://founders.archives.gov/documents/Jefferson/01-19-02-0059".]
 
-But even multiple copies of collections deteriorate over time, from small erosions of individual documents or larger losses from external shocks.  **Exhibit nnn** shows the deterioration of collections with multiple copies over long periods of time.  A strategy that includes monitoring and repair of documents is required for long-term preservation.  [[RBL: find the results for this case.]]
+But even multiple copies of collections deteriorate over time, from small erosions of individual documents or larger losses from external shocks.  **Exhibit nnn** shows the deterioration of collections with multiple copies over long periods of time.  [[RBL: find the results for this case.]]  A modest number of copies, even of very high quality, cannot guarantee archival storage over long periods.  A strategy that includes monitoring and repair of documents is required for long-term preservation.
 
 
 # Protect Against a Wide Range of Conditions
@@ -199,7 +199,7 @@ There is some data on the failure rate of individual disk drives over time. Than
 
 #### Drive Failures May Place Limits on Sector Lifetime
 
-We can try to estimate bounds on the failure of sectors by extrapolating from the failure of drives.  Example: If disks are allowed to run until the drive fails, then the life of all the sectors on the disk cannot be longer than the life of the entire drive.  That is, the half-life of the drive is an upper bound on the half-life of sectors contained on that drive.  
+We can try to estimate bounds on the failure of sectors by extrapolating from the failure of drives.  Example: At the low end of the range of disk quality, with no active error correction or repair, we can estimate bound the lifetime of sectors by examining disk drive failures.  If disks are allowed to run until the drive fails, then the life of all the sectors on the disk cannot be longer than the life of the entire drive.  That is, the half-life of the drive is an upper bound on the half-life of sectors contained on that drive.  
 
 Backblaze, on the basis of experience with hundreds of thousands of disk drives, has estimated the failure rates of drives for the first four years. [[citation needed]]  **Exhibit nnn** shows the estimated drive lifetimes based on that experience.  [[Source spreadsheet = PaperDraft/DiskFailuresDuringRAIDRebuild.xls sheet Survival2Halflife]]
 
@@ -228,6 +228,8 @@ If the half-life of a disk drive in production use is, say, between six and twel
 Based on the experience of Backblaze, at least, the drive survival rate is much lower than is shown here after the third year of production use.
 
 #### Reducing Disk Drive Failures in Production
+
+The low end of the quality scale might be estimated by simply watching data deteriorate over time.  At the other end of the scale, high quality, high lifetimes for data, can be achieved with strategies that actively avoid or detect and repair errors as they occur.  This way, very reliable storage can be achieved with even moderately reliable components.  
 
 Some storage installations may choose to preempt wear-out drive failures by replacing drives at the end of some "service lifetime."  From the Backblaze numbers (see **Exhibit nnn**) that service lifetime would probably be not much more than three years.  Such an "error-avoidance" strategy would truncate the sharply rising end of the bathtub curve where drives pass from maturity to senescence.  
 
@@ -291,6 +293,30 @@ We do not have good information on the sector error rates of our storage media, 
 # Visit Your Documents Regularly 
 
 Verify and repair the multiple copies.  In general, we will use the term "auditing" to refer to checking documents for validity and repairing any errors discovered, wherever possible.  
+
+
+### Strategies to Achieve Very Long Data Lifetimes
+
+How can we protect data over the long term against a wide range of error conditions?  A single copy is vulnerable, regardless of its quality.  Multiple high-quality copies still deteriorate over long periods.  We must adopt active strategies to detect and correct errors in data to preserve the corpus over long periods.  Such strategies must include three components: detecting errors, correcting errors, and actively seeking errors.  
+
+- Detecting errors requires a certain redundancy in storage, typically parity, or comparison of copies, or special encodings.  There is always some degree of damage that cannot be detected accurately, e.g., multiple errors in a simple parity system.  
+- Correcting errors requires restoring a damaged copy with a correct copy, either by consulting a known good copy or by using an error-correcting encoding in the storage of the data.  The ability of a system to correct errors is also limited, e.g., if all copies of the data are damaged.  
+- Actively seeking errors requires a mechanism outside normal usage that examines all the data and checks its validity.  The system searches all the data for latent errors in order to locate (and repair) them before they pile up and overwhelm the redundancy of storage.  
+
+Strategies that include these three components are routinely used at low levels within computer systems.
+
+- Small regions of memory, e.g., RAM banks, disk sectors, are protected with parity bits or error-correcting codes.  Parity provides only limited error detection; error-correcting codes provide some higher level of redundancy for detection and correction.  And large memory arrays may be actively scrubbed to find and correct errors early.  
+
+- Disk drives tend to fail all at once, but they are often protected by RAID or eraasure code structures and controllers.  Such arrays of disks include redundant recording and parity to permit repair of failed drives.  
+
+This study is concerned with providing a degree of redundancy and error correction for other groupings of data of different sizes: 
+
+- Files or documents of intermediate size between sectors and drives; and 
+- Entire storage services containing thousands of files.
+
+We explore a wide variety of strategies for protecting large collections of documents.  Many variations are possible, of quality of storage devices and arrays, degree of redundancy (number of copies), frequency and speed of auditing and repair.  With appropriate choices along these dimensions, the probability of permanent loss of documents can be reduced to very low levels.
+Even with low quality storage media and unreliable storage services, a high degree of redundancy and aggressive auditing and repair can protect collections against the ravages of age, imperfect administration, and unstable commercial services.  
+
 
 ### The Process of Auditing and Repairing
 
@@ -389,7 +415,7 @@ TBS
 
 The likelihood of an error in a disk bit or sector, or even the failure of an entire disk, is a very small number with many zeroes before the first significant digit.  We choose to invert the error rate into a function of lifetime of that bit (or sector containing many bits).  Thus a probability of a bit failing in a year of 10E-15 becomes a mean lifetime of 100E12 years.  Expressed that way, the figure seems excessively optimistic.  (The age of the universe is currently estimated to be 14E9 years.)  Data on such a disk would be effectively immortal, and that does not correlate with experience.  
 
-We agree with Rosenthal (2010) [[citation needed]] and others that such estimates are merely marketing projections that are not based on empirical data.  Using simulations to investigate such nearly immortal disks would be expensive and fruitless.  If there are no errors at all, then no protective strategy is needed.  However, the statement "no errors" does not correlate well with practical experience.  
+We agree with Rosenthal (2010) [[citation needed]] and others that such estimates are merely marketing projections that are often not based on empirical data.  Using simulations to investigate such nearly immortal disks would be expensive and fruitless.  If there are no errors at all, then no protective strategy is needed.  However, the statement "no errors" does not correlate well with practical experience.  
 
 
 #### Lifetime Easier to Understand Than Error Rate
@@ -400,7 +426,7 @@ The inverse of error rate is usually expressed in terms of MTBF or MTTF, and, in
 
 The disk manufacturing industry tends to express the device lifetime as MTBF or MTTF. This is an expected (mean) exponential lifetime for the device, but that does not give much information about the lifetime of data in individual files, blocks, or bits on the disk. There are several layers of error detection and correction in storage systems that tend to mask small errors in disk data and obscure the relationship between small data errors and drive failures.
 
-MTBF, Mean Time Between Failures, is a slippery notion, much touted by marketing departments and viewed warily by users. If the object in question is removed from service after only one failure, as is the case here with documents, it is perhaps more appropriate to speak of MTTF, Mean Time To Failure. MTTF is intended to be equivalent to the mean lifetime (before failure) of the object, and, if one assumes that failures are a Poisson process, then MTTF is the mean exponential lifetime of the object.
+MTBF, Mean Time Between Failures, is a slippery notion, much touted by marketing departments and viewed warily by users. Such figures may be derived from drive failure rates observed in accelerated life testing or returns from early deployments.  If the object in question is removed from service after only one failure, as is the case here with documents, it is perhaps more appropriate to speak of MTTF, Mean Time To Failure. MTTF is intended to be equivalent to the mean lifetime (before failure) of the object, and, if one assumes that failures are a Poisson process, then MTTF is the mean exponential lifetime of the object.
 
 Most non-marketing literature considers MTBF estimates from manufacturers to be exaggerated considerably, by factors of three or four at best. The annual failure rates of disk drives in large collections of drives are much higher than would be expected based on published MTBF estimates of 1E6 hours or more. [[citations needed]]
 
