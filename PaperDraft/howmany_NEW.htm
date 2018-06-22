@@ -29,7 +29,7 @@ padding-bottom: 3px;
 <p>% How Many Copies Is Enough?<br />
 % Micah Altman; Richard Landau<br />
 % 2016-08-15<br />
-% Revised 2018-06-18 RBL</p>
+% Revised 2018-06-22 RBL</p>
 <p>[[Text blocks in double-square-brackets, such as this is, are editorial notes for the authors to clean up.]]</p>
 <h1 id="title" class="unnumbered">Information Integrity Over the Long Term -- How Many Copies Is Enough?</h1>
 <h4 id="assessing-long-term-durability-of-collections-through-a-flexible-replicable-simulation">Assessing Long-term Durability of Collections Through A Flexible, Replicable Simulation</h4>
@@ -79,6 +79,17 @@ padding-bottom: 3px;
 <p>Acknowledge immortal data services; then audit what?</p>
 <p>Six copies if broad span correlated failures.</p>
 <p>RS(m,n) and repair-when-fail has vastly longer data life than multiple independent disks however reliable.</p>
+<p>Notes from 20180619.1400</p>
+<p>JPEG2000? - Preferred to PNG by L.O.C. - file size? - color treatment better than PNG? - Their first choice is uncompressed TIFF. [yikes!]</p>
+<p>Detecting errors: say &quot;fixity&quot;</p>
+<p>Can use the terms patrolling, replication, fixity.</p>
+<p>Assert &quot;indefinitely long&quot; or beyond any epsilon.</p>
+<p>Do a looong test to get down to &lt; 1ppm over 100 years. 1ppb preferred, but nobody has that much computer time.<br />
+- Probably 10 copies, quarterly auditing; 1000 runs.</p>
+<p>Economics = files for this audience. Be careful about file losses, not disks. - For larger or smaller than file, sort of don't care. [Adjacent-above and below. Except servers, of course, where we do care and have control.] - Focus on level meaningful to you = files (=documents).</p>
+<p>We do a smaller piece of the system; let someone else deal with the big things, e.g., disk arrays. Client has only a small amount of data that is nowhere near the size of a plausible disk array. [like RS(6,4) or RS(10,6) with multi-terabyte disks.] - We could do sectors, but it's not practical. The client doesn't have access at that level, so it doesn't matter, no control possible. Someone else has access to that [disk drives and disk controllers] - We don't have access to disks, either; that's the province of the disk controller, RAID controller, erasure code controller, service.</p>
+<p>Other figures about lifetimes are right only in narrow circumstances, good weasel words.</p>
+<!-- a Land Without Rs moment: Lunch at the bar at Legal.  Two guys on my left speak Italian to each other, plain American English to the bartender.  The guy on my right speaks unaccented English to the bartender but is reading a newpaper on his iPad in Swedish. -->
 <!-- END:TODO:RICK -->
 <h1 id="motivation">Motivation</h1>
 <ul>

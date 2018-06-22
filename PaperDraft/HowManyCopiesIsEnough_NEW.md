@@ -30,7 +30,7 @@ padding-bottom: 3px;
 % How Many Copies Is Enough?  
 % Micah Altman; Richard Landau  
 % 2016-08-15  
-% Revised 2018-06-18 RBL
+% Revised 2018-06-22 RBL
 
 [[Text blocks in double-square-brackets, such as this is, are editorial notes for the authors to clean up.]]
 
@@ -110,7 +110,33 @@ Six copies if broad span correlated failures.
 
 RS(m,n) and repair-when-fail has vastly longer data life than multiple independent disks however reliable.  
 
+Notes from 20180619.1400
 
+JPEG2000?
+- Preferred to PNG by L.O.C.
+- file size?
+- color treatment better than PNG?
+- Their first choice is uncompressed TIFF.  [yikes!]
+
+Detecting errors: say "fixity"
+
+Can use the terms patrolling, replication, fixity.
+
+Assert "indefinitely long" or beyond any epsilon.
+
+Do a looong test to get down to < 1ppm over 100 years.  1ppb preferred, but nobody has that much computer time.  
+- Probably 10 copies, quarterly auditing; 1000 runs.
+
+Economics = files for this audience.  Be careful about file losses, not disks.  - For larger or smaller than file, sort of don't care. [Adjacent-above and below.  Except servers, of course, where we do care and have control.]
+- Focus on level meaningful to you = files (=documents).
+
+We do a smaller piece of the system; let someone else deal with the big things, e.g., disk arrays.  Client has only a small amount of data that is nowhere near the size of a plausible disk array.  [like RS(6,4) or RS(10,6) with multi-terabyte disks.]
+- We could do sectors, but it's not practical.  The client doesn't have access at that level, so it doesn't matter, no control possible.  Someone else has access to that [disk drives and disk controllers]
+- We don't have access to disks, either; that's the province of the disk controller, RAID controller, erasure code controller, service.  
+
+Other figures about lifetimes are right only in narrow circumstances, good weasel words.  
+
+<!-- a Land Without Rs moment: Lunch at the bar at Legal.  Two guys on my left speak Italian to each other, plain American English to the bartender.  The guy on my right speaks unaccented English to the bartender but is reading a newpaper on his iPad in Swedish. -->
 <!-- END:TODO:RICK -->
 
 # Motivation
