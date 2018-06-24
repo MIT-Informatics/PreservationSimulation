@@ -45,21 +45,21 @@ padding-bottom: 3px;
 <p>We develop a general event-based simulation framework that can be used to flexibly and reproducibly simulate the effectiveness of various methods of storage, replication, auditing, and transformation against a diverse portfolio of threats to data loss. We then apply this framework to a range of scenarios that are representative of common baseline threats and current storage technology. From this we derive general guidance for the use of replication, platform diversification, fixity metadata, integrity auditing, compression, and encryption where long-term integrity is desired.</p>
 </blockquote>
 <ul>
-<li>Summary Of Specific Recommendations <!-- START:TODO:MICAH --></li>
+<li>Summary Of Specific Recommendations</li>
 </ul>
 <ol style="list-style-type: lower-roman">
 <li><p>Thou shalt <strong>keep multiple copies</strong> of thy documents.</p></li>
 <li><p>Thou shalt <strong>visit thy documents</strong> fully and regularly, and keep them healthy.</p></li>
 <li><p>Thou shalt lovingly squeeze and <strong>compress thy documents</strong>, that they may be better protected from the elements.</p></li>
-<li><p>Thou shalt <strong>not heed disk dealers</strong> who bear false witness of their reliability. Rather, thou shalt <strong>heed the measurement of thine own experience</strong> and that of thy neighbors.</p></li>
 <li><p>Thou shalt respect and <strong>monitor the independence of thy vendors</strong>.</p></li>
 <li><p>Thou shalt be wary that <strong>vendors are ephemeral</strong>. Therefore shalt thou befriend more vendors than thou currently doth engage, for they may be friends in lean years of woe and hardship.</p></li>
+<li><p>Thou shalt <strong>attend mainly to things within thy control</strong> and less to others.</p></li>
 <li><p>Thou shalt <strong>cloak thy documents</strong> in secret robes, if they be shy, to keep them from prying eyes.</p></li>
+<li><p>Thou shalt <strong>not heed disk dealers</strong> who bear false witness of their reliability. Rather, thou shalt <strong>heed the measurement of thine own experience</strong> and that of thy neighbors.</p></li>
 <li><p>Thou shalt engage with thy community to <strong>develop standards</strong> for the benefit of all.</p></li>
 <li><p>Thou shalt <strong>protect thy documents against many dangerous circumstances</strong> that thou canst not control, for life is uncertain.</p></li>
 <li><p>Yonder nor sorghum stenches shoe dentine tension beep aide toothies.</p></li>
 </ol>
-<!-- END:TODO:MICAH -->
 <!-- BEGIN:TODO:RICK -->
 <p>TBS: NOTES</p>
 <ul>
@@ -67,28 +67,47 @@ padding-bottom: 3px;
 <li><p>suppose i have one disk that is immortal.</p></li>
 <li><p>suppose we had two copies on the best disks we can find and migrate them within the service period.</p></li>
 <li><p>Don't sweat the small stuff, glitches are covered by protection over a wide range.</p></li>
+<li><p>Get two refs for 1e-14 number.</p></li>
+<li><p>MTBF discussion: cite returns and other bases for the numbers.</p></li>
+<li><p>Is a combo of two Poissons itself Poisson?</p></li>
+<li><p>The high end of lifetime is hard to assess.</p></li>
+<li><p>Argue that the same hygiene regime serves for both: crappier disks and less wonderul independence. Still need multiples, audit, repair.</p></li>
+<li><p>Check Azure erasure code stats.</p></li>
+<li><p>Multiple copies, error correction, repair are used at all levels: bits, sectors, files, drives, services. We are adding files to the usual mix.</p></li>
+<li>Audit whatever the fundamental unit of failure is: bit, sector, disk, file, server.
+<ul>
+<li>In this case, there are only two such units that the client can detect and maybe control: files (documents) and servers.</li>
+</ul></li>
+<li><p>Acknowledge immortal data services; then audit what? The services themselves. The data may be immortal but the services are not: disasters, wars, government interventions, failed credit arrangements, etc.</p></li>
+<li><p>Six copies if broad span correlated failures.</p></li>
+<li><p>RS(m,n) and repair-when-fail has vastly longer data life than multiple independent disks however reliable. [Have to get some numbers to make this convincing.]</p></li>
 </ul>
-<p>Get two refs for 1e-14 number.</p>
-<p>MTBF discussion: cite returns and other bases for the numbers.</p>
-<p>Is a combo of two Poissons itself Poisson?</p>
-<p>The high end of lifetime is hard to assess.</p>
-<p>Argue that the same hygiene regime serves for both: crappier disks and less wonderul independence. Still need multiples, audit, repair.</p>
-<p>Check Azure erasure code stats.</p>
-<p>Multiple copies, error correction, repair are used at all levels: bits, sectors, files, drives, services. We are adding files to the usual mix.</p>
-<p>Audit whatever the fundamental unit of failure is: bit, sector, disk, file, server.</p>
-<p>Acknowledge immortal data services; then audit what?</p>
-<p>Six copies if broad span correlated failures.</p>
-<p>RS(m,n) and repair-when-fail has vastly longer data life than multiple independent disks however reliable.</p>
 <p>Notes from 20180619.1400</p>
-<p>JPEG2000? - Preferred to PNG by L.O.C. - file size? - color treatment better than PNG? - Their first choice is uncompressed TIFF. [yikes!]</p>
-<p>Detecting errors: say &quot;fixity&quot;</p>
-<p>Can use the terms patrolling, replication, fixity.</p>
-<p>Assert &quot;indefinitely long&quot; or beyond any epsilon.</p>
-<p>Do a looong test to get down to &lt; 1ppm over 100 years. 1ppb preferred, but nobody has that much computer time.<br />
-- Probably 10 copies, quarterly auditing; 1000 runs.</p>
-<p>Economics = files for this audience. Be careful about file losses, not disks. - For larger or smaller than file, sort of don't care. [Adjacent-above and below. Except servers, of course, where we do care and have control.] - Focus on level meaningful to you = files (=documents).</p>
-<p>We do a smaller piece of the system; let someone else deal with the big things, e.g., disk arrays. Client has only a small amount of data that is nowhere near the size of a plausible disk array. [like RS(6,4) or RS(10,6) with multi-terabyte disks.] - We could do sectors, but it's not practical. The client doesn't have access at that level, so it doesn't matter, no control possible. Someone else has access to that [disk drives and disk controllers] - We don't have access to disks, either; that's the province of the disk controller, RAID controller, erasure code controller, service.</p>
-<p>Other figures about lifetimes are right only in narrow circumstances, good weasel words.</p>
+<ul>
+<li>JPEG2000?
+<ul>
+<li>Preferred to PNG by L.O.C.</li>
+<li>file size?</li>
+<li>color treatment better than PNG?</li>
+<li>Their first choice is uncompressed TIFF. [yikes!]</li>
+</ul></li>
+<li><p>Detecting errors: say &quot;fixity&quot;</p></li>
+<li><p>Can use the terms patrolling, replication, fixity.</p></li>
+<li><p>Assert &quot;indefinitely long&quot; or beyond any epsilon.</p></li>
+<li>Do a looong test to get down to &lt; 1ppm over 100 years. 1ppb preferred, but nobody has that much computer time.<br />
+</li>
+<li><p>Probably 10 copies, quarterly auditing; 1000 runs.</p></li>
+<li>Economics = files for this audience. Be careful about file losses, not disks. - For larger or smaller than file, sort of don't care. [Adjacent-above and below. Except servers, of course, where we do care and have control.]
+<ul>
+<li>Focus on level meaningful to you = files (=documents).</li>
+</ul></li>
+<li>We do a smaller piece of the system; let someone else deal with the big things, e.g., disk arrays. Client has only a small amount of data that is nowhere near the size of a plausible disk array. [like RS(6,4) or RS(10,6) with multi-terabyte disks.]
+<ul>
+<li>We could do sectors, but it's not practical. The client doesn't have access at that level, so it doesn't matter, no control possible. Someone else has access to that [disk drives and disk controllers]</li>
+<li>We don't have access to disks, either; that's the province of the disk controller, RAID controller, erasure code controller, service.</li>
+</ul></li>
+<li><p>Other figures about lifetimes are right only in narrow circumstances, good weasel words.</p></li>
+</ul>
 <!-- a Land Without Rs moment: Lunch at the bar at Legal.  Two guys on my left speak Italian to each other, plain American English to the bartender.  The guy on my right speaks unaccented English to the bartender but is reading a newpaper on his iPad in Swedish. -->
 <!-- END:TODO:RICK -->
 <h1 id="motivation">Motivation</h1>
@@ -145,6 +164,26 @@ padding-bottom: 3px;
 <p>Errors accumulate over time. Every now and then an error will occur in storage and, if the error occurs in a region of storage occupied by a document, the error destroys a document. The rate at which documents are lost depends of course on the quality of the storage. But even if the rate of error accumulation is very low, over a long period of time, many documents will be lost.</p>
 <p>A single copy of a collection will deteriorate as predicted by the Poisson distribution. A collection with multiple copies will deteriorate more slowly, but predictably; and, eventually, all the copies of a single document will be lost. Since no copy of the document is then retrievable, the document is permanently lost.</p>
 <p>The table of <strong>Exhibit nnn</strong> shows the expected rates of document errors, theoretical and simulated, over a wide range of storage error rates. [[calibration for ncopies=1 in shelf/docs/PoissonFailures.xls]]</p>
+<h1 id="attend-to-what-you-can-control">Attend to What You Can Control</h1>
+<p>Many sources of errors are possible in long-term storage, and at many levels. Consider the following hierarchy:</p>
+<ul>
+<li>Small collections of data: bits, bytes, sectors on disks.</li>
+<li>Medium-size collections of data: files.</li>
+<li>Large collections of data: disk drives, arrays of disk drives.</li>
+<li>Very large collections of data: storage services</li>
+</ul>
+<p>The sources of error in these several layers, and strategies that can be used to control and minimize the impact of errors there, are very different. A client, a library with a collection of documents, can exercise some control at some of these levels but not at others.</p>
+<ul>
+<li>For example, as a computer user, I have no control over bit or sector errors on the disks I use. These are all managed by the firmware that the disk vendor uses on the drives.<br />
+</li>
+<li>And as a customer of a storage service, whether within my organization or out in the cloud, I have no control over disk drives or arrays of disk drives. These are managed and controlled by the managers of the computer centers where the storage arrays live.<br />
+</li>
+<li>However, as a client, I am a customer of storage services, and therefore I have complete control over the set of files that I choose to store, where I store them, the formats in which I store them, whether I duplicate them, when I check on their validity, and so forth. These are choices that I can make regardless of the particular storage vendors from whom I buy storage services.<br />
+</li>
+<li>And as a customer, I have control over <em>which</em> storage services I choose to patronize, and how many, and the criteria I use to choose, and what I store there.</li>
+</ul>
+<p>As we will discuss later, we might wish to be aware of the technologies and concerns in the areas we cannot control, but we should reserve our vigilance for the areas that we can control. This paper concentrates on the objects we value -- files containing documents -- and the storage services to which we entrust our valuable files. We suggest strategies in those particular areas that can be used by client libraries to minimize the impact of errors, the ravages of age and administrative inattention, and the vicissitudes of nature, economics, and politics.</p>
+<p>more TBS</p>
 <h1 id="keep-multiple-copies">Keep Multiple Copies</h1>
 <p>Even if errors in a collection do not accumulate at a significant rate, a single copy of a collection is vulnerable to large-scale or total loss if that single copy is victim of a disaster, natural or man-made (e.g., earthquake, flood, war, economic depression, administrative error, etc.). Multiple copies in multiple independent locations are necessary to safeguard documents against this type of large-scale loss. Thomas Jefferson noted this danger to valuable documents long ago.</p>
 <blockquote>
@@ -155,6 +194,7 @@ padding-bottom: 3px;
 <h3 id="what-range-of-storage-error-rates-should-we-consider">What Range of Storage Error Rates Should We Consider?</h3>
 <p>One basic question should be answered before embarking on such simulations: what is the failure rate of stored documents? This is a difficult question due to a lack of real data.</p>
 <p>There is some data on the failure rate of individual disk drives over time. Thanks to Backblaze, Google, and others, there is some published empirical data on failure rates of disk drives of recent technology vintages. [[citations needed]] These figures refer to replacements of entire disk drives during the useful life and wear-out periods of device use. That is, they exclude infant failures but include mid-life and senescence. Unfortunately, we do not get much information on the rates of sector failures, bad block replacements, and so forth.</p>
+<p>TBS NOTE (RBL): We should be able to demote much of this lengthy discussion to later, even to the supplementary material. 90% of this is not relevant to the discussions at hand. Main topics of interest: copies, independence, format, auditing and repair.</p>
 <h4 id="drive-failures-may-place-limits-on-sector-lifetime">Drive Failures May Place Limits on Sector Lifetime</h4>
 <p>We can try to estimate bounds on the failure of sectors by extrapolating from the failure of drives. Example: At the low end of the range of disk quality, with no active error correction or repair, we can estimate bound the lifetime of sectors by examining disk drive failures. If disks are allowed to run until the drive fails, then the life of all the sectors on the disk cannot be longer than the life of the entire drive. That is, the half-life of the drive is an upper bound on the half-life of sectors contained on that drive.</p>
 <p>Backblaze, on the basis of experience with hundreds of thousands of disk drives, has estimated the failure rates of drives for the first four years. [[citation needed]] <strong>Exhibit nnn</strong> shows the estimated drive lifetimes based on that experience. [[Source spreadsheet = PaperDraft/DiskFailuresDuringRAIDRebuild.xls sheet Survival2Halflife]]</p>
