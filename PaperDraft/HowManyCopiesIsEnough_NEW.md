@@ -239,7 +239,11 @@ Even if errors in a collection do not accumulate at a significant rate, a single
 >"Time and accident are committing daily havoc on the originals deposited in our public offices. . . .  The lost cannot be recovered; but let us save what remains: not by vaults and locks which fence them from the public eye and use, in consigning them to the waste of time, but by such a multiplication of copies, as shall place them beyond the reach of accident."
 ^[From the National Archives, "https://founders.archives.gov/documents/Jefferson/01-19-02-0059".]
 
-But even multiple copies of collections deteriorate over time, from small erosions of individual documents or larger losses from external shocks.  **Exhibit nnn** shows the deterioration of collections with multiple copies over long periods of time.  [[RBL: find or regenerate the results for this case.]]  A modest number of copies, even of very high quality, cannot guarantee archival storage over long periods.  A strategy that includes monitoring and repair of documents is required for long-term preservation.
+But even multiple copies of collections deteriorate over time, from small erosions of individual documents or larger losses from external shocks.  **Exhibit nnn** shows the deterioration of collections with multiple copies over long periods of time.  [[RBL: find or regenerate the results for this case.]] 
+
+![](./images/baseline-noaudit.png)
+
+A modest number of copies, even of very high quality, cannot guarantee archival storage over long periods.  A strategy that includes monitoring and repair of documents is required for long-term preservation.
 
 
 # Protect Against a Wide Range of Conditions
