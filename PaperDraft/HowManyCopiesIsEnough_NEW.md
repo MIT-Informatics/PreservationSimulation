@@ -408,9 +408,11 @@ For documents that might not be fatally corrupted by a single sector error, loss
 In these simulations, we have modeled documents as *very fragile*: one sector error causes the document to be judged as lost.  In this model, at least these two considerations should be included in the decision to compress documents.   
 
 - Smaller is safer.  A smaller document presents a smaller target for random errors.  If a document is compressed, say, by 90%, that is, to 10% of its original size, then a random error is only one-tenth as likely to strike that document.  When placed on a storage medium of any given quality level, that smaller, compressed document is likely to persist without error ten times longer than the uncompressed version. 
-- Smaller is less expensive.  A stored collection incurs costs for both storage of the document images and the bandwidth used in auditing and repair.  Smaller documents consume less space and less bandwidth and therefore cost less to maintain.  On a given budget, a compressed collection can be replicated into more copies and audited more frequently.  Both the increased copy count and more frequent auditing contribute directly to reducing or eliminating permanent losses in the collection.  
 
-A large document occupies more storage than a small document.  If errors are striking storage uniformly randomly, then a large document is proportionally a larger target.  This effect is verified empirically by our experiments.  
+> A large document occupies more storage than a small document.  If errors are striking storage uniformly randomly, then a large document is proportionally a larger target.  This effect is verified empirically by our experiments.  
+
+- Smaller is less expensive.  A stored collection incurs costs for both storage of the document images and the bandwidth used in auditing and repair.  Smaller documents consume less space and less bandwidth and therefore cost less to maintain.  
+- Smaller enables higher storage redundancy.  On a given budget, a compressed collection can be replicated into more copies and audited more frequently.  Both the increased copy count and more frequent auditing contribute directly to reducing or eliminating permanent losses in the collection.  
 
 The drawings in **Exhibit nnn** illustrate the effect of randomly placed errors on documents of varying sizes.  [[Picture from old presentation of doc blocks with Xs in them, with maybe a couple more Xs added to make it clearer that large = big target.]]
 
@@ -435,6 +437,8 @@ Encryption of documents may be required for secrecy, digital rights management, 
 - An encrypted document is more fragile in the sense that it, if damaged by an error, it may not be recoverable even with extraordinary efforts.  (Contrast with text documents, still photo, video, and audio files.)
 - A collection of encrypted documents is more subject to large shocks, associated failures where multiple servers are immediately affected.  E.g., losing the encryption keys can cause all the copies on several servers to be irretrievable.  
 
+Encrypted documents, like compressed documents, may have a greater need for storage redundancy, auditing, and repair because of their increased fragility.  
+
 
 # A Very Simple Cost Model
 
@@ -457,21 +461,13 @@ Do not blindly believe reliability estimates from vendors.
 
 ### Doubt Statistics of Manufacturers and Cloud Vendors    
 
-#### Don't Believe Tricky Statistics
+#### Lifetime is Easier to Understand Than Error Rate
 
-TBS
-
-- be wary of marketing numbers
-- mtbf, mttf, and such are particularly hard to grasp
+The inverse of error rate is usually expressed in terms of MTBF or MTTF, and, initially, we expressed all parameters as mean exponential lifetime. But MTBF and MTTF are hard even for most experts to grasp, and uninformative or misleading for non-experts.
 
 The likelihood of an error in a disk bit or sector, or even the failure of an entire disk, is a very small number with many zeroes before the first significant digit.  We choose to invert the error rate into a function of lifetime of that bit (or sector containing many bits).  Thus a probability of a bit failing in a year of 10E-15 becomes a mean lifetime of 100E12 years.  Expressed that way, the figure seems excessively optimistic.  (The age of the universe is currently estimated to be 14E9 years.)  Data on such a disk would be effectively immortal, and that does not correlate with experience.  
 
-We agree with Rosenthal (2010) [[citation needed]] and others that such estimates are merely marketing projections that are often not based on empirical data.  Using simulations to investigate such nearly immortal disks would be expensive and fruitless.  If there are no errors at all, then no protective strategy is needed.  However, the statement "no errors" does not correlate well with practical experience.  
-
-
-#### Lifetime Easier to Understand Than Error Rate
-
-The inverse of error rate is usually expressed in terms of MTBF or MTTF, and, initially, we expressed all parameters as mean exponential lifetime. But MTBF and MTTF are hard even for most experts to grasp, and uninformative or misleading for non-experts.
+### Don't Believe Tricky Statistics
 
 #### Be Skeptical of MTBF
 
@@ -483,12 +479,15 @@ Most non-marketing literature considers MTBF estimates from manufacturers to be 
 
 Even if we understood the source and accuracy of stated MTTF estimates for disk drives, we would still not have information about individual sector failures within a drive that cause document failures, nor the relative frequencies of sector failures versus drive failures.
 
+We agree with Rosenthal (2010) [[citation needed]] and others that such estimates are merely marketing projections that are often not based on empirical data.  Using simulations to investigate such nearly immortal disks would be expensive and fruitless.  If there are no errors at all, then no protective strategy is needed.  However, the statement "no errors" does not correlate well with practical experience.  
+
 
 ### Reliability Varies Over Time
 
+
 #### Infant and Aging Failures
 
-TBS
+[[RBL: This section should probably be relegated to supplementary material.  It is possible that we can simply find a reference with a good description and pictures to handle this discussion entirely.]]
 
 - bathtub curve
     - declining infant failures
@@ -496,6 +495,7 @@ TBS
     - rising senescence failures, wear-out
 
 [[Do we draw our own picture, or steal one, or just cite literature on the topic?]]
+
 
 #### Small Changes in Error Rates: Glitches
 
@@ -518,33 +518,31 @@ TBS
 
 TBS
 
-- plan for failures
+- plan for failures and mergers
 - plan ahead for replacements
 
 ### Exceptional but Realistic Conditions: Major Shocks
 
 TBS
 
-- shocks that weaken or kill whole servers, multiple servers
-- regional: depression, war, earthquake, flood, etc.
-- human: admin failures, payment arrangements, hostile or government action
+We use the term "shock" to refer to incidents that can weaken or kill a whole server, or even multiple servers.  
 
 - A *shock* is a more serious condition affecting storage servers.  This is a temporary, short-lived, or possibly permanent, increase in the likelihood of death of a server.  All servers are considered to have finite lives (of random length), though the lives may be very long.  A shock reduces that lifetime.  
 - A shock may kill a server immediately, or it may simply increase the likelihood of failure of that server.  
-- What types of shocks might occur?  Natural disasters, such as fire, flood, earthquake, volcano, meteor, etc.; economic downturnsin consumer and financial markets; regional wars; government interference; administrative errors such as billing and credit arrangements; and so forth.  
+- What types of shocks might occur?  Some shocks are exogenous: natural disasters, such as fire, flood, earthquake, volcano, meteor, etc.; economic downturns in consumer and financial markets; regional wars; government interference.  Others may be endogenous: administrative errors such as billing and credit arrangements; and so forth.  
 - Shocks arrive at random intervals in a Poisson process, and may be immediately fatal to a set of servers or may simply reduce their life expectancies for a period.  
-- The impact of a shock is modeled as silent, that is, no one notices the death of a server until someone tries to retrieve a document from a dead server.  Note that a server failure results in the loss of all document copies stored on that server.  
+- The death of a server as a result of a shock is modeled as silent, that is, no one notices the death of a server until someone tries to retrieve a document from a dead server.  Note that a server failure results in the loss of all document copies stored on that server.  
 - Shocks may be regional or administrative phenomena that affect more than one server at a time.  One particularly subtle cause of a shock affecting multiple servers is lack of independence of the servers, due to corporate mergers, collocation of server farms, dependence on large power grids, etc.  
 - When a server is lost, the client is required to find a new server and populate it with the whole collection -- or at least the parts of the collection that can still be found on the remaining servers.  
 
 
 # Storage Vendors and Locations Must be Independent
 
-TBS
+An underappreciated source of correlated server failures is lack of independence of storage services.  This may stem from several causes.  
 
-- financial dependence through mergers
-- accidental location dependence through common facilities
-- don't keep multiple copies in one facility
+- Financial dependence through mergers: companies may merge or be brought together by holding companies that relate their financial structures.  As a result, multiple services may share vulnerabilities.  A client can suddenly find that it has effectively only N-1 redundant copies of its collection because two of them would fail together.  
+- Accidental location dependence through common facilities: large server farms may be effectively co-located, either through actual physical proximity in a secure computing facility or regional facilities, or through dependence on the same external resources, such as power grids, water supplies for cooling, etc.  
+- Multiple copies kept in one facility: a client might keep two or more copies of a collection in the same server room or IT infrastructure.  In such a case, the copies are not sufficiently independent to be considered really redundant.  
 
 
 # Develop Standards for the Benefit of All
@@ -553,9 +551,12 @@ TBS
 
 TBS
 
-- consumes much time, bandwidth, egress charges
-- what is needed: cryptographic verification, checksum with nonce
-- work to develop standards for all vendors and clients to use
+Auditing consumes much time, bandwidth, and egress charges from storage services.  It would be to everyone's advantage for the process to be more efficient.  Verifying document integrity by some means other than full retrieval and comparison could improve the economics for all parties.  In particular, methods of cryptographic verification could reduce bandwidth requirements dramatically at the expense of a small increase in computing.  
+
+- For instance, if a client could retrieve a secure checksum of part or all of a document with a client-supplied nonce, the bandwidth required by both the client and the service would be reduced to a small fraction of that required for full-document auditing.  Such a transaction would likely be tens of bytes rather than megabytes.  
+- Egress charges from the storage service would be similarly reduced.  The storage vendor might impose a small charge for the additional computing cost of the checksumming, but the result would likely be much less than the egress charge for the entire document content.  
+
+We feel that the library "industry" and the cloud storage industry should join to develop standards for some more efficient auditing mechanisms, such as cryptographic checksum with nonce.
 
 
 # END OF NEW OUTLINE
