@@ -1,0 +1,8 @@
+# Number of documents in the collection
+
+nDocuments
+Number of Documents
+value,label,selected
+10000,"ten thousand (baseline)",SELECTED
+30000,"thirty thousand (large)",0
+100000,"one hundred thousand (very large)",0

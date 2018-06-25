@@ -17,11 +17,16 @@ td {
 border: 1px solid black;
 padding: 1ex;
 }
-h1, h2, h3, h4 {
+h1, h2, h3, h4, h5 {
 font-family: Helvetica, Arial, sans-serif;
 }
 li {
 padding-bottom: 3px;
+}
+.caption {
+font-family: Helvetica, Arial, sans-serif;
+font-weight: bold;
+font-size: smaller;
 }
 </style>
 </head>
@@ -83,28 +88,13 @@ TBS: NOTES
 
 - look at the numbers in Beyond MTTF paper 2014.  
 
-- suppose i have one disk that is immortal.
-
-- suppose we had two copies on the best disks we can find and migrate them within the service period.  
-
-- Don't sweat the small stuff, glitches are covered by protection over a wide range. 
-
 - Get two refs for 1e-14 number.  
 
-- MTBF discussion: cite returns and other bases for the numbers.
-
-- Is a combo of two Poissons itself Poisson? 
+- Is a combo of two Poissons itself Poisson?  [[I forget the question.]]
 
 - The high end of lifetime is hard to assess.  
 
-- Argue that the same hygiene regime serves for both: crappier disks and less wonderful independence.  Still need multiples, audit, repair.  
-
 - Check Azure erasure code stats.
-
-- Multiple copies, error correction, repair are used at all levels: bits, sectors, files, drives, services.  We are adding files to the usual mix.  
-
-- Audit whatever the fundamental unit of failure is: bit, sector, disk, file, server. 
-    - In this case, there are only two such units that the client can detect and maybe control: files (documents) and servers. 
 
 - Acknowledge immortal data services; then audit what?  The services themselves.  The data may be immortal but the services are not: disasters, wars, government interventions, failed credit arrangements, etc.  
 
@@ -125,17 +115,8 @@ Notes from 20180619.1400
 
 - Can use the terms patrolling, replication, fixity.
 
-- Assert "indefinitely long" or beyond any epsilon.
-
 - Do a looong test to get down to < 1ppm over 100 years.  1ppb preferred, but nobody has that much computer time.  
     - Probably 10 copies, quarterly auditing; 1000 runs.
-
-- Economics = files for this audience.  Be careful about file losses, not disks.     - For larger or smaller than file, sort of don't care. [Adjacent-above and below.  Except servers, of course, where we do care and have control.]
-    - Focus on level meaningful to you = files (=documents).
-
-- We do a smaller piece of the system; let someone else deal with the big things, e.g., disk arrays.  Client has only a small amount of data that is nowhere near the size of a plausible disk array.  [like RS(6,4) or RS(10,6) with multi-terabyte disks.]
-    - We could do sectors, but it's not practical.  The client doesn't have access at that level, so it doesn't matter, no control possible.  Someone else has access to that [disk drives and disk controllers]
-    - We don't have access to disks, either; that's the province of the disk controller, RAID controller, erasure code controller, service.  
 
 - Other figures about lifetimes are right only in narrow circumstances, good weasel words.  
 
@@ -198,7 +179,6 @@ A *client* (library) has a *collection* of *documents* in digital form.  A copy 
 - Errors are silent, that is, no one notices an error until someone tries to read the document and discovers that it is lost.  
 
 
-
 # Attend to What You Can Control
 
 Many sources of errors are possible in long-term storage, and at many levels.  Consider the following hierarchy:
@@ -253,7 +233,7 @@ One basic question should be answered before embarking on such simulations: what
 
 There is some data on the failure rate of individual disk drives over time. Thanks to Backblaze, Google, and others, there is some published empirical data on failure rates of disk drives of recent technology vintages. [[citations needed]]  These figures refer to replacements of entire disk drives during the useful life and wear-out periods of device use. That is, they exclude infant failures but include mid-life and senescence. Unfortunately, we do not get much information on the rates of sector failures, bad block replacements, and so forth.
 
-TBS NOTE (RBL): We should be able to demote much of this lengthy discussion to later, even to the supplementary material.  90% of this is not relevant to the discussions at hand.  Main topics of interest: copies, independence, format, auditing and repair.  
+ > TBS NOTE (RBL): We should be able to demote much of this lengthy discussion to later, even to the supplementary material.  90% of this is not relevant to the discussions at hand.  Main topics of interest: copies, independence, format, auditing and repair.  
 
 
 #### Drive Failures May Place Limits on Sector Lifetime
@@ -302,7 +282,7 @@ However, we do have to consider the effects on document loss of redundant implem
 
 If arrays of disks are managed with conservative hygiene, e.g., replacing most drives after some "usable" lifetime but before they fail, and rebuilding redundant arrays of disks, then the drive lifetime may not be the dominant factor in sector survival.  Failures of individual sectors will occur all the time, albeit at a much lower rate, but they are silent and will accumulate if they are not actively uncovered and repaired. 
 
-An oft-cited number about disk error rates is "uncorrectable error rate = one bit in 10e-14."  Note several things about this number.  
+An oft-cited number about disk error rates is "uncorrectable error rate = one bit in 10e-14."  [[Need citations.]]  Note several things about this number.  
 
 1. It is not a statistic in the usual sense; that is, it has not been derived from any referenced empirical data.  It is a hypothesis from the manufacturing industry, perhaps derived from collective experience.
 1. It is not stated as time-dependent; that is, it is not an *arrival* rate of errors, it is a constant.  It also does not seem to increase with the size of the drive.  Most analyses using this number treat it as a given fact for any disk drives, for example, as perhaps a rate of manufacturing defects.  
@@ -342,7 +322,8 @@ Note also that, since documents typically occupy more than one disk sector, even
 
 [[Source spreadsheet: FailureRatesBackOfTheEnvelope.xls, sheet PrintMe]]
 
-Clearly, at the low end of the range, where sector lifetime is in the range of 10 million hours, document losses would be unacceptably high.  If you lost 3 percent of all your documents in the first year, you would take immediate action to find a more reliable storage environment.  Even up to 30 million hours (sector half-life), such disks would be classified as "rusty garbage can lids" that are not suitable for archival storage.  Better disks might still accumulate errors at a significant rate, but permanent losses can be avoided wtih suitable auditing and repair regimes, as discussed below.  
+Clearly, at the low end of the range, where sector lifetime is in the range of 10 million hours, document losses would be unacceptably high.  If you lost 3 percent of all your documents in the first year, you would take immediate action to find a more reliable storage environment.  Even up to 30 million hours (sector half-life), such disks would be classified as "rusty garbage can lids" that are not suitable for archival storage.  Better disks might still accumulate errors at a significant rate, but permanent losses can be avoided with suitable auditing and repair regimes, as discussed below.  
+
 
 #### If You Can't Control It, Buy Insurance Against It
 
@@ -356,17 +337,16 @@ Verify and repair the multiple copies.  In general, we will use the term "auditi
 
 ### Strategies to Achieve Very Long Data Lifetimes
 
-How can we protect data over the long term against a wide range of error conditions?  A single copy is vulnerable, regardless of its quality.  Multiple high-quality copies still deteriorate over long periods.  We must adopt active strategies to detect and correct errors in data to preserve the corpus over long periods.  Such strategies must include three components: detecting errors, correcting errors, and actively seeking errors.  
+How can we protect data over the long term against a wide range of error conditions?  A single copy is vulnerable, regardless of its quality.  Multiple high-quality copies still deteriorate over long periods.  We must adopt active strategies to detect and correct errors in data to preserve the corpus over long periods.  Such strategies must include three components: detecting errors, correcting errors, and actively locating errors.  
 
-- Detecting errors requires a certain redundancy in storage, typically parity, or comparison of copies, or special encodings.  There is always some degree of damage that cannot be detected accurately, e.g., multiple errors in a simple parity system.  
+- Detecting errors requires a certain redundancy in storage, typically parity, or comparison of copies, fixity information, or special encodings.  There is always some degree of damage that cannot be detected accurately, e.g., multiple errors in a simple parity system.  
 - Correcting errors requires restoring a damaged copy with a correct copy, either by consulting a known good copy or by using an error-correcting encoding in the storage of the data.  The ability of a system to correct errors is also limited, e.g., if all copies of the data are damaged.  
-- Actively seeking errors requires a mechanism outside normal usage that examines all the data and checks its validity.  The system searches all the data for latent errors in order to locate (and repair) them before they pile up and overwhelm the redundancy of storage.  
+- Actively locating errors requires a mechanism outside normal usage that examines all the data and checks its validity, sometimes called "patrolling" or "scrubbing."  The system searches all the data for latent errors in order to locate (and repair) them before they pile up and overwhelm the redundancy of storage.  
 
 Strategies that include these three components are routinely used at low levels within computer systems.
 
 - Small regions of memory, e.g., RAM banks, disk sectors, are protected with parity bits or error-correcting codes.  Parity provides only limited error detection; error-correcting codes provide some higher level of redundancy for detection and correction.  And large memory arrays may be actively scrubbed to find and correct errors early.  
-
-- Disk drives tend to fail all at once, but they are often protected by RAID or eraasure code structures and controllers.  Such arrays of disks include redundant recording and parity to permit repair of failed drives.  
+- Disk drive mechanisms tend to fail all at once rather than a sector at a time, but they are often protected by RAID or erasure code structures and controllers.  Such arrays of disks include redundant recording and parity to permit repair of failed drives.  
 
 This study is concerned with providing a degree of redundancy and error correction for other groupings of data of different sizes: 
 
@@ -400,14 +380,24 @@ Over a very wide range of storage quality conditions (storage error rates or sec
 [[This may refer to the preceding exhibit, if that picture is clear enough.]]
 
 
+### Depend on Redundancy and Repair
+
+Clients can adjust the degree of redundancy of storage and the aggressiveness of auditing and repair to match almost any requirements for permanent storage of documents.  To defend against high rates of document losses and correlated server failures, a client can increase the number of copies maintained, with careful consideration to their physical and financial independence, and can audit the several copies more frequently.  By controlling both of these factors in a maintenance regimen, a client can protect the integrity of a collection for any desired period.  
+
+This regimen of data hygiene -- high redundancy and frequent auditing and repair -- can be used to protect against poorer-quality storage servers and higher levels of correlated failure.  
+
+- Originally, RAID disk arrays were intended to protect against imperfect disk drives.  The term "RAID" was coined to abbreviate "Redundant Arrays of Inexpensive Disks," where "inexpensive" referred to perhaps imperfect quality.  Similar techniques were applied for a time to large memory banks, constructed of RAM chips with some weak or failed bits, using wide error-correcting encodings to make up for bit errors.  
+- By analogy, a collection of documents can be replicated with a high degree of redundancy (many copies), and aggressive error detection and correction techniques (frequent auditing and repair) can be used to maintain the collection in perfect or near-perfect condition for long periods of time.  
+
+
 # Compress Your Documents
 
 The impacts of document size, compression, encryption.
 
 What are the effects of compressing and/or encrypting documents?  Lossless compression is almost always a good strategy for long-term storage of documents.
 
-### Compression Reduces the Target Area of a Document
 
+### Compression Reduces the Target Area of a Document
 
 Documents stored on digital media are fragile; storage errors corrupt the content of a document.  How much of a document is corrupted depends largely on the data format of the document.  Even small errors in highly compressed or encrypted documents may render part or all of the document unusable. 
 
@@ -424,11 +414,17 @@ In these simulations, we have modeled documents as *very fragile*: one sector er
 
 The drawings in **Exhibit nnn** illustrate the effect of randomly placed errors on documents of varying sizes.  [[Picture from old presentation of doc blocks with Xs in them, with maybe a couple more Xs added to make it clearer that large = big target.]]
 
+![Exhibit nnn: Cartoon of Large Document Presenting Larger Target Area for Random Errors](../pictures/docsizevserrorrate/SmallVsLargeFile-2.png)
+
 **Exhibit nnn** shows the increase in document losses for larger documents across a range of storage error rates.  
 [[Picture in pictures/largerdocs, but it needs to be redone.]]
 
+![Exhibit nnn: Larger Docs Are More Vulnerable to Random Errors: 5, 50, 500, 5000MB -- !!!MUST BE REDONE!!!](../pictures/largerdocs/baseline-scalingdocsize.png)
+
 The table of **Exhibit nnn** shows the linear relationship between document size and storage error rate.  (Error rate is expressed as sector half-life, as explained below.)
 [[PDF captured from spreadsheet, in pictures/docsizevserrorrate/Data_Scaling_DocsizeSpreadsheet-2.pdf]]
+
+![Exhibit nnn: Linear Relationships Between Document Sizes and Error Rates](../pictures/docsizevserrorrate/Data_Scaling_DocsizeSpreadsheet.png)
 
 Lossless compression is benign for a variety of reasons.
 
@@ -507,13 +503,16 @@ We agree with Rosenthal (2010) [[citation needed]] and others that such estimate
 
 #### Small Changes in Error Rates: Glitches
 
-TBS
+The error rate of a storage device or storage server is not necessarily constant.  The rate can vary over time for a variety of reasons.  One reason is the "bathtub curve" phenomenon [[citations needed]].  In this study, we have examined other varying conditions under the general heading of *glitches*.  
 
 - A *glitch* is a temporary, short-lived, condition that impacts a single server and increases the sector error rate on that server for some short interval.   
-- What types of glitches might occur in server farms?  HVAC weakness or failure; environmental contamination by chemicals or particulates; radiation; electrical noise; and similar.  In general, these conditions are not fatal to the server overall, but degrade the integrity of data storage.  
+- What types of glitches might occur in server farms?  HVAC weakness or failure; environmental contamination by chemicals or particulates, radiation, electrical noise; and similar.  It is also possible that insertion into a service of a batch of disk drives with different error characteristics could temporarily alter the overall error rate of the service.  In general, these conditions are not fatal to the server overall, but degrade the integrity of data storage.  
 - Glitches arrive at random intervals in a Poisson process, and have limited duration.  
 - Glitches are local phenomena, limited to a single server.  
-- The effect of a glitch is simply to increase the sector error rate for a short period.  Glitches, like the errors they induce, are silent.  In this study, we find that it is hard to distinguish glitch-induced increases in error rates from random variations in performance.  
+- The effect of a glitch is simply to increase the sector error rate for a short period.  
+- Glitches, like the errors they induce, are silent.  
+
+In this study, we have found that it is hard to distinguish glitch-induced increases in error rates from random variations in performance.  A glitch increases the error rate (reduces the sector lifetime) of the server for a while, but this need not impact the overall performance of a collection of documents in which that server is a participating member.  A good client strategy should maintain sufficient redundancy and auditing discipline to protect the collection over a wide range of adverse conditions.  A glitch in one server might require a higher degree of repair of that server during the next auditing cycle, but that should not impact the health of the overall collection.  
 
 
 ### Do Believe the Experience of Others
