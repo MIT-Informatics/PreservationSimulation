@@ -45,11 +45,13 @@ padding-bottom: 3px;
 
 ## **Abstract**
 
-> How to protect a large, valuable, digital document collection?
+> How should we protect large and valuable collections of digital documents?
 
-> This article addresses the problem of ensuring information integrity over long periods, and against a diverse range of real-world legal, organizational, technical, and economic threats. Rapid advances information technology have shifted the economics of information production, transmission, and storage -- resulting in a vast amount of information that is increasing stored online or near-line. This shift in information storage changes both the profile of threat to integrity, and the set of feasible methods for mitigating these threats. 
+> Rapid advances information technology have shifted the economics of information production, transmission, and storage. The result is that a vast and increasing amount of information is increasing stored digitally on-line, or near-line; but is not adequately protected against threats to long-term loss. The shift in information storage from physical to digital has technical, legal and economic dimensions -- and has changed the profile of threats to integrity, and the set of feasible methods for mitigating these threats. 
 
-> We develop a general event-based simulation framework that can be used to flexibly and reproducibly simulate the effectiveness of various methods of storage, replication, auditing, and transformation against a diverse portfolio of threats to data loss. We then apply this framework to a range of scenarios that are representative of common baseline threats and current storage technology. From this we derive general guidance for the use of replication, platform diversification, fixity metadata, integrity auditing, compression, and encryption where long-term integrity is desired. 
+> This article addresses the problem of developing optimal strategies to ensure information integrity over long periods -- and against a diverse range of real-world  technical, legal, organizational, and economic threats. To address this problem we develop a general event-based simulation framework that can be used to flexibly and reproducibly simulate the effectiveness of various methods of storage, replication, auditing, and transformation against a diverse portfolio of threats to data loss. 
+
+> We use this framework to analyze combinations of preservation strategies across a range of scenarios that are represent varying threats and storage technologies. From this we derive general guidance for the use of replication, platform diversification, fixity metadata, integrity auditing, compression, and encryption where long-term integrity is desired. 
 
 - Summary Of Specific Recommendations
 
@@ -141,6 +143,9 @@ Notes from 20180619.1400
 <!-- END:TODO:RICK -->
 
 # Motivation
+
+Much ink has been spilled on the subject of the exponential increase in information production in the digital age. And more recently, the durability of digital information has become a important concern for technologists, scholars, and government [CITE]. For example, the biggest long-term archive of information, the Internet Archive currently holds 35 petabytes of information. This is roughly equivalent to the text of 7 million long novels -- or to the amount of new information produced across the globe every 45 minutes, throughout the year. [CITE]
+
 
 - Information production is rapidly increasing.
 - The vast majority of the world's data is stored on rotating disks, 90% in 2007 and not changing very rapidly.
