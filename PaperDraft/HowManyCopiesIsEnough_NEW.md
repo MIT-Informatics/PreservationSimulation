@@ -30,7 +30,7 @@ padding-bottom: 3px;
 % How Many Copies Is Enough?  
 % Micah Altman; Richard Landau  
 % 2016-08-15  
-% Revised 2018-06-22 RBL
+% Revised 2018-06-25 RBL
 
 [[Text blocks in double-square-brackets, such as this is, are editorial notes for the authors to clean up.]]
 
@@ -63,7 +63,7 @@ i. Thou shalt respect and **monitor the independence of thy vendors**.
 
 i. Thou shalt be wary that **vendors are ephemeral**.  Therefore shalt thou befriend more vendors than thou currently doth engage, for they may be friends in lean years of woe and hardship.  
 
-i.  Thou shalt **attend mainly to things within thy control** and less to others.
+i.  Thou shalt **attend mainly to what is within thy control**, and less to others.
 
 i. Thou shalt **cloak thy documents** in secret robes, if they be shy, to keep them from prying eyes.
 
@@ -95,7 +95,7 @@ TBS: NOTES
 
 - The high end of lifetime is hard to assess.  
 
-- Argue that the same hygiene regime serves for both: crappier disks and less wonderul independence.  Still need multiples, audit, repair.  
+- Argue that the same hygiene regime serves for both: crappier disks and less wonderful independence.  Still need multiples, audit, repair.  
 
 - Check Azure erasure code stats.
 
@@ -126,9 +126,9 @@ Notes from 20180619.1400
 - Assert "indefinitely long" or beyond any epsilon.
 
 - Do a looong test to get down to < 1ppm over 100 years.  1ppb preferred, but nobody has that much computer time.  
-- Probably 10 copies, quarterly auditing; 1000 runs.
+    - Probably 10 copies, quarterly auditing; 1000 runs.
 
-- Economics = files for this audience.  Be careful about file losses, not disks.  - For larger or smaller than file, sort of don't care. [Adjacent-above and below.  Except servers, of course, where we do care and have control.]
+- Economics = files for this audience.  Be careful about file losses, not disks.     - For larger or smaller than file, sort of don't care. [Adjacent-above and below.  Except servers, of course, where we do care and have control.]
     - Focus on level meaningful to you = files (=documents).
 
 - We do a smaller piece of the system; let someone else deal with the big things, e.g., disk arrays.  Client has only a small amount of data that is nowhere near the size of a plausible disk array.  [like RS(6,4) or RS(10,6) with multi-terabyte disks.]
@@ -234,7 +234,7 @@ Even if errors in a collection do not accumulate at a significant rate, a single
 >"Time and accident are committing daily havoc on the originals deposited in our public offices. . . .  The lost cannot be recovered; but let us save what remains: not by vaults and locks which fence them from the public eye and use, in consigning them to the waste of time, but by such a multiplication of copies, as shall place them beyond the reach of accident."
 ^[From the National Archives, "https://founders.archives.gov/documents/Jefferson/01-19-02-0059".]
 
-But even multiple copies of collections deteriorate over time, from small erosions of individual documents or larger losses from external shocks.  **Exhibit nnn** shows the deterioration of collections with multiple copies over long periods of time.  [[RBL: find the results for this case.]]  A modest number of copies, even of very high quality, cannot guarantee archival storage over long periods.  A strategy that includes monitoring and repair of documents is required for long-term preservation.
+But even multiple copies of collections deteriorate over time, from small erosions of individual documents or larger losses from external shocks.  **Exhibit nnn** shows the deterioration of collections with multiple copies over long periods of time.  [[RBL: find or regenerate the results for this case.]]  A modest number of copies, even of very high quality, cannot guarantee archival storage over long periods.  A strategy that includes monitoring and repair of documents is required for long-term preservation.
 
 
 # Protect Against a Wide Range of Conditions
