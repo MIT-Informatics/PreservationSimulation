@@ -1,3 +1,130 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+</head>
+<body>
+<div id="TOC">
+<ul>
+<li><a href="#title">Information Integrity Over the Long Term -- How Many Copies Is Enough?</a><ul>
+<li><a href="#assessing-long-term-durability-of-collections-through-a-flexible-replicable-simulation">Assessing Long-term Durability of Collections Through A Flexible, Replicable Simulation</a></li>
+</ul></li>
+<li><a href="#outline-with-text-in-it">OUTLINE WITH TEXT IN IT</a><ul>
+<li><a href="#abstract"><strong>Abstract</strong></a></li>
+</ul></li>
+<li><a href="#motivation">Motivation</a></li>
+<li><a href="#problem-definition">Problem Definition</a></li>
+<li><a href="#core-risks">Core Risks</a></li>
+<li><a href="#basic-model-and-some-implications">Basic Model and Some Implications</a><ul>
+<li><a href="#very-brief-outline-of-the-model">Very Brief Outline of the Model</a></li>
+<li><a href="#the-simplest-case-sector-errors">The Simplest Case: Sector Errors</a><ul>
+<li><a href="#process">Process</a></li>
+<li><a href="#implications">Implications</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#attend-to-what-you-can-control">Attend to What You Can Control</a></li>
+<li><a href="#keep-multiple-copies">Keep Multiple Copies</a></li>
+<li><a href="#protect-against-a-wide-range-of-conditions">Protect Against a Wide Range of Conditions</a><ul>
+<li><a href="#what-range-of-storage-error-rates-should-we-consider">What Range of Storage Error Rates Should We Consider?</a><ul>
+<li><a href="#drive-failures-may-place-limits-on-sector-lifetime">Drive Failures May Place Limits on Sector Lifetime</a></li>
+<li><a href="#reducing-disk-drive-failures-in-production">Reducing Disk Drive Failures in Production</a></li>
+<li><a href="#consider-sector-failures-independent-of-drive-failures">Consider Sector Failures Independent of Drive Failures</a></li>
+<li><a href="#if-you-cant-control-it-buy-insurance-against-it">If You Can't Control It, Buy Insurance Against It</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#visit-your-documents-regularly">Visit Your Documents Regularly</a><ul>
+<li><a href="#strategies-to-achieve-very-long-data-lifetimes">Strategies to Achieve Very Long Data Lifetimes</a></li>
+<li><a href="#the-process-of-auditing-and-repairing">The Process of Auditing and Repairing</a></li>
+<li><a href="#how-many-copies-to-keep-with-auditing">How Many Copies to Keep With Auditing?</a></li>
+<li><a href="#depend-on-redundancy-and-repair">Depend on Redundancy and Repair</a></li>
+</ul></li>
+<li><a href="#compress-your-documents">Compress Your Documents</a><ul>
+<li><a href="#compression-reduces-the-target-area-of-a-document">Compression Reduces the Target Area of a Document</a></li>
+</ul></li>
+<li><a href="#cloak-your-documents-encryption">Cloak Your Documents: Encryption</a></li>
+<li><a href="#a-very-simple-cost-model">A Very Simple Cost Model</a></li>
+<li><a href="#judge-the-level-of-storage-quality">Judge the Level of Storage Quality</a><ul>
+<li><a href="#doubt-statistics-of-manufacturers-and-cloud-vendors">Doubt Statistics of Manufacturers and Cloud Vendors</a><ul>
+<li><a href="#lifetime-is-easier-to-understand-than-error-rate">Lifetime is Easier to Understand Than Error Rate</a></li>
+</ul></li>
+<li><a href="#dont-believe-tricky-statistics">Don't Believe Tricky Statistics</a><ul>
+<li><a href="#be-skeptical-of-mtbf">Be Skeptical of MTBF</a></li>
+</ul></li>
+<li><a href="#reliability-varies-over-time">Reliability Varies Over Time</a><ul>
+<li><a href="#infant-and-aging-failures">Infant and Aging Failures</a></li>
+<li><a href="#small-changes-in-error-rates-glitches">Small Changes in Error Rates: Glitches</a></li>
+</ul></li>
+<li><a href="#do-believe-the-experience-of-others">Do Believe the Experience of Others</a></li>
+</ul></li>
+<li><a href="#storage-vendors-may-be-ephemeral">Storage Vendors May be Ephemeral</a><ul>
+<li><a href="#exceptional-but-realistic-conditions-major-shocks">Exceptional but Realistic Conditions: Major Shocks</a></li>
+</ul></li>
+<li><a href="#storage-vendors-and-locations-must-be-independent">Storage Vendors and Locations Must be Independent</a></li>
+<li><a href="#develop-standards-for-the-benefit-of-all">Develop Standards for the Benefit of All</a><ul>
+<li><a href="#make-auditing-more-efficient.">Make auditing more efficient.</a></li>
+</ul></li>
+<li><a href="#end-of-new-outline">END OF NEW OUTLINE</a></li>
+<li><a href="#material-from-here-down-will-be-relocated-to-the-proper-place-in-the-new-outline-or-to-supplementry-material.">MATERIAL FROM HERE DOWN WILL BE RELOCATED TO THE PROPER PLACE IN THE NEW OUTLINE, OR TO SUPPLEMENTRY MATERIAL.</a></li>
+<li><a href="#end-end-end-end-end-end-end-end-end-end-end-end-end">END END END END END END END END END END END END END</a></li>
+<li><a href="#end-end-end-end-end-end-end-end-end-end-end-end-end-1">END END END END END END END END END END END END END</a></li>
+<li><a href="#details-of-the-structure-of-the-model">Details of the Structure of the Model</a><ul>
+<li><a href="#small-and-large-failures">Small and Large Failures</a><ul>
+<li><a href="#large-complex-case-shocks">Large, Complex Case: Shocks</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#basic-testing-process">Basic Testing Process</a></li>
+<li><a href="#data-representation">Data Representation</a><ul>
+<li><a href="#lifetime-expressed-as-half-life">Lifetime Expressed as Half-Life</a></li>
+<li><a href="#simplest-case-no-auditing">Simplest Case: No Auditing</a></li>
+<li><a href="#simple-case-independent-failures-just-plain-copies">Simple Case: Independent Failures &amp; Just Plain Copies</a></li>
+<li><a href="#how-many-copies-do-you-need-if-...">How many copies do you need if ...</a></li>
+<li><a href="#common-auditing-strategies">Common Auditing Strategies</a></li>
+</ul></li>
+<li><a href="#observations-scale-independence">Observations: Scale Independence</a><ul>
+<li><a href="#large-vs-small-collections">Large vs Small Collections</a></li>
+<li><a href="#large-vs-small-documents">Large vs Small Documents</a></li>
+<li><a href="#large-vs-small-storage-structures">Large vs Small Storage Structures</a></li>
+</ul></li>
+<li><a href="#observations-auditing-is-essential">Observations: Auditing is Essential</a><ul>
+<li><a href="#total-auditing-is-essential">Total Auditing is Essential</a></li>
+<li><a href="#other-types-of-auditing">Other Types Of Auditing</a></li>
+<li><a href="#segmented-total-auditing-slightly-better">Segmented Total Auditing Slightly Better</a></li>
+</ul></li>
+<li><a href="#recommendations">Recommendations</a><ul>
+<li><a href="#for-the-collection-owner">For the Collection Owner</a></li>
+<li><a href="#for-digital-preservation-commons">For digital preservation commons</a></li>
+</ul></li>
+<li><a href="#supplemental-material">Supplemental Material</a></li>
+<li><a href="#a-few-words-about-error-rates">A Few Words About Error Rates</a><ul>
+<li><a href="#the-representation-and-scale-of-error-rates">The Representation and Scale of Error Rates</a><ul>
+<li><a href="#why-did-we-choose-this-range-of-error-rates">Why Did We Choose This Range of Error Rates</a></li>
+<li><a href="#relationship-of-mtbfmttf-to-block-error-rates">Relationship of MTBF/MTTF to Block Error Rates</a></li>
+</ul></li>
+<li><a href="#what-is-mtbf-really">What is MTBF, Really?</a></li>
+<li><a href="#a-few-words-about-the-graphs">A Few Words About the Graphs</a></li>
+<li><a href="#type-of-threats">Type of Threats</a></li>
+<li><a href="#modeling-associated-failures">Modeling Associated Failures</a></li>
+<li><a href="#threat-matrix">Threat Matrix</a></li>
+<li><a href="#how-many-more-for">How Many More for</a></li>
+</ul></li>
+<li><a href="#extensions">Extensions</a><ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#large-vs-small-collections-1">Large vs Small collections</a></li>
+<li><a href="#large-vs-small-documents-1">Large vs Small Documents</a></li>
+<li><a href="#compression">Compression</a></li>
+<li><a href="#encryption">Encryption</a></li>
+<li><a href="#format-obsolescence">Format Obsolescence</a></li>
+<li><a href="#adversaries">Adversaries</a></li>
+<li><a href="#recommendations-for-research">Recommendations for research</a></li>
+</ul></li>
+<li><a href="#references">References</a></li>
+<li><a href="#end-of-outline-with-text-in-it">END OF OUTLINE WITH TEXT IN IT</a></li>
+</ul>
+</div>
 <html>
 <head>
 <style>
@@ -17,11 +144,16 @@ td {
 border: 1px solid black;
 padding: 1ex;
 }
-h1, h2, h3, h4 {
+h1, h2, h3, h4, h5 {
 font-family: Helvetica, Arial, sans-serif;
 }
 li {
 padding-bottom: 3px;
+}
+.caption {
+font-family: Helvetica, Arial, sans-serif;
+font-weight: bold;
+font-size: smaller;
 }
 </style>
 </head>
@@ -36,13 +168,16 @@ padding-bottom: 3px;
 <h1 id="outline-with-text-in-it">OUTLINE WITH TEXT IN IT</h1>
 <h2 id="abstract"><strong>Abstract</strong></h2>
 <blockquote>
-<p>How to protect a large, valuable, digital document collection?</p>
+<p>How should we protect large and valuable collections of digital documents?</p>
 </blockquote>
 <blockquote>
-<p>This article addresses the problem of ensuring information integrity over long periods, and against a diverse range of real-world legal, organizational, technical, and economic threats. Rapid advances information technology have shifted the economics of information production, transmission, and storage -- resulting in a vast amount of information that is increasing stored online or near-line. This shift in information storage changes both the profile of threat to integrity, and the set of feasible methods for mitigating these threats.</p>
+<p>Rapid advances information technology have shifted the economics of information production, transmission, and storage. The result is that a vast and increasing amount of information is increasing stored digitally on-line, or near-line; but is not adequately protected against threats to long-term loss. The shift in information storage from physical to digital has technical, legal and economic dimensions -- and has changed the profile of threats to integrity, and the set of feasible methods for mitigating these threats.</p>
 </blockquote>
 <blockquote>
-<p>We develop a general event-based simulation framework that can be used to flexibly and reproducibly simulate the effectiveness of various methods of storage, replication, auditing, and transformation against a diverse portfolio of threats to data loss. We then apply this framework to a range of scenarios that are representative of common baseline threats and current storage technology. From this we derive general guidance for the use of replication, platform diversification, fixity metadata, integrity auditing, compression, and encryption where long-term integrity is desired.</p>
+<p>This article addresses the problem of developing optimal strategies to ensure information integrity over long periods -- and against a diverse range of real-world technical, legal, organizational, and economic threats. To address this problem we develop a general event-based simulation framework that can be used to flexibly and reproducibly simulate the effectiveness of various methods of storage, replication, auditing, and transformation against a diverse portfolio of threats to data loss.</p>
+</blockquote>
+<blockquote>
+<p>We use this framework to analyze combinations of preservation strategies across a range of scenarios that are represent varying threats and storage technologies. From this we derive general guidance for the use of replication, platform diversification, fixity metadata, integrity auditing, compression, and encryption where long-term integrity is desired.</p>
 </blockquote>
 <ul>
 <li>Summary Of Specific Recommendations</li>
@@ -64,20 +199,10 @@ padding-bottom: 3px;
 <p>TBS: NOTES</p>
 <ul>
 <li><p>look at the numbers in Beyond MTTF paper 2014.</p></li>
-<li><p>suppose i have one disk that is immortal.</p></li>
-<li><p>suppose we had two copies on the best disks we can find and migrate them within the service period.</p></li>
-<li><p>Don't sweat the small stuff, glitches are covered by protection over a wide range.</p></li>
 <li><p>Get two refs for 1e-14 number.</p></li>
-<li><p>MTBF discussion: cite returns and other bases for the numbers.</p></li>
-<li><p>Is a combo of two Poissons itself Poisson?</p></li>
+<li><p>Is a combo of two Poissons itself Poisson? [[I forget the question.]]</p></li>
 <li><p>The high end of lifetime is hard to assess.</p></li>
-<li><p>Argue that the same hygiene regime serves for both: crappier disks and less wonderful independence. Still need multiples, audit, repair.</p></li>
 <li><p>Check Azure erasure code stats.</p></li>
-<li><p>Multiple copies, error correction, repair are used at all levels: bits, sectors, files, drives, services. We are adding files to the usual mix.</p></li>
-<li>Audit whatever the fundamental unit of failure is: bit, sector, disk, file, server.
-<ul>
-<li>In this case, there are only two such units that the client can detect and maybe control: files (documents) and servers.</li>
-</ul></li>
 <li><p>Acknowledge immortal data services; then audit what? The services themselves. The data may be immortal but the services are not: disasters, wars, government interventions, failed credit arrangements, etc.</p></li>
 <li><p>Six copies if broad span correlated failures.</p></li>
 <li><p>RS(m,n) and repair-when-fail has vastly longer data life than multiple independent disks however reliable. [Have to get some numbers to make this convincing.]</p></li>
@@ -93,25 +218,16 @@ padding-bottom: 3px;
 </ul></li>
 <li><p>Detecting errors: say &quot;fixity&quot;</p></li>
 <li><p>Can use the terms patrolling, replication, fixity.</p></li>
-<li><p>Assert &quot;indefinitely long&quot; or beyond any epsilon.</p></li>
 <li>Do a looong test to get down to &lt; 1ppm over 100 years. 1ppb preferred, but nobody has that much computer time.
 <ul>
 <li>Probably 10 copies, quarterly auditing; 1000 runs.</li>
-</ul></li>
-<li>Economics = files for this audience. Be careful about file losses, not disks. - For larger or smaller than file, sort of don't care. [Adjacent-above and below. Except servers, of course, where we do care and have control.]
-<ul>
-<li>Focus on level meaningful to you = files (=documents).</li>
-</ul></li>
-<li>We do a smaller piece of the system; let someone else deal with the big things, e.g., disk arrays. Client has only a small amount of data that is nowhere near the size of a plausible disk array. [like RS(6,4) or RS(10,6) with multi-terabyte disks.]
-<ul>
-<li>We could do sectors, but it's not practical. The client doesn't have access at that level, so it doesn't matter, no control possible. Someone else has access to that [disk drives and disk controllers]</li>
-<li>We don't have access to disks, either; that's the province of the disk controller, RAID controller, erasure code controller, service.</li>
 </ul></li>
 <li><p>Other figures about lifetimes are right only in narrow circumstances, good weasel words.</p></li>
 </ul>
 <!-- a Land Without Rs moment: Lunch at the bar at Legal.  Two guys on my left speak Italian to each other, plain American English to the bartender.  The guy on my right speaks unaccented English to the bartender but is reading a newpaper on his iPad in Swedish. -->
 <!-- END:TODO:RICK -->
 <h1 id="motivation">Motivation</h1>
+<p>Much ink has been spilled on the subject of the exponential increase in information production in the digital age. And more recently, the durability of digital information has become a important concern for technologists, scholars, and government [CITE]. For example, the biggest long-term archive of information, the Internet Archive currently holds 35 petabytes of information. This is roughly equivalent to the text of 7 million long novels -- or to the amount of new information produced across the globe every 45 minutes, throughout the year. [CITE]</p>
 <ul>
 <li>Information production is rapidly increasing.</li>
 <li>The vast majority of the world's data is stored on rotating disks, 90% in 2007 and not changing very rapidly.</li>
@@ -162,9 +278,13 @@ padding-bottom: 3px;
 <li>Errors are silent, that is, no one notices an error until someone tries to read the document and discovers that it is lost.</li>
 </ul>
 <h3 id="implications">Implications</h3>
-<p>Errors accumulate over time. Every now and then an error will occur in storage and, if the error occurs in a region of storage occupied by a document, the error destroys a document. The rate at which documents are lost depends of course on the quality of the storage. But even if the rate of error accumulation is very low, over a long period of time, many documents will be lost.</p>
+<p>Errors accumulate over time. Every now and then an error will occur in storage and, if the error occurs in a region of storage occupied by a document, the error destroys a document. The rate at which documents are lost depends of course on the quality of the storage medium. But even if the rate of error accumulation is very low, over a long period of time, many documents will be lost.</p>
 <p>A single copy of a collection will deteriorate as predicted by the Poisson distribution. A collection with multiple copies will deteriorate more slowly, but predictably; and, eventually, all the copies of a single document will be lost. Since no copy of the document is then retrievable, the document is permanently lost.</p>
-<p>The table of <strong>Exhibit nnn</strong> shows the expected rates of document errors, theoretical and simulated, over a wide range of storage error rates. [[calibration for ncopies=1 in shelf/docs/PoissonFailures.xls]]</p>
+<p>The table of <strong>Exhibit nnn</strong> shows the expected rates of document errors, theoretical and simulated, as a calibration check, over a wide range of storage error rates. [[calibration for ncopies=1 in shelf/docs/PoissonFailures.xls]]</p>
+<div class="figure">
+<img src="../pictures/copies1/PoissonFailures.png" alt="Exhibit nnn: Poisson Failures for copies=1 -- !!!REDO TO INCLUDE ONLY ESSENTIALS!!!" />
+<p class="caption">Exhibit nnn: Poisson Failures for copies=1 -- !!!REDO TO INCLUDE ONLY ESSENTIALS!!!</p>
+</div>
 <h1 id="attend-to-what-you-can-control">Attend to What You Can Control</h1>
 <p>Many sources of errors are possible in long-term storage, and at many levels. Consider the following hierarchy:</p>
 <ul>
@@ -195,7 +315,9 @@ padding-bottom: 3px;
 <h3 id="what-range-of-storage-error-rates-should-we-consider">What Range of Storage Error Rates Should We Consider?</h3>
 <p>One basic question should be answered before embarking on such simulations: what is the failure rate of stored documents? This is a difficult question due to a lack of real data.</p>
 <p>There is some data on the failure rate of individual disk drives over time. Thanks to Backblaze, Google, and others, there is some published empirical data on failure rates of disk drives of recent technology vintages. [[citations needed]] These figures refer to replacements of entire disk drives during the useful life and wear-out periods of device use. That is, they exclude infant failures but include mid-life and senescence. Unfortunately, we do not get much information on the rates of sector failures, bad block replacements, and so forth.</p>
+<blockquote>
 <p>TBS NOTE (RBL): We should be able to demote much of this lengthy discussion to later, even to the supplementary material. 90% of this is not relevant to the discussions at hand. Main topics of interest: copies, independence, format, auditing and repair.</p>
+</blockquote>
 <h4 id="drive-failures-may-place-limits-on-sector-lifetime">Drive Failures May Place Limits on Sector Lifetime</h4>
 <p>We can try to estimate bounds on the failure of sectors by extrapolating from the failure of drives. Example: At the low end of the range of disk quality, with no active error correction or repair, we can estimate bound the lifetime of sectors by examining disk drive failures. If disks are allowed to run until the drive fails, then the life of all the sectors on the disk cannot be longer than the life of the entire drive. That is, the half-life of the drive is an upper bound on the half-life of sectors contained on that drive.</p>
 <p>Backblaze, on the basis of experience with hundreds of thousands of disk drives, has estimated the failure rates of drives for the first four years. [[citation needed]] <strong>Exhibit nnn</strong> shows the estimated drive lifetimes based on that experience. [[Source spreadsheet = PaperDraft/DiskFailuresDuringRAIDRebuild.xls sheet Survival2Halflife]]</p>
@@ -294,7 +416,7 @@ padding-bottom: 3px;
 <p>However, we do have to consider the effects on document loss of redundant implementations and error detection and repair. If drive failures are absent or significantly delayed due to early replacement or redundant configurations, we have to look at the rate of sector errors. The loss of disk sectors is a combination of two processes: drive failure, as just discussed, in which many sectors are lost at one time, and individual sector failures, which may be due to particulate contamination, physical shocks, cosmic rays, etc.</p>
 <h4 id="consider-sector-failures-independent-of-drive-failures">Consider Sector Failures Independent of Drive Failures</h4>
 <p>If arrays of disks are managed with conservative hygiene, e.g., replacing most drives after some &quot;usable&quot; lifetime but before they fail, and rebuilding redundant arrays of disks, then the drive lifetime may not be the dominant factor in sector survival. Failures of individual sectors will occur all the time, albeit at a much lower rate, but they are silent and will accumulate if they are not actively uncovered and repaired.</p>
-<p>An oft-cited number about disk error rates is &quot;uncorrectable error rate = one bit in 10e-14.&quot; Note several things about this number.</p>
+<p>An oft-cited number about disk error rates is &quot;uncorrectable error rate = one bit in 10e-14.&quot; [[Need citations.]] Note several things about this number.</p>
 <ol style="list-style-type: decimal">
 <li>It is not a statistic in the usual sense; that is, it has not been derived from any referenced empirical data. It is a hypothesis from the manufacturing industry, perhaps derived from collective experience.</li>
 <li>It is not stated as time-dependent; that is, it is not an <em>arrival</em> rate of errors, it is a constant. It also does not seem to increase with the size of the drive. Most analyses using this number treat it as a given fact for any disk drives, for example, as perhaps a rate of manufacturing defects.<br />
@@ -415,24 +537,25 @@ padding-bottom: 3px;
 </tbody>
 </table>
 <p>[[Source spreadsheet: FailureRatesBackOfTheEnvelope.xls, sheet PrintMe]]</p>
-<p>Clearly, at the low end of the range, where sector lifetime is in the range of 10 million hours, document losses would be unacceptably high. If you lost 3 percent of all your documents in the first year, you would take immediate action to find a more reliable storage environment. Even up to 30 million hours (sector half-life), such disks would be classified as &quot;rusty garbage can lids&quot; that are not suitable for archival storage. Better disks might still accumulate errors at a significant rate, but permanent losses can be avoided wtih suitable auditing and repair regimes, as discussed below.</p>
+<p>Clearly, at the low end of the range, where sector lifetime is in the range of 10 million hours, document losses would be unacceptably high. If you lost 3 percent of all your documents in the first year, you would take immediate action to find a more reliable storage environment. Even up to 30 million hours (sector half-life), such disks would be classified as &quot;rusty garbage can lids&quot; that are not suitable for archival storage. Better disks might still accumulate errors at a significant rate, but permanent losses can be avoided with suitable auditing and repair regimes, as discussed below.</p>
 <h4 id="if-you-cant-control-it-buy-insurance-against-it">If You Can't Control It, Buy Insurance Against It</h4>
 <p>We do not have good information on the sector error rates of our storage media, particularly if we are buying a service from an outside vendor. Since such factors are beyond our control, we should choose strategies to protect our document collections from a <em>wide</em> range of circumstances that we might encounter.</p>
 <h1 id="visit-your-documents-regularly">Visit Your Documents Regularly</h1>
 <p>Verify and repair the multiple copies. In general, we will use the term &quot;auditing&quot; to refer to checking documents for validity and repairing any errors discovered, wherever possible.</p>
 <h3 id="strategies-to-achieve-very-long-data-lifetimes">Strategies to Achieve Very Long Data Lifetimes</h3>
-<p>How can we protect data over the long term against a wide range of error conditions? A single copy is vulnerable, regardless of its quality. Multiple high-quality copies still deteriorate over long periods. We must adopt active strategies to detect and correct errors in data to preserve the corpus over long periods. Such strategies must include three components: detecting errors, correcting errors, and actively seeking errors.</p>
+<p>How can we protect data over the long term against a wide range of error conditions? A single copy is vulnerable, regardless of its quality. Multiple high-quality copies still deteriorate over long periods. We must adopt active strategies to detect and correct errors in data to preserve the corpus over long periods. Such strategies must include three components: detecting errors, correcting errors, and actively locating errors.</p>
 <ul>
-<li>Detecting errors requires a certain redundancy in storage, typically parity, or comparison of copies, or special encodings. There is always some degree of damage that cannot be detected accurately, e.g., multiple errors in a simple parity system.<br />
+<li>Detecting errors requires a certain redundancy in storage, typically parity, or comparison of copies, fixity information, or special encodings. There is always some degree of damage that cannot be detected accurately, e.g., multiple errors in a simple parity system.<br />
 </li>
 <li>Correcting errors requires restoring a damaged copy with a correct copy, either by consulting a known good copy or by using an error-correcting encoding in the storage of the data. The ability of a system to correct errors is also limited, e.g., if all copies of the data are damaged.<br />
 </li>
-<li>Actively seeking errors requires a mechanism outside normal usage that examines all the data and checks its validity. The system searches all the data for latent errors in order to locate (and repair) them before they pile up and overwhelm the redundancy of storage.</li>
+<li>Actively locating errors requires a mechanism outside normal usage that examines all the data and checks its validity, sometimes called &quot;patrolling&quot; or &quot;scrubbing.&quot; The system searches all the data for latent errors in order to locate (and repair) them before they pile up and overwhelm the redundancy of storage.</li>
 </ul>
 <p>Strategies that include these three components are routinely used at low levels within computer systems.</p>
 <ul>
-<li><p>Small regions of memory, e.g., RAM banks, disk sectors, are protected with parity bits or error-correcting codes. Parity provides only limited error detection; error-correcting codes provide some higher level of redundancy for detection and correction. And large memory arrays may be actively scrubbed to find and correct errors early.</p></li>
-<li><p>Disk drives tend to fail all at once, but they are often protected by RAID or eraasure code structures and controllers. Such arrays of disks include redundant recording and parity to permit repair of failed drives.</p></li>
+<li>Small regions of memory, e.g., RAM banks, disk sectors, are protected with parity bits or error-correcting codes. Parity provides only limited error detection; error-correcting codes provide some higher level of redundancy for detection and correction. And large memory arrays may be actively scrubbed to find and correct errors early.<br />
+</li>
+<li>Disk drive mechanisms tend to fail all at once rather than a sector at a time, but they are often protected by RAID or erasure code structures and controllers. Such arrays of disks include redundant recording and parity to permit repair of failed drives.</li>
 </ul>
 <p>This study is concerned with providing a degree of redundancy and error correction for other groupings of data of different sizes:</p>
 <ul>
@@ -451,6 +574,14 @@ padding-bottom: 3px;
 <p>Over a very wide range of storage quality conditions (storage error rates or sector half-lives), our experiments show that five copies with annual total auditing reduce document loss rates to negligible levels.</p>
 <p><strong>Exhibit nnn</strong> compares the effect of number of audited copies and storage error rates on document loss rates.<br />
 [[This may refer to the preceding exhibit, if that picture is clear enough.]]</p>
+<h3 id="depend-on-redundancy-and-repair">Depend on Redundancy and Repair</h3>
+<p>Clients can adjust the degree of redundancy of storage and the aggressiveness of auditing and repair to match almost any requirements for permanent storage of documents. To defend against high rates of document losses and correlated server failures, a client can increase the number of copies maintained, with careful consideration to their physical and financial independence, and can audit the several copies more frequently. By controlling both of these factors in a maintenance regimen, a client can protect the integrity of a collection for any desired period.</p>
+<p>This regimen of data hygiene -- high redundancy and frequent auditing and repair -- can be used to protect against poorer-quality storage servers and higher levels of correlated failure.</p>
+<ul>
+<li>Originally, RAID disk arrays were intended to protect against imperfect disk drives. The term &quot;RAID&quot; was coined to abbreviate &quot;Redundant Arrays of Inexpensive Disks,&quot; where &quot;inexpensive&quot; referred to perhaps imperfect quality. Similar techniques were applied for a time to large memory banks, constructed of RAM chips with some weak or failed bits, using wide error-correcting encodings to make up for bit errors.<br />
+</li>
+<li>By analogy, a collection of documents can be replicated with a high degree of redundancy (many copies), and aggressive error detection and correction techniques (frequent auditing and repair) can be used to maintain the collection in perfect or near-perfect condition for long periods of time.</li>
+</ul>
 <h1 id="compress-your-documents">Compress Your Documents</h1>
 <p>The impacts of document size, compression, encryption.</p>
 <p>What are the effects of compressing and/or encrypting documents? Lossless compression is almost always a good strategy for long-term storage of documents.</p>
@@ -470,9 +601,21 @@ padding-bottom: 3px;
 <li>Smaller enables higher storage redundancy. On a given budget, a compressed collection can be replicated into more copies and audited more frequently. Both the increased copy count and more frequent auditing contribute directly to reducing or eliminating permanent losses in the collection.</li>
 </ul>
 <p>The drawings in <strong>Exhibit nnn</strong> illustrate the effect of randomly placed errors on documents of varying sizes. [[Picture from old presentation of doc blocks with Xs in them, with maybe a couple more Xs added to make it clearer that large = big target.]]</p>
+<div class="figure">
+<img src="../pictures/docsizevserrorrate/SmallVsLargeFile-2.png" alt="Exhibit nnn: Cartoon of Large Document Presenting Larger Target Area for Random Errors" />
+<p class="caption">Exhibit nnn: Cartoon of Large Document Presenting Larger Target Area for Random Errors</p>
+</div>
 <p><strong>Exhibit nnn</strong> shows the increase in document losses for larger documents across a range of storage error rates.<br />
 [[Picture in pictures/largerdocs, but it needs to be redone.]]</p>
+<div class="figure">
+<img src="../pictures/largerdocs/baseline-scalingdocsize.png" alt="Exhibit nnn: Larger Docs Are More Vulnerable to Random Errors: 5, 50, 500, 5000MB -- !!!MUST BE REDONE!!!" />
+<p class="caption">Exhibit nnn: Larger Docs Are More Vulnerable to Random Errors: 5, 50, 500, 5000MB -- !!!MUST BE REDONE!!!</p>
+</div>
 <p>The table of <strong>Exhibit nnn</strong> shows the linear relationship between document size and storage error rate. (Error rate is expressed as sector half-life, as explained below.) [[PDF captured from spreadsheet, in pictures/docsizevserrorrate/Data_Scaling_DocsizeSpreadsheet-2.pdf]]</p>
+<div class="figure">
+<img src="../pictures/docsizevserrorrate/Data_Scaling_DocsizeSpreadsheet.png" alt="Exhibit nnn: Linear Relationships Between Document Sizes and Error Rates" />
+<p class="caption">Exhibit nnn: Linear Relationships Between Document Sizes and Error Rates</p>
+</div>
 <p>Lossless compression is benign for a variety of reasons.</p>
 <ul>
 <li>As already mentioned, smaller documents are smaller targets for errors.<br />
@@ -533,18 +676,21 @@ padding-bottom: 3px;
 </ul>
 <p>[[Do we draw our own picture, or steal one, or just cite literature on the topic?]]</p>
 <h4 id="small-changes-in-error-rates-glitches">Small Changes in Error Rates: Glitches</h4>
-<p>TBS</p>
+<p>The error rate of a storage device or storage server is not necessarily constant. The rate can vary over time for a variety of reasons. One reason is the &quot;bathtub curve&quot; phenomenon [[citations needed]]. In this study, we have examined other varying conditions under the general heading of <em>glitches</em>.</p>
 <ul>
 <li>A <em>glitch</em> is a temporary, short-lived, condition that impacts a single server and increases the sector error rate on that server for some short interval.<br />
 </li>
-<li>What types of glitches might occur in server farms? HVAC weakness or failure; environmental contamination by chemicals or particulates; radiation; electrical noise; and similar. In general, these conditions are not fatal to the server overall, but degrade the integrity of data storage.<br />
+<li>What types of glitches might occur in server farms? HVAC weakness or failure; environmental contamination by chemicals or particulates, radiation, electrical noise; and similar. It is also possible that insertion into a service of a batch of disk drives with different error characteristics could temporarily alter the overall error rate of the service. In general, these conditions are not fatal to the server overall, but degrade the integrity of data storage.<br />
 </li>
 <li>Glitches arrive at random intervals in a Poisson process, and have limited duration.<br />
 </li>
 <li>Glitches are local phenomena, limited to a single server.<br />
 </li>
-<li>The effect of a glitch is simply to increase the sector error rate for a short period. Glitches, like the errors they induce, are silent. In this study, we find that it is hard to distinguish glitch-induced increases in error rates from random variations in performance.</li>
+<li>The effect of a glitch is simply to increase the sector error rate for a short period.<br />
+</li>
+<li>Glitches, like the errors they induce, are silent.</li>
 </ul>
+<p>In this study, we have found that it is hard to distinguish glitch-induced increases in error rates from random variations in performance. A glitch increases the error rate (reduces the sector lifetime) of the server for a while, but this need not impact the overall performance of a collection of documents in which that server is a participating member. A good client strategy should maintain sufficient redundancy and auditing discipline to protect the collection over a wide range of adverse conditions. A glitch in one server might require a higher degree of repair of that server during the next auditing cycle, but that should not impact the health of the overall collection.</p>
 <h3 id="do-believe-the-experience-of-others">Do Believe the Experience of Others</h3>
 <ul>
 <li>attend the experience of other similar users</li>
@@ -1305,3 +1451,5 @@ loss due to raid/internal replication characteristics and failure
 <li id="fn1"><p>From the National Archives, &quot;https://founders.archives.gov/documents/Jefferson/01-19-02-0059&quot;.<a href="#fnref1">↩</a></p></li>
 </ol>
 </div>
+</body>
+</html>
