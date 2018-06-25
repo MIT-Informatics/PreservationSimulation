@@ -142,32 +142,28 @@ Notes from 20180619.1400
 <!-- a Land Without Rs moment: Lunch at the bar at Legal.  Two guys on my left speak Italian to each other, plain American English to the bartender.  The guy on my right speaks unaccented English to the bartender but is reading a newpaper on his iPad in Swedish. -->
 <!-- END:TODO:RICK -->
 
-# Motivation
+# How digitization changes strategies for ensuring long-term access.
 
 Much ink has been spilled on the subject of the exponential increase in information production in the digital age. And more recently, the durability of digital information has become a important concern for technologists, scholars, and government [CITE]. For example, the biggest long-term archive of information, the Internet Archive currently holds 35 petabytes of information. This is roughly equivalent to the text of 7 million long novels -- or to the amount of new information produced across the globe every 45 minutes, throughout the year. [CITE]
 
+The vast majority of the world's information is stored online or near-line -- using rotating disks, solid state drives, or robotic-tape libraries. [CITE] Much of this information has long-term value to the data controller or to others. And, as it turns out, much of this information is at risk -- since current information systems are designed for current use, and not for long term access and understanding.  
 
-- Information production is rapidly increasing.
-- The vast majority of the world's data is stored on rotating disks, 90% in 2007 and not changing very rapidly.
-- Digital store changes the goal of preservation, from maintaining a constant optimal physical environment for documents to continual curation in order to maintain document integrity and understanding.
-- Information systems are generally designed for immediate use, not for long term access and understanding.  Much of the information generated is at risk.
-- The changing economics of digital production make it difficult for any one institution to safeguard everything it uses.
-- The changing economics also provide opportunities for preservation: replication, cloud services, auditing, and a variety of storage options.
-- Curators are faced with a set of choices: storage media, replication, cloud vendors, auditing strategy, encryption, compression.  There is currently no systematic guidance based on quantitative models.
+Ensuring the value of long-term access is thus the domain of 'preservation'. The overarching goal of information preservation (or conservation) is to enable meaningful communication with the future through supporting document integrity and understanding -- whether or not the information in digital or tangible form [CITE]. However, the form in which information is represenented can fundamentally changes the strategies used to preserve it: When information is represented in physical form, preservation strategies most often aim to maintain the information-bearing media in a stable state, often by maintaining a constant optimal physical environment. [CITE] 
+
+In contrast, strategies for presrving digital information are generally based on the observation that neither digital media and formats are reliably durable, and thus tht long-term access requires regular curation of the information: Common digital preservation strategies include migrating information to new media, and, less frequently, to new formats. Further, since information in digital form can be read and replicated at a very low marginal cost, relative to tangible content, digital preservation strategies can much more easily include replication and verification of content. [CITE]
+ 
+Stewards of digital information are faced with a large set of choices in developing a preservation strategy. These choices include document size and data format; file encryption and compression; storage media durability and reliability; collection replication, distribution, verification, and repair. [CITE] These choices have the potential to change dramatically the cost of a preservation strategy, and how (and where) that strategy is vulnerable to a wide range of threats.  Moreover, changes in these factors interact in complex ways -- making it difficult to discover optimal/efficient strategies. 
+
+While a number of 'good practices' are recognized digital preservation [CITE] -- many of these practices are heuristic, and most are based on experience with particular technologies and threats. There is currently no comprehensive framework that enables systematic quantitative prediction of the cost and effectiveness of differing preservation strategies. In the sections below, we develop a framework for just such an analysis, and derive general guidance for the selection of strategies over document size, file compression and encyption, and colection replication, diversification, and auditing.
 
 # Problem Definition
 
-TBS
 
 - Maintain understanding of large digital collections over time.
 - Choose strategy for collection storage quality, replication, auditing, repair, formatting.
 - Risks to collections come from a variety of threat types.
 - Problem: Keeping risk of object loss fixed: what choices minimize $ in storage, network, etc.
 - "Dual" problem: Keeping $ fixed,  what choices minimize risk?
-
-# Core Risks
-
-TBS
 
 - types and severity of threats
 <!-- START:TODO:MICAH --> 
@@ -195,21 +191,13 @@ A *client* (library) has a *collection* of *documents* in digital form.  A copy 
 
 (All the italicized words are terms of art that are discussed in detail later.)
 
-## The Simplest Case: Sector Errors
-
-### Process
+### The Simplest Case: Sector Errors
 
 - An error in the storage corrupts a document sector.  Errors arrive randomly in a Poisson process.  A cosmic ray striking a disk or memory cell is a good model for this type of error.  
 - If the error occurs in a sector occupied by a copy of a document, that copy is corrupted.  For the purposes of this study, we consider the copy to be lost.  Manual repair by human inspection is not considered here.
 - Errors are silent, that is, no one notices an error until someone tries to read the document and discovers that it is lost.  
 
-### Implications
 
-Errors accumulate over time.  Every now and then an error will occur in storage and, if the error occurs in a region of storage occupied by a document, the error destroys a document.  The rate at which documents are lost depends of course on the quality of the storage.  But even if the rate of error accumulation is very low, over a long period of time, many documents will be lost.  
-
-A single copy of a collection will deteriorate as predicted by the Poisson distribution.  A collection with multiple copies will deteriorate more slowly, but predictably; and, eventually, all the copies of a single document will be lost.  Since no copy of the document is then retrievable, the document is permanently lost.  
-
-The table of **Exhibit nnn** shows the expected rates of document errors, theoretical and simulated, over a wide range of storage error rates.  [[calibration for ncopies=1 in shelf/docs/PoissonFailures.xls]]
 
 # Attend to What You Can Control
 
@@ -234,18 +222,26 @@ more TBS
 
 # Keep Multiple Copies
 
-Even if errors in a collection do not accumulate at a significant rate, a single copy of a collection is vulnerable to large-scale or total loss if that single copy is victim of a disaster, natural or man-made (e.g., earthquake, flood, war, economic depression, administrative error, etc.).  Multiple copies in multiple independent locations are necessary to safeguard documents against this type of large-scale loss.  Thomas Jefferson noted this danger to valuable documents long ago. 
+Errors accumulate over time.  Every now and then an error will occur in storage and, if the error occurs in a region of storage occupied by a document, the error destroys a document.  The rate at which documents are lost depends of course on the quality of the storage. In theory, we can predict the detioriation of a collection as a result solely of sector-level losses, using the Poisson distribution.  **Figure 1**, below, illustrates the percentage of a collection lost in a 10-year period, as a function of the reliability of the underlying storage.
+
+> ![Graph of cumulative collection losses over time.](./images/c1lossesvsquality.png)
+> ##### Figure 1: How percentage of collection lost over 10 years as a factor of sector reliability.
+
+As **Figure 1** demonstrates, if a collection exists as only a single copy, then it is very likely that some of its documents will be lost within a decade, even if the storage medium is highly reliable. Further, even if the rate of error accumulation is much lower than illustrated above,  many documents will be lost over longer periods of time: For example, over 50 years XX% of the collection will be lost, even if media reliability were 100x the maximum shown above.  (For more details, **Table A-1** in the appendices shows the expected rates of document errors, theoretical and simulated, over a range of storage error rates and periods.)  [[calibration for ncopies=1 in shelf/docs/PoissonFailure.xls]]
+
+Moreover, even if the media was invulnerable to sector-level errors, a single copy of a collection is vulnerable to large-scale or total loss if that single copy is victim of a disaster, natural or man-made (e.g., earthquake, flood, war, economic depression, administrative error, etc.).  Multiple copies in multiple independent locations are necessary to safeguard documents against this type of large-scale loss.  Thomas Jefferson noted this danger to valuable documents long ago. 
 
 >"Time and accident are committing daily havoc on the originals deposited in our public offices. . . .  The lost cannot be recovered; but let us save what remains: not by vaults and locks which fence them from the public eye and use, in consigning them to the waste of time, but by such a multiplication of copies, as shall place them beyond the reach of accident."
 ^[From the National Archives, "https://founders.archives.gov/documents/Jefferson/01-19-02-0059".]
 
-But even multiple copies of collections deteriorate over time, from small erosions of individual documents or larger losses from external shocks.  **Figure 1** shows the deterioration of collections with multiple copies over long periods of time.  [[RBL: find or regenerate the results for this case.]] 
+Even multiple copies of collections deteriorate over time, however, from small erosions of individual documents or larger losses from external shocks.  **Figure 2** shows the deterioration of collections with multiple copies over long periods of time.  [[RBL: find or regenerate the results for this case.]] 
 	
 	 
-> ![Without auditing, we need many copies to avoid permanent losses](./images/baseline-noaudit.png)
-> *Figure 1: How percentage of collection lost over 10 years as a factor of both sector reliability and the number of copies*
+> ![Graph of cumulative collection losses over time, with replication.](./images/baseline-noaudit.png)
+> ##### Figure 2: How percentage of collection lost over 10 years as a factor of both sector reliability and the number of copies
 
-A modest number of copies, even of very high quality, cannot guarantee archival storage over long periods.  A strategy that includes monitoring and repair of documents is required for long-term preservation.
+A modest number of copies, even of very high quality, cannot guarantee archival storage over long periods. As figure 2 show, without auditing, at least nine copies are needed to ensure against sector-level loss for even a period of a decade. Further, significant losses will acculate longer periods.    For example, to prevent 1% loss of a collection over 50 years, at least XX copies would be needed.  (For more details, **Table A-2** in the appendices shows the expected rates of document errors, over a range of storage copies, and time periods.)  A strategy that includes monitoring and repair of documents is required for long-term preservation.
+
 
 
 # Protect Against a Wide Range of Conditions
