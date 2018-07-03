@@ -54,9 +54,9 @@ font-size: smaller;
 
 > Rapid advances information technology have shifted the economics of information production, transmission, and storage. The result is that a vast and increasing amount of information is increasing stored digitally on-line, or near-line; but is not adequately protected against threats to long-term loss. The shift in information storage from physical to digital has technical, legal and economic dimensions -- and has changed the profile of threats to integrity, and the set of feasible methods for mitigating these threats. 
 
-> This article addresses the problem of developing optimal strategies to ensure information integrity over long periods -- and against a diverse range of real-world  technical, legal, organizational, and economic threats. To address this problem we develop a general event-based simulation framework that can be used to flexibly and reproducibly simulate the effectiveness of various methods of storage, replication, auditing, and transformation against a diverse portfolio of threats to data loss. 
+> This article addresses the problem of developing robust strategies to ensure information integrity over long periods -- and against a diverse range of real-world  technical, legal, organizational, and economic threats. To address this we frame the preseravation problem as a formal optimization problem, and develop a general event-based simulation framework that can be used to flexibly and reproducibly simulate the effectiveness of various methods of storage, replication, auditing, and transformation against a diverse portfolio of threats to data loss. 
 
-> We use this framework to analyze combinations of preservation strategies across a range of scenarios that are represent varying threats and storage technologies. From this we derive general guidance for the use of replication, platform diversification, fixity metadata, integrity auditing, compression, and encryption where long-term integrity is desired. 
+> We use this framework to analyze combinations of preservation strategies across a range of scenarios that are represent varying threats and storage technologies. From this we derive general guidance for the use of replication, platform diversification, fixity metadata, integrity auditing, compression, and encryption where long-term integrity is desired -- especially where there is uncertainty over risks. 
 
 - Summary Of Specific Recommendations
 
@@ -208,6 +208,8 @@ Errors accumulate over time.  Every now and then an error will occur in storage 
 > ##### Figure 1: How percentage of collection lost over 10 years as a factor of sector reliability.
 
 As **Figure 1** demonstrates, if a collection exists as only a single copy, then it is very likely that some of its documents will be lost within a decade, even if the storage medium is highly reliable. Further, even if the rate of error accumulation is much lower than illustrated above,  many documents will be lost over longer periods of time: For example, over 50 years XX% of the collection will be lost, even if media reliability were 100x the maximum shown above.  (For more details, **Table A-1** in the appendices shows the expected rates of document errors, theoretical and simulated, over a range of storage error rates and periods.)  [[calibration for ncopies=1 in shelf/docs/PoissonFailure.xls]]
+
+> From this analysis we derive the first commandment: Thou shalt **keep multiple copies** of thy documents. 
 
 We are not the first to recommend multiple copies. Thomas Jefferson noted the danger of a single copy of valuable documents long ago. 
 
