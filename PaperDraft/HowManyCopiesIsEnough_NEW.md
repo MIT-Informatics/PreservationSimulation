@@ -135,34 +135,150 @@ In contrast, strategies for presrving digital information are generally based on
  
 Stewards of digital information are faced with a large set of choices in developing a preservation strategy. These choices include document size and data format; file encryption and compression; storage media durability and reliability; collection replication, distribution, verification, and repair. [CITE] These choices have the potential to change dramatically the cost of a preservation strategy, and how (and where) that strategy is vulnerable to a wide range of threats.  Moreover, changes in these factors interact in complex ways -- making it difficult to discover optimal/efficient strategies. 
 
-While a number of 'good practices' are recognized digital preservation [CITE] -- many of these practices are heuristic, and most are based on experience with particular technologies and threats. There is currently no comprehensive framework that enables systematic quantitative prediction of the cost and effectiveness of differing preservation strategies. In the sections below, we develop a framework for just such an analysis, and derive general guidance for the selection of strategies over document size, file compression and encyption, and colection replication, diversification, and auditing.
+While a number of 'good practices' are recognized digital preservation [CITE] -- many of these practices are heuristic, and most are based on experience with particular technologies and threats. There is currently no comprehensive framework that enables systematic quantitative prediction of the cost and effectiveness of differing preservation strategies. In the sections below, we develop a framework for just such an analysis, and derive general guidance for the selection of strategies over document size, file compression and encryption, and colection replication, diversification, and auditing.
 
 # Problem Definition
 
+The ultimate goal of information preservation is to communicate across time. Our concrete objective, broadly speaking, is to maintain a collection of documents, so that its contents can be read at a designated future time. Communication will be deemed a success, ifat some designated future time the integrity of the documents has been maintained. (We extend this to the case where additional context must be presved so that the document can be presented t the reader in a form they can understand.) In this scenario, the curator's task is to select a preservation strategy, combining rules for compression, replication, auditing and repair that minimize loss of documents subject to a budget constraint.
 
-- Maintain understanding of large digital collections over time.
-- Choose strategy for collection storage quality, replication, auditing, repair, formatting.
-- Risks to collections come from a variety of threat types.
-- Problem: Keeping risk of object loss fixed: what choices minimize $ in storage, network, etc.
-- "Dual" problem: Keeping $ fixed,  what choices minimize risk?
 
-- types and severity of threats
-<!-- START:TODO:MICAH --> 
-![Various Threats to Library Collections (in the square brackets)](threats.jpg "Various Threat Types (in quotes after the link addr)")
+More strictly, we can formulate this task as an optimization problem. Given:
+ a set \\(C\\), of documents \\C={D_1..D_N}\\);
+ a budget \\(B\\); 
+ a preservation strategy \\(S\\), which is tuple \\
+(S={Copies,AuditMethod,RepairFrequency,Compression }\\)
+ a cost function \\(Cost(C,S)\\),
+ and a prediction of the expected collection loss over time \\(Loss(C,S,T)\\),
+ what strategy should a curator use so as to lose as few documents as possible:
+  
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="true">
+    <mrow class="MJX-TeXAtom-ORD">
+      <mtable  columnalign="right left right left right left right left right left right left" rowspacing=".5em" columnspacing="0.278em 2em 0.278em 2em 0.278em 2em 0.278em 2em 0.278em 2em 0.278em">
+        <mtr>
+          <mtd />
+          <mtd>
+            <munder>
+              <mtext>minimize</mtext>
+              <mrow>
+                <mi>S</mi>
+                <mo>&#x2217;<!-- ∗ --></mo>
+                <mo>&#x220B;<!-- ∋ --></mo>
+                <mi>S</mi>
+              </mrow>
+            </munder>
+          </mtd>
+          <mtd />
+          <mtd>
+            <mrow class="MJX-TeXAtom-ORD">
+              <mi mathvariant="normal">L</mi>
+              <mi mathvariant="normal">o</mi>
+              <mi mathvariant="normal">s</mi>
+              <mi mathvariant="normal">s</mi>
+            </mrow>
+            <mo stretchy="false">(</mo>
+            <mi>C</mi>
+            <mo>,</mo>
+            <msup>
+              <mi>S</mi>
+              <mo>&#x2217;<!-- ∗ --></mo>
+            </msup>
+            <mo>,</mo>
+            <mi>T</mi>
+            <mo stretchy="false">)</mo>
+          </mtd>
+        </mtr>
+        <mtr>
+          <mtd />
+          <mtd>
+            <mtext>subject to</mtext>
+          </mtd>
+          <mtd />
+          <mtd>
+            <mrow class="MJX-TeXAtom-ORD">
+              <mi mathvariant="normal">C</mi>
+              <mi mathvariant="normal">o</mi>
+              <mi mathvariant="normal">s</mi>
+              <mi mathvariant="normal">t</mi>
+            </mrow>
+            <mo stretchy="false">(</mo>
+            <mi>C</mi>
+            <mo>,</mo>
+            <msub>
+              <mi>S</mi>
+              <mo>&#x2217;<!-- ∗ --></mo>
+            </msub>
+            <mo>,</mo>
+            <mi>T</mi>
+            <mo stretchy="false">)</mo>
+            <mo>&#x2264;<!-- ≤ --></mo>
+            <mi>B</mi>
+          </mtd>
+        </mtr>
+      </mtable>
+    </mrow>
+  </mstyle>
+</math>
 
-1.  Document rot (bit rot) on disk.
-2.  Environmental failures that accelerate document rot.
-3.  Server failures that destroy sets of documents.
-4.  Lack of independence of servers. 
+We designate this solution 
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="true">
+    <mrow class="MJX-TeXAtom-ORD">
+      <msubsup>
+        <mi>S</mi>
+        <mi>B</mi>
+        <mo>&#x2217;<!-- ∗ --></mo>
+      </msubsup>
+    </mrow>
+  </mstyle>
+</math>. This solution can be used to describe the minimimum cost of reducing preservation cost, to a specific level, for a fixed collection:
 
-  1. Business failures: a single business failure may affect more than one server, due, e.g., to consolidation or cross-financing.  That is, servers that appear to be independent may not be financially independent in practice.  
-  2. Economic failures.
-5.  Attack on collection, institution, subject matter.
-<!-- END:TODO:MICAH --> 
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="true">
+    <mrow class="MJX-TeXAtom-ORD">
+      <mi>B</mi>
+      <mi>e</mi>
+      <mi>s</mi>
+      <mi>t</mi>
+      <mi>C</mi>
+      <mi>o</mi>
+      <mi>s</mi>
+      <mi>t</mi>
+      <mo stretchy="false">(</mo>
+      <mi>R</mi>
+      <mi>i</mi>
+      <mi>s</mi>
+      <mi>k</mi>
+      <mo stretchy="false">)</mo>
+      <mo>=</mo>
+      <mo movablelimits="true">min</mo>
+      <mi>B</mi>
+      <mo>,</mo>
+      <mtext>such that&#xA0;</mtext>
+      <mi>L</mi>
+      <mi>o</mi>
+      <mi>s</mi>
+      <mi>s</mi>
+      <mo stretchy="false">(</mo>
+      <msubsup>
+        <mi>S</mi>
+        <mi>B</mi>
+        <mo>&#x2217;<!-- ∗ --></mo>
+      </msubsup>
+      <mo stretchy="false">)</mo>
+      <mo>&#x2264;<!-- ≤ --></mo>
+      <mi>R</mi>
+      <mi>i</mi>
+      <mi>s</mi>
+      <mi>k</mi>
+    </mrow>
+  </mstyle>
+</math> 
 
-- range of error rates, wide, what's plausible
 
----
+Where both cost and loss functions are simple and behaved, it may be possible to find the optimal solution analytically. However, in more realistic conditions, risk of loss is a complex function of multiple sources of loss -- including low-level media failures, mid-level events such as manufacturing defects that affect clusters of media, and high-level events such as government action that can simultaneously affect multiple replicas of entire collections. Moreove, in realistic conditions there will be significant uncertertainty about the distribution of threats. 
+
+In order to evaluate a curator's strategies under these more realistic conditions, we adopt two approaches: First, we use discrete event simulation across a range of threat conditions to estimate the loss function for a specific curation strategy. Second, we aim to identify strategies that are relatively low cost and robust to a range of threat conditions, rather than focusing on the optimal strategy for a precisely identified set of threats. 
 
 # Basic Model and Some Implications
 
