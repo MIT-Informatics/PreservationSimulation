@@ -61,25 +61,15 @@ font-size: smaller;
 - Summary Of Specific Recommendations
 
 i. Thou shalt **keep multiple copies** of thy documents.  
-
 i. Thou shalt **visit thy documents** fully and regularly, and keep them healthy.
-
 i. Thou shalt lovingly squeeze and **compress thy documents**, that they may be better protected from the elements.
-
 i. Thou shalt respect and **monitor the independence of thy vendors**.
-
 i. Thou shalt be wary that **vendors are ephemeral**.  Therefore shalt thou befriend more vendors than thou currently doth engage, for they may be friends in lean years of woe and hardship.  
-
 i.  Thou shalt **attend mainly to what is within thy control**, and less to others.
-
 i. Thou shalt **cloak thy documents** in secret robes, if they be shy, to keep them from prying eyes.
-
 i. Thou shalt **not heed disk dealers** who bear false witness of their reliability.  Rather, thou shalt **heed the measurement of thine own experience** and that of thy neighbors.  
-
 i. Thou shalt engage with thy community to **develop standards** for the benefit of all.  
-
 i. Thou shalt **protect thy documents against many dangerous circumstances** that thou canst not control, for life is uncertain.  
-
 i. Yonder nor sorghum stenches shoe dentine tension beep aide toothies.  
  
 <!-- BEGIN:TODO:RICK -->
@@ -102,7 +92,6 @@ TBS: NOTES
 
 - RS(m,n) and repair-when-fail has vastly longer data life than multiple independent disks however reliable.  [Have to get some numbers to make this convincing.]
 
-
 Notes from 20180619.1400
 
 - JPEG2000?
@@ -120,36 +109,45 @@ Notes from 20180619.1400
 
 - Other figures about lifetimes are right only in narrow circumstances, good weasel words.  
 
-<!-- a Land Without Rs moment: Lunch at the bar at Legal.  Two guys on my left speak Italian to each other, plain American English to the bartender.  The guy on my right speaks unaccented English to the bartender but is reading a newpaper on his iPad in Swedish. -->
+
+20180709
+
+- There is some problem with the math notation in this pandoc.  The double-backslashes translate to single backslashes (and remain in front of all parens and a few elsewhere).  And the subscripts don't work; I tried to fix both of these.  
+- And what's with all the extra letter spacing?  Does not aid readability.  
+
+
+<!-- a Land Without Rs moment: Lunch at the bar at Legal in Kendall.  Two guys on my left speak Italian to each other, plain American English to the bartender.  The guy on my right speaks unaccented English to the bartender but is reading a newpaper on his iPad in Swedish.  A Cambridge moment.  -->
 <!-- END:TODO:RICK -->
 
 # How digitization changes strategies for ensuring long-term access.
 
 Much ink has been spilled on the subject of the exponential increase in information production in the digital age. And more recently, the durability of digital information has become a important concern for technologists, scholars, and government [CITE]. For example, the biggest long-term archive of information, the Internet Archive currently holds 35 petabytes of information. This is roughly equivalent to the text of 7 million long novels -- or to the amount of new information produced across the globe every 45 minutes, throughout the year. [CITE]
 
-The vast majority of the world's information is stored online or near-line -- using rotating disks, solid state drives, or robotic-tape libraries. [CITE] Much of this information has long-term value to the data controller or to others. And, as it turns out, much of this information is at risk -- since current information systems are designed for current use, and not for long term access and understanding.  
+The vast majority of the world's information is stored online or near-line, using rotating disks, solid state drives, or robotic-tape libraries. [CITE] Much of this information has long-term value to the data controller or to others. And, as it turns out, much of this information is at risk -- since current information systems are designed for current use, and not for long term access and understanding.  
 
-Ensuring the value of long-term access is thus the domain of 'preservation'. The overarching goal of information preservation (or conservation) is to enable meaningful communication with the future through supporting document integrity and understanding -- whether or not the information in digital or tangible form [CITE]. However, the form in which information is represenented can fundamentally changes the strategies used to preserve it: When information is represented in physical form, preservation strategies most often aim to maintain the information-bearing media in a stable state, often by maintaining a constant optimal physical environment. [CITE] 
+Ensuring the value of long-term access is thus the domain of 'preservation'. The overarching goal of information preservation (or conservation) is to enable meaningful communication with the future through supporting document integrity and understanding -- whether or not the information in digital or tangible form [CITE]. However, the form in which information is represenented can fundamentally change the strategies used to preserve it.  When information is represented in physical form, preservation strategies most often aim to maintain the information-bearing media in a stable state, often by maintaining a constant optimal physical environment. [CITE] 
 
-In contrast, strategies for presrving digital information are generally based on the observation that neither digital media and formats are reliably durable, and thus tht long-term access requires regular curation of the information: Common digital preservation strategies include migrating information to new media, and, less frequently, to new formats. Further, since information in digital form can be read and replicated at a very low marginal cost, relative to tangible content, digital preservation strategies can much more easily include replication and verification of content. [CITE]
+In contrast, strategies for presrving digital information are generally based on the observation that neither digital media and formats are reliably durable, and thus that long-term access requires regular curation of the information: Common digital preservation strategies include migrating information to new media, and, less frequently, to new formats. Further, since information in digital form can be read and replicated at a very low marginal cost, relative to tangible content, digital preservation strategies can much more easily include replication and verification of content. [CITE]
  
 Stewards of digital information are faced with a large set of choices in developing a preservation strategy. These choices include document size and data format; file encryption and compression; storage media durability and reliability; collection replication, distribution, verification, and repair. [CITE] These choices have the potential to change dramatically the cost of a preservation strategy, and how (and where) that strategy is vulnerable to a wide range of threats.  Moreover, changes in these factors interact in complex ways -- making it difficult to discover optimal/efficient strategies. 
 
-While a number of 'good practices' are recognized digital preservation [CITE] -- many of these practices are heuristic, and most are based on experience with particular technologies and threats. There is currently no comprehensive framework that enables systematic quantitative prediction of the cost and effectiveness of differing preservation strategies. In the sections below, we develop a framework for just such an analysis, and derive general guidance for the selection of strategies over document size, file compression and encryption, and colection replication, diversification, and auditing.
+While a number of 'good practices' are recognized digital preservation [CITE], many of these practices are heuristic, and most are based on experience with particular technologies and threats. There is currently no comprehensive framework that enables systematic quantitative prediction of the cost and effectiveness of differing preservation strategies. In the sections below, we develop a framework for just such an analysis, and derive general guidance for the selection of strategies over document size, file compression and encryption, and colection replication, diversification, and auditing.
 
 # Problem Definition
 
-The ultimate goal of information preservation is to communicate across time. Our concrete objective, broadly speaking, is to maintain a collection of documents, so that its contents can be read at a designated future time. Communication will be deemed a success, ifat some designated future time the integrity of the documents has been maintained. (We extend this to the case where additional context must be presved so that the document can be presented t the reader in a form they can understand.) In this scenario, the curator's task is to select a preservation strategy, combining rules for compression, replication, auditing and repair that minimize loss of documents subject to a budget constraint.
+The ultimate goal of information preservation is to communicate across time. Our concrete objective, broadly speaking, is to maintain a collection of documents, so that its contents can be read at a designated future time. Communication will be deemed a success if at some designated future time the integrity of the documents has been maintained. (We extend this to the case where additional context must be presved so that the document can be presented t the reader in a form they can understand.) In this scenario, the curator's task is to select a preservation strategy, combining rules for compression, replication, auditing and repair that minimize loss of documents subject to a budget constraint.
 
 
 More strictly, we can formulate this task as an optimization problem. Given:
- a set \\(C\\), of documents \\C={D_1..D_N}\\);
- a budget \\(B\\); 
- a preservation strategy \\(S\\), which is tuple \\
-(S={Copies,AuditMethod,RepairFrequency,Compression }\\)
- a cost function \\(Cost(C,S)\\),
- and a prediction of the expected collection loss over time \\(Loss(C,S,T)\\),
- what strategy should a curator use so as to lose as few documents as possible:
+
+-  a set \(C\), of documents \C={D~1~..D~N~}\);
+-  a budget \(B\); 
+-  a preservation strategy \(S\), which is a tuple \
+(S={Copies, AuditMethod, RepairFrequency, Compression}\);
+-  a cost function \(Cost(C, S)\); and 
+-  a prediction of the expected collection loss over time \(Loss(C, S, T)\);
+ 
+what strategy should a curator use so as to lose as few documents as possible:
   
 <math xmlns="http://www.w3.org/1998/Math/MathML">
   <mstyle displaystyle="true">
@@ -276,15 +274,16 @@ We designate this solution
 </math> 
 
 
-Where both cost and loss functions are simple and behaved, it may be possible to find the optimal solution analytically. However, in more realistic conditions, risk of loss is a complex function of multiple sources of loss -- including low-level media failures, mid-level events such as manufacturing defects that affect clusters of media, and high-level events such as government action that can simultaneously affect multiple replicas of entire collections. Moreove, in realistic conditions there will be significant uncertertainty about the distribution of threats. 
+Where both cost and loss functions are simple and behaved, it may be possible to find the optimal solution analytically. However, in more realistic conditions, risk of loss is a complex function of multiple sources of loss -- including low-level media failures, mid-level events such as manufacturing defects that affect clusters of media, and high-level events such as government action that can simultaneously affect multiple replicas of entire collections. Moreover, in realistic conditions there will be significant uncertainty about the distribution of threats. 
 
-In order to evaluate a curator's strategies under these more realistic conditions, we adopt two approaches: First, we use discrete event simulation across a range of threat conditions to estimate the loss function for a specific curation strategy. Second, we aim to identify strategies that are relatively low cost and robust to a range of threat conditions, rather than focusing on the optimal strategy for a precisely identified set of threats. 
+In order to evaluate a curator's strategies under these more realistic conditions, we adopt two approaches: First, we use discrete event simulation across a range of threat conditions to estimate the loss function for a specific curation strategy. Second, we aim to identify strategies that are relatively low cost and robust to a range of threat conditions, rather than focusing on the optimal strategy for a precisely identified set of threats.  Rather than search for asymptotically optimal solutions to over-specified situations, we hope to develop reasonably precise answers to very approximate questions.  
+
 
 # Basic Model and Some Implications
 
 ## Very Brief Outline of the Model
 
-A *client* (library) has a *collection* of *documents* in digital form.  A copy of the collection of documents is stored on a *server* somewhere.  If the client maintains multiple *copies* of the collection of documents, the several copies are stored on separate servers.  Customers retrieve documents from the server(s) to read them.  An *error* may occur that corrupts a copy of a document or makes that copy inaccessible.  In this case, we consider the copy to be *lost*.  Other copies may still persist.  If all copies of a document are lost, then the document itself is permanently lost.  
+The model for the simulations is very simple.  A ***client*** (library) has a ***collection*** of ***documents*** in digital form.  A copy of the collection of documents is stored on a ***server*** somewhere.  If the client maintains multiple ***copies*** of the collection of documents, the several copies are stored on separate servers.  Customers retrieve documents from the server(s) to read them.  An ***error*** may occur that corrupts a copy of a document or makes that copy inaccessible.  In this case, we consider the copy to be ***lost***.  Other copies may still persist.  If all copies of a document are lost, then the document itself is permanently lost.  
 
 (All the italicized words are terms of art that are discussed in detail later.)
 
@@ -295,7 +294,7 @@ A *client* (library) has a *collection* of *documents* in digital form.  A copy 
 - Errors are silent, that is, no one notices an error until someone tries to read the document and discovers that it is lost.  
 
 
-# Attend to What You Can Control
+# Commandment VI: Attend to What You Can Control
 
 Many sources of errors are possible in long-term storage, and at many levels.  Consider the following hierarchy:
 
@@ -309,33 +308,33 @@ The sources of error in these several layers, and strategies that can be used to
 - For example, as a computer user, I have no control over bit or sector errors on the disks I use.  These are all managed by the firmware that the disk vendor uses on the drives.  
 - And as a customer of a storage service, whether within my organization or out in the cloud, I have no control over disk drives or arrays of disk drives.  These are managed and controlled by the managers of the computer centers where the storage arrays live.  
 - However, as a client, I am a customer of storage services, and therefore I have complete control over the set of files that I choose to store, where I store them, the formats in which I store them, whether I duplicate them, when I check on their validity, and so forth.  These are choices that I can make regardless of the particular storage vendors from whom I buy storage services.  
-- And as a customer, I have control over *which* storage services I choose to patronize, and how many, and the criteria I use to choose, and what I store there.  
+- And as a customer, I have control over *which* storage services I choose to patronize, and how many, and the criteria I use to choose, and what I store there.  Hence the commandment, "Attend mainly to what you can control."
 
 As we will discuss later, we might wish to be aware of the technologies and concerns in the areas we cannot control, but we should reserve our vigilance for the areas that we can control.  This paper concentrates on the objects we value -- files containing documents -- and the storage services to which we entrust our valuable files.  We suggest strategies in those particular areas that can be used by client libraries to minimize the impact of errors, the ravages of age and administrative inattention, and the vicissitudes of nature, economics, and politics.  
 
-more TBS
 
-
-# Keep Multiple Copies
+# Commandment I: Keep Multiple Copies
 
 Errors accumulate over time.  Every now and then an error will occur in storage and, if the error occurs in a region of storage occupied by a document, the error destroys a document.  The rate at which documents are lost depends of course on the quality of the storage. In theory, we can predict the detioriation of a collection as a result solely of sector-level losses, using the Poisson distribution.  **Figure 1**, below, illustrates the percentage of a collection lost in a 10-year period, as a function of the reliability of the underlying storage.
 
-> ![Graph of cumulative collection losses over time.](./images/c1lossesvsquality.png)
+> ![Graph of cumulative collection losses over time.](./images/c1lossesvsquality.png){width=90%}
+
 > ##### Figure 1: How percentage of collection lost over 10 years as a factor of sector reliability.
 
-As **Figure 1** demonstrates, if a collection exists as only a single copy, then it is very likely that some of its documents will be lost within a decade, even if the storage medium is highly reliable. Further, even if the rate of error accumulation is much lower than illustrated above,  many documents will be lost over longer periods of time: For example, over 50 years XX% of the collection will be lost, even if media reliability were 100x the maximum shown above.  (For more details, **Table A-1** in the appendices shows the expected rates of document errors, theoretical and simulated, over a range of storage error rates and periods.)  [[calibration for ncopies=1 in shelf/docs/PoissonFailure.xls]]
+As **Figure 1** demonstrates, if a collection exists as only a single copy, then it is very likely that some of its documents will be lost within a decade, even if the storage medium is highly reliable. Further, even if the rate of error accumulation is much lower than illustrated above,  many documents will be lost over longer periods of time: For example, over 50 years, about 0.02% (170ppm) of the collection will be lost, even if media reliability were 100x the maximum shown above.  (For more details, **Table A-1** in the appendices shows the expected rates of document errors, theoretical and simulated, over a range of storage error rates and periods.)  [[calibration for ncopies=1 in shelf/docs/PoissonFailure.xls]]
 
-> From this analysis we derive the first commandment: Thou shalt **keep multiple copies** of thy documents. 
+From this analysis we derive the first commandment: Thou shalt **keep multiple copies** of thy documents. 
 
 We are not the first to recommend multiple copies. Thomas Jefferson noted the danger of a single copy of valuable documents long ago. 
 
->"Time and accident are committing daily havoc on the originals deposited in our public offices. . . .  The lost cannot be recovered; but let us save what remains: not by vaults and locks which fence them from the public eye and use, in consigning them to the waste of time, but by such a multiplication of copies, as shall place them beyond the reach of accident."
+>"Time and accident are committing daily havoc on the originals deposited in our public offices.  The late war has done the work of centuries in this business.  The lost cannot be recovered; but let us save what remains: not by vaults and locks which fence them from the public eye and use, in consigning them to the waste of time, but by such a multiplication of copies, as shall place them beyond the reach of accident."
 ^[From the National Archives, "https://founders.archives.gov/documents/Jefferson/01-19-02-0059".]
 
 Even multiple copies of collections deteriorate over time, however, from small erosions of individual documents or larger losses from external shocks.  **Figure 2** shows the deterioration of collections with multiple copies over long periods of time.  [[RBL: find or regenerate the results for this case.]] 
 	
 	 
-> ![Graph of cumulative collection losses over time, with replication.](./images/baseline-noaudit.png)
+> ![Graph of cumulative collection losses over time, with replication.](./images/baseline-noaudit.png){width=90%}
+
 > ##### Figure 2: How percentage of collection lost over 10 years as a factor of both sector reliability and the number of copies
 
 A modest number of copies, even of very high quality, cannot guarantee archival storage over long periods. As figure 2 show, without auditing, at least nine copies are needed to ensure against sector-level loss for even a period of a decade. Further, significant losses will acculate longer periods.    For example, to prevent 1% loss of a collection over 50 years, at least XX copies would be needed.  (For more details, **Table A-2** in the appendices shows the expected rates of document errors, over a range of storage copies, and time periods.)  A strategy that includes monitoring and repair of documents is required for long-term preservation.
@@ -343,70 +342,13 @@ A modest number of copies, even of very high quality, cannot guarantee archival 
 Moreover, even if the media was invulnerable to sector-level errors, a single copy of a collection is vulnerable to large-scale or total loss if that single copy is victim of a disaster, natural or man-made (e.g., earthquake, flood, war, economic depression, administrative error, etc.).  As shown in the next section, multiple copies in multiple independent locations are necessary to safeguard documents against this type of large-scale loss. 
 
 
-# Protect Against a Wide Range of Conditions
+# Commandment X: Protect Against a Wide Range of Conditions
 
 ### What Range of Storage Error Rates Should We Consider?
 
 One basic question should be answered before embarking on such simulations: what is the failure rate of stored documents? This is a difficult question due to a lack of real data.
 
 There is some data on the failure rate of individual disk drives over time. Thanks to Backblaze, Google, and others, there is some published empirical data on failure rates of disk drives of recent technology vintages. [[citations needed]]  These figures refer to replacements of entire disk drives during the useful life and wear-out periods of device use. That is, they exclude infant failures but include mid-life and senescence. Unfortunately, we do not get much information on the rates of sector failures, bad block replacements, and so forth.
-
- > TBS NOTE (RBL): We should be able to demote much of this lengthy discussion to later, even to the supplementary material.  90% of this is not relevant to the discussions at hand.  Main topics of interest: copies, independence, format, auditing and repair.  
-
-
-#### Drive Failures May Place Limits on Sector Lifetime
-
-We can try to estimate bounds on the failure of sectors by extrapolating from the failure of drives.  Example: At the low end of the range of disk quality, with no active error correction or repair, we can estimate bound the lifetime of sectors by examining disk drive failures.  If disks are allowed to run until the drive fails, then the life of all the sectors on the disk cannot be longer than the life of the entire drive.  That is, the half-life of the drive is an upper bound on the half-life of sectors contained on that drive.  
-
-Backblaze, on the basis of experience with hundreds of thousands of disk drives, has estimated the failure rates of drives for the first four years. [[citation needed]]  **Exhibit nnn** shows the estimated drive lifetimes based on that experience.  [[Source spreadsheet = PaperDraft/DiskFailuresDuringRAIDRebuild.xls sheet Survival2Halflife]]
-
-##### Exhibit nnn: Disk failure rates from measured experience
-
-| Years in service | Cumulative drives failed % | Annualized Failure Rate (AFR) % | Drives survived % | Equivalent half-life (yrs)|
-|-----:|-----:|-----:|-----:|-----:|
-| 1.5 |8| 5.1 | 92.4 | 13.1 | 
-| 3 |10| 1.4 | 90.3 | 20.3 |
-| 4 |22| 12 | 78.5 | 11.4 |
-
-(Numbers are approximate, and include interpolations and rounding.)  Overall, they estimated that 22% of all drives would fail in the first four years, and that the expected half-life of disk drives is more than six years.  Apparently, there is a bathtub effect present here: infant failures are high for the first year and a half, then mature drives fail at a much lower rate for another year or so, and finally wear-out failures increase after three years.
-
-If the half-life of a disk drive in production use is, say, between six and twelve years according to their experience figures, then the half-life of a sector on that disk cannot be longer than that same six to twelve years.   
-
-##### Exhibit nnn: Disk failure rates based on drive half-life = 11 years (calculated)
-
-| Years of use | Cumulative drives failed by end of period % | Drives survived at end of period % |
-|-----:|-----:|-----:|
-| 1 | 6 | 94 |
-| 2 | 12 | 88 | 
-| 3 | 17 | 83 |
-| 4 | 22 | 78 |
-| 5 | 27 | 73 |
-
-Based on the experience of Backblaze, at least, the drive survival rate is much lower than is shown here after the third year of production use.
-
-#### Reducing Disk Drive Failures in Production
-
-The low end of the quality scale might be estimated by simply watching data deteriorate over time.  At the other end of the scale, high quality, high lifetimes for data, can be achieved with strategies that actively avoid or detect and repair errors as they occur.  This way, very reliable storage can be achieved with even moderately reliable components.  
-
-Some storage installations may choose to preempt wear-out drive failures by replacing drives at the end of some "service lifetime."  From the Backblaze numbers (see **Exhibit nnn**) that service lifetime would probably be not much more than three years.  Such an "error-avoidance" strategy would truncate the sharply rising end of the bathtub curve where drives pass from maturity to senescence.  
-
-We have not encountered data on the performance of disk drives or blocks in RAID and erasure coding arrays, the effect of pre-emptive data scrubbing or active patrolling, etc.  
-
-Obviously, redundant implementation such as RAID dramatically reduces the loss of data.  Still, there is the possibility with RAID5 that a second drive fails while a previously failed drive is being rebuilt.  RAID6, with two redundant drives, is a partial solution to this problem, but storage experts now do not view even this as a long-term solution as disk sizes increase.  Discussion of this situation is beyond the scope of this paper.  
-
-However, we do have to consider the effects on document loss of redundant implementations and error detection and repair.  If drive failures are absent or significantly delayed due to early replacement or redundant configurations, we have to look at the rate of sector errors.  The loss of disk sectors is a combination of two processes: drive failure, as just discussed, in which many sectors are lost at one time, and individual sector failures, which may be due to particulate contamination, physical shocks, cosmic rays, etc.  
-
-#### Consider Sector Failures Independent of Drive Failures
-
-If arrays of disks are managed with conservative hygiene, e.g., replacing most drives after some "usable" lifetime but before they fail, and rebuilding redundant arrays of disks, then the drive lifetime may not be the dominant factor in sector survival.  Failures of individual sectors will occur all the time, albeit at a much lower rate, but they are silent and will accumulate if they are not actively uncovered and repaired. 
-
-An oft-cited number about disk error rates is "uncorrectable error rate = one bit in 10e-14."  [[Need citations.]]  Note several things about this number.  
-
-1. It is not a statistic in the usual sense; that is, it has not been derived from any referenced empirical data.  It is a hypothesis from the manufacturing industry, perhaps derived from collective experience.
-1. It is not stated as time-dependent; that is, it is not an *arrival* rate of errors, it is a constant.  It also does not seem to increase with the size of the drive.  Most analyses using this number treat it as a given fact for any disk drives, for example, as perhaps a rate of manufacturing defects.  
-1. Disk sizes have increased dramatically since that number was first published, but the UER rate remains constant.  A typical (today) drive of 8TB capacity, ignoring recording overhead, has probably 0.6 unrecoverable bits on the drive, or only a 53% likelihood of being error-free.  
-1. It is an *unrecoverable* error that is not repaired by the error-correction coding in the actual recording on the disk.  
-1. A single-bit unrecoverable error may invalidate a sector, currently 4KiB on disk, and invalidate any document stored including that sector.  Because documents are large and more vulnerable, document losses will always be large multiples of bit error rates.  
 
 In the absence of either experimental or experiential data on sector failure rates, we are attempting to provide simulated data as guidelines for policies regarding data storage, redundancy, auditing and repair.  We have assumed that sector errors arrive randomly in a Poisson process.  The question is, what is the arrival rate of sector errors on a disk or disk array?  There is no single, even approximate answer to that question.  Consequently, we have looked at document losses over a wide range of error arrival rates and amelioration strategies.  
 
@@ -415,7 +357,7 @@ In the absence of either experimental or experiential data on sector failure rat
 
 ##### Exhibit nnn: Sector losses in **permille** over the first few years of drive use, across a wide range of sector half-lives.  Sectors 1MB, sector half-lives in megahours (Mhr).
 
-| Sector losses (**permille**) by sector half-life (megahours) |
+##### Sector losses (**permille**) by sector half-life (megahours) 
 
 | Years in service | Sector half-life = 10Mhr | 30Mhr | 100Mhr | 300Mhr |
 |-----:|-----:|-----:|-----:|-----:|
@@ -440,15 +382,15 @@ Note also that, since documents typically occupy more than one disk sector, even
 
 [[Source spreadsheet: FailureRatesBackOfTheEnvelope.xls, sheet PrintMe]]
 
-Clearly, at the low end of the range, where sector lifetime is in the range of 10 million hours, document losses would be unacceptably high.  If you lost 3 percent of all your documents in the first year, you would take immediate action to find a more reliable storage environment.  Even up to 30 million hours (sector half-life), such disks would be classified as "rusty garbage can lids" that are not suitable for archival storage.  Better disks might still accumulate errors at a significant rate, but permanent losses can be avoided with suitable auditing and repair regimes, as discussed below.  
+Clearly, at the low end of the range, where sector half-life is in the range of 10 million hours, document losses would be unacceptably high.  If you lost 3 percent of all your documents in the first year, you would take immediate action to find a more reliable storage environment.  Even up to 30 million hours (sector half-life), such disks would be classified as "rusty garbage can lids" that are not suitable for archival storage.  Better disks might still accumulate errors at a significant rate, but permanent losses can be avoided with suitable auditing and repair regimes, as discussed below.  
 
 
 #### If You Can't Control It, Buy Insurance Against It
 
-We do not have good information on the sector error rates of our storage media, particularly if we are buying a service from an outside vendor.  Since such factors are beyond our control, we should choose strategies to protect our document collections from a *wide* range of circumstances that we might encounter.  
+We do not have good information on the sector error rates of our storage media, particularly if we are buying a service from an outside vendor.  Since such factors are beyond our control, we should choose strategies to protect our document collections from a *wide* range of circumstances that we might encounter.  Hence the commandment, "Protect against a wide range of conditions."  
 
 
-# Visit Your Documents Regularly 
+# Commandment II: Visit Your Documents Regularly 
 
 Verify and repair the multiple copies.  In general, we will use the term "auditing" to refer to checking documents for validity and repairing any errors discovered, wherever possible.  
 
@@ -479,20 +421,24 @@ Even with low quality storage media and unreliable storage services, a high degr
 
 Auditing the collection to verify the validity of remote copies of documents, and to repair discovered errors, can greatly reduce permanent document losses over time.  Without auditing and its attendant repair of damaged documents, minor errors will continually erode a stored collection; the collection will to continue to decline over time with no barrier to extinction.  No number of redundant copies without auditing, certainly no *reasonable* number, will prevent significant document losses over a long period.  In addition, major shocks to the system may cause servers to fail, thus reducing the actual number of active copies of a collection and accelerating further deterioration.  
 
-Auditing is essential to maintaining the health of a collection.  This is the method by which errors are detected and corrected.  Without auditing, errors tend to build up in a collection and eventually cause some permanent document losses, regardless of how many copies of the documents we keep.  We can think of the auditing process as health care for electronic documents: minor problems will be found and fixed before they cause permanent damage.  Of course, it will always be possible for unlikely juxtapositions of errors to cause a document to be lost, but regular auditing of a modest number of copies can minimize permanent losses.  
+Auditing is essential to maintaining the health of a collection.  This is the method by which errors are detected and corrected.  Without auditing, errors tend to build up in a collection and eventually cause some permanent document losses, regardless of how many copies of the documents we keep.  We can think of the auditing process as health care for electronic documents: minor problems will be found and fixed before they cause permanent damage.  Of course, it will always be possible for unlikely juxtapositions of errors to cause a document to be lost, but regular auditing of a modest number of copies can minimize permanent losses.  This active mechanism of searching for and repairing errors is the essence of the commandment, "Visit your documents regularly and keep them healthy."  
 
 The auditing process actively patrols for errors before they cause permanent document losses, and corrects them when possible.  In all cases, when a document copy is found to be absent (or corrupted), the auditing process attempts to replace the missing copy with a fresh copy obtained from another server.  If there is an intact copy on another server, then the missing copy is repaired and the process continues.  If there is no other intact copy, then the document is considered permanently lost.  
 
-**Exhibit nnn** shows the dratic reduction in document losses when using regular auditing on collections with a modest number of copies.  [[Picture of results for copies=3,4,5, total annual audit.]]
+**Exhibit nnn** shows the dramatic reduction in document losses when using regular auditing on collections with a modest number of copies.  [[Picture of results for copies=3,4,5, total annual audit.]]
 
-The most basic strategy for auditing is *total auditing*.  This involved examining every copy of every document on a regular schedule, and effecting repairs where necessary (and possible).  
+![Exhibit nnn: A modest number of copies with total annual auditing can reduce errors to negligible levels](./images/baseline-auditannually.png){width=90%}
 
-A number of other strategies for auditing are possible, and some are measurably better than others.  Various strategies will be described and evaluated below.  
+##### Exhibit nnn: Graph of losses with annual auditing.
+
+The simplest and most effective strategy for auditing is *total auditing*.  This involves examining every copy of every document on a regular schedule, and effecting repairs where necessary (and possible).  These visits may be spread throughout the year to level bandwidth requirements over time.  
+
+A number of other strategies for auditing are possible, and some are measurably better than others.  Various strategies will be described and evaluated in the supplemental material.  
 
 
 ### How Many Copies to Keep With Auditing?
 
-Over a very wide range of storage quality conditions (storage error rates or sector half-lives), our experiments show that five copies with annual total auditing reduce document loss rates to negligible levels.  
+Over a very wide range of storage quality conditions (storage error rates or sector half-lives), our experiments show that **five copies with annual total auditing** reduce document loss rates to negligible levels.  
 
 **Exhibit nnn** compares the effect of number of audited copies and storage error rates on document loss rates.  
 [[This may refer to the preceding exhibit, if that picture is clear enough.]]
@@ -502,13 +448,15 @@ Over a very wide range of storage quality conditions (storage error rates or sec
 
 Clients can adjust the degree of redundancy of storage and the aggressiveness of auditing and repair to match almost any requirements for permanent storage of documents.  To defend against high rates of document losses and correlated server failures, a client can increase the number of copies maintained, with careful consideration to their physical and financial independence, and can audit the several copies more frequently.  By controlling both of these factors in a maintenance regimen, a client can protect the integrity of a collection for any desired period.  
 
+(Conversely, of course, clients may find that storage services are much less error-prone, and the economic and administrative environments much more reliable, and may reduce their degree of redundancy as a result.  We do not recommend this: should we drop our auto insurance because we haven't had an accident *lately*?)  
+
 This regimen of data hygiene -- high redundancy and frequent auditing and repair -- can be used to protect against poorer-quality storage servers and higher levels of correlated failure.  
 
 - Originally, RAID disk arrays were intended to protect against imperfect disk drives.  The term "RAID" was coined to abbreviate "Redundant Arrays of Inexpensive Disks," where "inexpensive" referred to perhaps imperfect quality.  Similar techniques were applied for a time to large memory banks, constructed of RAM chips with some weak or failed bits, using wide error-correcting encodings to make up for bit errors.  
 - By analogy, a collection of documents can be replicated with a high degree of redundancy (many copies), and aggressive error detection and correction techniques (frequent auditing and repair) can be used to maintain the collection in perfect or near-perfect condition for long periods of time.  
 
 
-# Compress Your Documents
+# Commandment III: Compress Your Documents
 
 The impacts of document size, compression, encryption.
 
@@ -532,17 +480,17 @@ In these simulations, we have modeled documents as *very fragile*: one sector er
 
 The drawings in **Exhibit nnn** illustrate the effect of randomly placed errors on documents of varying sizes.  [[Picture from old presentation of doc blocks with Xs in them, with maybe a couple more Xs added to make it clearer that large = big target.]]
 
-![Exhibit nnn: Cartoon of Large Document Presenting Larger Target Area for Random Errors](../pictures/docsizevserrorrate/SmallVsLargeFile-2.png)
+![Exhibit nnn: Cartoon of Large Document Presenting Larger Target Area for Random Errors](../pictures/docsizevserrorrate/SmallVsLargeFile-2.png){width=90%}
 
 **Exhibit nnn** shows the increase in document losses for larger documents across a range of storage error rates.  
 [[Picture in pictures/largerdocs, but it needs to be redone.]]
 
-![Exhibit nnn: Larger Docs Are More Vulnerable to Random Errors: 5, 50, 500, 5000MB -- !!!MUST BE REDONE!!!](../pictures/largerdocs/baseline-scalingdocsize.png)
+![Exhibit nnn: Larger Docs Are More Vulnerable to Random Errors: 5, 50, 500, 5000MB -- !!!MUST BE REDONE!!!](../pictures/largerdocs/baseline-scalingdocsize.png){width=90%}
 
 The table of **Exhibit nnn** shows the linear relationship between document size and storage error rate.  (Error rate is expressed as sector half-life, as explained below.)
 [[PDF captured from spreadsheet, in pictures/docsizevserrorrate/Data_Scaling_DocsizeSpreadsheet-2.pdf]]
 
-![Exhibit nnn: Linear Relationships Between Document Sizes and Error Rates](../pictures/docsizevserrorrate/Data_Scaling_DocsizeSpreadsheet.png)
+![Exhibit nnn: Linear Relationships Between Document Sizes and Error Rates](../pictures/docsizevserrorrate/Data_Scaling_DocsizeSpreadsheet.png){width=90%}
 
 Lossless compression is benign for a variety of reasons.
 
@@ -551,10 +499,12 @@ Lossless compression is benign for a variety of reasons.
 - Smaller documents consume lower bandwidth for retrieval and editing, lowering egress charges from the storage vendor.  This makes the auditing process less expensive.
 - A possible drawback is that some methods of compression may require decompression software at client end for retrieval.
 
+Thus the commandment, "Compress your documents."  
 
-# Cloak Your Documents: Encryption
 
-Encryption of documents may be required for secrecy, digital rights management, or other reasons.  If a document is encrypted after it has been compressed, the encryption generally does not impose an additional size burden on the document.  Thus encryption does not compromise the advantage gained by compression, though it does have some impact on potential document losses.  
+# Commandment VII: Cloak Your Documents: Encryption
+
+The commandment, "Cloak your documents" tries to meet the needs of some collections for privacy.  Encryption of documents may be required for secrecy, digital rights management, or other reasons.  If a document is encrypted after it has been compressed, the encryption generally does not impose an additional size burden on the document.  Thus encryption does not compromise the advantage gained by compression, though it does have some impact on potential document losses.  
 
 - An encrypted document is more fragile in the sense that it, if damaged by an error, it may not be recoverable even with extraordinary efforts.  (Contrast with text documents, still photo, video, and audio files.)
 - A collection of encrypted documents is more subject to large shocks, associated failures where multiple servers are immediately affected.  E.g., losing the encryption keys can cause all the copies on several servers to be irretrievable.  
@@ -563,6 +513,8 @@ Encrypted documents, like compressed documents, may have a greater need for stor
 
 
 # A Very Simple Cost Model
+
+TBS NOTE: Where should this section go?  Beginning?  In the Compression section?  
 
 Many storage vendors may be available to a client, each with charge schedules.  For the most part, vendors will charge for storage and bandwidth.
 
@@ -577,9 +529,12 @@ Many storage vendors may be available to a client, each with charge schedules.  
 For the purposes of this study, a client will store a collection on a set of servers of the same "quality" level.  Documents with differing quality requirements are considered separate collections and are stored and managed separately.  
 
 
-# Judge the Level of Storage Quality
+# Commandment VIII: Judge for Yourself the Level of Storage Quality
 
-Do not blindly believe reliability estimates from vendors.  
+This commandment counsels us to trust our own experience more than the marketing statements of those trying to sell us products and services.  This has two parts:
+
+- Question the provenance of reliability estimates from vendors.  
+- Pay close attention to our own experience with storage reliability.  Note that this requires that we *collect* and *analyze* reliability data from our own collections.  
 
 ### Doubt Statistics of Manufacturers and Cloud Vendors    
 
@@ -587,7 +542,7 @@ Do not blindly believe reliability estimates from vendors.
 
 The inverse of error rate is usually expressed in terms of MTBF or MTTF, and, initially, we expressed all parameters as mean exponential lifetime. But MTBF and MTTF are hard even for most experts to grasp, and uninformative or misleading for non-experts.
 
-The likelihood of an error in a disk bit or sector, or even the failure of an entire disk, is a very small number with many zeroes before the first significant digit.  We choose to invert the error rate into a function of lifetime of that bit (or sector containing many bits).  Thus a probability of a bit failing in a year of 10E-15 becomes a mean lifetime of 100E12 years.  Expressed that way, the figure seems excessively optimistic.  (The age of the universe is currently estimated to be 14E9 years.)  Data on such a disk would be effectively immortal, and that does not correlate with experience.  
+The likelihood of an error in a disk bit or sector, or even the failure of an entire disk, is a very small number with many zeroes before the first significant digit.  We choose to invert the error rate into a function of lifetime of that bit (or sector containing many bits).  Thus a probability of a bit failing in a year of 10E-15 becomes a mean lifetime of 100E12 years.  Expressed that way, the figure seems excessively optimistic.  (The age of the universe is currently estimated to be 14E9 years.)  Data on such a disk would be effectively immortal, and that does not seem to correlate with experience.  
 
 ### Don't Believe Tricky Statistics
 
@@ -607,24 +562,14 @@ We agree with Rosenthal (2010) [[citation needed]] and others that such estimate
 ### Reliability Varies Over Time
 
 
-#### Infant and Aging Failures
-
-[[RBL: This section should probably be relegated to supplementary material.  It is possible that we can simply find a reference with a good description and pictures to handle this discussion entirely.]]
-
-- bathtub curve
-    - declining infant failures
-    - stable maturity
-    - rising senescence failures, wear-out
-
-[[Do we draw our own picture, or steal one, or just cite literature on the topic?]]
-
-
 #### Small Changes in Error Rates: Glitches
 
 The error rate of a storage device or storage server is not necessarily constant.  The rate can vary over time for a variety of reasons.  One reason is the "bathtub curve" phenomenon [[citations needed]].  In this study, we have examined other varying conditions under the general heading of *glitches*.  
 
-- A *glitch* is a temporary, short-lived, condition that impacts a single server and increases the sector error rate on that server for some short interval.   
-- What types of glitches might occur in server farms?  HVAC weakness or failure; environmental contamination by chemicals or particulates, radiation, electrical noise; and similar.  It is also possible that insertion into a service of a batch of disk drives with different error characteristics could temporarily alter the overall error rate of the service.  In general, these conditions are not fatal to the server overall, but degrade the integrity of data storage.  
+- A ***glitch*** is a temporary, short-lived, condition that impacts a single server and increases the sector error rate on that server for some short interval.   
+- What types of glitches might occur in server farms?  HVAC weakness or failure; environmental contamination by chemicals or particulates, radiation, electrical noise; and similar short-lived phenomena.  
+
+> It is also possible that insertion into a service of a batch of disk drives with different error characteristics could temporarily alter the overall error rate of the service.  In general, these conditions are not fatal to the server overall, but degrade the integrity of data storage.  
 - Glitches arrive at random intervals in a Poisson process, and have limited duration.  
 - Glitches are local phenomena, limited to a single server.  
 - The effect of a glitch is simply to increase the sector error rate for a short period.  
@@ -633,27 +578,31 @@ The error rate of a storage device or storage server is not necessarily constant
 In this study, we have found that it is hard to distinguish glitch-induced increases in error rates from random variations in performance.  A glitch increases the error rate (reduces the sector lifetime) of the server for a while, but this need not impact the overall performance of a collection of documents in which that server is a participating member.  A good client strategy should maintain sufficient redundancy and auditing discipline to protect the collection over a wide range of adverse conditions.  A glitch in one server might require a higher degree of repair of that server during the next auditing cycle, but that should not impact the health of the overall collection.  
 
 
-### Do Believe the Experience of Others
+### Do Believe the Experience of Yourself and Others
 
-- attend the experience of other similar users
+- Attend your own experiences and those of other similar users
+
 - Trust Your Experience
 
 
-# Storage Vendors May be Ephemeral
+# Commandment V: Storage Vendors May be Ephemeral
 
-TBS
+The computing facilities from whom we buy storage services are just corporations, and therefore not immortal.  They may die for a number of reasons: 
 
-- plan for failures and mergers
-- plan ahead for replacements
+- Corporate financial failure; 
+- Change of goals, changes in product lines and services offered; 
+- Mergers with other corporations or spinoffs of divisions;
+- Changes in pricing policies;
+- Etc.
+
+To protect a digital collection, we must plan for failures and mergers, and plan ahead for replacements.  This commandment warns us to be aware of the possibilities of, and the impacts of, changes in the corporate landscape; and to be prepared to protect ourselves against such changes.  
 
 ### Exceptional but Realistic Conditions: Major Shocks
 
-TBS
-
 We use the term "shock" to refer to incidents that can weaken or kill a whole server, or even multiple servers.  
 
-- A *shock* is a more serious condition affecting storage servers.  This is a temporary, short-lived, or possibly permanent, increase in the likelihood of death of a server.  All servers are considered to have finite lives (of random length), though the lives may be very long.  A shock reduces that lifetime.  
-- A shock may kill a server immediately, or it may simply increase the likelihood of failure of that server.  
+- A ***shock*** is a more serious condition affecting storage servers.  This is a temporary, short-lived, or possibly permanent, increase in the likelihood of death of a server.  All servers are considered to have finite lives (of random length), though the lives may be very long.  A shock reduces that lifetime.  
+- A shock may kill a server immediately (by reducing its lifetime to zero), or it may simply increase the likelihood of failure of that server.  
 - What types of shocks might occur?  Some shocks are exogenous: natural disasters, such as fire, flood, earthquake, volcano, meteor, etc.; economic downturns in consumer and financial markets; regional wars; government interference.  Others may be endogenous: administrative errors such as billing and credit arrangements; and so forth.  
 - Shocks arrive at random intervals in a Poisson process, and may be immediately fatal to a set of servers or may simply reduce their life expectancies for a period.  
 - The death of a server as a result of a shock is modeled as silent, that is, no one notices the death of a server until someone tries to retrieve a document from a dead server.  Note that a server failure results in the loss of all document copies stored on that server.  
@@ -661,7 +610,7 @@ We use the term "shock" to refer to incidents that can weaken or kill a whole se
 - When a server is lost, the client is required to find a new server and populate it with the whole collection -- or at least the parts of the collection that can still be found on the remaining servers.  
 
 
-# Storage Vendors and Locations Must be Independent
+# Commandment IV: Storage Vendors and Locations Must be Independent
 
 An underappreciated source of correlated server failures is lack of independence of storage services.  This may stem from several causes.  
 
@@ -669,12 +618,12 @@ An underappreciated source of correlated server failures is lack of independence
 - Accidental location dependence through common facilities: large server farms may be effectively co-located, either through actual physical proximity in a secure computing facility or regional facilities, or through dependence on the same external resources, such as power grids, water supplies for cooling, etc.  
 - Multiple copies kept in one facility: a client might keep two or more copies of a collection in the same server room or IT infrastructure.  In such a case, the copies are not sufficiently independent to be considered really redundant.  
 
+This commandment warns us to monitor carefully the true independence of the services to which we commit our valuable documents.  
 
-# Develop Standards for the Benefit of All
+
+# Commandment IX: Develop Standards for the Benefit of All
 
 ### Make auditing more efficient.
-
-TBS
 
 Auditing consumes much time, bandwidth, and egress charges from storage services.  It would be to everyone's advantage for the process to be more efficient.  Verifying document integrity by some means other than full retrieval and comparison could improve the economics for all parties.  In particular, methods of cryptographic verification could reduce bandwidth requirements dramatically at the expense of a small increase in computing.  
 
@@ -995,6 +944,63 @@ Even if we understood the source and accuracy of stated MTTF estimates for disk 
 
 
 
+#### Drive Failures May Place Limits on Sector Lifetime
+
+We can try to estimate bounds on the failure of sectors by extrapolating from the failure of drives.  Example: At the low end of the range of disk quality, with no active error correction or repair, we can estimate bound the lifetime of sectors by examining disk drive failures.  If disks are allowed to run until the drive fails, then the life of all the sectors on the disk cannot be longer than the life of the entire drive.  That is, the half-life of the drive is an upper bound on the half-life of sectors contained on that drive.  
+
+Backblaze, on the basis of experience with hundreds of thousands of disk drives, has estimated the failure rates of drives for the first four years. [[citation needed]]  **Exhibit nnn** shows the estimated drive lifetimes based on that experience.  [[Source spreadsheet = PaperDraft/DiskFailuresDuringRAIDRebuild.xls sheet Survival2Halflife]]
+
+##### Exhibit nnn: Disk failure rates from measured experience
+
+| Years in service | Cumulative drives failed % | Annualized Failure Rate (AFR) % | Drives survived % | Equivalent half-life (yrs)|
+|-----:|-----:|-----:|-----:|-----:|
+| 1.5 |8| 5.1 | 92.4 | 13.1 | 
+| 3 |10| 1.4 | 90.3 | 20.3 |
+| 4 |22| 12 | 78.5 | 11.4 |
+
+(Numbers are approximate, and include interpolations and rounding.)  Overall, they estimated that 22% of all drives would fail in the first four years, and that the expected half-life of disk drives is more than six years.  Apparently, there is a bathtub effect present here: infant failures are high for the first year and a half, then mature drives fail at a much lower rate for another year or so, and finally wear-out failures increase after three years.
+
+If the half-life of a disk drive in production use is, say, between six and twelve years according to their experience figures, then the half-life of a sector on that disk cannot be longer than that same six to twelve years.   
+
+##### Exhibit nnn: Disk failure rates based on drive half-life = 11 years (calculated)
+
+| Years of use | Cumulative drives failed by end of period % | Drives survived at end of period % |
+|-----:|-----:|-----:|
+| 1 | 6 | 94 |
+| 2 | 12 | 88 | 
+| 3 | 17 | 83 |
+| 4 | 22 | 78 |
+| 5 | 27 | 73 |
+
+Based on the experience of Backblaze, at least, the drive survival rate is much lower than is shown here after the third year of production use.
+
+#### Reducing Disk Drive Failures in Production
+
+The low end of the quality scale might be estimated by simply watching data deteriorate over time.  At the other end of the scale, high quality, high lifetimes for data, can be achieved with strategies that actively avoid or detect and repair errors as they occur.  This way, very reliable storage can be achieved with even moderately reliable components.  
+
+Some storage installations may choose to preempt wear-out drive failures by replacing drives at the end of some "service lifetime."  From the Backblaze numbers (see **Exhibit nnn**) that service lifetime would probably be not much more than three years.  Such an "error-avoidance" strategy would truncate the sharply rising end of the bathtub curve where drives pass from maturity to senescence.  
+
+We have not encountered data on the performance of disk drives or blocks in RAID and erasure coding arrays, the effect of pre-emptive data scrubbing or active patrolling, etc.  
+
+Obviously, redundant implementation such as RAID dramatically reduces the loss of data.  Still, there is the possibility with RAID5 that a second drive fails while a previously failed drive is being rebuilt.  RAID6, with two redundant drives, is a partial solution to this problem, but storage experts now do not view even this as a long-term solution as disk sizes increase.  Discussion of this situation is beyond the scope of this paper.  
+
+However, we do have to consider the effects on document loss of redundant implementations and error detection and repair.  If drive failures are absent or significantly delayed due to early replacement or redundant configurations, we have to look at the rate of sector errors.  The loss of disk sectors is a combination of two processes: drive failure, as just discussed, in which many sectors are lost at one time, and individual sector failures, which may be due to particulate contamination, physical shocks, cosmic rays, etc.  
+
+#### Consider Sector Failures Independent of Drive Failures
+
+If arrays of disks are managed with conservative hygiene, e.g., replacing most drives after some "usable" lifetime but before they fail, and rebuilding redundant arrays of disks, then the drive lifetime may not be the dominant factor in sector survival.  Failures of individual sectors will occur all the time, albeit at a much lower rate, but they are silent and will accumulate if they are not actively uncovered and repaired. 
+
+An oft-cited number about disk error rates is "uncorrectable error rate = one bit in 10e-14."  [[Need citations.]]  Note several things about this number.  
+
+1. It is not a statistic in the usual sense; that is, it has not been derived from any referenced empirical data.  It is a hypothesis from the manufacturing industry, perhaps derived from collective experience.
+1. It is not stated as time-dependent; that is, it is not an *arrival* rate of errors, it is a constant.  It also does not seem to increase with the size of the drive.  Most analyses using this number treat it as a given fact for any disk drives, for example, as perhaps a rate of manufacturing defects.  
+1. Disk sizes have increased dramatically since that number was first published, but the UER rate remains constant.  A typical (today) drive of 8TB capacity, ignoring recording overhead, has probably 0.6 unrecoverable bits on the drive, or only a 53% likelihood of being error-free.  
+1. It is an *unrecoverable* error that is not repaired by the error-correction coding in the actual recording on the disk.  
+1. A single-bit unrecoverable error may invalidate a sector, currently 4KiB on disk, and invalidate any document stored including that sector.  Because documents are large and more vulnerable, document losses will always be large multiples of bit error rates.  
+
+
+
+
 ## A Few Words About the Graphs
 
 The graphs are generally structured as follows:
@@ -1018,7 +1024,7 @@ A wide range of real-world threats may be modeled through varying the parameteri
 
 ---
 
-where to these fit?
+where do these fit?
 
 - limitations
 
@@ -1255,6 +1261,19 @@ Suppose there are only 2 copies of keys. Is the expected document rate due to en
 - What is L*= E(L|KL,N_K)
 - Can this be derived from failure rate of N_S servers with a rate of KL financial failures
 - Also affects repairability
+
+
+
+#### Infant and Aging Failures
+
+[[RBL: This section should probably be relegated to supplementary material.  It is possible that we can simply find a reference with a good description and pictures to handle this discussion entirely.]]
+
+- bathtub curve
+    - declining infant failures
+    - stable maturity
+    - rising senescence failures, wear-out
+
+[[Do we draw our own picture, or steal one, or just cite literature on the topic?]]
 
 
 
