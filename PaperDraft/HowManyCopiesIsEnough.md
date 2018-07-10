@@ -129,7 +129,7 @@ Stewards of digital information are faced with a large set of choices in develop
 
 While a number of 'good practices' are recognized digital preservation [CITE], many of these practices are heuristic, and most are based on experience with particular technologies and threats. There is currently no comprehensive framework that enables systematic quantitative prediction of the cost and effectiveness of differing preservation strategies. In the sections below, we develop a framework for just such an analysis, and derive general guidance for the selection of strategies over document size, file compression and encryption, and colection replication, diversification, and auditing.
 
-# Problem Definition
+# Problem Characterization
 
 The ultimate goal of information preservation is to communicate across time. Our concrete objective, broadly speaking, is to maintain a collection of documents, so that its contents can be read at a designated future time. Communication will be deemed a success if at some designated future time the integrity of the documents has been maintained. (We extend this to the case where additional context must be preserved so that the document can be presented t the reader in a form they can understand.) In this scenario, the curator's task is to select a preservation strategy, combining rules for compression, replication, auditing and repair that minimize loss of documents subject to a budget constraint.
 
@@ -276,15 +276,13 @@ Where both cost and loss functions are simple and behaved, it may be possible to
 
 In order to evaluate a curator's strategies under these more realistic conditions, we adopt two approaches: First, we use discrete event simulation across a range of threat conditions to estimate the loss function for a specific curation strategy. Second, we aim to identify strategies that are relatively low cost and robust to a range of threat conditions, rather than focusing on the optimal strategy for a precisely identified set of threats. 
 
-# Basic Model and Some Implications
-
-## Very Brief Outline of the Model
+## Sketch of Discrete Simulation Model
 
 The model for the simulations is very simple.  A ***client*** (library) has a ***collection*** of ***documents*** in digital form.  A copy of the collection of documents is stored on a ***server*** somewhere.  If the client maintains multiple ***copies*** of the collection of documents, the several copies are stored on separate servers.  Customers retrieve documents from the server(s) to read them.  An ***error*** may occur that corrupts a copy of a document or makes that copy inaccessible.  In this case, we consider the copy to be ***lost***.  Other copies may still persist.  If all copies of a document are lost, then the document itself is permanently lost.  
 
 (All the italicized words are terms of art that are discussed in detail later.)
 
-### The Simplest Case: Sector Errors
+## Formalizing Low-level Threats: Sector Errors
 
 - An error in the storage corrupts a document sector.  Errors arrive randomly in a Poisson process.  A cosmic ray striking a disk or memory cell is a good model for this type of error.  
 - If the error occurs in a sector occupied by a copy of a document, that copy is corrupted.  For the purposes of this study, we consider the copy to be lost.  Manual repair by human inspection is not considered here.
