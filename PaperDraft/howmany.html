@@ -16,7 +16,7 @@
 <li><a href="#outline-with-text-in-it">OUTLINE WITH TEXT IN IT</a><ul>
 <li><a href="#abstract"><strong>Abstract</strong></a></li>
 </ul></li>
-<li><a href="#how-digitization-changes-strategies-for-ensuring-long-term-access.">How digitization changes strategies for ensuring long-term access.</a></li>
+<li><a href="#how-digitization-changes-strategies-for-ensuring-long-term-access.">How Digitization Changes Strategies for Ensuring Long-Term Access.</a></li>
 <li><a href="#problem-definition">Problem Definition</a></li>
 <li><a href="#basic-model-and-some-implications">Basic Model and Some Implications</a><ul>
 <li><a href="#very-brief-outline-of-the-model">Very Brief Outline of the Model</a><ul>
@@ -102,12 +102,12 @@
 <li><a href="#reducing-disk-drive-failures-in-production">Reducing Disk Drive Failures in Production</a></li>
 <li><a href="#consider-sector-failures-independent-of-drive-failures">Consider Sector Failures Independent of Drive Failures</a></li>
 </ul></li>
+</ul></li>
 <li><a href="#a-few-words-about-the-graphs">A Few Words About the Graphs</a></li>
 <li><a href="#type-of-threats">Type of Threats</a></li>
 <li><a href="#modeling-associated-failures">Modeling Associated Failures</a></li>
 <li><a href="#threat-matrix">Threat Matrix</a></li>
-<li><a href="#how-many-more-for">How Many More for</a></li>
-</ul></li>
+<li><a href="#how-many-more-for-other-circumstances">How Many More for other circumstances</a></li>
 <li><a href="#extensions">Extensions</a><ul>
 <li><a href="#overview">Overview</a></li>
 <li><a href="#large-vs-small-collections-1">Large vs Small collections</a></li>
@@ -160,7 +160,7 @@ font-size: smaller;
 <p>% How Many Copies Is Enough?<br />
 % Micah Altman; Richard Landau<br />
 % 2016-08-15<br />
-% Revised 2018-06-25 RBL</p>
+% Revised 2018-07-10 RBL</p>
 <p>[[Text blocks in double-square-brackets, such as this is, are editorial notes for the authors to clean up.]]</p>
 <h1 id="title" class="unnumbered">Information Integrity Over the Long Term -- How Many Copies Is Enough?</h1>
 <h4 id="assessing-long-term-durability-of-collections-through-a-flexible-replicable-simulation">Assessing Long-term Durability of Collections Through A Flexible, Replicable Simulation</h4>
@@ -205,9 +205,7 @@ font-size: smaller;
 <li><p>look at the numbers in Beyond MTTF paper 2014.</p></li>
 <li><p>Get two refs for 1e-14 number.</p></li>
 <li><p>Is a combo of two Poissons itself Poisson? [[I forget the question.]]</p></li>
-<li><p>The high end of lifetime is hard to assess.</p></li>
 <li><p>Check Azure erasure code stats.</p></li>
-<li><p>Acknowledge immortal data services; then audit what? The services themselves. The data may be immortal but the services are not: disasters, wars, government interventions, failed credit arrangements, etc.</p></li>
 <li><p>Six copies if broad span correlated failures.</p></li>
 <li><p>RS(m,n) and repair-when-fail has vastly longer data life than multiple independent disks however reliable. [Have to get some numbers to make this convincing.]</p></li>
 </ul>
@@ -236,7 +234,7 @@ font-size: smaller;
 </ul>
 <!-- a Land Without Rs moment: Lunch at the bar at Legal in Kendall.  Two guys on my left speak Italian to each other, plain American English to the bartender.  The guy on my right speaks unaccented English to the bartender but is reading a newpaper on his iPad in Swedish.  A Cambridge moment.  -->
 <!-- END:TODO:RICK -->
-<h1 id="how-digitization-changes-strategies-for-ensuring-long-term-access.">How digitization changes strategies for ensuring long-term access.</h1>
+<h1 id="how-digitization-changes-strategies-for-ensuring-long-term-access.">How Digitization Changes Strategies for Ensuring Long-Term Access.</h1>
 <p>Much ink has been spilled on the subject of the exponential increase in information production in the digital age. And more recently, the durability of digital information has become a important concern for technologists, scholars, and government [CITE]. For example, the biggest long-term archive of information, the Internet Archive currently holds 35 petabytes of information. This is roughly equivalent to the text of 7 million long novels -- or to the amount of new information produced across the globe every 45 minutes, throughout the year. [CITE]</p>
 <p>The vast majority of the world's information is stored online or near-line, using rotating disks, solid state drives, or robotic-tape libraries. [CITE] Much of this information has long-term value to the data controller or to others. And, as it turns out, much of this information is at risk -- since current information systems are designed for current use, and not for long term access and understanding.</p>
 <p>Ensuring the value of long-term access is thus the domain of 'preservation'. The overarching goal of information preservation (or conservation) is to enable meaningful communication with the future through supporting document integrity and understanding -- whether or not the information in digital or tangible form [CITE]. However, the form in which information is represenented can fundamentally change the strategies used to preserve it. When information is represented in physical form, preservation strategies most often aim to maintain the information-bearing media in a stable state, often by maintaining a constant optimal physical environment. [CITE]</p>
@@ -1005,7 +1003,7 @@ font-size: smaller;
 </li>
 <li>A single-bit unrecoverable error may invalidate a sector, currently 4KiB on disk, and invalidate any document stored including that sector. Because documents are large and more vulnerable, document losses will always be large multiples of bit error rates.</li>
 </ol>
-<h2 id="a-few-words-about-the-graphs">A Few Words About the Graphs</h2>
+<h1 id="a-few-words-about-the-graphs">A Few Words About the Graphs</h1>
 <p>The graphs are generally structured as follows:</p>
 <ul>
 <li>The X axis is the sector lifetime expressed as half-life. As half-life increases from left to right, the sector error rate, which is the inverse of lifetime, decreases. Trying to express the sector life as an error rate was found to be confusing because they are generally small fractions.<br />
@@ -1045,7 +1043,7 @@ font-size: smaller;
 - Given an MTBF, what is the possible bounded range of half-lives?</code></pre></li>
 <li><p>specific types of threats: finance, billing, adversaries internal and external, HVAC, environment, software failures, admin errors, hardware batches, government censorship, economics</p></li>
 </ul>
-<h2 id="type-of-threats">Type of Threats</h2>
+<h1 id="type-of-threats">Type of Threats</h1>
 <!-- START:TODO:MICAH-->
 <ul>
 <li>Server-side Billing Failure<br />
@@ -1074,11 +1072,10 @@ font-size: smaller;
 </li>
 <li>Curatorial Failure/Client error<br />
 </li>
-<li><p>Common software failure<br />
-<!-- END:TODO:MICAH--></p></li>
-<li><p>modeling associated failures, types and ranges</p></li>
+<li>Common software failure<br />
+<!-- END:TODO:MICAH--></li>
 </ul>
-<h2 id="modeling-associated-failures">Modeling Associated Failures</h2>
+<h1 id="modeling-associated-failures">Modeling Associated Failures</h1>
 <p>Sources of failures are modeled as a stochastic processes, in a hierarchical model</p>
 <table style="width:71%;">
 <colgroup>
@@ -1149,10 +1146,7 @@ font-size: smaller;
 </ul></li>
 </ul>
 <p>What we are not modeling - Sophisticated adversaries that attack the auditing mechanism - Cascading failure/contagion - Environmental glitch that directly affect background rate of server glitch - Server characteristics are in a steady -state equlibrium -- characteristic of servers remain the same over time.</p>
-<ul>
-<li>threat matrix</li>
-</ul>
-<h2 id="threat-matrix">Threat Matrix</h2>
+<h1 id="threat-matrix">Threat Matrix</h1>
 <p>A wide range of real-world threats may be modeled through varying the parameterization of the model</p>
 <p>[[Well, I'm fairly convinced that pandoc markdown cannot do complex lists inside tables, so we will have to render this sort of table in raw HTML.]]</p>
 <table>
@@ -1351,7 +1345,7 @@ loss due to raid/internal replication characteristics and failure
 <ul>
 <li>extensions</li>
 </ul>
-<h2 id="how-many-more-for">How Many More for</h2>
+<h1 id="how-many-more-for-other-circumstances">How Many More for other circumstances</h1>
 <!-- START:TODO:RICK-->
 <ul>
 <li><p>Environmental</p></li>

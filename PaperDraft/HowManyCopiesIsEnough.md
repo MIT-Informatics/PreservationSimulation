@@ -35,7 +35,7 @@ font-size: smaller;
 % How Many Copies Is Enough?  
 % Micah Altman; Richard Landau  
 % 2016-08-15  
-% Revised 2018-06-25 RBL
+% Revised 2018-07-10 RBL
 
 [[Text blocks in double-square-brackets, such as this is, are editorial notes for the authors to clean up.]]
 
@@ -82,11 +82,7 @@ TBS: NOTES
 
 - Is a combo of two Poissons itself Poisson?  [[I forget the question.]]
 
-- The high end of lifetime is hard to assess.  
-
 - Check Azure erasure code stats.
-
-- Acknowledge immortal data services; then audit what?  The services themselves.  The data may be immortal but the services are not: disasters, wars, government interventions, failed credit arrangements, etc.  
 
 - Six copies if broad span correlated failures.  
 
@@ -119,7 +115,7 @@ Notes from 20180619.1400
 <!-- a Land Without Rs moment: Lunch at the bar at Legal in Kendall.  Two guys on my left speak Italian to each other, plain American English to the bartender.  The guy on my right speaks unaccented English to the bartender but is reading a newpaper on his iPad in Swedish.  A Cambridge moment.  -->
 <!-- END:TODO:RICK -->
 
-# How digitization changes strategies for ensuring long-term access.
+# How Digitization Changes Strategies for Ensuring Long-Term Access.
 
 Much ink has been spilled on the subject of the exponential increase in information production in the digital age. And more recently, the durability of digital information has become a important concern for technologists, scholars, and government [CITE]. For example, the biggest long-term archive of information, the Internet Archive currently holds 35 petabytes of information. This is roughly equivalent to the text of 7 million long novels -- or to the amount of new information produced across the globe every 45 minutes, throughout the year. [CITE]
 
@@ -1001,7 +997,7 @@ An oft-cited number about disk error rates is "uncorrectable error rate = one bi
 
 
 
-## A Few Words About the Graphs
+# A Few Words About the Graphs
 
 The graphs are generally structured as follows:
 
@@ -1058,7 +1054,7 @@ where do these fit?
 
 - specific types of threats: finance, billing, adversaries internal and external, HVAC, environment, software failures, admin errors, hardware batches, government censorship, economics
 
-## Type of Threats
+# Type of Threats
 <!-- START:TODO:MICAH--> 
 - Server-side Billing Failure  
 - Server-side Financial Failure  
@@ -1077,9 +1073,7 @@ where do these fit?
 <!-- END:TODO:MICAH--> 
 
 
-- modeling associated failures, types and ranges
-
-## Modeling Associated Failures
+# Modeling Associated Failures
 Sources of failures are modeled as a stochastic processes, in a hierarchical  model
 
 
@@ -1112,9 +1106,7 @@ What we are not modeling
 
 
 
-- threat matrix
-
-## Threat Matrix
+# Threat Matrix
 A wide range of real-world threats may be modeled through varying the parameterization of the model
 
 [[Well, I'm fairly convinced that pandoc markdown cannot do complex lists inside tables, so we will have to render this sort of table in raw HTML.]]
@@ -1180,7 +1172,7 @@ Lifetime|High|Hardware Batch|1 Year|3 year
 
 - extensions
 
-## How Many More for 
+# How Many More for other circumstances
 <!-- START:TODO:RICK--> 
 
 - Environmental
