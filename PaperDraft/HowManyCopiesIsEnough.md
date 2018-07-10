@@ -129,11 +129,20 @@ Stewards of digital information are faced with a large set of choices in develop
 
 While a number of 'good practices' are recognized digital preservation [CITE], many of these practices are heuristic, and most are based on experience with particular technologies and threats. There is currently no comprehensive framework that enables systematic quantitative prediction of the cost and effectiveness of differing preservation strategies. In the sections below, we develop a framework for just such an analysis, and derive general guidance for the selection of strategies over document size, file compression and encryption, and colection replication, diversification, and auditing.
 
+This paper concentrates on the objects we value -- files containing documents -- and the storage services to which we entrust our valuable files.  We suggest strategies in those particular areas that can be used by client libraries to minimize the impact of errors, the ravages ofT age and administrative inattention, and the vicissitudes of nature, economics, and politics.
+
 # Problem Characterization
 
-The ultimate goal of information preservation is to communicate across time. Our concrete objective, broadly speaking, is to maintain a collection of documents, so that its contents can be read at a designated future time. Communication will be deemed a success if at some designated future time the integrity of the documents has been maintained. (We extend this to the case where additional context must be preserved so that the document can be presented t the reader in a form they can understand.) In this scenario, the curator's task is to select a preservation strategy, combining rules for compression, replication, auditing and repair that minimize loss of documents subject to a budget constraint.
+The ultimate goal of information preservation is to communicate across time. Our concrete objective, broadly speaking, is to maintain a collection of documents, so that its contents can be read at a designated future time. Communication will be deemed a success if at some designated future time the integrity of the documents has been maintained. (We extend this to the case where additional context must be preserved so that the document can be presented to the reader in a form they can understand.) In this scenario, the curator's task is to select a preservation strategy.
 
-In order to guide these curatorial decisions, we develop a formal model of replication threats and replication strategies.  Using this, we aim to develop reasonably precise answers to very approximate questions, rather than search for asymptotically optimal solutions to over-specified situations, 
+As we will discuss later, curators might wish to be aware of the technologies and concerns in the areas we cannot control.   In defining the curatorial strategy, we focus on those elements that curators are most likely to be able to control: the number and distribution of copies, how we audit and repair these, and whether to apply file transformations such as compression, encryption, or format conversion:
+
+- For example, as a computer user, we have no control over bit or sector errors on the disks we use.  These are all managed by the firmware that the disk vendor uses on the drives.  
+- And as a customer of a storage service, whether within my organization or out in the cloud, I have no control over disk drives or arrays of disk drives.  These are managed and controlled by the managers of the computer centers where the storage arrays live.  
+- However, as a client, I am a customer of storage services, and therefore I have complete control over the set of files that I choose to store, where I store them, the formats in which I store them, whether I duplicate them, when I check on their validity, and so forth.  These are choices that I can make regardless of the particular storage vendors from whom I buy storage services.  
+- And as a customer, I have control over *which* storage services I choose to patronize, and how many, and the criteria I use to choose, and what I store there.  Hence the commandment, "Attend mainly to what you can control."
+
+There are many threats to content, and the range of strategies that are available to curators interact with these threats differently.  In order to guide these curatorial decisions, we develop a formal model of replication threats and replication strategies.  Using this, we aim to develop reasonably precise answers to very approximate questions, rather than search for asymptotically optimal solutions to over-specified situations, 
 
 
 More strictly, we can formulate this task as an optimization problem. Given:
@@ -141,7 +150,7 @@ More strictly, we can formulate this task as an optimization problem. Given:
 -  a set \(C\), of documents \C={D~1~..D~N~}\);
 -  a budget \(B\); 
 -  a preservation strategy \(S\), which is a tuple \
-(S={Copies, AuditMethod, RepairFrequency, Compression}\);
+(S={Copies, AuditMethod, RepairFrequency, FileTransformation}\);
 -  a cost function \(Cost(C, S)\); and 
 -  a prediction of the expected collection loss over time \(Loss(C, S, T)\);
  
@@ -284,13 +293,6 @@ The model for the simulations is very simple.  A ***client*** (library) has a **
 
 ## Formalizing Low-level Threats: Sector Errors
 
-- An error in the storage corrupts a document sector.  Errors arrive randomly in a Poisson process.  A cosmic ray striking a disk or memory cell is a good model for this type of error.  
-- If the error occurs in a sector occupied by a copy of a document, that copy is corrupted.  For the purposes of this study, we consider the copy to be lost.  Manual repair by human inspection is not considered here.
-- Errors are silent, that is, no one notices an error until someone tries to read the document and discovers that it is lost.  
-
-
-# Commandment VI: Attend to What You Can Control
-
 Many sources of errors are possible in long-term storage, and at many levels.  Consider the following hierarchy:
 
 - Small collections of data: bits, bytes, sectors on disks.
@@ -298,14 +300,10 @@ Many sources of errors are possible in long-term storage, and at many levels.  C
 - Large collections of data: disk drives, arrays of disk drives.
 - Very large collections of data: storage services
 
-The sources of error in these several layers, and strategies that can be used to control and minimize the impact of errors there, are very different.  A client, a library with a collection of documents, can exercise some control at some of these levels but not at others.  
-
-- For example, as a computer user, I have no control over bit or sector errors on the disks I use.  These are all managed by the firmware that the disk vendor uses on the drives.  
-- And as a customer of a storage service, whether within my organization or out in the cloud, I have no control over disk drives or arrays of disk drives.  These are managed and controlled by the managers of the computer centers where the storage arrays live.  
-- However, as a client, I am a customer of storage services, and therefore I have complete control over the set of files that I choose to store, where I store them, the formats in which I store them, whether I duplicate them, when I check on their validity, and so forth.  These are choices that I can make regardless of the particular storage vendors from whom I buy storage services.  
-- And as a customer, I have control over *which* storage services I choose to patronize, and how many, and the criteria I use to choose, and what I store there.  Hence the commandment, "Attend mainly to what you can control."
-
-As we will discuss later, we might wish to be aware of the technologies and concerns in the areas we cannot control, but we should reserve our vigilance for the areas that we can control.  This paper concentrates on the objects we value -- files containing documents -- and the storage services to which we entrust our valuable files.  We suggest strategies in those particular areas that can be used by client libraries to minimize the impact of errors, the ravages of age and administrative inattention, and the vicissitudes of nature, economics, and politics.  
+We start our analysis by focusing on the lowest level errors -- sector errors. These are characterized as follows:
+- An error in the storage corrupts a document sector.  Errors arrive randomly in a Poisson process.  A cosmic ray striking a disk or memory cell is a good model for this type of error.  
+- If the error occurs in a sector occupied by a copy of a document, that copy is corrupted.  For the purposes of this study, we consider the copy to be lost.  Manual repair by human inspection is not considered here.
+- Errors are silent, that is, no one notices an error until someone tries to read the document and discovers that it is lost.  
 
 
 # Commandment I: Keep Multiple Copies
