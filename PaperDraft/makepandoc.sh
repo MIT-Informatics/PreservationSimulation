@@ -1,2 +1,2 @@
 #!/bin/sh
-pandoc --toc --toc-depth=4 -s  -o howmany.html  HowManyCopiesIsEnough.md
+pandoc --toc --toc-depth=4 -s  -o howmany.htm  HowManyCopiesIsEnough.md

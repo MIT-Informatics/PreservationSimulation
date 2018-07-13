@@ -17,13 +17,10 @@
 <li><a href="#abstract"><strong>Abstract</strong></a></li>
 </ul></li>
 <li><a href="#how-digitization-changes-strategies-for-ensuring-long-term-access.">How Digitization Changes Strategies for Ensuring Long-Term Access.</a></li>
-<li><a href="#problem-definition">Problem Definition</a></li>
-<li><a href="#basic-model-and-some-implications">Basic Model and Some Implications</a><ul>
-<li><a href="#very-brief-outline-of-the-model">Very Brief Outline of the Model</a><ul>
-<li><a href="#the-simplest-case-sector-errors">The Simplest Case: Sector Errors</a></li>
+<li><a href="#problem-characterization">Problem Characterization</a><ul>
+<li><a href="#sketch-of-discrete-simulation-model">Sketch of Discrete Simulation Model</a></li>
+<li><a href="#formalizing-low-level-threats-sector-errors">Formalizing Low-level Threats: Sector Errors</a></li>
 </ul></li>
-</ul></li>
-<li><a href="#commandment-vi-attend-to-what-you-can-control">Commandment VI: Attend to What You Can Control</a></li>
 <li><a href="#commandment-i-keep-multiple-copies">Commandment I: Keep Multiple Copies</a></li>
 <li><a href="#commandment-x-protect-against-a-wide-range-of-conditions">Commandment X: Protect Against a Wide Range of Conditions</a><ul>
 <li><a href="#what-range-of-storage-error-rates-should-we-consider">What Range of Storage Error Rates Should We Consider?</a><ul>
@@ -238,17 +235,29 @@ font-size: smaller;
 <p>Much ink has been spilled on the subject of the exponential increase in information production in the digital age. And more recently, the durability of digital information has become a important concern for technologists, scholars, and government [CITE]. For example, the biggest long-term archive of information, the Internet Archive currently holds 35 petabytes of information. This is roughly equivalent to the text of 7 million long novels -- or to the amount of new information produced across the globe every 45 minutes, throughout the year. [CITE]</p>
 <p>The vast majority of the world's information is stored online or near-line, using rotating disks, solid state drives, or robotic-tape libraries. [CITE] Much of this information has long-term value to the data controller or to others. And, as it turns out, much of this information is at risk -- since current information systems are designed for current use, and not for long term access and understanding.</p>
 <p>Ensuring the value of long-term access is thus the domain of 'preservation'. The overarching goal of information preservation (or conservation) is to enable meaningful communication with the future through supporting document integrity and understanding -- whether or not the information in digital or tangible form [CITE]. However, the form in which information is represenented can fundamentally change the strategies used to preserve it. When information is represented in physical form, preservation strategies most often aim to maintain the information-bearing media in a stable state, often by maintaining a constant optimal physical environment. [CITE]</p>
-<p>In contrast, strategies for presrving digital information are generally based on the observation that neither digital media and formats are reliably durable, and thus that long-term access requires regular curation of the information: Common digital preservation strategies include migrating information to new media, and, less frequently, to new formats. Further, since information in digital form can be read and replicated at a very low marginal cost, relative to tangible content, digital preservation strategies can much more easily include replication and verification of content. [CITE]</p>
+<p>In contrast, strategies for preserving digital information are generally based on the observation that neither digital media and formats are reliably durable, and thus that long-term access requires regular curation of the information: Common digital preservation strategies include migrating information to new media, and, less frequently, to new formats. Further, since information in digital form can be read and replicated at a very low marginal cost, relative to tangible content, digital preservation strategies can much more easily include replication and verification of content. [CITE]</p>
 <p>Stewards of digital information are faced with a large set of choices in developing a preservation strategy. These choices include document size and data format; file encryption and compression; storage media durability and reliability; collection replication, distribution, verification, and repair. [CITE] These choices have the potential to change dramatically the cost of a preservation strategy, and how (and where) that strategy is vulnerable to a wide range of threats. Moreover, changes in these factors interact in complex ways -- making it difficult to discover optimal/efficient strategies.</p>
 <p>While a number of 'good practices' are recognized digital preservation [CITE], many of these practices are heuristic, and most are based on experience with particular technologies and threats. There is currently no comprehensive framework that enables systematic quantitative prediction of the cost and effectiveness of differing preservation strategies. In the sections below, we develop a framework for just such an analysis, and derive general guidance for the selection of strategies over document size, file compression and encryption, and colection replication, diversification, and auditing.</p>
-<h1 id="problem-definition">Problem Definition</h1>
-<p>The ultimate goal of information preservation is to communicate across time. Our concrete objective, broadly speaking, is to maintain a collection of documents, so that its contents can be read at a designated future time. Communication will be deemed a success if at some designated future time the integrity of the documents has been maintained. (We extend this to the case where additional context must be presved so that the document can be presented t the reader in a form they can understand.) In this scenario, the curator's task is to select a preservation strategy, combining rules for compression, replication, auditing and repair that minimize loss of documents subject to a budget constraint.</p>
+<p>This paper concentrates on the objects we value -- files containing documents -- and the storage services to which we entrust our valuable files. We suggest strategies in those particular areas that can be used by client libraries to minimize the impact of errors, the ravages ofT age and administrative inattention, and the vicissitudes of nature, economics, and politics.</p>
+<h1 id="problem-characterization">Problem Characterization</h1>
+<p>The ultimate goal of information preservation is to communicate across time. Our concrete objective, broadly speaking, is to maintain a collection of documents, so that its contents can be read at a designated future time. Communication will be deemed a success if at some designated future time the integrity of the documents has been maintained. (We extend this to the case where additional context must be preserved so that the document can be presented to the reader in a form they can understand.) In this scenario, the curator's task is to select a preservation strategy.</p>
+<p>As we will discuss later, curators might wish to be aware of the technologies and concerns in the areas we cannot control. In defining the curatorial strategy, we focus on those elements that curators are most likely to be able to control: the number and distribution of copies, how we audit and repair these, and whether to apply file transformations such as compression, encryption, or format conversion:</p>
+<ul>
+<li>For example, as a computer user, we have no control over bit or sector errors on the disks we use. These are all managed by the firmware that the disk vendor uses on the drives.<br />
+</li>
+<li>And as a customer of a storage service, whether within my organization or out in the cloud, I have no control over disk drives or arrays of disk drives. These are managed and controlled by the managers of the computer centers where the storage arrays live.<br />
+</li>
+<li>However, as a client, I am a customer of storage services, and therefore I have complete control over the set of files that I choose to store, where I store them, the formats in which I store them, whether I duplicate them, when I check on their validity, and so forth. These are choices that I can make regardless of the particular storage vendors from whom I buy storage services.<br />
+</li>
+<li>And as a customer, I have control over <em>which</em> storage services I choose to patronize, and how many, and the criteria I use to choose, and what I store there. Hence the commandment, &quot;Attend mainly to what you can control.&quot;</li>
+</ul>
+<p>There are many threats to content, and the range of strategies that are available to curators interact with these threats differently. In order to guide these curatorial decisions, we develop a formal model of replication threats and replication strategies. Using this, we aim to develop reasonably precise answers to very approximate questions, rather than search for asymptotically optimal solutions to over-specified situations,</p>
 <p>More strictly, we can formulate this task as an optimization problem. Given:</p>
 <ul>
 <li>a set (C), of documents ={D<sub>1</sub>..D<sub>N</sub>});</li>
 <li>a budget (B);</li>
 <li>a preservation strategy (S), which is a tuple<br />
-(S={Copies, AuditMethod, RepairFrequency, Compression});</li>
+(S={Copies, AuditMethod, RepairFrequency, FileTransformation});</li>
 <li>a cost function (Cost(C, S)); and</li>
 <li>a prediction of the expected collection loss over time (Loss(C, S, T));</li>
 </ul>
@@ -257,19 +266,11 @@ font-size: smaller;
 <p>We designate this solution <math xmlns="http://www.w3.org/1998/Math/MathML"> <mstyle displaystyle="true"> <mrow class="MJX-TeXAtom-ORD"> <msubsup> <mi>S</mi> <mi>B</mi> <mo>∗<!-- ∗ --></mo> </msubsup> </mrow> </mstyle> </math>. This solution can be used to describe the minimimum cost of reducing preservation cost, to a specific level, for a fixed collection:</p>
 <p><math xmlns="http://www.w3.org/1998/Math/MathML"> <mstyle displaystyle="true"> <mrow class="MJX-TeXAtom-ORD"> <mi>B</mi> <mi>e</mi> <mi>s</mi> <mi>t</mi> <mi>C</mi> <mi>o</mi> <mi>s</mi> <mi>t</mi> <mo stretchy="false">(</mo> <mi>R</mi> <mi>i</mi> <mi>s</mi> <mi>k</mi> <mo stretchy="false">)</mo> <mo>=</mo> <mo movablelimits="true">min</mo> <mi>B</mi> <mo>,</mo> <mtext>such that </mtext> <mi>L</mi> <mi>o</mi> <mi>s</mi> <mi>s</mi> <mo stretchy="false">(</mo> <msubsup> <mi>S</mi> <mi>B</mi> <mo>∗<!-- ∗ --></mo> </msubsup> <mo stretchy="false">)</mo> <mo>≤<!-- ≤ --></mo> <mi>R</mi> <mi>i</mi> <mi>s</mi> <mi>k</mi> </mrow> </mstyle> </math></p>
 <p>Where both cost and loss functions are simple and behaved, it may be possible to find the optimal solution analytically. However, in more realistic conditions, risk of loss is a complex function of multiple sources of loss -- including low-level media failures, mid-level events such as manufacturing defects that affect clusters of media, and high-level events such as government action that can simultaneously affect multiple replicas of entire collections. Moreover, in realistic conditions there will be significant uncertainty about the distribution of threats.</p>
-<p>In order to evaluate a curator's strategies under these more realistic conditions, we adopt two approaches: First, we use discrete event simulation across a range of threat conditions to estimate the loss function for a specific curation strategy. Second, we aim to identify strategies that are relatively low cost and robust to a range of threat conditions, rather than focusing on the optimal strategy for a precisely identified set of threats. Rather than search for asymptotically optimal solutions to over-specified situations, we hope to develop reasonably precise answers to very approximate questions.</p>
-<h1 id="basic-model-and-some-implications">Basic Model and Some Implications</h1>
-<h2 id="very-brief-outline-of-the-model">Very Brief Outline of the Model</h2>
+<p>In order to evaluate a curator's strategies under these more realistic conditions, we adopt two approaches: First, we use discrete event simulation across a range of threat conditions to estimate the loss function for a specific curation strategy. Second, we aim to identify strategies that are relatively low cost and robust to a range of threat conditions, rather than focusing on the optimal strategy for a precisely identified set of threats.</p>
+<h2 id="sketch-of-discrete-simulation-model">Sketch of Discrete Simulation Model</h2>
 <p>The model for the simulations is very simple. A <strong><em>client</em></strong> (library) has a <strong><em>collection</em></strong> of <strong><em>documents</em></strong> in digital form. A copy of the collection of documents is stored on a <strong><em>server</em></strong> somewhere. If the client maintains multiple <strong><em>copies</em></strong> of the collection of documents, the several copies are stored on separate servers. Customers retrieve documents from the server(s) to read them. An <strong><em>error</em></strong> may occur that corrupts a copy of a document or makes that copy inaccessible. In this case, we consider the copy to be <strong><em>lost</em></strong>. Other copies may still persist. If all copies of a document are lost, then the document itself is permanently lost.</p>
 <p>(All the italicized words are terms of art that are discussed in detail later.)</p>
-<h3 id="the-simplest-case-sector-errors">The Simplest Case: Sector Errors</h3>
-<ul>
-<li>An error in the storage corrupts a document sector. Errors arrive randomly in a Poisson process. A cosmic ray striking a disk or memory cell is a good model for this type of error.<br />
-</li>
-<li>If the error occurs in a sector occupied by a copy of a document, that copy is corrupted. For the purposes of this study, we consider the copy to be lost. Manual repair by human inspection is not considered here.</li>
-<li>Errors are silent, that is, no one notices an error until someone tries to read the document and discovers that it is lost.</li>
-</ul>
-<h1 id="commandment-vi-attend-to-what-you-can-control">Commandment VI: Attend to What You Can Control</h1>
+<h2 id="formalizing-low-level-threats-sector-errors">Formalizing Low-level Threats: Sector Errors</h2>
 <p>Many sources of errors are possible in long-term storage, and at many levels. Consider the following hierarchy:</p>
 <ul>
 <li>Small collections of data: bits, bytes, sectors on disks.</li>
@@ -277,17 +278,8 @@ font-size: smaller;
 <li>Large collections of data: disk drives, arrays of disk drives.</li>
 <li>Very large collections of data: storage services</li>
 </ul>
-<p>The sources of error in these several layers, and strategies that can be used to control and minimize the impact of errors there, are very different. A client, a library with a collection of documents, can exercise some control at some of these levels but not at others.</p>
-<ul>
-<li>For example, as a computer user, I have no control over bit or sector errors on the disks I use. These are all managed by the firmware that the disk vendor uses on the drives.<br />
-</li>
-<li>And as a customer of a storage service, whether within my organization or out in the cloud, I have no control over disk drives or arrays of disk drives. These are managed and controlled by the managers of the computer centers where the storage arrays live.<br />
-</li>
-<li>However, as a client, I am a customer of storage services, and therefore I have complete control over the set of files that I choose to store, where I store them, the formats in which I store them, whether I duplicate them, when I check on their validity, and so forth. These are choices that I can make regardless of the particular storage vendors from whom I buy storage services.<br />
-</li>
-<li>And as a customer, I have control over <em>which</em> storage services I choose to patronize, and how many, and the criteria I use to choose, and what I store there. Hence the commandment, &quot;Attend mainly to what you can control.&quot;</li>
-</ul>
-<p>As we will discuss later, we might wish to be aware of the technologies and concerns in the areas we cannot control, but we should reserve our vigilance for the areas that we can control. This paper concentrates on the objects we value -- files containing documents -- and the storage services to which we entrust our valuable files. We suggest strategies in those particular areas that can be used by client libraries to minimize the impact of errors, the ravages of age and administrative inattention, and the vicissitudes of nature, economics, and politics.</p>
+<p>We start our analysis by focusing on the lowest level errors -- sector errors. These are characterized as follows: - An error in the storage corrupts a document sector. Errors arrive randomly in a Poisson process. A cosmic ray striking a disk or memory cell is a good model for this type of error.<br />
+- If the error occurs in a sector occupied by a copy of a document, that copy is corrupted. For the purposes of this study, we consider the copy to be lost. Manual repair by human inspection is not considered here. - Errors are silent, that is, no one notices an error until someone tries to read the document and discovers that it is lost.</p>
 <h1 id="commandment-i-keep-multiple-copies">Commandment I: Keep Multiple Copies</h1>
 <p>Errors accumulate over time. Every now and then an error will occur in storage and, if the error occurs in a region of storage occupied by a document, the error destroys a document. The rate at which documents are lost depends of course on the quality of the storage. In theory, we can predict the detioriation of a collection as a result solely of sector-level losses, using the Poisson distribution. <strong>Figure 1</strong>, below, illustrates the percentage of a collection lost in a 10-year period, as a function of the reliability of the underlying storage.</p>
 <blockquote>
