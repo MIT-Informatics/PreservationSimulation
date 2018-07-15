@@ -310,7 +310,7 @@ We start our analysis by focusing on the lowest level errors -- sector errors. T
 
 # Recommendation: Keep Multiple Copies
 
-Errors accumulate over time.  Every now and then an error will occur in storage and, if the error occurs in a region of storage occupied by a document, the error destroys a document.  The rate at which documents are lost depends of course on the quality of the storage. In theory, we can predict the detioriation of a collection as a result solely of sector-level losses, using the Poisson distribution.  **Figure 1**, below, illustrates the percentage of a collection lost in a 10-year period, as a function of the reliability of the underlying storage.
+Errors accumulate over time.  Every now and then an error will occur in storage and, if the error occurs in a region of storage occupied by a document, the error destroys a document.  The rate at which documents are lost depends of course on the quality of the storage. In theory, we can predict the detioriation of a collection as a result solely of sector-level losses, using the Poisson distribution.   **Figure 1**, below, illustrates the percentage of a collection lost in a 10-year period, as a function of the reliability of the underlying storage -- overa a very wide range of storage quality. (In **Section XX: Protect Against a Range of Threats**, we provide details on estimating sector error rates, and introduce other types of error.) 
 
 > ![Graph of cumulative collection losses over time.](./images/c1lossesvsquality.png){width=90%}
 
@@ -383,6 +383,99 @@ Clearly, at the low end of the range, where sector half-life is in the range of 
 #### If You Can't Control It, Buy Insurance Against It
 
 We do not have good information on the sector error rates of our storage media, particularly if we are buying a service from an outside vendor.  Since such factors are beyond our control, we should choose strategies to protect our document collections from a *wide* range of circumstances that we might encounter.  Hence the recommendation, "Protect against a wide range of conditions."  
+
+
+# Protecting Against a Range of Threats
+
+In the previous sections we demonstrate that, in theory, as few as three copies, audited and repaired annually, can preserve information indefinitely -- provided that we can be certain that the storage medium is of reasonably high-quality, and  independently distributed sector failures are the only threat to data integrity. In practice, however,  the rate of sector loss varies considerably, even within media of the same type and from the same manufacturer. Furthermore, when content is stored over time-spans of a decade or more, a range of additional threats to content must be considered. Moreover, these threats may affect multiple copies at once. 
+
+In this section, we discuss the variety of threats to content, and the uncertainties in measuring error rates. In the rest of the paper, we provide strategies that are robust to a range of threats and uncertainties. 
+
+## Threats to Content
+ 
+While there is no definitive and comprehensive taxonomy of major threats to information integrity over long periods, there are bodies of work in both the information security and archival fields. There is a voluminous literature on threat analysis in the information security field [[see for example CITE]] -- with the caveat that most of this field focuses on short- or medium-term periods, not on archival periods. The source of most threats can be taxonomized as physical, logical, technological or human (which is divided further into intentional, or unintentional); and as originating either from internal or external to the system being protected. [[CITE]]. Information security modeling also incorporates the qualitative severity of threats (e.g. low, medium, high) into threat analysis.  
+
+In contrast, the archival field has focused on identifying specific threats to long-term information integrity.  The following threats are widely recognized:  media failure, hardware failure, software failure, communication (network) errors, failure of network services, media and hardware obsolescence, software (format) obsolescence, operator error, natural disaster, external attack, internal attack, and organizational failure. [[cite Rosental 2005, ++]] These threats can be readily organized using the taxonomy above. 
+
+We use simulation to predict the rate of content failure under of replication and auditing strategies across this exhaustive set of threats. To model threats, we integrate the archival threats into the standard information security taxonomy. We then specify exemplar threats at both high and moderate severity level. Finally we use multi-level hierarchical threat models (discussed in more detail in the following sections) to predict correlated/mass failures. The range of threats covered in this analysis is summarized in the table below:
+
+
+[[Table https://docs.google.com/document/d/1RMd6L3P5ZlmYa3v8etyWhIdDIrOgAFsWwToKxuJZlgI/edit ]]
+
+Our analysis excludes file-format obsolescence, shown in gray, above.  File-format obsolesence cannot be mitigated through content replication and integrity auditing -- which is the focus of this analysis, so this threat is excluded. Note that mitigation strategies for this threat, such as format migration, emulation, are compatible with, and complementary to the replication strategies we address here. [[cite]] 
+
+The other threats, shown in gray, are addressed, by the model -- however, a number of other protections are required in addition to simple replication and auditing. To mitigate against powerful attacks, the auditing system can be made cryptographically secure; to mitigate against encryption key loss, the encryption keys must also be replicated across multiple independent servers, and regularly audited; to mitigate against organization mission change, each replica must be accompanied by a succession agreement where a separate institution will take ownership of it, should the curating institution fail to audit. We discuss these extended protections in detail, in section [[XX]] below.  
+
+## Uncertainies about Threat Rates
+
+The likelihood of different threats are uncertain. As discussed below, it is surprisingly difficult to estimate, using available evidence, even the most common errors -- sector losses. We therefore use a range of threat rates to develop robust protection strategies. 
+
+
+### Uncertainties over MTTF
+
+The storage manufacturing industry tends to express the reliability of storage in terms of device lifetime as MTBF or MTTF. This is an expected (mean) exponential lifetime for the device. When the object in question is removed from service after only one failure, as is the case here with documents, it is perhaps more appropriate to speak of MTTF, Mean Time To Failure. MTTF is intended to be equivalent to the mean lifetime (before failure) of the object, and, if one assumes that failures are a Poisson process, then MTTF is the mean exponential lifetime of the object.
+
+
+How is MTTF calculated before it is published?  Several methods might be used, including at least the following.  
+
+1. A predicted value based on engineering characteristics of the mechanism, component parts, expected wear patterns, and so forth.  Depending on the complexity of the device and the manufacturer's understanding of its components and usage patterns, this can be a very complex and, frankly, questionable estimation.  
+1. Failure data from life testing, often of large numbers of devices over long periods.  Such testing may be done by the manufacturer in-house, or in field testing of early deployments, or by consumers who use large numbers of devices and track failures carefully.
+1. Failure data from accelerated life testing.  It is often assumed that operation under high temperature or thermal cycling or high speeds or other stress conditions will cause devices to fail predictably prematurely.  For some classes of devices, accelerated life testing has proved to be useful and accurate.  
+1. Failure data from warranty failures returned during a service period.  This may be assessed by the manufacturer or by users of large numbers of devices.  
+
+Published claims of MMTF are usually derived from drive failure rates observed in accelerated life testing or returns from early deployments.  Most non-marketing literature considers MTBF estimates from manufacturers to be exaggerated considerably, by factors of three or four at best. The annual failure rates of disk drives in large collections of drives are much higher than would be expected based on published MTBF estimates of 1E6 hours or more. [[citations needed]]
+
+There is data on the failure rate of individual disk drives over time.  Thanks to Backblaze, Google, and others, there is some published empirical data on failure rates of disk drives of recent technology vintages.  [[citations needed]]  These figures refer to replacements of entire disk drives during the useful life and wear-out periods of device use.  That is, they exclude infant failures but include mid-life and senescence. 
+
+Backblaze, on the basis of experience with hundreds of thousands of disk drives, has estimated the failure rates of drives for the first four years. [[citation needed]]  **Exhibit nnn** shows the estimated drive lifetimes based on that experience.  [[Source spreadsheet = PaperDraft/DiskFailuresDuringRAIDRebuild.xls sheet Survival2Halflife]] This and related data suggests that 2-8% [[CHECK] of disks fail annually. [[CITE]]  
+
+
+### Uncertainties over Sector Reliability
+
+MTTF, even when accurate, does not give direct information about the lifetime of data in individual files, blocks, or bits on the disk -- since there are several layers of error detection and correction in storage systems that tend to mask small errors in disk data and obscure the relationship between small data errors and drive failures. Further, there is little reliable publishe empirical information on the rates of sector failures, bad block replacements, and so forth.  
+
+The inverse of error rate is usually expressed in terms of MTBF or MTTF, and, initially, we expressed all parameters as mean exponential lifetime.  But MTBF and MTTF are hard even for most experts to grasp, and uninformative or misleading for non-experts.  
+
+MTTF does not give direct information about the lifetime of data in individual files, blocks, or bits on the disk.   Drive failure may result from failures in the mechanisms of moving parts, the controller electronics, circuit boards, connectors, etc. Most of these will errors will in practice make recovery of data from the sectors on that drive infeasible. Sector failure can occur without drive failure -- from surface wear, chemistry, radiation, lubrication, magnetic interference, and so forth.
+
+Further, there are several layers of error detection and correction in storage systems that tend to mask small errors in disk data and obscure the relationship between small data errors and drive failures.
+
+1. Block error correction on the disk.  Disk data is written with error correcting coding that can repair small errors when reading data sectors.  
+1. Bad block remapping in disk controllers.  Smart disk controllers can take unreliable sectors out of service, replacing them with more reliable sectors from a pool of spares.  Such remapping is usually transparent to most software, but it may or may not be able to rescue the data residing on the bad blocks.  
+1. RAID and similar redundant recording of sector data.  Sector data may be recorded redundantly in mirror sets, or recorded partially in multiple versions using parity techniques, and so forth.  
+
+We can estimate some bounds on the failure of sectors by extrapolating from the failure of drives. In the absence of data replication and auditing -- either at an object level, or through RAID or erasure-codes operating at the file system or storage level, the life of all the sectors on the disk cannot be longer than the life of the entire drive during its standard service lifetime. (We do not assume that drives are run until they fail, but replaced after a fixed period.)   That is, the MTTF of the drive is an upper bound on life of sectors contained on that drive.  
+
+While erasure-code and other techniques may substantially reduce the rate of 'logical' sector errors across the entire volume, caution is warranted when relying on low-level replication services. For example,  RAID and similar techniques protect only against *drive* failure; they do not protect against bad bits, blocks, or tracks when reading from a drive.  If a disk drive fails completely, RAID and erasure code techniques can rebuild the data on that drive from redundant data stored on other drives.  However, while a drive is still in operation, individual bad blocks on a drive will still read as bad blocks until the drive is removed from service and its data recovered, *if possible*, from the remaining drives in the redundancy set.  The data on a disk drive, even in a redundancy set, can deteriorate incrementally over time and cause documents (in our case documents, but files in general) to be altered badly.  If deteriorated data cannot be repaired by block error correction techniques in the disk controller, then the data of the file or document may be permanently lost or corrupted. Thus, in our modelling we focus on mitigating sector errors through replication techniques that audit each sector/block/or document. 
+
+If disks are regularly replaced and volumes rebuilt redundant arrays of disks, then the drive lifetime may not be the dominant factor in sector survival.  Failures of individual sectors will occur all the time, albeit at a much lower rate, but they are silent and will accumulate if they are not actively uncovered and repaired.
+
+An oft-cited number about disk error rates is "uncorrectable error rate = one bit in 10e-14."  [[Need citations.]]  Note several things about this number.  
+
+1. It is not a statistic in the usual sense; that is, it has not been derived from any referenced empirical data.  It is a hypothesis from the manufacturing industry, perhaps derived from collective experience.
+1. It is not stated as time-dependent; that is, it is not an *arrival* rate of errors, it is a constant.  It also does not seem to increase with the size of the drive.  Most analyses using this number treat it as a given fact for any disk drives, for example, as perhaps a rate of manufacturing defects.  
+1. Disk sizes have increased dramatically since that number was first published, but the UER rate remains constant.  A typical (today) drive of 8TB capacity, ignoring recording overhead, has probably 0.6 unrecoverable bits on the drive, or only a 53% likelihood of being error-free.  
+1. It is an *unrecoverable* error that is not repaired by the error-correction coding in the actual recording on the disk.  
+1. A single-bit unrecoverable error may invalidate a sector, currently 4KiB on disk, and invalidate any document stored including that sector.  Because documents are large and more vulnerable, document losses will always be large multiples of bit error rates.  
+
+As a baseline, an estimate of unrecoverable failures on consumer-grade SATA drives that is often mentioned in the industry: Pr{a bit fails} = 10E-15.  This looks like a small number until one calculates that a single 4TB drive, very commonly deployed today, contains about 40E12 bits of data, plus essential metadata.  [[I'm pretty sure that this figure is for SCSI and FC disks; the number quoted for consumer grade SATA disks is 1E-14, which is very different.  And these numbers are not per year, but just per bit.]] [[Have to find the reference for this number, and have to check the accuracy, too.]]  Even ignoring the magnitude of the storage involved, it is hard to grasp that the average lifetime of a bit is a thousand times longer than the age of the universe.  
+
+For robustness, our simulation uses a range of [[XX]] for sector errors. Error rates above this range would lead to unignorable levels of losses, even over a year -- and error rates above this range are not plausible based on available data.  
+
+
+### Uncertainties over Reliability of Cloud Storage
+
+Cloud storage vendors use internal replication and auditing strategies to reduce error rates far below that of the base hardware and media. However, we recommend being conservative in relying on vendor's estimates of their own reliability.
+
+As an example, consider Amazon's long-term storage, Glacier. Amazon describes its reliability as follows: 
+
+> Amazon S3 Standard, S3 Standard–IA, S3 One Zone-IA, and Amazon Glacier are all designed to provide 99.999999999% durability of objects over a given year. This durability level corresponds to an average annual expected loss of 0.000000001% of objects. For example, if you store 10,000,000 objects with Amazon S3, you can on average expect to incur a loss of a single object once every 10,000 years. In addition, Amazon S3 Standard, S3 Standard-IA, and Amazon Glacier are all designed to sustain data in the event of an entire S3 Availability Zone loss.
+
+There are several reasons to be cautious of this reliablity figure. 
+1. First, no empirical evidence is provide to support these numbers. Neither externally validated data, nor internally produced audit records are provide in support of these figures. 
+2. Second, the internal replication and auditing mechanisms are not described, although Amazon's documentation indicates that data is checked at rest. Likely, some form of erasure coding is used, and Amazon's reliability numbers are consistent with theoretical erasure code reliability numbers. [[CITE]]. Notwithstanding, however, published theoretical calculations exclude a range of internal correlated failure modes (such as software errors), and are thus likely to underestimate observed errors.
+3. Third, Amazon's SLA does not provide an enforcement or redress mechanism that consistent with these reliability claims. Redress is limited to service fees only, not to the value of content.
+4. Fourth, collections stored by any single institution are subject to catastrophic threats, including operator error (e.g. loss of billing information), operator malfeasance, and financial failure. We discuss these in more detail in section [[XXXX]] 
 
 
 # Recommendation: Visit Your Documents Regularly 
@@ -1010,6 +1103,48 @@ An oft-cited number about disk error rates is "uncorrectable error rate = one bi
 
 
 
+## What Range of Storage Error Rates Should We Consider?
+
+One basic question should be answered before embarking on such simulations: what is the failure rate of stored documents? This is a difficult question due to a lack of real data.
+
+There is some data on the failure rate of individual disk drives over time. Thanks to Backblaze, Google, and others, there is some published empirical data on failure rates of disk drives of recent technology vintages. [[citations needed]]  These figures refer to replacements of entire disk drives during the useful life and wear-out periods of device use. That is, they exclude infant failures but include mid-life and senescence. Unfortunately, we do not get much information on the rates of sector failures, bad block replacements, and so forth.
+
+In the absence of either experimental or experiential data on sector failure rates, we are attempting to provide simulated data as guidelines for policies regarding data storage, redundancy, auditing and repair.  We have assumed that sector errors arrive randomly in a Poisson process.  The question is, what is the arrival rate of sector errors on a disk or disk array?  There is no single, even approximate answer to that question.  Consequently, we have looked at document losses over a wide range of error arrival rates and amelioration strategies.  
+
+**Exhibits nnn and nnn+1** show theoretical sector and document losses, based solely on error arrival rate (expressed as half-life), over the first few years of a disk drive's life.  
+
+
+##### Exhibit nnn: Sector losses in **permille** over the first few years of drive use, across a wide range of sector half-lives.  Sectors 1MB, sector half-lives in megahours (Mhr).
+
+##### Sector losses (**permille**) by sector half-life (megahours) 
+
+| Years in service | Sector half-life = 10Mhr | 30Mhr | 100Mhr | 300Mhr |
+|-----:|-----:|-----:|-----:|-----:|
+| 1 | 0.7 | 0.2 | 0.07 |0.02|
+| 2 | 1.4 | 0.5 | 0.13 |0.05|
+| 3 | 2.1 | 0.7 | 0.21 |0.07|
+| 5 | 3.5 | 1.2 | 0.35 |0.12|
+| 10 | 7.0 | 2.3 | 0.69 |0.23|
+
+Note also that, since documents typically occupy more than one disk sector, even the large sectors we use for these calculations, they are larger targets and therefore considerably more vulnerable to random errors.
+
+##### Exhibit nnn: Document losses in **percent** over the first few years, across a wide range of sector half-lives
+##### Sectors 1MB, documents 50MB, sector half-lives in megahours .
+
+| Years in service | Sector half-life = 10Mhr | 30Mhr | 100Mhr | 300Mhr | 1000Mhr |
+|-----:|-----:|-----:|-----:|-----:|-----:|
+| 1 | 3.4 | 1.1 | 0.3 |0.1 | 0.0 | 
+| 2 | 6.7 | 2.3 | 0.7 |0.2 | 0.1 |
+| 3 | 9.9 | 3.4 | 1.0 |0.3 | 0.1 |
+| 5 | 15.9 | 5.6 | 1.7 |0.6 | 0.2 |
+| 10 | 19.3 | 10.9 | 3.4 | 1.1 | 0.3 |
+
+[[Source spreadsheet: FailureRatesBackOfTheEnvelope.xls, sheet PrintMe]]
+
+Clearly, at the low end of the range, where sector half-life is in the range of 10 million hours, document losses would be unacceptably high.  If you lost 3 percent of all your documents in the first year, you would take immediate action to find a more reliable storage environment.  Even up to 30 million hours (sector half-life), such disks would be classified as "rusty garbage can lids" that are not suitable for archival storage.  Better disks might still accumulate errors at a significant rate, but permanent losses can be avoided with suitable auditing and repair regimes, as discussed below.  
+
+
+
 
 # A Few Words About the Graphs
 
@@ -1319,6 +1454,64 @@ Suppose there are only 2 copies of keys. Is the expected document rate due to en
 - Strong adversaries
 - Erasure codes...
 - Auditing with lower bandwidth -- with cryptographic primitives
+
+
+
+# Commandment VIII: Judge for Yourself the Level of Storage Quality
+
+This commandment counsels us to trust our own experience more than the marketing statements of those trying to sell us products and services.  This has two parts:
+
+- Question the provenance of reliability estimates from vendors.  
+- Pay close attention to our own experience with storage reliability.  Note that this requires that we *collect* and *analyze* reliability data from our own collections.  
+
+### Doubt Statistics of Manufacturers and Cloud Vendors    
+
+#### Lifetime is Easier to Understand Than Error Rate
+
+The inverse of error rate is usually expressed in terms of MTBF or MTTF, and, initially, we expressed all parameters as mean exponential lifetime. But MTBF and MTTF are hard even for most experts to grasp, and uninformative or misleading for non-experts.
+
+The likelihood of an error in a disk bit or sector, or even the failure of an entire disk, is a very small number with many zeroes before the first significant digit.  We choose to invert the error rate into a function of lifetime of that bit (or sector containing many bits).  Thus a probability of a bit failing in a year of 10E-15 becomes a mean lifetime of 100E12 years.  Expressed that way, the figure seems excessively optimistic.  (The age of the universe is currently estimated to be 14E9 years.)  Data on such a disk would be effectively immortal, and that does not seem to correlate with experience.  
+
+### Don't Believe Tricky Statistics
+
+#### Be Skeptical of MTBF
+
+The disk manufacturing industry tends to express the device lifetime as MTBF or MTTF. This is an expected (mean) exponential lifetime for the device, but that does not give much information about the lifetime of data in individual files, blocks, or bits on the disk. There are several layers of error detection and correction in storage systems that tend to mask small errors in disk data and obscure the relationship between small data errors and drive failures.
+
+MTBF, Mean Time Between Failures, is a slippery notion, much touted by marketing departments and viewed warily by users. Such figures may be derived from drive failure rates observed in accelerated life testing or returns from early deployments.  If the object in question is removed from service after only one failure, as is the case here with documents, it is perhaps more appropriate to speak of MTTF, Mean Time To Failure. MTTF is intended to be equivalent to the mean lifetime (before failure) of the object, and, if one assumes that failures are a Poisson process, then MTTF is the mean exponential lifetime of the object.
+
+Most non-marketing literature considers MTBF estimates from manufacturers to be exaggerated considerably, by factors of three or four at best. The annual failure rates of disk drives in large collections of drives are much higher than would be expected based on published MTBF estimates of 1E6 hours or more. [[citations needed]]
+
+Even if we understood the source and accuracy of stated MTTF estimates for disk drives, we would still not have information about individual sector failures within a drive that cause document failures, nor the relative frequencies of sector failures versus drive failures.
+
+We agree with Rosenthal (2010) [[citation needed]] and others that such estimates are merely marketing projections that are often not based on empirical data.  Using simulations to investigate such nearly immortal disks would be expensive and fruitless.  If there are no errors at all, then no protective strategy is needed.  However, the statement "no errors" does not correlate well with practical experience.  
+
+
+### Reliability Varies Over Time
+
+
+#### Small Changes in Error Rates: Glitches
+
+The error rate of a storage device or storage server is not necessarily constant.  The rate can vary over time for a variety of reasons.  One reason is the "bathtub curve" phenomenon [[citations needed]].  In this study, we have examined other varying conditions under the general heading of *glitches*.  
+
+- A ***glitch*** is a temporary, short-lived, condition that impacts a single server and increases the sector error rate on that server for some short interval.   
+- What types of glitches might occur in server farms?  HVAC weakness or failure; environmental contamination by chemicals or particulates, radiation, electrical noise; and similar short-lived phenomena.  
+
+> It is also possible that insertion into a service of a batch of disk drives with different error characteristics could temporarily alter the overall error rate of the service.  In general, these conditions are not fatal to the server overall, but degrade the integrity of data storage.  
+- Glitches arrive at random intervals in a Poisson process, and have limited duration.  
+- Glitches are local phenomena, limited to a single server.  
+- The effect of a glitch is simply to increase the sector error rate for a short period.  
+- Glitches, like the errors they induce, are silent.  
+
+In this study, we have found that it is hard to distinguish glitch-induced increases in error rates from random variations in performance.  A glitch increases the error rate (reduces the sector lifetime) of the server for a while, but this need not impact the overall performance of a collection of documents in which that server is a participating member.  A good client strategy should maintain sufficient redundancy and auditing discipline to protect the collection over a wide range of adverse conditions.  A glitch in one server might require a higher degree of repair of that server during the next auditing cycle, but that should not impact the health of the overall collection.  
+
+
+### Do Believe the Experience of Yourself and Others
+
+- Attend your own experiences and those of other similar users
+
+- Trust Your Experience
+
 
 
 # References
