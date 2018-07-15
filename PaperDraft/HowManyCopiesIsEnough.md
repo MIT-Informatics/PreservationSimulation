@@ -35,7 +35,7 @@ font-size: smaller;
 % How Many Copies Is Enough?  
 % Micah Altman; Richard Landau  
 % 2016-08-15  
-% Revised 2018-07-10 RBL
+% Revised 2018-07-15 RBL
 
 [[Text blocks in double-square-brackets, such as this is, are editorial notes for the authors to clean up.]]
 
@@ -115,7 +115,7 @@ Notes from 20180619.1400
 <!-- a Land Without Rs moment: Lunch at the bar at Legal in Kendall.  Two guys on my left speak Italian to each other, plain American English to the bartender.  The guy on my right speaks unaccented English to the bartender but is reading a newpaper on his iPad in Swedish.  A Cambridge moment.  -->
 <!-- END:TODO:RICK -->
 
-# How Digitization Changes Strategies for Ensuring Long-Term Access.
+# How Digitization Changes Strategies for Ensuring Long-Term Access
 
 Much ink has been spilled on the subject of the exponential increase in information production in the digital age. And more recently, the durability of digital information has become a important concern for technologists, scholars, and government [CITE]. For example, the biggest long-term archive of information, the Internet Archive currently holds 35 petabytes of information. This is roughly equivalent to the text of 7 million long novels -- or to the amount of new information produced across the globe every 45 minutes, throughout the year. [CITE]
 
@@ -140,7 +140,7 @@ As we will discuss later, curators might wish to be aware of the technologies an
 - For example, as a computer user, we have no control over bit or sector errors on the disks we use.  These are all managed by the firmware that the disk vendor uses on the drives.  
 - And as a customer of a storage service, whether within my organization or out in the cloud, I have no control over disk drives or arrays of disk drives.  These are managed and controlled by the managers of the computer centers where the storage arrays live.  
 - However, as a client, I am a customer of storage services, and therefore I have complete control over the set of files that I choose to store, where I store them, the formats in which I store them, whether I duplicate them, when I check on their validity, and so forth.  These are choices that I can make regardless of the particular storage vendors from whom I buy storage services.  
-- And as a customer, I have control over *which* storage services I choose to patronize, and how many, and the criteria I use to choose, and what I store there.  Hence the commandment, "Attend mainly to what you can control."
+- And as a customer, I have control over *which* storage services I choose to patronize, and how many, and the criteria I use to choose, and what I store there.  Hence the recommendation, "Attend mainly to what you can control."
 
 There are many threats to content, and the range of strategies that are available to curators interact with these threats differently.  In order to guide these curatorial decisions, we develop a formal model of replication threats and replication strategies.  Using this, we aim to develop reasonably precise answers to very approximate questions, rather than search for asymptotically optimal solutions to over-specified situations, 
 
@@ -291,6 +291,8 @@ The model for the simulations is very simple.  A ***client*** (library) has a **
 
 (All the italicized words are terms of art that are discussed in detail later.)
 
+From this simple model, the impacts on more complex situations can be inferred by straightforward calculations.  
+
 ## Formalizing Low-level Threats: Sector Errors
 
 Many sources of errors are possible in long-term storage, and at many levels.  Consider the following hierarchy:
@@ -306,7 +308,7 @@ We start our analysis by focusing on the lowest level errors -- sector errors. T
 - Errors are silent, that is, no one notices an error until someone tries to read the document and discovers that it is lost.  
 
 
-# Commandment I: Keep Multiple Copies
+# Recommendation: Keep Multiple Copies
 
 Errors accumulate over time.  Every now and then an error will occur in storage and, if the error occurs in a region of storage occupied by a document, the error destroys a document.  The rate at which documents are lost depends of course on the quality of the storage. In theory, we can predict the detioriation of a collection as a result solely of sector-level losses, using the Poisson distribution.  **Figure 1**, below, illustrates the percentage of a collection lost in a 10-year period, as a function of the reliability of the underlying storage.
 
@@ -316,7 +318,7 @@ Errors accumulate over time.  Every now and then an error will occur in storage 
 
 As **Figure 1** demonstrates, if a collection exists as only a single copy, then it is very likely that some of its documents will be lost within a decade, even if the storage medium is highly reliable. Further, even if the rate of error accumulation is much lower than illustrated above,  many documents will be lost over longer periods of time: For example, over 50 years, about 0.02% (170ppm) of the collection will be lost, even if media reliability were 100x the maximum shown above.  (For more details, **Table A-1** in the appendices shows the expected rates of document errors, theoretical and simulated, over a range of storage error rates and periods.)  [[calibration for ncopies=1 in shelf/docs/PoissonFailure.xls]]
 
-From this analysis we derive the first commandment: Thou shalt **keep multiple copies** of thy documents. 
+From this analysis we derive the first recommendation: Thou shalt **keep multiple copies** of thy documents. 
 
 We are not the first to recommend multiple copies. Thomas Jefferson noted the danger of a single copy of valuable documents long ago. 
 
@@ -335,7 +337,7 @@ A modest number of copies, even of very high quality, cannot guarantee archival 
 Moreover, even if the media was invulnerable to sector-level errors, a single copy of a collection is vulnerable to large-scale or total loss if that single copy is victim of a disaster, natural or man-made (e.g., earthquake, flood, war, economic depression, administrative error, etc.).  As shown in the next section, multiple copies in multiple independent locations are necessary to safeguard documents against this type of large-scale loss. 
 
 
-# Commandment X: Protect Against a Wide Range of Conditions
+# Recommendation: Protect Against a Wide Range of Conditions
 
 ### What Range of Storage Error Rates Should We Consider?
 
@@ -380,41 +382,30 @@ Clearly, at the low end of the range, where sector half-life is in the range of 
 
 #### If You Can't Control It, Buy Insurance Against It
 
-We do not have good information on the sector error rates of our storage media, particularly if we are buying a service from an outside vendor.  Since such factors are beyond our control, we should choose strategies to protect our document collections from a *wide* range of circumstances that we might encounter.  Hence the commandment, "Protect against a wide range of conditions."  
+We do not have good information on the sector error rates of our storage media, particularly if we are buying a service from an outside vendor.  Since such factors are beyond our control, we should choose strategies to protect our document collections from a *wide* range of circumstances that we might encounter.  Hence the recommendation, "Protect against a wide range of conditions."  
 
 
-# Commandment II: Visit Your Documents Regularly 
+# Recommendation: Visit Your Documents Regularly 
 
-Verify and repair the multiple copies.  In general, we will use the term "auditing" to refer to checking documents for validity and repairing any errors discovered, wherever possible.  
+We should verify and repair the multiple copies of documents on a regular basis.  We will use the term ***auditing*** to refer to the process of checking documents for validity and repairing where possible any errors discovered.
 
 
 ### Strategies to Achieve Very Long Data Lifetimes
 
-How can we protect data over the long term against a wide range of error conditions?  A single copy is vulnerable, regardless of its quality.  Multiple high-quality copies still deteriorate over long periods.  We must adopt active strategies to detect and correct errors in data to preserve the corpus over long periods.  Such strategies must include three components: detecting errors, correcting errors, and actively locating errors.  
+How can we protect data over the long term against a wide range of error conditions?  A single copy of a document is vulnerable, regardless of its quality.  Multiple copies are less vulnerable physically but still deteriorate over long periods, and sometimes, randomly, errors will coincide to cause a permanent loss.  We must adopt active strategies to detect and correct errors in data in order to preserve the corpus over long periods.  Such strategies must include three components: detecting errors, correcting errors, and actively locating errors.  
 
-- Detecting errors requires a certain redundancy in storage, typically parity, or comparison of copies, fixity information, or special encodings.  There is always some degree of damage that cannot be detected accurately, e.g., multiple errors in a simple parity system.  
-- Correcting errors requires restoring a damaged copy with a correct copy, either by consulting a known good copy or by using an error-correcting encoding in the storage of the data.  The ability of a system to correct errors is also limited, e.g., if all copies of the data are damaged.  
+- Detecting errors requires a certain redundancy in storage, typically parity or other special encodings, or comparison of copies, or fixity information.  There is generally some degree of damage that cannot be detected accurately, e.g., multiple errors in a simple parity system (likely) or aliases in checksums (unlikely).  
+- Correcting errors requires replacing a damaged copy with a correct copy, either by consulting a known good copy or by using an error-correcting encoding in the storage of the data.  The ability of a system to correct errors is also limited, e.g., if all copies of the data are damaged.  
 - Actively locating errors requires a mechanism outside normal usage that examines all the data and checks its validity, sometimes called "patrolling" or "scrubbing."  The system searches all the data for latent errors in order to locate (and repair) them before they pile up and overwhelm the redundancy of storage.  
 
-Strategies that include these three components are routinely used at low levels within computer systems.
+This study is concerned with examining what degree of redundancy and error correction is appropriate for document data and for storage services.  
 
-- Small regions of memory, e.g., RAM banks, disk sectors, are protected with parity bits or error-correcting codes.  Parity provides only limited error detection; error-correcting codes provide some higher level of redundancy for detection and correction.  And large memory arrays may be actively scrubbed to find and correct errors early.  
-- Disk drive mechanisms tend to fail all at once rather than a sector at a time, but they are often protected by RAID or erasure code structures and controllers.  Such arrays of disks include redundant recording and parity to permit repair of failed drives.  
-
-This study is concerned with providing a degree of redundancy and error correction for other groupings of data of different sizes: 
-
-- Files or documents of intermediate size between sectors and drives; and 
-- Entire storage services containing thousands of files.
-
-We explore a wide variety of strategies for protecting large collections of documents.  Many variations are possible, of quality of storage devices and arrays, degree of redundancy (number of copies), frequency and speed of auditing and repair.  With appropriate choices along these dimensions, the probability of permanent loss of documents can be reduced to very low levels.
-Even with low quality storage media and unreliable storage services, a high degree of redundancy and aggressive auditing and repair can protect collections against the ravages of age, imperfect administration, and unstable commercial services.  
+We have explored a wide variety of strategies for protecting large collections of documents.  There are several dimensions that can be manipulated: quality level of storage devices and arrays, degrees of redundancy (number of copies), and frequency and speed of auditing and repair.  With appropriate choices along these dimensions, the probability of permanent loss of documents can be reduced to very low levels.  Even with low quality storage media and unreliable storage services, a high degree of redundancy and aggressive auditing and repair can protect collections against the ravages of age, imperfect administration, and unstable commercial services.  
 
 
 ### The Process of Auditing and Repairing
 
-Auditing the collection to verify the validity of remote copies of documents, and to repair discovered errors, can greatly reduce permanent document losses over time.  Without auditing and its attendant repair of damaged documents, minor errors will continually erode a stored collection; the collection will to continue to decline over time with no barrier to extinction.  No number of redundant copies without auditing, certainly no *reasonable* number, will prevent significant document losses over a long period.  In addition, major shocks to the system may cause servers to fail, thus reducing the actual number of active copies of a collection and accelerating further deterioration.  
-
-Auditing is essential to maintaining the health of a collection.  This is the method by which errors are detected and corrected.  Without auditing, errors tend to build up in a collection and eventually cause some permanent document losses, regardless of how many copies of the documents we keep.  We can think of the auditing process as health care for electronic documents: minor problems will be found and fixed before they cause permanent damage.  Of course, it will always be possible for unlikely juxtapositions of errors to cause a document to be lost, but regular auditing of a modest number of copies can minimize permanent losses.  This active mechanism of searching for and repairing errors is the essence of the commandment, "Visit your documents regularly and keep them healthy."  
+Auditing is essential to maintain the health of a collection.  This is the method by which errors are detected and corrected.  Without auditing, errors tend to build up in a collection and eventually cause some permanent document losses, regardless of how many copies of the documents we keep.  No number of redundant copies without auditing, certainly no *reasonable* number, will prevent significant document losses over a long period.  We can think of the auditing process as health care for electronic documents: minor problems will be found and fixed before they cause permanent problems.  Of course, it will always be possible for unlikely juxtapositions of errors to cause a document to be lost, but regular auditing of a modest number of copies can minimize permanent losses.  This active mechanism of searching for and repairing errors is the essence of the recommendation, "Visit your documents regularly and keep them healthy."  
 
 The auditing process actively patrols for errors before they cause permanent document losses, and corrects them when possible.  In all cases, when a document copy is found to be absent (or corrupted), the auditing process attempts to replace the missing copy with a fresh copy obtained from another server.  If there is an intact copy on another server, then the missing copy is repaired and the process continues.  If there is no other intact copy, then the document is considered permanently lost.  
 
@@ -424,14 +415,25 @@ The auditing process actively patrols for errors before they cause permanent doc
 
 ##### Exhibit nnn: Graph of losses with annual auditing.
 
-The simplest and most effective strategy for auditing is *total auditing*.  This involves examining every copy of every document on a regular schedule, and effecting repairs where necessary (and possible).  These visits may be spread throughout the year to level bandwidth requirements over time.  
 
-A number of other strategies for auditing are possible, and some are measurably better than others.  Various strategies will be described and evaluated in the supplemental material.  
+### Auditing Strategies
 
+The simplest and most effective strategy for auditing is ***total auditing***.  This involves examining *every* copy of *every* document on a regular cycle, and effecting repairs where necessary (and possible).  The simplest method is to examine all documents at the same time.  
+
+- A useful variation is to divide the collection into several subsets and to audit those subsets at regular intervals spread throughout the year.  This variation, called ***segmented auditing*** has two advantages: 
+
+    - It spreads out the bandwidth required for total auditing.  Auditing every document requires a large burst of communications to occur in a short time.  For example, if total auditing is done on an annual cycle, all the documents will be checked for validity in a short period based on that schedule.  If the collection is divided into smaller units, say, one quarter of the collection to be audited every quarter, then every document will still be checked once a year, but the communications for auditing will be spread out into four bursts.  (The number four could, of course, be two for semi-annual auditing or twelve for monthly auditing, and so forth.)  
+    - Auditing any document more frequently than the, say, annual cycle makes it possible for the client to detect the failure of a storage server earlier.  When a storage server fails, the effective number of copies of the collection -- the level of redundancy -- is reduced, which places all documents at somewhat higher risk of loss.  A failed server should be replaced as soon as possible to minimize that gap.  
+
+> It is important to note that total auditing requires that *all* copies of a document be checked during each auditing cycle.  A document may be assigned to any segment within a cycle, but it must be present in some segment of each cycle.  That is, auditing segments must sample documents *without replacement*.  Sampling with replacement permits some documents to be missed in each cycle and reduces the effectiveness of auditing.  
+
+Various strategies will be described and evaluated in the supplemental material.  
+
+[[RBL: continue editing from here.]]
 
 ### How Many Copies to Keep With Auditing?
 
-Over a very wide range of storage quality conditions (storage error rates or sector half-lives), our experiments show that **five copies with annual total auditing** reduce document loss rates to negligible levels.  
+Over a very wide range of storage quality conditions (storage error rates or sector half-lives), our experiments show that **five copies with annual total auditing** reduce document loss rates to negligible levels.  The annual audit may be segmented, as mentioned previously.  
 
 **Exhibit nnn** compares the effect of number of audited copies and storage error rates on document loss rates.  
 [[This may refer to the preceding exhibit, if that picture is clear enough.]]
@@ -449,7 +451,7 @@ This regimen of data hygiene -- high redundancy and frequent auditing and repair
 - By analogy, a collection of documents can be replicated with a high degree of redundancy (many copies), and aggressive error detection and correction techniques (frequent auditing and repair) can be used to maintain the collection in perfect or near-perfect condition for long periods of time.  
 
 
-# Commandment III: Compress Your Documents
+# Recommendation: Compress Your Documents
 
 The impacts of document size, compression, encryption.
 
@@ -483,7 +485,7 @@ The drawings in **Exhibit nnn** illustrate the effect of randomly placed errors 
 The table of **Exhibit nnn** shows the linear relationship between document size and storage error rate.  (Error rate is expressed as sector half-life, as explained below.)
 [[PDF captured from spreadsheet, in pictures/docsizevserrorrate/Data_Scaling_DocsizeSpreadsheet-2.pdf]]
 
-![Exhibit nnn: Linear Relationships Between Document Sizes and Error Rates](../pictures/docsizevserrorrate/Data_Scaling_DocsizeSpreadsheet.png){width=90%}
+![Exhibit nnn: Linear Relationships Between Document Sizes and Error Rates](../pictures/docsizevserrorrate/Scaling_DocsizeLifetimeComparisons_abbrev.png){width=70%}
 
 Lossless compression is benign for a variety of reasons.
 
@@ -492,12 +494,12 @@ Lossless compression is benign for a variety of reasons.
 - Smaller documents consume lower bandwidth for retrieval and editing, lowering egress charges from the storage vendor.  This makes the auditing process less expensive.
 - A possible drawback is that some methods of compression may require decompression software at client end for retrieval.
 
-Thus the commandment, "Compress your documents."  
+Thus the recommendation, "Compress your documents."  
 
 
-# Commandment VII: Cloak Your Documents: Encryption
+# Recommendation: Cloak Your Documents: Encryption
 
-The commandment, "Cloak your documents" tries to meet the needs of some collections for privacy.  Encryption of documents may be required for secrecy, digital rights management, or other reasons.  If a document is encrypted after it has been compressed, the encryption generally does not impose an additional size burden on the document.  Thus encryption does not compromise the advantage gained by compression, though it does have some impact on potential document losses.  
+The recommendation, "Cloak your documents" tries to meet the needs of some collections for privacy.  Encryption of documents may be required for secrecy, digital rights management, or other reasons.  If a document is encrypted after it has been compressed, the encryption generally does not impose an additional size burden on the document.  Thus encryption does not compromise the advantage gained by compression, though it does have some impact on potential document losses.  
 
 - An encrypted document is more fragile in the sense that it, if damaged by an error, it may not be recoverable even with extraordinary efforts.  (Contrast with text documents, still photo, video, and audio files.)
 - A collection of encrypted documents is more subject to large shocks, associated failures where multiple servers are immediately affected.  E.g., losing the encryption keys can cause all the copies on several servers to be irretrievable.  
@@ -522,9 +524,9 @@ Many storage vendors may be available to a client, each with charge schedules.  
 For the purposes of this study, a client will store a collection on a set of servers of the same "quality" level.  Documents with differing quality requirements are considered separate collections and are stored and managed separately.  
 
 
-# Commandment VIII: Judge for Yourself the Level of Storage Quality
+# Recommendation: Judge for Yourself the Level of Storage Quality
 
-This commandment counsels us to trust our own experience more than the marketing statements of those trying to sell us products and services.  This has two parts:
+This recommendation counsels us to trust our own experience more than the marketing statements of those trying to sell us products and services.  This has two parts:
 
 - Question the provenance of reliability estimates from vendors.  
 - Pay close attention to our own experience with storage reliability.  Note that this requires that we *collect* and *analyze* reliability data from our own collections.  
@@ -578,7 +580,7 @@ In this study, we have found that it is hard to distinguish glitch-induced incre
 - Trust Your Experience
 
 
-# Commandment V: Storage Vendors May be Ephemeral
+# Recommendation: Storage Vendors May be Ephemeral
 
 The computing facilities from whom we buy storage services are just corporations, and therefore not immortal.  They may die for a number of reasons: 
 
@@ -588,7 +590,7 @@ The computing facilities from whom we buy storage services are just corporations
 - Changes in pricing policies;
 - Etc.
 
-To protect a digital collection, we must plan for failures and mergers, and plan ahead for replacements.  This commandment warns us to be aware of the possibilities of, and the impacts of, changes in the corporate landscape; and to be prepared to protect ourselves against such changes.  
+To protect a digital collection, we must plan for failures and mergers, and plan ahead for replacements.  This recommendation warns us to be aware of the possibilities of, and the impacts of, changes in the corporate landscape; and to be prepared to protect ourselves against such changes.  
 
 ### Exceptional but Realistic Conditions: Major Shocks
 
@@ -603,7 +605,7 @@ We use the term "shock" to refer to incidents that can weaken or kill a whole se
 - When a server is lost, the client is required to find a new server and populate it with the whole collection -- or at least the parts of the collection that can still be found on the remaining servers.  
 
 
-# Commandment IV: Storage Vendors and Locations Must be Independent
+# Recommendation: Storage Vendors and Locations Must be Independent
 
 An underappreciated source of correlated server failures is lack of independence of storage services.  This may stem from several causes.  
 
@@ -611,10 +613,10 @@ An underappreciated source of correlated server failures is lack of independence
 - Accidental location dependence through common facilities: large server farms may be effectively co-located, either through actual physical proximity in a secure computing facility or regional facilities, or through dependence on the same external resources, such as power grids, water supplies for cooling, etc.  
 - Multiple copies kept in one facility: a client might keep two or more copies of a collection in the same server room or IT infrastructure.  In such a case, the copies are not sufficiently independent to be considered really redundant.  
 
-This commandment warns us to monitor carefully the true independence of the services to which we commit our valuable documents.  
+This recommendation warns us to monitor carefully the true independence of the services to which we commit our valuable documents.  
 
 
-# Commandment IX: Develop Standards for the Benefit of All
+# Recommendation: Develop Standards for the Benefit of All
 
 ### Make auditing more efficient.
 
@@ -703,6 +705,21 @@ For Poisson processes (with exponential arrivals), the relationship of half-life
 
 ---
 
+Strategies for long-term preservation of content
+
+We must adopt active strategies to detect and correct errors in data in order to preserve the corpus over long periods.  Such strategies must include three components: detecting errors, correcting errors, and actively locating errors.  
+
+- Detecting errors requires a certain redundancy in storage, typically parity or other special encodings, or comparison of copies, or fixity information.  There is generally some degree of damage that cannot be detected accurately, e.g., multiple errors in a simple parity system (likely) or aliases in checksums (unlikely).  
+- Correcting errors requires replacing a damaged copy with a correct copy, either by consulting a known good copy or by using an error-correcting encoding in the storage of the data.  The ability of a system to correct errors is also limited, e.g., if all copies of the data are damaged.  
+- Actively locating errors requires a mechanism outside normal usage that examines all the data and checks its validity, sometimes called "patrolling" or "scrubbing."  The system searches all the data for latent errors in order to locate (and repair) them before they pile up and overwhelm the redundancy of storage.  
+
+Strategies that include these three components are routinely used at low levels within computer systems.  
+
+- Small regions of memory, e.g., RAM banks, disk sectors, are protected with parity bits or error-correcting codes.  Parity provides only limited error detection; multiple bit errors may not be detected.  Error-correcting codes provide some higher level of redundancy for detection and correction.  And large memory arrays may be actively scrubbed to find and correct errors early.  
+- Disk drive mechanisms tend to fail all at once rather than a sector at a time, but they are often protected by RAID or erasure code structures and controllers.  Such arrays of disks include redundant recording and parity to permit repair of failed drives.  
+
+
+---
 
 ## Simplest Case: No Auditing
 
