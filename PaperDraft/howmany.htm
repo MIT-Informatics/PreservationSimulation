@@ -179,7 +179,7 @@ font-size: smaller;
 <p>% How Many Copies Is Enough?<br />
 % Micah Altman; Richard Landau<br />
 % 2016-08-15<br />
-% Revised 2018-07-15 RBL</p>
+% Revised 2018-07-16 RBL</p>
 <p>[[Text blocks in double-square-brackets, such as this is, are editorial notes for the authors to clean up.]]</p>
 <h1 id="title" class="unnumbered">Information Integrity Over the Long Term -- How Many Copies Is Enough?</h1>
 <h4 id="assessing-long-term-durability-of-collections-through-a-flexible-replicable-simulation">Assessing Long-term Durability of Collections Through A Flexible, Replicable Simulation</h4>
@@ -290,7 +290,7 @@ font-size: smaller;
 <p>Where both cost and loss functions are simple and behaved, it may be possible to find the optimal solution analytically. However, in more realistic conditions, risk of loss is a complex function of multiple sources of loss -- including low-level media failures, mid-level events such as manufacturing defects that affect clusters of media, and high-level events such as government action that can simultaneously affect multiple replicas of entire collections. Moreover, in realistic conditions there will be significant uncertainty about the distribution of threats.</p>
 <p>In order to evaluate a curator's strategies under these more realistic conditions, we adopt two approaches: First, we use discrete event simulation across a range of threat conditions to estimate the loss function for a specific curation strategy. Second, we aim to identify strategies that are relatively low cost and robust to a range of threat conditions, rather than focusing on the optimal strategy for a precisely identified set of threats.</p>
 <h2 id="sketch-of-discrete-simulation-model">Sketch of Discrete Simulation Model</h2>
-<p>The model for the simulations is very simple. A <strong><em>client</em></strong> (library) has a <strong><em>collection</em></strong> of <strong><em>documents</em></strong> in digital form. A copy of the collection of documents is stored on a <strong><em>server</em></strong> somewhere. If the client maintains multiple <strong><em>copies</em></strong> of the collection of documents, the several copies are stored on separate servers. Customers retrieve documents from the server(s) to read them. An <strong><em>error</em></strong> may occur that corrupts a copy of a document or makes that copy inaccessible. In this case, we consider the copy to be <strong><em>lost</em></strong>. Other copies may still persist. If all copies of a document are lost, then the document itself is permanently lost.</p>
+<p>The model for the simulations is very simple. A <strong><em>client</em></strong> (library) has a <strong><em>collection</em></strong> of <strong><em>documents</em></strong> in digital form. A copy of the collection of documents is stored on a <strong><em>server</em></strong> somewhere. If the client maintains multiple <strong><em>copies</em></strong> of the collection of documents, the several copies are stored on separate servers. Customers retrieve documents from the server(s) to read them. An <strong><em>error</em></strong> may occur that corrupts a copy of a document or makes that copy inaccessible. In this case, we consider the copy to be <strong><em>lost</em></strong>. Other copies may still persist. If all copies of a document are lost, then the document itself is <strong><em>permanently lost</em></strong>.</p>
 <p>(All the italicized words are terms of art that are discussed in detail later.)</p>
 <p>From this simple model, the impacts on more complex situations can be inferred by straightforward calculations.</p>
 <h2 id="formalizing-low-level-threats-sector-errors">Formalizing Low-level Threats: Sector Errors</h2>
@@ -301,8 +301,13 @@ font-size: smaller;
 <li>Large collections of data: disk drives, arrays of disk drives.</li>
 <li>Very large collections of data: storage services</li>
 </ul>
-<p>We start our analysis by focusing on the lowest level errors -- sector errors. These are characterized as follows: - An error in the storage corrupts a document sector. Errors arrive randomly in a Poisson process. A cosmic ray striking a disk or memory cell is a good model for this type of error.<br />
-- If the error occurs in a sector occupied by a copy of a document, that copy is corrupted. For the purposes of this study, we consider the copy to be lost. Manual repair by human inspection is not considered here. - Errors are silent, that is, no one notices an error until someone tries to read the document and discovers that it is lost.</p>
+<p>We start our analysis by focusing on the lowest level errors -- sector errors. These are characterized as follows:</p>
+<ul>
+<li>An error in the storage corrupts a document sector. Errors arrive randomly in a Poisson process. A cosmic ray striking a disk or memory cell is a good model for this type of error.<br />
+</li>
+<li>If the error occurs in a sector occupied by a copy of a document, that copy is corrupted. For the purposes of this study, we consider the copy to be lost. Manual repair by human inspection is not considered here.</li>
+<li>Errors are silent, that is, no one notices an error until someone tries to read the document and discovers that it is lost.</li>
+</ul>
 <h1 id="recommendation-keep-multiple-copies">Recommendation: Keep Multiple Copies</h1>
 <p>Errors accumulate over time. Every now and then an error will occur in storage and, if the error occurs in a region of storage occupied by a document, the error destroys a document. The rate at which documents are lost depends of course on the quality of the storage. In theory, we can predict the detioriation of a collection as a result solely of sector-level losses, using the Poisson distribution. <strong>Figure 1</strong>, below, illustrates the percentage of a collection lost in a 10-year period, as a function of the reliability of the underlying storage -- overa a very wide range of storage quality. (In <strong>Section XX: Protect Against a Range of Threats</strong>, we provide details on estimating sector error rates, and introduce other types of error.)</p>
 <blockquote>
@@ -457,6 +462,11 @@ font-size: smaller;
 <p>In contrast, the archival field has focused on identifying specific threats to long-term information integrity. The following threats are widely recognized: media failure, hardware failure, software failure, communication (network) errors, failure of network services, media and hardware obsolescence, software (format) obsolescence, operator error, natural disaster, external attack, internal attack, and organizational failure. [[cite Rosental 2005, ++]] These threats can be readily organized using the taxonomy above.</p>
 <p>We use simulation to predict the rate of content failure under of replication and auditing strategies across this exhaustive set of threats. To model threats, we integrate the archival threats into the standard information security taxonomy. We then specify exemplar threats at both high and moderate severity level. Finally we use multi-level hierarchical threat models (discussed in more detail in the following sections) to predict correlated/mass failures. The range of threats covered in this analysis is summarized in the table below:</p>
 <p>[[Table https://docs.google.com/document/d/1RMd6L3P5ZlmYa3v8etyWhIdDIrOgAFsWwToKxuJZlgI/edit ]]</p>
+<div class="figure">
+<img src="../pictures/other/ThreatModel_GoogleTable.png" alt="Table: RBL: El Cheapo screen capture of the nice table from Google" style="width:90.0%" />
+<p class="caption">Table: RBL: El Cheapo screen capture of the nice table from Google</p>
+</div>
+<h5 id="various-threats-to-collection-content">Various Threats to Collection Content</h5>
 <p>Our analysis excludes file-format obsolescence, shown in gray, above. File-format obsolesence cannot be mitigated through content replication and integrity auditing -- which is the focus of this analysis, so this threat is excluded. Note that mitigation strategies for this threat, such as format migration, emulation, are compatible with, and complementary to the replication strategies we address here. [[cite]]</p>
 <p>The other threats, shown in gray, are addressed, by the model -- however, a number of other protections are required in addition to simple replication and auditing. To mitigate against powerful attacks, the auditing system can be made cryptographically secure; to mitigate against encryption key loss, the encryption keys must also be replicated across multiple independent servers, and regularly audited; to mitigate against organization mission change, each replica must be accompanied by a succession agreement where a separate institution will take ownership of it, should the curating institution fail to audit. We discuss these extended protections in detail, in section [[XX]] below.</p>
 <h2 id="uncertainies-about-threat-rates">Uncertainies about Threat Rates</h2>
@@ -519,54 +529,57 @@ font-size: smaller;
 </li>
 <li>Correcting errors requires replacing a damaged copy with a correct copy, either by consulting a known good copy or by using an error-correcting encoding in the storage of the data. The ability of a system to correct errors is also limited, e.g., if all copies of the data are damaged.<br />
 </li>
-<li>Actively locating errors requires a mechanism outside normal usage that examines all the data and checks its validity, sometimes called &quot;patrolling&quot; or &quot;scrubbing.&quot; The system searches all the data for latent errors in order to locate (and repair) them before they pile up and overwhelm the redundancy of storage.</li>
+<li>Actively locating errors requires a mechanism outside normal usage that examines all the data and checks its validity, sometimes called &quot;patrolling&quot; or &quot;scrubbing.&quot; We need to be wary that failures -- of documents or servers -- are silent to the client. The system actively searches all the data for latent errors in order to locate (and repair) them before they pile up and overwhelm the redundancy of storage.</li>
 </ul>
 <p>This study is concerned with examining what degree of redundancy and error correction is appropriate for document data and for storage services.</p>
 <p>We have explored a wide variety of strategies for protecting large collections of documents. There are several dimensions that can be manipulated: quality level of storage devices and arrays, degrees of redundancy (number of copies), and frequency and speed of auditing and repair. With appropriate choices along these dimensions, the probability of permanent loss of documents can be reduced to very low levels. Even with low quality storage media and unreliable storage services, a high degree of redundancy and aggressive auditing and repair can protect collections against the ravages of age, imperfect administration, and unstable commercial services.</p>
 <h3 id="the-process-of-auditing-and-repairing">The Process of Auditing and Repairing</h3>
-<p>Auditing is essential to maintain the health of a collection. This is the method by which errors are detected and corrected. Without auditing, errors tend to build up in a collection and eventually cause some permanent document losses, regardless of how many copies of the documents we keep. No number of redundant copies without auditing, certainly no <em>reasonable</em> number, will prevent significant document losses over a long period. We can think of the auditing process as health care for electronic documents: minor problems will be found and fixed before they cause permanent problems. Of course, it will always be possible for unlikely juxtapositions of errors to cause a document to be lost, but regular auditing of a modest number of copies can minimize permanent losses. This active mechanism of searching for and repairing errors is the essence of the recommendation, &quot;Visit your documents regularly and keep them healthy.&quot;</p>
-<p>The auditing process actively patrols for errors before they cause permanent document losses, and corrects them when possible. In all cases, when a document copy is found to be absent (or corrupted), the auditing process attempts to replace the missing copy with a fresh copy obtained from another server. If there is an intact copy on another server, then the missing copy is repaired and the process continues. If there is no other intact copy, then the document is considered permanently lost.</p>
+<p>Auditing is essential to maintain the health of a collection. It is the method by which errors are detected and corrected. Without auditing, errors tend to build up in a collection and eventually cause some permanent document losses, regardless of how many copies of the documents we keep. No number of redundant copies without auditing, certainly no <em>reasonable</em> number, will prevent significant document losses over a long period. We can think of the auditing process as health care for electronic documents: minor problems will be found and fixed before they cause permanent problems. Of course, it will always be possible for unlikely juxtapositions of errors to cause a document to be lost, but regular auditing of a modest number of copies can minimize permanent losses. This active mechanism of searching for and repairing errors is the essence of the recommendation, &quot;Visit your documents regularly and keep them healthy.&quot;</p>
+<p>The auditing process actively patrols for errors before they cause permanent document losses, and corrects them when possible. In all cases, when a document copy is found to be absent or corrupted, the auditing process attempts to replace the missing copy with a fresh copy obtained from another server. If there is an intact copy on another server, then the missing copy is repaired and the process continues. If there is no other intact copy, then the document is considered permanently lost.</p>
 <p><strong>Exhibit nnn</strong> shows the dramatic reduction in document losses when using regular auditing on collections with a modest number of copies. [[Picture of results for copies=3,4,5, total annual audit.]]</p>
 <div class="figure">
-<img src="./images/baseline-auditannually.png" alt="Exhibit nnn: A modest number of copies with total annual auditing can reduce errors to negligible levels" style="width:90.0%" />
-<p class="caption">Exhibit nnn: A modest number of copies with total annual auditing can reduce errors to negligible levels</p>
+<img src="./images/baseline-auditannually.png" alt="A modest number of copies with total annual auditing can reduce errors to negligible levels" style="width:90.0%" />
+<p class="caption">A modest number of copies with total annual auditing can reduce errors to negligible levels</p>
 </div>
-<h5 id="exhibit-nnn-graph-of-losses-with-annual-auditing.">Exhibit nnn: Graph of losses with annual auditing.</h5>
+<h5 id="exhibit-nnn-losses-are-reduced-with-annual-auditing.">Exhibit nnn: Losses are reduced with annual auditing.</h5>
 <h3 id="auditing-strategies">Auditing Strategies</h3>
-<p>The simplest and most effective strategy for auditing is <strong><em>total auditing</em></strong>. This involves examining <em>every</em> copy of <em>every</em> document on a regular cycle, and effecting repairs where necessary (and possible). The simplest method is to examine all documents at the same time.</p>
+<p>The simplest <em>and most effective</em> strategy for auditing is <strong><em>total auditing</em></strong>. This involves examining <em>every</em> copy of <em>every</em> document on a regular <strong><em>cycle</em></strong>, and effecting repairs where necessary (and possible). The simplest method is to examine all documents at the same time.</p>
 <ul>
+<li><p>Total auditing can be performed on any cycle the client chooses: biennial, annual, semi-annual, quarterly, monthly, weekly, etc. We have found improvement in document survival diminishes for audit cycles more frequent than annual.</p></li>
 <li><p>A useful variation is to divide the collection into several subsets and to audit those subsets at regular intervals spread throughout the year. This variation, called <strong><em>segmented auditing</em></strong> has two advantages:</p>
 <ul>
-<li>It spreads out the bandwidth required for total auditing. Auditing every document requires a large burst of communications to occur in a short time. For example, if total auditing is done on an annual cycle, all the documents will be checked for validity in a short period based on that schedule. If the collection is divided into smaller units, say, one quarter of the collection to be audited every quarter, then every document will still be checked once a year, but the communications for auditing will be spread out into four bursts. (The number four could, of course, be two for semi-annual auditing or twelve for monthly auditing, and so forth.)<br />
+<li>It spreads out the bandwidth required for total auditing. Auditing every document requires a large burst of communications to occur in a short time. For example, if total auditing is done on an annual cycle, all the documents will be checked for validity in a short period once per year. If the collection is divided into smaller units, say, one quarter of the collection is audited every quarter, then every document will still be checked once a year, but the communications for auditing will be spread out into four bursts. (The number four could, of course, be two for semi-annual segmented auditing or twelve for monthly segmented auditing, and so forth.)<br />
 </li>
-<li>Auditing any document more frequently than the, say, annual cycle makes it possible for the client to detect the failure of a storage server earlier. When a storage server fails, the effective number of copies of the collection -- the level of redundancy -- is reduced, which places all documents at somewhat higher risk of loss. A failed server should be replaced as soon as possible to minimize that gap.</li>
+<li>Auditing documents more frequently than the, say, annual cycle makes it possible for the client to detect the failure of a storage server earlier. When a storage server fails, all the document copies it contains are lost. This reduces the effective number of copies of the collection -- the level of redundancy -- which places all documents at a higher risk of loss. A failed server should be replaced as soon as possible to minimize that gap. Frequent segmented auditing can reduce that gap before a dead server is discovered.</li>
 </ul></li>
 </ul>
 <blockquote>
-<p>It is important to note that total auditing requires that <em>all</em> copies of a document be checked during each auditing cycle. A document may be assigned to any segment within a cycle, but it must be present in some segment of each cycle. That is, auditing segments must sample documents <em>without replacement</em>. Sampling with replacement permits some documents to be missed in each cycle and reduces the effectiveness of auditing.</p>
+<p>It is important to note that total auditing requires that <em>all</em> copies of a document be checked during each auditing cycle. A document may be assigned to any segment within a cycle, but it must be present in some segment of each cycle. The sampling of documents for each segment of the auditing can be systematic (some 25% subset of the collection each quarter, e.g., every fourth document in some list) or random (e.g., choose randomly 25% of the collection from among the remaining unaudited documents each quarter); but it is important that the total auditing actually be <em>total</em>. That is, auditing segments must sample documents <strong><em>without replacement</em></strong> each cycle. Sampling with replacement permits some documents to be missed in each cycle and reduces the effectiveness of auditing.</p>
 </blockquote>
-<p>Various strategies will be described and evaluated in the supplemental material.</p>
-<p>[[RBL: continue editing from here.]]</p>
+<p>A variety of auditing strategies will be described and evaluated in the supplemental material.</p>
 <h3 id="how-many-copies-to-keep-with-auditing">How Many Copies to Keep With Auditing?</h3>
-<p>Over a very wide range of storage quality conditions (storage error rates or sector half-lives), our experiments show that <strong>five copies with annual total auditing</strong> reduce document loss rates to negligible levels. The annual audit may be segmented, as mentioned previously.</p>
-<p><strong>Exhibit nnn</strong> compares the effect of number of audited copies and storage error rates on document loss rates.<br />
-[[This may refer to the preceding exhibit, if that picture is clear enough.]]</p>
+<p>Over a very wide range of storage quality conditions (storage error rates or sector half-lives), our experiments show that <strong>five copies with annual total auditing</strong> reduce document loss rates to negligible levels. The annual audit may be segmented, as mentioned previously. Of course, more frequent total auditing will reduce loss rates further, but only marginally.</p>
+<p><strong>Exhibit nnn</strong> compares the length of audit cycles and storage error rates on document loss rates.</p>
+<div class="figure">
+<img src="../pictures/auditfrequency/Audit_FrequencyComparisons_copies5_MonthToBiennial.png" alt="Reducing auditing cycle to less than a year reduces loss rates only marginally" style="width:80.0%" />
+<p class="caption">Reducing auditing cycle to less than a year reduces loss rates only marginally</p>
+</div>
+<h5 id="exhibit-nnn-relationship-of-audit-cycles-to-document-loss-rates">Exhibit nnn: Relationship of audit cycles to document loss rates</h5>
 <h3 id="depend-on-redundancy-and-repair">Depend on Redundancy and Repair</h3>
 <p>Clients can adjust the degree of redundancy of storage and the aggressiveness of auditing and repair to match almost any requirements for permanent storage of documents. To defend against high rates of document losses and correlated server failures, a client can increase the number of copies maintained, with careful consideration to their physical and financial independence, and can audit the several copies more frequently. By controlling both of these factors in a maintenance regimen, a client can protect the integrity of a collection for any desired period.</p>
 <p>(Conversely, of course, clients may find that storage services are much less error-prone, and the economic and administrative environments much more reliable, and may reduce their degree of redundancy as a result. We do not recommend this: should we drop our auto insurance because we haven't had an accident <em>lately</em>?)</p>
 <p>This regimen of data hygiene -- high redundancy and frequent auditing and repair -- can be used to protect against poorer-quality storage servers and higher levels of correlated failure.</p>
 <ul>
-<li>Originally, RAID disk arrays were intended to protect against imperfect disk drives. The term &quot;RAID&quot; was coined to abbreviate &quot;Redundant Arrays of Inexpensive Disks,&quot; where &quot;inexpensive&quot; referred to perhaps imperfect quality. Similar techniques were applied for a time to large memory banks, constructed of RAM chips with some weak or failed bits, using wide error-correcting encodings to make up for bit errors.<br />
+<li>Small historical aside: Originally, RAID disk arrays were intended to protect against imperfect disk drives. The term &quot;RAID&quot; was coined to abbreviate &quot;Redundant Arrays of Inexpensive Disks,&quot; where &quot;inexpensive&quot; referred to less than top quality. Similar techniques were applied for a time to large memory banks, constructed of RAM chips with some weak or failed bits, using wide error-correcting encodings to make up for bit errors.<br />
 </li>
-<li>By analogy, a collection of documents can be replicated with a high degree of redundancy (many copies), and aggressive error detection and correction techniques (frequent auditing and repair) can be used to maintain the collection in perfect or near-perfect condition for long periods of time.</li>
+<li>By analogy, a collection of documents can be replicated with a high degree of redundancy (many independent copies), and aggressive error detection and correction techniques (frequent auditing and repair) can be used to maintain the collection in perfect or near-perfect condition for long periods of time.</li>
 </ul>
 <h1 id="recommendation-compress-your-documents">Recommendation: Compress Your Documents</h1>
-<p>The impacts of document size, compression, encryption.</p>
-<p>What are the effects of compressing and/or encrypting documents? Lossless compression is almost always a good strategy for long-term storage of documents.</p>
+<p>What are the effects of compressing and/or encrypting documents? Compression can make a document dramatically smaller but also somewhat more fragile. This study does not consider the availability of human-aided repair of digital documents, which we believe is extremely rare, only the complete replacement of damaged documents. In that context, lossless compression is almost always a good strategy for long-term storage of documents.</p>
 <h3 id="compression-reduces-the-target-area-of-a-document">Compression Reduces the Target Area of a Document</h3>
-<p>Documents stored on digital media are fragile; storage errors corrupt the content of a document. How much of a document is corrupted depends largely on the data format of the document. Even small errors in highly compressed or encrypted documents may render part or all of the document unusable.</p>
-<p>For documents that might not be fatally corrupted by a single sector error, lossless compression of the document involves a clear trade-off. A smaller document is a smaller target for a randomly occurring error, but a highly compressed document is more fragile. A small error in an audio or video file, or an uncompressed text file, might not be fatal to the document, but a highly compressed text document (or an encrypted document) might be lost.</p>
-<p>In these simulations, we have modeled documents as <em>very fragile</em>: one sector error causes the document to be judged as lost. In this model, at least these two considerations should be included in the decision to compress documents.</p>
+<p>For documents that might not be fatally corrupted by a single sector error, lossless compression of the document involves a clear trade-off. A smaller document is a smaller target for a randomly occurring error, but a highly compressed document is more fragile. For example, a small error in an audio or video file, or an uncompressed text file, might not be fatal to the document, but a highly compressed text document (or an encrypted document) might be fatally corrupted.</p>
+<p>In these simulations, we have modeled documents as <em>very fragile</em>: one sector error causes the document to be judged as lost. A document copy is either an exact copy of the original or it is not; and, if not, it is not usable. During the process of auditing and &quot;repair,&quot; the client will generally not take time to examine the damage to a document and try to &quot;repair&quot; damaged bits; the client will replace it as quickly as possible from a valid copy.</p>
+<p>In this model, at least these two considerations should be included in the decision to compress documents.</p>
 <ul>
 <li>Smaller is safer. A smaller document presents a smaller target for random errors. If a document is compressed, say, by 90%, that is, to 10% of its original size, then a random error is only one-tenth as likely to strike that document. When placed on a storage medium of any given quality level, that smaller, compressed document is likely to persist without error ten times longer than the uncompressed version.</li>
 </ul>
@@ -574,36 +587,38 @@ font-size: smaller;
 <p>A large document occupies more storage than a small document. If errors are striking storage uniformly randomly, then a large document is proportionally a larger target. This effect is verified empirically by our experiments.</p>
 </blockquote>
 <ul>
-<li>Smaller is less expensive. A stored collection incurs costs for both storage of the document images and the bandwidth used in auditing and repair. Smaller documents consume less space and less bandwidth and therefore cost less to maintain.<br />
+<li>Smaller is cheaper. A stored collection incurs costs for both storage of the document images and the bandwidth used in auditing and repair. Smaller documents consume less space and less bandwidth and therefore cost less to maintain.<br />
 </li>
-<li>Smaller enables higher storage redundancy. On a given budget, a compressed collection can be replicated into more copies and audited more frequently. Both the increased copy count and more frequent auditing contribute directly to reducing or eliminating permanent losses in the collection.</li>
+<li>Smaller size enables higher storage redundancy. On a given budget, a compressed collection can be replicated into more copies and audited more frequently. Both the increased copy count and more frequent auditing contribute directly to reducing or eliminating permanent losses in the collection.</li>
 </ul>
-<p>The drawings in <strong>Exhibit nnn</strong> illustrate the effect of randomly placed errors on documents of varying sizes. [[Picture from old presentation of doc blocks with Xs in them, with maybe a couple more Xs added to make it clearer that large = big target.]]</p>
+<p>The drawings in <strong>Exhibit nnn</strong> illustrate the effect of randomly placed errors on documents of varying sizes. A larger extent is a proportionally larger target.</p>
 <div class="figure">
 <img src="../pictures/docsizevserrorrate/SmallVsLargeFile-2.png" alt="Exhibit nnn: Cartoon of Large Document Presenting Larger Target Area for Random Errors" style="width:90.0%" />
 <p class="caption">Exhibit nnn: Cartoon of Large Document Presenting Larger Target Area for Random Errors</p>
 </div>
-<p><strong>Exhibit nnn</strong> shows the increase in document losses for larger documents across a range of storage error rates.<br />
+<p><strong>Exhibit nnn</strong> shows the increase in document losses for larger documents across a range of storage error rates. Larger documents always suffer higher loss rates for any given quality (error rate, sector half-life) of server.<br />
 [[Picture in pictures/largerdocs, but it needs to be redone.]]</p>
 <div class="figure">
 <img src="../pictures/largerdocs/baseline-scalingdocsize.png" alt="Exhibit nnn: Larger Docs Are More Vulnerable to Random Errors: 5, 50, 500, 5000MB -- !!!MUST BE REDONE!!!" style="width:90.0%" />
 <p class="caption">Exhibit nnn: Larger Docs Are More Vulnerable to Random Errors: 5, 50, 500, 5000MB -- !!!MUST BE REDONE!!!</p>
 </div>
-<p>The table of <strong>Exhibit nnn</strong> shows the linear relationship between document size and storage error rate. (Error rate is expressed as sector half-life, as explained below.) [[PDF captured from spreadsheet, in pictures/docsizevserrorrate/Data_Scaling_DocsizeSpreadsheet-2.pdf]]</p>
+<p>The table of <strong>Exhibit nnn</strong> shows the relationship between document size and storage error rate. (Error rate is expressed as sector half-life, as explained below.) Note the extremely linear relationship between document size and storage quality. A larger document must reside on a higher quality server to achieve the same loss rate.<br />
+[[PDF captured from spreadsheet, in pictures/docsizevserrorrate/Data_Scaling_DocsizeSpreadsheet-2.pdf]]</p>
 <div class="figure">
 <img src="../pictures/docsizevserrorrate/Scaling_DocsizeLifetimeComparisons_abbrev.png" alt="Exhibit nnn: Linear Relationships Between Document Sizes and Error Rates" style="width:70.0%" />
 <p class="caption">Exhibit nnn: Linear Relationships Between Document Sizes and Error Rates</p>
 </div>
-<p>Lossless compression is benign for a variety of reasons.</p>
+<p>In summary, we consider lossless compression to be benign for a variety of reasons.</p>
 <ul>
 <li>As already mentioned, smaller documents are smaller targets for errors.<br />
 </li>
-<li>Compression of document copies reduces storage costs. This permits a client to employ more copies for redundancy without increasing the price.<br />
+<li>Compression of document copies reduces storage costs. This permits a client to employ more copies for greater redundancy without increasing the price.<br />
 </li>
 <li>Smaller documents consume lower bandwidth for retrieval and editing, lowering egress charges from the storage vendor. This makes the auditing process less expensive.</li>
-<li>A possible drawback is that some methods of compression may require decompression software at client end for retrieval.</li>
+<li>A possible drawback is that some methods of compression may require decompression software at client end for document retrieval.</li>
 </ul>
 <p>Thus the recommendation, &quot;Compress your documents.&quot;</p>
+<p>[[END of RBL's editing 20180716.]]</p>
 <h1 id="recommendation-cloak-your-documents-encryption">Recommendation: Cloak Your Documents: Encryption</h1>
 <p>The recommendation, &quot;Cloak your documents&quot; tries to meet the needs of some collections for privacy. Encryption of documents may be required for secrecy, digital rights management, or other reasons. If a document is encrypted after it has been compressed, the encryption generally does not impose an additional size burden on the document. Thus encryption does not compromise the advantage gained by compression, though it does have some impact on potential document losses.</p>
 <ul>
