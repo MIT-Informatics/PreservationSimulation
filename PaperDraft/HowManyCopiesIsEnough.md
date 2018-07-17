@@ -144,7 +144,6 @@ As we will discuss later, curators might wish to be aware of the technologies an
 
 There are many threats to content, and the range of strategies that are available to curators interact with these threats differently.  In order to guide these curatorial decisions, we develop a formal model of replication threats and replication strategies.  Using this, we aim to develop reasonably precise answers to very approximate questions, rather than search for asymptotically optimal solutions to over-specified situations, 
 
-
 More strictly, we can formulate this task as an optimization problem. Given:
 
 -  a set \(C\), of documents \C={D~1~..D~N~}\);
@@ -338,52 +337,139 @@ A modest number of copies, even of very high quality, cannot guarantee archival 
 Moreover, even if the media was invulnerable to sector-level errors, a single copy of a collection is vulnerable to large-scale or total loss if that single copy is victim of a disaster, natural or man-made (e.g., earthquake, flood, war, economic depression, administrative error, etc.).  As shown in the next section, multiple copies in multiple independent locations are necessary to safeguard documents against this type of large-scale loss. 
 
 
-# Recommendation: Protect Against a Wide Range of Conditions
+# Recommendation: Visit Your Documents Regularly 
 
-### What Range of Storage Error Rates Should We Consider?
-
-One basic question should be answered before embarking on such simulations: what is the failure rate of stored documents? This is a difficult question due to a lack of real data.
-
-There is some data on the failure rate of individual disk drives over time. Thanks to Backblaze, Google, and others, there is some published empirical data on failure rates of disk drives of recent technology vintages. [[citations needed]]  These figures refer to replacements of entire disk drives during the useful life and wear-out periods of device use. That is, they exclude infant failures but include mid-life and senescence. Unfortunately, we do not get much information on the rates of sector failures, bad block replacements, and so forth.
-
-In the absence of either experimental or experiential data on sector failure rates, we are attempting to provide simulated data as guidelines for policies regarding data storage, redundancy, auditing and repair.  We have assumed that sector errors arrive randomly in a Poisson process.  The question is, what is the arrival rate of sector errors on a disk or disk array?  There is no single, even approximate answer to that question.  Consequently, we have looked at document losses over a wide range of error arrival rates and amelioration strategies.  
-
-**Exhibits nnn and nnn+1** show theoretical sector and document losses, based solely on error arrival rate (expressed as half-life), over the first few years of a disk drive's life.  
+We should verify and repair the multiple copies of documents on a regular basis.  We will use the term ***auditing*** to refer to the process of checking documents for validity and repairing where possible any errors discovered.
 
 
-##### Exhibit nnn: Sector losses in **permille** over the first few years of drive use, across a wide range of sector half-lives.  Sectors 1MB, sector half-lives in megahours (Mhr).
+### Strategies to Achieve Very Long Data Lifetimes
 
-##### Sector losses (**permille**) by sector half-life (megahours) 
+How can we protect data over the long term against a wide range of error conditions?  A single copy of a document is vulnerable, regardless of its quality.  Multiple copies are less vulnerable physically but still deteriorate over long periods, and sometimes, randomly, errors will coincide to cause a permanent loss.  We must adopt active strategies to detect and correct errors in data in order to preserve the corpus over long periods.  Such strategies must include three components: detecting errors, correcting errors, and actively locating errors.  
 
-| Years in service | Sector half-life = 10Mhr | 30Mhr | 100Mhr | 300Mhr |
-|-----:|-----:|-----:|-----:|-----:|
-| 1 | 0.7 | 0.2 | 0.07 |0.02|
-| 2 | 1.4 | 0.5 | 0.13 |0.05|
-| 3 | 2.1 | 0.7 | 0.21 |0.07|
-| 5 | 3.5 | 1.2 | 0.35 |0.12|
-| 10 | 7.0 | 2.3 | 0.69 |0.23|
+- Detecting errors requires a certain redundancy in storage, typically parity or other special encodings, or comparison of copies, or fixity information.  There is generally some degree of damage that cannot be detected accurately, e.g., multiple errors in a simple parity system (likely) or aliases in checksums (unlikely).  
+- Correcting errors requires replacing a damaged copy with a correct copy, either by consulting a known good copy or by using an error-correcting encoding in the storage of the data.  The ability of a system to correct errors is also limited, e.g., if all copies of the data are damaged.  
+- Actively locating errors requires a mechanism outside normal usage that examines all the data and checks its validity, sometimes called "patrolling" or "scrubbing."  We need to be wary that failures -- of documents or servers -- are silent to the client.  The system actively searches all the data for latent errors in order to locate (and repair) them before they pile up and overwhelm the redundancy of storage.  
 
-Note also that, since documents typically occupy more than one disk sector, even the large sectors we use for these calculations, they are larger targets and therefore considerably more vulnerable to random errors.
+This study is concerned with examining what degree of redundancy and error correction is appropriate for document data and for storage services.  
 
-##### Exhibit nnn: Document losses in **percent** over the first few years, across a wide range of sector half-lives
-##### Sectors 1MB, documents 50MB, sector half-lives in megahours .
-
-| Years in service | Sector half-life = 10Mhr | 30Mhr | 100Mhr | 300Mhr | 1000Mhr |
-|-----:|-----:|-----:|-----:|-----:|-----:|
-| 1 | 3.4 | 1.1 | 0.3 |0.1 | 0.0 | 
-| 2 | 6.7 | 2.3 | 0.7 |0.2 | 0.1 |
-| 3 | 9.9 | 3.4 | 1.0 |0.3 | 0.1 |
-| 5 | 15.9 | 5.6 | 1.7 |0.6 | 0.2 |
-| 10 | 19.3 | 10.9 | 3.4 | 1.1 | 0.3 |
-
-[[Source spreadsheet: FailureRatesBackOfTheEnvelope.xls, sheet PrintMe]]
-
-Clearly, at the low end of the range, where sector half-life is in the range of 10 million hours, document losses would be unacceptably high.  If you lost 3 percent of all your documents in the first year, you would take immediate action to find a more reliable storage environment.  Even up to 30 million hours (sector half-life), such disks would be classified as "rusty garbage can lids" that are not suitable for archival storage.  Better disks might still accumulate errors at a significant rate, but permanent losses can be avoided with suitable auditing and repair regimes, as discussed below.  
+We have explored a wide variety of strategies for protecting large collections of documents.  There are several dimensions that can be manipulated: quality level of storage devices and arrays, degrees of redundancy (number of copies), and frequency and speed of auditing and repair.  With appropriate choices along these dimensions, the probability of permanent loss of documents can be reduced to very low levels.  Even with low quality storage media and unreliable storage services, a high degree of redundancy and aggressive auditing and repair can protect collections against the ravages of age, imperfect administration, and unstable commercial services.  
 
 
-#### If You Can't Control It, Buy Insurance Against It
+### The Process of Auditing and Repairing
 
-We do not have good information on the sector error rates of our storage media, particularly if we are buying a service from an outside vendor.  Since such factors are beyond our control, we should choose strategies to protect our document collections from a *wide* range of circumstances that we might encounter.  Hence the recommendation, "Protect against a wide range of conditions."  
+Auditing is essential to maintain the health of a collection.  It is the method by which errors are detected and corrected.  Without auditing, errors tend to build up in a collection and eventually cause some permanent document losses, regardless of how many copies of the documents we keep.  No number of redundant copies without auditing, certainly no *reasonable* number, will prevent significant document losses over a long period.  We can think of the auditing process as health care for electronic documents: minor problems will be found and fixed before they cause permanent problems.  Of course, it will always be possible for unlikely juxtapositions of errors to cause a document to be lost, but regular auditing of a modest number of copies can minimize permanent losses.  This active mechanism of searching for and repairing errors is the essence of the recommendation, "Visit your documents regularly and keep them healthy."  
+
+The auditing process actively patrols for errors before they cause permanent document losses, and corrects them when possible.  In all cases, when a document copy is found to be absent or corrupted, the auditing process attempts to replace the missing copy with a fresh copy obtained from another server.  If there is an intact copy on another server, then the missing copy is repaired and the process continues.  If there is no other intact copy, then the document is considered permanently lost.  
+
+**Exhibit nnn** shows the dramatic reduction in document losses when using regular auditing on collections with a modest number of copies.  [[Picture of results for copies=3,4,5, total annual audit.]]
+
+![A modest number of copies with total annual auditing can reduce errors to negligible levels](./images/baseline-auditannually.png){width=90%}
+
+##### Exhibit nnn: Losses are reduced with annual auditing.
+
+
+### A Simple Cost Model
+
+TBS NOTE: Where should this section go?  Beginning?  In the Compression section?  
+
+Many storage vendors may be available to a client, each with charge schedules.  For the most part, vendors will charge for storage and bandwidth.
+
+- A charge per month per byte stored (usually gigabyte or petabyte).
+    - The cost of storage may vary by "quality" of storage, based on its typical error rate or perhaps on speed of retrieval access.  
+    - Storage is charged per copy; multiple copies cost more.
+- A charge per month per byte sent in or out ("ingress" and "egress" charges).
+    - Bytes sent do not distinguish between user access for normal retrieval and administrative access for auditing.  
+    - The cost may vary by speed or reserved bandwidth (Mbps).
+- Charge schedules may include quantity discounts for storage and transfer
+
+For the purposes of this study, a client will store a collection on a set of servers of the same "quality" level.  Documents with differing quality requirements are considered separate collections and are stored and managed separately.  
+
+
+
+### Auditing Strategies
+<mark>NOTE: We should establish that total auditing beats sample auditing. Is there a figure that demonstrates total vs sample audit?</mark>
+
+The simplest *and most effective* strategy for auditing is ***total auditing***.  This involves examining *every* copy of *every* document on a regular ***cycle***, and effecting repairs where necessary (and possible).  The simplest method is to examine all documents at the same time.  
+
+- Total auditing can be performed on any cycle the client chooses: biennial, annual, semi-annual, quarterly, monthly, weekly, etc.  We have found improvement in document survival diminishes for audit cycles more frequent than annual.  
+
+- A useful variation is to divide the collection into several subsets and to audit those subsets at regular intervals spread throughout the year.  This variation, called ***segmented auditing*** has two advantages: 
+
+    - It spreads out the bandwidth required for total auditing.  Auditing every document requires a large burst of communications to occur in a short time.  For example, if total auditing is done on an annual cycle, all the documents will be checked for validity in a short period once per year.  If the collection is divided into smaller units, say, one quarter of the collection is audited every quarter, then every document will still be checked once a year, but the communications for auditing will be spread out into four bursts.  (The number four could, of course, be two for semi-annual segmented auditing or twelve for monthly segmented auditing, and so forth.)  
+    - Auditing documents more frequently than the, say, annual cycle makes it possible for the client to detect the failure of a storage server earlier.  When a storage server fails, all the document copies it contains are lost.  This reduces the effective number of copies of the collection -- the level of redundancy -- which places all documents at a higher risk of loss.  A failed server should be replaced as soon as possible to minimize that gap.  Frequent segmented auditing can reduce that gap before a dead server is discovered.  
+
+> It is important to note that total auditing requires that *all* copies of a document be checked during each auditing cycle.  A document may be assigned to any segment within a cycle, but it must be present in some segment of each cycle.  The sampling of documents for each segment of the auditing can be systematic (some 25% subset of the collection each quarter, e.g., every fourth document in some list) or random (e.g., choose randomly 25% of the collection from among the remaining unaudited documents each quarter); but it is important that the total auditing actually be *total*.  That is, auditing segments must sample documents ***without replacement*** each cycle.  Sampling with replacement permits some documents to be missed in each cycle and reduces the effectiveness of auditing.  
+
+A variety of auditing strategies will be described and evaluated in the supplemental material.  
+
+### How Many Copies to Keep With Auditing?
+
+Over a very wide range of storage quality conditions (storage error rates or sector half-lives), our experiments show that **five copies with annual total auditing** reduce document loss rates to negligible levels.  The annual audit may be segmented, as mentioned previously.  Of course, more frequent total auditing will reduce loss rates further, but only marginally.  
+
+**Exhibit nnn** compares the length of audit cycles and storage error rates on document loss rates.  
+
+![Reducing auditing cycle to less than a year reduces loss rates only marginally](../pictures/auditfrequency/Audit_FrequencyComparisons_copies5_MonthToBiennial.png){width=80%}
+
+##### Exhibit nnn: Relationship of audit cycles to document loss rates
+
+### Depend on Redundancy and Repair
+
+Clients can adjust the degree of redundancy of storage and the aggressiveness of auditing and repair to match almost any requirements for permanent storage of documents.  To defend against high rates of document losses and correlated server failures, a client can increase the number of copies maintained, with careful consideration to their physical and financial independence, and can audit the several copies more frequently.  By controlling both of these factors in a maintenance regimen, a client can protect the integrity of a collection for any desired period.  
+
+(Conversely, of course, clients may find that storage services are much less error-prone, and the economic and administrative environments much more reliable, and may reduce their degree of redundancy as a result.  We do not recommend this: should we drop our auto insurance because we haven't had an accident *lately*?)  
+
+This regimen of data hygiene -- high redundancy and frequent auditing and repair -- can be used to protect against poorer-quality storage servers and higher levels of correlated failure.  
+
+- Small historical aside: Originally, RAID disk arrays were intended to protect against imperfect disk drives.  The term "RAID" was coined to abbreviate "Redundant Arrays of Inexpensive Disks," where "inexpensive" referred to less than top quality.  Similar techniques were applied for a time to large memory banks, constructed of RAM chips with some weak or failed bits, using wide error-correcting encodings to make up for bit errors.  
+- By analogy, a collection of documents can be replicated with a high degree of redundancy (many independent copies), and aggressive error detection and correction techniques (frequent auditing and repair) can be used to maintain the collection in perfect or near-perfect condition for long periods of time.  
+
+
+### Corollary: Compress Your Documents
+
+ <mark>NOTE: this discussion elides two important points. (1) In real life documents are repairable. Compression increases fragility of the document but decreases the target size. The ratio matters -- if size goes down faster than fragility, then compression is an unambiguous win. (2) Even when compression increass overall fragility, it reduces storage costs, enabling an extra copy to be made. When does having another copy reduce risk more than having a more fragile collection?</mark>
+
+What are the effects of compressing and/or encrypting documents?  Compression can make a document dramatically smaller but also somewhat more fragile.  This study does not consider the availability of human-aided repair of digital documents, which we believe is extremely rare, only the complete replacement of damaged documents.  In that context, lossless compression is almost always a good strategy for long-term storage of documents.
+
+
+### Compression Reduces the Target Area of a Document
+
+For documents that might not be fatally corrupted by a single sector error, lossless compression of the document involves a clear trade-off.  A smaller document is a smaller target for a randomly occurring error, but a highly compressed document is more fragile.  For example, a small error in an audio or video file, or an uncompressed text file, might not be fatal to the document, but a highly compressed text document (or an encrypted document) might be fatally corrupted.  
+
+In these simulations, we have modeled documents as *very fragile*: one sector error causes the document to be judged as lost.  A document copy is either an exact copy of the original or it is not; and, if not, it is not usable.  During the process of auditing and "repair," the client will generally not take time to examine the damage to a document and try to "repair" damaged bits; the client will replace it as quickly as possible from a valid copy.  
+
+In this model, at least these two considerations should be included in the decision to compress documents.   
+
+- Smaller is safer.  A smaller document presents a smaller target for random errors.  If a document is compressed, say, by 90%, that is, to 10% of its original size, then a random error is only one-tenth as likely to strike that document.  When placed on a storage medium of any given quality level, that smaller, compressed document is likely to persist without error ten times longer than the uncompressed version. 
+
+> A large document occupies more storage than a small document.  If errors are striking storage uniformly randomly, then a large document is proportionally a larger target.  This effect is verified empirically by our experiments.  
+
+- Smaller is cheaper.  A stored collection incurs costs for both storage of the document images and the bandwidth used in auditing and repair.  Smaller documents consume less space and less bandwidth and therefore cost less to maintain.  
+- Smaller size enables higher storage redundancy.  On a given budget, a compressed collection can be replicated into more copies and audited more frequently.  Both the increased copy count and more frequent auditing contribute directly to reducing or eliminating permanent losses in the collection.  
+
+The drawings in **Exhibit nnn** illustrate the effect of randomly placed errors on documents of varying sizes.  A larger extent is a proportionally larger target.  
+
+![Exhibit nnn: Cartoon of Large Document Presenting Larger Target Area for Random Errors](../pictures/docsizevserrorrate/SmallVsLargeFile-2.png){width=90%}
+
+**Exhibit nnn** shows the increase in document losses for larger documents across a range of storage error rates.  Larger documents always suffer higher loss rates for any given quality (error rate, sector half-life) of server.  
+[[Picture in pictures/largerdocs, but it needs to be redone.]]
+
+![Exhibit nnn: Larger Docs Are More Vulnerable to Random Errors: 5, 50, 500, 5000MB -- !!!MUST BE REDONE!!!](../pictures/largerdocs/baseline-scalingdocsize.png){width=90%}
+
+The table of **Exhibit nnn** shows the relationship between document size and storage error rate.  (Error rate is expressed as sector half-life, as explained below.)  Note the extremely linear relationship between document size and storage quality.  A larger document must reside on a higher quality server to achieve the same loss rate.  
+[[PDF captured from spreadsheet, in pictures/docsizevserrorrate/Data_Scaling_DocsizeSpreadsheet-2.pdf]]
+
+![Exhibit nnn: Linear Relationships Between Document Sizes and Error Rates](../pictures/docsizevserrorrate/Scaling_DocsizeLifetimeComparisons_abbrev.png){width=70%}
+
+In summary, we consider lossless compression to be benign for a variety of reasons.
+
+- As already mentioned, smaller documents are smaller targets for errors.  
+- Compression of document copies reduces storage costs.  This permits a client to employ more copies for greater redundancy without increasing the price.  
+- Smaller documents consume lower bandwidth for retrieval and editing, lowering egress charges from the storage vendor.  This makes the auditing process less expensive.
+- A possible drawback is that some methods of compression may require decompression software at client end for document retrieval.
+
+Thus the recommendation, "Compress your documents."  
+
+[[END of RBL's editing 20180716.]]
 
 
 # Protecting Against a Range of Threats
@@ -483,178 +569,19 @@ There are several reasons to be cautious of this reliablity figure.
 4. Fourth, collections stored by any single institution are subject to catastrophic threats, including operator error (e.g. loss of billing information), operator malfeasance, and financial failure. We discuss these in more detail in section [[XXXX]] 
 
 
-# Recommendation: Visit Your Documents Regularly 
 
-We should verify and repair the multiple copies of documents on a regular basis.  We will use the term ***auditing*** to refer to the process of checking documents for validity and repairing where possible any errors discovered.
+# Recommendation: Diversify Across Storage Vendors
+The computing facilities from whom we buy storage services are just corporations, and therefore not immortal.  They may die for a number of reasons: 
 
+- Corporate financial failure; 
+- Change of goals, changes in product lines and services offered; 
+- Mergers with other corporations or spinoffs of divisions;
+- Changes in pricing policies;
+- Etc.
 
-### Strategies to Achieve Very Long Data Lifetimes
+To protect a digital collection, we must plan for failures and mergers, and plan ahead for replacements.  This recommendation warns us to be aware of the possibilities of, and the impacts of, changes in the corporate landscape; and to be prepared to protect ourselves against such changes.  
 
-How can we protect data over the long term against a wide range of error conditions?  A single copy of a document is vulnerable, regardless of its quality.  Multiple copies are less vulnerable physically but still deteriorate over long periods, and sometimes, randomly, errors will coincide to cause a permanent loss.  We must adopt active strategies to detect and correct errors in data in order to preserve the corpus over long periods.  Such strategies must include three components: detecting errors, correcting errors, and actively locating errors.  
-
-- Detecting errors requires a certain redundancy in storage, typically parity or other special encodings, or comparison of copies, or fixity information.  There is generally some degree of damage that cannot be detected accurately, e.g., multiple errors in a simple parity system (likely) or aliases in checksums (unlikely).  
-- Correcting errors requires replacing a damaged copy with a correct copy, either by consulting a known good copy or by using an error-correcting encoding in the storage of the data.  The ability of a system to correct errors is also limited, e.g., if all copies of the data are damaged.  
-- Actively locating errors requires a mechanism outside normal usage that examines all the data and checks its validity, sometimes called "patrolling" or "scrubbing."  We need to be wary that failures -- of documents or servers -- are silent to the client.  The system actively searches all the data for latent errors in order to locate (and repair) them before they pile up and overwhelm the redundancy of storage.  
-
-This study is concerned with examining what degree of redundancy and error correction is appropriate for document data and for storage services.  
-
-We have explored a wide variety of strategies for protecting large collections of documents.  There are several dimensions that can be manipulated: quality level of storage devices and arrays, degrees of redundancy (number of copies), and frequency and speed of auditing and repair.  With appropriate choices along these dimensions, the probability of permanent loss of documents can be reduced to very low levels.  Even with low quality storage media and unreliable storage services, a high degree of redundancy and aggressive auditing and repair can protect collections against the ravages of age, imperfect administration, and unstable commercial services.  
-
-
-### The Process of Auditing and Repairing
-
-Auditing is essential to maintain the health of a collection.  It is the method by which errors are detected and corrected.  Without auditing, errors tend to build up in a collection and eventually cause some permanent document losses, regardless of how many copies of the documents we keep.  No number of redundant copies without auditing, certainly no *reasonable* number, will prevent significant document losses over a long period.  We can think of the auditing process as health care for electronic documents: minor problems will be found and fixed before they cause permanent problems.  Of course, it will always be possible for unlikely juxtapositions of errors to cause a document to be lost, but regular auditing of a modest number of copies can minimize permanent losses.  This active mechanism of searching for and repairing errors is the essence of the recommendation, "Visit your documents regularly and keep them healthy."  
-
-The auditing process actively patrols for errors before they cause permanent document losses, and corrects them when possible.  In all cases, when a document copy is found to be absent or corrupted, the auditing process attempts to replace the missing copy with a fresh copy obtained from another server.  If there is an intact copy on another server, then the missing copy is repaired and the process continues.  If there is no other intact copy, then the document is considered permanently lost.  
-
-**Exhibit nnn** shows the dramatic reduction in document losses when using regular auditing on collections with a modest number of copies.  [[Picture of results for copies=3,4,5, total annual audit.]]
-
-![A modest number of copies with total annual auditing can reduce errors to negligible levels](./images/baseline-auditannually.png){width=90%}
-
-##### Exhibit nnn: Losses are reduced with annual auditing.
-
-
-### Auditing Strategies
-
-The simplest *and most effective* strategy for auditing is ***total auditing***.  This involves examining *every* copy of *every* document on a regular ***cycle***, and effecting repairs where necessary (and possible).  The simplest method is to examine all documents at the same time.  
-
-- Total auditing can be performed on any cycle the client chooses: biennial, annual, semi-annual, quarterly, monthly, weekly, etc.  We have found improvement in document survival diminishes for audit cycles more frequent than annual.  
-
-- A useful variation is to divide the collection into several subsets and to audit those subsets at regular intervals spread throughout the year.  This variation, called ***segmented auditing*** has two advantages: 
-
-    - It spreads out the bandwidth required for total auditing.  Auditing every document requires a large burst of communications to occur in a short time.  For example, if total auditing is done on an annual cycle, all the documents will be checked for validity in a short period once per year.  If the collection is divided into smaller units, say, one quarter of the collection is audited every quarter, then every document will still be checked once a year, but the communications for auditing will be spread out into four bursts.  (The number four could, of course, be two for semi-annual segmented auditing or twelve for monthly segmented auditing, and so forth.)  
-    - Auditing documents more frequently than the, say, annual cycle makes it possible for the client to detect the failure of a storage server earlier.  When a storage server fails, all the document copies it contains are lost.  This reduces the effective number of copies of the collection -- the level of redundancy -- which places all documents at a higher risk of loss.  A failed server should be replaced as soon as possible to minimize that gap.  Frequent segmented auditing can reduce that gap before a dead server is discovered.  
-
-> It is important to note that total auditing requires that *all* copies of a document be checked during each auditing cycle.  A document may be assigned to any segment within a cycle, but it must be present in some segment of each cycle.  The sampling of documents for each segment of the auditing can be systematic (some 25% subset of the collection each quarter, e.g., every fourth document in some list) or random (e.g., choose randomly 25% of the collection from among the remaining unaudited documents each quarter); but it is important that the total auditing actually be *total*.  That is, auditing segments must sample documents ***without replacement*** each cycle.  Sampling with replacement permits some documents to be missed in each cycle and reduces the effectiveness of auditing.  
-
-A variety of auditing strategies will be described and evaluated in the supplemental material.  
-
-### How Many Copies to Keep With Auditing?
-
-Over a very wide range of storage quality conditions (storage error rates or sector half-lives), our experiments show that **five copies with annual total auditing** reduce document loss rates to negligible levels.  The annual audit may be segmented, as mentioned previously.  Of course, more frequent total auditing will reduce loss rates further, but only marginally.  
-
-**Exhibit nnn** compares the length of audit cycles and storage error rates on document loss rates.  
-
-![Reducing auditing cycle to less than a year reduces loss rates only marginally](../pictures/auditfrequency/Audit_FrequencyComparisons_copies5_MonthToBiennial.png){width=80%}
-
-##### Exhibit nnn: Relationship of audit cycles to document loss rates
-
-### Depend on Redundancy and Repair
-
-Clients can adjust the degree of redundancy of storage and the aggressiveness of auditing and repair to match almost any requirements for permanent storage of documents.  To defend against high rates of document losses and correlated server failures, a client can increase the number of copies maintained, with careful consideration to their physical and financial independence, and can audit the several copies more frequently.  By controlling both of these factors in a maintenance regimen, a client can protect the integrity of a collection for any desired period.  
-
-(Conversely, of course, clients may find that storage services are much less error-prone, and the economic and administrative environments much more reliable, and may reduce their degree of redundancy as a result.  We do not recommend this: should we drop our auto insurance because we haven't had an accident *lately*?)  
-
-This regimen of data hygiene -- high redundancy and frequent auditing and repair -- can be used to protect against poorer-quality storage servers and higher levels of correlated failure.  
-
-- Small historical aside: Originally, RAID disk arrays were intended to protect against imperfect disk drives.  The term "RAID" was coined to abbreviate "Redundant Arrays of Inexpensive Disks," where "inexpensive" referred to less than top quality.  Similar techniques were applied for a time to large memory banks, constructed of RAM chips with some weak or failed bits, using wide error-correcting encodings to make up for bit errors.  
-- By analogy, a collection of documents can be replicated with a high degree of redundancy (many independent copies), and aggressive error detection and correction techniques (frequent auditing and repair) can be used to maintain the collection in perfect or near-perfect condition for long periods of time.  
-
-
-# Recommendation: Compress Your Documents
-
-What are the effects of compressing and/or encrypting documents?  Compression can make a document dramatically smaller but also somewhat more fragile.  This study does not consider the availability of human-aided repair of digital documents, which we believe is extremely rare, only the complete replacement of damaged documents.  In that context, lossless compression is almost always a good strategy for long-term storage of documents.
-
-
-### Compression Reduces the Target Area of a Document
-
-For documents that might not be fatally corrupted by a single sector error, lossless compression of the document involves a clear trade-off.  A smaller document is a smaller target for a randomly occurring error, but a highly compressed document is more fragile.  For example, a small error in an audio or video file, or an uncompressed text file, might not be fatal to the document, but a highly compressed text document (or an encrypted document) might be fatally corrupted.  
-
-In these simulations, we have modeled documents as *very fragile*: one sector error causes the document to be judged as lost.  A document copy is either an exact copy of the original or it is not; and, if not, it is not usable.  During the process of auditing and "repair," the client will generally not take time to examine the damage to a document and try to "repair" damaged bits; the client will replace it as quickly as possible from a valid copy.  
-
-In this model, at least these two considerations should be included in the decision to compress documents.   
-
-- Smaller is safer.  A smaller document presents a smaller target for random errors.  If a document is compressed, say, by 90%, that is, to 10% of its original size, then a random error is only one-tenth as likely to strike that document.  When placed on a storage medium of any given quality level, that smaller, compressed document is likely to persist without error ten times longer than the uncompressed version. 
-
-> A large document occupies more storage than a small document.  If errors are striking storage uniformly randomly, then a large document is proportionally a larger target.  This effect is verified empirically by our experiments.  
-
-- Smaller is cheaper.  A stored collection incurs costs for both storage of the document images and the bandwidth used in auditing and repair.  Smaller documents consume less space and less bandwidth and therefore cost less to maintain.  
-- Smaller size enables higher storage redundancy.  On a given budget, a compressed collection can be replicated into more copies and audited more frequently.  Both the increased copy count and more frequent auditing contribute directly to reducing or eliminating permanent losses in the collection.  
-
-The drawings in **Exhibit nnn** illustrate the effect of randomly placed errors on documents of varying sizes.  A larger extent is a proportionally larger target.  
-
-![Exhibit nnn: Cartoon of Large Document Presenting Larger Target Area for Random Errors](../pictures/docsizevserrorrate/SmallVsLargeFile-2.png){width=90%}
-
-**Exhibit nnn** shows the increase in document losses for larger documents across a range of storage error rates.  Larger documents always suffer higher loss rates for any given quality (error rate, sector half-life) of server.  
-[[Picture in pictures/largerdocs, but it needs to be redone.]]
-
-![Exhibit nnn: Larger Docs Are More Vulnerable to Random Errors: 5, 50, 500, 5000MB -- !!!MUST BE REDONE!!!](../pictures/largerdocs/baseline-scalingdocsize.png){width=90%}
-
-The table of **Exhibit nnn** shows the relationship between document size and storage error rate.  (Error rate is expressed as sector half-life, as explained below.)  Note the extremely linear relationship between document size and storage quality.  A larger document must reside on a higher quality server to achieve the same loss rate.  
-[[PDF captured from spreadsheet, in pictures/docsizevserrorrate/Data_Scaling_DocsizeSpreadsheet-2.pdf]]
-
-![Exhibit nnn: Linear Relationships Between Document Sizes and Error Rates](../pictures/docsizevserrorrate/Scaling_DocsizeLifetimeComparisons_abbrev.png){width=70%}
-
-In summary, we consider lossless compression to be benign for a variety of reasons.
-
-- As already mentioned, smaller documents are smaller targets for errors.  
-- Compression of document copies reduces storage costs.  This permits a client to employ more copies for greater redundancy without increasing the price.  
-- Smaller documents consume lower bandwidth for retrieval and editing, lowering egress charges from the storage vendor.  This makes the auditing process less expensive.
-- A possible drawback is that some methods of compression may require decompression software at client end for document retrieval.
-
-Thus the recommendation, "Compress your documents."  
-
-[[END of RBL's editing 20180716.]]
-
-# Recommendation: Cloak Your Documents: Encryption
-
-The recommendation, "Cloak your documents" tries to meet the needs of some collections for privacy.  Encryption of documents may be required for secrecy, digital rights management, or other reasons.  If a document is encrypted after it has been compressed, the encryption generally does not impose an additional size burden on the document.  Thus encryption does not compromise the advantage gained by compression, though it does have some impact on potential document losses.  
-
-- An encrypted document is more fragile in the sense that it, if damaged by an error, it may not be recoverable even with extraordinary efforts.  (Contrast with text documents, still photo, video, and audio files.)
-- A collection of encrypted documents is more subject to large shocks, associated failures where multiple servers are immediately affected.  E.g., losing the encryption keys can cause all the copies on several servers to be irretrievable.  
-
-Encrypted documents, like compressed documents, may have a greater need for storage redundancy, auditing, and repair because of their increased fragility.  
-
-
-# A Very Simple Cost Model
-
-TBS NOTE: Where should this section go?  Beginning?  In the Compression section?  
-
-Many storage vendors may be available to a client, each with charge schedules.  For the most part, vendors will charge for storage and bandwidth.
-
-- A charge per month per byte stored (usually gigabyte or petabyte).
-    - The cost of storage may vary by "quality" of storage, based on its typical error rate or perhaps on speed of retrieval access.  
-    - Storage is charged per copy; multiple copies cost more.
-- A charge per month per byte sent in or out ("ingress" and "egress" charges).
-    - Bytes sent do not distinguish between user access for normal retrieval and administrative access for auditing.  
-    - The cost may vary by speed or reserved bandwidth (Mbps).
-- Charge schedules may include quantity discounts for storage and transfer
-
-For the purposes of this study, a client will store a collection on a set of servers of the same "quality" level.  Documents with differing quality requirements are considered separate collections and are stored and managed separately.  
-
-
-# Recommendation: Judge for Yourself the Level of Storage Quality
-
-This recommendation counsels us to trust our own experience more than the marketing statements of those trying to sell us products and services.  This has two parts:
-
-- Question the provenance of reliability estimates from vendors.  
-- Pay close attention to our own experience with storage reliability.  Note that this requires that we *collect* and *analyze* reliability data from our own collections.  
-
-### Doubt Statistics of Manufacturers and Cloud Vendors    
-
-#### Lifetime is Easier to Understand Than Error Rate
-
-The inverse of error rate is usually expressed in terms of MTBF or MTTF, and, initially, we expressed all parameters as mean exponential lifetime. But MTBF and MTTF are hard even for most experts to grasp, and uninformative or misleading for non-experts.
-
-The likelihood of an error in a disk bit or sector, or even the failure of an entire disk, is a very small number with many zeroes before the first significant digit.  We choose to invert the error rate into a function of lifetime of that bit (or sector containing many bits).  Thus a probability of a bit failing in a year of 10E-15 becomes a mean lifetime of 100E12 years.  Expressed that way, the figure seems excessively optimistic.  (The age of the universe is currently estimated to be 14E9 years.)  Data on such a disk would be effectively immortal, and that does not seem to correlate with experience.  
-
-### Don't Believe Tricky Statistics
-
-#### Be Skeptical of MTBF
-
-The disk manufacturing industry tends to express the device lifetime as MTBF or MTTF. This is an expected (mean) exponential lifetime for the device, but that does not give much information about the lifetime of data in individual files, blocks, or bits on the disk. There are several layers of error detection and correction in storage systems that tend to mask small errors in disk data and obscure the relationship between small data errors and drive failures.
-
-MTBF, Mean Time Between Failures, is a slippery notion, much touted by marketing departments and viewed warily by users. Such figures may be derived from drive failure rates observed in accelerated life testing or returns from early deployments.  If the object in question is removed from service after only one failure, as is the case here with documents, it is perhaps more appropriate to speak of MTTF, Mean Time To Failure. MTTF is intended to be equivalent to the mean lifetime (before failure) of the object, and, if one assumes that failures are a Poisson process, then MTTF is the mean exponential lifetime of the object.
-
-Most non-marketing literature considers MTBF estimates from manufacturers to be exaggerated considerably, by factors of three or four at best. The annual failure rates of disk drives in large collections of drives are much higher than would be expected based on published MTBF estimates of 1E6 hours or more. [[citations needed]]
-
-Even if we understood the source and accuracy of stated MTTF estimates for disk drives, we would still not have information about individual sector failures within a drive that cause document failures, nor the relative frequencies of sector failures versus drive failures.
-
-We agree with Rosenthal (2010) [[citation needed]] and others that such estimates are merely marketing projections that are often not based on empirical data.  Using simulations to investigate such nearly immortal disks would be expensive and fruitless.  If there are no errors at all, then no protective strategy is needed.  However, the statement "no errors" does not correlate well with practical experience.  
-
-
-### Reliability Varies Over Time
-
+#Modeling Higher-Level Threats
 
 #### Small Changes in Error Rates: Glitches
 
@@ -671,26 +598,6 @@ The error rate of a storage device or storage server is not necessarily constant
 
 In this study, we have found that it is hard to distinguish glitch-induced increases in error rates from random variations in performance.  A glitch increases the error rate (reduces the sector lifetime) of the server for a while, but this need not impact the overall performance of a collection of documents in which that server is a participating member.  A good client strategy should maintain sufficient redundancy and auditing discipline to protect the collection over a wide range of adverse conditions.  A glitch in one server might require a higher degree of repair of that server during the next auditing cycle, but that should not impact the health of the overall collection.  
 
-
-### Do Believe the Experience of Yourself and Others
-
-- Attend your own experiences and those of other similar users
-
-- Trust Your Experience
-
-
-# Recommendation: Storage Vendors May be Ephemeral
-
-The computing facilities from whom we buy storage services are just corporations, and therefore not immortal.  They may die for a number of reasons: 
-
-- Corporate financial failure; 
-- Change of goals, changes in product lines and services offered; 
-- Mergers with other corporations or spinoffs of divisions;
-- Changes in pricing policies;
-- Etc.
-
-To protect a digital collection, we must plan for failures and mergers, and plan ahead for replacements.  This recommendation warns us to be aware of the possibilities of, and the impacts of, changes in the corporate landscape; and to be prepared to protect ourselves against such changes.  
-
 ### Exceptional but Realistic Conditions: Major Shocks
 
 We use the term "shock" to refer to incidents that can weaken or kill a whole server, or even multiple servers.  
@@ -704,7 +611,7 @@ We use the term "shock" to refer to incidents that can weaken or kill a whole se
 - When a server is lost, the client is required to find a new server and populate it with the whole collection -- or at least the parts of the collection that can still be found on the remaining servers.  
 
 
-# Recommendation: Storage Vendors and Locations Must be Independent
+## Recommendation: Storage Vendors and Locations Must be Independent
 
 An underappreciated source of correlated server failures is lack of independence of storage services.  This may stem from several causes.  
 
@@ -714,8 +621,25 @@ An underappreciated source of correlated server failures is lack of independence
 
 This recommendation warns us to monitor carefully the true independence of the services to which we commit our valuable documents.  
 
+# Corollary: Replicate Keys when Encrypting Your Documents
+
+<mark>Note: the main point is that one can model loss of encryption keys as a separate, small collection. Loss of that collection implies loss of the larger collection. The main threat is "shocks" to the set of "servers" that retain copies of the keys.  </mark>
+
+The recommendation, "Cloak your documents" tries to meet the needs of some collections for privacy.  Encryption of documents may be required for secrecy, digital rights management, or other reasons.  If a document is encrypted after it has been compressed, the encryption generally does not impose an additional size burden on the document.  Thus encryption does not compromise the advantage gained by compression, though it does have some impact on potential document losses.  
+
+- An encrypted document is more fragile in the sense that it, if damaged by an error, it may not be recoverable even with extraordinary efforts.  (Contrast with text documents, still photo, video, and audio files.)
+- A collection of encrypted documents is more subject to large shocks, associated failures where multiple servers are immediately affected.  E.g., losing the encryption keys can cause all the copies on several servers to be irretrievable.  
+
+Encrypted documents, like compressed documents, may have a greater need for storage redundancy, auditing, and repair because of their increased fragility.  
+
+
+
 
 # Recommendation: Develop Standards for the Benefit of All
+
+### Recommendation: Collect and Share Information on Storage Quality
+
+- Pay close attention to our own experience with storage reliability.  Note that this requires that we *collect* and *analyze* reliability data from our own collections.  
 
 ### Make auditing more efficient.
 
@@ -1517,6 +1441,85 @@ In this study, we have found that it is hard to distinguish glitch-induced incre
 - Attend your own experiences and those of other similar users
 
 - Trust Your Experience
+
+
+# Recommendation: Judge for Yourself the Level of Storage Quality
+
+This recommendation counsels us to trust our own experience more than the marketing statements of those trying to sell us products and services.  This has two parts:
+
+- Question the provenance of reliability estimates from vendors.  
+
+
+### Doubt Statistics of Manufacturers and Cloud Vendors    
+
+#### Lifetime is Easier to Understand Than Error Rate
+
+The inverse of error rate is usually expressed in terms of MTBF or MTTF, and, initially, we expressed all parameters as mean exponential lifetime. But MTBF and MTTF are hard even for most experts to grasp, and uninformative or misleading for non-experts.
+
+The likelihood of an error in a disk bit or sector, or even the failure of an entire disk, is a very small number with many zeroes before the first significant digit.  We choose to invert the error rate into a function of lifetime of that bit (or sector containing many bits).  Thus a probability of a bit failing in a year of 10E-15 becomes a mean lifetime of 100E12 years.  Expressed that way, the figure seems excessively optimistic.  (The age of the universe is currently estimated to be 14E9 years.)  Data on such a disk would be effectively immortal, and that does not seem to correlate with experience.  
+
+### Don't Believe Tricky Statistics
+
+#### Be Skeptical of MTBF
+
+The disk manufacturing industry tends to express the device lifetime as MTBF or MTTF. This is an expected (mean) exponential lifetime for the device, but that does not give much information about the lifetime of data in individual files, blocks, or bits on the disk. There are several layers of error detection and correction in storage systems that tend to mask small errors in disk data and obscure the relationship between small data errors and drive failures.
+
+MTBF, Mean Time Between Failures, is a slippery notion, much touted by marketing departments and viewed warily by users. Such figures may be derived from drive failure rates observed in accelerated life testing or returns from early deployments.  If the object in question is removed from service after only one failure, as is the case here with documents, it is perhaps more appropriate to speak of MTTF, Mean Time To Failure. MTTF is intended to be equivalent to the mean lifetime (before failure) of the object, and, if one assumes that failures are a Poisson process, then MTTF is the mean exponential lifetime of the object.
+
+Most non-marketing literature considers MTBF estimates from manufacturers to be exaggerated considerably, by factors of three or four at best. The annual failure rates of disk drives in large collections of drives are much higher than would be expected based on published MTBF estimates of 1E6 hours or more. [[citations needed]]
+
+Even if we understood the source and accuracy of stated MTTF estimates for disk drives, we would still not have information about individual sector failures within a drive that cause document failures, nor the relative frequencies of sector failures versus drive failures.
+
+We agree with Rosenthal (2010) [[citation needed]] and others that such estimates are merely marketing projections that are often not based on empirical data.  Using simulations to investigate such nearly immortal disks would be expensive and fruitless.  If there are no errors at all, then no protective strategy is needed.  However, the statement "no errors" does not correlate well with practical experience.  
+
+# Recommendation: Protect Against a Wide Range of Conditions
+
+### What Range of Storage Error Rates Should We Consider?
+
+One basic question should be answered before embarking on such simulations: what is the failure rate of stored documents? This is a difficult question due to a lack of real data.
+
+There is some data on the failure rate of individual disk drives over time. Thanks to Backblaze, Google, and others, there is some published empirical data on failure rates of disk drives of recent technology vintages. [[citations needed]]  These figures refer to replacements of entire disk drives during the useful life and wear-out periods of device use. That is, they exclude infant failures but include mid-life and senescence. Unfortunately, we do not get much information on the rates of sector failures, bad block replacements, and so forth.
+
+In the absence of either experimental or experiential data on sector failure rates, we are attempting to provide simulated data as guidelines for policies regarding data storage, redundancy, auditing and repair.  We have assumed that sector errors arrive randomly in a Poisson process.  The question is, what is the arrival rate of sector errors on a disk or disk array?  There is no single, even approximate answer to that question.  Consequently, we have looked at document losses over a wide range of error arrival rates and amelioration strategies.  
+
+**Exhibits nnn and nnn+1** show theoretical sector and document losses, based solely on error arrival rate (expressed as half-life), over the first few years of a disk drive's life.  
+
+
+##### Exhibit nnn: Sector losses in **permille** over the first few years of drive use, across a wide range of sector half-lives.  Sectors 1MB, sector half-lives in megahours (Mhr).
+
+##### Sector losses (**permille**) by sector half-life (megahours) 
+
+| Years in service | Sector half-life = 10Mhr | 30Mhr | 100Mhr | 300Mhr |
+|-----:|-----:|-----:|-----:|-----:|
+| 1 | 0.7 | 0.2 | 0.07 |0.02|
+| 2 | 1.4 | 0.5 | 0.13 |0.05|
+| 3 | 2.1 | 0.7 | 0.21 |0.07|
+| 5 | 3.5 | 1.2 | 0.35 |0.12|
+| 10 | 7.0 | 2.3 | 0.69 |0.23|
+
+Note also that, since documents typically occupy more than one disk sector, even the large sectors we use for these calculations, they are larger targets and therefore considerably more vulnerable to random errors.
+
+##### Exhibit nnn: Document losses in **percent** over the first few years, across a wide range of sector half-lives
+##### Sectors 1MB, documents 50MB, sector half-lives in megahours .
+
+| Years in service | Sector half-life = 10Mhr | 30Mhr | 100Mhr | 300Mhr | 1000Mhr |
+|-----:|-----:|-----:|-----:|-----:|-----:|
+| 1 | 3.4 | 1.1 | 0.3 |0.1 | 0.0 | 
+| 2 | 6.7 | 2.3 | 0.7 |0.2 | 0.1 |
+| 3 | 9.9 | 3.4 | 1.0 |0.3 | 0.1 |
+| 5 | 15.9 | 5.6 | 1.7 |0.6 | 0.2 |
+| 10 | 19.3 | 10.9 | 3.4 | 1.1 | 0.3 |
+
+[[Source spreadsheet: FailureRatesBackOfTheEnvelope.xls, sheet PrintMe]]
+
+Clearly, at the low end of the range, where sector half-life is in the range of 10 million hours, document losses would be unacceptably high.  If you lost 3 percent of all your documents in the first year, you would take immediate action to find a more reliable storage environment.  Even up to 30 million hours (sector half-life), such disks would be classified as "rusty garbage can lids" that are not suitable for archival storage.  Better disks might still accumulate errors at a significant rate, but permanent losses can be avoided with suitable auditing and repair regimes, as discussed below.  
+
+
+#### If You Can't Control It, Buy Insurance Against It
+
+We do not have good information on the sector error rates of our storage media, particularly if we are buying a service from an outside vendor.  Since such factors are beyond our control, we should choose strategies to protect our document collections from a *wide* range of circumstances that we might encounter.  Hence the recommendation, "Protect against a wide range of conditions."  
+
+
 
 
 
