@@ -28,6 +28,10 @@ font-family: Helvetica, Arial, sans-serif;
 font-weight: bold;
 font-size: smaller;
 }
+mark {
+background-color: #ffff88;
+color: black;
+}
 </style>
 </head>
 
@@ -35,7 +39,7 @@ font-size: smaller;
 % How Many Copies Is Enough?  
 % Micah Altman; Richard Landau  
 % 2016-08-15  
-% Revised 2018-07-16 RBL
+% Revised 2018-07-22 RBL
 
 [[Text blocks in double-square-brackets, such as this is, are editorial notes for the authors to clean up.]]
 
@@ -52,7 +56,7 @@ font-size: smaller;
 
 > How should we protect large and valuable collections of digital documents?
 
-> Rapid advances information technology have shifted the economics of information production, transmission, and storage. The result is that a vast and increasing amount of information is increasing stored digitally on-line, or near-line; but is not adequately protected against threats to long-term loss. The shift in information storage from physical to digital has technical, legal and economic dimensions -- and has changed the profile of threats to integrity, and the set of feasible methods for mitigating these threats. 
+> Rapid advances information technology have shifted the economics of information production, transmission, and storage. The result is that a vast and increasing amount of information is increasingly stored digitally on-line, or near-line; but is not adequately protected against threats to long-term loss. The shift in information storage from physical to digital has technical, legal and economic dimensions -- and has changed the profile of threats to integrity, and the set of feasible methods for mitigating these threats. 
 
 > This article addresses the problem of developing robust strategies to ensure information integrity over long periods -- and against a diverse range of real-world  technical, legal, organizational, and economic threats. To address this we frame the preseravation problem as a formal optimization problem, and develop a general event-based simulation framework that can be used to flexibly and reproducibly simulate the effectiveness of various methods of storage, replication, auditing, and transformation against a diverse portfolio of threats to data loss. 
 
@@ -80,39 +84,19 @@ TBS: NOTES
 
 - Get two refs for 1e-14 number.  
 
-- Is a combo of two Poissons itself Poisson?  [[I forget the question.]]
-
 - Check Azure erasure code stats.
 
 - Six copies if broad span correlated failures.  
 
 - RS(m,n) and repair-when-fail has vastly longer data life than multiple independent disks however reliable.  [Have to get some numbers to make this convincing.]
 
-Notes from 20180619.1400
-
-- JPEG2000?
-    - Preferred to PNG by L.O.C.
-    - file size?
-    - color treatment better than PNG?
-    - Their first choice is uncompressed TIFF.  [yikes!]
-
 - Detecting errors: say "fixity"
 
-- Can use the terms patrolling, replication, fixity.
-
 - Do a looong test to get down to < 1ppm over 100 years.  1ppb preferred, but nobody has that much computer time.  
-    - Probably 10 copies, quarterly auditing; 1000 runs.
+    - Probably 10 copies, quarterly auditing; 1000 runs
 
-- Other figures about lifetimes are right only in narrow circumstances, good weasel words.  
+- There is some problem with the math notation in this pandoc.  
 
-
-20180709
-
-- There is some problem with the math notation in this pandoc.  The double-backslashes translate to single backslashes (and remain in front of all parens and a few elsewhere).  And the subscripts don't work; I tried to fix both of these.  
-- And what's with all the extra letter spacing?  Does not aid readability.  
-
-
-<!-- a Land Without Rs moment: Lunch at the bar at Legal in Kendall.  Two guys on my left speak Italian to each other, plain American English to the bartender.  The guy on my right speaks unaccented English to the bartender but is reading a newpaper on his iPad in Swedish.  A Cambridge moment.  -->
 <!-- END:TODO:RICK -->
 
 # How Digitization Changes Strategies for Ensuring Long-Term Access
@@ -146,7 +130,7 @@ There are many threats to content, and the range of strategies that are availabl
 
 More strictly, we can formulate this task as an optimization problem. Given:
 
--  a set \(C\), of documents \C={D~1~..D~N~}\);
+-  a set \(C\), of documents \C={D~1~..D~N~}\;
 -  a budget \(B\); 
 -  a preservation strategy \(S\), which is a tuple \
 (S={Copies, AuditMethod, RepairFrequency, FileTransformation}\);
@@ -427,6 +411,20 @@ This regimen of data hygiene -- high redundancy and frequent auditing and repair
 ### Corollary: Compress Your Documents
 
  <mark>NOTE: this discussion elides two important points. (1) In real life documents are repairable. Compression increases fragility of the document but decreases the target size. The ratio matters -- if size goes down faster than fragility, then compression is an unambiguous win. (2) Even when compression increass overall fragility, it reduces storage costs, enabling an extra copy to be made. When does having another copy reduce risk more than having a more fragile collection?</mark>
+ 
+<mark>
+(Response that may be the fruit of ignorance, apology in advance.)
+
+<mark>I *think* that documents are less and less repairable every day.  There are too many of them, and more every day.  And more of them are encrypted every day.  And there are too few people with too little time and expertise to effect the repairs.  </mark>
+
+<mark>Software that is specifically designed to repair some document defects will not doubt be developed (or may already have been).  A single bit or single frame error in a movie, no problem.  A small error in audio, no problem.  They may be repairable by built-in error correction coding or by context, or they may simply be ignorable.  However, a small error in a JPG or PDF or in running text, problem.  Is that glaring pixel an error in the picture or a feature of the picture?  Is that text change just one more typo away from the original?  Even a human can decide only by comparison with the original document, and that is exactly what the automated auditing process is supposed to do: compare the copy with the original and fix it if it is different.  Admittedly, the "fix" is done with a howitzer, simply replacing the document copy.  Subtlety was never my strong suit.  </mark>
+
+<mark>I had hoped that the second and third bullets here tried to address the question of smaller = cheaper = more copies on a fixed budget = higher redundancy = lower risk of loss.  Maybe they need to be clearer, or I missed something else.  </mark>
+
+<mark>If there is an accepted meaningful way to quantify fragility or risk, wow, please enlighten me.  </mark>
+
+<mark>End of response.  -- RBL
+</mark>
 
 What are the effects of compressing and/or encrypting documents?  Compression can make a document dramatically smaller but also somewhat more fragile.  This study does not consider the availability of human-aided repair of digital documents, which we believe is extremely rare, only the complete replacement of damaged documents.  In that context, lossless compression is almost always a good strategy for long-term storage of documents.
 
@@ -469,8 +467,6 @@ In summary, we consider lossless compression to be benign for a variety of reaso
 
 Thus the recommendation, "Compress your documents."  
 
-[[END of RBL's editing 20180716.]]
-
 
 # Protecting Against a Range of Threats
 
@@ -510,9 +506,9 @@ The storage manufacturing industry tends to express the reliability of storage i
 How is MTTF calculated before it is published?  Several methods might be used, including at least the following.  
 
 1. A predicted value based on engineering characteristics of the mechanism, component parts, expected wear patterns, and so forth.  Depending on the complexity of the device and the manufacturer's understanding of its components and usage patterns, this can be a very complex and, frankly, questionable estimation.  
-1. Failure data from life testing, often of large numbers of devices over long periods.  Such testing may be done by the manufacturer in-house, or in field testing of early deployments, or by consumers who use large numbers of devices and track failures carefully.
-1. Failure data from accelerated life testing.  It is often assumed that operation under high temperature or thermal cycling or high speeds or other stress conditions will cause devices to fail predictably prematurely.  For some classes of devices, accelerated life testing has proved to be useful and accurate.  
-1. Failure data from warranty failures returned during a service period.  This may be assessed by the manufacturer or by users of large numbers of devices.  
+1. Failure data from life testing, often of large numbers of devices over long periods.  Such testing may be done by the manufacturer in-house, or in field testing of early deployments, or by consumers who use large numbers of devices and track failures carefully.  
+1. Failure data from accelerated life testing.  It is often assumed that operation under high temperature, thermal cycling, high speeds, or other stress conditions will cause devices to fail predictably prematurely.  For some classes of devices, accelerated life testing has proved to be useful and accurate.  
+1. Failure data from warranty failures returned during a service period.  This may be assessed by the manufacturer or by users of large numbers of devices.  [[CITE Google and Backblaze numbers.]]
 
 Published claims of MMTF are usually derived from drive failure rates observed in accelerated life testing or returns from early deployments.  Most non-marketing literature considers MTBF estimates from manufacturers to be exaggerated considerably, by factors of three or four at best. The annual failure rates of disk drives in large collections of drives are much higher than would be expected based on published MTBF estimates of 1E6 hours or more. [[citations needed]]
 
@@ -520,14 +516,15 @@ There is data on the failure rate of individual disk drives over time.  Thanks t
 
 Backblaze, on the basis of experience with hundreds of thousands of disk drives, has estimated the failure rates of drives for the first four years. [[citation needed]]  **Exhibit nnn** shows the estimated drive lifetimes based on that experience.  [[Source spreadsheet = PaperDraft/DiskFailuresDuringRAIDRebuild.xls sheet Survival2Halflife]] This and related data suggests that 2-8% [[CHECK] of disks fail annually. [[CITE]]  
 
+![List of articles citing disk error rates, just for reference](../pictures/other/DiskErrorRates_xmind_02.png){width=90%}
 
-### Uncertainties over Sector Reliability
+##### (Where to find articles citing disk error rates.)
 
-MTTF, even when accurate, does not give direct information about the lifetime of data in individual files, blocks, or bits on the disk -- since there are several layers of error detection and correction in storage systems that tend to mask small errors in disk data and obscure the relationship between small data errors and drive failures. Further, there is little reliable publishe empirical information on the rates of sector failures, bad block replacements, and so forth.  
+MTTF, even when accurate, does not give direct information about the lifetime of data in individual files, blocks, or bits on the disk -- since there are several layers of error detection and correction in storage systems that tend to mask small errors in disk data and obscure the relationship between small data errors and drive failures. Further, there is little reliable published empirical information on the rates of sector failures, bad block replacements, and so forth.  
 
 The inverse of error rate is usually expressed in terms of MTBF or MTTF, and, initially, we expressed all parameters as mean exponential lifetime.  But MTBF and MTTF are hard even for most experts to grasp, and uninformative or misleading for non-experts.  
 
-MTTF does not give direct information about the lifetime of data in individual files, blocks, or bits on the disk.   Drive failure may result from failures in the mechanisms of moving parts, the controller electronics, circuit boards, connectors, etc. Most of these will errors will in practice make recovery of data from the sectors on that drive infeasible. Sector failure can occur without drive failure -- from surface wear, chemistry, radiation, lubrication, magnetic interference, and so forth.
+MTTF does not give direct information about the lifetime of data in individual files, blocks, or bits on the disk.   Drive failure may result from failures in the mechanisms of moving parts, the controller electronics, circuit boards, connectors, etc. Most of these will errors will in practice make recovery of data from the sectors on that drive infeasible. Sector failure can occur without drive failure -- from surface wear, chemistry, radiation, lubrication, particulate contamination, magnetic interference, and so forth.
 
 Further, there are several layers of error detection and correction in storage systems that tend to mask small errors in disk data and obscure the relationship between small data errors and drive failures.
 
@@ -535,13 +532,13 @@ Further, there are several layers of error detection and correction in storage s
 1. Bad block remapping in disk controllers.  Smart disk controllers can take unreliable sectors out of service, replacing them with more reliable sectors from a pool of spares.  Such remapping is usually transparent to most software, but it may or may not be able to rescue the data residing on the bad blocks.  
 1. RAID and similar redundant recording of sector data.  Sector data may be recorded redundantly in mirror sets, or recorded partially in multiple versions using parity techniques, and so forth.  
 
-We can estimate some bounds on the failure of sectors by extrapolating from the failure of drives. In the absence of data replication and auditing -- either at an object level, or through RAID or erasure-codes operating at the file system or storage level, the life of all the sectors on the disk cannot be longer than the life of the entire drive during its standard service lifetime. (We do not assume that drives are run until they fail, but replaced after a fixed period.)   That is, the MTTF of the drive is an upper bound on life of sectors contained on that drive.  
+We can estimate some bounds on the failure of sectors by extrapolating from the failure of drives. In the absence of data replication and auditing -- either at an object level, or through RAID or erasure-codes operating at the file system or storage level -- the life of all the sectors on the disk cannot be longer than the life of the entire drive during its standard service lifetime. (We do not assume that drives are run until they fail, but are replaced after a fixed period.)   That is, the MTTF of the drive is an upper bound on life of sectors contained on that drive.  
 
 While erasure-code and other techniques may substantially reduce the rate of 'logical' sector errors across the entire volume, caution is warranted when relying on low-level replication services. For example,  RAID and similar techniques protect only against *drive* failure; they do not protect against bad bits, blocks, or tracks when reading from a drive.  If a disk drive fails completely, RAID and erasure code techniques can rebuild the data on that drive from redundant data stored on other drives.  However, while a drive is still in operation, individual bad blocks on a drive will still read as bad blocks until the drive is removed from service and its data recovered, *if possible*, from the remaining drives in the redundancy set.  The data on a disk drive, even in a redundancy set, can deteriorate incrementally over time and cause documents (in our case documents, but files in general) to be altered badly.  If deteriorated data cannot be repaired by block error correction techniques in the disk controller, then the data of the file or document may be permanently lost or corrupted. Thus, in our modelling we focus on mitigating sector errors through replication techniques that audit each sector/block/or document. 
 
-If disks are regularly replaced and volumes rebuilt redundant arrays of disks, then the drive lifetime may not be the dominant factor in sector survival.  Failures of individual sectors will occur all the time, albeit at a much lower rate, but they are silent and will accumulate if they are not actively uncovered and repaired.
+If disks are regularly replaced and volumes rebuilt in redundant arrays of disks, then the drive lifetime may not be the dominant factor in sector survival.  Failures of individual sectors will occur all the time, albeit at a much lower rate, but they are silent and will accumulate if they are not actively uncovered and repaired.
 
-An oft-cited number about disk error rates is "uncorrectable error rate = one bit in 10e-14."  [[Need citations.]]  Note several things about this number.  
+An oft-cited number about disk error rates is "uncorrectable error rate (UER) = one bit in 10e-14."  [[Need citations.]]  Note several things about this number.  
 
 1. It is not a statistic in the usual sense; that is, it has not been derived from any referenced empirical data.  It is a hypothesis from the manufacturing industry, perhaps derived from collective experience.
 1. It is not stated as time-dependent; that is, it is not an *arrival* rate of errors, it is a constant.  It also does not seem to increase with the size of the drive.  Most analyses using this number treat it as a given fact for any disk drives, for example, as perhaps a rate of manufacturing defects.  
@@ -563,11 +560,15 @@ As an example, consider Amazon's long-term storage, Glacier. Amazon describes it
 > Amazon S3 Standard, S3 Standard–IA, S3 One Zone-IA, and Amazon Glacier are all designed to provide 99.999999999% durability of objects over a given year. This durability level corresponds to an average annual expected loss of 0.000000001% of objects. For example, if you store 10,000,000 objects with Amazon S3, you can on average expect to incur a loss of a single object once every 10,000 years. In addition, Amazon S3 Standard, S3 Standard-IA, and Amazon Glacier are all designed to sustain data in the event of an entire S3 Availability Zone loss.
 
 There are several reasons to be cautious of this reliablity figure. 
+
 1. First, no empirical evidence is provide to support these numbers. Neither externally validated data, nor internally produced audit records are provide in support of these figures. 
 2. Second, the internal replication and auditing mechanisms are not described, although Amazon's documentation indicates that data is checked at rest. Likely, some form of erasure coding is used, and Amazon's reliability numbers are consistent with theoretical erasure code reliability numbers. [[CITE]]. Notwithstanding, however, published theoretical calculations exclude a range of internal correlated failure modes (such as software errors), and are thus likely to underestimate observed errors.
 3. Third, Amazon's SLA does not provide an enforcement or redress mechanism that consistent with these reliability claims. Redress is limited to service fees only, not to the value of content.
 4. Fourth, collections stored by any single institution are subject to catastrophic threats, including operator error (e.g. loss of billing information), operator malfeasance, and financial failure. We discuss these in more detail in section [[XXXX]] 
 
+<mark>
+The Backblaze Blog last week talked about the same fifteen-nines level of reliablity, how they arrived at that number, and why they feel it doesn't matter.  
+</mark>
 
 
 # Recommendation: Diversify Across Storage Vendors
