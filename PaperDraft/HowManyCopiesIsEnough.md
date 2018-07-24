@@ -573,7 +573,8 @@ The Backblaze Blog last week talked about the same fifteen-nines level of reliab
 </mark>
 
 
-# Recommendation: Diversify Across Storage Vendors
+#Modeling Higher-Level Threats
+
 The computing facilities from whom we buy storage services are just corporations, and therefore not immortal.  They may die for a number of reasons: 
 
 - Corporate financial failure; 
@@ -584,7 +585,8 @@ The computing facilities from whom we buy storage services are just corporations
 
 To protect a digital collection, we must plan for failures and mergers, and plan ahead for replacements.  This recommendation warns us to be aware of the possibilities of, and the impacts of, changes in the corporate landscape; and to be prepared to protect ourselves against such changes.  
 
-#Modeling Higher-Level Threats
+In order to protect ourselves, we need to identify both the potential threats that can cause correlated failure and to model potential impact of those threats on our replication and auditing strategies. 
+
 
 #### Small Changes in Error Rates: Glitches
 
@@ -624,16 +626,19 @@ An underappreciated source of correlated server failures is lack of independence
 
 This recommendation warns us to monitor carefully the true independence of the services to which we commit our valuable documents.  
 
-# Corollary: Replicate Keys when Encrypting Your Documents
+## Corollary: Replicate Keys when Encrypting Your Documents
 
-<mark>Note: the main point is that one can model loss of encryption keys as a separate, small collection. Loss of that collection implies loss of the larger collection. The main threat is "shocks" to the set of "servers" that retain copies of the keys.  </mark>
+We identified loss of encryption keys as a threat to content in section XXX above. In this section we discuss strategies for evaluating the impact of encryption key loss, and mitigating these risks. As it turns out, it is not necessay to add encyrption directly to the discrete simulation model described above -- we can evaluate this risk using the existing model. 
 
-The recommendation, "Cloak your documents" tries to meet the needs of some collections for privacy.  Encryption of documents may be required for secrecy, digital rights management, or other reasons.  If a document is encrypted after it has been compressed, the encryption generally does not impose an additional size burden on the document.  Thus encryption does not compromise the advantage gained by compression, though it does have some impact on potential document losses.  
+Encrypting a collection of content creates three additional threats of loss. First, and most important,  losing all  copies of the encryption keys for the collection effectively results in a loss of all replicas of the collection -- while the bits comprising such collections may continue to exist, they are rendered meaningless. Second, if the knowledge of the encryption algorithm is lost, the collection is likewise destroyed. Third, encryption may make documents more fragile --  a single block loss will destroy the entire document rather than a portion. 
 
-- An encrypted document is more fragile in the sense that it, if damaged by an error, it may not be recoverable even with extraordinary efforts.  (Contrast with text documents, still photo, video, and audio files.)
-- A collection of encrypted documents is more subject to large shocks, associated failures where multiple servers are immediately affected.  E.g., losing the encryption keys can cause all the copies on several servers to be irretrievable.  
+The last threat (fragility) has a minor impact (see section XXX discussing compression and fragility) and is readily mitigated, if necessary, by adding an additional copy to the replication scheme. The second threat (algorithm loss) can be effectively mitigated by selecting a well-known standard encryption algorithms -- standard algorithms are widely documented, and indepently replicated. Thus, we focus on the threats from loss of encryption keys.
 
-Encrypted documents, like compressed documents, may have a greater need for storage redundancy, auditing, and repair because of their increased fragility.  
+Loss of encryption key may be modeled by treating the keys as a small, separate collection of documents. As we have shown above -- mitigating risks of loss to a collection requires replication, auditing, and repair. For security reasons, encryption keys should be kept in separate administrative domains than the content they encrypt. We recommend that a separate set of 'servers' be used to replicate the collection of encryption keys. 
+
+Because the size of the collection is small (encryption keys are very small relative to the content they collect), risks to the collection of keys will be dominated by 'shocks' that disrupt organizations and affect multiple replicas. For example -- wars, economic recessions, and government actions may lead to organizational failures. 
+
+Summarizing section XXX, above -- XXX independent copies, audited annually, are sufficient to prevent loss from an extensive range of severe external shocks. We thus conclude that one should maintain copies of encryption keys (or equivalent redundancy using secret-sharing methods [CITE]), distributed across across XXX independent organizations. 
 
 
 
@@ -1516,7 +1521,6 @@ Note also that, since documents typically occupy more than one disk sector, even
 [[Source spreadsheet: FailureRatesBackOfTheEnvelope.xls, sheet PrintMe]]
 
 Clearly, at the low end of the range, where sector half-life is in the range of 10 million hours, document losses would be unacceptably high.  If you lost 3 percent of all your documents in the first year, you would take immediate action to find a more reliable storage environment.  Even up to 30 million hours (sector half-life), such disks would be classified as "rusty garbage can lids" that are not suitable for archival storage.  Better disks might still accumulate errors at a significant rate, but permanent losses can be avoided with suitable auditing and repair regimes, as discussed below.  
-
 
 #### If You Can't Control It, Buy Insurance Against It
 
