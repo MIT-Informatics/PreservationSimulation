@@ -316,7 +316,7 @@ Even multiple copies of collections deteriorate over time, however, from small e
 
 > ##### Figure 2: How percentage of collection lost over 10 years as a factor of both sector reliability and the number of copies
 
-A modest number of copies, even of very high quality, cannot guarantee archival storage over long periods. As figure 2 show, without auditing, at least nine copies are needed to ensure against sector-level loss for even a period of a decade. Further, significant losses will acculate longer periods.    For example, to prevent 1% loss of a collection over 50 years, at least XX copies would be needed.  (For more details, **Table A-2** in the appendices shows the expected rates of document errors, over a range of storage copies, and time periods.)  A strategy that includes monitoring and repair of documents is required for long-term preservation.
+A modest number of copies, even of very high quality, cannot guarantee archival storage over long periods. As figure 2 show, without auditing, at least nine copies are needed to ensure against sector-level loss for even a period of a decade. Further, significant losses will acculate longer periods.   <mark> For example, to prevent 1% loss of a collection over 50 years, at least XX copies would be needed.</mark>  (For more details, **Table A-2** in the appendices shows the expected rates of document errors, over a range of storage copies, and time periods.)  A strategy that includes monitoring and repair of documents is required for long-term preservation.
 
 Moreover, even if the media was invulnerable to sector-level errors, a single copy of a collection is vulnerable to large-scale or total loss if that single copy is victim of a disaster, natural or man-made (e.g., earthquake, flood, war, economic depression, administrative error, etc.).  As shown in the next section, multiple copies in multiple independent locations are necessary to safeguard documents against this type of large-scale loss. 
 
@@ -350,6 +350,8 @@ The auditing process actively patrols for errors before they cause permanent doc
 ![A modest number of copies with total annual auditing can reduce errors to negligible levels](./images/baseline-auditannually.png){width=90%}
 
 ##### Exhibit nnn: Losses are reduced with annual auditing.
+
+<mark>Note: Is 5 sufficient to prevent loss over 50 year periods.</mark>
 
 
 ### A Simple Cost Model
