@@ -39,7 +39,7 @@ color: black;
 % How Many Copies Is Enough?  
 % Micah Altman; Richard Landau  
 % 2016-08-15  
-% Revised 2018-07-22 RBL
+% Revised 2018-07-26 RBL
 
 [[Text blocks in double-square-brackets, such as this is, are editorial notes for the authors to clean up.]]
 
@@ -455,17 +455,29 @@ The drawings in **Exhibit nnn** illustrate the effect of randomly placed errors 
 
 ![Exhibit nnn: Larger Docs Are More Vulnerable to Random Errors: 5, 50, 500, 5000MB -- !!!MUST BE REDONE!!!](../pictures/largerdocs/baseline-scalingdocsize.png){width=90%}
 
-The table of **Exhibit nnn** shows the relationship between document size and storage error rate.  (Error rate is expressed as sector half-life, as explained below.)  Note the extremely linear relationship between document size and storage quality.  A larger document must reside on a higher quality server to achieve the same loss rate.  
+The table of **Exhibit nnn** shows the relationship between document size and storage error rate.  (Error rate is expressed as sector half-life, as explained below.)  Note the extremely linear relationship between document size and storage quality.  A larger document must reside on a higher quality server to achieve the same loss rate. Note that the figures in this table are derived from experiment, not simply from theory.  And please recall that storage quality is expressed as sector lifetime (half-life), which is the inverse of the error rate; as the error rate goes up, the sector lifetime goes down.  High sector lifetimes are seen in more desirable storage with lower error rates.  
+ 
 [[PDF captured from spreadsheet, in pictures/docsizevserrorrate/Data_Scaling_DocsizeSpreadsheet-2.pdf]]
 
 ![Exhibit nnn: Linear Relationships Between Document Sizes and Error Rates](../pictures/docsizevserrorrate/Scaling_DocsizeLifetimeComparisons_abbrev.png){width=70%}
 
+As can be seen from the figures, larger documents suffer higher loss rates *in direct proportion to their size*.  A ten-times-larger document will suffer the same loss rate as a smaller document only if the smaller document is stored with a ten-times-higher error rate.  If the error rates (lifetimes) for storage of the small and large documents are the same, the larger document will be corrupted and lost much more frequently.  A smaller file is always a smaller target for random errors.  
+
+The linear increase in document losses based on size is to be expected from straightforward Poisson calculations.  In addition, we ran simulations over a wide variety of conditions to verify that this linear relationship holds for multiple copies of collection documents, various auditing strategies, and a very wide range of storage quality (error rates, sector lifetimes).  
+
+### Compression Also Offers Other Advantages
+
+Compression offers another major advantage: potentially higher redudancy.  If compression reduces a document's size by, say, 50%, then a client can store two copies of the document for the same cost in storage.  That extra copy provides higher redundancy and thus greater resistance to document loss.  On a fixed budget, a client can store additional copies of documents depending on how effective the compression algorithm is.  High compression permits more copies to be replicated to offset any increased fragility of a compressed document.  Text and image compression are particularly effective in this regard.  
+
+Finally, compression permits more aggressive auditing, to protect a collection, without increasing costs.  Smaller, compressed documents can be retrieved more quickly without increasing bandwidth, and consume less bandwidth and less egress costs from the storage vendors.  Auditing of the collection can be done more frequently on the same budget, which improves document survival rates.  
+
 In summary, we consider lossless compression to be benign for a variety of reasons.
 
-- As already mentioned, smaller documents are smaller targets for errors.  
-- Compression of document copies reduces storage costs.  This permits a client to employ more copies for greater redundancy without increasing the price.  
-- Smaller documents consume lower bandwidth for retrieval and editing, lowering egress charges from the storage vendor.  This makes the auditing process less expensive.
-- A possible drawback is that some methods of compression may require decompression software at client end for document retrieval.
+- Smaller documents are smaller targets for errors.  They are less likely to corrupted than large documents.  
+- Smaller documents permit higher storage redundancy without increasing costs, thus offering greater protection for the documents in a collection.  
+- Smaller documents can be audited more frequently to protect the collection.  
+
+Overall, while compression may increase the fragility of an individual document, it can greatly increase the survival of an entire collection without increasing costs.  In all but a few extreme cases, the trade-off favors compression.  
 
 Thus the recommendation, "Compress your documents."  
 
