@@ -481,6 +481,7 @@
                     <option value="150000">&nbsp;&nbsp;150000 (15 years)&nbsp;</option>
                     <option value="200000">&nbsp;&nbsp;200000 (20 years)&nbsp;</option>
                     <option value="300000">&nbsp;&nbsp;300000 (30 years)&nbsp;</option>
+                    <option value="500000">&nbsp;&nbsp;500000 (50 years)&nbsp;</option>
                     </select>
             </td></tr>
         </table>
