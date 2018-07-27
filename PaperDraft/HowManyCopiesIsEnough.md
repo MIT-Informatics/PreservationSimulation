@@ -386,6 +386,12 @@ The simplest *and most effective* strategy for auditing is ***total auditing***.
 
 > It is important to note that total auditing requires that *all* copies of a document be checked during each auditing cycle.  A document may be assigned to any segment within a cycle, but it must be present in some segment of each cycle.  The sampling of documents for each segment of the auditing can be systematic (some 25% subset of the collection each quarter, e.g., every fourth document in some list) or random (e.g., choose randomly 25% of the collection from among the remaining unaudited documents each quarter); but it is important that the total auditing actually be *total*.  That is, auditing segments must sample documents ***without replacement*** each cycle.  Sampling with replacement permits some documents to be missed in each cycle and reduces the effectiveness of auditing.  
 
+Exhibit nnn shows the deleterious impact of random sampling with replacement on the effectiveness of auditing.  (The figures shown here are for three copies; for larger numbers of copies, e.g., five, the loss rates are smaller but the comparisons hold.)
+
+![Exhibit nnn: Auditing using random selection WITH replacement predictably misses some documents entirely, reducing the effectiveness of auditing and increasing losses. ](../oldpictures/audit/random/baseline-auditrandomvsbaseline-c3.png){width=80%}
+
+##### (Picture needs to be redone, of course.)
+
 A variety of auditing strategies will be described and evaluated in the supplemental material.  
 
 ### How Many Copies to Keep With Auditing?
@@ -415,17 +421,7 @@ This regimen of data hygiene -- high redundancy and frequent auditing and repair
  <mark>NOTE: this discussion elides two important points. (1) In real life documents are repairable. Compression increases fragility of the document but decreases the target size. The ratio matters -- if size goes down faster than fragility, then compression is an unambiguous win. (2) Even when compression increass overall fragility, it reduces storage costs, enabling an extra copy to be made. When does having another copy reduce risk more than having a more fragile collection?</mark>
  
 <mark>
-(Response that may be the fruit of ignorance, apology in advance.)
-
-<mark>I *think* that documents are less and less repairable every day.  There are too many of them, and more every day.  And more of them are encrypted every day.  And there are too few people with too little time and expertise to effect the repairs.  </mark>
-
-<mark>Software that is specifically designed to repair some document defects will not doubt be developed (or may already have been).  A single bit or single frame error in a movie, no problem.  A small error in audio, no problem.  They may be repairable by built-in error correction coding or by context, or they may simply be ignorable.  However, a small error in a JPG or PDF or in running text, problem.  Is that glaring pixel an error in the picture or a feature of the picture?  Is that text change just one more typo away from the original?  Even a human can decide only by comparison with the original document, and that is exactly what the automated auditing process is supposed to do: compare the copy with the original and fix it if it is different.  Admittedly, the "fix" is done with a howitzer, simply replacing the document copy.  Subtlety was never my strong suit.  </mark>
-
-<mark>I had hoped that the second and third bullets here tried to address the question of smaller = cheaper = more copies on a fixed budget = higher redundancy = lower risk of loss.  Maybe they need to be clearer, or I missed something else.  </mark>
-
-<mark>If there is an accepted meaningful way to quantify fragility or risk, wow, please enlighten me.  </mark>
-
-<mark>End of response.  -- RBL
+See new text.
 </mark>
 
 What are the effects of compressing and/or encrypting documents?  Compression can make a document dramatically smaller but also somewhat more fragile.  This study does not consider the availability of human-aided repair of digital documents, which we believe is extremely rare, only the complete replacement of damaged documents.  In that context, lossless compression is almost always a good strategy for long-term storage of documents.
@@ -648,7 +644,7 @@ The last threat (fragility) has a minor impact (see section XXX discussing compr
 
 Loss of encryption key may be modeled by treating the keys as a small, separate collection of documents. As we have shown above -- mitigating risks of loss to a collection requires replication, auditing, and repair. For security reasons, encryption keys should be kept in separate administrative domains than the content they encrypt. We recommend that a separate set of 'servers' be used to replicate the collection of encryption keys. 
 
-Because the size of the collection is small (encryption keys are very small relative to the content they collect), risks to the collection of keys will be dominated by 'shocks' that disrupt organizations and affect multiple replicas. For example -- wars, economic recessions, and government actions may lead to organizational failures. 
+Because the size of the collection is small (encryption keys are very small relative to the content they protect), risks to the collection of keys will be dominated by 'shocks' that disrupt organizations and affect multiple replicas. For example -- wars, economic recessions, and government actions may lead to organizational failures. 
 
 Summarizing section XXX, above -- XXX independent copies, audited annually, are sufficient to prevent loss from an extensive range of severe external shocks. We thus conclude that one should maintain copies of encryption keys (or equivalent redundancy using secret-sharing methods [CITE]), distributed across across XXX independent organizations. 
 
