@@ -623,6 +623,22 @@ We use the term "shock" to refer to incidents that can weaken or kill a whole se
 - Shocks may be regional or administrative phenomena that affect more than one server at a time.  One particularly subtle cause of a shock affecting multiple servers is lack of independence of the servers, due to corporate mergers, collocation of server farms, dependence on large power grids, etc.  
 - When a server is lost, the client is required to find a new server and populate it with the whole collection -- or at least the parts of the collection that can still be found on the remaining servers.  
 
+A shock represents a serious threat to collection survival.  If a shock is fatal to one or more servers, then the effective redundancy of the collection is reduced.  Even if the shock is not immediately fatal to some server(s), it can weaken one or more servers financially or politically, which may then cause them to fail in the short term.  
+
+To protect against the possibility of shocks, several strategies may be useful.  
+
+- Increase the number of copies replicated in the network.  This simple increase in redundancy can mitigate the loss of one or more servers during a shock.  
+- Disperse the servers geographically and politically, so that regional problems and changes in national policies are less likely to strike more than one server at a time.  
+- Increase the frequency of auditing by auditing more segments per cycle.  If a shock kills one or more servers, the redundancy of the collection is reduced only until the client discovers the failed server(s) and replaces them.  If a client audits annually and a server fails, then the collection is at risk of reduced redundancy for, on the average, six months.  If the client audits annually but in four segments, then every server will be checked every quarter of a year.  This leaves the collection exposed to reduced redundancy for only, on the average, six weeks.  The collection can be restored to full redundancy more quickly, reducing the likelihood of permanent losses.  
+
+Our simulations show that, even for very severe shocks, e.g., an annual loss of two or three servers to some disaster, NNN copies with annual auditing with four or more segments suffices to protect the collection over a very wide range of server quality and shock conditions.  
+
+Exhibit NNN illustrates that, under conditions of even moderate shocks, three or four copies are not sufficient to protect a collection over a wide range of server quality.
+
+![Exhibit nnn: Moderate shocks cannot be tolerated with only 3 or 4 copies. ](../oldpictures/shocks/compare/pct50/Shock_compare_copvar_freq2yr_dur1yr_span2_impact50.png){width=80%}
+
+##### (Placeholder icture to be redone, up to six copies, of course.)
+
 
 ## Recommendation: Storage Vendors and Locations Must be Independent
 
