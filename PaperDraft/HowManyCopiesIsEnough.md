@@ -292,7 +292,7 @@ We start our analysis by focusing on the lowest level errors -- sector errors. T
 - Errors are silent, that is, no one notices an error until someone tries to read the document and discovers that it is lost.  
 
 
-# Recommendation: Keep Multiple Copies
+# Using Auditing and Repair to Achieve Very Long Data Lifetimes
 
 Errors accumulate over time.  Every now and then an error will occur in storage and, if the error occurs in a region of storage occupied by a document, the error destroys a document.  The rate at which documents are lost depends of course on the quality of the storage. In theory, we can predict the detioriation of a collection as a result solely of sector-level losses, using the Poisson distribution.   **Figure 1**, below, illustrates the percentage of a collection lost in a 10-year period, as a function of the reliability of the underlying storage -- overa a very wide range of storage quality. (In **Section XX: Protect Against a Range of Threats**, we provide details on estimating sector error rates, and introduce other types of error.) 
 
@@ -387,6 +387,8 @@ The simplest *and most effective* strategy for auditing is ***total auditing***.
 > It is important to note that total auditing requires that *all* copies of a document be checked during each auditing cycle.  A document may be assigned to any segment within a cycle, but it must be present in some segment of each cycle.  The sampling of documents for each segment of the auditing can be systematic (some 25% subset of the collection each quarter, e.g., every fourth document in some list) or random (e.g., choose randomly 25% of the collection from among the remaining unaudited documents each quarter); but it is important that the total auditing actually be *total*.  That is, auditing segments must sample documents ***without replacement*** each cycle.  Sampling with replacement permits some documents to be missed in each cycle and reduces the effectiveness of auditing.  
 
 Exhibit nnn shows the deleterious impact of random sampling with replacement on the effectiveness of auditing.  (The figures shown here are for three copies; for larger numbers of copies, e.g., five, the loss rates are smaller but the comparisons hold.)
+
+<mark>Note: common random auditing is much lower than 100% a year -- seen 20% or even 5% a year</mark>
 
 ![Exhibit nnn: Auditing using random selection WITH replacement predictably misses some documents entirely, reducing the effectiveness of auditing and increasing losses. ](../oldpictures/audit/random/baseline-auditrandomvsbaseline-c3.png){width=80%}
 
@@ -629,13 +631,16 @@ To protect against the possibility of shocks, several strategies may be useful.
 
 - Increase the number of copies replicated in the network.  This simple increase in redundancy can mitigate the loss of one or more servers during a shock.  
 - Disperse the servers geographically and politically, so that regional problems and changes in national policies are less likely to strike more than one server at a time.  
-- Increase the frequency of auditing by auditing more segments per cycle.  If a shock kills one or more servers, the redundancy of the collection is reduced only until the client discovers the failed server(s) and replaces them.  If a client audits annually and a server fails, then the collection is at risk of reduced redundancy for, on the average, six months.  If the client audits annually but in four segments, then every server will be checked every quarter of a year.  This leaves the collection exposed to reduced redundancy for only, on the average, six weeks.  The collection can be restored to full redundancy more quickly, reducing the likelihood of permanent losses.  
+- Increase the frequency of auditing by auditing more segments per cycle.  If a shock kills one or more servers, the redundancy of the collection is reduced only until the client discovers the failed server(s) and replaces them.  If a client audits annually and a server fails, then the collection is at risk of reduced redundancy for, on the average, six months.  If the client audits annually but in four segments, then every server will be checked every quarter of a year.  This leaves the collection exposed to reduced redundancy for only, on the average, six weeks.  The collection can be restored to full redundancy more quickly, reducing the likelihood of permanent losses. 
+<mark>Note: proof point here for segmenting -- appendix? </mark> 
 
 Our simulations show that, even for very severe shocks, e.g., an annual loss of two or three servers to some disaster, NNN copies with annual auditing with four or more segments suffices to protect the collection over a very wide range of server quality and shock conditions.  
 
 Exhibit NNN illustrates that, under conditions of even moderate shocks, three or four copies are not sufficient to protect a collection over a wide range of server quality.
 
 ![Exhibit nnn: Moderate shocks cannot be tolerated with only 3 or 4 copies. ](../oldpictures/shocks/compare/pct50/Shock_compare_copvar_freq2yr_dur1yr_span2_impact50.png){width=80%}
+
+<mark>Note: compare to baseline of 3 copies w/out shocks in figure</mark>
 
 ##### (Placeholder icture to be redone, up to six copies, of course.)
 
