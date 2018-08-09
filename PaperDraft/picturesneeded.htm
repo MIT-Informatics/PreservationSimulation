@@ -1,0 +1,239 @@
+<head>
+<!-- pandoc quirk: embedded style info must NOT be indented to 
+    look reasonable, else pandoc thinks it's text rather than style.
+    It must all be at the left margin to be emitted as HTML style.
+-->
+<style>
+th {
+background-color: yellow;
+font-family: sans-serif;
+}
+td {
+border: 1px solid black;
+}
+table {
+width: 90%;
+border-collapse: collapse;
+}
+</style>
+</head>
+<h1 id="pretty-pictures-we-need-for-the-paper-publication-quality">Pretty pictures we need for the paper, <em>publication quality</em></h1>
+<p>RBLandau 20180808</p>
+<hr />
+<p>Notes on pictures:</p>
+<ul>
+<li>Aspect ratio 16:10, raw size 1600x1000 or greater for publication, 800x500 for easier viewing while editing. [Do journals have standards for sizes and aspects? <em>Science</em> does, but I've never looked at others.]</li>
+<li>All log-log.</li>
+<li>Almost all need decade lines for loss rates: 1%, 0.1%, 0.01%, I think. Horizontal dotted lines with small labels. Would be good if the lines were easily distinguished, e.g., by weight, but not clear that's possible. What would Tufte say?</li>
+<li>X half-life scales 2-1000 or 2-100.</li>
+<li>Legends upper right (if I can force legends at all; may have to be manual annotations, yuck).</li>
+<li>Attempt consistent color labeling for number of copies, but not sure this is reasonable in R.</li>
+<li>Describe data plots: #copies, losses, error injection, log scales x and y, percent losses, trimmed means (25%=midmean, maybe only 10%) of sample size=21, colors=black or blue usually best case recommendation.</li>
+<li>Describe why low half-lives and why 3,4 copies: otherwise numbers too small to make clear pictures, best to look at where the differences are exaggerated but parallel.<br />
+</li>
+<li>Note that one would never actually use disks with such low half-lives, but they are needed to show the phenomena.</li>
+</ul>
+<hr />
+<p>(Note: the numbers are just for reference during discussions and editing.)</p>
+<table style="width:96%;">
+<colgroup>
+<col width="2%" />
+<col width="25%" />
+<col width="18%" />
+<col width="33%" />
+<col width="16%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>idea / assertion</th>
+<th>basics</th>
+<th>details</th>
+<th>wayzit</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>for copies=1 losses are unacceptable and auditing can't help</td>
+<td>cop=1, lifem=2-1000</td>
+<td>line at 0.1% or so maybe decades below 1%, many annotations</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>without auditing, need many copies to minimize losses</td>
+<td>cop=1,2,3,5,10 lifem=2-1000</td>
+<td>1% line and 0.1%, clear legend for n-copies</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>with annual auditing, need only a few copies</td>
+<td>cop=3,4,5 lifem=2-1000</td>
+<td>1% line and 0.1% line, shorten lifem=2-100</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>is 5 sufficient for longer periods, 30-50 years?</td>
+<td>lifem=2-1000</td>
+<td>lines 1% and decades below</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>is 4 sufficient in calm periods?</td>
+<td>cop=4,5 lifem=2-100, various audit methods</td>
+<td>decade lines for all graphs, I think</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>are 6 necessary in shock periods?</td>
+<td>cop-5,6 lifem=2-100 shocks f=2yr dur=1yr 50, 67, 100%</td>
+<td>see which is most striking visually</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>7a</td>
+<td>even generous random auditing still worse than total auditing</td>
+<td>WITH vs WITHOUT replacement, cop=3 maybe also 5</td>
+<td>one segment total, 4 or 12 segments random</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>7b</td>
+<td>include very sparse random auditing vs total</td>
+<td>WITH replacement, cop=3,4,5</td>
+<td>random 20% per year, yikes</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>8</td>
+<td>frequent segments improve survival slightly in no-shock</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>9</td>
+<td>frequent segments help a lot in high-shock</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>10</td>
+<td>increase total audit frequency vs segmentation</td>
+<td>cop=3,4,5 lifem=2-100</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>11</td>
+<td>larger docs are larger targets for random errors</td>
+<td>docsize=5,50,500,5000MB usual lifem, losses are 100% for large docs at low half-life</td>
+<td>legend must be clear</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>12</td>
+<td>TABLE: tradeoff of docsize vs error rate</td>
+<td>docsize5-5000 lifem=2-10000</td>
+<td>nicely shaded png or pdf of spreadsheet excerpt; graph overlays too much to make the point</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>13</td>
+<td>TABLE: threats to content, from google doc</td>
+<td>make it look like the other tables, bad word wraps</td>
+<td>redo in md so it matches if possible to change text color emphasis</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>14</td>
+<td>glitch just like higher error rate</td>
+<td>cop=5 show line shifted to lower half-life with significant glitch</td>
+<td>probably one month per quarter 50% or 67% increase in error rate, cherry-pick for clearest appearance</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>15a</td>
+<td>shocks: moderate not tolerated with 3 or 4 copies, the current pic is not too bad</td>
+<td></td>
+<td>redo with larger samples to smooth out the numbers</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>15b</td>
+<td>severe shocks may require 6 copies</td>
+<td>copies=4,5,6</td>
+<td>freq2yr dur1yr span3 imp50,80</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>15c</td>
+<td>severe shocks may require 6 copies</td>
+<td>copies=4,5,6</td>
+<td>freq2yr dur1yr span2 imp50,80</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>15d</td>
+<td>severe shocks may require 6 copies</td>
+<td>copies=4,5,6</td>
+<td>freq1yr dur0.5yr span2 imp50,80</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>16</td>
+<td>how many copies for &lt; 1% long loss? no audit</td>
+<td>long=30yr</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>17</td>
+<td>how many copies for &lt; 1% long loss? annual audit</td>
+<td>long=30yr</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>18</td>
+<td>how long before lose 1% of collection</td>
+<td>lifem-losses plot</td>
+<td>separate lines for 10,30,50 years, copies=3,4,5 with annual audit</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>19</td>
+<td>TABLE: calibration test of simulation results</td>
+<td>theoretical vs simulated results</td>
+<td>copies=1, 100 samples, vs straight Poisson, in ppm; have in spreadsheet, get nice png or pdf</td>
+<td>tables/calibration</td>
+</tr>
+<tr class="even">
+<td>20</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>21</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>

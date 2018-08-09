@@ -21,7 +21,7 @@
 <li><a href="#sketch-of-discrete-simulation-model">Sketch of Discrete Simulation Model</a></li>
 <li><a href="#formalizing-low-level-threats-sector-errors">Formalizing Low-level Threats: Sector Errors</a></li>
 </ul></li>
-<li><a href="#recommendation-keep-multiple-copies">Recommendation: Keep Multiple Copies</a></li>
+<li><a href="#using-auditing-and-repair-to-achieve-very-long-data-lifetimes">Using Auditing and Repair to Achieve Very Long Data Lifetimes</a></li>
 <li><a href="#recommendation-visit-your-documents-regularly">Recommendation: Visit Your Documents Regularly</a><ul>
 <li><a href="#strategies-to-achieve-very-long-data-lifetimes">Strategies to Achieve Very Long Data Lifetimes</a></li>
 <li><a href="#the-process-of-auditing-and-repairing">The Process of Auditing and Repairing</a></li>
@@ -204,13 +204,18 @@ color: black;
 <ol style="list-style-type: lower-roman">
 <li>Thou shalt <strong>keep multiple copies</strong> of thy documents.<br />
 </li>
-<li>Thou shalt <strong>visit thy documents</strong> fully and regularly, and keep them healthy.</li>
-<li>Thou shalt lovingly squeeze and <strong>compress thy documents</strong>, that they may be better protected from the elements.</li>
-<li>Thou shalt respect and <strong>monitor the independence of thy vendors</strong>.</li>
+<li>Thou shalt <strong>visit thy documents</strong> fully and regularly, and keep them healthy.<br />
+</li>
+<li>Thou shalt lovingly squeeze and <strong>compress thy documents</strong>, that they may be better protected from the elements.<br />
+</li>
+<li>Thou shalt respect and <strong>monitor the independence of thy vendors</strong>.<br />
+</li>
 <li>Thou shalt be wary that <strong>vendors are ephemeral</strong>. Therefore shalt thou befriend more vendors than thou currently doth engage, for they may be friends in lean years of woe and hardship.<br />
 </li>
-<li>Thou shalt <strong>attend mainly to what is within thy control</strong>, and less to others.</li>
-<li>Thou shalt <strong>cloak thy documents</strong> in secret robes, if they be shy, to keep them from prying eyes.</li>
+<li>Thou shalt <strong>attend mainly to what is within thy control</strong>, and less to others.<br />
+</li>
+<li>Thou shalt <strong>cloak thy documents</strong> in secret robes, if they be shy, to keep them from prying eyes.<br />
+</li>
 <li>Thou shalt <strong>not heed disk dealers</strong> who bear false witness of their reliability. Rather, thou shalt <strong>heed the measurement of thine own experience</strong> and that of thy neighbors.<br />
 </li>
 <li>Thou shalt engage with thy community to <strong>develop standards</strong> for the benefit of all.<br />
@@ -290,7 +295,7 @@ color: black;
 <li>If the error occurs in a sector occupied by a copy of a document, that copy is corrupted. For the purposes of this study, we consider the copy to be lost. Manual repair by human inspection is not considered here.</li>
 <li>Errors are silent, that is, no one notices an error until someone tries to read the document and discovers that it is lost.</li>
 </ul>
-<h1 id="recommendation-keep-multiple-copies">Recommendation: Keep Multiple Copies</h1>
+<h1 id="using-auditing-and-repair-to-achieve-very-long-data-lifetimes">Using Auditing and Repair to Achieve Very Long Data Lifetimes</h1>
 <p>Errors accumulate over time. Every now and then an error will occur in storage and, if the error occurs in a region of storage occupied by a document, the error destroys a document. The rate at which documents are lost depends of course on the quality of the storage. In theory, we can predict the detioriation of a collection as a result solely of sector-level losses, using the Poisson distribution. <strong>Figure 1</strong>, below, illustrates the percentage of a collection lost in a 10-year period, as a function of the reliability of the underlying storage -- overa a very wide range of storage quality. (In <strong>Section XX: Protect Against a Range of Threats</strong>, we provide details on estimating sector error rates, and introduce other types of error.)</p>
 <blockquote>
 <div class="figure">
@@ -377,6 +382,7 @@ color: black;
 <p>It is important to note that total auditing requires that <em>all</em> copies of a document be checked during each auditing cycle. A document may be assigned to any segment within a cycle, but it must be present in some segment of each cycle. The sampling of documents for each segment of the auditing can be systematic (some 25% subset of the collection each quarter, e.g., every fourth document in some list) or random (e.g., choose randomly 25% of the collection from among the remaining unaudited documents each quarter); but it is important that the total auditing actually be <em>total</em>. That is, auditing segments must sample documents <strong><em>without replacement</em></strong> each cycle. Sampling with replacement permits some documents to be missed in each cycle and reduces the effectiveness of auditing.</p>
 </blockquote>
 <p>Exhibit nnn shows the deleterious impact of random sampling with replacement on the effectiveness of auditing. (The figures shown here are for three copies; for larger numbers of copies, e.g., five, the loss rates are smaller but the comparisons hold.)</p>
+<p><mark>Note: common random auditing is much lower than 100% a year -- seen 20% or even 5% a year</mark></p>
 <div class="figure">
 <img src="../oldpictures/audit/random/baseline-auditrandomvsbaseline-c3.png" alt="Exhibit nnn: Auditing using random selection WITH replacement predictably misses some documents entirely, reducing the effectiveness of auditing and increasing losses." style="width:80.0%" />
 <p class="caption">Exhibit nnn: Auditing using random selection WITH replacement predictably misses some documents entirely, reducing the effectiveness of auditing and increasing losses.</p>
@@ -580,7 +586,7 @@ color: black;
 </li>
 <li>Disperse the servers geographically and politically, so that regional problems and changes in national policies are less likely to strike more than one server at a time.<br />
 </li>
-<li>Increase the frequency of auditing by auditing more segments per cycle. If a shock kills one or more servers, the redundancy of the collection is reduced only until the client discovers the failed server(s) and replaces them. If a client audits annually and a server fails, then the collection is at risk of reduced redundancy for, on the average, six months. If the client audits annually but in four segments, then every server will be checked every quarter of a year. This leaves the collection exposed to reduced redundancy for only, on the average, six weeks. The collection can be restored to full redundancy more quickly, reducing the likelihood of permanent losses.</li>
+<li>Increase the frequency of auditing by auditing more segments per cycle. If a shock kills one or more servers, the redundancy of the collection is reduced only until the client discovers the failed server(s) and replaces them. If a client audits annually and a server fails, then the collection is at risk of reduced redundancy for, on the average, six months. If the client audits annually but in four segments, then every server will be checked every quarter of a year. This leaves the collection exposed to reduced redundancy for only, on the average, six weeks. The collection can be restored to full redundancy more quickly, reducing the likelihood of permanent losses. <mark>Note: proof point here for segmenting -- appendix? </mark></li>
 </ul>
 <p>Our simulations show that, even for very severe shocks, e.g., an annual loss of two or three servers to some disaster, NNN copies with annual auditing with four or more segments suffices to protect the collection over a very wide range of server quality and shock conditions.</p>
 <p>Exhibit NNN illustrates that, under conditions of even moderate shocks, three or four copies are not sufficient to protect a collection over a wide range of server quality.</p>
@@ -588,6 +594,7 @@ color: black;
 <img src="../oldpictures/shocks/compare/pct50/Shock_compare_copvar_freq2yr_dur1yr_span2_impact50.png" alt="Exhibit nnn: Moderate shocks cannot be tolerated with only 3 or 4 copies." style="width:80.0%" />
 <p class="caption">Exhibit nnn: Moderate shocks cannot be tolerated with only 3 or 4 copies.</p>
 </div>
+<p><mark>Note: compare to baseline of 3 copies w/out shocks in figure</mark></p>
 <h5 id="placeholder-icture-to-be-redone-up-to-six-copies-of-course.">(Placeholder icture to be redone, up to six copies, of course.)</h5>
 <h2 id="recommendation-storage-vendors-and-locations-must-be-independent">Recommendation: Storage Vendors and Locations Must be Independent</h2>
 <p>An underappreciated source of correlated server failures is lack of independence of storage services. This may stem from several causes.</p>

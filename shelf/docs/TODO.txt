@@ -219,21 +219,36 @@ DONE - slow down after extractvalues, too.
 
 
 TODO: broker.py
-DONE - BUG! add simlen to input CLI and output to main.  
-FIXME - MAYBE - ditch mongodb in favor of sqlite3.
-DONE - in listonly listings, sort the dictionary dump.
+FIXME - add params for nDocuments, and for nCoverage during random auditing. 
+    **** Note that new params are spread thinly throughout the system, into 
+    at least a dozen different modules, from CLI to form to instuction 
+    generation to reporting to output formatting.  
+    **** But at the moment I cannot remember why it was interesting to change
+    the number of documents for a test case.  Why not just use arithmetic?  
+    That's the one parameter that I'm sure is linear, since we always report
+    losses as percentages.  Hmmm.  Why did we ever start to do that?  
+    Let's back out changes supporting the nDocuments param.
+FIXME - in listings and traces that show any instruction dictionaries, 
+    always sort the dictionary by item key.  util.py contains a 
+    convenient fngSortDictItemsByKeys() to do that.  
 FIXME - in listonly listings, remove nLifeMax/Min, nCopiesMax/Min from dict.
+FIXME - write a utility to reconstitute the main.py and broker.py command lines 
+    from a result line in GiantOutput and from the dump in the log.  
+DONE - add a cleanstart shell script to empty the dirs that need to 
+    be empty, set a clean GiantOutput file.
+    Done, sorta.  There is an additional page for the form app that does 
+    setup including clearing all the files and establishing new, virgin
+    directories, including the GiantOutput file.  
+DONE - BUG! add simlen to input CLI and output to main.  
+DONT - MAYBE - ditch mongodb in favor of sqlite3.
+DONE - in listonly listings, sort the dictionary dump.
 DONE - harden against missing env var for NUMBER_OF_PROCESSORS.  and then
     maybe remove the crap added to AWSinstall.
 DONE - log all broker commands into some file.
-FIXME - write a utility to reconstitute the main.py and broker.py command lines 
-    from a result line in GiantOutput and from the dump in the log.  
 DONE - put out the command line, or at least the arg list, as trace-0
     so that it gets recorded into a tee file.  
 DONE - dump the instruction dictionary as trace-0 before or just after
     getting iterator from searchspace.  
-FIXME - add a cleanstart shell script to empty the dirs that need to 
-    be empty, set a clean GiantOutput file.
 DONE - validate directories before doing anything else.
 DONE - add serverdefaultlife to done-hash, to logfilename, and anywhere
     else that seems appropriate.  (REDUNDANT)

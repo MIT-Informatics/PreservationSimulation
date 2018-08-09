@@ -65,12 +65,12 @@ color: black;
 - Summary Of Specific Recommendations
 
 i. Thou shalt **keep multiple copies** of thy documents.  
-i. Thou shalt **visit thy documents** fully and regularly, and keep them healthy.
-i. Thou shalt lovingly squeeze and **compress thy documents**, that they may be better protected from the elements.
-i. Thou shalt respect and **monitor the independence of thy vendors**.
+i. Thou shalt **visit thy documents** fully and regularly, and keep them healthy.  
+i. Thou shalt lovingly squeeze and **compress thy documents**, that they may be better protected from the elements.  
+i. Thou shalt respect and **monitor the independence of thy vendors**.  
 i. Thou shalt be wary that **vendors are ephemeral**.  Therefore shalt thou befriend more vendors than thou currently doth engage, for they may be friends in lean years of woe and hardship.  
-i.  Thou shalt **attend mainly to what is within thy control**, and less to others.
-i. Thou shalt **cloak thy documents** in secret robes, if they be shy, to keep them from prying eyes.
+i.  Thou shalt **attend mainly to what is within thy control**, and less to others.  
+i. Thou shalt **cloak thy documents** in secret robes, if they be shy, to keep them from prying eyes.  
 i. Thou shalt **not heed disk dealers** who bear false witness of their reliability.  Rather, thou shalt **heed the measurement of thine own experience** and that of thy neighbors.  
 i. Thou shalt engage with thy community to **develop standards** for the benefit of all.  
 i. Thou shalt **protect thy documents against many dangerous circumstances** that thou canst not control, for life is uncertain.  
