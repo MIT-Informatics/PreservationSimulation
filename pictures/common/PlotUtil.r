@@ -97,20 +97,48 @@ fnPlotPercentLine <- function(gp,
 }
 
 
+# f n P l o t M i l l e L i n e       at 0.1%
+# Seems a bizarre way to do this, to create a fake data point
+#  and then plot it using text centered there instead of just a dot.  
+fnPlotPercentLine <- function(gp, 
+                    xloc=log10(1.7), yloc=log10(1.2), 
+                    labeltext="0.1%", labelsize=4, 
+                    percent=0.1){
+    gp <- gp + geom_hline(yintercept=percent, linetype="dashed")
+    gp <- gp + geom_text(x=xloc, y=yloc, label=labeltext, size=labelsize, 
+                    fontface="plain", family="mono")
+    return(gp)
+}
+
+
+# f n P l o t S u b M i l l e L i n e    at 0.01%
+# Seems a bizarre way to do this, to create a fake data point
+#  and then plot it using text centered there instead of just a dot.  
+fnPlotPercentLine <- function(gp, 
+                    xloc=log10(1.7), yloc=log10(1.2), 
+                    labeltext="0.01%", labelsize=4, 
+                    percent=0.01){
+    gp <- gp + geom_hline(yintercept=percent, linetype="dashed")
+    gp <- gp + geom_text(x=xloc, y=yloc, label=labeltext, size=labelsize, 
+                    fontface="plain", family="mono")
+    return(gp)
+}
+
+
 # f n P l o t M a k e F i l e 
 fnPlotMakeFile <- function(plotname, sFilename, sSize="4x3") {
-# Capture graph in 16:9 aspect and reasonable size.
+# Capture graph in 16:10 aspect and reasonable size.
     if (is.null(plotname)) {print("ERROR: missing first argument = plot in progress")}
     if (sSize == "large")
-        { png(sFilename,width=1600,height=900) }
+        { png(sFilename,width=1600,height=1000) }
     else if (sSize == "mediumlarge")
-        { png(sFilename,width=1200,height=675) }
+        { png(sFilename,width=1200,height=750) }
     else if (sSize == "mediumsmall")
-        { png(sFilename,width=960,height=540) }
+        { png(sFilename,width=960,height=600) }
     else if (sSize == "4x3")
         { png(sFilename,width=800,height=600) } 
     else 
-        { png(sFilename,width=800,height=450) } 
+        { png(sFilename,width=800,height=500) } 
       print(plotname)
       dev.off()
 } #endfunction

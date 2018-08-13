@@ -18,7 +18,7 @@ border-collapse: collapse;
 </style>
 </head>
 <h1 id="pretty-pictures-we-need-for-the-paper-publication-quality">Pretty pictures we need for the paper, <em>publication quality</em></h1>
-<p>RBLandau 20180808</p>
+<p>RBLandau 20180813</p>
 <hr />
 <p>Notes on pictures:</p>
 <ul>
@@ -31,17 +31,22 @@ border-collapse: collapse;
 <li>Describe data plots: #copies, losses, error injection, log scales x and y, percent losses, trimmed means (25%=midmean, maybe only 10%) of sample size=21, colors=black or blue usually best case recommendation.</li>
 <li>Describe why low half-lives and why 3,4 copies: otherwise numbers too small to make clear pictures, best to look at where the differences are exaggerated but parallel.<br />
 </li>
-<li>Note that one would never actually use disks with such low half-lives, but they are needed to show the phenomena.</li>
+<li>Note that one would never actually use disks with such low half-lives, but they are needed to show the phenomena.<br />
+</li>
+<li>I will have to regerate the data for most of these, rats.<br />
+</li>
+<li>Comments inside the graph area will be done with annotation(), also rats.</li>
 </ul>
 <hr />
 <p>(Note: the numbers are just for reference during discussions and editing.)</p>
-<table style="width:96%;">
+<table style="width:100%;">
 <colgroup>
 <col width="2%" />
+<col width="24%" />
+<col width="6%" />
 <col width="25%" />
-<col width="18%" />
-<col width="33%" />
-<col width="16%" />
+<col width="15%" />
+<col width="25%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -50,6 +55,7 @@ border-collapse: collapse;
 <th>basics</th>
 <th>details</th>
 <th>wayzit</th>
+<th>needs data &amp; work</th>
 </tr>
 </thead>
 <tbody>
@@ -57,7 +63,8 @@ border-collapse: collapse;
 <td>1</td>
 <td>for copies=1 losses are unacceptable and auditing can't help</td>
 <td>cop=1, lifem=2-1000</td>
-<td>line at 0.1% or so maybe decades below 1%, many annotations</td>
+<td>line at 0.1% or so, maybe decades below 1%, many annotations</td>
+<td></td>
 <td></td>
 </tr>
 <tr class="even">
@@ -66,12 +73,14 @@ border-collapse: collapse;
 <td>cop=1,2,3,5,10 lifem=2-1000</td>
 <td>1% line and 0.1%, clear legend for n-copies</td>
 <td></td>
+<td></td>
 </tr>
 <tr class="odd">
 <td>3</td>
 <td>with annual auditing, need only a few copies</td>
 <td>cop=3,4,5 lifem=2-1000</td>
 <td>1% line and 0.1% line, shorten lifem=2-100</td>
+<td></td>
 <td></td>
 </tr>
 <tr class="even">
@@ -80,12 +89,14 @@ border-collapse: collapse;
 <td>lifem=2-1000</td>
 <td>lines 1% and decades below</td>
 <td></td>
+<td></td>
 </tr>
 <tr class="odd">
 <td>5</td>
 <td>is 4 sufficient in calm periods?</td>
 <td>cop=4,5 lifem=2-100, various audit methods</td>
 <td>decade lines for all graphs, I think</td>
+<td></td>
 <td></td>
 </tr>
 <tr class="even">
@@ -94,12 +105,14 @@ border-collapse: collapse;
 <td>cop-5,6 lifem=2-100 shocks f=2yr dur=1yr 50, 67, 100%</td>
 <td>see which is most striking visually</td>
 <td></td>
+<td></td>
 </tr>
 <tr class="odd">
 <td>7a</td>
 <td>even generous random auditing still worse than total auditing</td>
 <td>WITH vs WITHOUT replacement, cop=3 maybe also 5</td>
 <td>one segment total, 4 or 12 segments random</td>
+<td></td>
 <td></td>
 </tr>
 <tr class="even">
@@ -108,10 +121,12 @@ border-collapse: collapse;
 <td>WITH replacement, cop=3,4,5</td>
 <td>random 20% per year, yikes</td>
 <td></td>
+<td></td>
 </tr>
 <tr class="odd">
 <td>8</td>
 <td>frequent segments improve survival slightly in no-shock</td>
+<td></td>
 <td></td>
 <td></td>
 <td></td>
@@ -122,11 +137,13 @@ border-collapse: collapse;
 <td></td>
 <td></td>
 <td></td>
+<td></td>
 </tr>
 <tr class="odd">
 <td>10</td>
 <td>increase total audit frequency vs segmentation</td>
 <td>cop=3,4,5 lifem=2-100</td>
+<td></td>
 <td></td>
 <td></td>
 </tr>
@@ -136,12 +153,14 @@ border-collapse: collapse;
 <td>docsize=5,50,500,5000MB usual lifem, losses are 100% for large docs at low half-life</td>
 <td>legend must be clear</td>
 <td></td>
+<td></td>
 </tr>
 <tr class="odd">
 <td>12</td>
 <td>TABLE: tradeoff of docsize vs error rate</td>
 <td>docsize5-5000 lifem=2-10000</td>
 <td>nicely shaded png or pdf of spreadsheet excerpt; graph overlays too much to make the point</td>
+<td></td>
 <td></td>
 </tr>
 <tr class="even">
@@ -150,12 +169,14 @@ border-collapse: collapse;
 <td>make it look like the other tables, bad word wraps</td>
 <td>redo in md so it matches if possible to change text color emphasis</td>
 <td></td>
+<td></td>
 </tr>
 <tr class="odd">
 <td>14</td>
 <td>glitch just like higher error rate</td>
 <td>cop=5 show line shifted to lower half-life with significant glitch</td>
 <td>probably one month per quarter 50% or 67% increase in error rate, cherry-pick for clearest appearance</td>
+<td></td>
 <td></td>
 </tr>
 <tr class="even">
@@ -164,12 +185,14 @@ border-collapse: collapse;
 <td></td>
 <td>redo with larger samples to smooth out the numbers</td>
 <td></td>
+<td></td>
 </tr>
 <tr class="odd">
 <td>15b</td>
 <td>severe shocks may require 6 copies</td>
 <td>copies=4,5,6</td>
 <td>freq2yr dur1yr span3 imp50,80</td>
+<td></td>
 <td></td>
 </tr>
 <tr class="even">
@@ -178,6 +201,7 @@ border-collapse: collapse;
 <td>copies=4,5,6</td>
 <td>freq2yr dur1yr span2 imp50,80</td>
 <td></td>
+<td></td>
 </tr>
 <tr class="odd">
 <td>15d</td>
@@ -185,11 +209,13 @@ border-collapse: collapse;
 <td>copies=4,5,6</td>
 <td>freq1yr dur0.5yr span2 imp50,80</td>
 <td></td>
+<td></td>
 </tr>
 <tr class="even">
 <td>16</td>
 <td>how many copies for &lt; 1% long loss? no audit</td>
 <td>long=30yr</td>
+<td></td>
 <td></td>
 <td></td>
 </tr>
@@ -199,12 +225,14 @@ border-collapse: collapse;
 <td>long=30yr</td>
 <td></td>
 <td></td>
+<td></td>
 </tr>
 <tr class="even">
 <td>18</td>
 <td>how long before lose 1% of collection</td>
 <td>lifem-losses plot</td>
 <td>separate lines for 10,30,50 years, copies=3,4,5 with annual audit</td>
+<td></td>
 <td></td>
 </tr>
 <tr class="odd">
@@ -213,9 +241,11 @@ border-collapse: collapse;
 <td>theoretical vs simulated results</td>
 <td>copies=1, 100 samples, vs straight Poisson, in ppm; have in spreadsheet, get nice png or pdf</td>
 <td>tables/calibration</td>
+<td></td>
 </tr>
 <tr class="even">
 <td>20</td>
+<td></td>
 <td></td>
 <td></td>
 <td></td>
@@ -227,10 +257,12 @@ border-collapse: collapse;
 <td></td>
 <td></td>
 <td></td>
+<td></td>
 </tr>
 <tr class="even">
-<td></td>
-<td></td>
+<td>no number</td>
+<td>How many unaudited copies to get below 1% loss over 50 years?</td>
+<td>lifem=</td>
 <td></td>
 <td></td>
 <td></td>
