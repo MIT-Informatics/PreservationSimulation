@@ -46,7 +46,7 @@ Notes on pictures:
 
 | | idea / assertion | basics | details | wayzit | needs data & work |  
 |-|-----------------|----|------------------|-----------|------------------|  
-|1| for copies=1 losses are unacceptable and auditing can't help | cop=1, lifem=2-1000 | line at 0.1% or so, maybe decades below 1%, many annotations |  |  |  
+|1| for copies=1 losses are unacceptable and auditing can't help | cop=1, lifem=2-1000 | line at 0.1% or so, maybe decades below 1%, many annotations | pictures/noauditcalibrationcopies1 |  |  
 |2| without auditing, need many copies to minimize losses | cop=1,2,3,5,10 lifem=2-1000 | 1% line and 0.1%, clear legend for n-copies |  |  |  
 |3| with annual auditing, need only a few copies | cop=3,4,5 lifem=2-1000 | 1% line and 0.1% line, shorten lifem=2-100 |  |  |  
 |4| is 5 sufficient for longer periods, 30-50 years? | lifem=2-1000 | lines 1% and decades below |  |  |  
