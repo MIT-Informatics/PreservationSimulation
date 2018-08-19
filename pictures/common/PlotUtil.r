@@ -100,8 +100,8 @@ fnPlotPercentLine <- function(gp,
 # f n P l o t M i l l e L i n e       at 0.1%
 # Seems a bizarre way to do this, to create a fake data point
 #  and then plot it using text centered there instead of just a dot.  
-fnPlotPercentLine <- function(gp, 
-                    xloc=log10(1.7), yloc=log10(1.2), 
+fnPlotMilleLine <- function(gp, 
+                    xloc=log10(1.8), yloc=log10(0.12), 
                     labeltext="0.1%", labelsize=4, 
                     percent=0.1){
     gp <- gp + geom_hline(yintercept=percent, linetype="dashed")
@@ -114,8 +114,8 @@ fnPlotPercentLine <- function(gp,
 # f n P l o t S u b M i l l e L i n e    at 0.01%
 # Seems a bizarre way to do this, to create a fake data point
 #  and then plot it using text centered there instead of just a dot.  
-fnPlotPercentLine <- function(gp, 
-                    xloc=log10(1.7), yloc=log10(1.2), 
+fnPlotSubMilleLine <- function(gp, 
+                    xloc=log10(1.7), yloc=log10(0.011), 
                     labeltext="0.01%", labelsize=4, 
                     percent=0.01){
     gp <- gp + geom_hline(yintercept=percent, linetype="dashed")
@@ -126,7 +126,7 @@ fnPlotPercentLine <- function(gp,
 
 
 # f n P l o t M a k e F i l e 
-fnPlotMakeFile <- function(plotname, sFilename, sSize="4x3") {
+fnPlotMakeFile <- function(plotname, sFilename, sSize="mediumlarge") {
 # Capture graph in 16:10 aspect and reasonable size.
     if (is.null(plotname)) {print("ERROR: missing first argument = plot in progress")}
     if (sSize == "large")

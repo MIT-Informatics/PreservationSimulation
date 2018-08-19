@@ -1,67 +1,18 @@
 # GetNoAuditCalibrationCopies1Data.r
 
-source("../common/DataUtil.r")
 
 # G E T   D A T A  
 
-if (is.null(dir.string)) {dir.string <- "./"}
+source("../common/DataUtil.r")
+
+if (!exists('dir.string') || (is.null(dir.string))) {dir.string <- "./"}
 filesList <- grep(pattern="^Giant.*\\.txt$", dir(dir.string), 
                 perl=TRUE, value = TRUE)
-data.noaudit <- read.table(filesList[1],
+dat.noaudit <- read.table(filesList[1],
                         header=TRUE,sep=" ", na.strings="nolinefound")
-
-
-
-
-
-
-
-
-
-
-
-
-rm(results)
-results <- fndfGetGiantData("./")
-# Get fewer columns to work with, easier to see.
-dat.noaudit <- fndfGetAuditData(results)
-
-if(0){
-# T A B U L A T E   D A T A 
-# Tabulate columns by copies and sector lifetime.
-tbl.noaudit <- data.frame(with(dat.noaudit, 
-            tapply(mdmlosspct, list(copies, lifem), FUN=identity)))
-# Re-form the data into a table for printing.  
-#tbl<-cbind.data.frame(dat.noaudit$copies, tbl.noaudit)
-#tbl<-cbind.data.frame(levels(factor(dat.noaudit$copies)), tbl.noaudit)
-#colnames(tbl)<-c("copies",colnames(tbl.noaudit))
-foo<-(with(dat.noaudit, 
-       tapply(mdmlosspct, list(copies, lifem), FUN=identity)))
-foo2<-cbind(as.numeric(levels(factor(results$copies))), foo)
-tbl2<-data.frame(foo2)
-colnames(tbl2)<-c("copies",as.numeric(colnames(foo2[,2:ncol(foo2)])))
-
-# Pretty-print this to a file with explanatory headings.
-sOutputFilename <- "./Data_NoAudit.txt"
-sTitle <- "Document losses with multiple copies and no auditing"
-sSubtitle <- "Table of percentage loss of collection tabulated\n" %+% 
-    "by number of copies and sector half-lifetime"
-sink(sOutputFilename)
-cat("MIT Preservation Simulation Project", "\n\n")
-cat(sOutputFilename, format(Sys.time(),"%Y%m%d_%H%M%S%Z"), "\n\n")
-cat(sTitle, "\n\n")
-cat(sSubtitle, "\n\n")
-cat("\n")
-print(tbl2)
-sink()
-
-# Micah finally bent dcast to his will, thanks; see email.
-# Gets the same answer for this simple case.
-library(reshape2)
-bar.small <- dat.noaudit[,c("copies", "lifem", "mdmlosspct")]
-bar.melted <- melt(bar.small, id=c("copies", "lifem"))
-bar.recast <- dcast(bar.melted, copies~lifem)
-}#ENDIF0
+mdmlosspct <- dat.noaudit$EmpiricalLosses / 100.0
+newdat <- cbind(dat.noaudit,mdmlosspct)
+dat.noaudit <- newdat
 
 
 # P L O T   D A T A 
@@ -76,54 +27,44 @@ trows <- fnSelectCopies(dat.noaudit, nCopies)
 gp <- gp + 
         aes(trows, x=(lifem), y=(safe(mdmlosspct))) +
         geom_point(data=trows, 
-            color="black", size=5, shape=(48+nCopies)) +
+            color="red", size=3, shape=(point.DOT)) +
         geom_line(data=trows, 
-            linetype="dashed", color="red", size=1)
-
-nCopies <- 2; trows <- fnSelectCopies(dat.noaudit, nCopies)
-gp <- gp + 
-        aes(trows, x=(lifem), y=(safe(mdmlosspct))) +
-        geom_point(data=trows, 
-            color="black", size=5, shape=(48+nCopies)) +
-        geom_line(data=trows, linetype="dashed", color="blue", size=1) 
-
-nCopies <- 3; trows <- fnSelectCopies(dat.noaudit, nCopies)
-gp <- gp + 
-        aes(trows, x=(lifem), y=(safe(mdmlosspct))) +
-        geom_point(data=trows, 
-            color="black", size=5, shape=(48+nCopies)) +
-        geom_line(data=trows, linetype="dashed", color="purple", size=1) 
-
-nCopies <- 5; trows <- fnSelectCopies(dat.noaudit, nCopies)
-gp <- gp + 
-        aes(trows, x=(lifem), y=(safe(mdmlosspct))) +
-        geom_point(data=trows, 
-            color="black", size=5, shape=(48+nCopies)) +
-        geom_line(data=trows, linetype="dashed", color="green", size=1) 
-
-nCopies <- 10; trows <- fnSelectCopies(dat.noaudit, nCopies)
-gp <- gp + 
-        aes(trows, x=(lifem), y=(safe(mdmlosspct))) +
-        geom_point(data=trows, 
-            color="black", size=5, shape=(point.DIAMOND)) +
-        geom_line(data=trows, linetype="dashed", color="black", size=1) 
+            linetype="dashed", color="black", size=1)
 
 gp <- fnPlotLogScales(gp, x="YES", y="YES"
         , xbreaks=c(2,5,10,50,100,1000,10000)
         , ybreaks=c(0.1,1,10,100)
         )
 gp <- fnPlotTitles(gp 
-        ,titleline="Without auditing, we need many copies"
-            %+% "\nto minimize permanent losses, " 
+        ,titleline="With a single copy, losses are unacceptable, "
             %+% "even with high quality disks"
-            %+% "\n(shown for copies=1,2,3,5,10)"
+            %+% "\n(document losses over 10 years)"
         ,titlesize=16
         ,xlabel="1MB sector half-life (megahours)"
-            %+% "                     (lower error rate ====>)"
-        ,ylabel="permanent document losses (%)"
+            %+% "                     (lower error rate \u2192)"
+        ,ylabel="permanent document losses (% of collection)"
         ,labelsize=14
         )
 gp <- fnPlotPercentLine(gp)
+gp <- fnPlotMilleLine(gp)
+#gp <- fnPlotSubMilleLine(gp)
+
+
+# A N N O T A T I O N S 
+
+labelsize <- 10
+gp <- gp + geom_text(x=log10(150.0), y=log10(0.04) 
+                ,label="Increasing quality of storage    \u2192 \u2192 \u2192"
+                ,size=labelsize, color="red"
+                ,fontface="plain", family="sans")
+
+gp <- gp + geom_text(x=log10(10000.0), y=log10(1.2)
+                ,label="Decreasing\ndocument\nlosses "
+                %+% "\n\u2193\n\u2193\n\u2193"
+                ,size=labelsize, color="red"
+                ,fontface="plain", family="sans"
+                ,hjust=1)
+
 
 plot(gp)
 fnPlotMakeFile(gp, "baseline-noaudit.png")
