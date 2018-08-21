@@ -472,6 +472,24 @@ more resistant to failure.
 
 Finally, compression permits more aggressive auditing, to protect a collection, without increasing costs for bandwidth and server egress.  Smaller, compressed documents can be retrieved more quickly without increasing bandwidth, and consume less bandwidth and less egress charge from the storage vendors.  Auditing of the collection can be done more frequently on the same budget, which improves document survival rates.  
 
+### Compression Sometimes Increases Fragility -- But Not Too Much 
+
+A disadvantage of compression is that it may make documents more fragile. We define fragility as the proportion of the document (and document's value) that is eliminated by a single block failure -- we refer to this proportion as the fragility index. 
+
+For simplicity in the rest of the article we have assumed that documents were completely fragile (i.e. a fragility index of 1) --  blocks failures cause an entire document to be lost. However, it is trivial to model losses for a collection of documents with a uniform fragility index: These losses are mathematically equivalent to the losses found in a collection of fragile document that is has 1/F times the number of documents each of which is S/F in size.  
+
+Using this fact we can readily estimate the combined effects of compression. Compression will shrink the document as a whole -- reducing the likelihood of a block failure affecting it; increase the amount of storage available for replication; and multiplies the fragility of a document by some factor CF (bounded by 1)
+
+Where is compression a win? First, wherever C<F compression is  a win based on the target-reduction effect alone -- even if each of the compressed documents is completely fragile.  Moreover, when C>F compression will still be a win in most circumstances -- except where the fragility index is very low, and compression makes the document much more fragile without substantially reducing size. 
+
+The figure below illustrates where compression lowers overall collection loss, based on the C, F, and CF, for a collection of 10000 documents of initial size ZZ, a failure rate of XX, and 3 replications.
+
+![Exhibit nnn:  make a figure with some variation of the formula here?"
+
+https://docs.google.com/spreadsheets/d/1KQWx4gd6ndvsgMcSiQOHnRi0QowXDtnxe8JMIs-Rbsk/edit#gid=0 ){width=90%}
+
+
+
 In summary, we consider lossless compression to be benign for a variety of reasons.
 
 - Smaller documents are smaller targets for errors.  They are less likely to corrupted than large documents.  
