@@ -18,7 +18,7 @@ border-collapse: collapse;
 </style>
 </head>
 <h1 id="pretty-pictures-we-need-for-the-paper-publication-quality">Pretty pictures we need for the paper, <em>publication quality</em></h1>
-<p>RBLandau 20180813</p>
+<p>RBLandau 20180824</p>
 <hr />
 <p>Notes on pictures:</p>
 <ul>
@@ -39,14 +39,14 @@ border-collapse: collapse;
 </ul>
 <hr />
 <p>(Note: the numbers are just for reference during discussions and editing.)</p>
-<table style="width:100%;">
+<table style="width:97%;">
 <colgroup>
 <col width="2%" />
-<col width="24%" />
+<col width="25%" />
 <col width="6%" />
-<col width="25%" />
-<col width="15%" />
-<col width="25%" />
+<col width="26%" />
+<col width="9%" />
+<col width="26%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -60,15 +60,15 @@ border-collapse: collapse;
 </thead>
 <tbody>
 <tr class="odd">
-<td>1</td>
+<td>CALIBRATIONPIC: Copies1 Calibration</td>
 <td>for copies=1 losses are unacceptable and auditing can't help</td>
 <td>cop=1, lifem=2-1000</td>
 <td>line at 0.1% or so, maybe decades below 1%, many annotations</td>
-<td></td>
-<td></td>
+<td>pictures/noauditcalibrationcopies1</td>
+<td>How do I draw looong arrows in R? All the Unicode arrows are short. There is supposed to be a way to place an image, so I could draw an arrow. Is this a plausible aspect ratio? Need better title and captions?</td>
 </tr>
 <tr class="even">
-<td>2</td>
+<td>NOAUDITCOPIES: No audit needs many copies</td>
 <td>without auditing, need many copies to minimize losses</td>
 <td>cop=1,2,3,5,10 lifem=2-1000</td>
 <td>1% line and 0.1%, clear legend for n-copies</td>
@@ -76,87 +76,71 @@ border-collapse: collapse;
 <td></td>
 </tr>
 <tr class="odd">
-<td>3</td>
+<td>COPIES5SUFFICES: Is Copies=5 sufficient for all non-shock conditions?</td>
 <td>with annual auditing, need only a few copies</td>
 <td>cop=3,4,5 lifem=2-1000</td>
-<td>1% line and 0.1% line, shorten lifem=2-100</td>
+<td>1% line and 0.1% line, maybe shorten lifem=2-100</td>
 <td></td>
 <td></td>
 </tr>
 <tr class="even">
-<td>4</td>
-<td>is 5 sufficient for longer periods, 30-50 years?</td>
-<td>lifem=2-1000</td>
-<td>lines 1% and decades below</td>
-<td></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>5</td>
+<td>COPIES4MAYBE: Is Copies=4 sufficient for calm periods?</td>
 <td>is 4 sufficient in calm periods?</td>
 <td>cop=4,5 lifem=2-100, various audit methods</td>
 <td>decade lines for all graphs, I think</td>
 <td></td>
 <td></td>
 </tr>
+<tr class="odd">
+<td>COPIES5LONGTERM: Is Copies=5 okay for long periods?</td>
+<td>is 5 sufficient for longer periods, 30-50 years?</td>
+<td>lifem=2-1000</td>
+<td>lines 1% and decades below</td>
+<td></td>
+<td></td>
+</tr>
 <tr class="even">
-<td>6</td>
+<td>COPIES6FORSHOCKS: Need Copies=6 for shock conditions?</td>
 <td>are 6 necessary in shock periods?</td>
-<td>cop-5,6 lifem=2-100 shocks f=2yr dur=1yr 50, 67, 100%</td>
+<td>cop=5,6 lifem=2-100 shocks freq=2yr dur=1yr, span=2,3, impact=50,67,75?,100%</td>
 <td>see which is most striking visually</td>
 <td></td>
 <td></td>
 </tr>
 <tr class="odd">
-<td>7a</td>
+<td>RANDOMCONTRAST: Random auditing direct contrast</td>
 <td>even generous random auditing still worse than total auditing</td>
 <td>WITH vs WITHOUT replacement, cop=3 maybe also 5</td>
-<td>one segment total, 4 or 12 segments random</td>
+<td>4 or 10 segments for direct comparison</td>
 <td></td>
 <td></td>
 </tr>
 <tr class="even">
-<td>7b</td>
-<td>include very sparse random auditing vs total</td>
+<td>FIVEYEARRANDOM: Five year random audit cycle</td>
+<td>long-term lazy random auditing vs total</td>
 <td>WITH replacement, cop=3,4,5</td>
-<td>random 20% per year, yikes</td>
-<td></td>
+<td>5 year cycle in 5 segments, hence 20% per year</td>
+<td>again want direct comparison with total audit WITH vs WITHOUT replacement</td>
 <td></td>
 </tr>
 <tr class="odd">
-<td>8</td>
+<td>SHOCKSSEGMENTS: Shocks frequent segments better</td>
 <td>frequent segments improve survival slightly in no-shock</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td>9</td>
-<td>frequent segments help a lot in high-shock</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>10</td>
-<td>increase total audit frequency vs segmentation</td>
-<td>cop=3,4,5 lifem=2-100</td>
-<td></td>
+<td>1 segment vs 4 and maybe 10</td>
+<td>cop=4,5 lifem2-100</td>
 <td></td>
 <td></td>
 </tr>
 <tr class="even">
-<td>11</td>
+<td>LARGEDOCTARGETS: Large docs are bigger targets</td>
 <td>larger docs are larger targets for random errors</td>
-<td>docsize=5,50,500,5000MB usual lifem, losses are 100% for large docs at low half-life</td>
+<td>docsize=5,50,500,5000MB, usual lifem, losses are 100% for large docs at low half-life</td>
 <td>legend must be clear</td>
 <td></td>
 <td></td>
 </tr>
 <tr class="odd">
-<td>12</td>
+<td>DOCSIZETRADEOFF: Docsize vs error rate table</td>
 <td>TABLE: tradeoff of docsize vs error rate</td>
 <td>docsize5-5000 lifem=2-10000</td>
 <td>nicely shaded png or pdf of spreadsheet excerpt; graph overlays too much to make the point</td>
@@ -164,7 +148,7 @@ border-collapse: collapse;
 <td></td>
 </tr>
 <tr class="even">
-<td>13</td>
+<td>THREATSTABLE: Threats table</td>
 <td>TABLE: threats to content, from google doc</td>
 <td>make it look like the other tables, bad word wraps</td>
 <td>redo in md so it matches if possible to change text color emphasis</td>
@@ -172,7 +156,7 @@ border-collapse: collapse;
 <td></td>
 </tr>
 <tr class="odd">
-<td>14</td>
+<td>GLITCHERRORRATES: Glitch just increases error rate</td>
 <td>glitch just like higher error rate</td>
 <td>cop=5 show line shifted to lower half-life with significant glitch</td>
 <td>probably one month per quarter 50% or 67% increase in error rate, cherry-pick for clearest appearance</td>
@@ -180,7 +164,7 @@ border-collapse: collapse;
 <td></td>
 </tr>
 <tr class="even">
-<td>15a</td>
+<td>SHOCKSMORETHAN4: Medium shocks need more than 4 copies</td>
 <td>shocks: moderate not tolerated with 3 or 4 copies, the current pic is not too bad</td>
 <td></td>
 <td>redo with larger samples to smooth out the numbers</td>
@@ -188,31 +172,15 @@ border-collapse: collapse;
 <td></td>
 </tr>
 <tr class="odd">
-<td>15b</td>
+<td>SEVERESHOCKS5OR6: Severe shocks require 5 or 6 copies</td>
 <td>severe shocks may require 6 copies</td>
 <td>copies=4,5,6</td>
-<td>freq2yr dur1yr span3 imp50,80</td>
+<td>shocks freq2yr dur1yr span2,3 imp50,80,100</td>
 <td></td>
 <td></td>
 </tr>
 <tr class="even">
-<td>15c</td>
-<td>severe shocks may require 6 copies</td>
-<td>copies=4,5,6</td>
-<td>freq2yr dur1yr span2 imp50,80</td>
-<td></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>15d</td>
-<td>severe shocks may require 6 copies</td>
-<td>copies=4,5,6</td>
-<td>freq1yr dur0.5yr span2 imp50,80</td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td>16</td>
+<td>Less than 1% loss no audit</td>
 <td>how many copies for &lt; 1% long loss? no audit</td>
 <td>long=30yr</td>
 <td></td>
@@ -220,7 +188,7 @@ border-collapse: collapse;
 <td></td>
 </tr>
 <tr class="odd">
-<td>17</td>
+<td>ONEPCTLONGTERM: Less than 1% loss annual audit</td>
 <td>how many copies for &lt; 1% long loss? annual audit</td>
 <td>long=30yr</td>
 <td></td>
@@ -228,22 +196,14 @@ border-collapse: collapse;
 <td></td>
 </tr>
 <tr class="even">
-<td>18</td>
-<td>how long before lose 1% of collection</td>
-<td>lifem-losses plot</td>
-<td>separate lines for 10,30,50 years, copies=3,4,5 with annual audit</td>
-<td></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>19</td>
+<td>CALIBRATIONTABLE: Calibration table</td>
 <td>TABLE: calibration test of simulation results</td>
 <td>theoretical vs simulated results</td>
 <td>copies=1, 100 samples, vs straight Poisson, in ppm; have in spreadsheet, get nice png or pdf</td>
 <td>tables/calibration</td>
 <td></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>20</td>
 <td></td>
 <td></td>
@@ -251,7 +211,7 @@ border-collapse: collapse;
 <td></td>
 <td></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>21</td>
 <td></td>
 <td></td>
@@ -259,13 +219,19 @@ border-collapse: collapse;
 <td></td>
 <td></td>
 </tr>
-<tr class="even">
-<td>no number</td>
-<td>How many unaudited copies to get below 1% loss over 50 years?</td>
-<td>lifem=</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
 </tbody>
 </table>
+<p>Notes from 20180821</p>
+<ul>
+<li>Need convincing pic for five audited copies in calm days. Add 1% and 0.1% lines and see what it looks like. Check also for much longer periods, e.g., 30 and 50 years.<br />
+</li>
+<li>Random: compare same number of segments, just with vs without replacement. How many copies? Year, quarter, month. Maybe also 5 year cycle with 5 segments, done with replacement, just for comparison.<br />
+</li>
+<li>Use names not numbers for the figures to allow us to reorder them. Numbers assigned at the last minute.<br />
+</li>
+<li>Segments: ignore monthly, but leave the 2 year line.<br />
+</li>
+<li>Compression: may do this in a table rather than figure. Can we do a dramatic picture/graph?<br />
+</li>
+<li>Is there a function that relates one extra copy to a reduction in loss? Need to look across a lot of empirical data.</li>
+</ul>
