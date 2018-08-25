@@ -739,28 +739,58 @@ class CAudit_Uniform(CAudit):
                         self.mCalcSegmentSize(mysCollectionID, mynSegments), 
                         nDocsRemaining
                         )
-        # Use set() to ensure that a doc is not sampled twice in a segment.
-        #  This is sampling WITHOUT replacement for a segment only, to 
-        #  ensure that the right portion of the population gets audited.  
-        #  (I don't know what people who say, "audit one quarter of the 
-        #  population every quarter" actually mean.  This is a plausible
-        #  but optimistic guess.)
-        #  Note that the cycle is still sampled WITH repacement overall, so 
-        #  that some docs may be missed, say, quarter to quarter.  
-        # For sampling with replacement, use a list and just append doc IDs
-        #  to the list.  Then a doc might be sampled > once per segment, 
-        #  which would be even more useless.  
-        # Also, beware the case where there are no docs remaining.  
-        #  Carefully return an empty list.
-        setDocsThisSegment = set()
-        while nDocsMaybe > 0 and len(setDocsThisSegment) < nDocsMaybe:
-            idxChoose = int(util.makeunif(0, nDocsRemaining))
-            sDocID = lDocIDsRemaining[idxChoose]
-            cDoc = G.dID2Document[sDocID]
-            # If the doc is not already permanently kaput, check it.
-            if not cDoc.mIsLost():
-                setDocsThisSegment.add(sDocID)
-        lDocsThisSegment = util.fnlSortIDList(list(setDocsThisSegment))
+        if 1: # Which method do we choose today?  
+              # TRUE = generous assumptions, each segment will audit the 
+              #  segment's size number of unique documents WITHOUT REPLACEMENT.
+              # FALSE = naive assumptions, each segment will choose the 
+              #  segment's size number of document WITH REPLACEMENT.  
+            # Use set() to ensure that a doc is not sampled twice in a segment.
+            #  This is sampling WITHOUT REPLACEMENT FOR A SEGMENT ONLY, to 
+            #  ensure that the right portion of the population gets audited.  
+            #  (I don't know what people who say, "audit one quarter of the 
+            #  population every quarter" actually mean.  This is a plausible
+            #  but optimistic guess.)
+            #  Note that the cycle is still sampled WITH repacement overall, so 
+            #  that some docs may be missed, say, quarter to quarter.  
+            # For sampling with replacement, use a list and just append doc IDs
+            #  to the list.  Then a doc might be sampled > once per segment, 
+            #  which would be even more useless.  
+            # Also, beware the case where there are no docs remaining.  
+            #  Carefully return an empty list.
+            setDocsThisSegment = set()
+            while nDocsMaybe > 0 and len(setDocsThisSegment) < nDocsMaybe:
+                idxChoose = int(util.makeunif(0, nDocsRemaining))
+                sDocID = lDocIDsRemaining[idxChoose]
+                cDoc = G.dID2Document[sDocID]
+                # If the doc is not already permanently kaput, check it.
+                if not cDoc.mIsLost():
+                    setDocsThisSegment.add(sDocID)
+            lDocsThisSegment = util.fnlSortIDList(list(setDocsThisSegment))
+            sRandomType = "GENEROUS"
+        else:
+            # Do this the simple, stupid way: select a segment's size list
+            #  of uniform random numbers and make that the audit list for 
+            #  this segment.  Note that this will be SAMPLING WITH REPLACEMENT
+            #  WITHIN A SEGMENT, so that the number of documents actually 
+            #  audited during a segment will (almost certainly) be much less 
+            #  than the naively-desired number due to balls-in-urns effects
+            #  of replacement.  I think that this is what most people
+            #  would actually implement naively for "random auditing."  
+            #  The list may/will contain duplicates, and we don't care.  
+            lDocsThisSegment = []
+            while nDocsMaybe > 0 and len(lDocsThisSegment) < nDocsMaybe:
+                idxChoose = int(util.makeunif(0, nDocsRemaining))
+                sDocID = lDocIDsRemaining[idxChoose]
+                cDoc = G.dID2Document[sDocID]
+                # If the doc is not already permanently kaput, check it.
+                if not cDoc.mIsLost():
+                    lDocsThisSegment.append(sDocID)
+            lDocsThisSegment = util.fnlSortIDList(list(set(lDocsThisSegment)))
+            sRandomType = "NAIVE"
+        lg.logInfo("AUDIT2", "choose seg  t|%10.3f| auditid|%s| seg|%s|of|%s| "
+                "ndocsrem|%s| chosen|%s| type|%s|"
+            % (G.env.now, self.ID, iCurrentSegment+1, mynSegments, 
+                nDocsRemaining, len(lDocsThisSegment), sRandomType))
         return lDocsThisSegment
 
 
@@ -834,7 +864,7 @@ def fAudit_Select(mysStrategy, mysClientID, mysCollectionID, mynCycleInterval):
 
 '''\
 Here is a brief description of the methods used here.  This is a 
- summary of the r3b.py test program that acutally works properly.
+ summary of the r3b.py test program that actually works properly.
 SimPy is inherently asynchronous.  The tricky bit is to synchronize 
  with some processes and not others, so that the scheduling is done
  on a precise schedule.  In this case, collection synchronizes 
