@@ -9,3 +9,4 @@ value,label,selected
 5000,"5000 (1/2 year)",0
 10000,"10000 (year)",SELECTED
 20000,"20000 (two years)",0
+50000,"50000 (five years)",0

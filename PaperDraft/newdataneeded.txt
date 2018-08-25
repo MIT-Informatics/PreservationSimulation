@@ -4,13 +4,13 @@
 - COPIES5SUFFICES: cop=5 suffices?  copies=3,4,5, lifem=2-1000, annual total audit.
 - COPIES4MAYBE: copies=4,5, lifem=2-1000, annual total audit.
 - COPIES5LONGTERM: copies=5, len=30,50years, lifem=2-1000, annual total audit.
-- COPIES6FORSHOCKS: copies=5,6, lifem=2-1000, shocks freq=2yr dur=1yr span=2,3 impact=50,67,75,100%.
-- RANDOMCONTRAST: copies=3,4,5, audit=total,random, segments=1,4,10.
+- COPIES6FORSHOCKS: copies=5,6, audit=systematic segments=1,4, lifem=2-1000, shocks freq=2yr dur=1yr span=2,3 impact=50,67,75,100%.
+- RANDOMCONTRAST: copies=3,4,5, audit=total annual,random, segments=1,4,10.
 - FIVEYEARRANDOM: copies=3,4,5, audit=total,random freq=5years segments=5.
-- SHOCKSEGMENTS: copies=4,5, audit=total annual, segments=1,4,10, shocks=2yr dur=1yr span=2,3 impact=50,67, 100.
+- SHOCKSEGMENTS: copies=4,5, audit=systematic annual, segments=1,4,10, shocks=2yr dur=1yr span=2,3 impact=50,67,100.
 - LARGEDOCTARGETS: docsize=5,50,500,5000MB, usual lifem, audit=none,annual.
-- GLITCHERRORRATES: copies=5, audit=annual, glitch=quarter dur=month impact=50,67.
+- GLITCHERRORRATES: copies=5, audit=total annual, glitch=quarter dur=month impact=50,67.
 - SHOCKSMORETHAN4: same as COPIES6FORSHOCKS but with copies=4.
 - SEVERESHOCKS5OR6: copies=4,5,6, shocks freq2yr dur1yr span2,3 imp50,80,100.
-- ONEPCTLONGTERM: audit=anual total, len=30,50yr, copies=5,10.
+- ONEPCTLONGTERM: audit=annual total, len=30,50yr, copies=5,10.
 
