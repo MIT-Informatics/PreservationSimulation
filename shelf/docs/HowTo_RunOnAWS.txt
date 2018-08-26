@@ -13,14 +13,14 @@ Start EC2 machine
 - account = mitescience
 - name = rlandau (NOTE: no b)
 - password
-- select EC2
-- select instances
+- select EC2.
+- select instances.
 - select the instance  "RBL07A 32core c3.8xl 200GB 20160228 USEME"
-    (not the copy nor the spare).
+    (NOT the copy nor the spare).
 - examine State Transition: you want the last instance you closed:
     when launched, when shut down.
-- right click, Start, yes I'm sure
-- wait for IP addr to show up under IPv4 Public IP
+- right click, Instance State, Start, yes I'm sure.
+- wait for IP addr to show up under IPv4 Public IP, copy to clipboard.
 - there is some magic setting that one needs to use in the security section
     that enables an outside browser to access the EC2 system.
     I forget what setting, sorry.  ask stackoverflow.  I did.  
@@ -146,19 +146,22 @@ Get web form used to submit input parameters for runs
 - browse from your system to <aws-ip-addr>:8080
 
 
-Setup output directory tree for results
-- select "Go to setup page" option on form
-- fill in family and specific directory names
-- if needed, select option to clear output directory
-- if desired, select option to clear all "done" records from admin db
+Setup output directory tree for results.
+- select "Go to setup page" option on form.
+- fill in family and specific directory names.
+- if needed, select option to clear output directory.
+- if desired, select option to clear all "done" records from admin db.
 
 
-Run broker for a single range of cases
-- fill in the form and submit
+Run broker for a single range of cases.
+- fill in the form and submit.
 - be sure to check ALL the fields, esp. server default life, numbers of copies,
    lifetimes, shock and glitch frequencies, impacts, durations.  
 - useful trick: set seeds=1 and TEST mode on to count the number of cases, then 
     set seeds=21 or whatever and TEST mode off to do the actual run.  
+- Usually, you want to run detached, so check that box and supply a filename
+    for the logfile to be produced.  You want to include the date and probably
+    the purpose of the runs.  
 
 
 Pick up the results

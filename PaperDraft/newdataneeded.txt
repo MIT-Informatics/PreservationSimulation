@@ -2,13 +2,13 @@
 
 DONE - NOAUDITCOPIES: no audit, many copies.  copies=1,3,5,10, lifem=2-1000, no audit.
 DONE - COPIES5SUFFICES: cop=5 suffices?  copies=3,4,5, lifem=2-1000, annual total audit.
-- COPIES4MAYBE: copies=4,5, lifem=2-1000, annual total audit.
+DONE - COPIES4MAYBE: copies=4,5, lifem=2-1000, annual total audit.
 DONE - COPIES5LONGTERM: copies=5, len=30,50years, lifem=2-1000, annual total audit.
 - COPIES6FORSHOCKS: copies=5,6, audit=systematic segments=1,4, lifem=2-1000, shocks freq=2yr dur=1yr span=2,3 impact=50,67,75,100%.
 DONE - RANDOMCONTRAST: copies=3,4,5, audit=systematic annual,random, segments=1,4,10.  OOPS: random seg=1 is forbidden, may have to recode.  
 DONE - FIVEYEARRANDOM: copies=3,4,5, audit=systematic,random freq=5years segments=5.
 - SHOCKSEGMENTS: copies=4,5, audit=systematic annual, segments=1,4,10, shocks=2yr dur=1yr span=2,3 impact=50,67,100.
-- LARGEDOCTARGETS: docsize=5,50,500,5000MB, usual lifem, audit=none,annual.
+DONE - LARGEDOCTARGETS: copies=1, docsize=5,50,500,5000MB, lifem=2-10000, audit=none(cop1),annual(cop5).
 - GLITCHERRORRATES: copies=5, audit=total annual, glitch=quarter dur=month impact=50,67.
 - SHOCKSMORETHAN4: same as COPIES6FORSHOCKS but with copies=4.
 - SEVERESHOCKS5OR6: copies=4,5,6, shocks freq2yr dur1yr span2,3 imp50,80,100.

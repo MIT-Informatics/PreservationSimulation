@@ -111,11 +111,11 @@ auditminority,AUDITTOTALS,11,nminority.(\d+)
 auditlost,AUDITTOTALS,12,nlost.(\d+)
 
 # G L I T C H E S 
-glitchfreq,GLITCH,6,freq.(\d+)
-glitchimpact,GLITCH,7,impact.(\d+)
-glitchspan,GLITCH,8,span.(\d+)
-glitchdecay,GLITCH,9,decay.(\d+)
-glitchmaxlife,GLITCH,10,maxlife.(\d+)
+glitchfreq,"PARAMS INFO - GLITCH",6,freq.(\d+)
+glitchimpact,"PARAMS INFO - GLITCH",7,impact.(\d+)
+glitchspan,"PARAMS INFO - GLITCH",8,span.(\d+)
+glitchdecay,"PARAMS INFO - GLITCH",9,decay.(\d+)
+glitchmaxlife,"PARAMS INFO - GLITCH",10,maxlife.(\d+)
 nglitches,"LIFETIME Total glitches",7,glitches.(\d+)
 
 # S H O C K S 
