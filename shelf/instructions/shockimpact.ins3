@@ -8,8 +8,9 @@ value,label,selected
 10,10,0
 20,20,0
 33,33,0
-50,50,SELECTED
-67,67,0
-80,80,0
-90,90,0
-100,100 (fatal),0
+50,"50 (2x error rate)",SELECTED
+67,"67 (3x error rate)",0
+75,"75 (4x error rate)",0
+80,"80 (5x error rate)",0
+90,"90 (10x error rate)",0
+100,"100 (fatal)",0

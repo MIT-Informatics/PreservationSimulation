@@ -317,7 +317,7 @@ def mainmain():
 
     tWallEnd = time()
     G.tWallLen = tWallEnd - tWallBegin
-    NTRC.ntracef(0,"MAIN","proc End time stats: wall|%8.3f| cpu|%s|" 
+    NTRC.ntracef(0,"MAIN","proc End time stats: wall|%8.3f| cpu|%8.3f|" 
         % (G.tWallLen,G.tSimCpuLen))
     NTRC.ntracef(0,"MAIN","ENDENDEND" 
         % ())
@@ -364,6 +364,7 @@ if __name__ == "__main__":
 #               Fix some over-long lines.  
 # 20171101  RBL Add check for nonsensical combinations of arguments.
 # 20180529  RBL Remove ancient "<>" from code, yikes.  
+# 20180826  RBL Fix printing of CPU time to %8.3f.
 # 
 
 
