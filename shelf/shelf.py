@@ -473,7 +473,7 @@ class CShelf(object):
         ''' Nuke all the copies on the shelf.  
             Can't delete the CShelf object, however.
         '''
-        NNTRC.ntracef(3, "SHLF", "proc mDestroyShelf1 shelf|%s| "
+        NTRC.ntracef(3, "SHLF", "proc mDestroyShelf1 shelf|%s| "
             "has ncopies|%s|" 
             % (self.ID, len(self.lCopyIDs)))
         lg.logInfo("SHELF ", "t|%6.0f| destroy shelf|%s| "
@@ -503,6 +503,7 @@ class CShelf(object):
 #               Add logging for several shelf-death events.   
 #               PEP8-ify most of the trace/log and comment lines.  
 # 20180516  RBL Update to use ntrace, ntracef, NTRC.
+# 20180826  RBL Fix fatal typo (NNTRC) in mDestroyShelf.
 # 
 # 
 
