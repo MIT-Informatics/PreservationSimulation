@@ -1,6 +1,6 @@
 How to run on AWS
                 RBL 20170519
-                updated many times, most recently 20180409
+                updated many times, most recently 20180826.
 
 
 START AWS EC2 MACHINE
@@ -179,6 +179,12 @@ Pick up the results
 - also copy the detached-run log if you used that.  
 
 
+Poweroff and/or stop the EC instance when you're done
+- sudo poweroff now
+- If the instance is left running, even with the OS halted, AWS charges $.  
+    Don't do that.  shutdown does not suffice to stop the charges.  
+
+
 Things to note about the form:
 - The Setup page is accessible from the form.  That is the easy way
     to create (and clear) the output directory tree, and to 
@@ -211,6 +217,13 @@ Things to note about the form:
     name for the log file you in which you wish to collect results, or a
     filename will be selected and the results appended to that file (in
     shelf/tmp).  
+- If the sequence is running offline with output going to a log file like
+    brokerlog_<somepurposeorother>_<date>.log, it will finish even if the IP
+    connection is broken.  
+- If you need to stop the broker sequence in the middle for some reason, 
+    find the process that is running "python broker.py" or similar, and
+    kill that process by PID.  You can find the process ID with htop or 
+    ps aux or similar command.  
 
 
 MANUAL OPERATION
