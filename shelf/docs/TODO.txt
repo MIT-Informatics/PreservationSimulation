@@ -59,6 +59,7 @@ DONE - need new utils: list databases, list collections in db.
 
 
 TODO: web interface to select instructions for broker run
+FIXME - Make almost all entries multiple-select.  Curently several are not.
 FIXME - nDocuments does not appear in the interface; therefore, if it has 
     multiple values, it will generate redundant instructions.  YIKES!
     Workaround: permit only one value, i.e., 10,000 docs.  
@@ -109,6 +110,12 @@ DONE - add routine to tell if production mode is on, so it can be logged.
 
 
 TODO: general
+FIXME - For almost all cases, need a summary table of data, including midmean, 
+    lightly trimmed mean (10%? 5%?), mean, median.
+FIXME - For almost all cases, need boxplots of results; particularly important
+    for cases where most of the results are zero so that the trimmed values 
+    and median are zero, but there are some bad outliers, e.g., total losses
+    for a few cases; boxplots will make the outliers stand out.  
 FIXME - update deadly out of date comments in, e.g., main.py.  check all 
     such modules.
 FIXME - do we want to wrap this up as a python package?  not at all clear.
@@ -117,7 +124,7 @@ FIXME - do we want to wrap this up as a python package?  not at all clear.
 FIXME - update all the python shebang strings to "#!/usr/bin/env python"
     like a good boy.  or maybe not: modules that are always imported and 
     never executed alone do not need the shebang.
-DONOTDO - convert the entire corpus to python3?  no way.  
+DEFER - convert the entire corpus to python3?  no way.  
 DONE - create brokercommandlog_enable.sh and ..._disable.sh files to 
     enable the user easily to turn broker command logging on and off.
     both should preserve any info already in the log.
@@ -303,7 +310,12 @@ MAYBE - add a script to dump out some sample stats from a mongo db, such as name
 
 
 TODO: audit
-FIXME - log stats at end of each audit cycle: lost, minority repairs, 
+FIXME - Change SYSTEMATIC to TOTAL and allow segments>=1 for TOTAL audits.  
+    Maybe.  Discuss with Micah for clarity.  
+FIXME - Change UNIFORM to RANDOMGENEROUS and add RANDOMNAIVE as a strategy.  
+    Permit segments=1 for RANDOMNAIVE but not for GENEROUS.
+FIXME - Add number of audit segments to output line in addition to cycles.  
+DEFER - log stats at end of each audit cycle: lost, minority repairs, 
   majority repairs.  These are all cross-server figures.  We need to 
   add per-server figures, too.  Goal is to see if the user could 
   possibly detect server glitch less than fatal.  

@@ -550,7 +550,7 @@ def fnsReconstituteCommand(lArgs):
 @ntrace
 def fnbMaybeLogCommand(sCommand):
     if os.path.isfile(g.sBrokerCommandLogFile):
-        sTime = util.fnsGetTimeStamp() + "\n"
+        sTime = util.fnsGetTimeStamp() + " "
         with open(g.sBrokerCommandLogFile, "a") as fhBrokerCommandLog:
             fhBrokerCommandLog.write(sTime)
             fhBrokerCommandLog.write(sCommand + "\n")
@@ -662,6 +662,7 @@ foreach single-line file in holding dir
 # 20171217  RBL Move a couple small functions to util.py.
 # 20180408  RBL Add nSimLength var to take value from --simlen CLI option, 
 #                to be passed to main.py in cmd.  
+# 20180828  RBL Log commands on single line, timestamp then CLI command.  
 # 
 # 
 
