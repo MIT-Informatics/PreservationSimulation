@@ -12,5 +12,5 @@ DONE - LARGEDOCTARGETS: copies=1, docsize=5,50,500,5000MB, lifem=2-10000, audit=
 DONE - GLITCHERRORRATES: copies=5, audit=total annual, glitch=quarter dur=month impact=50,67.
 DONE - SHOCKSMORETHAN4: same as COPIES6FORSHOCKS but with copies=4.
 DONE - SEVERESHOCKS5OR6: copies=4,5,6, shocks freq2yr dur1yr span2,3 imp50,75,100.
-- ONEPCTLONGTERM: audit=annual total, segments=1,4, len=30,50yr, copies=5,10.
+- ONEPCTLONGTERM: audit=annual total, segments=1,4, len=30,50yr, copies=5,10.  Not good: with shocks, run out of servers over that long term; when calm, everything works.  Will try something near the normal vicissitudes of the business cycle: cop=456, lifem2-100(NB, don't waste time on good disks), shocks=30000dur10000imp50span2, serverdeflif=200000.
 
