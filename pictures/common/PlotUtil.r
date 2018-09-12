@@ -87,7 +87,7 @@ fnPlotTitles <- function(gp, titleline, titlesize=22,
 # Seems a bizarre way to do this, to create a fake data point
 #  and then plot it using text centered there instead of just a dot.  
 fnPlotPercentLine <- function(gp, 
-                    xloc=log10(1.7), yloc=log10(1.2), 
+                    xloc=log10(1.7), yloc=log10(1.30), 
                     labeltext="1%", labelsize=4, 
                     percent=1.0){
     gp <- gp + geom_hline(yintercept=percent, linetype="dashed")
@@ -101,7 +101,7 @@ fnPlotPercentLine <- function(gp,
 # Seems a bizarre way to do this, to create a fake data point
 #  and then plot it using text centered there instead of just a dot.  
 fnPlotMilleLine <- function(gp, 
-                    xloc=log10(1.8), yloc=log10(0.12), 
+                    xloc=log10(1.8), yloc=log10(0.14), 
                     labeltext="0.1%", labelsize=4, 
                     percent=0.1){
     gp <- gp + geom_hline(yintercept=percent, linetype="dashed")
@@ -115,7 +115,7 @@ fnPlotMilleLine <- function(gp,
 # Seems a bizarre way to do this, to create a fake data point
 #  and then plot it using text centered there instead of just a dot.  
 fnPlotSubMilleLine <- function(gp, 
-                    xloc=log10(1.7), yloc=log10(0.011), 
+                    xloc=log10(1.9), yloc=log10(0.015), 
                     labeltext="0.01%", labelsize=4, 
                     percent=0.01){
     gp <- gp + geom_hline(yintercept=percent, linetype="dashed")
@@ -130,17 +130,25 @@ fnPlotMakeFile <- function(plotname, sFilename, sSize="mediumlarge") {
 # Capture graph in 16:10 aspect and reasonable size.
     if (is.null(plotname)) {print("ERROR: missing first argument = plot in progress")}
     if (sSize == "large")
-        { png(sFilename,width=1600,height=1000) }
+        { png(sFilename,width=1600,height=1000) }   # 16:10
     else if (sSize == "mediumlarge")
-        { png(sFilename,width=1200,height=750) }
+        { png(sFilename,width=1200,height=750) }    # 16:10
     else if (sSize == "mediumsmall")
-        { png(sFilename,width=960,height=600) }
+        { png(sFilename,width=960,height=600) }     # 16:10
     else if (sSize == "4x3")
-        { png(sFilename,width=800,height=600) } 
+        { png(sFilename,width=800,height=600) }     # 4:3
     else 
-        { png(sFilename,width=800,height=500) } 
-      print(plotname)
-      dev.off()
+        { png(sFilename,width=800,height=500) }     # 16:10
+    print(plotname)
+    dev.off()
+    
+    # Make a medium size pic with ggsave, which assumes 300dpi.
+    # The text sizes seem to be all wrong, dunno why.  
+    # Fix this mess later.
+    h <- 1200/300; v <- 750/300; 
+    ggsave("ggsave_plot.png", width=h, height=v)
+
+    return    
 } #endfunction
 
 # Edit history: 
@@ -152,7 +160,9 @@ fnPlotMakeFile <- function(plotname, sFilename, sSize="mediumlarge") {
 #               Add warning to PlotBegin function.
 #               Add symbolic constants for point shapes.
 # 20180403  RBL Remove source() of DataUtil.r, not needed.
-# 
+# 20180911  RBL Move all the percent labels up and over to avoid dots.
+#               Add ggsave() which doesn't work as expected or 
+#                work well at all.  
 # 
 
 #END
