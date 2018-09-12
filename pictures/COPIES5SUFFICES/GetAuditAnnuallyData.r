@@ -75,7 +75,7 @@ gp <- fnPlotLogScales(gp, x="YES", y="YES"
                 )
 
 gp <- gp + geom_point(data=trows
-                , size=4
+                , size=5
                 , show.legend=TRUE
                 ) 
 gp <- gp + geom_line(

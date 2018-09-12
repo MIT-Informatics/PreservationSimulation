@@ -53,8 +53,8 @@ fnSelectCopies <- function(dfIn, nCopies)
 # Safe functions for plotting.
 # Note that safelog(0) returns 0, as needed for sensible axis labeling.  
 # How far away do we nudge logs from zero?
-safe.distance <- 1.0 * 1E-6 * 100     # one part per million (in percent)
-#safe.distance <- 10.0 * 1E-6 * 100    # ten parts per million (in percent)
+#safe.distance <- 1.0 * 1E-6 * 100     # one part per million (in percent)
+safe.distance <- 10.0 * 1E-6 * 100    # ten parts per million (in percent)
 safelog <- function(x) {return(log10(x+1))}
 safe    <- function(x) {return(x+safe.distance)}
 
@@ -196,6 +196,7 @@ fndfGetShelfsizeData <- function(results)
 # 20180325  RBL Increase rounding to two digits; one digit was causing
 #                problems with small percentages.  
 #               Save the raw data in the global environment.
+# 20180911  RBL Change safe distance back to 10ppm to avoid wasting space.
 # 
 # 
 
