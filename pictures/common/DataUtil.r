@@ -105,9 +105,11 @@ fndfGetGiantData <- function(dir.string)
     nonIgnoreVarNames <- setdiff(allVarNames, ignoreVarNames)
 
     # Select, group, and aggregate.
+    if (debugprint) {cat("before group_by\n");}
     sims.selected.df <- sims.merged.df[nonIgnoreVarNames]
     gp_sims.merged<-eval(parse(text=paste("group_by(sims.selected.df,",
         paste(collapse=",", paramVarNames),")")))
+    if (debugprint) {cat("before summarise\n");}
     results <- summarise(gp_sims.merged, 
                 mdmlosspct=round(midmean(docslost/docstotal)*100,2), n=n())
 #                mdmlosspct=round(trimmedmean(docslost/docstotal)*100,2), n=n())
@@ -132,7 +134,7 @@ fndfGetAuditData <- function(results)
     lNamesIWant <- c("copies","lifem","mdmlosspct",
                     "auditfrequency","auditsegments",    
                     #"audittype", too, needs fixed, but is not in data!
-                    "docsize","shelfsize")
+                    "docsize","shelfsize","simlength")
     results.narrow <- fndfGetSubsetData(results, lNamesIWant)
     results.plausible <- results.narrow[results.narrow$lifem>=2,]
     return(results.plausible)
