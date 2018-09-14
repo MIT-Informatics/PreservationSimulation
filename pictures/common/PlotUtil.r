@@ -83,9 +83,7 @@ fnPlotTitles <- function(gp, titleline, titlesize=22,
 }
 
 
-# f n P l o t P e r c e n t L i n e 
-# Seems a bizarre way to do this, to create a fake data point
-#  and then plot it using text centered there instead of just a dot.  
+# f n P l o t P e r c e n t L i n e     at 1.0%
 fnPlotPercentLine <- function(gp, 
                     xloc=log10(1.7), yloc=log10(1.30), 
                     labeltext="1%", labelsize=4, 
@@ -98,8 +96,6 @@ fnPlotPercentLine <- function(gp,
 
 
 # f n P l o t M i l l e L i n e       at 0.1%
-# Seems a bizarre way to do this, to create a fake data point
-#  and then plot it using text centered there instead of just a dot.  
 fnPlotMilleLine <- function(gp, 
                     xloc=log10(1.8), yloc=log10(0.14), 
                     labeltext="0.1%", labelsize=4, 
@@ -112,8 +108,6 @@ fnPlotMilleLine <- function(gp,
 
 
 # f n P l o t S u b M i l l e L i n e    at 0.01%
-# Seems a bizarre way to do this, to create a fake data point
-#  and then plot it using text centered there instead of just a dot.  
 fnPlotSubMilleLine <- function(gp, 
                     xloc=log10(1.9), yloc=log10(0.015), 
                     labeltext="0.01%", labelsize=4, 

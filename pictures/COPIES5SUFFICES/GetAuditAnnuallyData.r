@@ -12,6 +12,8 @@ dat.auditannually <- fndfGetAuditData(results)
 # Tabulate columns by copies and sector lifetime.
 tbl.auditannually <- data.frame(with(dat.auditannually, 
             tapply(mdmlosspct, list(copies, lifem), FUN=identity)))
+
+if(0){
 # Re-form the data into a table for printing.  
 foo<-(with(dat.auditannually, 
        tapply(mdmlosspct, list(copies, lifem), FUN=identity)))
@@ -31,6 +33,7 @@ cat(sSubtitle, "\n\n")
 cat("\n")
 print(tbl2)
 sink()
+}#ENDIF0
 
 # Micah succeeded in bending dcast to his will, thanks; see email.
 library(reshape2)
@@ -42,38 +45,20 @@ bar.recast <- dcast(bar.melted, copies~lifem)
 library(ggplot2)
 source("../common/PlotUtil.r")
 
-trows <- dat.auditannually
-
 # Show lines for 3, 4, 5 copies, with annual total auditing, over wiiiide range.
 nCopies <- 3; trows3 <- fnSelectCopies(dat.auditannually, nCopies)
-#gp <- fnPlotAddLine(gp, dat=trows, 
-#                    dotcolor="black", dotsize=5, dotshape=(48+nCopies), 
-#                    linecolor="red", linesize=1, lineshape="dashed")
-
 nCopies <- 4; trows4 <- fnSelectCopies(dat.auditannually, nCopies)
-#gp <- fnPlotAddLine(gp, dat=trows, 
-#                    dotcolor="black", dotsize=5, dotshape=(48+nCopies), 
-#                    linecolor="blue", linesize=1, lineshape="dashed")
-
 nCopies <- 5; trows5 <- fnSelectCopies(dat.auditannually, nCopies)
-#gp <- fnPlotAddLine(gp, dat=trows, 
-#                    dotcolor="black", dotsize=5, dotshape=(48+nCopies), 
-#                    linecolor="green", linesize=2, lineshape="dashed")
-
 trows <- rbind(trows3, trows4, trows5)
-ncop = as.integer(trows$copies)
-trows <- cbind(trows, ncop)
 
 gp <- ggplot(data=trows
             , aes(x=lifem,y=safe(mdmlosspct), color=factor(copies))
             ) 
 gp <- gp + labs(color="Number of\nCopies")
-
 gp <- fnPlotLogScales(gp, x="YES", y="YES"
                 ,xbreaks=c(2,5,10,100,1000)
                 ,ybreaks=c(0.01,0.10,1.00)
                 )
-
 gp <- gp + geom_point(data=trows
                 , size=5
                 , show.legend=TRUE
@@ -83,24 +68,22 @@ gp <- gp + geom_line(
                 , show.legend=TRUE
                 )
 
-#gp <- gp + scale_color_manual("title here i think", 
-#                breaks=c("3 copies", "4 copies", "5 copies"), 
-#                values=c("red", "green", "blue"))
-              
-
 gp <- fnPlotTitles(gp
-            , titleline="With annual auditing (in an uneventful world), "
+            , titleline="With auditing, in a peaceful world, "
                 %+% "we need only a few copies"
                 %+% "\nto minimize permanent losses over a wide range"
+                %+% "\n(Annual total auditing, duration = 10 years)"
             , titlesize=16
             , xlabel="1MB sector half-life (megahours)"
-                %+% "                     (lower error rate ===>)"
+                %+% "                           (lower error rate =====>)"
             , ylabel="permanent document losses (%)"
             , labelsize=14
         ) 
-gp <- fnPlotPercentLine(gp)
-gp <- fnPlotMilleLine(gp)
-gp <- fnPlotSubMilleLine(gp)
+# Label the percentage lines out on the right side.
+xlabelposition <- log10(800)
+gp <- fnPlotPercentLine(gp, xloc=xlabelposition)
+gp <- fnPlotMilleLine(gp, xloc=xlabelposition)
+gp <- fnPlotSubMilleLine(gp, xloc=xlabelposition)
 
 plot(gp)
 fnPlotMakeFile(gp, "baseline-auditannually.png")
