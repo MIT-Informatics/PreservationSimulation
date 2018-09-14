@@ -1,4 +1,4 @@
-# GetAuditAnnuallyData.r
+# GetNoAuditData.r
 
 source("../common/DataUtil.r")
 
@@ -55,7 +55,6 @@ gp <- ggplot(data=trows
             , aes(x=lifem,y=safe(mdmlosspct), color=factor(copies))
             ) 
 gp <- gp + labs(color="Number of\nCopies")
-
 gp <- fnPlotLogScales(gp, x="YES", y="YES"
                 ,xbreaks=c(2,5,10,100,1000)
                 ,ybreaks=c(0.01,0.10,1.00)
@@ -68,14 +67,6 @@ gp <- gp + geom_line(
                   size=2
                 , show.legend=TRUE
                 )
-
-gp <- gp + theme(legend.position=c(0.8,0.7))
-gp <- gp + theme(legend.background=element_rect(fill="lightgray", 
-                                  size=0.5, linetype="solid"))
-gp <- gp + theme(legend.key.size=unit(0.3, "in"))
-gp <- gp + theme(legend.key.width=unit(0.6, "in"))
-gp <- gp + theme(legend.text=element_text(size=16))
-gp <- gp + theme(legend.title=element_text(size=14))
 
 gp <- fnPlotTitles(gp
             , titleline="With auditing, in a peaceful world, "

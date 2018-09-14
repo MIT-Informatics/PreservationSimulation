@@ -29,7 +29,7 @@ options("width"=120)
 #  than median.  
 # midmean is just a trimmed mean of the middle half of the sample.
 # trimean is a less efficient but easier trimmed central measure, 
-#  and was a JWT favorite.  
+#  and was a JWT favorite: 1/2 median + 1/2 avg of quartiles. 
 # trimmedmean is a 10% trimmed mean, i.e., mean of the middle 80% of the data.
 trimean <-  function(vect)  
 {   foo <- fivenum(vect); 
@@ -40,8 +40,8 @@ midmean <-  function(vect)
 {   ans <- mean(vect, trim=0.25, na.rm=TRUE); 
     ans 
 }
-trimmedmean <-  function(vect)  
-{   ans <- mean(vect, trim=0.10, na.rm=TRUE); 
+trimmedmean <-  function(vect, trimpct=10)  
+{   ans <- mean(vect, trim=(trimpct/100), na.rm=TRUE); 
     ans 
 }
 
@@ -55,8 +55,8 @@ fnSelectCopies <- function(dfIn, nCopies)
 # How far away do we nudge logs from zero?
 #safe.distance <- 1.0 * 1E-6 * 100     # one part per million (in percent)
 safe.distance <- 10.0 * 1E-6 * 100    # ten parts per million (in percent)
-safelog <- function(x) {return(log10(x+1))}
-safe    <- function(x) {return(x+safe.distance)}
+safelog     <- function(x) {return(log10(x+1))}
+safe        <- function(x) {return(x+safe.distance)}
 
 # Shock tabulation functions.
 fntShockTab <- function(input, freq, impact, duration) {
@@ -70,6 +70,7 @@ fntShockTab <- function(input, freq, impact, duration) {
     assign("res.shocktabcast", restab, envir=globalenv())
     return(restab)
 }
+
 
 # f n d f G e t G i a n t D a t a 
 fndfGetGiantData <- function(dir.string)
@@ -92,11 +93,11 @@ fndfGetGiantData <- function(dir.string)
     allVarNames <- colnames(sims.merged.df)
     ignoreVarNames <- c("timestamp","seed","walltime","cputime","logfilename",
         "logfilesize","instructionfilename","todaysdatetime","extractorversion",
-        "cpuinfo","mongoid","audittype")
+        "cpuinfo","mongoid")
     resultVarNames <- c("docslost","docsrepairedmajority","docsrepairedminority",
         "lost","nshocks","nglitches","deadserversactive","deadserversall",
         "docsokay","auditmajority","auditminority","auditlost","auditrepairs",
-        "auditcycles")
+        "auditcycles","audittype")
     coreResultVarNames <- c("docslost","docsrepairedmajority",
         "docsrepairedminority")
     paramVarNames <- setdiff(setdiff(allVarNames, resultVarNames), ignoreVarNames)
@@ -115,6 +116,7 @@ fndfGetGiantData <- function(dir.string)
 
     return(results)
 }
+
 
 # f n d f G e t S u b s e t D a t a 
 fndfGetSubsetData <- function(results, lColumnNames)
@@ -179,6 +181,19 @@ fndfGetShelfsizeData <- function(results)
                     "docsize","shelfsize")
 }
 
+
+# f n d f G e t N o A u d i t D a t a 
+fndfGetNoAuditData <- function(results)
+{
+    # Specific to audit analyses: 
+    lNamesIWant <- c("copies","lifem","mdmlosspct",
+                    "docsize","shelfsize")
+    results.narrow <- fndfGetSubsetData(results, lNamesIWant)
+    results.plausible <- results.narrow[results.narrow$lifem>=2,]
+    return(results.plausible)
+}
+
+
 # Edit history:
 # 20171002  RBL Copy from Altman original ExploreGiantOutputs.r.
 #               Add functions to select data for specific analyses.
@@ -197,6 +212,8 @@ fndfGetShelfsizeData <- function(results)
 #                problems with small percentages.  
 #               Save the raw data in the global environment.
 # 20180911  RBL Change safe distance back to 10ppm to avoid wasting space.
+# 20180914  RBL Add selector for no-audit data.
+#               Move audittype into desired data columns.  
 # 
 # 
 

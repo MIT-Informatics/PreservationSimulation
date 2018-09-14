@@ -1,0 +1,38 @@
+Rhints
+
+Here is the full set of things you can change in element_text:
+
+element_text(family = NULL, face = NULL, colour = NULL, size = NULL,
+  hjust = NULL, vjust = NULL, angle = NULL, lineheight = NULL,
+  color = NULL)
+
+gp <- ggplot(data=trows
+            , aes(x=lifem,y=safe(mdmlosspct), color=factor(copies))
+            ) 
+gp <- gp + labs(color="Number of\nCopies")
+gp <- fnPlotLogScales(gp, x="YES", y="YES"
+                ,xbreaks=c(2,5,10,100,1000)
+                ,ybreaks=c(0.01,0.10,1.00)
+                )
+gp <- gp + geom_point(data=trows
+                , size=5
+                , show.legend=TRUE
+                ) 
+gp <- gp + geom_line(
+                  size=2
+                , show.legend=TRUE
+                )
+
+gp <- gp + theme(legend.position=c(0.8,0.7))
+gp <- gp + theme(legend.background=element_rect(fill="lightgray", 
+                                  size=0.5, linetype="solid"))
+gp <- gp + theme(legend.key.size=unit(0.3, "in"))
+gp <- gp + theme(legend.key.width=unit(0.6, "in"))
+gp <- gp + theme(legend.text=element_text(size=16))
+gp <- gp + theme(legend.title=element_text(size=14))
+
+plot + theme(legend.title = element_text(colour = 'red', angle = 45, size = 10, hjust = 3, vjust = 7, face = 'italic'))
+
+g+theme(legend.title = element_text(colour="chocolate", size=16, face="bold"))+
+  scale_color_discrete(name="This color is\ncalled chocolate!?")
+
