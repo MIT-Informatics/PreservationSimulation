@@ -46,10 +46,12 @@ library(ggplot2)
 source("../common/PlotUtil.r")
 
 # Show lines for 3, 4, 5 copies, with annual total auditing, over wiiiide range.
+nCopies <- 1; trows1 <- fnSelectCopies(dat.auditannually, nCopies)
 nCopies <- 3; trows3 <- fnSelectCopies(dat.auditannually, nCopies)
 nCopies <- 4; trows4 <- fnSelectCopies(dat.auditannually, nCopies)
 nCopies <- 5; trows5 <- fnSelectCopies(dat.auditannually, nCopies)
-trows <- rbind(trows3, trows4, trows5)
+nCopies <- 10; trows10 <- fnSelectCopies(dat.auditannually, nCopies)
+trows <- rbind(trows1, trows3, trows4, trows5, trows10)
 
 gp <- ggplot(data=trows
             , aes(x=lifem,y=safe(mdmlosspct), color=factor(copies))
@@ -68,11 +70,19 @@ gp <- gp + geom_line(
                 , show.legend=TRUE
                 )
 
+gp <- gp + theme(legend.position=c(0.9,0.8))
+gp <- gp + theme(legend.background=element_rect(fill="lightgray", 
+                                  size=0.5, linetype="solid"))
+gp <- gp + theme(legend.key.size=unit(0.3, "in"))
+gp <- gp + theme(legend.key.width=unit(0.6, "in"))
+gp <- gp + theme(legend.text=element_text(size=16))
+gp <- gp + theme(legend.title=element_text(size=14))
+
 gp <- fnPlotTitles(gp
-            , titleline="With auditing, in a peaceful world, "
-                %+% "we need only a few copies"
-                %+% "\nto minimize permanent losses over a wide range"
-                %+% "\n(Annual total auditing, duration = 10 years)"
+            , titleline="Without auditing, many copies are required "
+                %+% "\nto reduce permanent errors "
+                %+% "to acceptable levels"
+                %+% "\n(No auditing, duration = 10 years)"
             , titlesize=16
             , xlabel="1MB sector half-life (megahours)"
                 %+% "                           (lower error rate =====>)"
@@ -86,7 +96,7 @@ gp <- fnPlotMilleLine(gp, xloc=xlabelposition)
 gp <- fnPlotSubMilleLine(gp, xloc=xlabelposition)
 
 plot(gp)
-fnPlotMakeFile(gp, "baseline-auditannually.png")
+fnPlotMakeFile(gp, "noauditcopies.png")
 
 # Unwind any remaining sink()s to close output files.  
 while (sink.number() > 0) {sink()}

@@ -70,7 +70,7 @@ fnPlotLogScales <- function(gp, x=NULL, y=NULL, xbreaks=NULL, ybreaks=NULL) {
 
 # f n P l o t T i t l e s 
 fnPlotTitles <- function(gp, titleline, titlesize=22, 
-                    xlabel="XXX", ylabel="YYY", labelsize=18) {
+                    xlabel="XXX", ylabel="YYY", labelsize=18, hjust=NULL) {
     if (is.null(gp)) {print("ERROR: missing first argument = plot in progress")}
     gp <- gp + labs(title=titleline, x=xlabel, y=ylabel)
     gp <- gp + theme(
