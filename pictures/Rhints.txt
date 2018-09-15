@@ -36,3 +36,19 @@ plot + theme(legend.title = element_text(colour = 'red', angle = 45, size = 10, 
 g+theme(legend.title = element_text(colour="chocolate", size=16, face="bold"))+
   scale_color_discrete(name="This color is\ncalled chocolate!?")
 
+%>% is a pipe that puts the LHS into the first arg of the function on the RHS.
+
+select(df, col1, col2, ...)
+filter(df, cond1, cond2, ...)
+mutate(df, newcol1=expr1, newcol2=expr2, ...)
+arrange(df, sortcol1, sortcol2, ...)
+
+group_by(df, col1, col2, ...)
+summarize(df, newcol1=expr1, newcol2=expr2, ...)
+n() is count of items in group as new var into summarize
+
+newdat <- alldat %>%
+group_by(copies, lifem, auditfrequency, audittype, auditsegments) %>%
+summarize(losspct=round(midmean(lost/docstotal)*100.0, 2), n=n())
+
+

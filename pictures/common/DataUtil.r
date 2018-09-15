@@ -72,6 +72,24 @@ fntShockTab <- function(input, freq, impact, duration) {
 }
 
 
+# f n d f G e t G i a n t D a t a R a w
+# Just gimme all the rows of data; I'll group it myself.  
+fndfGetGiantDataRaw <- function(dir.string)
+{
+    # L O A D   F I L E S 
+    # Load & merge all files in directory
+    if (dir.string == "") {dir.string <- "./"}
+    filesList <- grep(pattern="^Giant.*\\.txt$", dir(dir.string), 
+                perl=TRUE, value = TRUE)
+    sims.df.ls <- lapply( filesList, 
+                        function(x) {data.frame(read.table(x,
+                            header=TRUE,sep=" ", na.strings="nolinefound"))}
+    ) # NOTE MISSING PARAMETER ENTRIES in na.strings
+    sims.merged.df <- bind_rows(sims.df.ls)
+    assign("rawdata.df", sims.merged.df, envir=.GlobalEnv)
+    return(sims.merged.df)
+}
+
 # f n d f G e t G i a n t D a t a 
 fndfGetGiantData <- function(dir.string)
 {
@@ -87,6 +105,7 @@ fndfGetGiantData <- function(dir.string)
                             header=TRUE,sep=" ", na.strings="nolinefound")
     ) # NOTE MISSING PARAMETER ENTRIES in na.strings
     sims.merged.df <- bind_rows(sims.df.ls)
+    assign("rawdata.df", sims.merged.df, envir=.GlobalEnv)
 
     # Set up namesets for dependent, independent, ignored vars.
     #  Many of the columns are not relevant to data analysis, only tracking.
@@ -114,7 +133,6 @@ fndfGetGiantData <- function(dir.string)
                 mdmlosspct=round(midmean(docslost/docstotal)*100,2), n=n())
 #                mdmlosspct=round(trimmedmean(docslost/docstotal)*100,2), n=n())
     selectedresults <- results[which(results[["copies"]]!=1),]
-    assign("rawdata.df", sims.merged.df, envir=.GlobalEnv)
 
     return(results)
 }

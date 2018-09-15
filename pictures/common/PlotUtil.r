@@ -86,7 +86,7 @@ fnPlotTitles <- function(gp, titleline, titlesize=22,
 # f n P l o t P e r c e n t L i n e     at 1.0%
 fnPlotPercentLine <- function(gp, 
                     xloc=log10(1.7), yloc=log10(1.30), 
-                    labeltext="1%", labelsize=4, 
+                    labeltext="1%", labelsize=5, 
                     percent=1.0){
     gp <- gp + geom_hline(yintercept=percent, linetype="dashed")
     gp <- gp + geom_text(x=xloc, y=yloc, label=labeltext, size=labelsize, 
@@ -98,7 +98,7 @@ fnPlotPercentLine <- function(gp,
 # f n P l o t M i l l e L i n e       at 0.1%
 fnPlotMilleLine <- function(gp, 
                     xloc=log10(1.8), yloc=log10(0.14), 
-                    labeltext="0.1%", labelsize=4, 
+                    labeltext="0.1%", labelsize=5, 
                     percent=0.1){
     gp <- gp + geom_hline(yintercept=percent, linetype="dashed")
     gp <- gp + geom_text(x=xloc, y=yloc, label=labeltext, size=labelsize, 
@@ -110,7 +110,7 @@ fnPlotMilleLine <- function(gp,
 # f n P l o t S u b M i l l e L i n e    at 0.01%
 fnPlotSubMilleLine <- function(gp, 
                     xloc=log10(1.9), yloc=log10(0.015), 
-                    labeltext="0.01%", labelsize=4, 
+                    labeltext="0.01%", labelsize=5, 
                     percent=0.01){
     gp <- gp + geom_hline(yintercept=percent, linetype="dashed")
     gp <- gp + geom_text(x=xloc, y=yloc, label=labeltext, size=labelsize, 
