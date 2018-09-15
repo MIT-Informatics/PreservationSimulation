@@ -234,6 +234,7 @@ fndfGetNoAuditData <- function(results)
 # 20180911  RBL Change safe distance back to 10ppm to avoid wasting space.
 # 20180914  RBL Add selector for no-audit data.
 #               Move audittype into desired data columns.  
+#               Add new function to get just the combined raw data.
 # 
 # 
 

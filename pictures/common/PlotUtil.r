@@ -157,6 +157,9 @@ fnPlotMakeFile <- function(plotname, sFilename, sSize="mediumlarge") {
 # 20180911  RBL Move all the percent labels up and over to avoid dots.
 #               Add ggsave() which doesn't work as expected or 
 #                work well at all.  
+# 20180914  RBL Change dot sizes and a few other minor moves.  
+#               Add aspect ratios to the picture size choices.  
+# 
 # 
 
 #END
