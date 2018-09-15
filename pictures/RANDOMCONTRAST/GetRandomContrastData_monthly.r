@@ -53,6 +53,7 @@ gp <- gp + theme(legend.key.size=unit(0.3, "in"))
 gp <- gp + theme(legend.key.width=unit(0.6, "in"))
 gp <- gp + theme(legend.text=element_text(size=16))
 gp <- gp + theme(legend.title=element_text(size=14))
+gp <- gp + scale_color_discrete(labels=c("systematic","random"))
 
 # Titles
 gp <- fnPlotTitles(gp
@@ -61,7 +62,7 @@ gp <- fnPlotTitles(gp
                 %+% "that are then vulnerable to error, "
                 %+% "\ncompared with auditing "
                 %+% "WITHOUT replacement segmented at the same frequency "
-                %+% "\n(Random vs total auditing, monthly, duration = 10 years)"
+                %+% "\n(Uniform random vs total systematic auditing, monthly, duration = 10 years)"
             , titlesize=16
             , xlabel="1MB sector half-life (megahours)"
                 %+% "                           (lower error rate =====>)"

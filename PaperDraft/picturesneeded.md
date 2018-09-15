@@ -21,21 +21,24 @@ border-collapse: collapse;
 # Pretty pictures we need for the paper, *publication quality*
 
 
-RBLandau 20180824
+RBLandau 20180915
 
 --- 
 
 Notes on pictures:
 
-- Aspect ratio 16:10, raw size 1600x1000 or greater for publication, 800x500 for easier viewing while editing.   [Do journals have standards for sizes and aspects?  *Science* does, but I've never looked at others.]
-- All log-log.
+- Aspect ratio 16:10, raw size 1600x1000 or greater for publication, 800x500 for easier viewing while editing.   [This is just a SWAG on my part.  Do journals have standards for sizes and aspects?  *Science* does, but I've never looked at others.]  Current default size in PlotUtil.r is 1200x750.  Sizes of individual plots can be adjusted with the sSize=<string> argument to the fnPlotMakeFile() call.  
+- Problem: the size and placement of manual elements, such as legends, depend on the size at which the picture is rendered.  We may need to know the size for publication well in advance so we can adjust these elements.  
+- Question: color in the plots.  ggplot assigns colors to points, lines, and legends in some order or other, and the cases differ between pictures.  Do we always want the best case line to be in, e.g., black or blue or red or green?  Question: non-color in the plots.  It may be that the publication wants everything in black and white, with maybe gray permitted, so that we will have to change the distinguishing feature of the plots to point shapes instead of colors.  
+- All axes log-log, for error rates and loss rates.  This means that zero errors need to be shifted slightly away from numerical zero.  The current choice is 0.001% or 10ppm.  I tried 1ppm, but that just creates a lot of empty space at the bottom of the graphs.  
+- Need text to explain that real zeros on the log(percent loss) axis isn't actually zero.
 - Almost all need decade lines for loss rates: 1%, 0.1%, 0.01%, I think.  Horizontal dotted lines with small labels.  Would be good if the lines were easily distinguished, e.g., by weight, but not clear that's possible.  What would Tufte say? 
+- Need text to describe why low half-lives and why 3,4 copies: otherwise numbers too small to make clear pictures, best to look at where the differences are exaggerated but parallel.  
+- Note that one would never actually use disks with such low half-lives, but they are needed to show the phenomena.  
 - X half-life scales 2-1000 or 2-100.
 - Legends upper right (if I can force legends at all; may have to be manual annotations, yuck).
 - Attempt consistent color labeling for number of copies, but not sure this is reasonable in R.
 - Describe data plots: #copies, losses, error injection, log scales x and y, percent losses, trimmed means (25%=midmean, maybe only 10%) of sample size=21, colors=black or blue usually best case recommendation.
-- Describe why low half-lives and why 3,4 copies: otherwise numbers too small to make clear pictures, best to look at where the differences are exaggerated but parallel.  
-- Note that one would never actually use disks with such low half-lives, but they are needed to show the phenomena.  
 - I will have to regerate the data for most of these, rats.  
 - Comments inside the graph area will be done with annotation(), also rats.
 
@@ -70,9 +73,9 @@ Notes on pictures:
 
 Notes from 20180821
 
-- Need convincing pic for five audited copies in calm days.  Add 1% and 0.1% lines and see what it looks like.  Check also for much longer periods, e.g., 30 and 50 years.  
-- Random: compare same number of segments, just with vs without replacement. How many copies?  Year, quarter, month.  Maybe also 5 year cycle with 5 segments, done with replacement, just for comparison.  
-- Use names not numbers for the figures to allow us to reorder them.  Numbers assigned at the last minute.  
+- DONE: Need convincing pic for five audited copies in calm days.  Add 1% and 0.1% lines and see what it looks like.  Check also for much longer periods, e.g., 30 and 50 years.  
+- DONE: Random: compare same number of segments, just with vs without replacement. How many copies?  Year, quarter, month.  Maybe also 5 year cycle with 5 segments, done with replacement, just for comparison.  
+- DONE: Use names not numbers for the figures to allow us to reorder them.  Numbers assigned at the last minute.  
 - Segments: ignore monthly, but leave the 2 year line.  
 - Compression: may do this in a table rather than figure.  Can we do a dramatic picture/graph?  
 - Is there a function that relates one extra copy to a reduction in loss?  Need to look across a lot of empirical data.  

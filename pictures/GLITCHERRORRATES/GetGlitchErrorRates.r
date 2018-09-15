@@ -1,18 +1,24 @@
-# GetRandomContrastData_quarterly.r
+# GetGlitchErrorRates.r
 
 source("../common/DataUtil.r")
 
 # G E T   D A T A  
-if (exists("results")) {rm(results)}
-alldata.df <- fndfGetGiantDataRaw("")
-newdat <- alldata.df %>%
-group_by(copies, lifem, auditfrequency, audittype, auditsegments) %>%
-summarize(mdmlosspct=round(midmean(lost/docstotal)*100.0, 2), n=n())
+# Get the data into the right form for these plots.
+alldat.df <- fndfGetGiantDataRaw("")
+newdat <- alldat.df %>%
+group_by(copies, lifem
+        , auditfrequency, audittype, auditsegments
+        , glitchfreq, glitchimpact) %>%
+summarize(mdmlosspct=round(midmean(lost/docstotal)*100.0, 2), n=n()) 
 
 # Params today: quarterly auditing, five copies.
-SEGMENTS <- 4
+IMPACTLO <- 67
+IMPACTHI <- 90
 NCOPIES <- 5
-results <- filter(newdat, auditsegments==SEGMENTS)
+results0 <- filter(newdat, glitchimpact==0)
+results1 <- filter(newdat, glitchimpact==IMPACTLO)
+results2 <- filter(newdat, glitchimpact==IMPACTHI)
+results <- rbind(results0, results1, results2)
 trows <- filter(results, copies==NCOPIES)
 
 # P L O T   D A T A 
@@ -21,9 +27,8 @@ source("../common/PlotUtil.r")
 
 gp <- ggplot(data=trows
             , aes(x=lifem,y=safe(mdmlosspct)
-            , color=factor(audittype)
-            , shape=factor(copies)
-            , segs=factor(auditsegments)
+            , color=factor(glitchimpact)
+#            , shape=factor(copies)
                     ) 
             )
 
@@ -42,27 +47,25 @@ gp <- gp + geom_line(
                 )
 
 # Legends
-gp <- gp + labs(color="Audit type"
-                , shape="Copies"
-                , segs="Audit segments\nper year"
+gp <- gp + labs(color="Glitch impacts"
                 )
-gp <- gp + theme(legend.position=c(0.8,0.7))
+gp <- gp + theme(legend.position=c(0.75,0.7))
 gp <- gp + theme(legend.background=element_rect(fill="lightgray", 
                                   size=0.5, linetype="solid"))
 gp <- gp + theme(legend.key.size=unit(0.3, "in"))
 gp <- gp + theme(legend.key.width=unit(0.6, "in"))
 gp <- gp + theme(legend.text=element_text(size=16))
 gp <- gp + theme(legend.title=element_text(size=14))
-gp <- gp + scale_color_discrete(labels=c("systematic","random"))
+gp <- gp + scale_color_discrete(labels=c("none", "moderate", "high"))
 
 # Titles
 gp <- fnPlotTitles(gp
-            , titleline="Random auditing WITH replacement "
-                %+% "misses many documents "
-                %+% "that are then vulnerable to error, "
-                %+% "\ncompared with auditing "
-                %+% "WITHOUT replacement segmented at the same frequency "
-                %+% "\n(Uniform random vs total systematic auditing, quarterly, duration = 10 years)"
+            , titleline="Occasional temporary glitches "
+                %+% "increase the server error rate for some period, "
+                %+% "\nbut otherwise are not substantially different "
+                %+% "from normal operation "
+                %+% "\n "
+                %+% "\n(Total annual auditing, 5 copies, duration = 10 years)"
             , titlesize=16
             , xlabel="1MB sector half-life (megahours)"
                 %+% "                           (lower error rate =====>)"
@@ -78,7 +81,7 @@ gp <- fnPlotMilleLine(gp, xloc=xlabelposition)
 gp <- fnPlotSubMilleLine(gp, xloc=xlabelposition)
 
 plot(gp)
-fnPlotMakeFile(gp, "randomcontrast_quarterly.png")
+fnPlotMakeFile(gp, "glitcherrorrates.png")
 
 # Unwind any remaining sink()s to close output files.  
 while (sink.number() > 0) {sink()}
