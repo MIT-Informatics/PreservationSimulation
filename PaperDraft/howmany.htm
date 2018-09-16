@@ -32,6 +32,7 @@
 <li><a href="#corollary-compress-your-documents">Corollary: Compress Your Documents</a></li>
 <li><a href="#compression-reduces-the-target-area-of-a-document">Compression Reduces the Target Area of a Document</a></li>
 <li><a href="#compression-also-offers-other-advantages">Compression Also Offers Other Advantages</a></li>
+<li><a href="#compression-sometimes-increases-fragility----but-not-too-much">Compression Sometimes Increases Fragility -- But Not Too Much</a></li>
 </ul></li>
 <li><a href="#protecting-against-a-range-of-threats">Protecting Against a Range of Threats</a><ul>
 <li><a href="#threats-to-content">Threats to Content</a></li>
@@ -180,7 +181,7 @@ color: black;
 <p>% How Many Copies Is Enough?<br />
 % Micah Altman; Richard Landau<br />
 % 2016-08-15<br />
-% Revised 2018-07-26 RBL</p>
+% Revised 2018-09-15 RBL % Revised 2018-08-21 MA</p>
 <p>[[Text blocks in double-square-brackets, such as this is, are editorial notes for the authors to clean up.]]</p>
 <h1 id="title" class="unnumbered">Information Integrity Over the Long Term -- How Many Copies Is Enough?</h1>
 <h4 id="assessing-long-term-durability-of-collections-through-a-flexible-replicable-simulation">Assessing Long-term Durability of Collections Through A Flexible, Replicable Simulation</h4>
@@ -247,12 +248,12 @@ color: black;
 <p>In contrast, strategies for preserving digital information are generally based on the observation that neither digital media and formats are reliably durable, and thus that long-term access requires regular curation of the information: Common digital preservation strategies include migrating information to new media, and, less frequently, to new formats. Further, since information in digital form can be read and replicated at a very low marginal cost, relative to tangible content, digital preservation strategies can much more easily include replication and verification of content. [CITE]</p>
 <p>Stewards of digital information are faced with a large set of choices in developing a preservation strategy. These choices include document size and data format; file encryption and compression; storage media durability and reliability; collection replication, distribution, verification, and repair. [CITE] These choices have the potential to change dramatically the cost of a preservation strategy, and how (and where) that strategy is vulnerable to a wide range of threats. Moreover, changes in these factors interact in complex ways -- making it difficult to discover optimal/efficient strategies.</p>
 <p>While a number of 'good practices' are recognized digital preservation [CITE], many of these practices are heuristic, and most are based on experience with particular technologies and threats. There is currently no comprehensive framework that enables systematic quantitative prediction of the cost and effectiveness of differing preservation strategies. In the sections below, we develop a framework for just such an analysis, and derive general guidance for the selection of strategies over document size, file compression and encryption, and colection replication, diversification, and auditing.</p>
-<p>This paper concentrates on the objects we value -- files containing documents -- and the storage services to which we entrust our valuable files. We suggest strategies in those particular areas that can be used by client libraries to minimize the impact of errors, the ravages ofT age and administrative inattention, and the vicissitudes of nature, economics, and politics.</p>
+<p>This paper concentrates on the objects we value -- files containing documents -- and the storage services to which we entrust our valuable files. We suggest strategies in those particular areas that can be used by client libraries to minimize the impact of errors, the ravages of age and administrative inattention, and the vicissitudes of nature, economics, and politics.</p>
 <h1 id="problem-characterization">Problem Characterization</h1>
 <p>The ultimate goal of information preservation is to communicate across time. Our concrete objective, broadly speaking, is to maintain a collection of documents, so that its contents can be read at a designated future time. Communication will be deemed a success if at some designated future time the integrity of the documents has been maintained. (We extend this to the case where additional context must be preserved so that the document can be presented to the reader in a form they can understand.) In this scenario, the curator's task is to select a preservation strategy.</p>
-<p>As we will discuss later, curators might wish to be aware of the technologies and concerns in the areas we cannot control. In defining the curatorial strategy, we focus on those elements that curators are most likely to be able to control: the number and distribution of copies, how we audit and repair these, and whether to apply file transformations such as compression, encryption, or format conversion:</p>
+<p>As we will discuss later, curators might wish to be aware of the technologies and concerns in the areas we cannot control. In defining the curatorial strategy, we focus on those elements that curators are most likely to be able to control: the number and distribution of copies, how we audit and repair these, and whether to apply file transformations such as compression, encryption, or format conversion.</p>
 <ul>
-<li>For example, as a computer user, we have no control over bit or sector errors on the disks we use. These are all managed by the firmware that the disk vendor uses on the drives.<br />
+<li>For example, as a computer user, I have no control over bit or sector errors on the disks used to store documents. These are all managed by the firmware that the disk vendor uses on the drives.<br />
 </li>
 <li>And as a customer of a storage service, whether within my organization or out in the cloud, I have no control over disk drives or arrays of disk drives. These are managed and controlled by the managers of the computer centers where the storage arrays live.<br />
 </li>
@@ -299,12 +300,12 @@ color: black;
 <p>Errors accumulate over time. Every now and then an error will occur in storage and, if the error occurs in a region of storage occupied by a document, the error destroys a document. The rate at which documents are lost depends of course on the quality of the storage. In theory, we can predict the detioriation of a collection as a result solely of sector-level losses, using the Poisson distribution. <strong>Figure 1</strong>, below, illustrates the percentage of a collection lost in a 10-year period, as a function of the reliability of the underlying storage -- overa a very wide range of storage quality. (In <strong>Section XX: Protect Against a Range of Threats</strong>, we provide details on estimating sector error rates, and introduce other types of error.)</p>
 <blockquote>
 <div class="figure">
-<img src="./images/c1lossesvsquality.png" alt="Graph of cumulative collection losses over time." style="width:90.0%" />
+<img src="../pictures/COPIES1HQ/copies1hq.png" alt="Graph of cumulative collection losses over time." style="width:90.0%" />
 <p class="caption">Graph of cumulative collection losses over time.</p>
 </div>
 </blockquote>
 <blockquote>
-<h5 id="figure-1-how-percentage-of-collection-lost-over-10-years-as-a-factor-of-sector-reliability.">Figure 1: How percentage of collection lost over 10 years as a factor of sector reliability.</h5>
+<h5 id="figure-1-percentage-of-collection-lost-over-10-years-as-a-factor-of-sector-reliability.">Figure 1: Percentage of collection lost over 10 years as a factor of sector reliability.</h5>
 </blockquote>
 <p>As <strong>Figure 1</strong> demonstrates, if a collection exists as only a single copy, then it is very likely that some of its documents will be lost within a decade, even if the storage medium is highly reliable. Further, even if the rate of error accumulation is much lower than illustrated above, many documents will be lost over longer periods of time: For example, over 50 years, about 0.02% (170ppm) of the collection will be lost, even if media reliability were 100x the maximum shown above. (For more details, <strong>Table A-1</strong> in the appendices shows the expected rates of document errors, theoretical and simulated, over a range of storage error rates and periods.) [[calibration for ncopies=1 in shelf/docs/PoissonFailure.xls]]</p>
 <p>From this analysis we derive the first recommendation: Thou shalt <strong>keep multiple copies</strong> of thy documents.</p>
@@ -315,14 +316,14 @@ color: black;
 <p>Even multiple copies of collections deteriorate over time, however, from small erosions of individual documents or larger losses from external shocks. <strong>Figure 2</strong> shows the deterioration of collections with multiple copies over long periods of time. [[RBL: find or regenerate the results for this case.]]</p>
 <blockquote>
 <div class="figure">
-<img src="./images/baseline-noaudit.png" alt="Graph of cumulative collection losses over time, with replication." style="width:90.0%" />
+<img src="../pictures/NOAUDITCOPIES/noauditcopies.png" alt="Graph of cumulative collection losses over time, with replication." style="width:90.0%" />
 <p class="caption">Graph of cumulative collection losses over time, with replication.</p>
 </div>
 </blockquote>
 <blockquote>
-<h5 id="figure-2-how-percentage-of-collection-lost-over-10-years-as-a-factor-of-both-sector-reliability-and-the-number-of-copies">Figure 2: How percentage of collection lost over 10 years as a factor of both sector reliability and the number of copies</h5>
+<h5 id="figure-2-percentage-of-collection-lost-over-10-years-as-a-factor-of-both-sector-reliability-and-the-number-of-unaudited-copies">Figure 2: Percentage of collection lost over 10 years as a factor of both sector reliability and the number of unaudited copies</h5>
 </blockquote>
-<p>A modest number of copies, even of very high quality, cannot guarantee archival storage over long periods. As figure 2 show, without auditing, at least nine copies are needed to ensure against sector-level loss for even a period of a decade. Further, significant losses will acculate longer periods. <mark> For example, to prevent 1% loss of a collection over 50 years, at least XX copies would be needed.</mark> (For more details, <strong>Table A-2</strong> in the appendices shows the expected rates of document errors, over a range of storage copies, and time periods.) A strategy that includes monitoring and repair of documents is required for long-term preservation.</p>
+<p>A modest number of copies, even of very high quality, cannot guarantee archival storage over long periods. As figure 2 shows, without auditing at least nine copies are needed to ensure against sector-level loss for even a period of a decade. Further, significant losses will acculate longer periods. <mark> For example, to prevent 1% loss of a collection over 50 years, at least XX copies would be needed.</mark> (For more details, <strong>Table A-2</strong> in the appendices shows the expected rates of document errors, over a range of storage copies, and time periods.) A strategy that includes monitoring and repair of documents is required for long-term preservation.</p>
 <p>Moreover, even if the media was invulnerable to sector-level errors, a single copy of a collection is vulnerable to large-scale or total loss if that single copy is victim of a disaster, natural or man-made (e.g., earthquake, flood, war, economic depression, administrative error, etc.). As shown in the next section, multiple copies in multiple independent locations are necessary to safeguard documents against this type of large-scale loss.</p>
 <h1 id="recommendation-visit-your-documents-regularly">Recommendation: Visit Your Documents Regularly</h1>
 <p>We should verify and repair the multiple copies of documents on a regular basis. We will use the term <strong><em>auditing</em></strong> to refer to the process of checking documents for validity and repairing where possible any errors discovered.</p>
@@ -342,7 +343,7 @@ color: black;
 <p>The auditing process actively patrols for errors before they cause permanent document losses, and corrects them when possible. In all cases, when a document copy is found to be absent or corrupted, the auditing process attempts to replace the missing copy with a fresh copy obtained from another server. If there is an intact copy on another server, then the missing copy is repaired and the process continues. If there is no other intact copy, then the document is considered permanently lost.</p>
 <p><strong>Exhibit nnn</strong> shows the dramatic reduction in document losses when using regular auditing on collections with a modest number of copies. [[Picture of results for copies=3,4,5, total annual audit.]]</p>
 <div class="figure">
-<img src="./images/baseline-auditannually.png" alt="A modest number of copies with total annual auditing can reduce errors to negligible levels" style="width:90.0%" />
+<img src="../pictures/COPIES5SUFFICES/baseline-auditannually.png" alt="A modest number of copies with total annual auditing can reduce errors to negligible levels" style="width:90.0%" />
 <p class="caption">A modest number of copies with total annual auditing can reduce errors to negligible levels</p>
 </div>
 <h5 id="exhibit-nnn-losses-are-reduced-with-annual-auditing.">Exhibit nnn: Losses are reduced with annual auditing.</h5>
@@ -384,7 +385,7 @@ color: black;
 <p>Exhibit nnn shows the deleterious impact of random sampling with replacement on the effectiveness of auditing. (The figures shown here are for three copies; for larger numbers of copies, e.g., five, the loss rates are smaller but the comparisons hold.)</p>
 <p><mark>Note: common random auditing is much lower than 100% a year -- seen 20% or even 5% a year</mark></p>
 <div class="figure">
-<img src="../oldpictures/audit/random/baseline-auditrandomvsbaseline-c3.png" alt="Exhibit nnn: Auditing using random selection WITH replacement predictably misses some documents entirely, reducing the effectiveness of auditing and increasing losses." style="width:80.0%" />
+<img src="../pictures/RANDOMCONTRAST/randomcontrast_quarterly.png" alt="Exhibit nnn: Auditing using random selection WITH replacement predictably misses some documents entirely, reducing the effectiveness of auditing and increasing losses." style="width:80.0%" />
 <p class="caption">Exhibit nnn: Auditing using random selection WITH replacement predictably misses some documents entirely, reducing the effectiveness of auditing and increasing losses.</p>
 </div>
 <h5 id="picture-needs-to-be-redone-of-course.">(Picture needs to be redone, of course.)</h5>
@@ -446,7 +447,16 @@ color: black;
 <p>The linear increase in document losses based on size is to be expected from straightforward Poisson calculations. In addition, we ran simulations over a wide variety of conditions to verify that this linear relationship holds for multiple copies of collection documents, various auditing strategies, and a very wide range of storage quality (error rates, sector lifetimes).</p>
 <h3 id="compression-also-offers-other-advantages">Compression Also Offers Other Advantages</h3>
 <p>Compression offers another major advantage: potentially higher redudancy. If compression reduces a document's size by, say, 50%, then a client can store two copies of the document for the same cost in storage. That extra copy provides higher redundancy and thus greater resistance to document loss. On a fixed budget, a client can store additional copies of documents depending on how effective the compression algorithm is. High compression permits more copies to be replicated to offset any increased fragility of a compressed document. Text and image compression are particularly effective in this regard.</p>
-<p>Finally, compression permits more aggressive auditing, to protect a collection, without increasing costs. Smaller, compressed documents can be retrieved more quickly without increasing bandwidth, and consume less bandwidth and less egress costs from the storage vendors. Auditing of the collection can be done more frequently on the same budget, which improves document survival rates.</p>
+<p>Viewed in a slightly different way, compression can increase the &quot;repairability&quot; of a document in the following sense. In our model, document copies are &quot;repaired&quot; by being re-placed on their servers from other copies; that is, the &quot;repairability&quot; of a document copy depends on the presence of one or more valid copies stored elsewhere. If compression permits an additional copy or copies of a document to be stored, then there will be more copies from which a &quot;repair&quot; can be effected when one copy fails and needs to be &quot;repaired.&quot; For example, if five copies of a collection are to be stored on servers, then a mere 20% reduction in size due to compression would permit one additional copy to be stored and maintained within the same budget. That additional redundancy, six copies instead of five, would make the document more resistant to failure.</p>
+<p>Finally, compression permits more aggressive auditing, to protect a collection, without increasing costs for bandwidth and server egress. Smaller, compressed documents can be retrieved more quickly without increasing bandwidth, and consume less bandwidth and less egress charge from the storage vendors. Auditing of the collection can be done more frequently on the same budget, which improves document survival rates.</p>
+<h3 id="compression-sometimes-increases-fragility----but-not-too-much">Compression Sometimes Increases Fragility -- But Not Too Much</h3>
+<p>A disadvantage of compression is that it may make documents more fragile. We define fragility as the proportion of the document (and document's value) that is eliminated by a single block failure -- we refer to this proportion as the fragility index.</p>
+<p>For simplicity in the rest of the article we have assumed that documents were completely fragile (i.e. a fragility index of 1) -- blocks failures cause an entire document to be lost. However, it is trivial to model losses for a collection of documents with a uniform fragility index: These losses are mathematically equivalent to the losses found in a collection of fragile document that is has 1/F times the number of documents each of which is S/F in size.</p>
+<p>Using this fact we can readily estimate the combined effects of compression. Compression will shrink the document as a whole -- reducing the likelihood of a block failure affecting it; increase the amount of storage available for replication; and multiplies the fragility of a document by some factor CF (bounded by 1)</p>
+<p>Where is compression a win? First, wherever C<F compression is  a win based on the target-reduction effect alone -- even if each of the compressed documents is completely fragile.  Moreover, when C>F compression will still be a win in most circumstances -- except where the fragility index is very low, and compression makes the document much more fragile without substantially reducing size.</p>
+<p>The figure below illustrates where compression lowers overall collection loss, based on the C, F, and CF, for a collection of 10000 documents of initial size ZZ, a failure rate of XX, and 3 replications.</p>
+<p>![Exhibit nnn: make a figure with some variation of the formula here?&quot;</p>
+<p>https://docs.google.com/spreadsheets/d/1KQWx4gd6ndvsgMcSiQOHnRi0QowXDtnxe8JMIs-Rbsk/edit#gid=0 ){width=90%}</p>
 <p>In summary, we consider lossless compression to be benign for a variety of reasons.</p>
 <ul>
 <li>Smaller documents are smaller targets for errors. They are less likely to corrupted than large documents.<br />

@@ -35,6 +35,7 @@ Notes on pictures:
 - Almost all need decade lines for loss rates: 1%, 0.1%, 0.01%, I think.  Horizontal dotted lines with small labels.  Would be good if the lines were easily distinguished, e.g., by weight, but not clear that's possible.  What would Tufte say? 
 - Need text to describe why low half-lives and why 3,4 copies: otherwise numbers too small to make clear pictures, best to look at where the differences are exaggerated but parallel.  
 - Note that one would never actually use disks with such low half-lives, but they are needed to show the phenomena.  
+- Aesthetic change: use black dots and much thicker lines on the png plots.  
 - X half-life scales 2-1000 or 2-100.
 - Legends upper right (if I can force legends at all; may have to be manual annotations, yuck).
 - Attempt consistent color labeling for number of copies, but not sure this is reasonable in R.

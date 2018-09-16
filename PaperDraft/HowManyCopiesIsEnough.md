@@ -297,7 +297,7 @@ We start our analysis by focusing on the lowest level errors -- sector errors. T
 
 Errors accumulate over time.  Every now and then an error will occur in storage and, if the error occurs in a region of storage occupied by a document, the error destroys a document.  The rate at which documents are lost depends of course on the quality of the storage. In theory, we can predict the detioriation of a collection as a result solely of sector-level losses, using the Poisson distribution.   **Figure 1**, below, illustrates the percentage of a collection lost in a 10-year period, as a function of the reliability of the underlying storage -- overa a very wide range of storage quality. (In **Section XX: Protect Against a Range of Threats**, we provide details on estimating sector error rates, and introduce other types of error.) 
 
-> ![Graph of cumulative collection losses over time.](./images/c1lossesvsquality.png){width=90%}
+> ![Graph of cumulative collection losses over time.](../pictures/COPIES1HQ/copies1hq.png){width=90%}
 
 > ##### Figure 1: Percentage of collection lost over 10 years as a factor of sector reliability.
 
@@ -313,7 +313,7 @@ We are not the first to recommend multiple copies. Thomas Jefferson noted the da
 Even multiple copies of collections deteriorate over time, however, from small erosions of individual documents or larger losses from external shocks.  **Figure 2** shows the deterioration of collections with multiple copies over long periods of time.  [[RBL: find or regenerate the results for this case.]] 
 	
 	 
-> ![Graph of cumulative collection losses over time, with replication.](./images/baseline-noaudit.png){width=90%}
+> ![Graph of cumulative collection losses over time, with replication.](../pictures/NOAUDITCOPIES/noauditcopies.png){width=90%}
 
 > ##### Figure 2: Percentage of collection lost over 10 years as a factor of both sector reliability and the number of unaudited copies
 
@@ -348,7 +348,7 @@ The auditing process actively patrols for errors before they cause permanent doc
 
 **Exhibit nnn** shows the dramatic reduction in document losses when using regular auditing on collections with a modest number of copies.  [[Picture of results for copies=3,4,5, total annual audit.]]
 
-![A modest number of copies with total annual auditing can reduce errors to negligible levels](./images/baseline-auditannually.png){width=90%}
+![A modest number of copies with total annual auditing can reduce errors to negligible levels](../pictures/COPIES5SUFFICES/baseline-auditannually.png){width=90%}
 
 ##### Exhibit nnn: Losses are reduced with annual auditing.
 
@@ -391,7 +391,7 @@ Exhibit nnn shows the deleterious impact of random sampling with replacement on 
 
 <mark>Note: common random auditing is much lower than 100% a year -- seen 20% or even 5% a year</mark>
 
-![Exhibit nnn: Auditing using random selection WITH replacement predictably misses some documents entirely, reducing the effectiveness of auditing and increasing losses. ](../oldpictures/audit/random/baseline-auditrandomvsbaseline-c3.png){width=80%}
+![Exhibit nnn: Auditing using random selection WITH replacement predictably misses some documents entirely, reducing the effectiveness of auditing and increasing losses. ](../pictures/RANDOMCONTRAST/randomcontrast_quarterly.png){width=80%}
 
 ##### (Picture needs to be redone, of course.)
 
