@@ -67,7 +67,7 @@ gp <- fnPlotTitles(gp
 
 # Limit lines
 # Label the percentage lines out on the right side.
-xlabelposition <- log10(800)
+xlabelposition <- log10(6000)
 gp <- fnPlotPercentLine(gp, xloc=xlabelposition)
 gp <- fnPlotMilleLine(gp, xloc=xlabelposition)
 gp <- fnPlotSubMilleLine(gp, xloc=xlabelposition)
@@ -82,9 +82,15 @@ gp <- gp + annotate(geom="text", x=20, y=0.015
                     , label="Length of time for storage to deteriorate "
                             %+% "and lose a document"
                     , color="red", size=8)
+gp <- gp + annotate(geom="text", x=400, y=0.03
+                    , label="3-o'clock arrow goes here ======>"
+                    , color="red", size=4)
 gp <- gp + annotate(geom="text", x=5000, y=20
                     , label="Decreasing\ndocument\nlosses"
                     , color="red", size=10)
+gp <- gp + annotate(geom="text", x=10000, y=2
+                    , label="6-o'clock arrow goes here ======>"
+                    , color="red", size=4, angle=270)
 
 plot(gp)
 fnPlotMakeFile(gp, "copies1hq.png")

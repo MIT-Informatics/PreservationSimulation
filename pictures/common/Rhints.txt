@@ -64,4 +64,10 @@ grob <- grobTree(textGrob("Scatter plot", x=0.1,  y=0.95, hjust=0,
 # Plot
 sp2 + annotation_custom(grob)
 
-
+# To overlay an image onto a plot
+mypngfile <- download.file('http://api.altmetric.com/donut/502878_64x64.png', destfile = 'mypng.png', mode = 'wb')
+library(png)
+mypng <- readPNG('mypng.png')
+p <- qplot(mpg, wt, data = mtcars) + theme_bw()
+p + annotation_raster(mypng, ymin = 4.5,ymax= 5,xmin = 30,xmax = 35) + 
+    geom_point()
