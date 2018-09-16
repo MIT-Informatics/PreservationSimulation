@@ -36,6 +36,8 @@ Notes on pictures:
 - Need text to describe why low half-lives and why 3,4 copies: otherwise numbers too small to make clear pictures, best to look at where the differences are exaggerated but parallel.  
 - Note that one would never actually use disks with such low half-lives, but they are needed to show the phenomena.  
 - Aesthetic change: use black dots and much thicker lines on the png plots.  
+- Aesthetic change: increase size of headings and axis labels on plots.  
+- Aesthetic bugfix: make all the numbers on the percent lines the same color, i.e., black.
 - X half-life scales 2-1000 or 2-100.
 - Legends upper right (if I can force legends at all; may have to be manual annotations, yuck).
 - Attempt consistent color labeling for number of copies, but not sure this is reasonable in R.
