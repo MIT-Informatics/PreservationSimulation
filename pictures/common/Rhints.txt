@@ -51,4 +51,17 @@ newdat <- alldat %>%
 group_by(copies, lifem, auditfrequency, audittype, auditsegments) %>%
 summarize(losspct=round(midmean(lost/docstotal)*100.0, 2), n=n())
 
+# Solution 1
+sp2 + geom_text(x=3, y=30, label="Scatter plot")
+# Solution 2
+sp2 + annotate(geom="text", x=3, y=30, label="Scatter plot",
+              color="red")
+
+library(grid)
+# Create a text
+grob <- grobTree(textGrob("Scatter plot", x=0.1,  y=0.95, hjust=0,
+  gp=gpar(col="red", fontsize=13, fontface="italic")))
+# Plot
+sp2 + annotation_custom(grob)
+
 

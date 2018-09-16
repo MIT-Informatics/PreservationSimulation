@@ -39,7 +39,8 @@ color: black;
 % How Many Copies Is Enough?  
 % Micah Altman; Richard Landau  
 % 2016-08-15  
-% Revised 2018-07-26 RBL
+% Revised 2018-09-15 RBL
+% Revised 2018-08-21 MA
 
 [[Text blocks in double-square-brackets, such as this is, are editorial notes for the authors to clean up.]]
 
