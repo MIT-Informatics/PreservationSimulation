@@ -37,14 +37,15 @@ gp <- fnPlotLogScales(gp, x="YES", y="YES"
                 ,xbreaks=c(2,5,10,100,1000)
                 ,ybreaks=c(0.01,0.10,1.00)
                 )
+gp <- gp + geom_line(
+                  size=3
+                , show.legend=TRUE
+                )
 gp <- gp + geom_point(data=trows
                 , size=6
                 , show.legend=TRUE
+                , color="black"
                 ) 
-gp <- gp + geom_line(
-                  size=2
-                , show.legend=TRUE
-                )
 
 # Legends
 gp <- gp + labs(color="Glitch impacts"
@@ -66,11 +67,9 @@ gp <- fnPlotTitles(gp
                 %+% "from normal operation "
                 %+% "\n "
                 %+% "\n(Total annual auditing, 5 copies, duration = 10 years)"
-            , titlesize=16
             , xlabel="1MB sector half-life (megahours)"
                 %+% "                           (lower error rate =====>)"
             , ylabel="permanent document losses (%)"
-            , labelsize=14
         ) 
 
 # Limit lines

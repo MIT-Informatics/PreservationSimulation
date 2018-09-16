@@ -71,3 +71,12 @@ mypng <- readPNG('mypng.png')
 p <- qplot(mpg, wt, data = mtcars) + theme_bw()
 p + annotation_raster(mypng, ymin = 4.5,ymax= 5,xmin = 30,xmax = 35) + 
     geom_point()
+
+# ggsave args
+ggsave(filename = "foo300.png", ggplot(mtcars, aes(x=wt, y=mpg)) +
+           geom_point(size=2, shape=23) + theme_bw(base_size = 10),
+       width = 5, height = 4, dpi = 300, units = "in", device='png')
+ggsave(filename = "foo150.png", ggplot(mtcars, aes(x=wt, y=mpg)) +
+           geom_point(size=2, shape=23) + theme_bw(base_size = 10),
+       width = 10, height = 8, dpi = 150, units = "in", device='png')
+

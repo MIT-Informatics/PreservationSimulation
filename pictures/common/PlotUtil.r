@@ -90,7 +90,7 @@ fnPlotPercentLine <- function(gp,
                     percent=1.0){
     gp <- gp + geom_hline(yintercept=percent, linetype="dashed")
     gp <- gp + geom_text(x=xloc, y=yloc, label=labeltext, size=labelsize, 
-                    fontface="plain", family="mono")
+                    fontface="plain", family="mono", color="black")
     return(gp)
 }
 
@@ -102,7 +102,7 @@ fnPlotMilleLine <- function(gp,
                     percent=0.1){
     gp <- gp + geom_hline(yintercept=percent, linetype="dashed")
     gp <- gp + geom_text(x=xloc, y=yloc, label=labeltext, size=labelsize, 
-                    fontface="plain", family="mono")
+                    fontface="plain", family="mono", color="black")
     return(gp)
 }
 
@@ -114,7 +114,7 @@ fnPlotSubMilleLine <- function(gp,
                     percent=0.01){
     gp <- gp + geom_hline(yintercept=percent, linetype="dashed")
     gp <- gp + geom_text(x=xloc, y=yloc, label=labeltext, size=labelsize, 
-                    fontface="plain", family="mono")
+                    fontface="plain", family="mono", color="black")
     return(gp)
 }
 
@@ -136,11 +136,13 @@ fnPlotMakeFile <- function(plotname, sFilename, sSize="mediumlarge") {
     print(plotname)
     dev.off()
     
-    # Make a medium size pic with ggsave, which assumes 300dpi.
-    # The text sizes seem to be all wrong, dunno why.  
-    # Fix this mess later.
-    h <- 1200/300; v <- 750/300; 
-    ggsave("ggsave_plot.png", width=h, height=v)
+    # Make a medium size pic with ggsave.
+    dpi <- 72
+    h <- 1200/dpi; v <- 750/dpi
+    sFileType <- "png"
+    sFullishFName <- "ggsave_" %+% sFilename 
+    ggsave(sFullishFName, width=h, height=v
+                , dpi=dpi, units="in", device=sFileType)
 
     return    
 } #endfunction
@@ -159,7 +161,7 @@ fnPlotMakeFile <- function(plotname, sFilename, sSize="mediumlarge") {
 #                work well at all.  
 # 20180914  RBL Change dot sizes and a few other minor moves.  
 #               Add aspect ratios to the picture size choices.  
-# 
+# 20180916  RBL Try to fix ggsave plots.  72dpi seems to work.  
 # 
 
 #END

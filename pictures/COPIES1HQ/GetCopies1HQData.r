@@ -30,16 +30,16 @@ gp <- fnPlotLogScales(gp, x="YES", y="YES"
                 ,xbreaks=c(2,5,10,100,1000,10000)
                 ,ybreaks=c(0.01,0.10,1.00,10,100)
                 )
-gp <- gp + geom_point(data=trows
-                , size=6
-                , show.legend=TRUE
-                , color="blue"
-                ) 
 gp <- gp + geom_line(
-                  size=2
+                  size=3
                 , show.legend=TRUE
                 , color="blue"
                 )
+gp <- gp + geom_point(data=trows
+                , size=6
+                , show.legend=TRUE
+                , color="black"
+                ) 
 
 # Legends
 gp <- gp + labs(color="Number of\nCopies"
@@ -58,11 +58,11 @@ gp <- fnPlotTitles(gp
                 %+% "\nover time, even with very high quality storage "
                 %+% "\n "
                 %+% "\n(Copies = 1, no auditing/repair is possible, duration = 10 years)"
-            , titlesize=16
+#            , titlesize=22
             , xlabel="1MB sector half-life (megahours)"
                 %+% "                           (lower error rate =====>)"
             , ylabel="permanent document losses (%)"
-            , labelsize=14
+#            , labelsize=18
         ) 
 
 # Limit lines
@@ -83,14 +83,14 @@ gp <- gp + annotate(geom="text", x=20, y=0.015
                             %+% "and lose a document"
                     , color="red", size=8)
 gp <- gp + annotate(geom="text", x=400, y=0.03
-                    , label="3-o'clock arrow goes here ======>"
-                    , color="red", size=4)
+                    , label="3-o'clock arrow goes here ========>>"
+                    , color="red", size=5)
 gp <- gp + annotate(geom="text", x=5000, y=20
                     , label="Decreasing\ndocument\nlosses"
                     , color="red", size=10)
 gp <- gp + annotate(geom="text", x=10000, y=2
-                    , label="6-o'clock arrow goes here ======>"
-                    , color="red", size=4, angle=270)
+                    , label="6-o'clock arrow goes here ========>>"
+                    , color="red", size=5, angle=270)
 
 plot(gp)
 fnPlotMakeFile(gp, "copies1hq.png")
