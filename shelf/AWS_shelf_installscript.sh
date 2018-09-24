@@ -290,6 +290,7 @@ fi
 export NPOLITE=1
 cd working/shelf
 bash start_brokerform.sh & 
+bash brokercommandlog_enable.sh
 
 echo ""
 echo "********************************************************"
@@ -325,8 +326,7 @@ echo "********************************************************"
 echo ""
 EOF
 
-sh working/shelf/brokercommandlog_enable.sh
-
+echo "**************************************** I N S T R U C T I O N S"
 echo "**************************************** "
 echo "*** To begin the shelf simulations,  *** "
 echo "*** enter the command:               *** "
