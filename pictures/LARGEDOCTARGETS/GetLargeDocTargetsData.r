@@ -1,26 +1,29 @@
-# GetCopies5LongTermData.r
+# GetLargeDocTargetsData.r
 source("../common/DataUtil.r")
 library(ggplot2)
 source("../common/PlotUtil.r")
 
 
-# Params
-sPlotFile <- "copies5longterm.png"
+# P A R A M S
+sPlotFile <- "largedoctargets.png"
 fnGroupBy <- function(dfIn) {group_by(dfIn, copies, lifem
-                                    , simlength
-                                    , auditfrequency)}
-fnSubset <- function(dfIn) {subset(dfIn, copies==5 & lifem<=1000
-                                    & auditfrequency==10000)}
-sTitleLine <-   (   "With moderate auditing, in a peaceful world, "
-                %+% "five copies are nearly immortal"
+                                    , docsize
+                                    )}
+fnSubset <- function(dfIn) {subset(dfIn, copies==1 & lifem<=10000
+                                    )}
+sTitleLine <-   (   ""
+                %+% "Larger documents are larger targets for random errors and "
+                %+% "therefore more likely to fail "
+                %+% " "
                 %+% "\n"
-                %+% "\n(Annual total auditing, duration = 30 & 50 years)"
+                %+% "\n(Copies=1, no auditing)"
                 )
-sLegendLabel <- "Length of\nSimulation\n(years)"
-lLegendItemLabels <- c("30", "50")
+sLegendLabel <- "Document\n size (MB)"
+lLegendItemLabels <- c("5", "50", "500", "5000")
 sXLabel <- ("1MB sector half-life (megahours)"
             %+% "                           (lower error rate =====>)")
 sYLabel <- ("permanent document losses (%)")
+# Also change summarize function and ggplot(color=...).
 
 
 # G E T   D A T A  
@@ -33,15 +36,14 @@ trows <- newdat
 
 
 # P L O T   D A T A 
-
 gp <- ggplot(data=trows
-            , aes(x=lifem,y=safe(mdmlosspct), color=factor(simlength))
+            , aes(x=lifem,y=safe(mdmlosspct), color=factor(docsize))
             ) 
 gp <- gp + labs(color=sLegendLabel)
 
 gp <- fnPlotLogScales(gp, x="YES", y="YES"
                 ,xbreaks=c(2,5,10,100,1000)
-                ,ybreaks=c(0.01,0.10,1.00)
+                ,ybreaks=c(0.01,0.10,1.00,10,100)
                 )
 gp <- gp + geom_line(
                   size=3
@@ -53,7 +55,7 @@ gp <- gp + geom_point(data=trows
                 , color="black"
                 ) 
 
-gp <- gp + theme(legend.position=c(0.8,0.7))
+gp <- gp + theme(legend.position=c(0.15,0.3))
 gp <- gp + theme(legend.background=element_rect(fill="lightgray", 
                                   size=0.5, linetype="solid"))
 gp <- gp + theme(legend.key.size=unit(0.3, "in"))

@@ -1,23 +1,22 @@
-# GetCopies5LongTermData.r
+# GetAuditVsNotData.r
 source("../common/DataUtil.r")
 library(ggplot2)
 source("../common/PlotUtil.r")
 
-
 # Params
-sPlotFile <- "copies5longterm.png"
-fnGroupBy <- function(dfIn) {group_by(dfIn, copies, lifem
-                                    , simlength
-                                    , auditfrequency)}
-fnSubset <- function(dfIn) {subset(dfIn, copies==5 & lifem<=1000
-                                    & auditfrequency==10000)}
-sTitleLine <-   (   "With moderate auditing, in a peaceful world, "
-                %+% "five copies are nearly immortal"
+sPlotFile <- "auditvsnot.png"
+fnGroupBy <- function(dfIn) {group_by(dfIn, copies, lifem, auditfrequency)}
+fnSubset <- function(dfIn) {subset(dfIn, copies==5 & lifem<=1000)}
+sTitleLine <-   (   "Auditing dramatically decreases "
+                %+% "permanent document losses "
+                %+% "over a wide range "
                 %+% "\n"
-                %+% "\n(Annual total auditing, duration = 30 & 50 years)"
+                %+% "\n(Copies=5, "
+                %+% "annual total auditing vs no auditing, "
+                %+% "duration = 10 years)"
                 )
-sLegendLabel <- "Length of\nSimulation\n(years)"
-lLegendItemLabels <- c("30", "50")
+sLegendLabel <- "Audited? Y/N"
+lLegendItemLabels <- c("Not audited", "Yes, audited")
 sXLabel <- ("1MB sector half-life (megahours)"
             %+% "                           (lower error rate =====>)")
 sYLabel <- ("permanent document losses (%)")
@@ -35,7 +34,7 @@ trows <- newdat
 # P L O T   D A T A 
 
 gp <- ggplot(data=trows
-            , aes(x=lifem,y=safe(mdmlosspct), color=factor(simlength))
+            , aes(x=lifem,y=safe(mdmlosspct), color=factor(auditfrequency))
             ) 
 gp <- gp + labs(color=sLegendLabel)
 

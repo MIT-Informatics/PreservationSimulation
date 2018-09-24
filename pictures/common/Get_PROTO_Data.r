@@ -1,11 +1,11 @@
-# GetCopies5LongTermData.r
+# Get_PROTO_Data.r
 source("../common/DataUtil.r")
 library(ggplot2)
 source("../common/PlotUtil.r")
 
 
-# Params
-sPlotFile <- "copies5longterm.png"
+# P A R A M S
+sPlotFile <- "_PROTO_.png"
 fnGroupBy <- function(dfIn) {group_by(dfIn, copies, lifem
                                     , simlength
                                     , auditfrequency)}
@@ -21,6 +21,7 @@ lLegendItemLabels <- c("30", "50")
 sXLabel <- ("1MB sector half-life (megahours)"
             %+% "                           (lower error rate =====>)")
 sYLabel <- ("permanent document losses (%)")
+# Also change summarize function and ggplot(color=...).
 
 
 # G E T   D A T A  

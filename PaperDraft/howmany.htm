@@ -343,7 +343,7 @@ color: black;
 <p>The auditing process actively patrols for errors before they cause permanent document losses, and corrects them when possible. In all cases, when a document copy is found to be absent or corrupted, the auditing process attempts to replace the missing copy with a fresh copy obtained from another server. If there is an intact copy on another server, then the missing copy is repaired and the process continues. If there is no other intact copy, then the document is considered permanently lost.</p>
 <p><strong>Exhibit nnn</strong> shows the dramatic reduction in document losses when using regular auditing on collections with a modest number of copies. [[Picture of results for copies=3,4,5, total annual audit.]]</p>
 <div class="figure">
-<img src="../pictures/COPIES5SUFFICES/baseline-auditannually.png" alt="A modest number of copies with total annual auditing can reduce errors to negligible levels" style="width:90.0%" />
+<img src="../pictures/COPIES345VSUNAUDITED/copies345vsunaudited.png" alt="A modest number of copies with total annual auditing can reduce errors to negligible levels" style="width:90.0%" />
 <p class="caption">A modest number of copies with total annual auditing can reduce errors to negligible levels</p>
 </div>
 <h5 id="exhibit-nnn-losses-are-reduced-with-annual-auditing.">Exhibit nnn: Losses are reduced with annual auditing.</h5>
@@ -434,8 +434,8 @@ color: black;
 <p><strong>Exhibit nnn</strong> shows the increase in document losses for larger documents across a range of storage error rates. Larger documents always suffer higher loss rates for any given quality (error rate, sector half-life) of server.<br />
 [[Picture in pictures/largerdocs, but it needs to be redone.]]</p>
 <div class="figure">
-<img src="../pictures/largerdocs/baseline-scalingdocsize.png" alt="Exhibit nnn: Larger Docs Are More Vulnerable to Random Errors: 5, 50, 500, 5000MB -- !!!MUST BE REDONE!!!" style="width:90.0%" />
-<p class="caption">Exhibit nnn: Larger Docs Are More Vulnerable to Random Errors: 5, 50, 500, 5000MB -- !!!MUST BE REDONE!!!</p>
+<img src="../pictures/LARGEDOCTARGETS/largedoctargets.png" alt="Exhibit nnn: Larger Docs Are More Vulnerable to Random Errors: 5, 50, 500, 5000MB" style="width:90.0%" />
+<p class="caption">Exhibit nnn: Larger Docs Are More Vulnerable to Random Errors: 5, 50, 500, 5000MB</p>
 </div>
 <p>The table of <strong>Exhibit nnn</strong> shows the relationship between document size and storage error rate. (Error rate is expressed as sector half-life, as explained below.) Note the extremely linear relationship between document size and storage quality. A larger document must reside on a higher quality server to achieve the same loss rate. Note that the figures in this table are derived from experiment, not simply from theory. And please recall that storage quality is expressed as sector lifetime (half-life), which is the inverse of the error rate; as the error rate goes up, the sector lifetime goes down. High sector lifetimes are seen in more desirable storage with lower error rates.</p>
 <p>[[PDF captured from spreadsheet, in pictures/docsizevserrorrate/Data_Scaling_DocsizeSpreadsheet-2.pdf]]</p>

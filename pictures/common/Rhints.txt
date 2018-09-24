@@ -57,6 +57,10 @@ sp2 + geom_text(x=3, y=30, label="Scatter plot")
 sp2 + annotate(geom="text", x=3, y=30, label="Scatter plot",
               color="red")
 
+gg +
+  annotate("text", x = 0.075, y = 300000, label = "This text is amazing!")
+
+
 library(grid)
 # Create a text
 grob <- grobTree(textGrob("Scatter plot", x=0.1,  y=0.95, hjust=0,
@@ -79,4 +83,96 @@ ggsave(filename = "foo300.png", ggplot(mtcars, aes(x=wt, y=mpg)) +
 ggsave(filename = "foo150.png", ggplot(mtcars, aes(x=wt, y=mpg)) +
            geom_point(size=2, shape=23) + theme_bw(base_size = 10),
        width = 10, height = 8, dpi = 150, units = "in", device='png')
+
+# Change key sizes in legends
+theme(legend.key.width = unit(2, "line"))
+theme(legend.key.size = unit(3,"line"))
+or maybe
+g + guides(color = guide_legend(override.aes = list(size=5)))
+
+# Title appearance
+bp + theme(legend.title = element_text(colour="blue", size=16, face="bold"))
+# Label appearance
+bp + theme(legend.text = element_text(colour="blue", size = 16, face = "bold"))
+
+There are 3 ways to change the legend title.
+Method 1: Using labs()
+
+# Change legend titles
+gg +
+  labs(color = "State",
+       size = "Density")
+gg +
+  guides(color = guide_legend("State"),
+         size = guide_legend("Density"))
+
+# Change labels and colors of legend items
+gg +
+  scale_color_manual(name = "State", 
+                     labels = c("Illinois", 
+                                "Indiana", 
+                                "Michigan", 
+                                "Ohio", 
+                                "Wisconsin"), 
+                     values = c("IL" = "blue", 
+                                "IN" = "red", 
+                                "MI" = "green", 
+                                "OH" = "brown", 
+                                "WI" = "orange"))
+
+
+# Change the order of several legends
+gg +
+  guides(color = guide_legend(order = 2),
+         size = guide_legend(order = 1))
+         
+# Move legend inside plot
+# legend at bottom-right, inside the plot
+gg + theme(
+  legend.title = element_text(size = 12, color = "salmon", face = "bold"),
+  legend.justification = c(1, 0),
+  legend.position = c(0.95, 0.05),
+  legend.background = element_blank(),
+  legend.key = element_blank()
+) +
+  labs(subtitle = "Legend: Bottom-Right Inside the Plot")
+
+
+# P A R A M S
+sPlotFile <- "copies345vsunaudited.png"
+fnGroupBy <- function(dfIn) {group_by(dfIn, copies, lifem
+                                    , auditfrequency)}
+fnSubset <- function(dfIn) {subset(dfIn, copies>=3 & copies<=5 
+                                    & lifem<=1000
+                                    & auditfrequency==10000)}
+sTitleLine <-   (   "Failure to audit the collection is worse than keeping "
+                %+% "\nonly a small number of audited copies "
+                %+% "\n"
+                %+% "\n(Copies=3,4,5, annual auditing vs no auditing, duration=10 years)"
+                )
+sLegendLabel <- "Number of\nCopies"
+lLegendItemLabels <- c("3", "4", "5")
+sXLabel <- ("1MB sector half-life (megahours)"
+            %+% "                           (lower error rate =====>)")
+sYLabel <- ("permanent document losses (%)")
+# Also change summarize function and ggplot(color=...).
+
+# G E T   D A T A  
+# Get the data into the right form for these plots.
+alldat.df <- fndfGetGiantDataRaw("")
+newdat <- alldat.df %>% fnGroupBy() %>% 
+summarize(mdmlosspct=round(midmean(lost/docstotal)*100.0, 2), n=n()) %>%
+fnSubset()
+trows <- newdat
+
+# P L O T   D A T A 
+
+gp <- ggplot(data=trows
+            , aes(x=lifem,y=safe(mdmlosspct), color=factor(copies))
+            ) 
+gp <- gp + labs(color=sLegendLabel)
+
+
+
+
 

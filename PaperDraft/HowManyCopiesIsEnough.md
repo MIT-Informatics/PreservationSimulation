@@ -348,7 +348,7 @@ The auditing process actively patrols for errors before they cause permanent doc
 
 **Exhibit nnn** shows the dramatic reduction in document losses when using regular auditing on collections with a modest number of copies.  [[Picture of results for copies=3,4,5, total annual audit.]]
 
-![A modest number of copies with total annual auditing can reduce errors to negligible levels](../pictures/COPIES5SUFFICES/baseline-auditannually.png){width=90%}
+![A modest number of copies with total annual auditing can reduce errors to negligible levels](../pictures/COPIES345VSUNAUDITED/copies345vsunaudited.png){width=90%}
 
 ##### Exhibit nnn: Losses are reduced with annual auditing.
 
@@ -452,7 +452,7 @@ The drawings in **Exhibit nnn** illustrate the effect of randomly placed errors 
 **Exhibit nnn** shows the increase in document losses for larger documents across a range of storage error rates.  Larger documents always suffer higher loss rates for any given quality (error rate, sector half-life) of server.  
 [[Picture in pictures/largerdocs, but it needs to be redone.]]
 
-![Exhibit nnn: Larger Docs Are More Vulnerable to Random Errors: 5, 50, 500, 5000MB -- !!!MUST BE REDONE!!!](../pictures/largerdocs/baseline-scalingdocsize.png){width=90%}
+![Exhibit nnn: Larger Docs Are More Vulnerable to Random Errors: 5, 50, 500, 5000MB](../pictures/LARGEDOCTARGETS/largedoctargets.png){width=90%}
 
 The table of **Exhibit nnn** shows the relationship between document size and storage error rate.  (Error rate is expressed as sector half-life, as explained below.)  Note the extremely linear relationship between document size and storage quality.  A larger document must reside on a higher quality server to achieve the same loss rate. Note that the figures in this table are derived from experiment, not simply from theory.  And please recall that storage quality is expressed as sector lifetime (half-life), which is the inverse of the error rate; as the error rate goes up, the sector lifetime goes down.  High sector lifetimes are seen in more desirable storage with lower error rates.  
  
