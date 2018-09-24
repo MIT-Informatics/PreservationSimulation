@@ -325,7 +325,7 @@ echo "********************************************************"
 echo ""
 EOF
 
-sh brokercommandlog_enable.sh
+sh working/shelf/brokercommandlog_enable.sh
 
 echo "**************************************** "
 echo "*** To begin the shelf simulations,  *** "
