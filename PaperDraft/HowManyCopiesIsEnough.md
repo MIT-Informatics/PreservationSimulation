@@ -313,7 +313,7 @@ We are not the first to recommend multiple copies. Thomas Jefferson noted the da
 Even multiple copies of collections deteriorate over time, however, from small erosions of individual documents or larger losses from external shocks.  **Figure 2** shows the deterioration of collections with multiple copies over long periods of time.  [[RBL: find or regenerate the results for this case.]] 
 	
 	 
-> ![Graph of cumulative collection losses over time, with replication.](../pictures/NOAUDITCOPIES/noauditcopies.png){width=90%}
+> ![Graph of cumulative collection losses over time, with replication.](../pictures/NOAUDITCOPIES/noauditcopies.png){width=80%}
 
 > ##### Figure 2: Percentage of collection lost over 10 years as a factor of both sector reliability and the number of unaudited copies
 
@@ -348,7 +348,7 @@ The auditing process actively patrols for errors before they cause permanent doc
 
 **Exhibit nnn** shows the dramatic reduction in document losses when using regular auditing on collections with a modest number of copies.  [[Picture of results for copies=3,4,5, total annual audit.]]
 
-![A modest number of copies with total annual auditing can reduce errors to negligible levels](../pictures/COPIES345VSUNAUDITED/copies345vsunaudited.png){width=90%}
+![A modest number of copies with total annual auditing can reduce errors to negligible levels](../pictures/COPIES345VSUNAUDITED/copies345vsunaudited.png){width=80%}
 
 ##### Exhibit nnn: Losses are reduced with annual auditing.
 
@@ -447,12 +447,12 @@ In this model, at least these two considerations should be included in the decis
 
 The drawings in **Exhibit nnn** illustrate the effect of randomly placed errors on documents of varying sizes.  A larger extent is a proportionally larger target.  
 
-![Exhibit nnn: Cartoon of Large Document Presenting Larger Target Area for Random Errors](../pictures/docsizevserrorrate/SmallVsLargeFile-2.png){width=90%}
+![Exhibit nnn: Cartoon of Large Document Presenting Larger Target Area for Random Errors](../pictures/docsizevserrorrate/SmallVsLargeFile-2.png){width=80%}
 
 **Exhibit nnn** shows the increase in document losses for larger documents across a range of storage error rates.  Larger documents always suffer higher loss rates for any given quality (error rate, sector half-life) of server.  
 [[Picture in pictures/largerdocs, but it needs to be redone.]]
 
-![Exhibit nnn: Larger Docs Are More Vulnerable to Random Errors: 5, 50, 500, 5000MB](../pictures/LARGEDOCTARGETS/largedoctargets.png){width=90%}
+![Exhibit nnn: Larger Docs Are More Vulnerable to Random Errors: 5, 50, 500, 5000MB](../pictures/LARGEDOCTARGETS/largedoctargets.png){width=80%}
 
 The table of **Exhibit nnn** shows the relationship between document size and storage error rate.  (Error rate is expressed as sector half-life, as explained below.)  Note the extremely linear relationship between document size and storage quality.  A larger document must reside on a higher quality server to achieve the same loss rate. Note that the figures in this table are derived from experiment, not simply from theory.  And please recall that storage quality is expressed as sector lifetime (half-life), which is the inverse of the error rate; as the error rate goes up, the sector lifetime goes down.  High sector lifetimes are seen in more desirable storage with lower error rates.  
  

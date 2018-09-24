@@ -42,7 +42,7 @@ gp <- ggplot(data=trows
 gp <- gp + labs(color=sLegendLabel)
 
 gp <- fnPlotLogScales(gp, x="YES", y="YES"
-                ,xbreaks=c(2,5,10,100,1000)
+                ,xbreaks=c(2,5,10,100,1000,10000)
                 ,ybreaks=c(0.01,0.10,1.00,10,100)
                 )
 gp <- gp + geom_line(
