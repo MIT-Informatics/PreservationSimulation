@@ -44,7 +44,7 @@ def mainsim_post():
     lCopies= request.forms.getall("nCopies")
 
     lLifem = request.forms.getall("nLifem")
-    nServerDefaultLife = request.forms.get("nServerDefaultLife")
+    nServerDefaultLife = request.forms.getall("nServerDefaultLife")
 
     nAuditFreq = request.forms.get("nAuditFreq")
     nAuditSegments = request.forms.get("nAuditSegments")
@@ -82,7 +82,7 @@ def mainsim_post():
     dVals = dict(sFamilyDir=sFamilyDir, sSpecificDir=sSpecificDir,
 
                 sCopies=fnsQuoteMulti(lCopies),
-                nServerDefaultLife=nServerDefaultLife, 
+                nServerDefaultLife=fnsQuoteMulti(nServerDefaultLife), 
 
                 sLifem=fnsQuoteMulti(lLifem), 
 
@@ -282,7 +282,8 @@ sRangeTemplate = "'{\"$gte\":%s, \"$lte\":%s}'"
 #               Separate page code from entry point and main line.
 # 20171231  RBL Import command from common module.  
 # 20180408  RBL Add --simlen option in command to broker.py.
-#
+# 20180925  RBL Change ServerDefaultLife to nulti-select.
+# 
 # 
 
 #END

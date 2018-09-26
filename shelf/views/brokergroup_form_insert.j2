@@ -142,7 +142,7 @@
 {% endblock %}
 
 {% block nServerDefaultLife scoped %}
-   {{insertmyvar(dVars.nServerDefaultLife, required=true)}}
+   {{insertmultivar(dVars.nServerDefaultLife, required=true)}}
 {% endblock %}
 
 {% block nShelfSize scoped %}
@@ -249,6 +249,7 @@ BZZZT!  New news: the min/max inputs hae been removed in favor of
 20171129    RBL Add multi-select var macro to be used for some vars.  
 20171215    RBL Add check and logfilename for Run Detached.
 20180408    RBL Add multivar for nSimLength.
+20180925    RBL Add multivar for ServerDefaultLife.
 
 
 -->

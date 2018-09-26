@@ -21,12 +21,17 @@ export TRACE_PRODUCTION=YES
 export NPOLITE=1
 
 echo "Browse to localhost:8080 to access the broker form."
-python brokergroupform.py >tmp/brokergroupform.log 2<&1 &
-# NOTE WELL: The ampersand runs the form program in a subprocess.
-#  To terminate the program, you must first bring it forward with 
-#  'fg' and then issue the control-C.
-# Sending the output to a log file makes the process detachable, I hope.
-#
+if "$1" = "here"
+then
+    # Start it locally so I can track its use and stop it if necessary.
+    python brokergroupform.py
+else
+    python brokergroupform.py >tmp/brokergroupform.log 2<&1 &
+    # NOTE WELL: The ampersand runs the form program in a subprocess.
+    #  To terminate the program, you must first bring it forward with 
+    #  'fg' and then issue the control-C.
+    # Sending the output to a log file makes the process detachable, I hope.
+fi
 echo "Use ctrl-z, fg, bg, and jobs to manipulate the web server."
 echo "And ctrl-c to terminate it when it is the foreground job."
 jobs

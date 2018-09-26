@@ -141,7 +141,7 @@
             <tr><td>
                 <select name="nLifem" multiple size="6">
                     <option value="1">&nbsp;&nbsp;1&nbsp;</option>
-                    <option value="2">&nbsp;&nbsp;2&nbsp;</option>
+                    <option value="2" selected>&nbsp;&nbsp;2&nbsp;</option>
                     <option value="3" selected>&nbsp;&nbsp;3&nbsp;</option>
                     <option value="5" selected>&nbsp;&nbsp;5&nbsp;</option>
                     <option value="10" selected>&nbsp;&nbsp;10&nbsp;</option>
@@ -187,6 +187,7 @@
                     <option value="5000">&nbsp;&nbsp;5000 (1/2 year)&nbsp;</option>
                     <option value="10000" selected>&nbsp;&nbsp;10000 (year)&nbsp;</option>
                     <option value="20000">&nbsp;&nbsp;20000 (two years)&nbsp;</option>
+                    <option value="50000">&nbsp;&nbsp;50000 (five years)&nbsp;</option>
                     </select>
             </td></tr>
         </table>
@@ -203,6 +204,7 @@
                     <option value="1" selected>&nbsp;&nbsp;1 (annual)&nbsp;</option>
                     <option value="2">&nbsp;&nbsp;2 (semi-annual)&nbsp;</option>
                     <option value="4">&nbsp;&nbsp;4 (quarter)&nbsp;</option>
+                    <option value="5">&nbsp;&nbsp;5 (1/5 of five year cycle)&nbsp;</option>
                     <option value="10">&nbsp;&nbsp;10 (month)&nbsp;</option>
                     <option value="50">&nbsp;&nbsp;50 (week)&nbsp;</option>
                     </select>
@@ -270,10 +272,11 @@
                     <option value="10">&nbsp;&nbsp;10&nbsp;</option>
                     <option value="20">&nbsp;&nbsp;20&nbsp;</option>
                     <option value="33">&nbsp;&nbsp;33&nbsp;</option>
-                    <option value="50" selected>&nbsp;&nbsp;50&nbsp;</option>
-                    <option value="67">&nbsp;&nbsp;67&nbsp;</option>
-                    <option value="80">&nbsp;&nbsp;80&nbsp;</option>
-                    <option value="90">&nbsp;&nbsp;90&nbsp;</option>
+                    <option value="50" selected>&nbsp;&nbsp;50 (2x error rate)&nbsp;</option>
+                    <option value="67">&nbsp;&nbsp;67 (3x error rate)&nbsp;</option>
+                    <option value="75">&nbsp;&nbsp;75 (4x error rate)&nbsp;</option>
+                    <option value="80">&nbsp;&nbsp;80 (5x error rate)&nbsp;</option>
+                    <option value="90">&nbsp;&nbsp;90 (10x error rate)&nbsp;</option>
                     <option value="100">&nbsp;&nbsp;100 (fatal)&nbsp;</option>
                     </select>
             </td></tr>
@@ -325,12 +328,16 @@
                 <b>Expected Half-life of Servers (hrs) (0=infinite), must be nonzero for shocks                    <font color="red">* required</font></b>
             </th></tr>
             <tr><td>
-                <select name="nServerDefaultLife">
+                <select name="nServerDefaultLife" multiple size="6">
                     <option value="0" selected>&nbsp;&nbsp;0 (infinite)&nbsp;</option>
+                    <option value="10000">&nbsp;&nbsp;10000 (1 year)&nbsp;</option>
+                    <option value="20000">&nbsp;&nbsp;20000 (2 years)&nbsp;</option>
+                    <option value="30000">&nbsp;&nbsp;30000 (3 years)&nbsp;</option>
+                    <option value="40000">&nbsp;&nbsp;40000 (4 years)&nbsp;</option>
                     <option value="50000">&nbsp;&nbsp;50000 (5 years)&nbsp;</option>
+                    <option value="80000">&nbsp;&nbsp;80000 (8 years)&nbsp;</option>
                     <option value="100000">&nbsp;&nbsp;100000 (10 years)&nbsp;</option>
                     <option value="200000">&nbsp;&nbsp;200000 (20 years)&nbsp;</option>
-                    <option value="500000">&nbsp;&nbsp;500000 (50 years)&nbsp;</option>
                     </select>
             </td></tr>
         </table>
@@ -385,10 +392,12 @@
             <tr><td>
                 <select name="nGlitchImpact" multiple size="6">
                     <option value="10">&nbsp;&nbsp;10&nbsp;</option>
-                    <option value="33" selected>&nbsp;&nbsp;33&nbsp;</option>
-                    <option value="50">&nbsp;&nbsp;50&nbsp;</option>
-                    <option value="67">&nbsp;&nbsp;67&nbsp;</option>
-                    <option value="90">&nbsp;&nbsp;90&nbsp;</option>
+                    <option value="33" selected>&nbsp;&nbsp;33 (1.5x error rate)&nbsp;</option>
+                    <option value="50">&nbsp;&nbsp;50 (2x error rate)&nbsp;</option>
+                    <option value="67">&nbsp;&nbsp;67 (3x error rate)&nbsp;</option>
+                    <option value="75">&nbsp;&nbsp;75 (4x error rate)&nbsp;</option>
+                    <option value="80">&nbsp;&nbsp;80 (5x error rate)&nbsp;</option>
+                    <option value="90">&nbsp;&nbsp;90 (10x error rate)&nbsp;</option>
                     </select>
             </td></tr>
         </table>
@@ -403,8 +412,8 @@
             <tr><td>
                 <select name="nGlitchMaxlife" multiple size="6">
                     <option value="0">&nbsp;&nbsp;0 (forever)&nbsp;</option>
-                    <option value="250" selected>&nbsp;&nbsp;250 (week)&nbsp;</option>
-                    <option value="1000">&nbsp;&nbsp;1000 (month)&nbsp;</option>
+                    <option value="250">&nbsp;&nbsp;250 (week)&nbsp;</option>
+                    <option value="1000" selected>&nbsp;&nbsp;1000 (month)&nbsp;</option>
                     <option value="5000">&nbsp;&nbsp;5000 (1/2 year)&nbsp;</option>
                     <option value="10000">&nbsp;&nbsp;10000 (2 years)&nbsp;</option>
                     <option value="30000">&nbsp;&nbsp;30000 (3 years)&nbsp;</option>
@@ -478,7 +487,6 @@
                 <select name="nSimLength" multiple size="6">
                     <option value="0" selected>&nbsp;&nbsp;0 (default)&nbsp;</option>
                     <option value="100000">&nbsp;&nbsp;100000 (10 years)&nbsp;</option>
-                    <option value="150000">&nbsp;&nbsp;150000 (15 years)&nbsp;</option>
                     <option value="200000">&nbsp;&nbsp;200000 (20 years)&nbsp;</option>
                     <option value="300000">&nbsp;&nbsp;300000 (30 years)&nbsp;</option>
                     <option value="500000">&nbsp;&nbsp;500000 (50 years)&nbsp;</option>
