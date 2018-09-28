@@ -2,6 +2,7 @@
 # start_brokerform.sh
 #                       RBLandau 20170318
 #                       revised  20170520
+#                       revised  20180928
 # Script to launch the broker web form.
 # You must already be in the shelf directory with the 
 #  'shelfenv' virtualenv activated, wherever that is.
@@ -21,7 +22,7 @@ export TRACE_PRODUCTION=YES
 export NPOLITE=1
 
 echo "Browse to localhost:8080 to access the broker form."
-if "$1" = "here"
+if [ "$1" = "here" ]
 then
     # Start it locally so I can track its use and stop it if necessary.
     python brokergroupform.py
