@@ -11,6 +11,7 @@ import  logoutput       as lg
 from    catchex         import  catchex
 from    shelf           import  CShelf
 import  resettabletimer as rt
+from    datetime        import  datetime
 
 
 #===========================================================
@@ -27,7 +28,8 @@ class CServer(object):
     def __init__(self,mysName,mynQual,mynShelfSize):
         self.sName = mysName
         self.nQual = mynQual
-        self.nShelfSize = mynShelfSize * 1000000    # Scale up from TB to MB.
+        self.nShelfSizeTB = mynShelfSize
+        self.nShelfSize = self.nShelfSizeTB * 1000000    # Scale up from TB to MB.
         self.ID = "V" + str(self.getID())
         self.lShelfIDs = list()
         self.lDocIDs = list()       # Docs that still live in this server.
@@ -54,18 +56,23 @@ class CServer(object):
                                     # TODO: the param is a halflife; need to 
                                     #  generate a random expo life from that
                                     #  rather than using a fixed number.
+        self.tLastServerCreated = (mysName, mynQual, mynShelfSize)
+
 
 # S e r v e r . m L i s t S e r v e r 
     @catchex
     @ntracef("SERV")
     def mListServer(self):
-        G.dID2Server[self.ID] = self
+ 
+       G.dID2Server[self.ID] = self
+
 
 # S e r v e r . m D e l i s t S e r v e r 
     @catchex
     @ntracef("SERV")
     def mDelistServer(self):
         if self.ID in G.dID2Server: del G.dID2Server[self.ID]
+
 
 # S e r v e r . m K i l l S e r v e r
     @catchex
@@ -79,6 +86,7 @@ class CServer(object):
             cShelf = G.dID2Shelf[sShelfID]
             cShelf.mKillShelf()
 
+
 # S e r v e r . m b I s S e r v e r D e a d 
     @catchex
     @ntracef("SERV")
@@ -87,11 +95,13 @@ class CServer(object):
         '''
         return self.bDead
 
+
 # S e r v e r . m b I s S e r v e r I n U s e 
     def mbIsServerInUse(self):
         ''' DO NOT MEMOIZE THIS FUNCTION!
         '''
         return self.bInUse
+
 
 # C S e r v e r . f n C o r r F a i l H a p p e n s T o A l l 
     @classmethod
@@ -108,6 +118,7 @@ class CServer(object):
             cServer = G.dID2Server[sVictim] 
             cServer.mCorrFailHappensToMe()
 
+
 # C S e r v e r . f n l L i s t L i v e S e r v e r I D s 
     @classmethod
     @catchex
@@ -120,6 +131,7 @@ class CServer(object):
             if (not csrv.mbIsServerDead()) and csrv.bInUse]
         return lLiveOnes
 
+
 # C S e r v e r . f n l L i s t A l l S e r v e r I D s 
     @classmethod
     @catchex
@@ -130,6 +142,7 @@ class CServer(object):
         lAllServers = [sid for sid,csrv in G.dID2Server.items() 
             if csrv.bInUse]
         return lAllServers
+
 
 # C S e r v e r . f n l S e l e c t S e r v e r V i c t i m s 
     @classmethod
@@ -144,6 +157,31 @@ class CServer(object):
         return lPossibleVictims[0: min(mynHowManyVictims, 
             len(lPossibleVictims))]
 
+
+# C S e r v e r . f n s I n v e n t N e w S e r v e r 
+    @classmethod
+    @catchex
+    @ntracef("SERV")
+    def fnsInventNewServer(cls):
+        '''Class method: Create another server on the fly.
+        Use the info from some old one that is still alive to create
+        a new one.  Change the long name to make it unique.  
+        Return the new server ID.
+        '''
+        tnow = datetime.now()
+        lLiveServerIDs = cls.fnlListLiveServerIDs()
+        sServerID = lLiveServerIDs[0]
+        cServer = G.dID2Server[sServerID]
+        sNewName = (cServer.sName + "_" + util.fnsGetTimeStamp()
+                     + "_" + tnow.strftime("%H%M%S.%f"))
+        cNewServer = CServer(sNewName, cServer.nQual, cServer.nShelfSizeTB)
+        lg.logInfo("SERVER", "created new server|%s| name|%s| "
+            "quality|%s| size|%s|TB svrlife|%.0f|" 
+            % (cNewServer.ID, sNewName, cNewServer.nQual, 
+            cNewServer.nShelfSizeTB, cNewServer.mfGetMyLife()))
+        return cNewServer.ID
+
+
 # S e r v e r . m C o r r F a i l H a p p e n s T o M e
     @catchex
     @ntracef("SERV")
@@ -153,12 +191,14 @@ class CServer(object):
             cShelf.mCorrFailHappensToMe()
         self.oTimer.stop()
 
+
 # S e r v e r . m f G e t O r i g i n a l M y L i f e
     @catchex
     @ntracef("SERV")
     def mfGetMyOriginalLife(self):
         ''' Return original lifespan number. '''
         return self.fOriginalLifespan
+
 
 # S e r v e r . m f G e t M y C u r r e n t L i f e
     @catchex
@@ -167,12 +207,14 @@ class CServer(object):
         ''' Return current lifespan number. '''
         return self.fCurrentLifespan
 
+
 # S e r v e r . m f G e t M y L i f e
     @catchex
     @ntracef("SERV")
     def mfGetMyLife(self):
         ''' Return current lifespan number. '''
         return self.mfGetMyCurrentLife()
+
 
 # S e r v e r . m R e s c h e d u l e M y L i f e 
     @catchex
@@ -181,12 +223,14 @@ class CServer(object):
         ''' Store new lifespan number. '''
         self.fCurrentLifespan = mynNewLife
 
+
 # S e r v e r . m l L i s t S h e l v e s 
     @catchex
     @ntracef("SERV")
     def mlListShelves(self):
         """Return list all current shelves for this server."""
         return self.lShelfIDs
+
 
 # S e r v e r . m A d d C o l l e c t i o n
     @catchex
@@ -203,6 +247,7 @@ class CServer(object):
         # BZZZT: new mechanism for declaring server death; don't do this. 
         #self.oTimer.start()         #  and alive, can die.
         return len(lTempDocIDs)
+
 
 # S e r v e r . m A d d D o c u m e n t 
     @catchex
@@ -257,10 +302,11 @@ class CServer(object):
         '''
         cShelf = CShelf(self.ID, self.nQual, self.nShelfSize)
         lg.logInfo("SERVER","server |%s| created storage shelf|%s| "
-            "quality|%s| size|%s|MB svrlife|%.0f|" 
-            % (self.ID, cShelf.ID, cShelf.nQual, cShelf.nCapacity, 
+            "quality|%s| size|%s|TB svrlife|%.0f|" 
+            % (self.ID, cShelf.ID, cShelf.nQual, self.nShelfSizeTB, 
             self.mfGetMyLife()))
         return cShelf.ID
+
 
 # S e r v e r . m D e s t r o y C o p y 
     @catchex
@@ -279,6 +325,7 @@ class CServer(object):
         del self.dDocIDs[mysDocID]
         # The Shelf will nuke the copy, because it created it.  
         return self.ID + "-" + mysDocID
+
 
 # S e r v e r . m T e s t D o c u m e n t 
     @catchex
@@ -299,6 +346,7 @@ class CServer(object):
         else:
             return False
 
+
 # S e r v e r . m S e r v e r D i e s 
     @catchex
     @ntracef("SERV")
@@ -317,6 +365,7 @@ class CServer(object):
                 G.dID2Shelf[sShelfID].mDestroyShelf()
 #               TODO: #mark all shelves as not bAlive
         pass
+
 
 # S e r v e r . f n T i m e r C a l l 
 @catchex
@@ -399,6 +448,8 @@ def fnTimerInt(objTimer, xContext):
 # 20170109  RBL Track servers that die, active or otherwise.  
 # 20180516  RBL Update to ntrace, ntracef, NTRC.
 #               And PEP8-ify a few stragglers.  
+# 20180928  RBL Save info on last server created for use in making
+#                dynamic servers when we run out of fixed ones.  
 # 
 # 
 

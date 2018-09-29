@@ -61,6 +61,9 @@ class CClient(object):
         cColl = G.dID2Collection[mysCollID]
         nCollValue = cColl.nValue   # Yes, bad, reaching into the colletion's knickers.
         lServersForCollection = self.mSelectServersForCollection(nCollValue)
+        if not lServersForCollection:
+            raise IndexError( 
+                'BUGCHECK not enough servers for initial collection placement.')
         # The distribution params have already limited the 
         # set of servers in the select-for-collection routine.
         self.lServersToUse = lServersForCollection
@@ -113,17 +116,18 @@ class CClient(object):
         NEW: return only servers that are not already in use and not broken.
         '''
         lPermChosenAlive = [svr for svr in lServersAtLevel 
-            if not G.dID2Server[svr].bDead]
-        lPermChosenFull = [svr for svr in lPermChosenAlive 
-            if not G.dID2Server[svr].bInUse]
+                            if not G.dID2Server[svr].bDead]
+        lPermChosenAvail = [svr for svr in lPermChosenAlive 
+                            if not G.dID2Server[svr].bInUse]
         NTRC.ntracef(3, "CLI", "proc servers chosen level|%s| alive|%s| "
             "full|%s|" 
-            % (lServersAtLevel, lPermChosenAlive, lPermChosenFull))
+            % (lServersAtLevel, lPermChosenAlive, lPermChosenAvail))
         # Just make sure there are enough of them to meet the client's needs.
         if len(lPermChosenAlive) < nCopies:
-            raise IndexError(
-                'Not enough servers left alive to satisfy client requirements')
-        lPermChosen = lPermChosenFull[0:nCopies]
+            # Not enough servers available; someone will have to create one.
+            lPermChosen = []
+        else:
+            lPermChosen = lPermChosenAvail[0:nCopies]
         return lPermChosen
 
 # C l i e n t . m P l a c e C o l l e c t i o n O n S e r v e r 
@@ -203,7 +207,12 @@ class CClient(object):
         lServersForCollection = self.mSelectServersForCollection(nCollValue)
         # The distribution params have already limited the 
         # set of servers in the select-for-collection routine.
-        sServerToUse = lServersForCollection.pop(0)
+        # If there are servers available, pick one.  Otherwise, 
+        #  create a new server that's just like an old one and use it.
+        if lServersForCollection:
+            sServerToUse = lServersForCollection.pop(0)
+        else:
+            sServerToUse = CServer.fnsInventNewServer()
         lg.logInfo("CLIENT", "client|%s| assign new server|%s| to replace|%s|" 
             % (self.ID, sServerToUse, mysServerID))
         nDocs = self.mPlaceCollectionOnServer(mysCollID, sServerToUse)
@@ -227,6 +236,8 @@ class CClient(object):
 # 20161231  RBL Log reprovisioning of new server.
 # 20170101  RBL Add count of collection docs to provisioning report.  
 # 20170102  RBL PEP8-ify most of the long lines.  
+# 20180928  RBL If we run out of servers due to shocks, just invent new ones.
+#                Yes, there is a potential infinte loop in this mess.  
 # 
 # 
 
