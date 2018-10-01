@@ -146,9 +146,9 @@ echo "**************************************** Quick setup and simple test"
 cd shelf
 # Remove any leftovers from possible previous deployment.
 sudo rm --force --recursive ../hl
+bash setupnumberofdocs.sh NORMAL
 bash setupfamilydir.sh ../hl a0 
 bash pretestchecklist.sh ../hl a0 
-bash setupnumberofdocs.sh NORMAL
 # M A I N   T E S T   1 
 # Run one simple test of the simulation, and check the answer.
 sudo rm --force --recursive tmp
