@@ -148,6 +148,7 @@ cd shelf
 sudo rm --force --recursive ../hl
 bash setupfamilydir.sh ../hl a0 
 bash pretestchecklist.sh ../hl a0 
+bash setupnumberofdocs.sh NORMAL
 # M A I N   T E S T   1 
 # Run one simple test of the simulation, and check the answer.
 sudo rm --force --recursive tmp
@@ -281,7 +282,7 @@ echo "**************************************** Done initial tests"
 
 echo "**************************************** Create startup.sh script in ~"
 cd ~
-cat >startup.sh <<\EOF
+cat >startup.sh <<\EOFEOF
 if [ -z "$NUMBER_OF_PROCESSORS" ]
 then
     export NUMBER_OF_PROCESSORS=$(cat /proc/cpuinfo | grep processor | wc -l)
@@ -321,10 +322,19 @@ echo "***  try   python main.py -h                         ***"
 echo "***  or    python broker.py -h                       ***" 
 echo "*** for help.                                        ***"
 echo "***                                                  ***" 
+echo "***    I M P O R T A N T  R E M I N D E R            ***" 
+echo "***                                                  ***" 
+echo "*** If you are simulating for SHOCKS ONLY,           ***" 
+echo "***  remember to set the number of documents         ***" 
+echo "***  down with the command                           ***" 
+echo "***     bash setupnumberofdocs.sh SHOCK              ***" 
+echo "*** Otherwise, you waste a *lot* of CPU time         ***" 
+echo "***  moving empty docs around for no benefit.        ***" 
+echo "***                                                  ***" 
 echo "*** HowTo info can be found in the 'docs' directory. ***"
 echo "********************************************************"
 echo ""
-EOF
+EOFEOF
 
 echo "**************************************** I N S T R U C T I O N S"
 echo "**************************************** "
