@@ -122,7 +122,13 @@ def fndCliParse(mysArglist):
                         , help='Log no detailed info for this run, params '
                         'and results only.'
                         )
-
+"""
+    cParse.add_argument('--ndocuments', type=int
+                        , dest='nDocuments'
+                        , metavar="nDOCS"
+                        , help='Number of documents in collection '
+                        )
+"""
     cParse.add_argument('--smalldoc', type=int
                         , dest='nDocSmall'
                         , metavar='nDOCSML_MB'
@@ -277,6 +283,7 @@ def fndCliParse(mysArglist):
 # 20161215  RBL Add maxlife to shock.  
 #               Add defaultlife to server.
 # 20180516  RBL Update to ntrace, ntracef, NTRC.
+# 20181001  RBL Add placeholder code for --ndocuments.
 # 
 # 
 

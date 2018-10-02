@@ -60,6 +60,10 @@ class ProtoG(object):
     nSimLength = 100000     # Length of simulation, hours.  
     nSimLengthDefault = 100000
 
+    nDocuments = 0          # Placeholder for number of documents in collection.
+                            #  If set nonzero by CLI, overrides the number
+                            #  from the clients.csv default.
+
     fServerDefaultHalflife = 0  # How long do servers life if unmolested?
 ############################################TESTING###########################
     #fServerDefaultHalflife = 33333.0
@@ -219,6 +223,7 @@ G = CG()
 # 20161118  RBL Add a default lifespan for servers.  
 # 20161231  RBL Add list of dead servers for reporting.  
 # 20170109  RBL Add list of dead active servers, too.  
+# 20181001  RBL Add nDocuments.
 # 
 # 
 
