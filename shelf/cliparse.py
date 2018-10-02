@@ -122,13 +122,13 @@ def fndCliParse(mysArglist):
                         , help='Log no detailed info for this run, params '
                         'and results only.'
                         )
-"""
+    """
     cParse.add_argument('--ndocuments', type=int
                         , dest='nDocuments'
                         , metavar="nDOCS"
                         , help='Number of documents in collection '
                         )
-"""
+    """
     cParse.add_argument('--smalldoc', type=int
                         , dest='nDocSmall'
                         , metavar='nDOCSML_MB'
