@@ -3,6 +3,7 @@
 #                       RBLandau 20170318
 #                       revised  20170520
 #                       revised  20180928
+#                       revised  20181002
 # Script to launch the broker web form.
 # You must already be in the shelf directory with the 
 #  'shelfenv' virtualenv activated, wherever that is.
@@ -19,7 +20,7 @@ fi
 export TRACE_LEVEL=
 export TRACE_PRODUCTION=YES
 # And start new runs as quickly as possible.  
-export NPOLITE=1
+export NPOLITE=1000
 
 echo "Browse to localhost:8080 to access the broker form."
 if [ "$1" = "here" ]
