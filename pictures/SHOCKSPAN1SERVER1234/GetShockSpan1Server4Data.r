@@ -1,33 +1,31 @@
-# GetShockSpan1Server1234Data.r
+# GetShockSpan1Server4Data.r
 source("../common/DataUtil.r")
 library(ggplot2)
 source("../common/PlotUtil.r")
 
 
 # P A R A M S
-sPlotFile <- "shockspan1freq2server1234.png"
+sPlotFile <- "shockspan1server4.png"
 fnGroupBy <- function(dfIn) {group_by(dfIn, copies, lifem
                                     , serverdefaultlife
                                     , shockfreq, shockspan, shockimpact
                                     , shockmaxlife
                                     )}
-fnSubset <- function(dfIn)  {subset(dfIn,  shockfreq==20000)}
+fnSubset <- function(dfIn)  {subset(dfIn, serverdefaultlife==40000)}
 want.varnames <- c("copies","lifem","lost","docstotal","serverdefaultlife"
                 ,"shockfreq","shockimpact","shockspan","shockmaxlife"
                 ,"auditfrequency","audittype","auditsegments"
                 ,"deadserversactive","deadserversall")
 fnNarrow <- function(dfIn)  {dfIn[want.varnames]}  
 sTitleLine <-   (   ""
-                %+% "Shocks  half-life=2yr duration=1yr span=1  "
+                %+% "Shocks duration=1yr span=1 serverdefaultlife=4yr "
                 %+% " "
                 %+% " "
                 %+% "\n"
                 %+% "\n(Copies=3, annual total auditing)"
                 )
-if (exists("sLegendLabel")) {rm(sLegendLabel)}
-sLegendLabel <- "Server lifetime\n      (half-life)"
-if (exists("lLegendItemLabels")) {rm(lLegendItemLabels)}
-lLegendItemLabels <- c("1 year", "2 years", "3 years", "4 years")
+sLegendLabel <- "Shock arrival\nrate (half-life)"
+lLegendItemLabels <- c("1 year", "2 years", "3 years")
 sXLabel <- ("Shock Impact, pct increase in server death rate "
             %+% "                           (lower shock impact =====>)")
 sYLabel <- ("permanent document losses (%)")
@@ -45,8 +43,7 @@ trows <- newdat
 
 # P L O T   D A T A 
 gp <- ggplot(data=trows
-            , aes(x=shockimpact,y=safe(losspct)
-            , color=factor(serverdefaultlife))
+            , aes(x=shockimpact,y=safe(losspct), color=factor(shockfreq))
             ) 
 gp <- gp + labs(color=sLegendLabel)
 

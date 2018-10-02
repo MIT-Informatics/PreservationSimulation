@@ -1,35 +1,33 @@
-# GetShockSpan1Server1234Data.r
+# GetShockSpan1Server25Data.r
 source("../common/DataUtil.r")
 library(ggplot2)
 source("../common/PlotUtil.r")
 
 
 # P A R A M S
-sPlotFile <- "shockspan1freq2server1234.png"
+sPlotFile <- "shockspan2server2.png"
 fnGroupBy <- function(dfIn) {group_by(dfIn, copies, lifem
                                     , serverdefaultlife
                                     , shockfreq, shockspan, shockimpact
                                     , shockmaxlife
                                     )}
-fnSubset <- function(dfIn)  {subset(dfIn,  shockfreq==20000)}
+fnSubset <- function(dfIn)  {subset(dfIn, serverdefaultlife==20000)}
 want.varnames <- c("copies","lifem","lost","docstotal","serverdefaultlife"
                 ,"shockfreq","shockimpact","shockspan","shockmaxlife"
                 ,"auditfrequency","audittype","auditsegments"
                 ,"deadserversactive","deadserversall")
 fnNarrow <- function(dfIn)  {dfIn[want.varnames]}  
 sTitleLine <-   (   ""
-                %+% "Shocks  half-life=2yr duration=1yr span=1  "
+                %+% "Shocks duration=1yr span=2 serverdefaultlife=2yrs "
                 %+% " "
                 %+% " "
                 %+% "\n"
                 %+% "\n(Copies=3, annual total auditing)"
                 )
-if (exists("sLegendLabel")) {rm(sLegendLabel)}
-sLegendLabel <- "Server lifetime\n      (half-life)"
-if (exists("lLegendItemLabels")) {rm(lLegendItemLabels)}
-lLegendItemLabels <- c("1 year", "2 years", "3 years", "4 years")
+sLegendLabel <- "Shock arrival\nrate (hours)"
+lLegendItemLabels <- c("1 year", "2 years")
 sXLabel <- ("Shock Impact, pct increase in server death rate "
-            %+% "                           (lower shock impact =====>)")
+            %+% "                           (lower error rate =====>)")
 sYLabel <- ("permanent document losses (%)")
 # ************ Also change summarize function and ggplot(color=...).
 
@@ -38,23 +36,21 @@ sYLabel <- ("permanent document losses (%)")
 # Get the data into the right form for these plots.
 alldat.df <- fndfGetGiantDataRaw("")
 newdat <- alldat.df %>% fnGroupBy() %>% 
-summarize(losspct=round(mean(lost/docstotal)*100.0, 2), n=n()) %>%
+summarize(losspct=round(mean(lost/docstotal/n())*100.0, 2), n=n()) %>%
 fnSubset()
 trows <- newdat
 
 
 # P L O T   D A T A 
 gp <- ggplot(data=trows
-            , aes(x=shockimpact,y=safe(losspct)
-            , color=factor(serverdefaultlife))
+            , aes(x=shockimpact,y=safe(losspct), color=factor(shockfreq))
             ) 
 gp <- gp + labs(color=sLegendLabel)
 
 gp <- fnPlotLogScales(gp, x="YES", y="YES"
-#                ,xbreaks=c(50,67,75,80,90,100)
+                ,xbreaks=c(50,67,75,80,90,100)
                 ,ybreaks=c(0.01,0.10,1.00,10,100)
                 )
-gp <- gp + scale_x_reverse(breaks=c(50,67,75,80,90,100))
 gp <- gp + geom_line(
                   size=3
                 , show.legend=TRUE
