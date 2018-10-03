@@ -11,7 +11,7 @@ fnGroupBy <- function(dfIn) {group_by(dfIn, copies, lifem
                                     , shockfreq, shockspan, shockimpact
                                     , shockmaxlife
                                     )}
-fnSubset <- function(dfIn)  {subset(dfIn, serverdefaultlife==40000)}
+fnSubset <- function(dfIn)  {subset(dfIn, copies==3 & serverdefaultlife==40000)}
 want.varnames <- c("copies","lifem","lost","docstotal","serverdefaultlife"
                 ,"shockfreq","shockimpact","shockspan","shockmaxlife"
                 ,"auditfrequency","audittype","auditsegments"
