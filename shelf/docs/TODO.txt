@@ -2,6 +2,11 @@ TODO list for PreservationSimulation SHELF project
 
 
 TODO: shock
+FIXME - reduce collections for shock cases to just a few documents;
+    we care only if all docs are lost or none are lost; binary decision; 
+    don't waste time scanning large collections.  
+FIXME - decrease NPOLITE timer to milliseconds.
+FIXME - decrease wait times for log files and such in brokercommandlist.
 DONE - increase number of servers available to 50 or 60.
 DONE - sort end-audit server list for easier reading.  
 DONE - add server default lifespan to param files and CLI, zero = infinite.
@@ -37,7 +42,10 @@ DONOTDO - if shockfreq==0, should we coerce serverdefaultlifetime=0?
 
 
 TODO: status bookkeeping database
-FIXME - move to SQLite instead of the current MongoDB.
+DONOTDO - move to SQLite instead of the current MongoDB.
+FIXME - BUG datacleanup sometimes inserts a second header line as line 3;
+    the first two jobs have a race condition; have to add locking
+    of the GiantOutput file, oops.
 DONE - add server default half-life, and any other vagrant parameters 
     you find lying about, to the hash for done-detection.  
 DONE - write searchdb status database based on json files.
@@ -63,6 +71,9 @@ FIXME - Make almost all entries multiple-select.  Curently several are not.
 FIXME - nDocuments does not appear in the interface; therefore, if it has 
     multiple values, it will generate redundant instructions.  YIKES!
     Workaround: permit only one value, i.e., 10,000 docs.  
+    BZZZT: conflicts with the needs of shock simulations that need
+    smaller collections for efficiency.
+    TEMP KLUDGE: take NPOLITE value as arg2 in start_brokerform.sh.
 DONE - BUG! Simulation length is not propagated downstream from form 
     to bottle to broker to main.  
 FIXME - timestamp the form when it is generated so we can tell when 
@@ -120,7 +131,7 @@ FIXME - update deadly out of date comments in, e.g., main.py.  check all
     such modules.
 FIXME - do we want to wrap this up as a python package?  not at all clear.
     given that it has to be installed on a linux, a zip with readmefirst and 
-    instruction docs would be more suitable.  
+    instruction docs would be more suitable.  or Docker container.   
 FIXME - update all the python shebang strings to "#!/usr/bin/env python"
     like a good boy.  or maybe not: modules that are always imported and 
     never executed alone do not need the shebang.
@@ -136,6 +147,7 @@ DONE - at end, report servers that died and were in use at the time;
 TODO: extractvalues.py
 FIXME - do not use the same lineregex more than once.  if a lineregex 
     has already been used on a line, hit or miss, don't bother asking again.  
+    minor optimization.  
 DONE - add audittype field to output.  this may require changes
     to other modules as well, but I can't think why at the moment.
     probably change only the instruction file to add the
@@ -356,7 +368,7 @@ FIXME - document new procedure for generating instructions: simpler, just edit
     the shelf/instructions/*.ins files.  
 
 
-TODO: packaging into Docker
+TODO: packaging into Docker container
 DONE - do Docker basic tutorials
 DONE - construct vm platforms for docker learning on both systems
 DONE - transcribe crummy bash script to dockerfile.

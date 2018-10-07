@@ -35,7 +35,8 @@ python -c 'import sys; print sys.version; print sys.version_info'
 #  Similarly for shock params: shockfreq=0 does not suffice to filter out
 #  all possibly redundant instructions.  
 # Singletons such as docsize and audittype can be ignored at one's risk.  
-#  But will they always remain singletons?
+#  But will they always remain singletons?  No, they didn't.  
+#  And similarly for docsize, simlen, ndocs, etc.  Specify *every*thing.  
 
 python main.py {sFamilyDir} {sSpecificDir} {nSimLength} {nRandomseed} --ncopies={nCopies} --lifek={nLifem}000 --audit={nAuditFreq} --auditsegments={nAuditSegments} --audittype={sAuditType} --glitchfreq={nGlitchFreq} --glitchimpact={nGlitchImpact} --glitchdecay={nGlitchDecay} --glitchmaxlife={nGlitchMaxlife} --glitchspan={nGlitchSpan} --serverdefaultlife={nServerDefaultLife} --shockfreq={nShockFreq} --shockimpact={nShockImpact} --shockmaxlife={nShockMaxlife} --shockspan={nShockSpan} --shelfsize={nShelfSize} --smalldoc={nDocSize} --pctsmall=100 {sShortLogOption} --mongoid=\'{_id}\'  >  {sFamilyDir}/{sSpecificDir}/log/{sShelfLogFileName}.log  2>&1
 
@@ -67,13 +68,17 @@ python main.py {sFamilyDir} {sSpecificDir} {nSimLength} {nRandomseed} --ncopies=
 #                paranoia to the waiting before extracting values.  Look for
 #                the absolute last line after the time-stats line.
 #               And slow down the waiting after the extract and before cleanup.
-#
+# 20181007  RBL Dramatically shorten the sleep periods for waiting, to 
+#                accommodate the extremely short runs for measuring shocks.
+#                The long sleep times caused amazing traffic jams.
+#                Hope this is sufficiently reliable.  
+# 
 
 date +%Y%m%d_%H%M%S.%3N
 
-while true; do if [ -z $(tail -3 {sFamilyDir}/{sSpecificDir}/log/{sShelfLogFileName}.log | grep "End time stats" | wc -l) ]; then sleep 19; else sleep 7; break; fi; done 
+while true; do if [ -z $(tail -3 {sFamilyDir}/{sSpecificDir}/log/{sShelfLogFileName}.log | grep "End time stats" | wc -l) ]; then sleep 2; else sleep 0.01; break; fi; done 
 
-while true; do if [ -z $(tail -3 {sFamilyDir}/{sSpecificDir}/log/{sShelfLogFileName}.log | grep "ENDENDEND" | wc -l) ]; then sleep 31; else sleep 23; break; fi; done 
+while true; do if [ -z $(tail -3 {sFamilyDir}/{sSpecificDir}/log/{sShelfLogFileName}.log | grep "ENDENDEND" | wc -l) ]; then sleep 2; else sleep 0.01; break; fi; done 
 
 # Data extraction command.  Header must be forced here so that the 
 #  cleanup program can label the data fields correctly.
@@ -88,11 +93,11 @@ date +%Y%m%d_%H%M%S.%3N
 #  buffers have not yet been written to disk?  Or something?  
 #  Should one always flush() before exiting? 
 
-while true; do if [ 2 -gt $(wc -l {sFamilyDir}/{sSpecificDir}/ext/{sShelfLogFileName}.ext | awk '{print $1}') ]; then sleep 37; else sleep 29; break; fi; done 
+while true; do if [ 2 -gt $(wc -l {sFamilyDir}/{sSpecificDir}/ext/{sShelfLogFileName}.ext | awk '{print $1}') ]; then sleep 2; else sleep 0.01; break; fi; done 
 
 # Again, slow the pace a little.
-
-sleep 5
+# Or not
+#sleep 1
 
 # Data cleanup command.  Appends line from extract file to output file, 
 #  and usually deletes the extract file and records it in the done collection.
