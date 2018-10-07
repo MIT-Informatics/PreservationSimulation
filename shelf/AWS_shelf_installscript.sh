@@ -66,6 +66,9 @@
 #                the last line.  
 # 20180409  RBL Fix all broker tests to include new --simlen=0 option.
 #               Add new CLEAROLD option to erase previous installation.
+# 20181001  RBL Add reminder to set the default number of documents for 
+#                shocks vs normal runs before setting up directory
+#                for runs.  
 # 
 
 if [ -n "$1" -a "$1" != "CLEAROLD" ]
@@ -330,6 +333,8 @@ echo "***  down with the command                           ***"
 echo "***     bash setupnumberofdocs.sh SHOCK              ***" 
 echo "*** Otherwise, you waste a *lot* of CPU time         ***" 
 echo "***  moving empty docs around for no benefit.        ***" 
+echo "*** This must be done *before* setting up the        ***" 
+echo "***  output directory for a run.                     ***" 
 echo "***                                                  ***" 
 echo "*** HowTo info can be found in the 'docs' directory. ***"
 echo "********************************************************"
