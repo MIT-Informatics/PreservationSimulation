@@ -59,7 +59,7 @@ class CG(object):
     sQuery = None
     nCores = 8          # Default, overridden by NCORES env var
     nCoreTimer = 10     # Wait for a free core,
-    nPoliteTimer = 1    # Shorter wait between sequential launches.
+    nPoliteTimer = 1000 # Wait between sequential launches, in milliseconds.
     nStuckLimit = 600   # Max nr of CoreTimer waits before giving up.
     nTestLimit = 0      # Max nr of runs executed for a test run, 0=infinite.
     sTestCommand = "N"  # Should just echo commands instead of executing them?
@@ -486,7 +486,7 @@ def fnstProcessOneInstruction(mysRunNumber, mydInstruction, mynSeed):
             NTRC.ntracef(3, "MAIN", "proc actor cmd run|%s|\n|%s|"
                 % (mysRunNumber, g.sActorCommand)) 
             sResult = cCmd.doCmdStr(g.sActorCommand)
-            time.sleep(g.nPoliteTimer)    
+            time.sleep(g.nPoliteTimer / 1000.0)    
 
         else:
             # If bContinue comes back false, then there is no room at the inn.
@@ -533,10 +533,11 @@ def fnvGetEnvironmentOverrides():
     NTRC.ntracef(0, "MAIN", "proc ncores|%s|" % (g.nCores))
     # Allow user to override the polite interval to use today.
     try:
-        g.nPoliteTimer = int(os.getenv("NPOLITE", CG.nPoliteTimer))
-        NTRC.ntracef(0, "MAIN", "proc politetimer|%s|" % (g.nPoliteTimer))
+        g.nPoliteTimer = int(os.getenv("NPOLITE", CG.nPoliteTimer)) 
+        NTRC.ntracef(0, "MAIN", "proc politetimer|%s|msec" % (g.nPoliteTimer))
     except (ValueError, TypeError):
-        raise TypeError('Environment variable NPOLITE must be an integer.')
+        raise TypeError("Environment variable NPOLITE must be "
+                        "an integer number of milliseconds.")
 
 
 # f n s R e c o n s t i t u t e C o m m a n d 
@@ -663,6 +664,8 @@ foreach single-line file in holding dir
 # 20180408  RBL Add nSimLength var to take value from --simlen CLI option, 
 #                to be passed to main.py in cmd.  
 # 20180828  RBL Log commands on single line, timestamp then CLI command.  
+# 20181002  RBL Change POLITE timer to be in milliseconds so that 
+#                very short runs for shocks are not spaced out unduly.
 # 
 # 
 
