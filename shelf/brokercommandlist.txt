@@ -76,9 +76,9 @@ python main.py {sFamilyDir} {sSpecificDir} {nSimLength} {nRandomseed} --ncopies=
 
 date +%Y%m%d_%H%M%S.%3N
 
-while true; do if [ -z $(tail -3 {sFamilyDir}/{sSpecificDir}/log/{sShelfLogFileName}.log | grep "End time stats" | wc -l) ]; then sleep 2; else sleep 0.01; break; fi; done 
+while true; do if [ -z $(tail -3 {sFamilyDir}/{sSpecificDir}/log/{sShelfLogFileName}.log | grep "End time stats" | wc -l) ]; then sleep 1; else sleep 0.01; break; fi; done 
 
-while true; do if [ -z $(tail -3 {sFamilyDir}/{sSpecificDir}/log/{sShelfLogFileName}.log | grep "ENDENDEND" | wc -l) ]; then sleep 2; else sleep 0.01; break; fi; done 
+while true; do if [ -z $(tail -3 {sFamilyDir}/{sSpecificDir}/log/{sShelfLogFileName}.log | grep "ENDENDEND" | wc -l) ]; then sleep 1; else sleep 0.01; break; fi; done 
 
 # Data extraction command.  Header must be forced here so that the 
 #  cleanup program can label the data fields correctly.
@@ -93,7 +93,7 @@ date +%Y%m%d_%H%M%S.%3N
 #  buffers have not yet been written to disk?  Or something?  
 #  Should one always flush() before exiting? 
 
-while true; do if [ 2 -gt $(wc -l {sFamilyDir}/{sSpecificDir}/ext/{sShelfLogFileName}.ext | awk '{print $1}') ]; then sleep 2; else sleep 0.01; break; fi; done 
+while true; do if [ 2 -gt $(wc -l {sFamilyDir}/{sSpecificDir}/ext/{sShelfLogFileName}.ext | awk '{print $1}') ]; then sleep 1; else sleep 0.01; break; fi; done 
 
 # Again, slow the pace a little.
 # Or not
