@@ -40,8 +40,9 @@ class CServer(object):
         G.nServerLastID = self.ID
         self.sClientID = None
         self.sCollectionID = None
-        self.bInUse = False         # This server not yet used by client.
+        self.bInUse = False         # This server not yet been used by client.
         self.bDead = False          # Server has not yet suffered a 100% glitch.
+        self.bInShock = False       # Server is in a shock cycle if true.  
         self.fOriginalLifespan = (util.makeserverlife(G.fServerDefaultHalflife)
                                     if G.fServerDefaultHalflife > 0 else 0)
                                     # Server gets a random lifetime if there
@@ -97,10 +98,24 @@ class CServer(object):
 
 
 # S e r v e r . m b I s S e r v e r I n U s e 
+    @catchex
+    @ntracef("SERV")
     def mbIsServerInUse(self):
         ''' DO NOT MEMOIZE THIS FUNCTION!
         '''
         return self.bInUse
+
+
+# C S e r v e r . m b H a s S e r v e r A l r e a d y E x p i r e d 
+    @catchex
+    @ntracef("SERV")
+    def mbHasServerAlreadyExpired(self):
+        '''Is this server's lifetime over but he just hasn't been caught
+            yet by an audit cycle?  If so, don't count it among the live
+            ones to be shocked.  True if server should be considered dead.  
+            Like, the server is dead but the body hasn't been discovered yet.
+        '''
+        return (self.fCurrentLifespan < G.env.now)
 
 
 # C S e r v e r . f n C o r r F a i l H a p p e n s T o A l l 
@@ -128,7 +143,10 @@ class CServer(object):
             all servers that are still alive
             and being used."""
         lLiveOnes = [sid for sid,csrv in G.dID2Server.items() 
-            if (not csrv.mbIsServerDead()) and csrv.bInUse]
+            if (not csrv.mbIsServerDead() 
+                and not csrv.mbHasServerAlreadyExpired()
+                and csrv.bInUse)
+                ]
         return lLiveOnes
 
 
@@ -222,6 +240,23 @@ class CServer(object):
     def mRescheduleMyLife(self, mynNewLife):
         ''' Store new lifespan number. '''
         self.fCurrentLifespan = mynNewLife
+
+
+# S e r v e r . m S e t S e r v e r I n S h o c k 
+    @catchex
+    @ntracef("SERV")
+    def mSetServerInShock(self, bStatus):
+        '''Set flag for whether this server is currently in a shock
+            or not.  Used for counting whether death was due to shock.
+        '''
+        self.bInShock = bStatus
+
+
+# S e r v e r . m b I s S e r v e r I n S h o c k 
+    @catchex
+    @ntracef("SERV")
+    def mbIsServerInShock(self):
+        return self.bInShock
 
 
 # S e r v e r . m l L i s t S h e l v e s 
@@ -380,7 +415,7 @@ def fnTimerCall(objTimer, xContext):
         % (xContext, objTimer.delay, objTimer, G.env.now))
     objTimer.setevent()
     cServer = xContext[0]
-    cServer.mKillServer
+    cServer.mKillServer()
     lg.logInfo("SERVER","timercalled t|%6.0f| context|%s| delay|%s|" 
         % (G.env.now, xContext, objTimer.delay))
     return (objTimer, xContext)
@@ -450,7 +485,10 @@ def fnTimerInt(objTimer, xContext):
 #               And PEP8-ify a few stragglers.  
 # 20180928  RBL Save info on last server created for use in making
 #                dynamic servers when we run out of fixed ones.  
-# 
+# 20181007  RBL Add routine to check if server's time has expired but
+#                the body has not yet been discovered by an audit cycle.  
+#                If so, then don't count it among the ones that might
+#                be subject to shock.  
 # 
 
 #END

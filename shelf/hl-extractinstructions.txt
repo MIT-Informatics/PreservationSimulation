@@ -10,7 +10,7 @@
 #  can use a different separator if the user wishes.  
 
 =template
-{timestamp} {docsize} {shelfsize} {copies} {lifem} {simlength} {seed} {lost} {docstotal} {docsokay} {docsrepairedmajority} {docsrepairedminority} {docslost} {auditcycles} {auditfrequency} {auditsegments} {audittype} {auditrepairs} {auditmajority} {auditminority} {auditlost} {glitchfreq} {glitchimpact} {glitchdecay} {glitchmaxlife} {nglitches} {serverdefaultlife} {shockfreq} {shockimpact} {shockmaxlife} {shockspan} {shocktype} {nshocks} {deadserversactive} {deadserversall} {walltime} {cputime} {logfilename} {logfilesize} {instructionfilename} {todaysdatetime} {extractorversion} {cpuinfo} {mongoid}
+{timestamp} {docsize} {shelfsize} {copies} {lifem} {simlength} {seed} {lost} {docstotal} {docsokay} {docsrepairedmajority} {docsrepairedminority} {docslost} {auditcycles} {auditfrequency} {auditsegments} {audittype} {auditrepairs} {auditmajority} {auditminority} {auditlost} {glitchfreq} {glitchimpact} {glitchdecay} {glitchmaxlife} {nglitches} {serverdefaultlife} {shockfreq} {shockimpact} {shockmaxlife} {shockspan} {shocktype} {nshocks} {nshockdeaths} {deadserversactive} {deadserversall} {walltime} {cputime} {logfilename} {logfilesize} {instructionfilename} {todaysdatetime} {extractorversion} {cpuinfo} {mongoid}
 
 # The header line will be output or not, depending on the 
 #  --header CLI option or the "header" environment variable.  
@@ -126,6 +126,7 @@ shockspan,"PARAMS INFO - SHOCKS",8,span.(\d+)
 shockmaxlife,"PARAMS INFO - SHOCKS",9,maxlife.(\d+)
 shocktype,"PARAMS INFO - SHOCKS",10,type.(\d+)
 nshocks,"MAIN INFO - SHOCKS Total shocks",7,shocks.(\d+)
+nshockdeaths,"MAIN INFO - SHOCKS Total shocks",11,shock.(\d+)
 
 # D E A D   S E R V E R S 
 deadserversall,"DEADSERVERS ALL",7,n.(\d+)

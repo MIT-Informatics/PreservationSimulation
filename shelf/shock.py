@@ -188,6 +188,7 @@ class CShock(object):
             % (G.env.now, mysServerID, myfReduction, fOriginalLife, fNewLife, 
             G.nShockType))
         cServer.mRescheduleMyLife(fNewLife)
+        cServer.mSetServerInShock(True)
         return
 
 
@@ -234,6 +235,7 @@ class CShock(object):
             lg.logInfo("SHOCK ", "t|%6.0f| restoring server|%s| life to |%.0f|" 
                 % (G.env.now, mysServerID, fOriginalLifespan))
             cServer.mRescheduleMyLife(fOriginalLifespan)
+        cServer.mSetServerInShock(False)
         return mysServerID
 
 
@@ -303,10 +305,11 @@ class CShock(object):
             ):
             # Server has overstayed its welcome.  Kill it.  
             sInUse = "currently in use" if cServer.mbIsServerInUse() else ""
+            sShockVictim = "shock victim" if cServer.mbIsServerInShock() else ""
             lg.logInfo("SHOCK ", "t|%6.0f| kill server|%s| life|%.0f|=|%.1f|yr"
-                " expired %s" 
+                " expired %s %s" 
                 % (G.env.now, mysServerID, fCurrentLife, fCurrentLife/10000, 
-                sInUse))
+                sInUse, sShockVictim))
             NTRC.ntracef(3, "SHOK", "proc t|%6.0f| expired svr|%s| "
                 "svrdefaulthalflife|%s| currlife|%.0f|" 
                 % (G.env.now, mysServerID, G.fServerDefaultHalflife, 
