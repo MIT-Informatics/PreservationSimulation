@@ -32,7 +32,7 @@ export TRACE_PRODUCTION=YES
 if [ -z "$2" ]
 then
     # And start new runs as quickly as possible.  
-    export NPOLITE=1000
+    export NPOLITE=50
 else
     export NPOLITE=$2
 fi

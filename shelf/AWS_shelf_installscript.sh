@@ -69,6 +69,8 @@
 # 20181001  RBL Add reminder to set the default number of documents for 
 #                shocks vs normal runs before setting up directory
 #                for runs.  
+# 20181007  RBL Shorten polite timer for shock runs, default=50msec.
+# 
 # 
 
 if [ -n "$1" -a "$1" != "CLEAROLD" ]
@@ -291,9 +293,9 @@ then
     export NUMBER_OF_PROCESSORS=$(cat /proc/cpuinfo | grep processor | wc -l)
 fi
 . shelfenv/bin/activate
-export NPOLITE=1
+export NPOLITE=50
 cd working/shelf
-bash start_brokerform.sh & 
+bash start_brokerform.sh detached 50 & 
 bash brokercommandlog_enable.sh
 
 echo ""
