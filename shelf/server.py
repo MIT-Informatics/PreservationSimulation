@@ -106,7 +106,7 @@ class CServer(object):
         return self.bInUse
 
 
-# C S e r v e r . m b H a s S e r v e r A l r e a d y E x p i r e d 
+# S e r v e r . m b H a s S e r v e r A l r e a d y E x p i r e d 
     @catchex
     @ntracef("SERV")
     def mbHasServerAlreadyExpired(self):

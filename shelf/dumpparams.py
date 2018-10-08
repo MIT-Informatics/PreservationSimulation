@@ -7,6 +7,7 @@ from NewTraceFac import NTRC,ntrace,ntracef
 import logoutput as lg
 from sys import argv
 from globaldata import G,P
+import os
 
 
 #-----------------------------------------------------------
@@ -26,6 +27,8 @@ def dumpParamsIntoLog():
         "defaultlimit|%d|hr=|%d|metricyr" 
         % (G.nSimLength, G.nSimLength/10000, 
         G.nSimLengthDefault, G.nSimLengthDefault/10000))
+    G.nPoliteTimer = int(os.getenv("NPOLITE", P.nPoliteTimer)) 
+    lg.logInfo("PARAMS","POLITE time|%s|msec" % (G.nPoliteTimer)) 
     lg.logInfo("PARAMS","LOG    logfile|%s| loglevel|%s|" 
         % (G.sLogFile,G.sLogLevel)) 
     lg.logInfo("PARAMS", "TRACE  traceproduction|%s|" % NTRC.isProduction())

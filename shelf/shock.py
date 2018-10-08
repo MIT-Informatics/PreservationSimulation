@@ -94,6 +94,7 @@ class CShock(object):
         end of the shock cycle.
         '''
         G.nShocksTotal += 1
+        G.lShockTimes.append(int(G.env.now))
         lg.logInfo("SHOCK ", "t|%6.0f| start to reduce life of |%s| servers "
             "by pct|%s|" 
             % (G.env.now, self.nSpan, self.nImpact))

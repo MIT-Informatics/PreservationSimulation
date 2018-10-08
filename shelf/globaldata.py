@@ -91,6 +91,7 @@ class ProtoG(object):
     nDeadOldServers = 0     # Count of servers that died of old age.
     nDeathsDueToShock = 0   # Count of servers that died of age during shock.  
     lDeathsDueToShock = []  # List of the shock victims.  
+    lShockTimes = []        # List of the times when shocks happened.
 
     sMongoId = None         # MongoDB _id of the instruction for this run.
 
@@ -190,6 +191,10 @@ class P(object):
     #  to permit consistent regression testing.
     #RANDOMSEED = 1
     nRandomSeed = 1
+    
+    # Polite timer, which is not used by the main simulation, 
+    #  but is reported here.
+    nPoliteTimer = 1000             # in msec, i.e., one second
 
     # Length of simulation, in hours.  Default = one year.
     #SIMLENGTH = 100000

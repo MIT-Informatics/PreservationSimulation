@@ -123,6 +123,8 @@ def dumpGlitchStats():
 def dumpShockStats():
     lg.logInfo("MAIN","SHOCKS Total shocks|%d| deaths due to shock|%d: %s|" 
         % (G.nShocksTotal, G.nDeathsDueToShock, G.lDeathsDueToShock))
+    lg.logInfo("MAIN","SHOCKS When nshocks|%d| at times|%s|" 
+        % (G.nShocksTotal, G.lShockTimes))
 
 # d u m p C o l l e c t i o n S t a t s 
 def dumpCollectionStats(mysCollID):
