@@ -1,0 +1,11 @@
+All the random numbers in these lists are 
+True Random Numbers from random.org;
+they are produced by atmospheric noise 
+and not by pseudo-random calculations.
+Thank you, random.org.
+
+These numbers are intended to be used as seeds
+for the Python pseudorandom number generator, 
+which is based on the Mersenne Twister algorithm.  
+
+-- Richard Landau 20181010
