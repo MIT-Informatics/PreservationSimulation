@@ -48,7 +48,7 @@ class CG(object):
     nServerDefaultLife = 0
 
     nRandomSeeds = 21
-    sRandomSeedFile = "RandomSeeds.txt"
+    sRandomSeedFile = "randomseeds.txt"
     nSimLength = 0
 
     nShelfSize = None
