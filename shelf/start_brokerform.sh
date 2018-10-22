@@ -14,7 +14,7 @@
 if [ -z "$1" -o "$1" = "-h" -o "$1" = "--help" -o "$1" = "help" ]
 then
     echo "Usage: $0 [<whereloc> [<politetime>]]"
-    echo "<whereloc> is either 'here' or '' "
+    echo "<whereloc> is either 'detached' or 'here' "
     echo "politetime is integer milliseconds for NPOLITE"
     exit 1
 fi
@@ -47,7 +47,7 @@ then
     # Start it locally so I can track its use and stop it if necessary.
     echo "Starting brokergroupform locally."
     python brokergroupform.py
-else
+elif [ "$1" = "detached" ]
     echo "Starting brokergroupform detached."
     python brokergroupform.py >tmp/brokergroupform.log 2<&1 &
     # NOTE WELL: The ampersand runs the form program in a subprocess.
@@ -55,6 +55,9 @@ else
     #  'fg' and then issue the control-C.
     # Sending the output to a log file makes the process detachable, I hope.
     jobs
+else
+    echo "Error in arg1: must be 'detached' or 'here'"
+    exit 1
 fi
 
 #END

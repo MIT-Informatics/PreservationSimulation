@@ -76,6 +76,11 @@ p <- qplot(mpg, wt, data = mtcars) + theme_bw()
 p + annotation_raster(mypng, ymin = 4.5,ymax= 5,xmin = 30,xmax = 35) + 
     geom_point()
 
+# or maybe this
+# reading image
+img <- readPNG(system.file("img", "Rlogo.png", package = "png"))
+
+
 # ggsave args
 ggsave(filename = "foo300.png", ggplot(mtcars, aes(x=wt, y=mpg)) +
            geom_point(size=2, shape=23) + theme_bw(base_size = 10),

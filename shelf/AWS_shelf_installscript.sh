@@ -69,6 +69,7 @@
 # 20181001  RBL Add reminder to set the default number of documents for 
 #                shocks vs normal runs before setting up directory
 #                for runs.  
+# 20181022  RBL Add now-required arg for start_brokerform.sh, oops.
 # 
 
 if [ -n "$1" -a "$1" != "CLEAROLD" ]
@@ -293,7 +294,7 @@ fi
 . shelfenv/bin/activate
 export NPOLITE=1
 cd working/shelf
-bash start_brokerform.sh & 
+bash start_brokerform.sh detached  
 bash brokercommandlog_enable.sh
 
 echo ""

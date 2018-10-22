@@ -28,7 +28,7 @@ sLegendLabel <- "Shock arrival\nrate (hours)"
 lLegendItemLabels <- c("1 year", "2 years")
 sXLabel <- ("Shock Impact, pct increase in server death rate "
             %+% "                           (lower error rate =====>)")
-sYLabel <- ("permanent document losses (%)")
+sYLabel <- ("probability of losing the entire collection (%)")
 # ************ Also change summarize function and ggplot(color=...).
 
 

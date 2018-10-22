@@ -1,0 +1,74 @@
+Debug and Production runs produce the same results.
+                    RBLandau 20170129
+
+There is now a "production" mode of the simulation runs that attempts
+ to optimize CPU and I/O time for long computations.  Question: does 
+ the production version produce exactly the same results as the 
+ standard version?  The standard version has debug trace logging and 
+ detailed error logging intact, but the production version skips over
+ both of these sections of code.  (The code is not changed in any way; 
+ its behavior is modified by command line option and environment variable.)
+
+Here's how to compare results:
+- Take two large GiantOutput*.txt files, one done with --shortlog and one
+   done with ordinary long logs.  The two I used below were from sequences 
+   including, e.g., the following command.  
+   (Hard word wraps added by me for legibility.)
+   ---------------------
+   python main.py ../hl a10000s1 100000 50746969 --ncopies=1 --lifek=10000 
+   --audit=10000 --auditsegments=1 --audittype=TOTAL --glitchfreq=0 
+   --glitchimpact=0 --glitchdecay=0 --glitchmaxlife=0 --glitchspan=0 
+   --shockfreq=0 --shockimpact=0 --shockmaxlife=0 --shockspan=0 
+   --shelfsize=1 --smalldoc=50 --pctsmall=100 --shortlog 
+   --mongoid=\'3c7dde6fb58d7c83952b659269a07ea0b0b18bb2_10\'  >  
+   ../hl/a10000s1/log/doc50cop1shlf1lif10_af10000s1tTOTAL_gf0i0d0m0_sh0i0s0_m0seed50746969.log  
+   2>&1
+   ---------------------
+- When this set of options is given to broker.py with range options
+    --ncopies='{"$gte":1,"$lte":8}'       and 
+    --lifem='{"$gte":10,"$lte":1000}'
+   broker produces 5454 runs (6 levels of copies * 9 levels of lifetime * 
+   101 seeds) per case.  
+- FYI, this takes 15 hours in standard (debug) mode but
+   only 6 hours in production mode.  
+- In this case, the one with shortlog also had TRACE_PRODUCTION=YES 
+   turned on, so it was much faster as well as smaller.  
+- Remove any fields from the logged lines that are necessarily different
+   for different runs, e.g., timestamp, todaysdatetime, walltime, cputime, 
+   and logfilesize.
+- Sort both files to wash out any reorderings due to other processes
+   running in Windows at the time.  
+- diff the two files with your favorite utility.  I used Tortoise GIT diff 
+   and GNU diff.  Both of them thought the results were identical.  
+- The console log of the process is shown below.  
+   (Again, hard word wraps added by me for legibility.)  
+======================================================================
+landau@RicksYoga2 ~/working/tmp
+$ cat GiantOutput_af10000s1_ShortLogs_00.txt |awk '/time/{next};
+  {$38=""; $36=""; $34=""; $33="";$1="";  print}' 
+  | sort > short.txt
+
+landau@RicksYoga2 ~/working/tmp
+$ tail -n2 short.txt
+ 50 1 8 500 100000 985655050 0 10000 9466 534 0 0 9 10000 1 503 503 0 0 
+ 0 0 0 0 0 0 0 0 10000 0 2 0   
+ ../hl/a10000s1/log/doc50cop8shlf1lif500_af10000s1tTOTAL_gf0i0d0m0_sh0i0s0_m0seed985655050.log  
+ hl-extractinstructions.txt  0.5 83bbcac88cda4d3fcd87989a4601d0486f4cf622_24 
+ 50 1 8 500 100000 987909730 0 10000 9486 514 0 0 9 10000 1 472 472 0 0 
+ 0 0 0 0 0 0 0 0 10000 0 2 0   
+ ../hl/a10000s1/log/doc50cop8shlf1lif500_af10000s1tTOTAL_gf0i0d0m0_sh0i0s0_m0seed987909730.log  
+ hl-extractinstructions.txt  0.5 83bbcac88cda4d3fcd87989a4601d0486f4cf622_69
+
+landau@RicksYoga2 ~/working/tmp
+$ cat GiantOutput_af10000s1_LongLogs_00.txt |awk '/time/{next};
+  {$38=""; $36=""; $34=""; $33="";$1="";  print}' 
+  | sort > long.txt
+
+landau@RicksYoga2 ~/working/tmp
+$ diff long.txt short.txt
+
+landau@RicksYoga2 ~/working/tmp
+$
+======================================================================
+
+No differences.  Voila.

@@ -1,5 +1,6 @@
 # GetCopies1HQData.r
 
+library(png)
 source("../common/DataUtil.r")
 
 # G E T   D A T A  
@@ -85,12 +86,30 @@ gp <- gp + annotate(geom="text", x=20, y=0.015
 gp <- gp + annotate(geom="text", x=400, y=0.03
                     , label="3-o'clock arrow goes here ========>>"
                     , color="red", size=5)
+rightimg <- readPNG(source='../ARROWS/right_8.png', native=FALSE)
+#img <- readPNG(system.file("img", "Rlogo.png", package="png"))
+
+gp <- gp + annotation_raster(raster=rightimg, 
+#                    ymin = 0.0015,ymax= 0.002,xmin = 100,xmax = 1000) + geom_point()
+                    ymin = 1,ymax= 2,xmin = 100,xmax = 1000) + geom_point()
+
 gp <- gp + annotate(geom="text", x=5000, y=20
                     , label="Decreasing\ndocument\nlosses"
                     , color="red", size=10)
 gp <- gp + annotate(geom="text", x=10000, y=2
                     , label="6-o'clock arrow goes here ========>>"
                     , color="red", size=5, angle=270)
+downimg <- readPNG(source='../ARROWS/right_8.png', native=FALSE)
+gp <- gp + annotation_raster(raster=downimg, 
+                    ymin = 1,ymax= 10,xmin = 10,xmax = 20) + geom_point()
+
+# -------------- test --------------
+blobimg <- readPNG(source='../ARROWS/blob1.png')
+gp <- gp + annotation_raster(raster=blobimg, 
+                    ymin = 1,ymax= 10,xmin = 10,xmax = 20) + geom_point()
+# -------------- end test --------------
+
+
 
 plot(gp)
 fnPlotMakeFile(gp, "copies1hq.png")
