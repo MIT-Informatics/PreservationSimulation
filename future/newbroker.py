@@ -31,6 +31,7 @@ argv[3] = sleep interval in loop waiting for open process slot;
             default 50 (msec).
 argv[4] = max number of times to sleep waiting for an open process slot; 
             default = 100.
+argv[5] = if present, causes debug printing of all the job output.
 '''
 
 import multiprocessing
@@ -111,6 +112,7 @@ def fntDoOneCase(mylInstruction, qToUse, mysLogfileName):
     lResultsToSee = ['\n'] + lPrefix + lResults + lSuffix + ['\n']
     tAnswers = tLinesOut(procname=sWhoami, listoflists=lResultsToSee)
     qToUse.put(tAnswers)
+    qToUse.close()
     return (tAnswers)
 
 
@@ -140,6 +142,7 @@ class CGlobal():
     llsFullOutput = list()  # Output for all test cases.
     nCases = 1          # DEBUG
     nWaitedForSlot = 0  # DEBUG
+    bDebugPrint = False # Print output of all jobs?
 
 
 # ==================== multiprocessing: RunEverything ====================
@@ -314,11 +317,12 @@ class CEndAllCases(threading.Thread):
                         while not queue.empty():
                             lLinesOut = queue.get().listoflists
                             lQOutput.append(lLinesOut)
+                        if gl.bDebugPrint:
                             NTRC.ntracef(5, "END", "proc lQOutput from q|%s|" 
-                                        % (lQOutput))
-                        self.llsFullOutput.extend(lQOutput)
-                        NTRC.ntracef(5, "END", "proc lOutput from q|%s|" 
-                                    % (self.llsFullOutput))
+                                            % (lQOutput))
+                            self.llsFullOutput.extend(lQOutput)
+                            NTRC.ntracef(5, "END", "proc lOutput from q|%s|" 
+                                        % (self.llsFullOutput))
                         # Remove job from active list.
                         gl.ltJobs[idx] = None
                         nCasesDone += 1
@@ -343,12 +347,14 @@ class CEndAllCases(threading.Thread):
         #  one job, more or less, with prefix and suffix 
         #  and comments, too.
         # Paste the whole thing together into a yuge list of lines.
-        sFullOutput = ""
-        for lJobOut in self.llsFullOutput:
-            sJobOut = "\n".join(lJobOut)
-            sFullOutput += sJobOut
-        NTRC.ntracef(5, "END", "proc sFullOutput|%s|" % (sFullOutput))
+        if gl.bDebugPrint:
+            sFullOutput = ""
+            for lJobOut in self.llsFullOutput:
+                sJobOut = "\n".join(lJobOut)
+                sFullOutput += sJobOut
+            NTRC.ntracef(5, "END", "proc sFullOutput|%s|" % (sFullOutput))
         self.qForOutput.put(self.llsFullOutput)
+        self.qForOutput.close()
 
 
 # ==================== utilities ====================
@@ -382,7 +388,8 @@ def fnbWaitForOpening(gl, mynWaitTimeMsec, mynWaitMax):
         else:
             nWait -= 1
             gl.nWaitedForSlot += 1
-            print(".", end='')          # DEBUG
+            if gl.bDebugPrint:
+                print(".", end='')          # DEBUG
             time.sleep(mynWaitTimeMsec / 1000.0)
             NTRC.ntracef(5, "WAIT", "proc waitforopening timesleft|%s|" 
                         % (nWait))
@@ -429,22 +436,23 @@ def main(gl):
     """
     NTRC.ntrace(0, "Starting...")
     llFullOutput = mainNewBroker(gl,)
-    
-    # Print all the crap that comes back.  
-    print("---------begin cases----------")
-    for lCase in llFullOutput:
-        sCaseOut = ""
-        NTRC.ntrace(3, "proc fromq lCase|%s|" % (lCase))
-        '''
-        for lCmd in lCase:
-            sCmdOut = "\n".join(lCmd)    # out from a single command
-            sCaseOut += sCmdOut
-        '''
-        sCaseOut = '\n'.join(lCase)
-        print(sCaseOut)
-        print("--------------")
-    print("---------end cases----------")
-    #NTRC.ntrace(5, "proc main sfulloutput|%s|" % (sFullOutput))
+
+    if gl.bDebugPrint:
+        # Print all the crap that comes back.  
+        print("---------begin cases----------")
+        for lCase in llFullOutput:
+            sCaseOut = ""
+            NTRC.ntrace(3, "proc fromq lCase|%s|" % (lCase))
+            '''
+            for lCmd in lCase:
+                sCmdOut = "\n".join(lCmd)    # out from a single command
+                sCaseOut += sCmdOut
+            '''
+            sCaseOut = '\n'.join(lCase)
+            print(sCaseOut)
+            print("--------------")
+        print("---------end cases----------")
+        #NTRC.ntrace(5, "proc main sfulloutput|%s|" % (sFullOutput))
     NTRC.ntrace(0, "Finished nWaitedForSlot|%s|" % (gl.nWaitedForSlot))
 
 
@@ -464,19 +472,20 @@ if __name__ == "__main__":
     if nArgs > 2: gl.nParallel = int(sys.argv[2]) 
     if nArgs > 3: gl.nWaitMsec = int(sys.argv[3]) 
     if nArgs > 4: gl.nWaitHowMany = int(sys.argv[4]) 
-    
+    if nArgs > 5: gl.bDebugPrint = True
+
     sTempListOfCommands = '''
         date +%Y%m%d_%H%M%S.%3N
         # this is comment 1
-#        ls | head -3
+        ls | head -3
         pwd
         # this is comment 2
         
         # and a blank line before and after this one
         
-#        cat /proc/version
-#        ps | grep python | grep -v grep
-#        date +%Y%m%d_%H%M%S.%3N
+        cat /proc/version
+        ps | grep python | grep -v grep
+        date +%Y%m%d_%H%M%S.%3N
     '''
 #    sTempListOfCommands = '''
 #        date +%Y%m%d_%H%M%S.%3N
