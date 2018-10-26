@@ -47,7 +47,7 @@ from NewTraceFac import NTRC, ntrace, ntracef
 
 # tuples
 # Job process ID and output queue.
-tJob = collections.namedtuple("tJobProcAndQueue", "procid")
+tJob = collections.namedtuple("tJob", "procid")
 # Line returned from a single command
 tLineOut = collections.namedtuple("tLineOut", "callstatus cmdstatus ltext ")
 # List of lines returned from list of commands
@@ -234,6 +234,9 @@ class CStartAllCases(threading.Thread):
                 except(StopIteration, IndexError):
                     self.gl.bThatsAllFolks = True
                     self.gl.nCasesTotal = self.gl.nCasesStarted
+                    NTRC.ntracef(1, "STRT", "proc startall "
+                                "exhausted instructions nprocess|%s|" 
+                                % (self.nProcess))
                     break
 
                 # Create resources for the job.        
@@ -297,9 +300,10 @@ class CEndAllCases(threading.Thread):
         while True:
             # L O C K 
             with self.gl.lockJobList:
+                NTRC.ntracef(3, "END", "proc ltJobs|%s|" % (gl.ltJobs))
                 ltActiveJobs = [(idx,tJob) for idx,tJob in 
                                 enumerate(gl.ltJobs) if tJob]
-                NTRC.ntracef(5, "END", "proc ltActiveJobs|%s|" % (ltActiveJobs))
+                NTRC.ntracef(3, "END", "proc ltActiveJobs|%s|" % (ltActiveJobs))
                 for idxtJob in ltActiveJobs:
                     idx,tJob = idxtJob
                     nJob = tJob.procid
@@ -317,6 +321,7 @@ class CEndAllCases(threading.Thread):
                         while not queue.empty():
                             lLinesOut = queue.get().listoflists
                             lQOutput.append(lLinesOut)
+                        queue.close()
                         if gl.bDebugPrint:
                             NTRC.ntracef(5, "END", "proc lQOutput from q|%s|" 
                                             % (lQOutput))
@@ -327,8 +332,10 @@ class CEndAllCases(threading.Thread):
                         gl.ltJobs[idx] = None
                         nCasesDone += 1
                         self.gl.nCasesDone += 1
+                        NTRC.ntracef(3, "STRT", "proc job completed |%s|" 
+                                    % (self.gl.nCasesDone))
 
-                NTRC.ntracef(5, "END", "proc end of for activejobs"
+                NTRC.ntracef(3, "END", "proc end of for activejobs"
                             " thatsall?|%s| ndone|%s| nstarted|%s|" 
                             % (self.gl.bThatsAllFolks
                             , self.gl.nCasesDone, self.gl.nCasesStarted))
@@ -427,6 +434,7 @@ def mainNewBroker(gl,):
     jRunJobs.start()    # Start subproc that does the work
     jRunJobs.join()     #  and wait for it to finish.
     llOut = qOut.get()  # Get massive output list.
+    qOut.close()
     return llOut
 
 
