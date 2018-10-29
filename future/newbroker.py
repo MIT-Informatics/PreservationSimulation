@@ -54,11 +54,11 @@ tLineOut = collections.namedtuple("tLineOut", "callstatus cmdstatus ltext ")
 tLinesOut = collections.namedtuple("tLinesOut", "procname, listoflists")
 
 
-# ==================== subprocess: do one line ====================
+# ==================== subprocess user: do one line ====================
 
 # f n D o O n e L i n e 
 @ntracef("DO1L")
-def fnDoOneLine(mysLine):
+def fntDoOneLine(mysLine):
     """Execute one command.  
     
     Input: single line of command.  
@@ -67,11 +67,16 @@ def fnDoOneLine(mysLine):
     """
     proc = (subprocess.Popen(mysLine
         , stdout=subprocess.PIPE
+        , close_fds=True            # The default anyway, I think.  
+        , stderr=subprocess.DEVNULL
         , universal_newlines=True
         , shell=True)
         )
-    sProcOut = proc.stdout.read()
-    sOut = "$ " + mysLine + "\n" + sProcOut.rstrip()
+#    sProcOut = proc.stdout.read()
+    (sProcOut, sProcErr) = proc.communicate()
+    proc.stdout.close()
+    if not sProcErr: sProcErr = ""
+    sOut = "$ " + mysLine + "\n" + sProcOut.rstrip() + sProcErr.rstrip()
     nCmdStat = "none available - RBL"
     nReturnCode = proc.returncode
     lOut = sOut.split("\n")
@@ -99,7 +104,7 @@ def fntDoOneCase(mylInstruction, qToUse, mysLogfileName):
     lResults = []                   # list of strings
     for sLine in mylInstruction:
         if fnbDoNotIgnoreLine(sLine):
-            tAnswer = fnDoOneLine(sLine)
+            tAnswer = fntDoOneLine(sLine)
             (nRtn, nErr, lResult) = tAnswer
             lResults.extend(lResult)
         else:
@@ -107,8 +112,8 @@ def fntDoOneCase(mylInstruction, qToUse, mysLogfileName):
     NTRC.ntracef(3, "DO1", "proc onecase lResults|%s|" % (lResults))
     
     fnWriteLogFile((lResults), mysLogfileName)
-    lPrefix = [("Begin results from " + sWhoami)]
-    lSuffix = [("Endof results from " + sWhoami)]
+    lPrefix = [("BEGIN results from " + sWhoami)]
+    lSuffix = [("ENDOF results from " + sWhoami)]
     lResultsToSee = ['\n'] + lPrefix + lResults + lSuffix + ['\n']
     tAnswers = tLinesOut(procname=sWhoami, listoflists=lResultsToSee)
     qToUse.put(tAnswers)
@@ -491,13 +496,15 @@ if __name__ == "__main__":
         
         # and a blank line before and after this one
         
+        python3 -V
         cat /proc/version
+        cat /proc/cpuinfo | grep processor |wc -l   
         ps | grep python | grep -v grep
         date +%Y%m%d_%H%M%S.%3N
     '''
-#    sTempListOfCommands = '''
-#        date +%Y%m%d_%H%M%S.%3N
-#    '''
+    sTempListOfCommands = '''
+        date +%Y%m%d_%H%M%S.%3N
+    '''
 
     sys.exit(main(gl))
 
