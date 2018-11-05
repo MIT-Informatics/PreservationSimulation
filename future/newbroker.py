@@ -58,7 +58,7 @@ tLinesOut = collections.namedtuple("tLinesOut", "procname, listoflists")
 
 # f n D o O n e L i n e 
 @ntracef("DO1L")
-def fntDoOneLine(mysLine):
+def fntDoOneLine(mysLine, mynProc, mynLine):
     """Execute one command.  
     
     Input: single line of command.  
@@ -101,15 +101,23 @@ def fntDoOneCase(mylInstruction, qToUse, mysLogfileName):
     This function will be a multiprocessing external process.
     """
     sWhoami = multiprocessing.current_process().name
+    nProc = fnsGetProcessNumber(sWhoami)
     lResults = []                   # list of strings
-    for sLine in mylInstruction:
+
+    # Process all lines of instructions and collect results.  
+    for nLine, sLine in enumerate(mylInstruction):
         if fnbDoNotIgnoreLine(sLine):
-            tAnswer = fntDoOneLine(sLine)
+            tAnswer = fntDoOneLine(sLine, nProc, nLine)
             (nRtn, nErr, lResult) = tAnswer
             lResults.extend(lResult)
+            NTRC.ntracef(4, "DO1", "proc DoOneCase case|%s| line|%s| "
+                        "lResult|%s|" 
+                        % (nProc, nLine, lResult))
         else:
+            NTRC.ntracef(4, "DO1", "proc DoOneCase case|%s| line|%s| "
+                        "comment|%s|" 
+                        % (nProc, nLine, sLine))
             lResults.extend([sLine])
-    NTRC.ntracef(3, "DO1", "proc onecase lResults|%s|" % (lResults))
     
     fnWriteLogFile((lResults), mysLogfileName)
     lPrefix = [("BEGIN results from " + sWhoami)]
@@ -153,7 +161,7 @@ class CGlobal():
 # ==================== multiprocessing: RunEverything ====================
 
 def fnRunEverything(gl, llsInstructions, nWaitMsec, nWaitHowMany
-                , myqFullOutput):
+                , myqFullOutput, myqWaited):
 
     # Fill the list of jobs with empties.
     for i in range(gl.nParallel + 1): gl.ltJobs.append(None)
@@ -163,7 +171,7 @@ def fnRunEverything(gl, llsInstructions, nWaitMsec, nWaitHowMany
     # Create new threads
     NTRC.ntracef(5, "RUN", "proc make thread instances")
     thrStart = CStartAllCases(gl, gl.nWaitMsec, gl.nWaitHowMany, llsInstructions, )            # NEED ARGS
-    thrEnd = CEndAllCases(gl, myqFullOutput, gl.nWaitMsec, )   # NEED ARGS
+    thrEnd = CEndAllCases(gl, myqFullOutput, myqWaited, gl.nWaitMsec, )   # NEED ARGS
     gl.llsFullOutput = [["",""]]
 
     # Start new Threads
@@ -207,15 +215,17 @@ class CStartAllCases(threading.Thread):
 
     @ntracef("STRT")
     def run(self):
-        while (fnbWaitForOpening(self.gl, self.nWaitMsec, self.nWaitHowMany)
+        while (fnbWaitForOpening(self.nWaitMsec, self.nWaitHowMany)
                 ):
-            NTRC.ntracef(3, "STRT", "proc doallcases slot is avail nprocess|%s| " 
+            NTRC.ntracef(3, "STRT", "proc doallcases slot is avail for case|%s| " 
                         % (self.nProcess))
 
             # How many active jobs?  If maxed out, wait for an empty slot
-            #  and to it again.
+            #  and do it again.
+            # L O C K 
             with self.gl.lockJobList:
                 nActive = len([tJob for tJob in self.gl.ltJobs if tJob])
+            # E N D L O C K 
             if nActive >= self.gl.nParallel:
                 NTRC.ntracef(3, "STRT", "proc startall slots full nActive|%s|" 
                             % (nActive))
@@ -286,13 +296,14 @@ class CEndAllCases(threading.Thread):
     """
 
     #@ntracef("END")
-    def __init__(self, gl, myqForOutput
+    def __init__(self, gl, myqForOutput, myqWaited
                 , mynWaitMsec
                 ):
         threading.Thread.__init__(self)
         self.gl = gl
         self.nWaitMsec = mynWaitMsec
         self.qForOutput = myqForOutput
+        self.qWaited = myqWaited
         self.llsFullOutput = list()
         NTRC.ntracef(5, "END", "exit init gl|%s| qout|%s| wait|%s|" 
                     % (self.gl, self.qForOutput, self.nWaitMsec))
@@ -315,8 +326,8 @@ class CEndAllCases(threading.Thread):
                     proc = self.gl.dId2Proc[nJob]
                     if not proc.is_alive():
                         NTRC.ntracef(3, "END", "proc endall found done "
-                                    "job|%s||%s| alive?|%s|" 
-                                    % (idxtJob, proc, proc.is_alive()))
+                                    "ltJobs[%s]=procid|%s|=|%s| alive?|%s|" 
+                                    % (idx, nJob, proc, proc.is_alive()))
                         # Job listed as still baking but reports that it is done.
                         # Wait until it is fully baked.
                         proc.join()
@@ -337,10 +348,10 @@ class CEndAllCases(threading.Thread):
                         gl.ltJobs[idx] = None
                         nCasesDone += 1
                         self.gl.nCasesDone += 1
-                        NTRC.ntracef(3, "STRT", "proc job completed |%s|" 
+                        NTRC.ntracef(3, "STRT", "proc job completed ndone|%s|" 
                                     % (self.gl.nCasesDone))
 
-                NTRC.ntracef(3, "END", "proc end of for activejobs"
+                NTRC.ntracef(3, "END", "proc end for-activejobs"
                             " thatsall?|%s| ndone|%s| nstarted|%s|" 
                             % (self.gl.bThatsAllFolks
                             , self.gl.nCasesDone, self.gl.nCasesStarted))
@@ -366,6 +377,7 @@ class CEndAllCases(threading.Thread):
                 sFullOutput += sJobOut
             NTRC.ntracef(5, "END", "proc sFullOutput|%s|" % (sFullOutput))
         self.qForOutput.put(self.llsFullOutput)
+        self.qWaited.put(gl.nWaitedForSlot)
         self.qForOutput.close()
 
 
@@ -381,6 +393,15 @@ def fnbDoNotIgnoreLine(mysLine):
     return (not re.match("^\s*#", mysLine)) and (not re.match("^\s*$", mysLine))
 
 
+# f n I n t P l e a s e 
+def fnIntPlease(mysIn):
+    try:
+        val = int(mysIn)
+    except:
+        val = mysIn
+    return val
+
+
 # f n n H o w M a n y A l i v e 
 @ntracef("MANY", level=5)
 def fnnHowManyAlive(gl):
@@ -391,7 +412,7 @@ def fnnHowManyAlive(gl):
 
 # f n b W a i t F o r O p e n i n g 
 @ntracef("WAIT")
-def fnbWaitForOpening(gl, mynWaitTimeMsec, mynWaitMax):
+def fnbWaitForOpening(mynWaitTimeMsec, mynWaitMax):
     nWait = mynWaitMax
     while nWait:
         nAlive = fnnHowManyAlive(gl)
@@ -403,19 +424,30 @@ def fnbWaitForOpening(gl, mynWaitTimeMsec, mynWaitMax):
             if gl.bDebugPrint:
                 print(".", end='')          # DEBUG
             time.sleep(mynWaitTimeMsec / 1000.0)
-            NTRC.ntracef(5, "WAIT", "proc waitforopening timesleft|%s|" 
-                        % (nWait))
+            NTRC.ntracef(5, "WAIT", "proc waitforopening timesleft|%s| "
+                        "nwaited|%s|" 
+                        % (nWait, gl.nWaitedForSlot))
     if nWait <= 0:
         raise ValueError("Waited too long for empty job slot.")
     else:
         return (nWait > 0)
 
 
+@ntrace
+# f n s G e t P r o c e s s N u m b e r 
+def fnsGetProcessNumber(mysProcName):
+    '''Extract the process number, which is the same as the case number
+    in this case, so we can use its abbreviated form in logs and traces.
+    '''
+    sProcNum = re.match("Process-\d+:(\d+)", mysProcName).group(1)
+    return sProcNum if sProcNum else ""
+
+
 # ==================== in main process ====================
 
 # ==================== m a i n N e w B r o k e r ====================
 @ntrace
-def mainNewBroker(gl,):
+def mainNewBroker(gl):
 
     NTRC.ntrace(3, "proc params ncases|%s| nparallel|%s| "
                     "nwaitmsec|%s| nwaitmany|%s|" 
@@ -432,14 +464,17 @@ def mainNewBroker(gl,):
 
     # Subprocess to start all case jobs.
     qOut = multiprocessing.Queue()
+    qWaited = multiprocessing.Queue()
     jRunJobs = multiprocessing.Process(target=fnRunEverything, name="RunJobs"
                 , args=(gl, llsInstructionsTemp
                         , gl.nWaitMsec, gl.nWaitHowMany
-                        , qOut))
+                        , qOut, qWaited))
     jRunJobs.start()    # Start subproc that does the work
     jRunJobs.join()     #  and wait for it to finish.
     llOut = qOut.get()  # Get massive output list.
     qOut.close()
+    gl.nWaitedForSlot = fnIntPlease(qWaited.get())
+    qWaited.close()
     return llOut
 
 
@@ -448,7 +483,8 @@ def main(gl):
     """ Temp hack to make instructions for debugging.
     """
     NTRC.ntrace(0, "Starting...")
-    llFullOutput = mainNewBroker(gl,)
+    gl.nWaitedForSlot = 0
+    llFullOutput = mainNewBroker(gl)
 
     if gl.bDebugPrint:
         # Print all the crap that comes back.  
@@ -479,7 +515,7 @@ if __name__ == "__main__":
     gl.nCases = 20 
     gl.nParallel = 8
     gl.nWaitMsec = 50
-    gl.nWaitHowMany = 100
+    gl.nWaitHowMany = 1000
     nArgs = len(sys.argv)
     if nArgs > 1: gl.nCases = int(sys.argv[1]) 
     if nArgs > 2: gl.nParallel = int(sys.argv[2]) 
@@ -502,9 +538,9 @@ if __name__ == "__main__":
         ps | grep python | grep -v grep
         date +%Y%m%d_%H%M%S.%3N
     '''
-    sTempListOfCommands = '''
-        date +%Y%m%d_%H%M%S.%3N
-    '''
+#    sTempListOfCommands = '''
+#        date +%Y%m%d_%H%M%S.%3N
+#    '''
 
     sys.exit(main(gl))
 
