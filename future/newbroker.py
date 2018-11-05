@@ -42,7 +42,8 @@ import sys
 import collections
 import re
 import itertools
-from NewTraceFac import NTRC, ntrace, ntracef
+import datetime
+from NewTrace import NTRC, ntrace, ntracef
 
 
 # tuples
@@ -483,7 +484,7 @@ def main(gl):
     """ Temp hack to make instructions for debugging.
     """
     NTRC.ntrace(0, "Starting...")
-    gl.nWaitedForSlot = 0
+    tStart = datetime.datetime.now()
     llFullOutput = mainNewBroker(gl)
 
     if gl.bDebugPrint:
@@ -503,6 +504,11 @@ def main(gl):
         print("---------end cases----------")
         #NTRC.ntrace(5, "proc main sfulloutput|%s|" % (sFullOutput))
     NTRC.ntrace(0, "Finished nWaitedForSlot|%s|" % (gl.nWaitedForSlot))
+    tEnd = datetime.datetime.now()
+    tDif = tEnd - tStart
+    tDifMuSec = float((tDif.seconds * 1E6) + tDif.microseconds)
+    NTRC.ntrace(0, "Time total|%.3f|sec cases|%s| per case|%.0f|msec" 
+                % (tDifMuSec/1E6, gl.nCases, tDifMuSec/gl.nCases/1E3))
 
 
 # E n t r y   p o i n t 
@@ -515,7 +521,7 @@ if __name__ == "__main__":
     gl.nCases = 20 
     gl.nParallel = 8
     gl.nWaitMsec = 50
-    gl.nWaitHowMany = 1000
+    gl.nWaitHowMany = 10000
     nArgs = len(sys.argv)
     if nArgs > 1: gl.nCases = int(sys.argv[1]) 
     if nArgs > 2: gl.nParallel = int(sys.argv[2]) 
