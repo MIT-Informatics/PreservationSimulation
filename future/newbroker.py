@@ -43,6 +43,7 @@ import collections
 import re
 import itertools
 import datetime
+import os
 from NewTrace import NTRC, ntrace, ntracef
 
 
@@ -50,7 +51,8 @@ from NewTrace import NTRC, ntrace, ntracef
 # Job process ID and output queue.
 tJob = collections.namedtuple("tJob", "procid")
 # Line returned from a single command
-tLineOut = collections.namedtuple("tLineOut", "callstatus cmdstatus ltext ")
+tLineOut = collections.namedtuple("tLineOut", 
+            "callstatus cmdstatus casenr linenr ltext ")
 # List of lines returned from list of commands
 tLinesOut = collections.namedtuple("tLinesOut", "procname, listoflists")
 
@@ -78,10 +80,14 @@ def fntDoOneLine(mysLine, mynProc, mynLine):
     proc.stdout.close()
     if not sProcErr: sProcErr = ""
     sOut = "$ " + mysLine + "\n" + sProcOut.rstrip() + sProcErr.rstrip()
-    nCmdStat = "none available - RBL"
+    nCmdStat = "n/a - RBL"
     nReturnCode = proc.returncode
     lOut = sOut.split("\n")
-    return(tLineOut(callstatus=nReturnCode, cmdstatus=nCmdStat, ltext=lOut))
+    NTRC.ntracef(4, "DO1L", "proc DoOneLine case|%s| line|%s| "
+                "sline|%s| lResult|%s|" 
+                % (mynProc, mynLine, mysLine, lOut))
+    return(tLineOut(callstatus=nReturnCode, cmdstatus=nCmdStat
+            , linenr=mynLine, casenr=mynProc, ltext=lOut))
 
 
 # ==================== multiprocessing: DoOneCase ====================
@@ -109,7 +115,9 @@ def fntDoOneCase(mylInstruction, qToUse, mysLogfileName):
     for nLine, sLine in enumerate(mylInstruction):
         if fnbDoNotIgnoreLine(sLine):
             tAnswer = fntDoOneLine(sLine, nProc, nLine)
-            (nRtn, nErr, lResult) = tAnswer
+            (nRtn, nErr, lResult) = (tAnswer.callstatus
+                                    , tAnswer.cmdstatus
+                                    , tAnswer.ltext)
             lResults.extend(lResult)
             NTRC.ntracef(4, "DO1", "proc DoOneCase case|%s| line|%s| "
                         "lResult|%s|" 
@@ -120,7 +128,7 @@ def fntDoOneCase(mylInstruction, qToUse, mysLogfileName):
                         % (nProc, nLine, sLine))
             lResults.extend([sLine])
     
-    fnWriteLogFile((lResults), mysLogfileName)
+    fnWriteLogFile(nProc, (lResults), mysLogfileName)
     lPrefix = [("BEGIN results from " + sWhoami)]
     lSuffix = [("ENDOF results from " + sWhoami)]
     lResultsToSee = ['\n'] + lPrefix + lResults + lSuffix + ['\n']
@@ -132,10 +140,19 @@ def fntDoOneCase(mylInstruction, qToUse, mysLogfileName):
 
 # f n W r i t e L o g F i l e 
 @ntracef("DO1")
-def fnWriteLogFile(mylContents, mysFileName):
+def fnWriteLogFile(mynProc, mylContents, mysFileName):
     sContents = '\n'.join(mylContents)
     with (open(mysFileName, "w")) as fhOut:
         print(sContents, file=fhOut)
+
+if not (os.getenv("DEBUG", "") == ""):
+    # Debug version of same: write only every tenth log file.
+    @ntracef("DO1")
+    def fnWriteLogFile(mynProc, mylContents, mysFileName):
+        sContents = '\n'.join(mylContents)
+        if fnIntPlease(mynProc) % 10 == 0:
+            with (open(mysFileName, "w")) as fhOut:
+                print(sContents, file=fhOut)
 
 
 # ==================== Global Data ====================
@@ -314,6 +331,7 @@ class CEndAllCases(threading.Thread):
     def run(self):
         NTRC.ntracef(5, "END", "proc run ltJobs|%s|" % (gl.ltJobs))
         nCasesDone = 0
+        nWaitedForDone = 0
         while True:
             # L O C K 
             with self.gl.lockJobList:
@@ -345,14 +363,18 @@ class CEndAllCases(threading.Thread):
                             self.llsFullOutput.extend(lQOutput)
                             NTRC.ntracef(5, "END", "proc lOutput from q|%s|" 
                                         % (self.llsFullOutput))
-                        # Remove job from active list.
+                        # Remove job from active list and Id-dicts.
+                        # If the queue objects are still in the dId2Queue dict,
+                        #  the pipe remains open, oops.  
                         gl.ltJobs[idx] = None
+                        gl.dId2Proc.pop(nJob)
+                        gl.dId2Queue.pop(nJob)
                         nCasesDone += 1
                         self.gl.nCasesDone += 1
                         NTRC.ntracef(3, "STRT", "proc job completed ndone|%s|" 
                                     % (self.gl.nCasesDone))
 
-                NTRC.ntracef(3, "END", "proc end for-activejobs"
+                NTRC.ntracef(3, "END", "proc end for-activejobs1"
                             " thatsall?|%s| ndone|%s| nstarted|%s|" 
                             % (self.gl.bThatsAllFolks
                             , self.gl.nCasesDone, self.gl.nCasesStarted))
@@ -360,8 +382,10 @@ class CEndAllCases(threading.Thread):
                     and self.gl.nCasesDone == self.gl.nCasesTotal):
                     break
                 else:
-                    NTRC.ntracef(3, "END", "proc endall waiting1, ndone|%s|" 
-                                % (nCasesDone))
+                    nWaitedForDone += 1
+                    NTRC.ntracef(3, "END", "proc end for-activejobs2 wait, "
+                                "ndone|%s| nwaits|%s|" 
+                                % (nCasesDone, nWaitedForDone))
                     time.sleep(self.nWaitMsec / 1000.0)
                     continue
             # E N D L O C K 
@@ -398,7 +422,7 @@ def fnbDoNotIgnoreLine(mysLine):
 def fnIntPlease(mysIn):
     try:
         val = int(mysIn)
-    except:
+    except ValueError:
         val = mysIn
     return val
 
@@ -434,7 +458,7 @@ def fnbWaitForOpening(mynWaitTimeMsec, mynWaitMax):
         return (nWait > 0)
 
 
-@ntrace
+@ntracef("GPRN", level=5)
 # f n s G e t P r o c e s s N u m b e r 
 def fnsGetProcessNumber(mysProcName):
     '''Extract the process number, which is the same as the case number
@@ -507,8 +531,10 @@ def main(gl):
     tEnd = datetime.datetime.now()
     tDif = tEnd - tStart
     tDifMuSec = float((tDif.seconds * 1E6) + tDif.microseconds)
-    NTRC.ntrace(0, "Time total|%.3f|sec cases|%s| per case|%.0f|msec" 
-                % (tDifMuSec/1E6, gl.nCases, tDifMuSec/gl.nCases/1E3))
+    NTRC.ntrace(0, "Time total|%.3f|sec cases|%s| parallel|%s| "
+                "per case|%.0f|msec" 
+                % (tDifMuSec/1E6, gl.nCases, gl.nParallel,
+                tDifMuSec/gl.nCases/1E3))
 
 
 # E n t r y   p o i n t 
