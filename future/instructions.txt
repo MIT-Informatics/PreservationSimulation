@@ -1,0 +1,33 @@
+#!/bin/sh
+
+# Since this is done line by line in separate processes, we cannot
+#  carry any context.  Oh, poo.  All this lovely timing hack gone to waste.  
+#  The outer level will have to keep the time stats.  
+
+minbef=$(date +%M)
+secbef=$(date +%S.%3N)
+
+date +%Y%m%d_%H%M%S.%3N
+# this is comment 1
+ls | head -3
+pwd
+# this is comment 2
+
+# and a blank line before and after this one
+
+python3 -V
+python3 fib.py 35       # spend some cpu time
+cat /proc/version
+cat /proc/cpuinfo | grep processor |wc -l   
+ps | grep python | grep -v grep
+date +%Y%m%d_%H%M%S.%3N
+
+minaft=$(date +%M)
+secaft=$(date +%S.%3N)
+mindif=$(echo "$minaft - $minbef" | bc)
+secdif=$(echo "$secaft - $secbef" | bc)
+mindifsec=$(echo "( $minaft - $minbef ) * 60.000 " | bc)
+dif=$(echo "$mindifsec + $secdif" | bc)
+echo "diftime =   $dif"
+
+#END

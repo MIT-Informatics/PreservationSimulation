@@ -47,7 +47,7 @@ import os
 from NewTrace import NTRC, ntrace, ntracef
 
 
-# tuples
+# Named tuples:
 # Job process ID and output queue.
 tJob = collections.namedtuple("tJob", "procid")
 # Line returned from a single command
@@ -55,6 +55,8 @@ tLineOut = collections.namedtuple("tLineOut",
             "callstatus cmdstatus casenr linenr ltext ")
 # List of lines returned from list of commands
 tLinesOut = collections.namedtuple("tLinesOut", "procname, listoflists")
+# Sadistics on how many times we waited for something
+tWaitStats = collections.namedtuple("tWaitStats", "slot done")
 
 
 # ==================== subprocess user: do one line ====================
@@ -67,7 +69,10 @@ def fntDoOneLine(mysLine, mynProc, mynLine):
     Input: single line of command.  
     Output: tuple of the (Popen PIPE return code, command return code, list
      of output lines as strings.
+     Input lines and the first line of output blocks have timestamps;
+     other lines in output blocks are indented with spaces.  
     """
+    sTimeBegin = fnsGetTimestamp()
     proc = (subprocess.Popen(mysLine
         , stdout=subprocess.PIPE
         , close_fds=True            # The default anyway, I think.  
@@ -75,11 +80,19 @@ def fntDoOneLine(mysLine, mynProc, mynLine):
         , universal_newlines=True
         , shell=True)
         )
-#    sProcOut = proc.stdout.read()
     (sProcOut, sProcErr) = proc.communicate()
     proc.stdout.close()
     if not sProcErr: sProcErr = ""
-    sOut = "$ " + mysLine + "\n" + sProcOut.rstrip() + sProcErr.rstrip()
+    sTimeEnd = fnsGetTimestamp()
+    # Format lines for output by timestamping or indenting each line.  
+    sOut = ("-"*len(sTimeBegin) + "\n"
+            + sTimeBegin + "  " + "$ " + mysLine + "\n")
+    lTmpOut1 = sProcOut.rstrip().split("\n")
+    lTmpOut2 = [fnsStampLine(sTimeEnd, sLine, (i==0))
+                    for i,sLine in enumerate(lTmpOut1)]
+    sOut += "\n".join(lTmpOut2)
+    sOut += sProcErr.rstrip()
+    # Collect and return everything to caller.  
     nCmdStat = "n/a - RBL"
     nReturnCode = proc.returncode
     lOut = sOut.split("\n")
@@ -114,6 +127,7 @@ def fntDoOneCase(mylInstruction, qToUse, mysLogfileName):
     # Process all lines of instructions and collect results.  
     for nLine, sLine in enumerate(mylInstruction):
         if fnbDoNotIgnoreLine(sLine):
+            # Genuine line; execute and collect answer line(s).  
             tAnswer = fntDoOneLine(sLine, nProc, nLine)
             (nRtn, nErr, lResult) = (tAnswer.callstatus
                                     , tAnswer.cmdstatus
@@ -123,12 +137,15 @@ def fntDoOneCase(mylInstruction, qToUse, mysLogfileName):
                         "lResult|%s|" 
                         % (nProc, nLine, lResult))
         else:
+            # Comment or blank line; just append to results.
+            lResults.extend([("-"*len(fnsGetTimestamp()))
+                            , (fnsGetTimestamp() + "  " + sLine)])
             NTRC.ntracef(4, "DO1", "proc DoOneCase case|%s| line|%s| "
                         "comment|%s|" 
                         % (nProc, nLine, sLine))
-            lResults.extend([sLine])
     
     fnWriteLogFile(nProc, (lResults), mysLogfileName)
+
     lPrefix = [("BEGIN results from " + sWhoami)]
     lSuffix = [("ENDOF results from " + sWhoami)]
     lResultsToSee = ['\n'] + lPrefix + lResults + lSuffix + ['\n']
@@ -145,8 +162,8 @@ def fnWriteLogFile(mynProc, mylContents, mysFileName):
     with (open(mysFileName, "w")) as fhOut:
         print(sContents, file=fhOut)
 
+# Debug version of same: write only every tenth log file.
 if not (os.getenv("DEBUG", "") == ""):
-    # Debug version of same: write only every tenth log file.
     @ntracef("DO1")
     def fnWriteLogFile(mynProc, mylContents, mysFileName):
         sContents = '\n'.join(mylContents)
@@ -180,25 +197,31 @@ class CGlobal():
 
 def fnRunEverything(gl, llsInstructions, nWaitMsec, nWaitHowMany
                 , myqFullOutput, myqWaited):
-
+    '''Start an async job for each case.  Limit number of concurrent jobs
+    to the size of the ltJobs vector.  
+    When a job completes, ship its output upline and remove it from 
+    the active lists.  
+    
+    Two separate threads:
+    - Wait for an empty slot; get an instruction, start an async job.
+    - Wait for an active job to complete and remove it from lists.  
+    '''
     # Fill the list of jobs with empties.
     for i in range(gl.nParallel + 1): gl.ltJobs.append(None)
-
     gl.lockJobList = threading.Lock()
 
     # Create new threads
     NTRC.ntracef(5, "RUN", "proc make thread instances")
-    thrStart = CStartAllCases(gl, gl.nWaitMsec, gl.nWaitHowMany, llsInstructions, )            # NEED ARGS
-    thrEnd = CEndAllCases(gl, myqFullOutput, myqWaited, gl.nWaitMsec, )   # NEED ARGS
+    thrStart = CStartAllCases(gl, gl.nWaitMsec, gl.nWaitHowMany
+                            , llsInstructions, )
+    thrEnd = CEndAllCases(gl, myqFullOutput, myqWaited
+                            , gl.nWaitMsec, )
     gl.llsFullOutput = [["",""]]
-
-    # Start new Threads
     thrStart.start()
     thrEnd.start()
-
     # Wait until all jobs have started and finished.
-    thrStart.join()
-    thrEnd.join()
+    thrStart.join()     # Runs out of instructions.
+    thrEnd.join()       # Runs out of finished jobs.  
 
 
 # ==================== thread: DoAllCases ====================
@@ -235,11 +258,11 @@ class CStartAllCases(threading.Thread):
     def run(self):
         while (fnbWaitForOpening(self.nWaitMsec, self.nWaitHowMany)
                 ):
-            NTRC.ntracef(3, "STRT", "proc doallcases slot is avail for case|%s| " 
+            NTRC.ntracef(3, "STRT", "proc doallcases slot avail for case|%s|" 
                         % (self.nProcess))
 
             # How many active jobs?  If maxed out, wait for an empty slot
-            #  and do it again.
+            #  and try again.
             # L O C K 
             with self.gl.lockJobList:
                 nActive = len([tJob for tJob in self.gl.ltJobs if tJob])
@@ -262,6 +285,9 @@ class CStartAllCases(threading.Thread):
                 # BEWARE: instruction list might be a generator, 
                 #  cannot test length.  ONLY IRL
                 # StopIteration for generator; IndexError for list.
+                # BZZZT: this doesn't work; cannot pop() a generator.
+                # Only for loop can do this for both types, rats.  
+                # Another stinking level of indentation.  
                 try:
                     lLines = self.llInstructions.pop(0)
                 except(StopIteration, IndexError):
@@ -331,7 +357,7 @@ class CEndAllCases(threading.Thread):
     def run(self):
         NTRC.ntracef(5, "END", "proc run ltJobs|%s|" % (gl.ltJobs))
         nCasesDone = 0
-        nWaitedForDone = 0
+        gl.nWaitedForDone = 0
         while True:
             # L O C K 
             with self.gl.lockJobList:
@@ -382,10 +408,10 @@ class CEndAllCases(threading.Thread):
                     and self.gl.nCasesDone == self.gl.nCasesTotal):
                     break
                 else:
-                    nWaitedForDone += 1
+                    gl.nWaitedForDone += 1
                     NTRC.ntracef(3, "END", "proc end for-activejobs2 wait, "
                                 "ndone|%s| nwaits|%s|" 
-                                % (nCasesDone, nWaitedForDone))
+                                % (nCasesDone, gl.nWaitedForDone))
                     time.sleep(self.nWaitMsec / 1000.0)
                     continue
             # E N D L O C K 
@@ -402,14 +428,14 @@ class CEndAllCases(threading.Thread):
                 sFullOutput += sJobOut
             NTRC.ntracef(5, "END", "proc sFullOutput|%s|" % (sFullOutput))
         self.qForOutput.put(self.llsFullOutput)
-        self.qWaited.put(gl.nWaitedForSlot)
+        self.qWaited.put(tWaitStats(slot=gl.nWaitedForSlot
+                                , done=gl.nWaitedForDone))
         self.qForOutput.close()
 
 
 # ==================== utilities ====================
 
 # f n b D o N o t I g n o r e L i n e 
-@ntracef("UTIL", level=5)
 def fnbDoNotIgnoreLine(mysLine):
     '''
     True if not a comment or blank line.
@@ -458,7 +484,6 @@ def fnbWaitForOpening(mynWaitTimeMsec, mynWaitMax):
         return (nWait > 0)
 
 
-@ntracef("GPRN", level=5)
 # f n s G e t P r o c e s s N u m b e r 
 def fnsGetProcessNumber(mysProcName):
     '''Extract the process number, which is the same as the case number
@@ -466,6 +491,25 @@ def fnsGetProcessNumber(mysProcName):
     '''
     sProcNum = re.match("Process-\d+:(\d+)", mysProcName).group(1)
     return sProcNum if sProcNum else ""
+
+
+# f n s G e t T i m e s t a m p 
+def fnsGetTimestamp():
+    '''Return timestamp with milliseconds.
+    '''
+    return datetime.datetime.now().strftime('%Y%m%d_%H%M%S.%f')[:-3]
+#    return datetime.datetime.now().strftime('%Y%m%d_%H%M%S')   # without msec
+
+
+# f n s S t a m p L i n e 
+def fnsStampLine(mysStamp, mysLine, mybFirstLine):
+    """To indent paras of lines where the timestamp appears only
+    on the first line, blanks to indent all the others.  
+    """
+    if mybFirstLine:
+        return fnsGetTimestamp() + "  " + mysLine
+    else:
+        return " "*len(fnsGetTimestamp()) + "  " + mysLine
 
 
 # ==================== in main process ====================
@@ -498,7 +542,8 @@ def mainNewBroker(gl):
     jRunJobs.join()     #  and wait for it to finish.
     llOut = qOut.get()  # Get massive output list.
     qOut.close()
-    gl.nWaitedForSlot = fnIntPlease(qWaited.get())
+    tTmp = qWaited.get()
+    (gl.nWaitedForSlot, gl.nWaitedForDone) = (tTmp.slot, tTmp.done)
     qWaited.close()
     return llOut
 
@@ -517,17 +562,12 @@ def main(gl):
         for lCase in llFullOutput:
             sCaseOut = ""
             NTRC.ntrace(3, "proc fromq lCase|%s|" % (lCase))
-            '''
-            for lCmd in lCase:
-                sCmdOut = "\n".join(lCmd)    # out from a single command
-                sCaseOut += sCmdOut
-            '''
             sCaseOut = '\n'.join(lCase)
             print(sCaseOut)
             print("--------------")
         print("---------end cases----------")
-        #NTRC.ntrace(5, "proc main sfulloutput|%s|" % (sFullOutput))
-    NTRC.ntrace(0, "Finished nWaitedForSlot|%s|" % (gl.nWaitedForSlot))
+    NTRC.ntrace(0, "Finished nWaitedForSlot|%s| nWaitedForDone|%s|" 
+                % (gl.nWaitedForSlot, gl.nWaitedForDone))
     tEnd = datetime.datetime.now()
     tDif = tEnd - tStart
     tDifMuSec = float((tDif.seconds * 1E6) + tDif.microseconds)
@@ -555,25 +595,40 @@ if __name__ == "__main__":
     if nArgs > 4: gl.nWaitHowMany = int(sys.argv[4]) 
     if nArgs > 5: gl.bDebugPrint = True
 
-    sTempListOfCommands = '''
-        date +%Y%m%d_%H%M%S.%3N
-        # this is comment 1
-        ls | head -3
-        pwd
-        # this is comment 2
-        
-        # and a blank line before and after this one
-        
-        python3 -V
-        cat /proc/version
-        cat /proc/cpuinfo | grep processor |wc -l   
-        ps | grep python | grep -v grep
-        date +%Y%m%d_%H%M%S.%3N
-    '''
-#    sTempListOfCommands = '''
-#        date +%Y%m%d_%H%M%S.%3N
-#    '''
+    try:
+        with open("instructions.txt", "r") as fhIn:
+            sTempListOfCommands = fhIn.read()
+    except FileNotFoundError:
+        sTempListOfCommands = '''
+            date +%Y%m%d_%H%M%S.%3N
+            # this is comment 1
+            ls | head -3
+            pwd
+            # this is comment 2
+            
+            # and a blank line before and after this one
+            
+            python3 -V
+            python3 fib.py 35       # spend some cpu time
+            cat /proc/version
+            cat /proc/cpuinfo | grep processor |wc -l   
+            ps | grep python | grep -v grep
+            date +%Y%m%d_%H%M%S.%3N
+        '''
+    #    sTempListOfCommands = '''
+    #        date +%Y%m%d_%H%M%S.%3N
+    #    '''
 
     sys.exit(main(gl))
+
+
+# Edit history:
+# 20181105  RBL First version that actually works, yay.  Finally remembered
+#                to remove references to the queue pipes from the ID-dict
+#                so that now the pipe files get closed.  
+# 20181106  RBL Add nWaitedForDone to the end stats.
+#               Add timestamps to log file for all lines including comments.
+# 
+# 
 
 #END
