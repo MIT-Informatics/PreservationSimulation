@@ -1,0 +1,119 @@
+# broker2commandlist.txt
+#
+# Sequence of instructions to be expanded and executed by the broker for each
+#  instruction chosen from the database.
+# Values will be substituted into these commands from the instructions 
+#  (so the field names better match precisely)
+#  and then the sequence will be packaged into a .cmds file 
+#  and a process spawned to execute the commands when a core is free.  
+
+# These commands must be SINGLE LINES.  No backslash-return foolishness.
+# As usual, blank lines and comment lines will be removed from the sequence.
+
+#---------------------------------------------
+
+# Turn off any tracing that might have been going on in the broker.
+#  This could poison any python programs by exploding their log files.  
+export TRACE_LEVEL=0
+export TRACE_FACIL=
+export DEBUG=
+
+# For the record, start time.
+date +%Y%m%d_%H%M%S.%3N
+
+# Make sure we have the right version of bash and Python.
+bash --version
+python2 -V
+python3 -V
+python3 -c 'import sys; print sys.version; print sys.version_info'
+
+# Actual simulation command.
+# Be sure when selecting the instruction set for a long run that you
+#  include selection values or ranges for ALL the parameters 
+#  to eliminate any irrelevant instructions.  
+#  For instance, stating  --glitchfreq=0  is NOT enough to force no 
+#  glitch instructions to be expanded.  You must also include
+#  --glitchimpact=100 --glitchdecay=0 --glitchmaxlife=0 
+#  Otherwise redundant instructions will be fetched and time will be wasted. 
+#  Similarly for shock params: shockfreq=0 does not suffice to filter out
+#  all possibly redundant instructions.  
+# Singletons such as docsize and audittype can be ignored at one's risk.  
+#  But will they always remain singletons?  No, they didn't.  
+#  And similarly for docsize, simlen, ndocs, etc.  Specify *every*thing.  
+
+python2 main.py {sFamilyDir} {sSpecificDir} {nSimLength} {nRandomseed} --ncopies={nCopies} --lifek={nLifem}000 --audit={nAuditFreq} --auditsegments={nAuditSegments} --audittype={sAuditType} --glitchfreq={nGlitchFreq} --glitchimpact={nGlitchImpact} --glitchdecay={nGlitchDecay} --glitchmaxlife={nGlitchMaxlife} --glitchspan={nGlitchSpan} --serverdefaultlife={nServerDefaultLife} --shockfreq={nShockFreq} --shockimpact={nShockImpact} --shockmaxlife={nShockMaxlife} --shockspan={nShockSpan} --shelfsize={nShelfSize} --smalldoc={nDocSize} --pctsmall=100 {sShortLogOption} --mongoid=\'{_id}\'  >  {sFamilyDir}/{sSpecificDir}/log/{sShelfLogFileName}.log  2>&1
+
+# Slow things down here to avoid maybe looking at the log file
+#  before it has finished being written to disk.  
+#  With many processes executing in parallel, sometimes the 
+#  execution gets ahead of emptying the buffers.
+# Wait until the log file is actually done.
+# I should not have to do this, grumble.  But I have seen five cases so far
+#  where the extract command begins long before the main simulation program 
+#  has finished, and the log file is incomplete.  In one case, the length of
+#  the log file was recorded by the extract program as 4MB, but the actual 
+#  length of the completed log file was 18MB.  How is it possible for the 
+#  shell to proceed to the next command before the previous one has finished?
+#  Shouldn't be.  But I have seen it five times (so far) out of about 5,000
+#  runs.  
+# So far, this has happened only on very CPU-intensive runs, with 2 or 4 copies
+#  of documents at lifek=3000, which is really rusty-garbage-can-lid quality
+#  that no one would ever actually use.  
+# Adjust the time delays so that nothing is a multiple of anything else, easier
+#  to find in the logs.  
+# 20171102  RBL Premature extraction occurred 8 times out of the first 60 runs
+#                this morning.  In all cases, the log file length was reported
+#                as either zero or very small, and the timestamps were completely
+#                messed up.  Intolerably high error rate.  
+#                It should be impossible for this to happen, but it is not.
+#                Note: errors were on Win10+Cygwin; still, should be impossible.
+#               Add an extra layer of is-this-file-complete
+#                paranoia to the waiting before extracting values.  Look for
+#                the absolute last line after the time-stats line.
+#               And slow down the waiting after the extract and before cleanup.
+# 20181007  RBL Dramatically shorten the sleep periods for waiting, to 
+#                accommodate the extremely short runs for measuring shocks.
+#                The long sleep times caused amazing traffic jams.
+#                Hope this is sufficiently reliable.  
+# 
+# 20181112  RBL Change for python3 and newbroker:
+#                Remove all the slow-down timing loops.  Eventually, 
+#                remove all such commands and the commentary surrounding them.  
+#               Specify python2 for the main simulation, even though we
+#                now have an experimental version that runs on p3.
+#                newbroker and its trace run on p3.
+# 
+
+date +%Y%m%d_%H%M%S.%3N
+
+#while true; do if [ -z $(tail -3 {sFamilyDir}/{sSpecificDir}/log/{sShelfLogFileName}.log | grep "End time stats" | wc -l) ]; then sleep 1; else sleep 0.01; break; fi; done 
+#while true; do if [ -z $(tail -3 {sFamilyDir}/{sSpecificDir}/log/{sShelfLogFileName}.log | grep "ENDENDEND" | wc -l) ]; then sleep 1; else sleep 0.01; break; fi; done 
+
+# Data extraction command.  Header must be forced here so that the 
+#  cleanup program can label the data fields correctly.
+
+python extractvalues2.py --header --separator=' ' hl-extractinstructions.txt {sFamilyDir}/{sSpecificDir}/log/{sShelfLogFileName}.log  |  tee  {sFamilyDir}/{sSpecificDir}/ext/{sShelfLogFileName}.ext
+
+date +%Y%m%d_%H%M%S.%3N
+
+# Aaargh!  Again, have to wait for the file to be written by
+#  the extract process.  !@#$%^&*()  File must contain two lines.
+#  Is this a problem in bash that the python terminates but the 
+#  buffers have not yet been written to disk?  Or something?  
+#  Should one always flush() before exiting? 
+
+#while true; do if [ 2 -gt $(wc -l {sFamilyDir}/{sSpecificDir}/ext/{sShelfLogFileName}.ext | awk '{print $1}') ]; then sleep 1; else sleep 0.01; break; fi; done 
+
+# Again, slow the pace a little.
+# Or not
+#sleep 1
+
+# Data cleanup command.  Appends line from extract file to output file, 
+#  and usually deletes the extract file and records it in the done collection.
+
+python datacleanup.py {sSearchDbProgressCollectionName} {sSearchDbDoneCollectionName} {sFamilyDir}/{sSpecificDir}/ext/{sShelfLogFileName}.ext {sFamilyDir}/{sSpecificDir}/dat/GiantOutput_00.txt  --separator=' ' --donotdelete=N
+
+# End time
+date +%Y%m%d_%H%M%S.%3N
+
+#END
