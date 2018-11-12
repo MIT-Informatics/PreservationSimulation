@@ -192,6 +192,7 @@ class CGlobal():
     llsFullOutput = list()  # Output for all test cases.
     nCases = 1          # DEBUG
     nWaitedForSlot = 0  # DEBUG
+    nWaitedForDone = 0  # DEBUG
     bDebugPrint = False # Print output of all jobs?
 
 
@@ -257,28 +258,18 @@ class CStartAllCases(threading.Thread):
 
     @ntracef("STRT")
     def run(self):
-        while (fnbWaitForOpening(self.nWaitMsec, self.nWaitHowMany)
+        while (fnbWaitForOpening(self.gl, self.nWaitMsec, self.nWaitHowMany)
                 ):
             NTRC.ntracef(3, "STRT", "proc doallcases slot avail for case|%s|" 
                         % (self.nProcess))
 
-            # How many active jobs?  If maxed out, wait for an empty slot
-            #  and try again.
             # L O C K 
             with self.gl.lockJobList:
-                nActive = len([tJob for tJob in self.gl.ltJobs if tJob])
-            # E N D L O C K 
-            if nActive >= self.gl.nParallel:
-                NTRC.ntracef(3, "STRT", "proc startall slots full nActive|%s|" 
-                            % (nActive))
-                time.sleep(self.nWaitMsec / 1000.0)
-                continue
-
-            # L O C K 
-            with gl.lockJobList:
                 # Find an empty slot in the jobs list.
-                lEmptySlots = [idx for (idx,x) in enumerate(gl.ltJobs) 
+                lEmptySlots = [idx for (idx,x) in enumerate(self.gl.ltJobs) 
                                 if not x]
+                assert len(lEmptySlots) > 0, ("Supposed to be an empty slot"
+                            "for new case, but I can\'t find one.")
                 idxEmpty = lEmptySlots[0]
 
                 # Instruction list for this job.
@@ -354,13 +345,13 @@ class CEndAllCases(threading.Thread):
     def run(self):
         NTRC.ntracef(5, "END", "proc run ltJobs|%s|" % (gl.ltJobs))
         nCasesDone = 0
-        gl.nWaitedForDone = 0
+        self.gl.nWaitedForDone = 0
         while True:
             # L O C K 
             with self.gl.lockJobList:
-                NTRC.ntracef(3, "END", "proc ltJobs|%s|" % (gl.ltJobs))
+                NTRC.ntracef(3, "END", "proc ltJobs|%s|" % (self.gl.ltJobs))
                 ltActiveJobs = [(idx,tJob) for idx,tJob in 
-                                enumerate(gl.ltJobs) if tJob]
+                                enumerate(self.gl.ltJobs) if tJob]
                 NTRC.ntracef(3, "END", "proc ltActiveJobs|%s|" % (ltActiveJobs))
                 for idxtJob in ltActiveJobs:
                     idx,tJob = idxtJob
@@ -380,7 +371,7 @@ class CEndAllCases(threading.Thread):
                             lLinesOut = queue.get().listoflists
                             lQOutput.append(lLinesOut)
                         queue.close()
-                        if gl.bDebugPrint:
+                        if self.gl.bDebugPrint:
                             NTRC.ntracef(5, "END", "proc lQOutput from q|%s|" 
                                             % (lQOutput))
                             self.llsFullOutput.extend(lQOutput)
@@ -389,9 +380,9 @@ class CEndAllCases(threading.Thread):
                         # Remove job from active list and Id-dicts.
                         # If the queue objects are still in the dId2Queue dict,
                         #  the pipe remains open, oops.  
-                        gl.ltJobs[idx] = None
-                        gl.dId2Proc.pop(nJob)
-                        gl.dId2Queue.pop(nJob)
+                        self.gl.ltJobs[idx] = None
+                        self.gl.dId2Proc.pop(nJob)
+                        self.gl.dId2Queue.pop(nJob)
                         nCasesDone += 1
                         self.gl.nCasesDone += 1
                         NTRC.ntracef(3, "STRT", "proc job completed ndone|%s|" 
@@ -405,10 +396,10 @@ class CEndAllCases(threading.Thread):
                     and self.gl.nCasesDone == self.gl.nCasesTotal):
                     break
                 else:
-                    gl.nWaitedForDone += 1
+                    self.gl.nWaitedForDone += 1
                     NTRC.ntracef(3, "END", "proc end for-activejobs2 wait, "
                                 "ndone|%s| nwaits|%s|" 
-                                % (nCasesDone, gl.nWaitedForDone))
+                                % (nCasesDone, self.gl.nWaitedForDone))
                     time.sleep(self.nWaitMsec / 1000.0)
                     continue
             # E N D L O C K 
@@ -418,7 +409,7 @@ class CEndAllCases(threading.Thread):
         #  one job, more or less, with prefix and suffix 
         #  and comments, too.
         # Paste the whole thing together into a yuge list of lines.
-        if gl.bDebugPrint:
+        if self.gl.bDebugPrint:
             sFullOutput = ""
             for lJobOut in self.llsFullOutput:
                 sJobOut = "\n".join(lJobOut)
@@ -449,14 +440,19 @@ def fnIntPlease(mysIn):
 # f n n H o w M a n y A l i v e 
 @ntracef("MANY", level=5)
 def fnnHowManyAlive(gl):
-    nAlive = len([1 for tJob in gl.ltJobs if tJob 
-                and gl.dId2Proc[tJob.procid].is_alive()])
+    '''How many empty slots in the jobs list?
+    The criterion is just empty (=None) vs anything else.
+    '''
+    nAlive = len([1 for tJob in gl.ltJobs if tJob])
     return nAlive
 
 
 # f n b W a i t F o r O p e n i n g 
 @ntracef("WAIT")
-def fnbWaitForOpening(mynWaitTimeMsec, mynWaitMax):
+def fnbWaitForOpening(gl, mynWaitTimeMsec, mynWaitMax):
+    '''How many active jobs?  If maxed out, wait for an empty slot 
+    and try again.
+    '''
     nWait = mynWaitMax
     while nWait:
         nAlive = fnnHowManyAlive(gl)
@@ -471,6 +467,8 @@ def fnbWaitForOpening(mynWaitTimeMsec, mynWaitMax):
             NTRC.ntracef(5, "WAIT", "proc waitforopening timesleft|%s| "
                         "nwaited|%s|" 
                         % (nWait, gl.nWaitedForSlot))
+
+    # Have we waited too long for an opening?
     if nWait <= 0:
         raise ValueError("Waited too long for empty job slot.")
     else:
@@ -522,20 +520,17 @@ def mainNewBroker(gl):
     lLinesTemp = [sLine.lstrip() 
                 for sLine in sTempListOfCommands.split('\n')
                 ]
+    # And make a list of instructions for each case.
     llsInstructionsTemp =  [lLinesTemp] * gl.nCases
 
-    # Subprocess to start all case jobs.
-#    jRunJobs = multiprocessing.Process(target=fnRunEverything, name="RunJobs"
     tTmp = fnRunEverything(gl, llsInstructionsTemp
                         , gl.nWaitMsec, gl.nWaitHowMany)
     (gl.nWaitedForSlot, gl.nWaitedForDone) = (tTmp.slot, tTmp.done)
-    return []   # should be llOut
+    return []   # used to be llOut in early proto
 
 
 # m a i n 
 def main(gl):
-    """ Temp hack to make instructions for debugging.
-    """
     NTRC.ntrace(0, "Starting...")
     tStart = datetime.datetime.now()
     llFullOutput = mainNewBroker(gl)
@@ -578,10 +573,13 @@ if __name__ == "__main__":
     if nArgs > 4: gl.nWaitHowMany = int(sys.argv[4]) 
     if nArgs > 5: gl.bDebugPrint = True
 
+    """ Temp hack to make instructions for debugging.
+    """
     try:
         with open("instructions.txt", "r") as fhIn:
             sTempListOfCommands = fhIn.read()
     except FileNotFoundError:
+        # Cheap version.
         sTempListOfCommands = '''
             date +%Y%m%d_%H%M%S.%3N
             # this is comment 1
@@ -598,6 +596,7 @@ if __name__ == "__main__":
             ps | grep python | grep -v grep
             date +%Y%m%d_%H%M%S.%3N
         '''
+        # Really cheap version.  
         sTempListOfCommands = '''
             date +%Y%m%d_%H%M%S.%3N
         '''
@@ -613,6 +612,8 @@ if __name__ == "__main__":
 #               Add timestamps to log file for all lines including comments.
 # 20181110  RBL Fold RunAll into the root process; it would be too hard to 
 #                pass the instruction generator through pipes.  
+# 20181111  RBL Clean up references to gl, which caused some things not
+#                to be accounted properly.  
 # 
 # 
 
