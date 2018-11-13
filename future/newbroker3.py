@@ -294,7 +294,8 @@ class CStartAllCases(threading.Thread):
                 qOut = multiprocessing.Queue()
                 nJob = next(self.nCounter)
                 with self.gl.lockPrint:
-                    NTRC.ntracef(0, "STRT", "proc case|%s| start" % (nJob))
+                    NTRC.ntracef(0, "STRT", "proc case|%s| start |%s|" 
+                                % (nJob, sRunId))
                 proc = multiprocessing.Process(target=fntDoOneCase
                                 , args=(tOneInstr, qOut)
                                 )
@@ -366,7 +367,7 @@ class CEndAllCases(threading.Thread):
                         # Wait until it is fully baked.
                         proc.join()
                         with self.gl.lockPrint:
-                            NTRC.ntracef(0, "END", "proc case|%s| end" 
+                            NTRC.ntracef(0, "END", "proc case|%s| end   " 
                                         % (nJob))
                         # Get its output for the full debug list.
                         queue = self.gl.dId2Queue[nJob]

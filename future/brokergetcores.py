@@ -43,6 +43,7 @@ def fnnGetResolvedCores():
     nHWCount = fnnGetHWCores()
     nUserCount = fnnGetUserCores()
     nCount = nUserCount if nUserCount < nHWCount else nHWCount
+#    nCount = nUserCount # if nUserCount < nHWCount else nHWCount
     return nCount
 
 

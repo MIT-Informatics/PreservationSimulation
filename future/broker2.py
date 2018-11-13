@@ -446,11 +446,11 @@ def fntProcessOneInstruction(mysRunNumber, mydInstruction, mynSeed):
                             g.sActorLogDirTemplate, mydInstruction, g, CG)
         NTRC.ntracef(0, "MAIN", "proc main commands run|%s| "
             "ncopies|%s| lifem|%s| audit|%s| "
-            "segs|%s|\n1-|%s|\n" 
+            "segs|%s|\n1-|%s|\n2-dir|%s| log|%s|" 
             % (mysRunNumber, mydInstruction["nCopies"], 
             mydInstruction["nLifem"], mydInstruction["nAuditFreq"], 
             mydInstruction["nAuditSegments"], 
-            g.lCommands))
+            g.lCommands, g.sActorLogDir, g.sShelfLogFileName))
         # Create file for actor, maybe just comments.
         with open(g.sActorCmdFileName, 'w') as fhActorCmdFile:
             fhActorCmdFile.write(
