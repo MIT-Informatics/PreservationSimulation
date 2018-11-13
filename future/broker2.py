@@ -13,7 +13,6 @@ import  searchdatabase
 import  searchdatabasemongo
 import  util
 import  brokercli
-import  command
 import  copy
 import  brokerformat
 import  brokergetcores
@@ -23,7 +22,7 @@ import  collections
 
 # namedtuples
 tInstruction = collections.namedtuple("tInstruction"
-                , "runid cmdlist logname casedict")
+                , "runid cmdlist logdir logname casedict")
 
 #===========================================================
 # class   C G   f o r   g l o b a l   d a t a 
@@ -65,8 +64,8 @@ class CG(object):
     sQuery = None
     nCores = 8          # Default, overridden by NCORES env var.
     nCoreTimer = 50     # Wait for a free core (msec).
-    nPoliteTimer = 1000 # Wait between sequential launches, in milliseconds.
-    nStuckLimit = 1000  # Max nr of CoreTimer waits before giving up.
+    nPoliteTimer = 20   # Wait between sequential launches, in milliseconds.
+    nStuckLimit = 10000 # Max nr of CoreTimer waits before giving up.
     nTestLimit = 0      # Max nr of runs executed for a test run, 0=infinite.
     sTestCommand = "N"  # Should just echo commands instead of executing them?
     sTestFib = "N"      # Should use Fibonacci calc instead of real programs?
@@ -127,6 +126,8 @@ class CG(object):
                         '{sShelfLogFileName}_actor.log 2>&1 &'
                         )
     sActorCmd = None
+    sActorLogDirTemplate = '{sFamilyDir}/{sSpecificDir}/act/'
+    sActorLogDir = None
 
     # Only field names that appear in items in the database should ever
     #  be in the query dictionary.  Otherwise, no item in the database 
@@ -148,8 +149,8 @@ class CG(object):
     sPythonIdCmd = ('python -c "import sys; print sys.version; '
                     'print sys.version_info"'
                     )
-    sFibCmd1 = 'python fib.py 42'
-    sFibCmd2 = 'python fib.py 40'
+    sFibCmd1 = 'python fib.py 35'
+    sFibCmd2 = 'python fib.py 34'
     sEndTime = 'date +%Y%m%d_%H%M%S.%3N'
     lFibTemplates = [sStartTime, sBashIdCmd, sPythonIdCmd, 
                     sFibCmd1, sFibCmd2, sEndTime]
@@ -224,65 +225,6 @@ def fnGetCommandTemplates(mysCommandFilename):
 #===========================================================
 
 
-# f n W a i t F o r O p e n i n g 
-@catchex
-@ntracef("WAIT")
-def fnbWaitForOpening(mynProcessMax, mysProcessName, mynWaitTime, mynWaitLimit):
-    ''' Wait for a small, civilized number of processes to be running.  
-        If the number is too large, wait a while and look again.  
-        But don't wait forever in case something is stuck.  
-        Args: 
-        - max nr of processes, including maybe this one
-        - process name to look for
-        - wait time between retries
-        - max nr of retries before giving up
-        NEW NEWS: Since the new listactor program is python, and the 
-         simulation main is python, there are two programs running 
-         python for each simulation run.  Plus this broker program.
-         So, if we are looking for python processes, the arithmetic ought to be 
-         - how many pythons are running
-         - subtract one for the broker
-         - divide by two for the actor and the main
-         - is that number greater than the stated limit?
-    '''
-    cCmd = command.CCommand()
-    dParams = dict()
-    dParams['Name'] = mysProcessName
-    for idx in range(mynWaitLimit):
-
-        # Harden the slot detection loop against errors seen.
-        #  If it fails many times in a row, let it really die.  
-        # Ignore (at our peril) the frequent null results from wc on Ubuntu.
-        nWcLimit = g.nWcLimit
-        while nWcLimit > 0:
-            sCmd = g.sWaitForOpeningCmd
-            sFullCmd = cCmd.makeCmd(sCmd, dParams)
-            sResult = cCmd.doCmdStr(sFullCmd)
-            try:
-                nResult = int(sResult)
-                nWcLimit = 0
-            except ValueError:
-                nWcLimit -= 1
-                time.sleep(g.nLinuxScrewupTime)
-        #end while waiting for int from wc
-
-        NTRC.tracef(3,"WAIT","proc WaitForOpening1 idx|%d| cmd|%s| result|%s|" 
-            % (idx, sFullCmd, nResult))
-        if mysProcessName.find("python") >= 0:
-            nOtherProcs = nResult - 1               # Processes that are not me.
-            nRealProcs = int(nOtherProcs / 2)       # They come in pairs.
-            if nRealProcs < mynProcessMax: break    # If there's still room, go to it.
-        else:
-            if nResult < mynProcessMax: break
-        NTRC.tracef(3,"WAIT","proc WaitForOpening2 sleep and do again idx|%d| nResult|%d|" 
-            % (idx, nResult))
-        time.sleep(mynWaitTime)
-    return (idx < mynWaitLimit-1)                   # Return false if we ran out of retries.
-
-
-#===========================================================
-
-
 # f n d M a y b e E n h a n c e I n s t r u c t i o n 
 @catchex
 @ntracef("MAIN")
@@ -332,8 +274,9 @@ def main():
 
     # Get args from CLI and put them into the global data
     dCliDict = brokercli.fndCliParse("")
-    # Carefully insert any new CLI values into the Global object.
-    dCliDictClean = {k:v for k,v in dCliDict.items() if v is not None}
+    # Carefully insert any new CLI values into the Global object.  
+    dCliDictClean = {k:util.fnIntPlease(v) for k,v in dCliDict.items() 
+                        if v is not None}
     g.__dict__.update(dCliDictClean)
 
     # Validate that the user-specified directories exist.
@@ -457,6 +400,7 @@ def fntProcessOneInstruction(mysRunNumber, mydInstruction, mynSeed):
      the user requires it to be redone.  
     '''
     sInstructionId = str(mydInstruction["_id"])
+    
     # If the user specifies, redo this case even if was done before.
     if g.sRedo.startswith("Y"):
         NTRC.ntracef(0,"MAIN","proc force redo for item id|%s|" 
@@ -473,15 +417,17 @@ def fntProcessOneInstruction(mysRunNumber, mydInstruction, mynSeed):
             % (mysRunNumber, sInstructionId, mydInstruction["nCopies"],
             mydInstruction["nLifem"]))
 
+    # Testing: Just dump out the instruction dictionary for this item.
     elif g.sListOnly.startswith("Y"):
-        # Testing: Just dump out the instruction dictionary for this item.
         NTRC.ntracef(0,"MAIN","proc ListOnly, item run|%s| "
             "ncopies|%s| lifem|%s| id|%s| dict|%s|" 
             % (mysRunNumber, mydInstruction["nCopies"], mydInstruction["nLifem"],
             sInstructionId, list(util.fngSortDictItemsByKeys(mydInstruction))))
 
-    else:   # Real life: execute the instruction.
+    # Real life: execute the instruction.  Well, put it in the list, anyway.  
+    else:   
         mydInstruction["nRandomSeed"] = mynSeed
+
         # Format commands to be executed by actor.
         g.sShelfLogFileName = g.cFmt.msGentlyFormat(
                             g.sShelfLogFileTemplate, mydInstruction, g, CG)
@@ -496,13 +442,15 @@ def fntProcessOneInstruction(mysRunNumber, mydInstruction, mynSeed):
                             g.sActorCmdFileTemplate, mydInstruction, g, CG)
         g.sActorCommand = g.cFmt.msGentlyFormat(
                             g.sActorCmdTemplate, mydInstruction, g, CG)
+        g.sActorLogDir = g.cFmt.msGentlyFormat(
+                            g.sActorLogDirTemplate, mydInstruction, g, CG)
         NTRC.ntracef(0, "MAIN", "proc main commands run|%s| "
             "ncopies|%s| lifem|%s| audit|%s| "
-            "segs|%s|\n1-|%s|\n2-|%s|\n" 
+            "segs|%s|\n1-|%s|\n" 
             % (mysRunNumber, mydInstruction["nCopies"], 
             mydInstruction["nLifem"], mydInstruction["nAuditFreq"], 
             mydInstruction["nAuditSegments"], 
-            g.lCommands, g.sActorCommand))
+            g.lCommands))
         # Create file for actor, maybe just comments.
         with open(g.sActorCmdFileName, 'w') as fhActorCmdFile:
             fhActorCmdFile.write(
@@ -513,21 +461,15 @@ def fntProcessOneInstruction(mysRunNumber, mydInstruction, mynSeed):
                 sLine = g.cFmt.fnsMaybeTest(sCommand, g)
                 print(sLine, file=fhActorCmdFile)
 
-        # Record that this job is running.
+        # Record that this job will soon be running.
         mydInstruction["starttime"] = util.fnsGetTimeStamp()
         g.mdb.fndInsertProgressRecord(mydInstruction["_id"], mydInstruction)
         
-        # Launch the actor to perform main runs.  
-        cCmd = command.CCommand()
-        NTRC.ntracef(3, "MAIN", "proc actor cmd run|%s|\n|%s|"
-            % (mysRunNumber, g.sActorCommand)) 
-        sResult = cCmd.doCmdStr(g.sActorCommand)
-        time.sleep(g.nPoliteTimer / 1000.0)
-
         # Return the full instruction.
         tThisInst = tInstruction(casedict=mydInstruction
                                 , cmdlist=g.lCommands
-                                , logname=g.sShelfLogFileName
+                                , logname=g.sShelfLogFileName + "_case.log"
+                                , logdir=g.sActorLogDir
                                 , runid=mysRunNumber
                                 )
         return tThisInst
@@ -703,6 +645,10 @@ foreach single-line file in holding dir
 # 20181112  RBL Begin major remodeling to adapt to newbroker job runner.  
 #                Pile up all instructions into a list that then gets
 #                fed to newbroker.RunEverything.
+#               Remove old code that is not used, e.g., command import, 
+#                Wait function.  These are now in newbroker.
+#               Add new CLI options for core wait time and stuck limit.
+# 
 # 
 
 #END

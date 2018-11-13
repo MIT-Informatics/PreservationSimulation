@@ -27,7 +27,7 @@ nb.RunEverything - DONE
 - out: tWaitStats
 - do: existing start and stop threads, wait function; create print lock
 
-nb.DoOneCase
+nb.DoOneCase - DONE
 - in: tInstruction, q for output - NOT QUITE
 - out: lock-print stdout run id, key items from dict at start - NO
 - do: existing one line at a time, log file

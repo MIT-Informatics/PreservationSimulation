@@ -23,9 +23,9 @@ date +%Y%m%d_%H%M%S.%3N
 
 # Make sure we have the right version of bash and Python.
 bash --version
-python2 -V
 python3 -V
-python3 -c 'import sys; print sys.version; print sys.version_info'
+python2 -c 'import sys; print(sys.version); print(sys.version_info)'
+python3 -c 'import sys; print(sys.version); print(sys.version_info)'
 
 # Actual simulation command.
 # Be sure when selecting the instruction set for a long run that you
@@ -48,33 +48,6 @@ python2 main.py {sFamilyDir} {sSpecificDir} {nSimLength} {nRandomseed} --ncopies
 #  With many processes executing in parallel, sometimes the 
 #  execution gets ahead of emptying the buffers.
 # Wait until the log file is actually done.
-# I should not have to do this, grumble.  But I have seen five cases so far
-#  where the extract command begins long before the main simulation program 
-#  has finished, and the log file is incomplete.  In one case, the length of
-#  the log file was recorded by the extract program as 4MB, but the actual 
-#  length of the completed log file was 18MB.  How is it possible for the 
-#  shell to proceed to the next command before the previous one has finished?
-#  Shouldn't be.  But I have seen it five times (so far) out of about 5,000
-#  runs.  
-# So far, this has happened only on very CPU-intensive runs, with 2 or 4 copies
-#  of documents at lifek=3000, which is really rusty-garbage-can-lid quality
-#  that no one would ever actually use.  
-# Adjust the time delays so that nothing is a multiple of anything else, easier
-#  to find in the logs.  
-# 20171102  RBL Premature extraction occurred 8 times out of the first 60 runs
-#                this morning.  In all cases, the log file length was reported
-#                as either zero or very small, and the timestamps were completely
-#                messed up.  Intolerably high error rate.  
-#                It should be impossible for this to happen, but it is not.
-#                Note: errors were on Win10+Cygwin; still, should be impossible.
-#               Add an extra layer of is-this-file-complete
-#                paranoia to the waiting before extracting values.  Look for
-#                the absolute last line after the time-stats line.
-#               And slow down the waiting after the extract and before cleanup.
-# 20181007  RBL Dramatically shorten the sleep periods for waiting, to 
-#                accommodate the extremely short runs for measuring shocks.
-#                The long sleep times caused amazing traffic jams.
-#                Hope this is sufficiently reliable.  
 # 
 # 20181112  RBL Change for python3 and newbroker:
 #                Remove all the slow-down timing loops.  Eventually, 
@@ -86,27 +59,12 @@ python2 main.py {sFamilyDir} {sSpecificDir} {nSimLength} {nRandomseed} --ncopies
 
 date +%Y%m%d_%H%M%S.%3N
 
-#while true; do if [ -z $(tail -3 {sFamilyDir}/{sSpecificDir}/log/{sShelfLogFileName}.log | grep "End time stats" | wc -l) ]; then sleep 1; else sleep 0.01; break; fi; done 
-#while true; do if [ -z $(tail -3 {sFamilyDir}/{sSpecificDir}/log/{sShelfLogFileName}.log | grep "ENDENDEND" | wc -l) ]; then sleep 1; else sleep 0.01; break; fi; done 
-
 # Data extraction command.  Header must be forced here so that the 
 #  cleanup program can label the data fields correctly.
 
 python extractvalues2.py --header --separator=' ' hl-extractinstructions.txt {sFamilyDir}/{sSpecificDir}/log/{sShelfLogFileName}.log  |  tee  {sFamilyDir}/{sSpecificDir}/ext/{sShelfLogFileName}.ext
 
 date +%Y%m%d_%H%M%S.%3N
-
-# Aaargh!  Again, have to wait for the file to be written by
-#  the extract process.  !@#$%^&*()  File must contain two lines.
-#  Is this a problem in bash that the python terminates but the 
-#  buffers have not yet been written to disk?  Or something?  
-#  Should one always flush() before exiting? 
-
-#while true; do if [ 2 -gt $(wc -l {sFamilyDir}/{sSpecificDir}/ext/{sShelfLogFileName}.ext | awk '{print $1}') ]; then sleep 1; else sleep 0.01; break; fi; done 
-
-# Again, slow the pace a little.
-# Or not
-#sleep 1
 
 # Data cleanup command.  Appends line from extract file to output file, 
 #  and usually deletes the extract file and records it in the done collection.

@@ -258,7 +258,18 @@ def fndCliParse(mysArglist):
                         , nargs='?'
                         , help='Time (msec) to wait for a core to '
                         'come available for computing.  '
-                        'Range 1 to 1000.'
+                        'Range 10 to 1000 or so.  '
+                        'Set high for long jobs, low for shocks.  '
+                        )
+
+    cParse.add_argument("--stucklimit", type=str
+                        , dest='nStuckLimit'
+                        , metavar='nSTUCKLIMIT'
+                        , nargs='?'
+                        , help='Number of times to wait (for nCoreTimer msec) '
+                        'for a computing core to '
+                        'come available.  '
+                        'Set high for long jobs.  '
                         )
 
     if mysArglist:          # If there is a specific string, use it.
