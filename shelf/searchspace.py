@@ -38,7 +38,7 @@ def fndReadAllInsFiles(mysDir, mysTyp):
             dInstructions[sName] = [util.fnIntPlease(item["value"]) 
                                         for item in lValueList]
     if len([k for k in dInstructions.keys()]) == 0:
-        raise ValueError, "No instruction files for type|%s|" % (mysTyp)
+        raise ValueError("No instruction files for type|%s|" % (mysTyp))
     return dInstructions
 
 # f n t R e a d O n e F i l e 
@@ -51,7 +51,7 @@ def fntReadOneFile(mysFilespec):
      OBSOLETE.  Fatal error if called.  
     '''
     
-    raise NotImplementedError, "Old-format .ins files are now obsolete."
+    raise NotImplementedError("Old-format .ins files are now obsolete.")
     
     with open(mysFilespec, "r") as fhInsfile:
         lLines = [sLine.rstrip() for sLine in fhInsfile 
@@ -77,7 +77,7 @@ def fndReadAllInsFilesForGUI(mysDir, mysTyp):
                                     "lValueList" : lValueList
                                     }
     if len([k for k in dInstructions.keys()]) == 0:
-        raise ValueError, "No instruction files for type|%s|" % (mysTyp)
+        raise ValueError("No instruction files for type|%s|" % (mysTyp))
     return dInstructions
 
 # f n t R e a d O n e F i l e F o r G U I 
@@ -128,12 +128,13 @@ def fndProcessOneUserRule(mydInstructionDict, mysName, myxRule):
     try:
         lInsVals = mydInstructionDict[mysName]
     except KeyError:
-        raise KeyError, "Error: Unknown parameter name|%s|" % (mysName)
+        raise KeyError("Error: Unknown parameter name|%s|" % (mysName))
     try:
-        sRule = str(myxRule).encode('ascii', 'ignore').replace('u"', '"')
+#        sRule = str(myxRule).encode('ascii', 'ignore').replace('u"', '"')
+        sRule = str(myxRule).replace('u"', '"')
         xResult = json.loads(sRule)
     except ValueError:
-        raise ValueError, "Error: Query string is not valid JSON|%s|" % (sRule)
+        raise ValueError("Error: Query string is not valid JSON|%s|" % (sRule))
     
     # One last fixup: Maybe the rule is a string that did not get integer-ified.
     if not xResult:
@@ -170,12 +171,12 @@ def fndProcessOneUserRule(mydInstructionDict, mysName, myxRule):
                             if item >= v]
             
             elif "$in" in xResult:
-                raise NotImplementedError, "$in"
+                raise NotImplementedError("$in")
             elif "$nin" in xResult:
-                raise NotImplementedError, "$nin"
+                raise NotImplementedError("$nin")
     else:
         lNewVals = ["rule type not found"] 
-        raise ValueError, "Error: unknown comparison operator|%s|" % (xResult)
+        raise ValueError("Error: unknown comparison operator|%s|" % (xResult))
     
     mydInstructionDict[mysName] = lNewVals
     return mydInstructionDict
@@ -226,11 +227,11 @@ def fnvTestResults(mydInstructions, mydOldInstructions):
     '''
     for sKey, lVal in mydInstructions.items():
         if len(lVal) == 0:
-            raise ValueError, ("Error: instructions too restrictive, \n"
+            raise ValueError("Error: instructions too restrictive, \n"
                             "no values remain for param|%s|; \n"
                             "original value set=|%s|\n"
-                            ) % (sKey, mydOldInstructions[sKey], 
-                                )
+                             % (sKey, mydOldInstructions[sKey], 
+                                ))
 
 # f n l g C o m b i n e R e s u l t s 
 @ntracef("SRCH")
@@ -243,7 +244,8 @@ def fndgCombineResults(mydInstructions):
                                         for sKey in lKeyNames]):
         dInstruction = dict(zip(lKeyNames, lInstruction)) 
         # Add unique id, as Mongo does, so we can find jobs already done.
-        dInstruction["_id"] = hashlib.sha1(str(dInstruction)).hexdigest()
+###        dInstruction["_id"] = hashlib.sha1(str(dInstruction)).hexdigest()
+        dInstruction["_id"] = hashlib.sha1(str(dInstruction).encode('ascii')).hexdigest()
         NTRC.ntracef(3, "SRCH", "proc CombineResults:dInstruction|%s|" 
             % (dInstruction))
         yield dInstruction

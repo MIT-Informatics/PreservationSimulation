@@ -9,8 +9,10 @@
 #  It poisons the traceback and never shows the line that failed.  
 #
 
+from __future__ import print_function
 from functools import wraps
 import sys, traceback
+
 
 def catchex(func):
     @wraps(func)
@@ -21,10 +23,10 @@ def catchex(func):
             type,value,tb = sys.exc_info()
             exctype = repr(value)[0:repr(value).index('(')]
             sys.stderr.flush()
-            print 'Caught exception: %s: %s' % (exctype, exc)
+            print('Caught exception: %s: %s' % (exctype, exc))
             #print "printing print_exc:"
             traceback.print_exc(file=sys.stdout)
-            print ""
+            print("")
             sys.stdout.flush()
             raise 
         return result

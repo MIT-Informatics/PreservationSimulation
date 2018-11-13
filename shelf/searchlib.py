@@ -90,8 +90,8 @@ def fnoOpenDb(mysDbFilename):
             try: 
                 dDb = json.loads(sDbContent)
             except ValueError:
-                raise ValueError, ("Error: file|%s| is not valid JSON" 
-                    % (mysDbFilename))
+                raise ValueError(("Error: file|%s| is not valid JSON" 
+                    % (mysDbFilename)))
         """
         with filelock.FileLock(mysDbFilename):
             dDb = fndReadRetryLock(mysDbFilename)
@@ -105,8 +105,8 @@ def fnoOpenDb(mysDbFilename):
                     dDb = copy.deepcopy(dDbEmpty)
                     json.dump(dDb, fh)
             except IOError:
-                raise IOError, ("Error: cannot create new json file|%s|" 
-                    % (mysDbFilename))
+                raise IOError(("Error: cannot create new json file|%s|" 
+                    % (mysDbFilename)))
     return dDb
 
 # f n v C l e a r C o l l e c t i o n 

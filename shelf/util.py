@@ -71,7 +71,7 @@ def makesomerand(mysDistn, myParam1, myParam2=0):
     elif mysDistn == "uniform":
         return makeunif(myParam1, myParam2)
     else:
-        raise ValueError, "Unknown distribution type |%s|" % mysDistn
+        raise ValueError("Unknown distribution type |%s|" % mysDistn)
             
 
 # m a k e s e r v e r l i f e 

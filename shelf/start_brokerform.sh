@@ -48,6 +48,7 @@ then
     echo "Starting brokergroupform locally."
     python brokergroupform.py
 elif [ "$1" = "detached" ]
+then
     echo "Starting brokergroupform detached."
     python brokergroupform.py >tmp/brokergroupform.log 2<&1 &
     # NOTE WELL: The ampersand runs the form program in a subprocess.

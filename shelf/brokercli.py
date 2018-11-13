@@ -26,7 +26,7 @@ def fndCliParse(mysArglist):
         "" 
         ""
         ,epilog="Defaults for args as follows: (none)\n"
-        , version=sVersion)
+        )
     
     # P O S I T I O N A L  arguments
     #cParse.add_argument('--something', type=, dest='', metavar='', help='')
@@ -252,6 +252,26 @@ def fndCliParse(mysArglist):
                         'they have been done before.'
                         )
 
+    cParse.add_argument("--coretimer", type=str
+                        , dest='nCoreTimer'
+                        , metavar='nCORETIMER'
+                        , nargs='?'
+                        , help='Time (msec) to wait for a core to '
+                        'come available for computing.  '
+                        'Range 10 to 1000 or so.  '
+                        'Set high for long jobs, low for shocks.  '
+                        )
+
+    cParse.add_argument("--stucklimit", type=str
+                        , dest='nStuckLimit'
+                        , metavar='nSTUCKLIMIT'
+                        , nargs='?'
+                        , help='Number of times to wait (for nCoreTimer msec) '
+                        'for a computing core to '
+                        'come available.  '
+                        'Set high for long jobs.  '
+                        )
+
     if mysArglist:          # If there is a specific string, use it.
         xx = cParse.parse_args(mysArglist)
     else:                   # If no string, then parse from argv[].
@@ -273,6 +293,8 @@ def fndCliParse(mysArglist):
 # 20170127  RBL Add --shortlog, which somehow was forgotten long ago.
 # 20180408  RBL Add --simlen option to catch simulation length from form
 #                and pass it to main.py.  
+# 20181111  RBL Add --coretimer and --stucklimit options to adjust time
+#                constants for newbroker.  
 # 
 # 
 

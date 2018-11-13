@@ -26,7 +26,7 @@ def mainsim_setup_get():
          Don't store the result file at all.
     """
     """
-    sMakeformCmd = ('python brokergroup_makeform.py '
+    sMakeformCmd = ('python2 brokergroup_makeform.py '
                         'brokergroup_setupform_insert.j2 '
                         'views/brokergroup_setupform.tpl '
                         'instructions')

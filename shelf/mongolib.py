@@ -2,6 +2,8 @@
 # mongolib.py
 # ideas from http://api.mongodb.org/python/current/tutorial.html
 
+from __future__ import print_function
+
 '''
 Interface of a few convenience functions for using pymongo.  
 - OpenDb (someone else has already started the mongod server)
@@ -38,7 +40,7 @@ def fniClearCollection(myoDb,mysCollectionName):
 @ntrace
 def fnsGetFilename():
     if len(sys.argv) < 2:
-        print "Usage: {} <filename> (required)".format(sys.argv[0])
+        print("Usage: {} <filename> (required)".format(sys.argv[0]))
         exit(1)
     return sys.argv[1]
 
@@ -116,7 +118,7 @@ def fngGetPendingWork(myoDb, mydCriteria):
 def main2(mysDbName):
     oDb = fnoOpenDb(mysDbName)
     for dItem in fngGetPendingWork(oDb, {}):
-        print dItem
+        print(dItem)
 
 def main(mysDbName, mysCollectionName):
     oDb = fnoOpenDb(mysDbName)

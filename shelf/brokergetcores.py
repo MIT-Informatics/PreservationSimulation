@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # brokergetcores.py
+from __future__ import print_function
 
 # Get real info from the OS about how many cores there are on this system.  
 # If the user has specified the NCORES environment variable, then
@@ -42,6 +43,7 @@ def fnnGetResolvedCores():
     nHWCount = fnnGetHWCores()
     nUserCount = fnnGetUserCores()
     nCount = nUserCount if nUserCount < nHWCount else nHWCount
+#    nCount = nUserCount # if nUserCount < nHWCount else nHWCount
     return nCount
 
 
@@ -51,7 +53,7 @@ def main():
     nHW = fnnGetHWCores()
     nUser = fnnGetUserCores()
     nResolved = fnnGetResolvedCores()
-    print "hw={} user={} resolved={}".format(nHW, nUser, nResolved)
+    print("hw={} user={} resolved={}".format(nHW, nUser, nResolved))
 
 
 # E n t r y   p o i n t 

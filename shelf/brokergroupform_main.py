@@ -22,7 +22,7 @@ import command
 @get('/mainsim')
 @ntrace
 def mainsim_get():
-    sMakeformCmd = ('python brokergroup_makeform.py '
+    sMakeformCmd = ('python2 brokergroup_makeform.py '
                         'brokergroup_form_insert.j2 '
                         'views/brokergroup_form2.tpl '
                         'instructions')
@@ -231,7 +231,7 @@ cCmd = command.CCommand()
 
 
 # CLI commands to run the main program.
-sMainCommandStringToStdout = ('python broker.py inprogress done '
+sMainCommandStringToStdout = ('python3 broker2.py inprogress done '
             '--familydir={sFamilyDir} '
             '--specificdir={sSpecificDir} '
             '--ncopies={xcopies} --lifem={xlifem} '
@@ -251,7 +251,7 @@ sMainCommandStringToStdout = ('python broker.py inprogress done '
 #            '--help'
             )
 # Itsy bitsy test versions
-sMainCommandStringTestOnly = '''python main.py -h
+sMainCommandStringTestOnly = '''python2 main.py -h
 '''
 sMainCommandStringDumbTest = '''ls -l
 '''
@@ -283,6 +283,7 @@ sRangeTemplate = "'{\"$gte\":%s, \"$lte\":%s}'"
 # 20171231  RBL Import command from common module.  
 # 20180408  RBL Add --simlen option in command to broker.py.
 # 20180925  RBL Change ServerDefaultLife to nulti-select.
+# 20181113  RBL Invoke broker2 with python3.
 # 
 # 
 
