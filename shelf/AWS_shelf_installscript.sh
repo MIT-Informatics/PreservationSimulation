@@ -70,6 +70,7 @@
 #                shocks vs normal runs before setting up directory
 #                for runs.  
 # 20181022  RBL Add now-required arg for start_brokerform.sh, oops.
+# 20181113  RBL Change NPOLITE timer, now used for nCoreTimer in broker2.
 # 
 
 if [ -n "$1" -a "$1" != "CLEAROLD" ]
@@ -292,9 +293,9 @@ then
     export NUMBER_OF_PROCESSORS=$(cat /proc/cpuinfo | grep processor | wc -l)
 fi
 . shelfenv/bin/activate
-export NPOLITE=1
+export NPOLITE=50
 cd working/shelf
-bash start_brokerform.sh detached  
+bash start_brokerform.sh detached $NPOLITE 
 bash brokercommandlog_enable.sh
 
 echo ""

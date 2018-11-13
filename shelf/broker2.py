@@ -507,9 +507,11 @@ def fnvGetEnvironmentOverrides():
     # Utility routine looks at HW and possible user envir override.
     g.nCores = brokergetcores.fnnGetResolvedCores()
     NTRC.ntracef(0, "MAIN", "proc ncores|%s|" % (g.nCores))
+    g.nParallel = g.nCores      # Sorry for the name change.
     # Allow user to override the polite interval to use today.
     try:
         g.nPoliteTimer = int(os.getenv("NPOLITE", CG.nPoliteTimer)) 
+        g.nCoreTimer = g.nPoliteTimer   # Sorry for the name change.  
         NTRC.ntracef(0, "MAIN", "proc politetimer|%s|msec" % (g.nPoliteTimer))
     except (ValueError, TypeError):
         raise TypeError("Environment variable NPOLITE must be "

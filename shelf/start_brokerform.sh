@@ -5,6 +5,7 @@
 #                       revised  20180928
 #                       revised  20181002
 #                       revised  20181007
+#                       revised  20181113
 # Script to launch the broker web form.
 # You must already be in the shelf directory with the 
 #  'shelfenv' virtualenv activated, wherever that is.
@@ -32,7 +33,7 @@ export TRACE_PRODUCTION=YES
 if [ -z "$2" ]
 then
     # And start new runs as quickly as possible.  
-    export NPOLITE=1000
+    export NPOLITE=50
 else
     export NPOLITE=$2
 fi
