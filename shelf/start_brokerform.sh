@@ -30,14 +30,12 @@ fi
 export TRACE_LEVEL=
 export TRACE_PRODUCTION=YES
 
-if [ -z "$2" ]
+# Leave polite timer unmolested unless user insists.
+if [ -n "$2" ]
 then
-    # And start new runs as quickly as possible.  
-    export NPOLITE=50
-else
     export NPOLITE=$2
+    echo "Politetimer set to $NPOLITE msec."
 fi
-echo "Politetimer set to $NPOLITE msec."
 
 echo "Browse to localhost:8080 to access the broker form."
 echo ""

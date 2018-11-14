@@ -70,7 +70,8 @@
 #                shocks vs normal runs before setting up directory
 #                for runs.  
 # 20181022  RBL Add now-required arg for start_brokerform.sh, oops.
-# 20181113  RBL Change NPOLITE timer, now used for nCoreTimer in broker2.
+# 20181113  RBL Change NPOLITE timer, now used for nCoreTimer in broker2.  
+#                Do not override the default.  
 # 
 
 if [ -n "$1" -a "$1" != "CLEAROLD" ]

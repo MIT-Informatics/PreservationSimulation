@@ -21,6 +21,8 @@ import  collections
 
 
 # namedtuples
+
+# Complete instruction info to pass to newbroker.
 tInstruction = collections.namedtuple("tInstruction"
                 , "runid cmdlist logdir logname casedict")
 
@@ -196,6 +198,7 @@ class CG(object):
     dId2Proc = dict()   # Map job number -> process object
     dId2Queue = dict()  # Map job number -> queue object
     nParallel = 4       # Limit on jobs running in parallel (on separate CPUs)
+                        #  (overridden by nCores).
     bThatsAllFolks = False  # All cases done, ran out of instructions.
     nCasesTotal = 0     # Nr of instructions total, all started.
     nCasesStarted = 0   # How many cases started so far.  #DEBUG
@@ -650,6 +653,8 @@ foreach single-line file in holding dir
 #               Remove old code that is not used, e.g., command import, 
 #                Wait function.  These are now in newbroker.
 #               Add new CLI options for core wait time and stuck limit.
+# 20181113  RBL Fix name changes between broker2 and newbroker3 by overlaying
+#                the old data with new.  Someday, clean this up.  
 # 
 # 
 

@@ -36,6 +36,7 @@ from NewTrace import NTRC, ntrace, ntracef
 
 
 # Named tuples:
+
 # Job process ID and output queue.
 tJob = collections.namedtuple("tJob", "procid")
 # Line returned from a single command
@@ -52,11 +53,12 @@ tWaitStats = collections.namedtuple("tWaitStats", "ncases slot done")
 # f n D o O n e L i n e 
 @ntracef("DO1L")
 def fntDoOneLine(mysLine, mynProc, mynLine):
-    """Execute one command.  
+    """Execute one single-line command.  
     
     Input: single line of command.  
     Output: tuple of the (Popen PIPE return code, command return code, list
      of output lines as strings.
+    Contributes line(s) to be in log file.
      Input lines and the first line of output blocks have timestamps;
      other lines in output blocks are indented with spaces.  
     """
@@ -116,12 +118,12 @@ def fntDoOneCase(mytInstruction, qToUse):
     nProc = fnsGetProcessNumber(sWhoami)
     lResults = []                   # list of strings
 
-    # Unpack instructions.
+    # Unpack instruction command list and other items.
     lInstruction = mytInstruction.cmdlist
     (sLogfileDir, sLogfileName) = (mytInstruction.logdir
                                 , mytInstruction.logname)
 
-    # Process all lines of instructions and collect results.  
+    # Process all command lines of the instruction list and collect results.  
     for nLine, sLine in enumerate(lInstruction):
         if fnbDoNotIgnoreLine(sLine):
             # Genuine line; execute and collect answer line(s).  
@@ -170,6 +172,8 @@ if not (os.getenv("DEBUG", "") == ""):
 
 
 # ==================== Global Data ====================
+# BZZZT: All this is now in the parent's (broker2.py's) global class.
+#  This will be removed carefully when I get around to it.  
 
 class CGlobal():
     """Data that is global, to this function, at least, so that it can
@@ -230,13 +234,13 @@ class CStartAllCases(threading.Thread):
     """pseudocode:
     arg gives list of instructions,
      each instruction is list of command lines
-    foreach instruction in list
+    foreach instruction in list *shared data, locked*
       wait for opening
       create queue for result
       create process to do instruction
-      append (process,queue) to job list
+      append (process,queue) to job list *shared data, locked*
+    set end flag, return
     """
-
 
     #@ntracef("STRT")
     def __init__(self, mygl 
@@ -270,10 +274,11 @@ class CStartAllCases(threading.Thread):
                             "for new case, but I can\'t find one.")
                 idxEmpty = lEmptySlots[0]
 
-                # Instruction list for this job.
+                # Read one instruction (from the list) for this job.
                 #  If the list is empty, then we are done here.
-                # itlInstructions is an iterator that produces a list of
+                # itlsInstructions is an iterator that produces a list of
                 #  instructions strings for each next().  
+                #  (itls = iterator over list of strings, if you're Hungarian)
                 # BEWARE: instruction list might be a generator, 
                 #  cannot test length.  
                 # StopIteration for generator or iterator; IndexError for dunno.
@@ -314,23 +319,27 @@ class CStartAllCases(threading.Thread):
                 self.nProcess += 1
                 self.gl.nCasesStarted += 1
             # E N D L O C K 
+        #ENDWHILE: either we ran out of instructions in the list, 
+        # or we waited like forever for a slot.
 
 # ==================== thread: EndAllCases ====================
 
 class CEndAllCases(threading.Thread):
     """pseudocode:
     while forever
-        get list of (job,queue) *shared data*
+        get list of (job,queue) *shared data, locked*
         while noempty, foreach in list of job.notalive
             join job to make sure it's dead
-            empty queue
+            empty its queue
             append output to big string
-            pop job from list *shared data*
+            pop job from list *shared data, locked*
         if empty
             if instruction list empty
                 return big string
+                break
             else
                 wait a few milliseconds
+                continue
     """
 
     #@ntracef("END")
@@ -628,6 +637,8 @@ if __name__ == "__main__":
 #                pass the instruction generator through pipes.  
 # 20181111  RBL Clean up references to gl, which caused some things not
 #                to be accounted properly.  
+# 20181113  RBL Integrate as module imported into broker2.
+#               Need to remove the standalone and obsolete global code someday.
 # 
 # 
 
