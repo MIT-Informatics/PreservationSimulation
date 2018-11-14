@@ -12,13 +12,7 @@
 
 #---------------------------------------------
 
-# Turn off any tracing that might have been going on in the broker.
-#  This could poison any python programs by exploding their log files.  
-export TRACE_LEVEL=0
-export TRACE_FACIL=
-export DEBUG=
-
-# For the record, start time.
+# For the record, get start time.
 date +%Y%m%d_%H%M%S.%3N
 
 # Make sure we have the right version of bash and Python.
@@ -41,7 +35,9 @@ python3 -c 'import sys; print(sys.version); print(sys.version_info)'
 #  But will they always remain singletons?  No, they didn't.  
 #  And similarly for docsize, simlen, ndocs, etc.  Specify *every*thing.  
 
-python2 main.py {sFamilyDir} {sSpecificDir} {nSimLength} {nRandomseed} --ncopies={nCopies} --lifek={nLifem}000 --audit={nAuditFreq} --auditsegments={nAuditSegments} --audittype={sAuditType} --glitchfreq={nGlitchFreq} --glitchimpact={nGlitchImpact} --glitchdecay={nGlitchDecay} --glitchmaxlife={nGlitchMaxlife} --glitchspan={nGlitchSpan} --serverdefaultlife={nServerDefaultLife} --shockfreq={nShockFreq} --shockimpact={nShockImpact} --shockmaxlife={nShockMaxlife} --shockspan={nShockSpan} --shelfsize={nShelfSize} --smalldoc={nDocSize} --pctsmall=100 {sShortLogOption} --mongoid=\'{_id}\'  >  {sFamilyDir}/{sSpecificDir}/log/{sShelfLogFileName}.log  2>&1
+# Turn off any tracing that might have been going on in the broker.
+#  This could poison any python programs by exploding their log files.  
+(export TRACE_LEVEL=0; unset TRACE_FACIL; unset DEBUG; python2 main.py {sFamilyDir} {sSpecificDir} {nSimLength} {nRandomseed} --ncopies={nCopies} --lifek={nLifem}000 --audit={nAuditFreq} --auditsegments={nAuditSegments} --audittype={sAuditType} --glitchfreq={nGlitchFreq} --glitchimpact={nGlitchImpact} --glitchdecay={nGlitchDecay} --glitchmaxlife={nGlitchMaxlife} --glitchspan={nGlitchSpan} --serverdefaultlife={nServerDefaultLife} --shockfreq={nShockFreq} --shockimpact={nShockImpact} --shockmaxlife={nShockMaxlife} --shockspan={nShockSpan} --shelfsize={nShelfSize} --smalldoc={nDocSize} --pctsmall=100 {sShortLogOption} --mongoid=\'{_id}\'  >  {sFamilyDir}/{sSpecificDir}/log/{sShelfLogFileName}.log  2>&1)
 
 # Slow things down here to avoid maybe looking at the log file
 #  before it has finished being written to disk.  
@@ -73,5 +69,14 @@ python2 datacleanup.py {sSearchDbProgressCollectionName} {sSearchDbDoneCollectio
 
 # End time
 date +%Y%m%d_%H%M%S.%3N
+
+
+# Edit history:
+# 20181111  RBL Copied from original, revised to change python versions as 
+#                needed.
+# 20181114  RBL Put changes in environment vars in the subprocess with 
+#                the python main.py program.  Never really did work
+#                the other way, flat forehead.  
+# 
 
 #END

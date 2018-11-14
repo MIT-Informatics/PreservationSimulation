@@ -254,7 +254,7 @@ def fndCliParse(mysArglist):
 
     cParse.add_argument("--coretimer", type=str
                         , dest='nCoreTimer'
-                        , metavar='nCORETIMER'
+                        , metavar='nCORETIMER_msec'
                         , nargs='?'
                         , help='Time (msec) to wait for a core to '
                         'come available for computing.  '

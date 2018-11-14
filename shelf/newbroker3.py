@@ -299,6 +299,7 @@ class CStartAllCases(threading.Thread):
                 qOut = multiprocessing.Queue()
                 nJob = next(self.nCounter)
                 with self.gl.lockPrint:
+                    fnvReportCaseInstructions(tOneInstr)
                     NTRC.ntracef(0, "STRT", "proc case|%s| start |%s|" 
                                 % (nJob, sRunId))
                 proc = multiprocessing.Process(target=fntDoOneCase
@@ -433,6 +434,30 @@ class CEndAllCases(threading.Thread):
 
 # ==================== utilities ====================
 
+def fnvReportCaseInstructions(mytInstr):
+    '''Print the details for the case: 
+    '''
+    (runid, dInstr) = (mytInstr.runid, mytInstr.casedict)
+    (lCmds) = (mytInstr.cmdlist)
+    (sLogDir, sLogName) = (mytInstr.logdir, mytInstr.logname)
+    
+    (nCopies, nLifem) = (dInstr["nCopies"],dInstr["nLifem"])
+    (nAuditFreq, nAuditSegments) = (dInstr["nAuditFreq"]
+                                    , dInstr["nAuditSegments"])
+    (nShockFreq, nShockImpact, nShockSpan) = (dInstr["nShockFreq"]
+                                    , dInstr["nShockImpact"]
+                                    , dInstr["nShockSpan"]
+                                    )
+    
+    NTRC.ntracef(0, "MAIN", "proc main commands run|%s| "
+        "ncopies|%s| lifem|%s| audit|%s|seg|%s|"
+        "\n1-|%s|\n2-dir|%s| log|%s|" 
+        % (runid, nCopies, nLifem, nAuditFreq, nAuditSegments, 
+        lCmds, sLogDir, sLogName)
+        )
+    return
+
+
 # f n b D o N o t I g n o r e L i n e 
 def fnbDoNotIgnoreLine(mysLine):
     '''
@@ -540,7 +565,7 @@ if __name__ == "__main__":
         # And make a list of instructions for each case.
         llsInstructionsTemp =  [lLinesTemp] * gl.nCases
 
-        tTmp = fnRunEverything(gl, iter(llsInstructionsTemp)
+        tTmp = fntRunEverything(gl, iter(llsInstructionsTemp)
                             , gl.nWaitMsec, gl.nWaitHowMany)
         (gl.nWaitedForSlot, gl.nWaitedForDone) = (tTmp.slot, tTmp.done)
         return []   # used to be llOut in early proto
