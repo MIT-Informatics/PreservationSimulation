@@ -138,7 +138,7 @@
                 <b>Number of Documents in Collection                    </b>
             </th></tr>
             <tr><td>
-                <select name="nDocuments">
+                <select name="nDocuments" multiple size="6">
                     <option value="10">&nbsp;&nbsp;10 (for SHOCKs)&nbsp;</option>
                     <option value="10000" selected>&nbsp;&nbsp;10,000 (baseline)&nbsp;</option>
                     </select>
@@ -170,7 +170,7 @@
                     <option value="2000">&nbsp;&nbsp;2000&nbsp;</option>
                     <option value="3000">&nbsp;&nbsp;3000&nbsp;</option>
                     <option value="5000">&nbsp;&nbsp;5000&nbsp;</option>
-                    <option value="10000">&nbsp;&nbsp;10000&nbsp;</option>
+                    <option value="10000">&nbsp;&nbsp;10000 (for SHOCKS)&nbsp;</option>
                     </select>
             </td></tr>
         </table>
@@ -264,9 +264,12 @@
             <tr><td>
                 <select name="nShockFreq" multiple size="6">
                     <option value="0" selected>&nbsp;&nbsp;0 (never)&nbsp;</option>
+                    <option value="5000">&nbsp;&nbsp;5000 (1/2 year)&nbsp;</option>
                     <option value="10000">&nbsp;&nbsp;10000 (1 year)&nbsp;</option>
+                    <option value="15000">&nbsp;&nbsp;15000 (1.5 year)&nbsp;</option>
                     <option value="20000">&nbsp;&nbsp;20000 (2 years)&nbsp;</option>
                     <option value="30000">&nbsp;&nbsp;30000 (3 years)&nbsp;</option>
+                    <option value="40000">&nbsp;&nbsp;40000 (4 years)&nbsp;</option>
                     <option value="50000">&nbsp;&nbsp;50000 (5 years)&nbsp;</option>
                     <option value="100000">&nbsp;&nbsp;100000 (10 years)&nbsp;</option>
                     <option value="200000">&nbsp;&nbsp;200000 (20 years)&nbsp;</option>
@@ -306,6 +309,7 @@
             <tr><td>
                 <select name="nShockMaxlife" multiple size="6">
                     <option value="0">&nbsp;&nbsp;0 (forever)&nbsp;</option>
+                    <option value="2500">&nbsp;&nbsp;2500 (1/4 year)&nbsp;</option>
                     <option value="5000">&nbsp;&nbsp;5000 (1/2 year)&nbsp;</option>
                     <option value="10000" selected>&nbsp;&nbsp;10000 (1 year)&nbsp;</option>
                     <option value="20000">&nbsp;&nbsp;20000 (2 years)&nbsp;</option>
@@ -607,7 +611,7 @@
 </form>
 
 <p>
-<font face="Arial" size="-1">      Last edited 20181115.1848 </font>
+<font face="Arial" size="-2">      Last edited 20181116.1720 </font>
 </p>
 
 </body>

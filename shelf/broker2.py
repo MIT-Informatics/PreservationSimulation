@@ -305,9 +305,10 @@ def main():
                 g.sSearchDbProgressCollectionName, 
                 g.sSearchDbDoneCollectionName)
     g.mdb.fnvDeleteProgressCollection()
-    
+
     # Get the set of instructions for today from database.
-    NTRC.tracef(0,"MAIN","proc querydict2|%s|" % ((dQuery)))
+    NTRC.tracef(0,"MAIN","proc querydict2|%s|" 
+                % (list(util.fngSortDictItemsByKeys(dQuery))))
     itAllInstructions = searchspace.fndgGetSearchSpace(g.sInsDir, g.sInsTyp, 
                         dQuery)
     nRuns = fnnProcessAllInstructions(itAllInstructions)
@@ -665,6 +666,7 @@ foreach single-line file in holding dir
 # 20181113  RBL Fix name changes between broker2 and newbroker3 by overlaying
 #                the old data with new.  Someday, clean this up.  
 # 20181115  RBL Add nDocuments option.
+# 20181116  RBL Sort dQuery when printing it.  
 # 
 # 
 

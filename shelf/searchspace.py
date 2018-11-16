@@ -189,11 +189,15 @@ def fndFilterResults(mydOldInstructions):
     If, e.g., no shocks, then don't test for various frequencies.
     '''
     dInstructions = copy.deepcopy(mydOldInstructions)
+    
+    """
     # First, nuke the special cases that are caused by the dynamic display.  
     dInstructions["nCopiesMax"] = [0]
     dInstructions["nCopiesMin"] = [0]
     dInstructions["nLifemMax"] = [0]
     dInstructions["nLifemMin"] = [0]
+    """
+    
     # If glitch frequency is zero, clear all the other glitch lists.
     if mydOldInstructions["nGlitchFreq"] == [0]:
         (dInstructions["nGlitchSpan"], dInstructions["nGlitchImpact"], 
@@ -377,6 +381,8 @@ Acceptable types of things to specify, just examples.  Be careful with quotes.
 # 20170216  RBL Change all read routines to use .ins3 files.
 #               Make sure that strings containing ints become ints.  
 #               Raise fatal error if no instruction files get translated.
+# 20181116  RBL Remove min/max for copies and lifem.  No longer needed
+#                with multiselect.
 # 
 # 
 
