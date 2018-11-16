@@ -1,10 +1,8 @@
 # Number of documents in the collection
 
 nDocuments
-Number of Documents
+Number of Documents in Collection
 value,label,selected
-10,"ten (for SHOCK simulations)",0
-#100,"one hundred (for no good reason)",0
-#10000,"ten thousand (baseline)",SELECTED
-#30000,"thirty thousand (large)",0
+10,"10 (for SHOCKs)",0
+10000,"10,000 (baseline)",SELECTED
 #100000,"one hundred thousand (very large)",0

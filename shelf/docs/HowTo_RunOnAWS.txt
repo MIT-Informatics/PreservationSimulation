@@ -1,6 +1,6 @@
 How to run on AWS
                 RBL 20170519
-                updated many times, most recently 20180826.
+                updated many times, most recently 20181114.
 
 
 START AWS EC2 MACHINE
@@ -98,6 +98,25 @@ Run AWS install script to install all the software
     to do.
 
 
+TO RUN A (git) BRANCH OTHER THAN 'MASTER'
+
+
+The AWS install retrieves only the master branch from github.  To retrieve
+a different branch, e.g., for testing, you have to getch that branch
+manually from the github remote repository.  
+
+The commands are:
+
+    cd working
+    git remote add https://github.com/MIT-Informatics/PreservationSimulation
+    git fetch
+    git checkout theotherbranchname
+    cd ..
+
+And you will then be operating on that new branch of the source code.  
+You can then run the startup script to load the web server.  
+
+
 PREPARING FOR A RUN
 
 
@@ -149,8 +168,10 @@ Get web form used to submit input parameters for runs
 Setup output directory tree for results.
 - select "Go to setup page" option on form.
 - fill in family and specific directory names.
-- if needed, select option to clear output directory.
-- if desired, select option to clear all "done" records from admin db.
+- if needed, select option to clear output directory.  You almost always
+    want to do this.
+- if desired, select option to clear all "done" records from admin db.  You 
+    almost always want to do this.  
 
 
 Run broker for a single range of cases.

@@ -192,6 +192,13 @@ def fndCliParse(mysArglist):
                         , help='Document size in MB.'
                         )
     
+    cParse.add_argument("--ndocuments", type=str
+                        , dest='nDocuments'
+                        , metavar='nDOCUMENTS'
+                        , nargs='?'
+                        , help='Number of documents in a collection.  '
+                        )
+    
 # Other options that are not used for selection, but for overrides or testing.
 
     cParse.add_argument("--familydir", type=str

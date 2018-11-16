@@ -61,6 +61,7 @@ def mainsim_post():
     lShockSpan = request.forms.getall("nShockSpan")
     lShockMaxlife = request.forms.getall("nShockMaxlife")
 
+    nDocuments = request.forms.getall("nDocuments")
     nDocSize = request.forms.get("nDocSize")
     nShelfSize = request.forms.get("nShelfSize")
 
@@ -107,6 +108,7 @@ def mainsim_post():
                 sShockMaxlife=fnsQuoteMulti(lShockMaxlife), 
 
                 nDocSize=nDocSize, nShelfSize=nShelfSize, 
+                nDocuments=fnsQuoteMulti(nDocuments),
 
                 bRedo=bRedo,
                 bTestOnly=bTestOnly, 
@@ -244,6 +246,7 @@ sMainCommandStringToStdout = ('python3 broker2.py inprogress done '
             '--shockfreq={sShockFreq} --shockimpact={sShockImpact} '
             '--shockspan={sShockSpan} --shockmaxlife={sShockMaxlife} '
             '--docsize={nDocSize} --shelfsize={nShelfSize} '
+            '--ndocuments={nDocuments} '
             '--nseeds={nRandomSeeds} --simlen={nSimLength} '
             '{xshortlog} {xtestonly} {xredo} '
             '2>&1 '
@@ -284,6 +287,7 @@ sRangeTemplate = "'{\"$gte\":%s, \"$lte\":%s}'"
 # 20180408  RBL Add --simlen option in command to broker.py.
 # 20180925  RBL Change ServerDefaultLife to nulti-select.
 # 20181113  RBL Invoke broker2 with python3.
+# 20181115  RBL Add nDocuments.
 # 
 # 
 

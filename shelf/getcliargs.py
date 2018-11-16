@@ -96,6 +96,7 @@ def getCliArgsForEverythingElse():
     
     fnMaybeOverride("fServerDefaultHalflife",dCliDict,G)
     fnMaybeOverride("lShelfSize",dCliDict,G)
+    fnMaybeOverride("nDocuments",dCliDict,G)
     
     fnMaybeOverride("sShortLogStr",dCliDict,G)
     
@@ -228,6 +229,8 @@ def fnbCheckBadCombinations():
 #               Fix some of the overlong lines.  
 #               Allow MaybeOverride to place zero values.
 # 20171101  RBL Add routine to check for nonsensical or dangerous params.
+# 20181115  RBL Add nDocuments option.
+# 
 # 
 
 #END

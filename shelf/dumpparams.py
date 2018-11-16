@@ -44,6 +44,7 @@ def dumpParamsIntoLog():
             lg.logInfo("PARAMS","CLIENT client|%s| collection|%s| quality|%d| "
                 "ndocs|%d|" 
                 % (sClient,sCollection,nQuality,nDocs))
+    lg.logInfo("PARAMS", "ALLCLIENTS nDocuments|%s| override if nz" % (G.nDocuments))
 
 #-----------------------------------------------------------
     # S e r v e r  params

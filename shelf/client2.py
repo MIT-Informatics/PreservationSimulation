@@ -40,6 +40,7 @@ class CClient(object):
         # Create the collections for this client.
         for lCollectionParams in mylCollections:
             (sCollName,nCollValue,nCollSize) = lCollectionParams
+            if G.nDocuments: nCollSize = G.nDocuments
             cColl = CCollection(sCollName,nCollValue,nCollSize, self.ID)
             sCollID = cColl.ID
             self.lCollectionIDs.append(sCollID)
@@ -238,6 +239,7 @@ class CClient(object):
 # 20170102  RBL PEP8-ify most of the long lines.  
 # 20180928  RBL If we run out of servers due to shocks, just invent new ones.
 #                Yes, there is a potential infinte loop in this mess.  
+# 20181115  RBL Let G.nDocuments override collection params if it is nonzero.
 # 
 # 
 

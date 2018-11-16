@@ -59,6 +59,7 @@ class CG(object):
     nSimLength = 0
 
     nShelfSize = None
+    nDocuments = None
     nDocSize = None
     sShortLog = "N"     # Log only setup and results info, no error details.  
 
@@ -138,7 +139,7 @@ class CG(object):
                     'nGlitchDecay nGlitchFreq nGlitchIgnorelevel '
                     'nGlitchImpact nGlitchMaxlife nGlitchSpan '
                     'nShockFreq nShockImpact nShockSpan nShockMaxlife '
-                    'nLifem nServerDefaultLife '
+                    'nLifem nServerDefaultLife nDocuments '
                     'nCopies nRandomseed nShelfSize nSimLength sQuery' 
                     ).split()
     # Special fake CPU-bound commands to test for proper parallel execution.  
@@ -663,6 +664,7 @@ foreach single-line file in holding dir
 #               Add new CLI options for core wait time and stuck limit.
 # 20181113  RBL Fix name changes between broker2 and newbroker3 by overlaying
 #                the old data with new.  Someday, clean this up.  
+# 20181115  RBL Add nDocuments option.
 # 
 # 
 

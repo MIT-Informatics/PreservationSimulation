@@ -131,7 +131,21 @@
         </table>
     </td>
 
-        <td>&nbsp;</td>        <!-- blank separator -->
+                
+    <td>
+        <table>
+            <tr><th align="left">
+                <b>Number of Documents in Collection                    </b>
+            </th></tr>
+            <tr><td>
+                <select name="nDocuments">
+                    <option value="10">&nbsp;&nbsp;10 (for SHOCKs)&nbsp;</option>
+                    <option value="10000" selected>&nbsp;&nbsp;10,000 (baseline)&nbsp;</option>
+                    </select>
+            </td></tr>
+        </table>
+    </td>
+
                
     <td>
         <table>
@@ -162,7 +176,7 @@
         </table>
     </td>
 
-        <td>&nbsp;</td>
+        <td>&nbsp;</td>        <!-- blank separator -->
     </tr>
  
  <!--  a u d i t i n g  -->   
@@ -511,6 +525,7 @@
              <br />
             <input type="text" name="nBandwidthMbps" value="100">
         </td>
+        
                 
     <td>
         <table>
@@ -590,60 +605,13 @@
     </p>
     </font>
 </form>
+
+<p>
+<font face="Arial" size="-1">      Last edited 20181115.1848 </font>
+</p>
+
 </body>
 
-
-
-<!--  d o c   a n d   s h e l f   s i z e  -->
-<!-- NONONO  But preserve this in case we ever need it again.  
-    <tr bgcolor="#999999">
-        <td colspan="5">
-            <b>Document size and shelf size (and doc size mixture, if any)</b>
-    </tr>
-
-    <tr bgcolor="#999999">
-        <td>
-            <b>Size of storage shelf:</b> <br/>
-            (terabytes) <br/>
-            <select name="nShelfSize">
-                <option value="1">1 TB</option>
-                <option value="10" selected>10 TB</option>
-            </select>
-        </td>
-        <td>
-            <b>Size of small document:</b> <br/>
-            (megabytes) <br/>
-            <select name="nSmallDoc">
-                <option value="5">5 MB</option>
-                <option value="50" selected>50 MB</option>
-                <option value=""500>500 MB</option>
-            </select>
-        </td>
-        <td>
-            <b>Size of large doc (if any):</b> <br/>
-            (megabytes) <br/>
-            <select name="nLargeDoc">
-                <option value="50" selected>50 MB</option>
-                <option value="500">500 MB</option>
-                <option value="5000">5000 MB</option>
-            </select>
-        </td>
-        <td>
-            <b>Percentage of small docs</b> <br/>
-            in the mix of docs: <br/>
-            <select name="nSmallDocPct">
-                <option value="100" selected>100%</option>
-                <option value="50">50%</option>
-                <option value="90">90%</option>
-            </select>
-        </td>
-        <td>
-            <b>Std dev of doc size:</b> <br/>
-            (if doc size if variable and not fixed)<br/>
-            <input type="text" name="nPctDocVar" value="0">
-        </td>
-    </tr>
--->
 
 <!-- Edit history:
 20170220    RBL Original version cribbed almost entirely from previous
@@ -658,6 +626,7 @@
 20171130    RBL Narrow formatting a little.  
 20180408    RBL Check on simlen input, widen field, add comment. 
                  Change nSimLength to multi-select pulldown. 
+20181115    RBL Add nDocuments block.  Hope it fits.  
 
 
 -->
