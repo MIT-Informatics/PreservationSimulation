@@ -185,10 +185,10 @@ fi
 
 # B R O K E R   T E S T   1 
 # Broker should find exactly one test case to run.
-python broker.py installtest done --familydir=../hl --specificdir=a0 \
+python3 broker2.py installtest done --familydir=../hl --specificdir=a0 \
     --serverdefaultlife=0 --glitchfreq=0 --shockfreq=0 \
     --ncopies=1 --lifem=1000 --auditfreq=0 \
-    --docsize=50 --shelfsize=1 --simlen=0 --nseeds=1 \
+    --docsize=50 --ndocuments=10000 --shelfsize=1 --simlen=0 --nseeds=1 \
     --redo --listonly > tmp/brokertest.log 2>&1
 # The number of the last case should be "1.1".
 sTestCases=$(grep "run|" tmp/brokertest.log | tail -1 | sed 's/.*run|//' | sed 's/|.*//')
@@ -204,11 +204,11 @@ fi
 
 # B R O K E R   T E S T   2 
 # And fifteen cases here.
-python broker.py installtest done --familydir=../hl --specificdir=a0 \
+python3 broker2.py installtest done --familydir=../hl --specificdir=a0 \
     --serverdefaultlife=0 --glitchfreq=0 \
     --ncopies='{"$gte":1,"$lte":5}' --lifem='[100,200,300]' \
     --auditfreq=10000 --audittype=TOTAL --auditsegments='[1]' \
-    --docsize=50 --shelfsize=1 --simlen=0 --nseeds=1 \
+    --docsize=50 --ndocuments=10000 --shelfsize=1 --simlen=0 --nseeds=1 \
     --redo --listonly  >tmp/brokertest.log 2>&1
 sTestCases=$(grep "run|" tmp/brokertest.log | tail -1 | sed 's/.*run|//' | sed 's/|.*//')
 if [ -n "$sTestCases" -a "$sTestCases" = "15.1" ]
@@ -228,13 +228,13 @@ sudo rm --force --recursive ../hl
 bash setupfamilydir.sh ../hl installtest
 bash pretestchecklist.sh ../hl installtest
 python dbclearcollection.py installtest done
-python broker.py installtest done --familydir=../hl --specificdir=installtest \
+python3 broker2.py installtest done --familydir=../hl --specificdir=installtest \
     --ncopies=1 --lifem=1000 --auditfreq=0 --auditsegments=0 \
     --audittype=TOTAL --glitchfreq=0 --glitchimpact=0 \
     --glitchdecay=0 --glitchmaxlife=0 --glitchspan=0 \
     --serverdefaultlife=0 --shockfreq=0 --shockimpact=0 \
     --shockmaxlife=0 --shockspan=0 --shelfsize=1 \
-    --docsize=50 --simlen=0 --nseeds=1 --redo 
+    --docsize=50 --ndocuments=10000 --simlen=0 --nseeds=1 --redo 
 sResultFile="../hl/installtest/dat/GiantOutput_00.txt"
 nWaitTime=5
 while true
@@ -268,11 +268,11 @@ fi
 python dbclearcollection.py installtest done
 # And set up new working directories for these runs.  
 bash setupfamilydir.sh ../hl testing
-python broker.py installtest done --familydir=../hl \
+python3 broker2.py installtest done --familydir=../hl \
     --specificdir=testing --serverdefaultlife=0 --glitchfreq=0 \
     --ncopies='{"$gte":1,"$lte":5}' --lifem='[100,200,300]' \
     --auditfreq=10000 --audittype=TOTAL --auditsegments=1 \
-    --docsize=50 --shelfsize=1 --nseeds=2 \
+    --docsize=50 --ndocuments=10000 --shelfsize=1 --nseeds=2 \
     --redo --testlimit=4 
 
 # If everything looks okay, remove or raise the --testlimit, 
@@ -282,7 +282,7 @@ python broker.py installtest done --familydir=../hl \
 #export NPOLITE=1       # Wait 2 seconds between process end and start another. 
 # This command will run thirty individual simulation tests, which will take
 #  more than a couple minutes. 
-#python broker.py inprogress done --familydir=../hl --specificdir=testing --serverdefaultlife=0 --glitchfreq=0 --ncopies='{"$gte":1,"$lte":5}' --lifem='[100,200,300]' --auditfreq=10000 --audittype=TOTAL --auditsegments=1 --nseeds=20 --redo 
+#python3 broker2.py inprogress done --familydir=../hl --specificdir=testing --serverdefaultlife=0 --glitchfreq=0 --ncopies='{"$gte":1,"$lte":5}' --lifem='[100,200,300]' --auditfreq=10000 --audittype=TOTAL --auditsegments=1 --nseeds=20 --redo 
 
 echo "**************************************** Done initial tests"
 
@@ -325,7 +325,7 @@ echo "***  of your instructions.                           ***"
 echo "***                                                  ***" 
 echo "*** For those who like typing CLI commands,          ***" 
 echo "***  try   python main.py -h                         ***"
-echo "***  or    python broker.py -h                       ***" 
+echo "***  or    python3 broker2.py -h                       ***" 
 echo "*** for help.                                        ***"
 echo "***                                                  ***" 
 echo "***    I M P O R T A N T  R E M I N D E R            ***" 
