@@ -21,13 +21,13 @@ class CCommand(object):
     '''
 
     @catchex
-    @ntracef("CMD")
+    @ntracef("CMD", level=5)
     def doCmdStr(self, mysCommand):
         return self.mDoCmdStr(mysCommand)
 
     # m D o C m d S t r ( )
     @catchex
-    @ntracef("CMD")
+    @ntracef("CMD", level=5)
     def mDoCmdStr(self, mysCommand):
         ''' Return concatenated string of result lines with newlines stripped.  
         '''
@@ -38,13 +38,13 @@ class CCommand(object):
 
 
     @catchex
-    @ntracef("CMD")
+    @ntracef("CMD", level=5)
     def doCmdLst(self, mysCommand):
         return self.mDoCmdLst(mysCommand)
 
     # m D o C m d L s t ( ) 
     @catchex
-    @ntracef("CMD")
+    @ntracef("CMD", level=5)
     def mDoCmdLst(self, mysCommand):
         ''' Return list of result lines with newlines stripped.  
         '''
@@ -55,7 +55,7 @@ class CCommand(object):
 
 
     @catchex
-    @ntracef("CMD")
+    @ntracef("CMD", level=5)
     def doCmdGen(self, mysPrefix, mysSuffix, 
             mysLinePrefix, mysLineSuffix, mysCommand):
         return self.mDoCmdGen(mysPrefix, mysSuffix, 
@@ -63,7 +63,7 @@ class CCommand(object):
 
     # m D o C m d G e n ( ) 
     @catchex
-    @ntracef("CMD")
+    @ntracef("CMD", level=5)
     def mDoCmdGen(self, mysPrefix, mysSuffix, 
         mysLinePrefix, mysLineSuffix, mysCommand):
         ''' 
@@ -80,13 +80,13 @@ class CCommand(object):
 
 
     @catchex
-    @ntracef("CMD")
+    @ntracef("CMD", level=5)
     def doParse(self, mysCommand, mysRegex):
         return self.mDoParse(mysCommand, mysRegex)
 
     # m D o P a r s e ( )         
     @catchex
-    @ntracef("CMD")
+    @ntracef("CMD", level=5)
     def mDoParse(self, mysCommand, mysRegex):
         sOutput = self.doCmd(mysCommand)
         mCheck = search(mysRegex,sOutput)
@@ -98,13 +98,13 @@ class CCommand(object):
 
 
     @catchex
-    @ntracef("CMD")
+    @ntracef("CMD", level=5)
     def makeCmd(self, mysCommand, mydArgs):
         return self.mMakeCmd(mysCommand, mydArgs)
 
     # m M a k e C m d ( )
     @catchex
-    @ntracef("CMD")
+    @ntracef("CMD", level=5)
     def mMakeCmd(self, mysCmd, mydArgs):
         ''' Substitute arguments into command template string.  
         '''
@@ -113,7 +113,7 @@ class CCommand(object):
 
 
     # m G e n t l y F o r m a t ( )
-    @ntrace
+    @ntracef("CMD", level=5)
     def mGentlyFormat(self, mysCmd, mydVals):
         '''
         Like string.format() but does not raise exception if the string
@@ -148,6 +148,7 @@ class CCommand(object):
 #               Oh, and catch all the old names that I changed, oops.
 # 20180104  RBL Remove old version, which had been commented out with if 0.
 # 20180105  RBL Fix all the call signatures that I messed up.  
+# 20181117  RBL Move all tracing to level 5.
 # 
 # 
 

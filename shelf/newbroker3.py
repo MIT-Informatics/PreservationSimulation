@@ -284,6 +284,9 @@ class CStartAllCases(threading.Thread):
                 #  cannot test length.  
                 # StopIteration for generator or iterator; IndexError for dunno.
                 try:
+                    with self.gl.lockPrint:
+                        NTRC.ntracef(3, "STRT", "proc get instr for case |%s|"
+                                    % (self.nProcess))
                     tOneInstr = next(self.itlsInstructions)
                     with self.gl.lockPrint:
                         NTRC.ntracef(3, "STRT", "proc instr|%s|" % (repr(tOneInstr)))

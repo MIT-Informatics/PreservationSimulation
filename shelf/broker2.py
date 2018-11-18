@@ -233,7 +233,7 @@ def fnGetCommandTemplates(mysCommandFilename):
 
 # f n d M a y b e E n h a n c e I n s t r u c t i o n 
 @catchex
-@ntracef("MAIN")
+@ntracef("MAIN", level=5)
 def fndMaybeEnhanceInstruction(mydRawInstruction):
     '''
     There may be some qualifiers that are neither searchable nor

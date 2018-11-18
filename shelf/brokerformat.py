@@ -24,7 +24,7 @@ import  json
 class CFormat(object):
 
 # m s G e n t l y F o r m a t 
-    @ntracef("FMT")
+    @ntracef("FMT", level=5)
     def msGentlyFormat(self, mysCmd, mydVals, myg, myCG):
         '''
         Like string.format() but does not raise exception if the string
