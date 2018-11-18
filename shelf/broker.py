@@ -470,6 +470,7 @@ def fnstProcessOneInstruction(mysRunNumber, mydInstruction, mynSeed):
                 mydInstruction["nLifem"], mydInstruction["nAuditFreq"], 
                 mydInstruction["nAuditSegments"], 
                 g.lCommands, g.sActorCommand))
+            """
             with open(g.sActorCmdFileName, 'w') as fhActorCmdFile:
                 fhActorCmdFile.write(
                                 "# ListActor command file, "
@@ -477,6 +478,7 @@ def fnstProcessOneInstruction(mysRunNumber, mydInstruction, mynSeed):
                                 "Do not edit.\n")
                 for sCommand in g.lCommands:
                     print >> fhActorCmdFile, g.cFmt.fnsMaybeTest(sCommand, g)
+            """
 
             # Record that this job is running.
             mydInstruction["starttime"] = util.fnsGetTimeStamp()
@@ -666,7 +668,9 @@ foreach single-line file in holding dir
 # 20180828  RBL Log commands on single line, timestamp then CLI command.  
 # 20181002  RBL Change POLITE timer to be in milliseconds so that 
 #                very short runs for shocks are not spaced out unduly.
-# 
+# 20181106  RBL Integrate newbroker into this.  Instructions now created
+#                all at once in a giant list, then fed to runall routine.
+# 20181117  RBL Don't write cmd files anymore: not needed and ssslllooowww.  
 # 
 
 #END
