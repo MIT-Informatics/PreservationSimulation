@@ -543,7 +543,7 @@ def fnvGetEnvironmentOverrides():
 # f n s R e c o n s t i t u t e C o m m a n d 
 @ntrace
 def fnsReconstituteCommand(lArgs):
-    sOut = "python " + " ".join(lArgs)
+    sOut = "python3 " + " ".join(lArgs)
     return sOut
 
 
