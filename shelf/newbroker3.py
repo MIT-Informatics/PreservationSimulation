@@ -262,8 +262,9 @@ class CStartAllCases(threading.Thread):
     def run(self):
         while (fnbWaitForOpening(self.gl, self.nWaitMsec, self.nWaitHowMany)
                 ):
-            NTRC.ntracef(3, "STRT", "proc doallcases slot avail for case|%s|" 
-                        % (self.nProcess))
+            with self.gl.lockPrint:
+                NTRC.ntracef(3, "STRT", "proc doallcases slot avail for case|%s|" 
+                            % (self.nProcess))
 
             # L O C K 
             with self.gl.lockJobList:
@@ -284,13 +285,15 @@ class CStartAllCases(threading.Thread):
                 # StopIteration for generator or iterator; IndexError for dunno.
                 try:
                     tOneInstr = next(self.itlsInstructions)
-                    NTRC.ntracef(3, "STRT", "proc instr|%s|" % (repr(tOneInstr)))
-                    lLines, sLogFilename = tOneInstr.cmdlist, tOneInstr.logname
-                    dInstr, sRunId = tOneInstr.casedict, tOneInstr.runid
+                    with self.gl.lockPrint:
+                        NTRC.ntracef(3, "STRT", "proc instr|%s|" % (repr(tOneInstr)))
+                        lLines, sLogFilename = tOneInstr.cmdlist, tOneInstr.logname
+                        dInstr, sRunId = tOneInstr.casedict, tOneInstr.runid
                 except(StopIteration, IndexError):
                     self.gl.bThatsAllFolks = True
                     self.gl.nCasesTotal = self.gl.nCasesStarted
-                    NTRC.ntracef(1, "STRT", "proc startall "
+                    with self.gl.lockPrint:
+                        NTRC.ntracef(1, "STRT", "proc startall "
                                 "exhausted instructions nprocess|%s|" 
                                 % (self.nProcess))
                     break
@@ -313,8 +316,9 @@ class CStartAllCases(threading.Thread):
                 self.gl.dId2Queue[nJob] = qOut
                 # Save job info in jobs list.
                 self.gl.ltJobs[idxEmpty] = tThisJob
-                NTRC.ntracef(3, "STRT", "proc startall go slot|%s| njob|%s|" 
-                            % (idxEmpty, nJob))
+                with self.gl.lockPrint:
+                    NTRC.ntracef(3, "STRT", "proc startall go slot|%s| njob|%s|" 
+                                % (idxEmpty, nJob))
 
                 proc.start()
                 self.nProcess += 1
@@ -361,19 +365,22 @@ class CEndAllCases(threading.Thread):
         while True:
             # L O C K 
             with self.gl.lockJobList:
-                NTRC.ntracef(3, "END", "proc ltJobs|%s|" % (self.gl.ltJobs))
-                ltActiveJobs = [(idx,tJob) for idx,tJob in 
-                                enumerate(self.gl.ltJobs) if tJob]
-                NTRC.ntracef(3, "END", "proc ltActiveJobs|%s|" % (ltActiveJobs))
+                with self.gl.lockPrint:
+                    NTRC.ntracef(3, "END", "proc ltJobs|%s|" % (self.gl.ltJobs))
+                    ltActiveJobs = [(idx,tJob) for idx,tJob in 
+                                    enumerate(self.gl.ltJobs) if tJob]
+                    NTRC.ntracef(3, "END", "proc ltActiveJobs|%s|" 
+                                % (ltActiveJobs))
                 for idxtJob in ltActiveJobs:
                     idx,tJob = idxtJob
                     nJob = tJob.procid
                     proc = self.gl.dId2Proc[nJob]
                     if not proc.is_alive():
-                        NTRC.ntracef(3, "END", "proc endall found done "
-                                    "ltJobs[%s]=procid|%s|=|%s| alive?|%s|" 
-                                    % (idx, nJob, proc, proc.is_alive()))
-                        # Job listed as still baking but reports that it is done.
+                        with self.gl.lockPrint:
+                            NTRC.ntracef(3, "END", "proc endall found done "
+                                        "ltJobs[%s]=procid|%s|=|%s| alive?|%s|" 
+                                        % (idx, nJob, proc, proc.is_alive()))
+                            # Job listed as still baking but reports that it is done.
                         # Wait until it is fully baked.
                         proc.join()
                         with self.gl.lockPrint:
@@ -387,12 +394,13 @@ class CEndAllCases(threading.Thread):
                             lQOutput.append(lLinesOut)
                         queue.close()
                         if self.gl.bDebugPrint:
-                            NTRC.ntracef(5, "END", "proc lQOutput from q|%s|" 
-                                            % (lQOutput))
-                            self.llsFullOutput.extend(lQOutput)
-                            NTRC.ntracef(5, "END", "proc lOutput from q|%s|" 
-                                        % (self.llsFullOutput))
-                        # Remove job from active list and Id-dicts.
+                            with self.gl.lockPrint:
+                                NTRC.ntracef(5, "END", "proc lQOutput from q|%s|" 
+                                                % (lQOutput))
+                                self.llsFullOutput.extend(lQOutput)
+                                NTRC.ntracef(5, "END", "proc lOutput from q|%s|" 
+                                            % (self.llsFullOutput))
+                            # Remove job from active list and Id-dicts.
                         # If the queue objects are still in the dId2Queue dict,
                         #  the pipe remains open, oops.  
                         self.gl.ltJobs[idx] = None
@@ -400,21 +408,33 @@ class CEndAllCases(threading.Thread):
                         self.gl.dId2Queue.pop(nJob)
                         nCasesDone += 1
                         self.gl.nCasesDone += 1
-                        NTRC.ntracef(3, "STRT", "proc job completed ndone|%s|" 
-                                    % (self.gl.nCasesDone))
+                        with self.gl.lockPrint:
+                            NTRC.ntracef(3, "END", "proc job completed ndone|%s|" 
+                                        % (self.gl.nCasesDone))
+                    else:
+                        with self.gl.lockPrint:
+                            NTRC.ntracef(3, "END", "proc job alive "
+                                        "ltJobs[%s]=procid|%s|=|%s|"
+                                        % (idx, nJob, proc))
 
-                NTRC.ntracef(3, "END", "proc end for-activejobs1"
-                            " thatsall?|%s| ndone|%s| nstarted|%s|" 
-                            % (self.gl.bThatsAllFolks
-                            , self.gl.nCasesDone, self.gl.nCasesStarted))
+                with self.gl.lockPrint:
+                    NTRC.ntracef(3, "END", "proc end for-activejobs1"
+                                " thatsall?|%s| ndone|%s| nstarted|%s|" 
+                                % (self.gl.bThatsAllFolks
+                                , self.gl.nCasesDone, self.gl.nCasesStarted))
                 if (self.gl.bThatsAllFolks 
                     and self.gl.nCasesDone == self.gl.nCasesTotal):
+                    with self.gl.lockPrint:
+                        NTRC.ntracef(3, "END", "proc end of all jobs, "
+                                    "ndone|%s| nwaits|%s|" 
+                                    % (nCasesDone, self.gl.nWaitedForDone))
                     break
                 else:
                     self.gl.nWaitedForDone += 1
-                    NTRC.ntracef(3, "END", "proc end for-activejobs2 wait, "
-                                "ndone|%s| nwaits|%s|" 
-                                % (nCasesDone, self.gl.nWaitedForDone))
+                    with self.gl.lockPrint:
+                        NTRC.ntracef(3, "END", "proc end for-activejobs2 wait, "
+                                    "ndone|%s| nwaits|%s|" 
+                                    % (nCasesDone, self.gl.nWaitedForDone))
                     time.sleep(self.nWaitMsec / 1000.0)
                     continue
             # E N D L O C K 
@@ -664,6 +684,8 @@ if __name__ == "__main__":
 #                to be accounted properly.  
 # 20181113  RBL Integrate as module imported into broker2.
 #               Need to remove the standalone and obsolete global code someday.
+# 20181117  RBL Add tracing in END loop; hangs on AWS.
+#               Add print-locks around all traces in STRT and END.
 # 
 # 
 

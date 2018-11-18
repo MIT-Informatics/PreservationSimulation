@@ -116,6 +116,7 @@ virtualenv shelfenv
 pip install simpy
 pip install pymongo
 pip install jinja2
+sudo pip3 install pymongo
 
 echo "**************************************** Install git and pull source code"
 # Get Git.

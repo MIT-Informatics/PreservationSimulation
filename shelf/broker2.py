@@ -123,11 +123,13 @@ class CG(object):
                             '{sShelfLogFileName}.cmds'
                             )
     sActorCmdFileName = None
+    """
     sActorCmdTemplate = ('export TRACE_LEVEL=0; export TRACE_FACIL=; '
                         'python listactor.py {sActorCmdFileName} > '
                         '{sFamilyDir}/{sSpecificDir}/act/'
                         '{sShelfLogFileName}_actor.log 2>&1 &'
                         )
+    """
     sActorCmd = None
     sActorLogDirTemplate = '{sFamilyDir}/{sSpecificDir}/act/'
     sActorLogDir = None
@@ -449,8 +451,10 @@ def fntProcessOneInstruction(mysRunNumber, mydInstruction, mynSeed):
             # Where do files go, and what are they called.
             g.sActorCmdFileName = g.cFmt.msGentlyFormat(
                                 g.sActorCmdFileTemplate, mydInstruction, g, CG)
+            """
             g.sActorCommand = g.cFmt.msGentlyFormat(
                                 g.sActorCmdTemplate, mydInstruction, g, CG)
+            """
             g.sActorLogDir = g.cFmt.msGentlyFormat(
                                 g.sActorLogDirTemplate, mydInstruction, g, CG)
             """NTRC.ntracef(0, "MAIN", "proc main commands run|%s| "
@@ -667,6 +671,7 @@ foreach single-line file in holding dir
 #                the old data with new.  Someday, clean this up.  
 # 20181115  RBL Add nDocuments option.
 # 20181116  RBL Sort dQuery when printing it.  
+# 20181117  RBL Comment out obsolete data relating to listactor.  
 # 
 # 
 
