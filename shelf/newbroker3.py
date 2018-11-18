@@ -425,21 +425,23 @@ class CEndAllCases(threading.Thread):
                                 " thatsall?|%s| ndone|%s| nstarted|%s|" 
                                 % (self.gl.bThatsAllFolks
                                 , self.gl.nCasesDone, self.gl.nCasesStarted))
-                if (self.gl.bThatsAllFolks 
-                    and self.gl.nCasesDone == self.gl.nCasesTotal):
-                    with self.gl.lockPrint:
-                        NTRC.ntracef(3, "END", "proc end of all jobs, "
-                                    "ndone|%s| nwaits|%s|" 
-                                    % (nCasesDone, self.gl.nWaitedForDone))
-                    break
-                else:
-                    self.gl.nWaitedForDone += 1
-                    with self.gl.lockPrint:
-                        NTRC.ntracef(3, "END", "proc end for-activejobs2 wait, "
-                                    "ndone|%s| nwaits|%s|" 
-                                    % (nCasesDone, self.gl.nWaitedForDone))
-                    time.sleep(self.nWaitMsec / 1000.0)
-                    continue
+
+            # Now unlock and check for end of loop.
+            if (self.gl.bThatsAllFolks 
+                and self.gl.nCasesDone == self.gl.nCasesTotal):
+                with self.gl.lockPrint:
+                    NTRC.ntracef(3, "END", "proc end of all jobs, "
+                                "ndone|%s| nwaits|%s|" 
+                                % (nCasesDone, self.gl.nWaitedForDone))
+                break
+            else:
+                self.gl.nWaitedForDone += 1
+                with self.gl.lockPrint:
+                    NTRC.ntracef(3, "END", "proc end for-activejobs2 wait, "
+                                "ndone|%s| nwaits|%s|" 
+                                % (nCasesDone, self.gl.nWaitedForDone))
+                time.sleep(self.nWaitMsec / 1000.0)
+                continue
             # E N D L O C K 
 
         # llsFullOutput is a list of list of strings, where
