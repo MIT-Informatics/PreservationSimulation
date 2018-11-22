@@ -295,7 +295,7 @@ then
     export NUMBER_OF_PROCESSORS=$(cat /proc/cpuinfo | grep processor | wc -l)
 fi
 . shelfenv/bin/activate
-export NPOLITE=50
+export NPOLITE=20
 cd working/shelf
 bash start_brokerform.sh detached $NPOLITE 
 bash brokercommandlog_enable.sh

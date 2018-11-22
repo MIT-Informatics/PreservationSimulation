@@ -217,7 +217,7 @@ New 2017: The decorators can be nulled out with the environment variable
 '''
 
 
-class CNewTrace:
+class CNewTrace(object):
     def __init__(self):
         self.setDefaults()
 
@@ -388,10 +388,24 @@ class CNewTrace:
      that one use some other four letter codes in the traced lines, 
      such as "proc" so that successive lines line up into clear columns.
 '''
+
+# Make a singleton of the NewTrace instance.  
+class Singleton(type):
+    _instances = {}
+    def __call__(cls,*args,**kwargs):
+        if cls not in cls._instances:
+            cls._instances[cls] = super(Singleton,cls).__call__(*args,**kwargs)
+            cls._provenance = "singleton instance of class %s" % cls._instances[cls]
+        return cls._instances[cls]
+
+class CSingletonNewTrace(CNewTrace):
+    __metaclass__ = Singleton
+    _whatsit = "singleton instance of class NewTrace"
+
 # NEW VERSION NTRC
-NTRC = CNewTrace()
+NTRC = CSingletonNewTrace()
 # OLD VERSION TRC
-TRC = CNewTrace()
+TRC = CSingletonNewTrace()
 
 
 # D e c o r a t o r s 

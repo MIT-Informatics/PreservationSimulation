@@ -3,7 +3,7 @@
 # 
 # 
 """
-NewTrace15py6 trace module
+NewTrace17py6 trace module
                                 RBLandau 20080226
                                 updated  20080830
                                 updated  20081003
@@ -20,6 +20,8 @@ NewTrace15py6 trace module
                                 updated  20170129
                                 updated  20180115
                                 updated  20180515
+                                updated  20181105
+                                updated  20181121
                                 
   Copyright (C) 2008,2009,2014,2015,2016,2017,2018 Richard Landau.  All rights reserved.
   
@@ -56,18 +58,28 @@ NewTrace15py6 trace module
 """
 
 from __future__ import print_function
-from time       import localtime, sleep
+from time       import sleep
 from os         import getenv
 from re         import findall
 from functools  import wraps
+from datetime   import datetime
+
 '''
     RBLandau 20080824
     NewTraceFac tracelog facility for Python.
     Copyright (C) 2008, Richard Landau.  All rights reserved.
     Evolved from old PDP-11 assembler, C, C++, VB, Perl, and other 
      similar trace facilities that I have done over the years.  
-     Originated in approximately 1978 and has been one-plussed 
+     Originated in approximately 1978, intended for debugging 
+     multiprocessing problems on FIFE, and has been one-plussed 
      surprisingly only slightly over several decades.  
+    The idea is to print relatively fixed-format lines with a 
+     standard timestamp, a priority level, a source facility, 
+     and whatever information would be useful at that point.  
+    Tracing is enabled and controlled through environment variables,
+     so that it may be turned on or off, subsetted, etc., without
+     any source code change.  
+    Output may be filtered by priority number and facility name.
 
     Usage: 
     Set environment variables, if necessary, to specify the desired 
@@ -167,6 +179,7 @@ from functools  import wraps
                     If "YES" then nothing will be traced, and the 
                      trace functions and decorators will attempt 
                      to use as little CPU resource as possible.
+    TRACE_TIME;     If nonempty, timestamps will include milliseconds.
 
 Python decorators:
 There are two new functions to use as Python decorators to
@@ -202,16 +215,26 @@ New 2017: The decorators can be nulled out with the environment variable
     TRACE_PRODUCTION=YES
  This will also cause direct calls to the ntrace() and ntracef() functions
  to return with as little work as possible.  
+New 2018: 
+    Run with Python versions 2 and 3.
+    TRACE_TIME=nonempty gives timestamps in milliseconds.
+    Speed up by using cheap isProduction() rather than interrogating 
+     sys.getenv() every time.
+    NTRC really is a singleton, fixing long-standing double printing bug.  
+
 '''
 
-class CNewTrace:
+
+class CNewTrace(object):
     def __init__(self):
         self.setDefaults()
+
 
     def setDefaults(self,mylevel=0,mytarget=1,myfile="newtrace.log",
         myfacil=""):
         self.tracelevel = mylevel
-        self.traceproduction = (getenv("TRACE_PRODUCTION", "NO") == "YES")
+        self.btraceproduction = (getenv("TRACE_PRODUCTION", "NO") == "YES")
+        self.btimehires = (not (getenv("TRACE_TIME", "") == ""))
         try:
             self.tracelevel = int(getenv("TRACE_LEVEL", mylevel))
         except ValueError:      # If not integer, take default.
@@ -223,37 +246,36 @@ class CNewTrace:
             pass
         self.tracefile = getenv("TRACE_FILE", myfile)
         self.tracefacil = getenv("TRACE_FACIL", myfacil).upper()
-        if not self.traceproduction:
+        if not self.btraceproduction:
             if self.tracelevel > 0:
                 self.trace(1,"DEBUG info level %s targets %s facil %s" 
                     % (self.tracelevel,self.tracetarget,self.tracefacil) )
 
+
 # i s P r o d u c t i o n 
     def isProduction(self):
-        return self.traceproduction
+        return self.btraceproduction
+
 
 # g e t L e v e l 
     def getLevel(self):
         return self.tracelevel
+
 
 # n t r a c e     trace with no identified facility name.
     # Old style, calls new style.
     def trace(self, level, line):
         self.ntrace(level, line)
 
+
     def ntrace(self, level, line):
         # If not in production mode or yes in production mode with level==0.
-        if (not (getenv("TRACE_PRODUCTION", "NO") == "YES")
-            or level == 0
-            ):
+        if (not self.isProduction() or level == 0):
             # If we are tracing at a high enough level to include this item, 
             #  then send it to the appropriate target(s).
             if level <= self.tracelevel:
                 # Get a timestamp
-                self.vecT = localtime()
-                (yr,mo,da,hr,min,sec,x,y,z) = self.vecT
-                self.ascT = "%4d%02d%02d_%02d%02d%02d" % (yr,mo,da,hr,min,sec)
-                #linestart = ascT + " " + "%1d"%level + " "
+                self.ascT = self.fnsGetTimestamp()
                 self.linestart = "%s %1d %-4s " % (self.ascT,level,"    ")
                 
                 # If console only, or console and others, print to stdout.
@@ -272,16 +294,16 @@ class CNewTrace:
         else:       # If in production mode and level > 0
             pass    #  go away.
 
+
 # n t r a c e f   trace associated with a named facility.
     # Old style, calls new style.
     def tracef(self, level, facility, line):
         self.ntracef(level, facility, line)
 
+
     def ntracef(self, level, facility, line):
         # If not in production mode or yes in production mode with level==0.
-        if (not (getenv("TRACE_PRODUCTION", "NO") == "YES")
-            or level == 0
-            ):
+        if (not self.isProduction() or level == 0):
             # If we are tracing at a high enough level to include this item, 
             #  then send it to the appropriate target(s).
             if level <= self.tracelevel:
@@ -300,11 +322,7 @@ class CNewTrace:
                     self.traceme = False
                 if self.traceme:
                     # Get a timestamp
-                    self.vecT = localtime()
-                    (self.yr,self.mo,self.da,self.hr,self.min,self.sec,
-                        self.x,self.y,self.z) = self.vecT
-                    self.ascT = ("%4d%02d%02d_%02d%02d%02d" 
-                        % (self.yr,self.mo,self.da,self.hr,self.min,self.sec))
+                    self.ascT = self.fnsGetTimestamp()
                     self.linestart = "%s %1d %-4s " % (self.ascT,level,facility)
                     # If console only, or console and others, print to stdout.
                     if (((self.tracetarget & 1) and not (self.tracetarget & 2)) 
@@ -322,7 +340,8 @@ class CNewTrace:
         else:       # If in production mode and level > 0
             pass    #  go away.
 
-# f W r i t e C a r e f u l l y         write to file avoiding file-busy errors.
+
+    # f W r i t e C a r e f u l l y     write to file avoiding file-busy errors.
     def fWriteCarefully(self, outfile, mode, outline, retries):
         # Careful: if the file is still busy with the last write, 
         #  wait a second and try it again.  A few times.
@@ -343,12 +362,67 @@ class CNewTrace:
         # If we can't write after several retries, tough.  
 
 
+    # f n s G e t T i m e s t a m p 
+    def fnsGetTimestamp(self):
+        '''Return timestamp with or without milliseconds.
+        '''
+        if self.btimehires:
+            return datetime.now().strftime('%Y%m%d_%H%M%S.%f')[:-3]
+        else:
+            return datetime.now().strftime('%Y%m%d_%H%M%S')
+
+
+# N T R C  i n s t a n c e 
+
+''' Easy usage:
+
+    Now, for the convenience of the lazy, populate a 
+     globally accessible instance that can be used with
+     no further action required.
+    If the user really wants a particular facility name, 
+     make another instance or use setFacility.
+    
+    Simplest way:
+        from NewTraceFac import NTRC,ntrace,ntracef
+    then
+        @ntracef("NAME")         # or just "@ntrace" if no facility code
+        def somefunction()
+    and
+        NTRC.ntracef(3, "NAME", "string with %s substitution%s" % ("two","s"))
+                                # or just "NTRC.ntrace" if no facility code
+
+    Since the function decorators use the strings "entr" and "exit" 
+     between the facility name and the function name, it is recommended
+     that one use some other four letter codes in the traced lines, 
+     such as "proc" so that successive lines line up into clear columns.
+'''
+
+# Make a singleton of the NewTrace instance.  
+class Singleton(type):
+    _instances = {}
+    def __call__(cls,*args,**kwargs):
+        if cls not in cls._instances:
+            cls._instances[cls] = super(Singleton,cls).__call__(*args,**kwargs)
+            cls._provenance = "singleton instance of class %s" % cls._instances[cls]
+        return cls._instances[cls]
+
+class CSingletonNewTrace(CNewTrace):
+    __metaclass__ = Singleton
+    _whatsit = "singleton instance of class NewTrace"
+
+# NEW VERSION NTRC
+NTRC = CSingletonNewTrace()
+# OLD VERSION TRC
+TRC = CSingletonNewTrace()
+
+
 # D e c o r a t o r s 
+
 
 # Plain decorator, no facility code.  Logs entry and exit.  
 
 # NEW VERSION @ntrace
-if (getenv("TRACE_PRODUCTION", "NO") == "YES"):
+if NTRC.isProduction():
     def ntrace(func):
         return func
 else:
@@ -377,8 +451,9 @@ else:
             return result
         return wrap2
 
+
 # OLD VERSION @trace
-if (getenv("TRACE_PRODUCTION", "NO") == "YES"):
+if NTRC.isProduction():
     def trace(func):
         return func
 else:
@@ -394,8 +469,9 @@ else:
 # Decorator with facility code and priority level.  
 # Facility code may be left blank to use priority or "self" printing.
 
+
 # NEW VERSION @ntracef
-if (getenv("TRACE_PRODUCTION", "NO") == "YES"):
+if NTRC.isProduction():
     def ntracef(facil="",level=1):
         def tracefinner(func):
             return func
@@ -426,8 +502,9 @@ else:
             return wrap1
         return tracefinner
 
+
 # OLD VERSION @tracef
-if (getenv("TRACE_PRODUCTION", "NO") == "YES"):
+if NTRC.isProduction():
     def tracef(facil="",level=1):
         def tracefinner(func):
             return func
@@ -455,34 +532,6 @@ else:
             return wrap1
         return tracefinner
 
-# T R C  i n s t a n c e 
-
-''' Easy usage:
-
-    Now, for the convenience of the lazy, populate a 
-     globally accessible instance that can be used with
-     no further action required.
-    If the user really wants a particular facility name, 
-     make another instance or use setFacility.
-    
-    Simplest way:
-        from NewTraceFac import NTRC,ntrace,ntracef
-    then
-        @ntracef("NAME")         # or just "trace" if no facility code
-        def somefunction()
-    and
-        NTRC.ntracef(3,"NAME","string with %s substitution%s"%("two","s"))
-                                # or just "ntrace" if no facility code
-
-    Since the function decorators use the strings "entr" and "exit" 
-     between the facility name and the function name, it is recommended
-     that one use some other four letter codes in the traced lines, 
-     such as "proc" so that successive lines line up into clear columns.
-'''
-# NEW VERSION NTRC
-NTRC = CNewTrace()
-# OLD VERSION TRC
-TRC = CNewTrace()
 
 # Edit history:
 # 20141020  RBL Add fWriteCarefully routine to minimize problems with 
@@ -519,8 +568,16 @@ TRC = CNewTrace()
 # 20180115  RBL V14p3: Make minimal changes to permit use on Python3.
 #               Future: make it work on both p2 and p3.  
 # 20180515  RBL NewTrace15py6 test version that maybe runs on Python 2 and 3.  
-#               Identify self (class and id) for ntrace and ntracef.
-# 
+#                Surprisingly hard to do and not efficient.  
+#               Identify self (cls and id) for both ntrace and ntracef.
+# 20181105  RBL NewTrace16py6: Add TRACE_TIME env var that prints 
+#                milliseconds on all lines if it is non-empty.
+#               Use cheap isProduction() instead of calling the os.getenv()
+#                every time.
+#               Turns out that both of these changes are less trivial than
+#                first appears, given the need for these functions inside 
+#                and outside the class.
+#  20181121 RBL Make NTRC a singleton.
 # 
 
 #END

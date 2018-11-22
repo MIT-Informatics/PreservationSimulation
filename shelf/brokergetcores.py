@@ -14,7 +14,7 @@ from NewTraceFac import NTRC, ntrace, ntracef
 import command
 
 # f n n G e t H W C o r e s 
-@ntrace
+@ntracef("GETC")
 def fnnGetHWCores(default=8):
     cmd = command.CCommand()
     sGetCoreCount = "cat /proc/cpuinfo | grep processor | wc -l"
@@ -27,7 +27,7 @@ def fnnGetHWCores(default=8):
 
 
 # f n n G e t U s e r C o r e s 
-@ntrace
+@ntracef("GETC")
 def fnnGetUserCores(default=32):
     nCount = default
     try:
@@ -38,7 +38,7 @@ def fnnGetUserCores(default=32):
 
 
 # f n n G e t R e s o l v e d C o r e s 
-@ntrace
+@ntracef("GETC")
 def fnnGetResolvedCores():
     nHWCount = fnnGetHWCores()
     nUserCount = fnnGetUserCores()
@@ -48,7 +48,7 @@ def fnnGetResolvedCores():
 
 
 # m a i n 
-@ntrace
+@ntracef("GETC")
 def main():
     nHW = fnnGetHWCores()
     nUser = fnnGetUserCores()

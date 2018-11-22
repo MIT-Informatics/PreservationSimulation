@@ -18,6 +18,7 @@ import  brokerformat
 import  brokergetcores
 import  newbroker3 as nb
 import  collections
+import  queue
 
 
 # namedtuples
@@ -68,7 +69,7 @@ class CG(object):
     nCores = 8          # Default, overridden by NCORES env var.
     nCoreTimer = 50     # Wait for a free core (msec).
     nPoliteTimer = 20   # Wait between sequential launches, in milliseconds.
-    nStuckLimit = 10000 # Max nr of CoreTimer waits before giving up.
+    nStuckLimit = 20000 # Max nr of CoreTimer waits before giving up.
     nTestLimit = 0      # Max nr of runs executed for a test run, 0=infinite.
     sTestCommand = "N"  # Should just echo commands instead of executing them?
     sTestFib = "N"      # Should use Fibonacci calc instead of real programs?
@@ -93,11 +94,11 @@ class CG(object):
     sInsTyp = '.ins3'   # File type (extension) specifier for instruction files.
 
     # SearchDatabase db info (for progress and done records)
-    sSearchDbFile = "./searchspacedb/searchdb.json"     # Obsolete, I hope.
+    #sSearchDbFile = "./searchspacedb/searchdb.json"     # Obsolete, I hope.
     sSearchDbMongoName = "brokeradmin"
     sSearchDbProgressCollectionName = "inprogress"
     sSearchDbDoneCollectionName = "done"
-    sdb = None          # Instance of searchspace db.   # Obsolete, I hope.
+    #sdb = None          # Instance of searchspace db.   # Obsolete, I hope.
     mdb = None          # Instance of searchdatabasemongo db.
     
     # Command template components.
@@ -116,21 +117,6 @@ class CG(object):
     lTemplates = []
     lCommands = []
 
-    # The listactor command must redirect all output to a file.
-    #  Otherwise, it will not run asynchronously to take advantage
-    #  of multiple cores.
-    sActorCmdFileTemplate = ('{sFamilyDir}/{sSpecificDir}/cmd/'
-                            '{sShelfLogFileName}.cmds'
-                            )
-    sActorCmdFileName = None
-    """
-    sActorCmdTemplate = ('export TRACE_LEVEL=0; export TRACE_FACIL=; '
-                        'python listactor.py {sActorCmdFileName} > '
-                        '{sFamilyDir}/{sSpecificDir}/act/'
-                        '{sShelfLogFileName}_actor.log 2>&1 &'
-                        )
-    """
-    sActorCmd = None
     sActorLogDirTemplate = '{sFamilyDir}/{sSpecificDir}/act/'
     sActorLogDir = None
 
@@ -154,32 +140,15 @@ class CG(object):
     sPythonIdCmd = ('python -c "import sys; print sys.version; '
                     'print sys.version_info"'
                     )
-    sFibCmd1 = 'python fib.py 35'
-    sFibCmd2 = 'python fib.py 34'
+    sFibCmd1 = 'python fib.py 33'
+    sFibCmd2 = 'python fib.py 32'
     sEndTime = 'date +%Y%m%d_%H%M%S.%3N'
     lFibTemplates = [sStartTime, sBashIdCmd, sPythonIdCmd, 
                     sFibCmd1, sFibCmd2, sEndTime]
 
-    # Command used to count instances and wait for an open core.  
-    # I added the temp files so that we can track certain errors
-    #  that seem to occur on AWS Ubuntu, running out of disk space 
-    #  or memory or some other resource.  Whatever the cause, the 
-    #  command below returns an empty string, oops.  
-    # NOTE: When we translate this entire application to python3, this 
-    #  command will have to change.  Now it eliminates the python3 something
-    #  that Ubuntu is running in the background.  
-    sWaitForOpeningCmd = ("ps axu 2>&1 | tee ps.tmp | grep {Name} 2>&1 "
-                        "| grep -v grep | grep -v python3 | "
-                        "grep -v 'sh -c' | grep -v '/sh ' | "
-                        "tee grep.tmp | wc -l | tee wc.tmp"
-                        )
-    nWcLimit = 100          # How many times to try for a number out of 
-                            #  the above command.
-    nLinuxScrewupTime = 3   # How long between attempts.
-
     '''
     Directory structure under the familydir/specificdir:
-    cmd - command files for the listactor program
+    cmd - command files for the listactor program (obsolete)
     log - log file output from the main simulation runs
     act - little bitty log files from the listactor program
     ext - the single line (plus heading) extracts from the log files
@@ -193,24 +162,38 @@ class CG(object):
     # List of all instructions, to be given to RunEverything.
     lGiantInstr = []
 
+    # queue to pass instructions to runeverything thread.
+    qInstructions = queue.Queue()
+    bLast = False   # Have we come to the end of all instructions.
+
+#===========================================================
 
     """Additional data needed by the newbroker module.  
     """
     ltJobs = list()     # Job numbers or None
-    lockJobList = None  # 
+    lockJobList = None  # Thread lock for ltJobs job list.
+    lockPrint = None    # Thread lock for trace printing.
+    
+    # Dictionaries that contain references to things we want cleaned up.
+    # These must be emptied when the jobs they point to are complete.
     dId2Proc = dict()   # Map job number -> process object
     dId2Queue = dict()  # Map job number -> queue object
+    
     nParallel = 4       # Limit on jobs running in parallel (on separate CPUs)
                         #  (overridden by nCores).
     bThatsAllFolks = False  # All cases done, ran out of instructions.
     nCasesTotal = 0     # Nr of instructions total, all started.
-    nCasesStarted = 0   # How many cases started so far.  #DEBUG
-    nCasesDone = 0      # How many cases done (finished) so far. #DEBUG
+    nCasesStarted = 0   # How many cases started so far.  # DEBUG
+    nCasesDone = 0      # How many cases done (finished) so far. # DEBUG
     llsFullOutput = list()  # Output for all test cases.
     nCases = 1          # DEBUG
     nWaitedForSlot = 0  # DEBUG
     nWaitedForDone = 0  # DEBUG
-    bDebugPrint = False # Print output of all jobs?
+    nWaitedForInstr = 0 # DEBUG
+    bDebugPrint = False # Print output of all jobs? (obsolete) 
+    thrStart = None
+    thrEnd = None
+    
 
 #===========================================================
 
@@ -274,6 +257,11 @@ def main():
     NTRC.ntracef(0, "MAIN", "Begin.")
     NTRC.ntracef(0, "MAIN", "TRACE  traceproduction|%s|" % NTRC.isProduction())
 
+
+    def fnbQEnd():
+        return g.bLast
+
+
     sBrokerCommand = fnsReconstituteCommand(sys.argv)
     fnbMaybeLogCommand(sBrokerCommand)
     NTRC.ntracef(0, "MAIN", "command=|%s|" % (sBrokerCommand.rstrip()))
@@ -313,16 +301,18 @@ def main():
                 % (list(util.fngSortDictItemsByKeys(dQuery))))
     itAllInstructions = searchspace.fndgGetSearchSpace(g.sInsDir, g.sInsTyp, 
                         dQuery)
-    nRuns = fnnProcessAllInstructions(itAllInstructions)
     
+    # Start the start-end threads.
+    nb.fntRunEverything(g, g.qInstructions, fnbQEnd
+                            , g.nCoreTimer, g.nStuckLimit)
+
     # If this wasn't just a listonly run, do all the cases.  
     if not g.sListOnly.startswith("Y"):
         NTRC.ntracef(3, "MAIN", "proc all instr|%s|" % (g.lGiantInstr))
-        nCases = nb.fntRunEverything(g, iter(g.lGiantInstr)
-                                , g.nCoreTimer, g.nStuckLimit)
     else:
-        nCases = len(g.lGiantInstr)
-    NTRC.ntracef(0, "MAIN", "End ncases|%s|" % (nCases,))
+        NTRC.ntracef(0, "MAIN", "Listonly.")
+    nRuns = fnnProcessAllInstructions(itAllInstructions)
+    NTRC.ntracef(0, "MAIN", "End queued all runs ncases|%s|" % (g.nCases,))
 
 
 # f n n P r o c e s s A l l I n s t r u c t i o n s 
@@ -352,21 +342,21 @@ def fnnProcessAllInstructions(myitInstructionIterator):
 
         # Execute each instruction once for each random seed value.
         nRunNumber += 1
-        lManyInstr = fnltProcessOneInstructionManyTimes(nRunNumber
-                            , dInstruction)
-        g.lGiantInstr.extend(lManyInstr)
+        fnnProcessOneInstructionManyTimes(nRunNumber
+                        , dInstruction)
         
         # If user asked for a short test run today, maybe stop now.
         maxcount -= 1
         if int(g.nTestLimit) > 0 and maxcount <= 0: break
 
+    g.bLast = True
     return nRunNumber
 
 
 # f n s t P r o c e s s O n e I n s t r u c t i o n M a n y T i m e s 
 @catchex
 @ntracef("MAIN")
-def fnltProcessOneInstructionManyTimes(mynRunNumber, mydInstruction):
+def fnnProcessOneInstructionManyTimes(mynRunNumber, mydInstruction):
     ''' 
     Process a single instruction (set of params) once for each of a
      predetermined number and sequence of random seeds.
@@ -393,12 +383,10 @@ def fnltProcessOneInstructionManyTimes(mynRunNumber, mydInstruction):
         mydInstruction["nRandomseed"] = nSeed
 
         tOneInstr = fntProcessOneInstruction(sRunId, mydInstruction, nSeed)
-        # If the instruction was to be skipped (done or listonly), ignore it.
-        if tOneInstr: lManyInstr.append(tOneInstr)
-    return lManyInstr
+    return g.nRandomSeeds
 
 
-# f n v P r o c e s s O n e I n s t r u c t i o n 
+# f n t P r o c e s s O n e I n s t r u c t i o n 
 @catchex
 @ntracef("MAIN")
 def fntProcessOneInstruction(mysRunNumber, mydInstruction, mynSeed):
@@ -410,35 +398,33 @@ def fntProcessOneInstruction(mysRunNumber, mydInstruction, mynSeed):
     '''
     sInstructionId = str(mydInstruction["_id"])
     
-    # If the user specifies, redo this case even if was done before.
-    #  We do this by removing the done record from the database and 
-    #  pretending it never happened.  
-    if g.sRedo.startswith("Y"):
-        NTRC.ntracef(0,"MAIN","proc force redo for item id|%s|" 
-            % (sInstructionId))
-        # Delete the done record for this run, if there is one, 
-        #  to make it appear that the run is new this time.  
-        g.mdb.fndDeleteDoneRecord(sInstructionId)
-
-    # If this instruction has already been processed, skip it.
+    # If this instruction has already been processed, maybe skip it.
     bIsItDone = g.mdb.fnbIsItDone(sInstructionId)
-    if bIsItDone: 
+    if bIsItDone and not g.sRedo.startswith("Y"): 
+        # If the user has not insisted on redo, skip it.
         NTRC.ntracef(0,"MAIN","proc skip item already done run|%s| "
             "id|%s| copies|%s| lifem|%s|" 
             % (mysRunNumber, sInstructionId, mydInstruction["nCopies"],
             mydInstruction["nLifem"]))
-    
-    # Testing: Just dump out the instruction dictionary for this item.
     else:
+        # If the user specifies, redo this case even if was done before.
+        if g.sRedo.startswith("Y"): 
+            NTRC.ntracef(0,"MAIN","proc force redo of run|%s| id|%s| " 
+                % (mysRunNumber, sInstructionId))
+
+        # Well, maybe.  Could be listonly.
         if g.sListOnly.startswith("Y"):
             NTRC.ntracef(0,"MAIN","proc ListOnly, item run|%s| "
                 "ncopies|%s| lifem|%s| id|%s| dict|%s|" 
                 % (mysRunNumber, mydInstruction["nCopies"], mydInstruction["nLifem"],
                 sInstructionId, list(util.fngSortDictItemsByKeys(mydInstruction))))
-
-        # Real life: execute the instruction.  Well, put it in the list, anyway.  
-        else:   
+        else:
+            # Okay, really do this instruction.  
             mydInstruction["nRandomSeed"] = mynSeed
+            NTRC.ntracef(0,"MAIN","proc queue instr, item run|%s| "
+                "ncopies|%s| lifem|%s| id|%s|" 
+                % (mysRunNumber, mydInstruction["nCopies"], mydInstruction["nLifem"],
+                sInstructionId))
 
             # Format commands to be executed by actor.
             g.sShelfLogFileName = g.cFmt.msGentlyFormat(
@@ -449,33 +435,8 @@ def fntProcessOneInstruction(mysRunNumber, mydInstruction, mynSeed):
                 g.lCommands.append(sCmd)
 
             # Where do files go, and what are they called.
-            g.sActorCmdFileName = g.cFmt.msGentlyFormat(
-                                g.sActorCmdFileTemplate, mydInstruction, g, CG)
-            """
-            g.sActorCommand = g.cFmt.msGentlyFormat(
-                                g.sActorCmdTemplate, mydInstruction, g, CG)
-            """
             g.sActorLogDir = g.cFmt.msGentlyFormat(
                                 g.sActorLogDirTemplate, mydInstruction, g, CG)
-            """NTRC.ntracef(0, "MAIN", "proc main commands run|%s| "
-                "ncopies|%s| lifem|%s| audit|%s| "
-                "segs|%s|\n1-|%s|\n2-dir|%s| log|%s|" 
-                % (mysRunNumber, mydInstruction["nCopies"], 
-                mydInstruction["nLifem"], mydInstruction["nAuditFreq"], 
-                mydInstruction["nAuditSegments"], 
-                g.lCommands, g.sActorLogDir, g.sShelfLogFileName))
-            """
-            # Make instruction file for the actor.
-            # BZZZT: This is probably irrelevant in newbroker.
-            # Create file for actor, maybe just comments.
-            with open(g.sActorCmdFileName, 'w') as fhActorCmdFile:
-                fhActorCmdFile.write(
-                                "# ListActor command file, "
-                                "automatically generated by broker.  "
-                                "Do not edit.\n")
-                for sCommand in g.lCommands:
-                    sLine = g.cFmt.fnsMaybeTest(sCommand, g)
-                    print(sLine, file=fhActorCmdFile)
 
             # Record that this job will soon be running.
             mydInstruction["starttime"] = util.fnsGetTimeStamp()
@@ -488,9 +449,15 @@ def fntProcessOneInstruction(mysRunNumber, mydInstruction, mynSeed):
                                     , logdir=g.sActorLogDir
                                     , runid=mysRunNumber
                                     )
+
+            # Send the instruction out to be done.
+            g.qInstructions.put(tThisInst)
+            
+            if not g.thrStart.is_alive(): g.thrStart.start()
+            if not g.thrEnd.is_alive(): g.thrEnd.start()
+
             return tThisInst
-    # Previously done or listonly, return nothing.
-    return None
+
 
 #===========================================================
 # Utility functions:
@@ -538,7 +505,8 @@ def fnvGetEnvironmentOverrides():
 # f n s R e c o n s t i t u t e C o m m a n d 
 @ntrace
 def fnsReconstituteCommand(lArgs):
-    sOut = "python " + " ".join(lArgs)
+    sPyVer = sys.version_info.major
+    sOut = "python" + str(sPyVer) + " " + " ".join(lArgs)
     return sOut
 
 
@@ -575,14 +543,36 @@ cli
 form request to db
 start stream from db
 foreach item
-  wait for slot
+  multiply case for each seed value required
   if _id is in done tbl continue
-  format instructions into cmds
-  write cmds into file
-  format cmd for listactor
-  start a listactor
+  format instructions into cmdlist
+  write cmdlist into queue
+  start the startall and endall threads
 
-cleaner:
+newbroker:
+two threads
+  startall: 
+    read instruction from queue
+    if no instruction and temporary shortfall, wait
+    if no instruction and end of all cases, exit
+    wait for slot
+    fork an async process to handle the case
+  endall:
+    examine all jobs running in slots
+    if a job has finished
+      clean up refs to the job
+      if debug, get output from job
+    if no jobs running and started last job, exit
+
+extractor: 
+for all lines of log file
+  does any lineregex match
+for lines that matched any regex
+  evaluate valueregex, store value
+add synthetic data 
+format output line
+
+cleanup:
 foreach single-line file in holding dir
   append line to combined results file
   add _id to done tbl of db
@@ -672,6 +662,11 @@ foreach single-line file in holding dir
 # 20181115  RBL Add nDocuments option.
 # 20181116  RBL Sort dQuery when printing it.  
 # 20181117  RBL Comment out obsolete data relating to listactor.  
+# 20181118  RBL Change the way instructions are generated and transmitted; 
+#                use a plain queue rather than piling up a giant list.
+#                Puzzle: had to move the start instructions for the 
+#                startall and endall threads here after the first 
+#                instruction is enqueued.  Why?
 # 
 # 
 

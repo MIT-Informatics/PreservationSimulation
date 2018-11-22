@@ -32,7 +32,8 @@ import re
 import itertools
 import datetime
 import os
-from NewTrace import NTRC, ntrace, ntracef
+import queue
+from NewTraceFac import NTRC, ntrace, ntracef
 
 
 # Named tuples:
@@ -45,7 +46,7 @@ tLineOut = collections.namedtuple("tLineOut",
 # List of lines returned from list of commands
 tLinesOut = collections.namedtuple("tLinesOut", "procname, listoflists")
 # Sadistics on how many times we waited for something
-tWaitStats = collections.namedtuple("tWaitStats", "ncases slot done")
+tWaitStats = collections.namedtuple("tWaitStats", "ncases slot done inst")
 
 
 # ==================== subprocess user: do one line ====================
@@ -171,33 +172,9 @@ if not (os.getenv("DEBUG", "") == ""):
                 print(sContents, file=fhOut)
 
 
-# ==================== Global Data ====================
-# BZZZT: All this is now in the parent's (broker2.py's) global class.
-#  This will be removed carefully when I get around to it.  
+# ==================== vanilla function: RunEverything ====================
 
-class CGlobal():
-    """Data that is global, to this function, at least, so that it can
-    shared between threads.  
-    """
-    ltJobs = list()     # Job numbers or None
-    lockJobList = None  # 
-    dId2Proc = dict()   # Map job number -> process object
-    dId2Queue = dict()  # Map job number -> queue object
-    nParallel = 4       # Limit on jobs running in parallel (on separate CPUs)
-    bThatsAllFolks = False  # All cases done, ran out of instructions.
-    nCasesTotal = 0     # Nr of instructions total, all started.
-    nCasesStarted = 0   # How many cases started so far.  #DEBUG
-    nCasesDone = 0      # How many cases done (finished) so far. #DEBUG
-    llsFullOutput = list()  # Output for all test cases.
-    nCases = 1          # DEBUG
-    nWaitedForSlot = 0  # DEBUG
-    nWaitedForDone = 0  # DEBUG
-    bDebugPrint = False # Print output of all jobs?
-
-
-# ==================== multiprocessing: RunEverything ====================
-
-def fntRunEverything(mygl, itlsInstructions, nWaitMsec, nWaitHowMany):
+def fntRunEverything(mygl, qInstr, fnbQEnd, nWaitMsec, nWaitHowMany):
     '''Start an async job for each case.  Limit number of concurrent jobs
     to the size of the ltJobs vector.  
     When a job completes, ship its output upline and remove it from 
@@ -212,20 +189,24 @@ def fntRunEverything(mygl, itlsInstructions, nWaitMsec, nWaitHowMany):
     mygl.lockJobList = threading.Lock()
     mygl.lockPrint = threading.Lock()
 
-    # Create new threads
+    # Create and start new threads
     NTRC.ntracef(5, "RUN", "proc make thread instances")
-    thrStart = CStartAllCases(mygl, mygl.nCoreTimer, mygl.nStuckLimit
-                            , itlsInstructions, )
-    thrEnd = CEndAllCases(mygl, mygl.nCoreTimer, )
+    mygl.thrStart = CStartAllCases(mygl, mygl.nCoreTimer, mygl.nStuckLimit
+                            , qInstr, fnbQEnd)
+    mygl.thrEnd = CEndAllCases(mygl, mygl.nCoreTimer, )
     mygl.llsFullOutput = [["",""]]
-    thrStart.start()
-    thrEnd.start()
+    #mygl.thrStart.start()
+    #mygl.thrEnd.start()
     
     # Wait until all jobs have started and finished.
-    thrStart.join()     # Runs out of instructions.
-    thrEnd.join()       # Runs out of finished jobs.  
+    if (mygl.thrStart.is_alive() and mygl.thrStart.is_alive()):
+        mygl.thrStart.join()     # Runs out of instructions.
+        mygl.thrEnd.join()       # Runs out of finished jobs.  
+    
     return tWaitStats(ncases=mygl.nCasesDone
-                , slot=mygl.nWaitedForSlot, done=mygl.nWaitedForDone)
+                , slot=mygl.nWaitedForSlot
+                , done=mygl.nWaitedForDone
+                , inst=mygl.nWaitedForInstr)
 
 
 # ==================== thread: DoAllCases ====================
@@ -245,91 +226,98 @@ class CStartAllCases(threading.Thread):
     #@ntracef("STRT")
     def __init__(self, mygl 
                 , mynWaitMsec, mynWaitHowMany
-                , myitlsInstructions
+                , myqInstructions, myfnbEnd
                 ):
-        threading.Thread.__init__(self)
+        threading.Thread.__init__(self, name="startall")
         self.gl = mygl
         self.nWaitMsec = mynWaitMsec
         self.nWaitHowMany = mynWaitHowMany
         self.nCounter = itertools.count(1)
         self.nProcess = 0
-        self.itlsInstructions = myitlsInstructions
+        self.qInstructions = myqInstructions
+        self.fnbEnd = myfnbEnd
         NTRC.ntracef(2, "STRT", "exit init gl|%s| instrs|%s|" 
-                % (self.gl, self.itlsInstructions))
+                % (self.gl, self.qInstructions))
 
 
+    # NEW VERSION THAT READS FROM QUEUE
     @ntracef("STRT")
     def run(self):
-        while (fnbWaitForOpening(self.gl, self.nWaitMsec, self.nWaitHowMany)
-                ):
-            with self.gl.lockPrint:
-                NTRC.ntracef(3, "STRT", "proc doallcases slot avail for case|%s|" 
+        while True:
+            # Empty the queue of pending instructions.  
+            while not self.qInstructions.empty():
+                tOneInstr = self.qInstructions.get()
+                with self.gl.lockPrint:
+                    NTRC.ntracef(3, "STRT", "proc instr|%s|" % (repr(tOneInstr)))
+                lLines, sLogFilename = tOneInstr.cmdlist, tOneInstr.logname
+                dInstr, sRunId = tOneInstr.casedict, tOneInstr.runid
+                # Wait until there is an empty slot.  
+                bStatus = (fnbWaitForOpening(self.gl, self.nWaitMsec
+                            , self.nWaitHowMany)
+                            )
+
+                # L O C K   J O B S
+                with self.gl.lockJobList:
+                    # Find an empty slot in the jobs list.
+                    lEmptySlots = [idx for (idx,x) in enumerate(self.gl.ltJobs) 
+                                    if not x]
+                    assert len(lEmptySlots) > 0, ("Supposed to be an empty slot"
+                                "for new case, but I can\'t find one.")
+                    idxEmpty = lEmptySlots[0]
+
+                    # Create resources for the job.        
+                    qOut = multiprocessing.Queue()
+                    nJob = next(self.nCounter)
+                    with self.gl.lockPrint:
+                        fnvReportCaseInstructions(tOneInstr)
+                        NTRC.ntracef(0, "STRT", "proc case|%s| start |%s|" 
+                                    % (nJob, sRunId))
+                    proc = multiprocessing.Process(target=fntDoOneCase
+                                    , args=(tOneInstr, qOut)
+                                    )
+                    tThisJob = tJob(procid=nJob, )
+
+                    # Save job in empty slot of list, and save dict
+                    #  entries to get proc and queue.
+                    self.gl.dId2Proc[nJob] = proc
+                    self.gl.dId2Queue[nJob] = qOut
+                    # Save job info in jobs list.
+                    self.gl.ltJobs[idxEmpty] = tThisJob
+                    with self.gl.lockPrint:
+                        NTRC.ntracef(3, "STRT", "proc startall go slot|%s| njob|%s|" 
+                                    % (idxEmpty, nJob))
+                    proc.start()
+                    self.nProcess += 1
+                    self.gl.nCasesStarted += 1
+                # E N D L O C K   J O B S 
+            # ENDWHILE QUEUE NOT EMPTY
+            
+            # Queue is empty.  Why?
+            if self.fnbEnd():
+                
+                # End of instruction stream.  Finish up.  
+                self.gl.bThatsAllFolks = True
+                self.gl.nCasesTotal = self.gl.nCasesStarted
+                with self.gl.lockPrint:
+                    NTRC.ntracef(1, "STRT", "proc startall "
+                            "exhausted instructions nprocess|%s|" 
                             % (self.nProcess))
+                break   # End the thread!
+            else:
 
-            # L O C K 
-            with self.gl.lockJobList:
-                # Find an empty slot in the jobs list.
-                lEmptySlots = [idx for (idx,x) in enumerate(self.gl.ltJobs) 
-                                if not x]
-                assert len(lEmptySlots) > 0, ("Supposed to be an empty slot"
-                            "for new case, but I can\'t find one.")
-                idxEmpty = lEmptySlots[0]
+                # Temporarily empty.  Wait a while and retry.  
+                self.gl.nWaitedForInstr += 1
+                NTRC.ntracef(3, "STRT", "proc waiting for instr "
+                            "nwait|%s| " 
+                            % (self.gl.nWaitedForInstr))
+                time.sleep(self.nWaitMsec)
+                #continue    # Go back and try it again.
+            NTRC.ntracef(3, "STRT", "proc end of while queue nonempty")
+            #continue        #???
+        NTRC.ntracef(3, "STRT", "proc end of while forever")
+        # ENDWHILE TRUE
 
-                # Read one instruction (from the list) for this job.
-                #  If the list is empty, then we are done here.
-                # itlsInstructions is an iterator that produces a list of
-                #  instructions strings for each next().  
-                #  (itls = iterator over list of strings, if you're Hungarian)
-                # BEWARE: instruction list might be a generator, 
-                #  cannot test length.  
-                # StopIteration for generator or iterator; IndexError for dunno.
-                try:
-                    with self.gl.lockPrint:
-                        NTRC.ntracef(3, "STRT", "proc get instr for case |%s|"
-                                    % (self.nProcess))
-                    tOneInstr = next(self.itlsInstructions)
-                    with self.gl.lockPrint:
-                        NTRC.ntracef(3, "STRT", "proc instr|%s|" % (repr(tOneInstr)))
-                        lLines, sLogFilename = tOneInstr.cmdlist, tOneInstr.logname
-                        dInstr, sRunId = tOneInstr.casedict, tOneInstr.runid
-                except(StopIteration, IndexError):
-                    self.gl.bThatsAllFolks = True
-                    self.gl.nCasesTotal = self.gl.nCasesStarted
-                    with self.gl.lockPrint:
-                        NTRC.ntracef(1, "STRT", "proc startall "
-                                "exhausted instructions nprocess|%s|" 
-                                % (self.nProcess))
-                    break
-
-                # Create resources for the job.        
-                qOut = multiprocessing.Queue()
-                nJob = next(self.nCounter)
-                with self.gl.lockPrint:
-                    fnvReportCaseInstructions(tOneInstr)
-                    NTRC.ntracef(0, "STRT", "proc case|%s| start |%s|" 
-                                % (nJob, sRunId))
-                proc = multiprocessing.Process(target=fntDoOneCase
-                                , args=(tOneInstr, qOut)
-                                )
-                tThisJob = tJob(procid=nJob, )
-
-                # Save job in empty slot of list, and save dict
-                #  entries to get proc and queue.
-                self.gl.dId2Proc[nJob] = proc
-                self.gl.dId2Queue[nJob] = qOut
-                # Save job info in jobs list.
-                self.gl.ltJobs[idxEmpty] = tThisJob
-                with self.gl.lockPrint:
-                    NTRC.ntracef(3, "STRT", "proc startall go slot|%s| njob|%s|" 
-                                % (idxEmpty, nJob))
-
-                proc.start()
-                self.nProcess += 1
-                self.gl.nCasesStarted += 1
-            # E N D L O C K 
-        #ENDWHILE: either we ran out of instructions in the list, 
-        # or we waited like forever for a slot.
-
+    
 # ==================== thread: EndAllCases ====================
 
 class CEndAllCases(threading.Thread):
@@ -352,7 +340,7 @@ class CEndAllCases(threading.Thread):
 
     #@ntracef("END")
     def __init__(self, mygl, mynWaitMsec):
-        threading.Thread.__init__(self)
+        threading.Thread.__init__(self, name="endall")
         self.gl = mygl
         self.nWaitMsec = mynWaitMsec
         self.llsFullOutput = list()
@@ -430,9 +418,13 @@ class CEndAllCases(threading.Thread):
             if (self.gl.bThatsAllFolks 
                 and self.gl.nCasesDone == self.gl.nCasesTotal):
                 with self.gl.lockPrint:
-                    NTRC.ntracef(3, "END", "proc end of all jobs, "
-                                "ndone|%s| nwaits|%s|" 
-                                % (nCasesDone, self.gl.nWaitedForDone))
+                    NTRC.ntracef(0, "END", "proc end of all jobs, "
+                                "ndone|%s| nwaits instr|%s| slot|%s| done|%s|" 
+                                % (nCasesDone
+                                , self.gl.nWaitedForInstr
+                                , self.gl.nWaitedForSlot
+                                , self.gl.nWaitedForDone
+                                ))
                 break
             else:
                 self.gl.nWaitedForDone += 1
@@ -474,7 +466,7 @@ def fnvReportCaseInstructions(mytInstr):
                                     , dInstr["nShockSpan"]
                                     )
     
-    NTRC.ntracef(0, "MAIN", "proc main commands run|%s| "
+    NTRC.ntracef(0, "STRT", "proc main commands run|%s| "
         "ncopies|%s| lifem|%s| audit|%s|seg|%s|"
         "\n1-|%s|\n2-dir|%s| log|%s|" 
         % (runid, nCopies, nLifem, nAuditFreq, nAuditSegments, 
@@ -691,6 +683,8 @@ if __name__ == "__main__":
 #               Need to remove the standalone and obsolete global code someday.
 # 20181117  RBL Add tracing in END loop; hangs on AWS.
 #               Add print-locks around all traces in STRT and END.
+# 20181118  RBL Restructure the startall-run to use a plain queue instead
+#                of expecting a huge list of instructions.  
 # 
 # 
 
