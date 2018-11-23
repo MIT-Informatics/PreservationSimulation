@@ -4,7 +4,7 @@ How to run on AWS
 
 
 START AWS EC2 MACHINE
-
+---------------------
 
 Start EC2 machine
 - browse to 
@@ -27,7 +27,7 @@ Start EC2 machine
 
 
 CONNECT
-
+-------
 
 with WinSCP
 - select session RBL07A(1)
@@ -67,7 +67,7 @@ with ssh
 
 
 LOAD SOFTWARE
-
+-------------
 
 Copy AWS install script
 - in WinSCP or FileZilla or whatever
@@ -99,26 +99,27 @@ Run AWS install script to install all the software
 
 
 TO RUN A (git) BRANCH OTHER THAN 'MASTER'
-
+-----------------------------------------
 
 The AWS install retrieves only the master branch from github.  To retrieve
 a different branch, e.g., for testing, you have to getch that branch
-manually from the github remote repository.  
+manually from the github remote repository.  Do this BEFORE you run the 
+startup.sh script.  
 
 The commands are:
 
     cd working
-    git remote add https://github.com/MIT-Informatics/PreservationSimulation
+    git remote add origin https://github.com/MIT-Informatics/PreservationSimulation
     git fetch
     git checkout theotherbranchname
     cd ..
 
 And you will then be operating on that new branch of the source code.  
-You can then run the startup script to load the web server.  
+You can then run the startup.sh script to load the web server.  
 
 
 PREPARING FOR A RUN
-
+-------------------
 
 Remove any pulled directories of moldy, old results that you don't want.
 - below working/ remove any directories that have names you want to use
@@ -151,7 +152,7 @@ Turn on broker logging
 
 
 WEB-BASED OPERATION
-
+-------------------
 
 Start software
 - the console session should still be in ~; go back if necessary with cd
@@ -201,9 +202,10 @@ Pick up the results
 
 
 Poweroff and/or stop the EC instance when you're done
-- sudo poweroff now
+- sudo poweroff 
 - If the instance is left running, even with the OS halted, AWS charges $.  
-    Don't do that.  shutdown does not suffice to stop the charges.  
+    Don't do that.  shutdown does not suffice to stop the charges; you
+    must poweroff.  
 
 
 Things to note about the form:
@@ -248,12 +250,12 @@ Things to note about the form:
 
 
 MANUAL OPERATION
-
+----------------
 
 If you need to run broker manually for large series of cases:
 (Note: The new web UI permits multiple selection for almost all of the 
 parameters.  This should make it unlikely that you will ever have 
-to issue a broker command through the CLI.  But if you insist....)
+to issue a broker command through the CLI.  But if you really insist....)
 
 
 Prepare the environment for a long broker run
