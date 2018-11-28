@@ -7,7 +7,7 @@
 from NewTraceFac import NTRC,ntrace,ntracef
 import readin
 from util import fnIntPlease
-from os import environ
+from os import environ, getenv
 from globaldata import G,P
 
 #-----------------------------------------------------------
@@ -103,6 +103,7 @@ def getEnvironmentParams():
         P.sLogLevel = environ["LOG_LEVEL"]
     except KeyError:
         pass
+    P.nPoliteTimer = fnIntPlease(getenv("NPOLITE", P.nPoliteTimer))
     G.nShockType = fnIntPlease(environ.get("SHELF_SHOCKTYPE", G.nShockType))
     # Have to resolve some of these from P to G before considering the 
     #  CLI params that may override them, so that they can be 
@@ -113,7 +114,8 @@ def getEnvironmentParams():
 # Edit History:
 # 20160920  RBL Move these routines out of main.py.
 # 20170109  RBL Add shock type to envir vars.  
-#               And note that none of the other envir vers is used anymore.  
+#               And note that none of the other envir vars is used anymore.  
+# 20181127  RBL Actually read POLITE timer if you're going to report it, duh.  
 # 
 # 
 

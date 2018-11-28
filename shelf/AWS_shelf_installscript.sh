@@ -72,6 +72,8 @@
 # 20181022  RBL Add now-required arg for start_brokerform.sh, oops.
 # 20181113  RBL Change NPOLITE timer, now used for nCoreTimer in broker2.  
 #                Do not override the default.  
+# 20181127  RBL Turn on millisecond trace printing for broker2.  
+# 
 # 
 
 if [ -n "$1" -a "$1" != "CLEAROLD" ]
@@ -296,6 +298,7 @@ then
 fi
 . shelfenv/bin/activate
 export NPOLITE=20
+export TRACE_TIME=Y
 cd working/shelf
 bash start_brokerform.sh detached $NPOLITE 
 bash brokercommandlog_enable.sh
@@ -326,7 +329,7 @@ echo "***  of your instructions.                           ***"
 echo "***                                                  ***" 
 echo "*** For those who like typing CLI commands,          ***" 
 echo "***  try   python main.py -h                         ***"
-echo "***  or    python3 broker2.py -h                       ***" 
+echo "***  or    python3 broker2.py -h                     ***" 
 echo "*** for help.                                        ***"
 echo "***                                                  ***" 
 echo "***    I M P O R T A N T  R E M I N D E R            ***" 
