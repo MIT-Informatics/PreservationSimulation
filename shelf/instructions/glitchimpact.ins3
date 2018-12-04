@@ -5,7 +5,6 @@
 nGlitchImpact
 Glitch Impact, Reduction in Logical Block Lifetime (pct)
 value,label,selected
-10,10,0
 33,"33 (1.5x error rate)",SELECTED
 50,"50 (2x error rate)",0
 67,"67 (3x error rate)",0
