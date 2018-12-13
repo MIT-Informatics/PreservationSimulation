@@ -76,7 +76,7 @@
 # 
 # 
 
-if [ -n "$1" -a "$1" != "CLEAROLD" ]
+if [ -n "$1" -a "$1" != "CLEAROLD" -a "$1" != "TESTING" ]
 then
     echo "Usage: $0 [CLEAROLD]    (note: upper case)"
     echo "Optional CLEAROLD will completely erase any previous installation"
@@ -89,7 +89,7 @@ if [ -n "$1" -a "$1" = "TESTING" ]
 then
     echo "rm -rf working/"
     echo "rm -rf shelfenv/"
-    echo "You are now hosed.  Your data is gonzo."
+    echo "If I had actually done those commands, you would behosed.  Your data would be gonzo."
     exit 1
 fi
 if [ -n "$1" -a "$1" = "CLEAROLD" ]

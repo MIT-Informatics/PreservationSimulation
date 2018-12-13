@@ -1,0 +1,60 @@
+Add this to /etc/apt/sources.list
+have to use sudo nano to do it
+this may fix the cannot find python-pip to install problem, we hope. 
+
+deb https://archive.ubuntu.com/ubuntu bionic universe
+
+and then sudo apt-get update
+
+
+
+and maybe this for mongodb
+
+#Step 1:  Import the MongoDB public key
+#In Ubuntu 18.*+, you may get invalid signatures. --recv value may need to be updated to EA312927. 
+#See here for more details on the invalid signature issue: [https://stackoverflow.com/questions/34733340/mongodb-gpg-invalid-signatures][1]
+
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
+
+#Step 2: Generate a file with the MongoDB repository url
+echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | sudo tee /etc/apt/sources.list.d/mongodb.list
+
+#Step 3: Refresh the local database with the packages
+sudo apt-get update
+
+#Step 4: Install the last stable MongoDB version and all the necessary packages on our system
+sudo apt-get install mongodb-org
+
+         #Or
+# The unofficial mongodb package provided by Ubuntu is not maintained by MongoDB and conflict with MongoDB’s offically supported packages. Use the official MongoDB mongodb-org packages, which are kept up-to-date with the most recent major and minor MongoDB releases.
+sudo apt-get install -y mongodb 
+
+
+Update The above instruction will install mongodb 2.6 version, if you want to install latest version for Uubuntu 12.04 then just replace above step 2 and follow bellow instruction instead of that:
+
+#Step 2: Generate a file with the MongoDB repository url
+echo "deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb.list
+If you are using Ubuntu 14.04 then use bellow step instead of above step 2
+
+#Step 2: Generate a file with the MongoDB repository url
+echo "deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.0.list
+shareimprove this answer
+
+
+echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | sudo tee /etc/apt/sources.list.d/mongodb.list
+
+echo "deb http://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.2 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.2.list
+
+#add package file
+echo "deb http://repo.mongodb.org/apt/ubuntu "$(lsb_release -sc)"/mongodb-org/3.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.0.list
+
+see 
+https://www.digitalocean.com/community/tutorials/how-to-install-mongodb-on-ubuntu-18-04
+or the more helpful 
+https://www.digitalocean.com/community/tutorials/how-to-install-mongodb-on-ubuntu-16-04
+
+
+and these
+https://www.tecmint.com/install-mongodb-ubuntu-16-04-lts/
+https://www.tecmint.com/install-mongodb-on-ubuntu-18-04/
+

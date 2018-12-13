@@ -115,8 +115,8 @@
                 <select name="nCopies" multiple size="6">
                     <option value="1">&nbsp;&nbsp;1&nbsp;</option>
                     <option value="2">&nbsp;&nbsp;2&nbsp;</option>
-                    <option value="3" selected>&nbsp;&nbsp;3&nbsp;</option>
-                    <option value="4" selected>&nbsp;&nbsp;4&nbsp;</option>
+                    <option value="3">&nbsp;&nbsp;3&nbsp;</option>
+                    <option value="4">&nbsp;&nbsp;4&nbsp;</option>
                     <option value="5" selected>&nbsp;&nbsp;5&nbsp;</option>
                     <option value="6">&nbsp;&nbsp;6&nbsp;</option>
                     <option value="7">&nbsp;&nbsp;7&nbsp;</option>
@@ -139,8 +139,8 @@
             </th></tr>
             <tr><td>
                 <select name="nDocuments" multiple size="6">
-                    <option value="10">&nbsp;&nbsp;10 (for SHOCKs)&nbsp;</option>
-                    <option value="10000" selected>&nbsp;&nbsp;10,000 (baseline)&nbsp;</option>
+                    <option value="10" selected>&nbsp;&nbsp;10 (for SHOCKs)&nbsp;</option>
+                    <option value="10000">&nbsp;&nbsp;10,000 (baseline)&nbsp;</option>
                     </select>
             </td></tr>
         </table>
@@ -268,6 +268,7 @@
                     <option value="10000">&nbsp;&nbsp;10000 (1 year)&nbsp;</option>
                     <option value="15000">&nbsp;&nbsp;15000 (1.5 year)&nbsp;</option>
                     <option value="20000">&nbsp;&nbsp;20000 (2 years)&nbsp;</option>
+                    <option value="25000">&nbsp;&nbsp;25000 (2.5 years)&nbsp;</option>
                     <option value="30000">&nbsp;&nbsp;30000 (3 years)&nbsp;</option>
                     <option value="40000">&nbsp;&nbsp;40000 (4 years)&nbsp;</option>
                     <option value="50000">&nbsp;&nbsp;50000 (5 years)&nbsp;</option>
@@ -309,9 +310,10 @@
             <tr><td>
                 <select name="nShockMaxlife" multiple size="6">
                     <option value="0">&nbsp;&nbsp;0 (forever)&nbsp;</option>
+                    <option value="10" selected>&nbsp;&nbsp;10 (for SHOCKS)&nbsp;</option>
                     <option value="2500">&nbsp;&nbsp;2500 (1/4 year)&nbsp;</option>
                     <option value="5000">&nbsp;&nbsp;5000 (1/2 year)&nbsp;</option>
-                    <option value="10000" selected>&nbsp;&nbsp;10000 (1 year)&nbsp;</option>
+                    <option value="10000">&nbsp;&nbsp;10000 (1 year)&nbsp;</option>
                     <option value="20000">&nbsp;&nbsp;20000 (2 years)&nbsp;</option>
                     <option value="30000">&nbsp;&nbsp;30000 (3 years)&nbsp;</option>
                     <option value="50000">&nbsp;&nbsp;50000 (5 years)&nbsp;</option>
@@ -409,7 +411,6 @@
             </th></tr>
             <tr><td>
                 <select name="nGlitchImpact" multiple size="6">
-                    <option value="10">&nbsp;&nbsp;10&nbsp;</option>
                     <option value="33" selected>&nbsp;&nbsp;33 (1.5x error rate)&nbsp;</option>
                     <option value="50">&nbsp;&nbsp;50 (2x error rate)&nbsp;</option>
                     <option value="67">&nbsp;&nbsp;67 (3x error rate)&nbsp;</option>
