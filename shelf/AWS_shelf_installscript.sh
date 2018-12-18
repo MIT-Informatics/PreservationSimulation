@@ -73,7 +73,8 @@
 # 20181113  RBL Change NPOLITE timer, now used for nCoreTimer in broker2.  
 #                Do not override the default.  
 # 20181127  RBL Turn on millisecond trace printing for broker2.  
-# 
+# 20181218  RBL Correct the post-install tests for new ndocuments arg and 
+#                different randomseeds files.  
 # 
 
 if [ -n "$1" -a "$1" != "CLEAROLD" -a "$1" != "TESTING" ]
@@ -232,6 +233,11 @@ sudo rm --force --recursive ../hl
 bash setupfamilydir.sh ../hl installtest
 bash pretestchecklist.sh ../hl installtest
 python dbclearcollection.py installtest done
+# Juggle the randomseeds file to make sure we get the right first seed.
+# Many runs will be done with much larger seeds file, like 10K or 100K seeds.
+mv randomseeds.txt randomseeds.txt_TEMPASIDE
+cp randomseeds_TESTING.txt randomseeds.txt
+#
 python3 broker2.py installtest done --familydir=../hl --specificdir=installtest \
     --ncopies=1 --lifem=1000 --auditfreq=0 --auditsegments=0 \
     --audittype=TOTAL --glitchfreq=0 --glitchimpact=0 \
@@ -256,6 +262,10 @@ do
         sleep "$nWaitTime"
     fi
 done
+# Put the correct randomseeds file back in place.
+rm -f randomseeds.txt
+mv randomseeds.txt_TEMPASIDE randomseeds.txt
+#
 sSeed=$(echo $sDataLine | cut -d " " -f 7)
 sLost=$(echo $sDataLine | cut -d " " -f 8)
 if [ -n "$sSeed" -a "$sSeed" = "919028296" -a -n "$sLost" -a "$sLost" = "42" ]
@@ -280,10 +290,8 @@ python3 broker2.py installtest done --familydir=../hl \
     --redo --testlimit=4 
 
 # If everything looks okay, remove or raise the --testlimit, 
-#  raise the NCORES limit, and probably lower the NPOLITE interval,
-#  and let 'er rip.  
+#  raise the NCORES limit and let 'er rip.  
 #export NCORES=32       # Max 32 cores on Amazon.
-#export NPOLITE=1       # Wait 2 seconds between process end and start another. 
 # This command will run thirty individual simulation tests, which will take
 #  more than a couple minutes. 
 #python3 broker2.py inprogress done --familydir=../hl --specificdir=testing --serverdefaultlife=0 --glitchfreq=0 --ncopies='{"$gte":1,"$lte":5}' --lifem='[100,200,300]' --auditfreq=10000 --audittype=TOTAL --auditsegments=1 --nseeds=20 --redo 
@@ -298,6 +306,7 @@ then
     export NUMBER_OF_PROCESSORS=$(cat /proc/cpuinfo | grep processor | wc -l)
 fi
 . shelfenv/bin/activate
+# Note that NPOLITE is now milliseconds.
 export NPOLITE=20
 export TRACE_TIME=Y
 cd working/shelf
