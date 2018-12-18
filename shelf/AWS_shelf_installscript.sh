@@ -158,11 +158,12 @@ sudo rm --force --recursive ../hl
 bash setupnumberofdocs.sh NORMAL
 bash setupfamilydir.sh ../hl a0 
 bash pretestchecklist.sh ../hl a0 
+
 # M A I N   T E S T   1 
 # Run one simple test of the simulation, and check the answer.
 sudo rm --force --recursive tmp
 mkdir tmp
-python main.py ../hl a0 0 1 --ncopies=1 --lifek=693147 --audit=0 >tmp/initialtest.log 2>&1
+python main.py ../hl a0 0 1 --ncopies=1 --lifek=693147 --audit=0 --ndocuments=10000 --smalldoc=50 --largedoc=50 --pctsmalldoc=0 >tmp/initialtest.log 2>&1
 # The correct answer should be   "BAD NEWS: Total documents lost by 
 #  client |T1| in all servers |49|".
 # (The crazy half-life number in the command is 1,000,000 * ln(2), 

@@ -77,7 +77,7 @@ done
 
 # Do we have all the execution files?
 sTargetDir="$sShelfDir"
-for needfile in broker2.py newbroker3.py brokercli.py brokerformat.py brokergetcores.py catchex.py NewTraceFac.py broker2commandlist.txt client2.py cliparse.py main.py command.py fib.py extractvalues2.py hl-extractinstructions.txt datacleanup.py lifetime.py listactor.py 
+for needfile in broker2.py newbroker3.py brokercli.py brokerformat.py brokergetcores.py catchex.py NewTraceFac.py broker2commandlist.txt client2.py cliparse.py main.py command.py fib.py extractvalues2.py hl-extractinstructions.txt datacleanup.py lifetime.py 
 do
     if [ ! -f "$sTargetDir/$needfile" ]
     then
@@ -89,7 +89,7 @@ done
 
 # Do we have all the simulation files?
 sTargetDir="$sShelfDir"
-for needfile in audit2.py bottle.py broker.py brokercli.py brokergroup_makeform.py brokergroupform.py catchex.py client2.py cliparse.py collection.py command.py datacleanup.py doccopy.py document.py dumpparams.py dumpuse.py getcliargs.py getparams.py globaldata.py logoutput.py main.py NewTraceFac.py logoutput.py readin.py repair.py server.py shelf.py shock.py util.py  
+for needfile in audit2.py brokercli.py catchex.py client2.py cliparse.py collection.py command.py datacleanup.py doccopy.py document.py dumpparams.py dumpuse.py getcliargs.py getparams.py globaldata.py logoutput.py main.py NewTraceFac.py logoutput.py readin.py repair.py server.py shelf.py shock.py util.py 
 do
     if [ ! -f "$sTargetDir/$needfile" ]
     then
@@ -101,7 +101,7 @@ done
 
 # Do we have all the web GUI files?
 sTargetDir="$sShelfDir"
-for needfile in brokergroupform.py brokergroupform_main.py brokergroupform_setup.py brokergroup_makeform.py 
+for needfile in bottle.py brokergroupform.py brokergroupform_main.py brokergroupform_setup.py brokergroup_makeform.py 
 do
     if [ ! -f "$sTargetDir/$needfile" ]
     then
