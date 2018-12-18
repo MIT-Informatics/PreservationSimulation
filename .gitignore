@@ -9,6 +9,10 @@ Q4
 hl
 logs
 
+# data directories from simulations, way too big to check in
+hl
+hl2018*
+
 # files to ignore everywhere
 *.zip
 *.tmp

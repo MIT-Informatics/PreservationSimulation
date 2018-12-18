@@ -11,7 +11,9 @@ fnGroupBy <- function(dfIn) {group_by(dfIn, copies, lifem
                                     , shockfreq, shockspan, shockimpact
                                     , shockmaxlife
                                     )}
-fnSubset <- function(dfIn)  {subset(dfIn, serverdefaultlife==30000)}
+fnSubset <- function(dfIn)  {subset(dfIn, serverdefaultlife==30000
+                                    & copies >= 5
+                                    )}
 want.varnames <- c("copies","lifem","lost","docstotal","serverdefaultlife"
                 ,"shockfreq","shockimpact","shockspan","shockmaxlife"
                 ,"auditfrequency","audittype","auditsegments"
@@ -22,10 +24,10 @@ sTitleLine <-   (   ""
                 %+% " "
                 %+% " "
                 %+% "\n"
-                %+% "\n(Copies=4,5,6, annual total auditing)"
+                %+% "\n(Copies=5,6, annual total auditing)"
                 )
 sLegendLabel <- "  Number of \nAudited Copies"
-lLegendItemLabels <- c("4", "5", "6")
+lLegendItemLabels <- c("5", "6")
 sXLabel <- ("Shock Frequency (half-life) in hours "
             %+% "                           (less frequent shocks =====>)")
 sYLabel <- ("probability of losing the entire collection (%)")
