@@ -374,6 +374,8 @@ if "__main__" == __name__:
 #                maybe examine compute speed.  Just more crud
 #                in the output line.  
 #               And bump version number.  
+# 20181218  RBL Make seed value print constant width to improve legibility of 
+#                lost value.
 # 
 # 
 
