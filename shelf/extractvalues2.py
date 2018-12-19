@@ -248,6 +248,11 @@ def main(mysInstructionsFileName,mysLogFileName):
     dSyntho = fndGetSyntheticVars()
     dValues.update(dSyntho)
 
+    # Make the seed value, at least, print constant width for legibility.  
+    sSeed = dValues["seed"]
+    sSeednew = "%09d" % (int(sSeed))
+    dValues["seed"] = sSeednew
+
     # Fill in the template with values and print.  
     # Template is allowed to be multiple lines.
     sTemplate = "\n".join(lTemplate)
