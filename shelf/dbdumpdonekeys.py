@@ -83,15 +83,18 @@ def main():
         sAuditFreq = dResults["auditfrequency"]
         sAuditSegs = dResults["auditsegments"]
         sShockFreq = dResults["shockfreq"]
+        sShockImpact = dResults["shockimpact"]
         sShockSpan = dResults["shockspan"]
         sGlitchFreq = dResults["glitchfreq"]
         sGlitchImpact = dResults["glitchimpact"]
         #sGlitchSpan = dResults["glitchspan"]
         
-        print ("#%4d cop %2s life %4s lost %4s audit %5s-%1s shock %s-%s %s %s " 
+        print (
+        "#%4d cop %2s life %4s lost %4s audit %5s-%1s shock %s %s %s %s %s id|%s|" 
         % (nItem, sCopies, sLifem, sLost, sAuditFreq, sAuditSegs, 
-        sShockFreq, sShockSpan, 
-        sSeed, sTimestamp))
+        sShockFreq, sShockImpact, sShockSpan,
+        sSeed, sTimestamp, sDoneId)
+        )
 
 
 # E n t r y   p o i n t . 
@@ -101,6 +104,7 @@ if __name__ == "__main__":
 
 # Edit history:
 # 20170128  RBL Original version.
+# 20181218  RBL Add sShockImpact and sDoneId to the output line.  
 # 
 # 
 

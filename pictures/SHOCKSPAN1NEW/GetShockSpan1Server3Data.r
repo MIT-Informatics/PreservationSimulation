@@ -12,7 +12,7 @@ fnGroupBy <- function(dfIn) {group_by(dfIn, copies, lifem
                                     , shockmaxlife
                                     )}
 fnSubset <- function(dfIn)  {subset(dfIn, serverdefaultlife==30000
-                                    & copies >= 5
+                                    & copies>=6
                                     )}
 want.varnames <- c("copies","lifem","lost","docstotal","serverdefaultlife"
                 ,"shockfreq","shockimpact","shockspan","shockmaxlife"
@@ -20,14 +20,14 @@ want.varnames <- c("copies","lifem","lost","docstotal","serverdefaultlife"
                 ,"deadserversactive","deadserversall")
 fnNarrow <- function(dfIn)  {dfIn[want.varnames]}  
 sTitleLine <-   (   ""
-                %+% "Shocks duration=0.5yr span=1 serverdefaultlife=3yrs "
+                %+% "Shocks span=1 serverdefaultlife=3yrs duration=short "
                 %+% " "
                 %+% " "
                 %+% "\n"
-                %+% "\n(Copies=5,6, annual total auditing)"
+                %+% "\n(Copies=6,7 annual total auditing)"
                 )
 sLegendLabel <- "  Number of \nAudited Copies"
-lLegendItemLabels <- c("5", "6")
+lLegendItemLabels <- c("6", "7")
 sXLabel <- ("Shock Frequency (half-life) in hours "
             %+% "                           (less frequent shocks =====>)")
 sYLabel <- ("probability of losing the entire collection (%)")
@@ -49,7 +49,7 @@ gp <- ggplot(data=trows
             ) 
 gp <- gp + labs(color=sLegendLabel)
 
-gp <- fnPlotLogScales(gp, x="YES", y="YES"
+gp <- fnPlotLogScales(gp, y="YES"
 #                ,xbreaks=c(50,67,75,80,90,100)
                 ,xbreaks=c(5000,10000,15000,20000,25000,30000,40000,50000)
                 ,ybreaks=c(0.01,0.10,1.00,10,100)
