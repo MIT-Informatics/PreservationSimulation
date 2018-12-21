@@ -1,0 +1,17 @@
+MIT Preservation Simulation Project 
+
+./Data_AuditAnnually.txt 20180326_161905EDT 
+
+Document losses with multiple copies and annual total auditing 
+
+Table of percentage loss of collection tabulated
+by number of copies and sector half-lifetime 
+
+
+  copies     2     3     5    10   20   30   50  100 200 300 500 1000
+1      1 82.27 68.48 50.06 29.34 16.0 10.9 6.76 3.43   2   1 0.7  0.3
+2      2 22.52 11.19  4.31  1.10  0.3  0.1 0.05 0.01   0   0 0.0  0.0
+3      3  3.95  1.31  0.30  0.03  0.0  0.0 0.00 0.00   0   0 0.0  0.0
+4      4  0.60  0.14  0.02  0.00  0.0  0.0 0.00 0.00   0   0 0.0  0.0
+5      5  0.10  0.02  0.00  0.00  0.0  0.0 0.00 0.00   0   0 0.0  0.0
+6      6  0.02  0.00  0.00  0.00  0.0  0.0 0.00 0.00   0   0 0.0  0.0

@@ -1,0 +1,16 @@
+MIT Preservation Simulation Project 
+
+./Data_NoAudit.txt 20180403_121356EDT 
+
+Document losses with multiple copies and no auditing 
+
+Table of percentage loss of collection tabulated
+by number of copies and sector half-lifetime 
+
+
+   copies  2  3    5   10    20   30   50 100  200  300 500 1000 2000 3000 5000 10000
+1       1 82 69 50.2 29.4 15.89 10.9 6.74 3.4 1.71 1.18 0.7  0.4  0.2  0.1 0.08  0.04
+2       2 68 47 25.0  8.5  2.49  1.1 0.44 0.1 0.03 0.01 0.0  0.0  0.0  0.0 0.00  0.00
+3       3 56 32 12.5  2.5  0.41  0.1 0.03 0.0 0.00 0.00 0.0  0.0  0.0  0.0 0.00  0.00
+5       5 38 15  3.1  0.2  0.01  0.0 0.00 0.0 0.00 0.00 0.0  0.0  0.0  0.0 0.00  0.00
+10     10 14  2  0.1  0.0  0.00  0.0 0.00 0.0 0.00 0.00 0.0  0.0  0.0  0.0 0.00  0.00

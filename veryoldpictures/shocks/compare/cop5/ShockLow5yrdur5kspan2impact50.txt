@@ -1,0 +1,9 @@
+MIT Preservation Simulation Project 
+ShockLow5yrdur5kspan2impact50.txt 20180105_213051EST 
+
+Percent Permanent Losses, Shock Low 5yr dur5k span2 impact 50% 
+(percent loss by copies vs sector half-life in megahours) 
+
+        half-life--------------------> 
+  copies   3 5 10 20 30 50 100 200 300 500 1000
+1      5 0.2 0  0  0  0  0   0   0   0   0    0
