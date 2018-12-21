@@ -12,6 +12,6 @@ Notes:
 
 - But, aha!, with systematic auditing quarterly (1/4 of the documents get tested every quarter, without replacement, so all are examined once a year), six copies seems to do the trick -- even with absurdly short server life (halflife = 3 years) and absurdly short shock intervals (halflife = 1 year).
 
-This is all good news, except that it is for the span=1 situation, which does not take care of credit failures, government censorship actions, powerful adversaries, regional wars, etc. Working on span=2 now.  
+This is all good news, except that it is for the span=1 situation, which does not take care of credit failures, government censorship actions, powerful adversaries, regional wars, etc. Working on span=2 now and span=3 after.  
 
 
