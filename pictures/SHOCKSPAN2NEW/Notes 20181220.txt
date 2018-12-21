@@ -1,0 +1,35 @@
+Notes on Shocks - RBL 20181220 
+
+Shocks with span=2 are *much* more severe than span=1.  Quarterly (segmented) auditing is mandatory; simple annual auditing has much higher failure rates.
+
+These pics are pretty simple, all based on sample reps=5000.  (At that size, each line takes about 20 minutes on the AWS 32-core system.)  
+
+There is still some surprising non-monoticity in the results, for which we should probably do reps of 10,000 or 20,000.  (If we really care.)  I have gathered 100,000 good random seeds available for use if we really want more precision.  It's only computing time and a few pennies to AWS.  
+
+- copies=6 seems to have a failure rate at or slightly below 1% over a wide range of shock arrival rates and server lifetimes.  
+
+- copies=7 is better but not all that much better.  Only with assumptions of high server lifetime and infrequent shocks do we get below 0.1% (1/1000).
+
+If I were a librarian who had a must-not-lose collection, I would worry.  
+
+------
+
+With shocks of span=3, the situation is even more dire.  
+
+- copies=7 results are scary enough; I did not bother with copies=6.  
+
+- Even with copies=7, failures are above 1% unless shocks are infrequent and servers have long lives.  Yikes.  
+
+------
+
+What are reasonable values for server default half-life?  The average lifetime is 1.4 (=1/ln(2)) longer than the half-life.  Half-life 5 years = average 7 years; hl 8 years = average 11 years, etc.  I don't know if other people think in half-lives or averages, but I find half-life easier to judge.  
+
+- Is it plausible that more than half of the servers we know will live more than {3, 4, 5, 8, 10} (pick one) years without failure, merger, war, fire, flood, earthquake, lapsed credit card, censorship, hacking, or general administrative inattention?  
+
+I think the server population is bimodal or trimodal: Google, Amazon, Microsoft LOCKSS as the immortals; a second tier of Dropbox, Backblaze, Rackspace, Carbonite and others I don't know offhand; then the seven dwarves, including most colleges.  I am talking through my hat here.  I really don't know this market, have never researched it, but some names just leap out at me in the news occasionally.  So I could be completely off-base here.  
+
+------
+
+Aside: the resulting data files are way too big: 12MB for a single run of 5,000 reps across shock arrival rates from 1 to 4 years (half-life).  I am working on a process to narrow the files we process to the data we need and zip up the full-size ones.
+
+
