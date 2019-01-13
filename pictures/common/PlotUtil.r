@@ -135,6 +135,7 @@ fnPlotMakeFile <- function(plotname, sFilename, sSize="mediumlarge") {
         { png(sFilename,width=800,height=500) }     # 16:10
     print(plotname)
     dev.off()
+    if(debugprint){fnhere("after print plotname")}
     
     # Make a medium size pic with ggsave.
     dpi <- 72
@@ -143,9 +144,22 @@ fnPlotMakeFile <- function(plotname, sFilename, sSize="mediumlarge") {
     sFullishFName <- "ggsave_" %+% sFilename 
     ggsave(sFullishFName, width=h, height=v
                 , dpi=dpi, units="in", device=sFileType)
+    if(debugprint){fnhere("after ggsave")}
 
     return    
 } #endfunction
+
+
+fngettime <- function() {
+    sTime <- format(Sys.time(), "%Y%m%d_%H%M%S")
+    return(sTime)
+}
+
+fnhere <- function(sLine) {
+    sTime <- fngettime()
+    print(sTime %+% "  " %+% sLine)
+}
+
 
 # Edit history: 
 # iforgetwhen   RBL Original common version.
@@ -162,6 +176,8 @@ fnPlotMakeFile <- function(plotname, sFilename, sSize="mediumlarge") {
 # 20180914  RBL Change dot sizes and a few other minor moves.  
 #               Add aspect ratios to the picture size choices.  
 # 20180916  RBL Try to fix ggsave plots.  72dpi seems to work.  
+# 20190109  RBL Add fnhere() to print debug lines with timestamp.
+# 
 # 
 
 #END

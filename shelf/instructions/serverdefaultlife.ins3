@@ -5,7 +5,7 @@ nServerDefaultLife
 Expected Half-life of Servers (hrs) (0=infinite), must be nonzero for shocks
 value,label,selected
 0,"0 (infinite)",SELECTED
-10000,"10000 (1 year)",0
+#10000,"10000 (1 year)",0
 20000,"20000 (2 years)",0
 30000,"30000 (3 years)",0
 40000,"40000 (4 years)",0

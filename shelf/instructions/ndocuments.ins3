@@ -3,6 +3,7 @@
 nDocuments
 Number of Documents in Collection
 value,label,selected
-10,"10 (for SHOCKs)",SELECTED
+20,"20 (for SHOCKs)",SELECTED
+30,"30 (for monthly audit)",0
 10000,"10,000 (baseline)",0
 #100000,"one hundred thousand (very large)",0
