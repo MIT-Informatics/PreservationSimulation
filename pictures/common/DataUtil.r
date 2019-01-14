@@ -3,6 +3,7 @@
 
 # From Micah Altman 20170726
 # Adapted RBLlandau 20171002
+if(!exists("debugprint")){debugprint<-0}
 
 library(tidyverse)
 
@@ -235,6 +236,7 @@ fndfGetNoAuditData <- function(results)
 # 20180914  RBL Add selector for no-audit data.
 #               Move audittype into desired data columns.  
 #               Add new function to get just the combined raw data.
+# 20190114  RBL Add debugprint safeguard.
 # 
 # 
 
