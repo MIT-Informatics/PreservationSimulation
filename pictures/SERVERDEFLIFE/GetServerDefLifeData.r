@@ -24,10 +24,10 @@ want.varnames <- c("copies","lifem","lost","docstotal"
 fnNarrow <- function(dfIn)  {dfIn[want.varnames]}  
 sTitleLine <-   (   ""
                 %+% "Varying ServerDefaultHalfLife; no shocks; "
-                %+% "samples=(some number) "
+                %+% "samples=5000 "
                 %+% " "
                 %+% "\n"
-                %+% "\n(Copies=5; annual systematic auditing in 1 segment)"
+                %+% "\n(Copies=5; annual total auditing in 1 segment)"
                 )
 sLegendLabel <- "  Length of\n Simulation\n (years)"
 lLegendItemLabels <- c("10","20","30","50")
