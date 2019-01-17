@@ -251,6 +251,7 @@ class CShock(object):
         '''
         for (sServerID, cServer) in (util.fnttSortIDDict(G.dID2Server)):
             fCurrentLife = cServer.mfGetMyCurrentLife()
+            fFullLife = cServer.mfGetMyFullLife()
             fBirthday = cServer.mfGetMyBirthday()
             bServerAlive = not cServer.mbIsServerDead()
             bServerActive = cServer.bInUse
@@ -259,14 +260,14 @@ class CShock(object):
             #  but note if it's already dead.
             sStatus = "inuse" if bServerActive else ""
             sStatus = sStatus if bServerAlive else "dead"
-            lg.logInfo("SHOCK ", "t|%6.0f| audit+end check server|%s| "
+            lg.logInfo("SHOCK ", "t|%6.0f| audit+end check svr|%s| "
                 "life|%.0f|=|%.1f|yr %s" 
-                % (G.env.now, sServerID, fCurrentLife, fCurrentLife/10000, 
+                % (G.env.now, sServerID, fFullLife, fFullLife/10000, 
                 sStatus))
             NTRC.ntracef(3, "SHOK", "proc t|%6.0f| check expir? svr|%s| "
-                "svrdefaulthalflife|%s| currlife|%s|" 
+                "svrdefaulthalflife|%s| born|%s| currlife|%s|" 
                 % (G.env.now, sServerID, G.fServerDefaultHalflife, 
-                fCurrentLife))
+                fBirthday, fCurrentLife))
             # Check to see if the server's lifetime has expired. 
             bDeadAlready = CShock.cmbShouldServerDieNow(sServerID)
 
@@ -312,7 +313,7 @@ class CShock(object):
             # Server has overstayed its welcome.  Kill it.  
             sInUse = "currently in use" if cServer.mbIsServerInUse() else ""
             sShockVictim = "shock victim" if cServer.mbIsServerInShock() else ""
-            lg.logInfo("SHOCK ", "t|%6.0f| kill server|%s| "
+            lg.logInfo("SHOCK ", "t|%6.0f| kill svr|%s| "
                 "born|%.0f| life|%.0f|=|%.1f|yr "
                 "expired %s %s" 
                 % (G.env.now, mysServerID, fBirthday, 
@@ -438,7 +439,9 @@ that have expired (but whose expiry has not been detected).
 # 20171204  RBL More clearly document the two types of shock.
 #               Clean up formatting and comments some more.  
 # 20190116  RBL Fix arithmetic of when server should die to account for 
-#                birth time and life expectancy.
+#                birth time and life expectancy; sum = FullLife.
+#               Log FullLife instead of CurrentLIfe, better for servers
+#                that were born en route.  
 # 
 # 
 

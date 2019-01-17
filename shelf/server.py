@@ -116,7 +116,7 @@ class CServer(object):
             ones to be shocked.  True if server should be considered dead.  
             Like, the server is dead but the body hasn't been discovered yet.
         '''
-        return ((self.fBirthday + self.fCurrentLifespan) < G.env.now)
+        return (self.mfGetMyFullLife() <= G.env.now)
 
 
 # C S e r v e r . f n C o r r F a i l H a p p e n s T o A l l 
