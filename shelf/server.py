@@ -58,6 +58,7 @@ class CServer(object):
                                     #  generate a random expo life from that
                                     #  rather than using a fixed number.
         self.tLastServerCreated = (mysName, mynQual, mynShelfSize)
+        self.fBirthday = G.env.now  # When was this server born?
 
 
 # S e r v e r . m L i s t S e r v e r 
@@ -115,7 +116,7 @@ class CServer(object):
             ones to be shocked.  True if server should be considered dead.  
             Like, the server is dead but the body hasn't been discovered yet.
         '''
-        return (self.fCurrentLifespan < G.env.now)
+        return ((self.fBirthday + self.fCurrentLifespan) < G.env.now)
 
 
 # C S e r v e r . f n C o r r F a i l H a p p e n s T o A l l 
@@ -196,7 +197,7 @@ class CServer(object):
         lg.logInfo("SERVER", "created new server|%s| name|%s| "
             "quality|%s| size|%s|TB svrlife|%.0f|" 
             % (cNewServer.ID, sNewName, cNewServer.nQual, 
-            cNewServer.nShelfSizeTB, cNewServer.mfGetMyLife()))
+            cNewServer.nShelfSizeTB, cNewServer.mfGetMyCurrentLife()))
         return cNewServer.ID
 
 
@@ -226,12 +227,20 @@ class CServer(object):
         return self.fCurrentLifespan
 
 
-# S e r v e r . m f G e t M y L i f e
+# S e r v e r . m f G e t M y F u l l L i f e
     @catchex
     @ntracef("SERV")
-    def mfGetMyLife(self):
+    def mfGetMyFullLife(self):
         ''' Return current lifespan number. '''
-        return self.mfGetMyCurrentLife()
+        return self.mfGetMyBirthday() + self.mfGetMyCurrentLife()
+
+
+# S e r v e r . m f G e t M y B i r t h d a y
+    @catchex
+    @ntracef("SERV")
+    def mfGetMyBirthday(self):
+        ''' Return when server was created. '''
+        return self.fBirthday
 
 
 # S e r v e r . m R e s c h e d u l e M y L i f e 
@@ -337,9 +346,9 @@ class CServer(object):
         '''
         cShelf = CShelf(self.ID, self.nQual, self.nShelfSize)
         lg.logInfo("SERVER","server |%s| created storage shelf|%s| "
-            "quality|%s| size|%s|TB svrlife|%.0f|" 
+            "quality|%s| size|%s|TB svrlifespan|%.0f| svrlife|%.0f|" 
             % (self.ID, cShelf.ID, cShelf.nQual, self.nShelfSizeTB, 
-            self.mfGetMyLife()))
+            self.mfGetMyOriginalLife(), self.mfGetMyCurrentLife()))
         return cShelf.ID
 
 
@@ -489,6 +498,10 @@ def fnTimerInt(objTimer, xContext):
 #                the body has not yet been discovered by an audit cycle.  
 #                If so, then don't count it among the ones that might
 #                be subject to shock.  
+# 201901016 RBL Record server's birthday when it is created.  
+#               Add routines to get and use birthday.
+#               Take account of birthday when assessing should server die.
+# 
 # 
 
 #END

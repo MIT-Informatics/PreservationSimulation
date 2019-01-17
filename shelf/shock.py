@@ -251,12 +251,15 @@ class CShock(object):
         '''
         for (sServerID, cServer) in (util.fnttSortIDDict(G.dID2Server)):
             fCurrentLife = cServer.mfGetMyCurrentLife()
+            fBirthday = cServer.mfGetMyBirthday()
             bServerAlive = not cServer.mbIsServerDead()
+            bServerActive = cServer.bInUse
 
             # Log that we are examining this server, 
             #  but note if it's already dead.
-            sStatus = "" if bServerAlive else "dead"
-            lg.logInfo("SHOCK ", "t|%6.0f| audit+end checking server|%s| "
+            sStatus = "inuse" if bServerActive else ""
+            sStatus = sStatus if bServerAlive else "dead"
+            lg.logInfo("SHOCK ", "t|%6.0f| audit+end check server|%s| "
                 "life|%.0f|=|%.1f|yr %s" 
                 % (G.env.now, sServerID, fCurrentLife, fCurrentLife/10000, 
                 sStatus))
@@ -298,23 +301,27 @@ class CShock(object):
         '''
         cServer = G.dID2Server[mysServerID]
         fCurrentLife = cServer.mfGetMyCurrentLife()
+        fFullLife = cServer.mfGetMyFullLife()
+        fBirthday = cServer.mfGetMyBirthday()
         bServerAlive = not cServer.mbIsServerDead()
         if (G.fServerDefaultHalflife > 0
             and fCurrentLife > 0
-            and fCurrentLife <= G.env.now
+            and fFullLife <= G.env.now
             and bServerAlive
             ):
             # Server has overstayed its welcome.  Kill it.  
             sInUse = "currently in use" if cServer.mbIsServerInUse() else ""
             sShockVictim = "shock victim" if cServer.mbIsServerInShock() else ""
-            lg.logInfo("SHOCK ", "t|%6.0f| kill server|%s| life|%.0f|=|%.1f|yr"
-                " expired %s %s" 
-                % (G.env.now, mysServerID, fCurrentLife, fCurrentLife/10000, 
+            lg.logInfo("SHOCK ", "t|%6.0f| kill server|%s| "
+                "born|%.0f| life|%.0f|=|%.1f|yr "
+                "expired %s %s" 
+                % (G.env.now, mysServerID, fBirthday, 
+                fCurrentLife, fCurrentLife/10000, 
                 sInUse, sShockVictim))
             NTRC.ntracef(3, "SHOK", "proc t|%6.0f| expired svr|%s| "
-                "svrdefaulthalflife|%s| currlife|%.0f|" 
+                "svrdefaulthalflife|%s| born|%.0f| currlife|%.0f|" 
                 % (G.env.now, mysServerID, G.fServerDefaultHalflife, 
-                fCurrentLife))
+                fBirthday, fCurrentLife))
             result = cServer.mKillServer()
             G.nDeadOldServers += 1
             bResult = True
@@ -430,6 +437,9 @@ that have expired (but whose expiry has not been detected).
 #                PEP8-ify some of the spacing.  
 # 20171204  RBL More clearly document the two types of shock.
 #               Clean up formatting and comments some more.  
+# 20190116  RBL Fix arithmetic of when server should die to account for 
+#                birth time and life expectancy.
+# 
 # 
 
 #END
