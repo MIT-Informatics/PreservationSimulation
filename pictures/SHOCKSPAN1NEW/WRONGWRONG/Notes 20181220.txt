@@ -1,0 +1,17 @@
+Notes on shock pictures -- RBL 20181220
+
+These pictures are all for shockspan=1 and shockimpact=100%, that is, a shock kills one server immediately.  The exponential wait for the next shock starts (almost) immediately afterward.  The half-life of shocks varies on the X axis. 
+
+This scenario could be approximately the local earthquake or flood: one server dies, but the next shock occurs at the same rate.  Okay for mergers, mission changes, and such, too.  This is perhaps not entirely plausible for the physical models of earthquakes and floods, which tend to occur in clumps due to aftershocks and rainy seasons.  Better for small fires or insurrections, perhaps.  
+
+Notes:
+
+- For server default halflife = 2 years and annual auditing, the situation is hopeless.  Even 6 copies has a 10-ish percent chance of losing everything.  
+
+- For server halflife = 4 years and annual auditing, even seven copies has a don't-risk-it chance (>1/1000) of losing everything.  
+
+- But, aha!, with systematic auditing quarterly (1/4 of the documents get tested every quarter, without replacement, so all are examined once a year), six copies seems to do the trick -- even with absurdly short server life (halflife = 3 years) and absurdly short shock intervals (halflife = 1 year).
+
+This is all good news, except that it is for the span=1 situation, which does not take care of credit failures, government censorship actions, powerful adversaries, regional wars, etc. Working on span=2 now and span=3 after.  
+
+
