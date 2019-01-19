@@ -5,7 +5,7 @@
 
 from NewTraceFac import NTRC,ntrace,ntracef
 import logoutput as lg
-from sys import argv
+import sys
 from globaldata import G,P
 import os
 
@@ -18,7 +18,9 @@ def dumpParamsIntoLog():
     #  of information in it about the parameters that resulted in
     #  the answers.
     lg.logInfo("MAIN","Simulation parameters")
-    lg.logInfo("MAIN","Command line|%s|" % (argv[1:]))
+    lg.logInfo("MAIN","Command line|%s|" % (sys.argv))
+    sCmd = fnsReconstituteCommand(sys.argv)
+    lg.logInfo("MAIN","Usable CLI line|%s|" % (sCmd))
     lg.logInfo("PARAMS","familydir|%s| specificdir|%s|" 
         % (G.sFamilyDir,G.sSpecificDir)) 
     lg.logInfo("PARAMS","RANDOM random seed|%d| "
@@ -107,12 +109,22 @@ def dumpParamsIntoLog():
         G.nShockType ))
 
 #-----------------------------------------------------------
+
+# f n s R e c o n s t i t u t e C o m m a n d 
+@ntrace
+def fnsReconstituteCommand(lArgs):
+    sPyVer = sys.version_info.major
+    sOut = "python" + str(sPyVer) + " " + " ".join(lArgs)
+    return sOut
+
+
 # Edit History:
 # 20160920  RBL Move these routines out of main.py.
 # 20161222  RBL Add maxlife to shock param output.
 # 20170109  RBL Add shock type to report line.  
 #               PEP8-ify long lines.  
 # 20170421  RBL Add span to glitch params log line.
+# 20190118  RBL Also put out usable command line.
 # 
 # 
 

@@ -142,9 +142,9 @@ fnPlotMakeFile <- function(plotname, sFilename, sSize="mediumlarge") {
     h <- 1200/dpi; v <- 750/dpi
     sFileType <- "png"
     sFullishFName <- "ggsave_" %+% sFilename 
-    ggsave(sFullishFName, width=h, height=v
-                , dpi=dpi, units="in", device=sFileType)
-    if(debugprint){fnhere("after ggsave")}
+#    ggsave(sFullishFName, width=h, height=v
+#                , dpi=dpi, units="in", device=sFileType)
+#    if(debugprint){fnhere("after ggsave")}
 
     return    
 } #endfunction

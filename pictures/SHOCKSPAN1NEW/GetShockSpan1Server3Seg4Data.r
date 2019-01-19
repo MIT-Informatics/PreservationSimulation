@@ -14,7 +14,9 @@ fnGroupBy <- function(dfIn) {group_by(dfIn, copies, lifem
                                     )}
 fnSubset <- function(dfIn)  {subset(dfIn, serverdefaultlife==30000
                                     & copies>=5
+                                    & auditfrequency==10000
                                     & auditsegments==4
+                                    & shockspan==1
                                     )}
 want.varnames <- c("copies","lifem","lost","docstotal","serverdefaultlife"
                 ,"shockfreq","shockimpact","shockspan","shockmaxlife"
@@ -23,7 +25,7 @@ want.varnames <- c("copies","lifem","lost","docstotal","serverdefaultlife"
 fnNarrow <- function(dfIn)  {dfIn[want.varnames]}  
 sTitleLine <-   (   ""
                 %+% "Shocks: span=1; ServerDefaultHalflife=3yrs; "
-                %+% "samples=5000 "
+                %+% "samples=1000 "
                 %+% " "
                 %+% "\n"
                 %+% "\n(Copies=5,6; annual systematic auditing in 4 segments)"

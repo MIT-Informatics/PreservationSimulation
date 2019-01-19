@@ -220,6 +220,11 @@ def fndFilterResults(mydOldInstructions):
     if mydOldInstructions["nAuditFreq"] == [0]:
         dInstructions["nAuditSegments"] = [0]
         dInstructions["sAuditType"] = ["TOTAL"]
+    # If auditing=systematic at high frequency, make sure there are enough
+    #  documents for each segment.  
+    nMinDocs = util.fnIntPlease(dInstructions["nAuditSegments"]) * 2
+    if mydOldInstructions["nDocuments"] < nMinDocs:
+        dInstructions["nDocuments"] = nMinDocs
     return dInstructions
 
 # f n v T e s t R e s u l t s 
@@ -383,7 +388,9 @@ Acceptable types of things to specify, just examples.  Be careful with quotes.
 #               Raise fatal error if no instruction files get translated.
 # 20181116  RBL Remove min/max for copies and lifem.  No longer needed
 #                with multiselect.
-# 
+# 20190118  RBL Ensure that there are enough documents to be divided into
+#                the number of auditing segments requested.  This may increase
+#                nDocuments for the runs, something we have not done before.  
 # 
 
 #END
