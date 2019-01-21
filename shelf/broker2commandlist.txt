@@ -55,6 +55,11 @@ python3 -c 'import sys; print(sys.version); print(sys.version_info)'
 
 date +%Y%m%d_%H%M%S.%3N
 
+# Wait for end of log file to be written; else risk "nolinefound" errors 
+#  in extraction.  This should not be necessary, but apparently is.  
+while true; do if [ -z $(tail -3 {sFamilyDir}/{sSpecificDir}/log/{sShelfLogFileName}.log | grep "ENDENDEND" | wc -l) ]; then sleep 0.100; else sleep 0.01; break; fi; done 
+date +%Y%m%d_%H%M%S.%3N
+
 # Data extraction command.  Header must be forced here so that the 
 #  cleanup program can label the data fields correctly.
 
@@ -79,6 +84,10 @@ date +%Y%m%d_%H%M%S.%3N
 #                the other way, flat forehead.  
 # 20181117  RBL Add TRACE_PRODUCTION=YES to the main.py invocation.  
 #               Add unset TRACE_others for extract and cleanup.
+# 20190121  RBL Add wait for end of log file after main.py run, grumble.  
+#                I thought this had been fixed with newbroker, but 
+#                apparently Linux is still capable of thinking a job is 
+#                completed before its files have been written.  
 # 
 
 #END

@@ -95,8 +95,7 @@ def main(mysInputFilename):
         # For each data line, create dict of values and map them into 
         #  the reduced-width output template.  
         print(g.sCoreColumns)
-        for sLine in fhIn:
-            lValues = next(oReader)
+        for lValues in oReader:
             NTRC.tracef(3, "NARO", "proc lValues|%s|" % (lValues))
             dValues = dict(zip(lHeader, lValues))
             NTRC.tracef(3, "NARO", "proc dValues|%s|" % (dValues))

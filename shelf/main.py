@@ -114,6 +114,7 @@ import dumpparams
 import dumpuse
 import makethings
 from shock import CShock
+import sys
 
 
 #-----------------------------------------------------------
@@ -335,6 +336,8 @@ if __name__ == "__main__":
         profile.run('mainmain()')
     else:
         mainmain()
+    sys.stdout.flush()
+    sys.stderr.flush()
 
 
 # Edit History:
@@ -365,7 +368,9 @@ if __name__ == "__main__":
 # 20171101  RBL Add check for nonsensical combinations of arguments.
 # 20180529  RBL Remove ancient "<>" from code, yikes.  
 # 20180826  RBL Fix printing of CPU time to %8.3f.
+# 20190121  RBL Flush stdout and stderr before exiting; might help with 
+#                extract starting too early on incomplete log files.
 # 
-
+# 
 
 # END
