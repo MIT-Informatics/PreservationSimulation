@@ -394,7 +394,7 @@ class CShelf(object):
         self.bAlive = False         # Shelf can no longer be used to store docs.
         NTRC.tracef(3, "SHLF", "proc mAge_shelf  time|%d| shelf|%s| shelf_error" 
             % (G.env.now,self.ID))
-        lg.logInfo("SERVER", "storage shelf failed time|%6q.0f| server|%s| "
+        lg.logInfo("SERVER", "storage shelf failed time|%6.0f| server|%s| "
             "shelf|%s| lost |%d| docs" 
             % (G.env.now,self.sServerID,self.ID,len(self.lCopyIDs)))
         # This whole shelf is a goner.  Kill it. 
@@ -408,7 +408,8 @@ class CShelf(object):
         for sCopyID in templCopyIDs:
             sDocID = G.dID2Copy[sCopyID].sDocID
             self.mDestroyCopy(sCopyID)
-            G.dID2Server[self.sServerID].mDestroyDocument(sDocID,self.ID)
+#            G.dID2Server[self.sServerID].mDestroyDocument(sDocID,self.ID)
+            G.dID2Server[self.sServerID].mDestroyCopy(sCopyID,self.ID)
             self.mReportDocumentLost(sDocID)
         NTRC.tracef(3, "FAIL", "proc t|%d| shelf failure server|%s| qual|%d| "
             "shelf|%s| docs|%d|" 
@@ -504,6 +505,9 @@ class CShelf(object):
 #               PEP8-ify most of the trace/log and comment lines.  
 # 20180516  RBL Update to use ntrace, ntracef, NTRC.
 # 20180826  RBL Fix fatal typo (NNTRC) in mDestroyShelf.
+# 20190121  RBL Remove rogue typo char from %something format spec. 
+#                And don't destroy document in server when shelf ages out.
+#                (Was that ever correct?  Destroy copy, yes.)
 # 
 # 
 

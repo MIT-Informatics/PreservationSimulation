@@ -1,0 +1,53 @@
+-------------------
+20190121_200507.888  $ date +%Y%m%d_%H%M%S.%3N
+20190121_200507.893  20190121_200507.892
+-------------------
+20190121_200507.893  $ bash --version
+20190121_200507.896  GNU bash, version 4.3.11(1)-release (x86_64-pc-linux-gnu)
+                     Copyright (C) 2013 Free Software Foundation, Inc.
+                     License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+                     
+                     This is free software; you are free to change and redistribute it.
+                     There is NO WARRANTY, to the extent permitted by law.
+-------------------
+20190121_200507.896  $ python3 -V
+20190121_200507.900  Python 3.4.3
+-------------------
+20190121_200507.900  $ python2 -c 'import sys; print(sys.version); print(sys.version_info)'
+20190121_200507.913  2.7.6 (default, Oct 26 2016, 20:30:19) 
+                     [GCC 4.8.4]
+                     sys.version_info(major=2, minor=7, micro=6, releaselevel='final', serial=0)
+-------------------
+20190121_200507.913  $ python3 -c 'import sys; print(sys.version); print(sys.version_info)'
+20190121_200507.945  3.4.3 (default, Nov 12 2018, 22:25:49) 
+                     [GCC 4.8.4]
+                     sys.version_info(major=3, minor=4, micro=3, releaselevel='final', serial=0)
+-------------------
+20190121_200507.945  $ (export TRACE_LEVEL=0; export TRACE_PRODUCTION=YES; unset TRACE_FACIL; unset TRACE_TARGET; unset DEBUG; python2 main.py ../hl20190121 SERVERDEFLIFE 500000 275986375 --ncopies=5 --lifek=10000000 --audit=10000 --auditsegments=1 --audittype=TOTAL --glitchfreq=0 --glitchimpact=0 --glitchdecay=0 --glitchmaxlife=0 --glitchspan=0 --serverdefaultlife=30000 --shockfreq=0 --shockimpact=0 --shockmaxlife=0 --shockspan=0 --shelfsize=1 --ndocuments=20 --smalldoc=50 --pctsmall=100 --shortlog --mongoid=\'e6f859f457a7565184c53dff4d1d1fe111db45e0_1965\'  >  ../hl20190121/SERVERDEFLIFE/log/doc50cop5shlf1lif10000_af10000s1tTOTAL_gf0i0d0m0_sh0i0s0m0_svrdeflif30000simlen500000_seed275986375.log  2>&1)
+20190121_200508.167  
+-------------------
+20190121_200508.167  $ date +%Y%m%d_%H%M%S.%3N
+20190121_200508.171  20190121_200508.170
+-------------------
+20190121_200508.171  $ while true; do if [ -z $(tail -3 ../hl20190121/SERVERDEFLIFE/log/doc50cop5shlf1lif10000_af10000s1tTOTAL_gf0i0d0m0_sh0i0s0m0_svrdeflif30000simlen500000_seed275986375.log | grep "ENDENDEND" | wc -l) ]; then sleep 0.100; else sleep 0.01; break; fi; done
+20190121_200508.186  
+-------------------
+20190121_200508.186  $ date +%Y%m%d_%H%M%S.%3N
+20190121_200508.190  20190121_200508.190
+-------------------
+20190121_200508.191  $ (export TRACE_LEVEL=0; export TRACE_PRODUCTION=YES; unset TRACE_FACIL; unset TRACE_TARGET; python2 extractvalues2.py --header --separator=' ' hl-extractinstructions.txt ../hl20190121/SERVERDEFLIFE/log/doc50cop5shlf1lif10000_af10000s1tTOTAL_gf0i0d0m0_sh0i0s0m0_svrdeflif30000simlen500000_seed275986375.log  |  tee  ../hl20190121/SERVERDEFLIFE/ext/doc50cop5shlf1lif10000_af10000s1tTOTAL_gf0i0d0m0_sh0i0s0m0_svrdeflif30000simlen500000_seed275986375.ext)
+20190121_200508.268  timestamp docsize shelfsize copies lifem simlength seed lost docstotal docsokay docsrepairedmajority docsrepairedminority docslost auditcycles auditfrequency auditsegments audittype auditrepairs auditmajority auditminority auditlost glitchfreq glitchimpact glitchdecay glitchmaxlife nglitches serverdefaultlife shockfreq shockimpact shockmaxlife shockspan shocktype nshocks nshockdeaths deadserversactive deadserversall walltime cputime logfilename logfilesize instructionfilename todaysdatetime extractorversion cpuinfo mongoid
+                     20190121_200507 50 1 5 10000 500000 275986375 nolinefound nolinefound nolinefound nolinefound nolinefound nolinefound nolinefound nolinefound nolinefound TOTAL nolinefound nolinefound nolinefound nolinefound 0 0 0 0 nolinefound 30000 0 0 0 0 2 nolinefound nolinefound nolinefound nolinefound nolinefound nolinefound ../hl20190121/SERVERDEFLIFE/log/doc50cop5shlf1lif10000_af10000s1tTOTAL_gf0i0d0m0_sh0i0s0m0_svrdeflif30000simlen500000_seed275986375.log 36718 hl-extractinstructions.txt 20190121_200508 0.6_20170522 GenuineIntel_fam6mod62step4cor8spd2800.084 e6f859f457a7565184c53dff4d1d1fe111db45e0_1965
+-------------------
+20190121_200508.269  $ date +%Y%m%d_%H%M%S.%3N
+20190121_200508.273  20190121_200508.272
+-------------------
+20190121_200508.273  $ (export TRACE_LEVEL=0; export TRACE_PRODUCTION=YES; unset TRACE_FACIL; unset TRACE_TARGET; python2 datacleanup.py inprogress done ../hl20190121/SERVERDEFLIFE/ext/doc50cop5shlf1lif10000_af10000s1tTOTAL_gf0i0d0m0_sh0i0s0m0_svrdeflif30000simlen500000_seed275986375.ext ../hl20190121/SERVERDEFLIFE/dat/GiantOutput_00.txt  --separator=' ' --donotdelete=N)
+20190121_200508.895  20190121_200508.349 0 DCLN  datacleanup Begin.
+                     20190121_200508.353 0 DCLN  proc looking for done recd|e6f859f457a7565184c53dff4d1d1fe111db45e0_1965|
+                     20190121_200508.366 0 DCLN  proc line appended to output 
+                     sLineOut|20190121_200507 50 1 5 10000 500000 275986375 nolinefound nolinefound nolinefound nolinefound nolinefound nolinefound nolinefound nolinefound nolinefound TOTAL nolinefound nolinefound nolinefound nolinefound 0 0 0 0 nolinefound 30000 0 0 0 0 2 nolinefound nolinefound nolinefound nolinefound nolinefound nolinefound ../hl20190121/SERVERDEFLIFE/log/doc50cop5shlf1lif10000_af10000s1tTOTAL_gf0i0d0m0_sh0i0s0m0_svrdeflif30000simlen500000_seed275986375.log 36718 hl-extractinstructions.txt 20190121_200508 0.6_20170522 GenuineIntel_fam6mod62step4cor8spd2800.084 e6f859f457a7565184c53dff4d1d1fe111db45e0_1965|
+                     20190121_200508.369 0 DCLN  datacleanup End.
+-------------------
+20190121_200508.896  $ date +%Y%m%d_%H%M%S.%3N
+20190121_200508.901  20190121_200508.900
