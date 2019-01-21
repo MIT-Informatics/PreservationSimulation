@@ -1,7 +1,0 @@
-Name,Value
-sAuditStrategy,OFF
-nAuditCycleInterval,0
-nAuditSegments,1
-fAuditZipfParam,1.0
-fAuditZipfBins,10
-nBandwidthMbps,100

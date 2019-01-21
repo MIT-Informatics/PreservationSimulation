@@ -1,9 +1,0 @@
-# Document size in MB
-
-nDocSize
-Size of Documents (MB)
-value,label,selected
-5,"5 (small, text/photo)",0
-50,"50 (large, audio)",SELECTED
-500,"500 (very large, video)",0
-5000,"5000 (giant, movie)",0
