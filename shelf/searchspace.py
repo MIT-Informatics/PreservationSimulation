@@ -220,11 +220,13 @@ def fndFilterResults(mydOldInstructions):
     if mydOldInstructions["nAuditFreq"] == [0]:
         dInstructions["nAuditSegments"] = [0]
         dInstructions["sAuditType"] = ["TOTAL"]
+    """
     # If auditing=systematic at high frequency, make sure there are enough
     #  documents for each segment.  
     nMinDocs = util.fnIntPlease(dInstructions["nAuditSegments"]) * 2
     if mydOldInstructions["nDocuments"] < nMinDocs:
         dInstructions["nDocuments"] = nMinDocs
+    """
     return dInstructions
 
 # f n v T e s t R e s u l t s 
@@ -391,6 +393,8 @@ Acceptable types of things to specify, just examples.  Be careful with quotes.
 # 20190118  RBL Ensure that there are enough documents to be divided into
 #                the number of auditing segments requested.  This may increase
 #                nDocuments for the runs, something we have not done before.  
+# 20190121  RBL Disable that last check for nDocuments.  Find a better way.  
+# 
 # 
 
 #END
