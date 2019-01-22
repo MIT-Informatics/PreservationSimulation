@@ -1,0 +1,458 @@
+20190121_185842 MAIN INFO - Simulation parameters
+20190121_185842 MAIN INFO - Command line|['main.py', '../hl20190121', 'SERVERDEFLIFE', '300000', '275986375', '--ncopies=5', '--lifek=10000000', '--audit=10000', '--auditsegments=1', '--audittype=TOTAL', '--glitchfreq=0', '--glitchimpact=0', '--glitchdecay=0', '--glitchmaxlife=0', '--glitchspan=0', '--serverdefaultlife=60000', '--shockfreq=0', '--shockimpact=0', '--shockmaxlife=0', '--shockspan=0', '--shelfsize=1', '--ndocuments=20', '--smalldoc=50', '--pctsmall=100', '--shortlog', '--mongoid=f424a8816c724959956a7fe30208dc1038b28e9c_1965']|
+20190121_185842 MAIN INFO - Usable CLI line|python2 main.py ../hl20190121 SERVERDEFLIFE 300000 275986375 --ncopies=5 --lifek=10000000 --audit=10000 --auditsegments=1 --audittype=TOTAL --glitchfreq=0 --glitchimpact=0 --glitchdecay=0 --glitchmaxlife=0 --glitchspan=0 --serverdefaultlife=60000 --shockfreq=0 --shockimpact=0 --shockmaxlife=0 --shockspan=0 --shelfsize=1 --ndocuments=20 --smalldoc=50 --pctsmall=100 --shortlog --mongoid=f424a8816c724959956a7fe30208dc1038b28e9c_1965|
+20190121_185842 PARAMS INFO - familydir|../hl20190121| specificdir|SERVERDEFLIFE|
+20190121_185842 PARAMS INFO - RANDOM random seed|275986375| 
+20190121_185842 PARAMS INFO - begin simulation timelimit|300000|hr=|30|metricyr defaultlimit|100000|hr=|10|metricyr
+20190121_185842 PARAMS INFO - POLITE time|1000|msec
+20190121_185842 PARAMS INFO - LOG    logfile|-| loglevel|INFO|
+20190121_185842 PARAMS INFO - TRACE  traceproduction|False|
+20190121_185842 PARAMS INFO - CLIENT client|MIT| collection|Mags| quality|1| ndocs|10|
+20190121_185842 PARAMS INFO - ALLCLIENTS nDocuments|20| override if nz
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 11| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 10| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 13| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 12| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 15| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 14| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 17| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 16| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 19| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 18| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|AWS Euro  Plus| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Google Drive Plus| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|AWS Euro Vanilla| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 06| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 07| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 04| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 05| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 02| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 03| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 01| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Yet Another 1| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 08| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 09| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Google Drive Platinum| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Very Desperate Backup 09| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Very Desperate Backup 08| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Very Desperate Backup 01| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Very Desperate Backup 03| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Very Desperate Backup 02| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Very Desperate Backup 05| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Very Desperate Backup 04| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Very Desperate Backup 07| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Very Desperate Backup 06| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Amazon East Premium| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Amazon West Plus| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 70| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Amazon West| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Amazon West Premium| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Amazon East Super Duper| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Google Drive Super Duper| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 60| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 61| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 62| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 63| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 64| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 65| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 66| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 67| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 68| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 69| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|AWS Euro  Super Duper| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Google Drive Premium| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|AWS Euro  Premium| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Amazon East Platinum| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Very Desperate Backup 50| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|OneDrive  Super Duper| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Amazon East Plus| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Amazon West Platinum| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 55| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 54| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 57| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 56| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 51| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 50| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 53| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 52| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 59| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 58| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|AWS Euro  Platinum| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|OneDrive  Platinum| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Google Drive| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|OneDrive  Plus| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Amazon East| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Very Desperate Backup 31| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Very Desperate Backup 32| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Very Desperate Backup 33| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Very Desperate Backup 34| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Very Desperate Backup 35| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Very Desperate Backup 36| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Very Desperate Backup 37| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Very Desperate Backup 38| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Very Desperate Backup 39| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Very Desperate Backup 45| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Very Desperate Backup 44| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Very Desperate Backup 47| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Very Desperate Backup 46| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Very Desperate Backup 41| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Very Desperate Backup 40| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Very Desperate Backup 43| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Very Desperate Backup 42| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Very Desperate Backup 49| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Very Desperate Backup 48| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 48| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 49| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 42| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 43| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 40| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 41| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 46| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 47| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 44| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 45| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Very Desperate Backup 23| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Very Desperate Backup 22| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Very Desperate Backup 21| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Very Desperate Backup 20| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Very Desperate Backup 27| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Very Desperate Backup 26| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Very Desperate Backup 25| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Very Desperate Backup 24| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Very Desperate Backup 29| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Very Desperate Backup 28| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Yet Another 4| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Yet Another 5| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Yet Another 2| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Yet Another 3| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 39| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 38| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 37| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 36| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 35| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 34| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 33| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 32| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 31| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 30| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|OneDrive Vanilla| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|OneDrive  Premium| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Very Desperate Backup 16| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Very Desperate Backup 17| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Very Desperate Backup 14| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Very Desperate Backup 15| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Very Desperate Backup 12| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Very Desperate Backup 13| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Very Desperate Backup 10| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Very Desperate Backup 11| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Very Desperate Backup 18| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Very Desperate Backup 19| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Very Desperate Backup 30| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Amazon West Super Duper| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 28| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 29| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 24| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 25| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 26| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 27| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 20| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 21| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 22| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER server|Desperate Backup 23| quality|1| shelfsize|1|TB
+20190121_185842 PARAMS INFO - SERVER DefaultHalflife|60000|
+20190121_185842 PARAMS INFO - SHELF quality|1| smallfailrate|10000000|Khr=|1140771|yr shelffailrate|100000000|Khr=|11407711|yr
+20190121_185842 PARAMS INFO - SHELF quality|2| smallfailrate|10000000|Khr=|1140771|yr shelffailrate|200000000|Khr=|22815423|yr
+20190121_185842 PARAMS INFO - SHELF quality|3| smallfailrate|10000000|Khr=|1140771|yr shelffailrate|400000000|Khr=|45630846|yr
+20190121_185842 PARAMS INFO - SHELF quality|4| smallfailrate|10000000|Khr=|1140771|yr shelffailrate|800000000|Khr=|91261692|yr
+20190121_185842 PARAMS INFO - SHELF quality|5| smallfailrate|10000000|Khr=|1140771|yr shelffailrate|1600000000|Khr=|182523385|yr
+20190121_185842 PARAMS INFO - DISTRIBUTION value|1| quality|1| copies|5|
+20190121_185842 PARAMS INFO - DISTRIBUTION value|2| quality|2| copies|4|
+20190121_185842 PARAMS INFO - DISTRIBUTION value|3| quality|3| copies|3|
+20190121_185842 PARAMS INFO - DISTRIBUTION value|4| quality|4| copies|2|
+20190121_185842 PARAMS INFO - DISTRIBUTION value|5| quality|5| copies|1|
+20190121_185842 PARAMS INFO - DOCUMENT value|1| percent|100| meanMB|50| sd|0|
+20190121_185842 PARAMS INFO - DOCUMENT value|1| percent|0| meanMB|5000| sd|2000|
+20190121_185842 PARAMS INFO - AUDIT interval hours|10000| segments|1| type|TOTAL| bandwidth Mbps|100|
+20190121_185842 PARAMS INFO - GLITCH freq|0| impact|0| span|0| decay|0| maxlife|0| ignorelimit|0.050|
+20190121_185842 PARAMS INFO - SHOCKS freq|0| impact|0| span|0| maxlife|0| type|2|
+20190121_185842 MAIN INFO - created server|V1| quality|1| shelfsize|1|TB name|Desperate Backup 11| life|13582|
+20190121_185842 MAIN INFO - created server|V2| quality|1| shelfsize|1|TB name|Desperate Backup 10| life|10517|
+20190121_185842 MAIN INFO - created server|V3| quality|1| shelfsize|1|TB name|Desperate Backup 13| life|49093|
+20190121_185842 MAIN INFO - created server|V4| quality|1| shelfsize|1|TB name|Desperate Backup 12| life|270603|
+20190121_185842 MAIN INFO - created server|V5| quality|1| shelfsize|1|TB name|Desperate Backup 15| life|63618|
+20190121_185842 MAIN INFO - created server|V6| quality|1| shelfsize|1|TB name|Desperate Backup 14| life|44748|
+20190121_185842 MAIN INFO - created server|V7| quality|1| shelfsize|1|TB name|Desperate Backup 17| life|31456|
+20190121_185842 MAIN INFO - created server|V8| quality|1| shelfsize|1|TB name|Desperate Backup 16| life|2291|
+20190121_185842 MAIN INFO - created server|V9| quality|1| shelfsize|1|TB name|Desperate Backup 19| life|4908|
+20190121_185842 MAIN INFO - created server|V10| quality|1| shelfsize|1|TB name|Desperate Backup 18| life|12712|
+20190121_185842 MAIN INFO - created server|V11| quality|1| shelfsize|1|TB name|AWS Euro  Plus| life|208441|
+20190121_185842 MAIN INFO - created server|V12| quality|1| shelfsize|1|TB name|Google Drive Plus| life|8579|
+20190121_185842 MAIN INFO - created server|V13| quality|1| shelfsize|1|TB name|AWS Euro Vanilla| life|79067|
+20190121_185842 MAIN INFO - created server|V14| quality|1| shelfsize|1|TB name|Desperate Backup 06| life|55949|
+20190121_185842 MAIN INFO - created server|V15| quality|1| shelfsize|1|TB name|Desperate Backup 07| life|6845|
+20190121_185842 MAIN INFO - created server|V16| quality|1| shelfsize|1|TB name|Desperate Backup 04| life|13728|
+20190121_185842 MAIN INFO - created server|V17| quality|1| shelfsize|1|TB name|Desperate Backup 05| life|59966|
+20190121_185842 MAIN INFO - created server|V18| quality|1| shelfsize|1|TB name|Desperate Backup 02| life|81281|
+20190121_185842 MAIN INFO - created server|V19| quality|1| shelfsize|1|TB name|Desperate Backup 03| life|2647|
+20190121_185842 MAIN INFO - created server|V20| quality|1| shelfsize|1|TB name|Desperate Backup 01| life|107549|
+20190121_185842 MAIN INFO - created server|V21| quality|1| shelfsize|1|TB name|Yet Another 1| life|19518|
+20190121_185842 MAIN INFO - created server|V22| quality|1| shelfsize|1|TB name|Desperate Backup 08| life|49546|
+20190121_185842 MAIN INFO - created server|V23| quality|1| shelfsize|1|TB name|Desperate Backup 09| life|62050|
+20190121_185842 MAIN INFO - created server|V24| quality|1| shelfsize|1|TB name|Google Drive Platinum| life|198188|
+20190121_185842 MAIN INFO - created server|V25| quality|1| shelfsize|1|TB name|Very Desperate Backup 09| life|792|
+20190121_185842 MAIN INFO - created server|V26| quality|1| shelfsize|1|TB name|Very Desperate Backup 08| life|109880|
+20190121_185842 MAIN INFO - created server|V27| quality|1| shelfsize|1|TB name|Very Desperate Backup 01| life|107250|
+20190121_185842 MAIN INFO - created server|V28| quality|1| shelfsize|1|TB name|Very Desperate Backup 03| life|12354|
+20190121_185842 MAIN INFO - created server|V29| quality|1| shelfsize|1|TB name|Very Desperate Backup 02| life|60437|
+20190121_185842 MAIN INFO - created server|V30| quality|1| shelfsize|1|TB name|Very Desperate Backup 05| life|252055|
+20190121_185842 MAIN INFO - created server|V31| quality|1| shelfsize|1|TB name|Very Desperate Backup 04| life|152953|
+20190121_185842 MAIN INFO - created server|V32| quality|1| shelfsize|1|TB name|Very Desperate Backup 07| life|85342|
+20190121_185842 MAIN INFO - created server|V33| quality|1| shelfsize|1|TB name|Very Desperate Backup 06| life|135996|
+20190121_185842 MAIN INFO - created server|V34| quality|1| shelfsize|1|TB name|Amazon East Premium| life|115317|
+20190121_185842 MAIN INFO - created server|V35| quality|1| shelfsize|1|TB name|Amazon West Plus| life|6471|
+20190121_185842 MAIN INFO - created server|V36| quality|1| shelfsize|1|TB name|Desperate Backup 70| life|1107|
+20190121_185842 MAIN INFO - created server|V37| quality|1| shelfsize|1|TB name|Amazon West| life|26445|
+20190121_185842 MAIN INFO - created server|V38| quality|1| shelfsize|1|TB name|Amazon West Premium| life|226260|
+20190121_185842 MAIN INFO - created server|V39| quality|1| shelfsize|1|TB name|Amazon East Super Duper| life|5154|
+20190121_185842 MAIN INFO - created server|V40| quality|1| shelfsize|1|TB name|Google Drive Super Duper| life|5090|
+20190121_185842 MAIN INFO - created server|V41| quality|1| shelfsize|1|TB name|Desperate Backup 60| life|380561|
+20190121_185842 MAIN INFO - created server|V42| quality|1| shelfsize|1|TB name|Desperate Backup 61| life|256536|
+20190121_185842 MAIN INFO - created server|V43| quality|1| shelfsize|1|TB name|Desperate Backup 62| life|111463|
+20190121_185842 MAIN INFO - created server|V44| quality|1| shelfsize|1|TB name|Desperate Backup 63| life|99912|
+20190121_185842 MAIN INFO - created server|V45| quality|1| shelfsize|1|TB name|Desperate Backup 64| life|27836|
+20190121_185842 MAIN INFO - created server|V46| quality|1| shelfsize|1|TB name|Desperate Backup 65| life|147054|
+20190121_185842 MAIN INFO - created server|V47| quality|1| shelfsize|1|TB name|Desperate Backup 66| life|199777|
+20190121_185842 MAIN INFO - created server|V48| quality|1| shelfsize|1|TB name|Desperate Backup 67| life|164243|
+20190121_185842 MAIN INFO - created server|V49| quality|1| shelfsize|1|TB name|Desperate Backup 68| life|39402|
+20190121_185842 MAIN INFO - created server|V50| quality|1| shelfsize|1|TB name|Desperate Backup 69| life|113333|
+20190121_185842 MAIN INFO - created server|V51| quality|1| shelfsize|1|TB name|AWS Euro  Super Duper| life|1935|
+20190121_185842 MAIN INFO - created server|V52| quality|1| shelfsize|1|TB name|Google Drive Premium| life|88900|
+20190121_185842 MAIN INFO - created server|V53| quality|1| shelfsize|1|TB name|AWS Euro  Premium| life|57220|
+20190121_185842 MAIN INFO - created server|V54| quality|1| shelfsize|1|TB name|Amazon East Platinum| life|32676|
+20190121_185842 MAIN INFO - created server|V55| quality|1| shelfsize|1|TB name|Very Desperate Backup 50| life|55784|
+20190121_185842 MAIN INFO - created server|V56| quality|1| shelfsize|1|TB name|OneDrive  Super Duper| life|32060|
+20190121_185842 MAIN INFO - created server|V57| quality|1| shelfsize|1|TB name|Amazon East Plus| life|17303|
+20190121_185842 MAIN INFO - created server|V58| quality|1| shelfsize|1|TB name|Amazon West Platinum| life|17985|
+20190121_185842 MAIN INFO - created server|V59| quality|1| shelfsize|1|TB name|Desperate Backup 55| life|122170|
+20190121_185842 MAIN INFO - created server|V60| quality|1| shelfsize|1|TB name|Desperate Backup 54| life|15065|
+20190121_185842 MAIN INFO - created server|V61| quality|1| shelfsize|1|TB name|Desperate Backup 57| life|103835|
+20190121_185842 MAIN INFO - created server|V62| quality|1| shelfsize|1|TB name|Desperate Backup 56| life|190333|
+20190121_185842 MAIN INFO - created server|V63| quality|1| shelfsize|1|TB name|Desperate Backup 51| life|134566|
+20190121_185842 MAIN INFO - created server|V64| quality|1| shelfsize|1|TB name|Desperate Backup 50| life|6976|
+20190121_185842 MAIN INFO - created server|V65| quality|1| shelfsize|1|TB name|Desperate Backup 53| life|158507|
+20190121_185842 MAIN INFO - created server|V66| quality|1| shelfsize|1|TB name|Desperate Backup 52| life|35975|
+20190121_185842 MAIN INFO - created server|V67| quality|1| shelfsize|1|TB name|Desperate Backup 59| life|275178|
+20190121_185842 MAIN INFO - created server|V68| quality|1| shelfsize|1|TB name|Desperate Backup 58| life|162155|
+20190121_185842 MAIN INFO - created server|V69| quality|1| shelfsize|1|TB name|AWS Euro  Platinum| life|111606|
+20190121_185842 MAIN INFO - created server|V70| quality|1| shelfsize|1|TB name|OneDrive  Platinum| life|37145|
+20190121_185842 MAIN INFO - created server|V71| quality|1| shelfsize|1|TB name|Google Drive| life|142782|
+20190121_185842 MAIN INFO - created server|V72| quality|1| shelfsize|1|TB name|OneDrive  Plus| life|12277|
+20190121_185842 MAIN INFO - created server|V73| quality|1| shelfsize|1|TB name|Amazon East| life|37044|
+20190121_185842 MAIN INFO - created server|V74| quality|1| shelfsize|1|TB name|Very Desperate Backup 31| life|13902|
+20190121_185842 MAIN INFO - created server|V75| quality|1| shelfsize|1|TB name|Very Desperate Backup 32| life|199316|
+20190121_185842 MAIN INFO - created server|V76| quality|1| shelfsize|1|TB name|Very Desperate Backup 33| life|113680|
+20190121_185842 MAIN INFO - created server|V77| quality|1| shelfsize|1|TB name|Very Desperate Backup 34| life|123438|
+20190121_185842 MAIN INFO - created server|V78| quality|1| shelfsize|1|TB name|Very Desperate Backup 35| life|10256|
+20190121_185842 MAIN INFO - created server|V79| quality|1| shelfsize|1|TB name|Very Desperate Backup 36| life|47130|
+20190121_185842 MAIN INFO - created server|V80| quality|1| shelfsize|1|TB name|Very Desperate Backup 37| life|94378|
+20190121_185842 MAIN INFO - created server|V81| quality|1| shelfsize|1|TB name|Very Desperate Backup 38| life|151038|
+20190121_185842 MAIN INFO - created server|V82| quality|1| shelfsize|1|TB name|Very Desperate Backup 39| life|54386|
+20190121_185842 MAIN INFO - created server|V83| quality|1| shelfsize|1|TB name|Very Desperate Backup 45| life|10158|
+20190121_185842 MAIN INFO - created server|V84| quality|1| shelfsize|1|TB name|Very Desperate Backup 44| life|185105|
+20190121_185842 MAIN INFO - created server|V85| quality|1| shelfsize|1|TB name|Very Desperate Backup 47| life|83574|
+20190121_185842 MAIN INFO - created server|V86| quality|1| shelfsize|1|TB name|Very Desperate Backup 46| life|30672|
+20190121_185842 MAIN INFO - created server|V87| quality|1| shelfsize|1|TB name|Very Desperate Backup 41| life|15808|
+20190121_185842 MAIN INFO - created server|V88| quality|1| shelfsize|1|TB name|Very Desperate Backup 40| life|35173|
+20190121_185842 MAIN INFO - created server|V89| quality|1| shelfsize|1|TB name|Very Desperate Backup 43| life|3017|
+20190121_185842 MAIN INFO - created server|V90| quality|1| shelfsize|1|TB name|Very Desperate Backup 42| life|17056|
+20190121_185842 MAIN INFO - created server|V91| quality|1| shelfsize|1|TB name|Very Desperate Backup 49| life|19105|
+20190121_185842 MAIN INFO - created server|V92| quality|1| shelfsize|1|TB name|Very Desperate Backup 48| life|103929|
+20190121_185842 MAIN INFO - created server|V93| quality|1| shelfsize|1|TB name|Desperate Backup 48| life|198824|
+20190121_185842 MAIN INFO - created server|V94| quality|1| shelfsize|1|TB name|Desperate Backup 49| life|23775|
+20190121_185842 MAIN INFO - created server|V95| quality|1| shelfsize|1|TB name|Desperate Backup 42| life|151186|
+20190121_185842 MAIN INFO - created server|V96| quality|1| shelfsize|1|TB name|Desperate Backup 43| life|53951|
+20190121_185842 MAIN INFO - created server|V97| quality|1| shelfsize|1|TB name|Desperate Backup 40| life|310541|
+20190121_185842 MAIN INFO - created server|V98| quality|1| shelfsize|1|TB name|Desperate Backup 41| life|7217|
+20190121_185842 MAIN INFO - created server|V99| quality|1| shelfsize|1|TB name|Desperate Backup 46| life|100341|
+20190121_185842 MAIN INFO - created server|V100| quality|1| shelfsize|1|TB name|Desperate Backup 47| life|106357|
+20190121_185842 MAIN INFO - created server|V101| quality|1| shelfsize|1|TB name|Desperate Backup 44| life|59529|
+20190121_185842 MAIN INFO - created server|V102| quality|1| shelfsize|1|TB name|Desperate Backup 45| life|97265|
+20190121_185842 MAIN INFO - created server|V103| quality|1| shelfsize|1|TB name|Very Desperate Backup 23| life|28476|
+20190121_185842 MAIN INFO - created server|V104| quality|1| shelfsize|1|TB name|Very Desperate Backup 22| life|469525|
+20190121_185842 MAIN INFO - created server|V105| quality|1| shelfsize|1|TB name|Very Desperate Backup 21| life|395474|
+20190121_185842 MAIN INFO - created server|V106| quality|1| shelfsize|1|TB name|Very Desperate Backup 20| life|68014|
+20190121_185842 MAIN INFO - created server|V107| quality|1| shelfsize|1|TB name|Very Desperate Backup 27| life|44040|
+20190121_185842 MAIN INFO - created server|V108| quality|1| shelfsize|1|TB name|Very Desperate Backup 26| life|117146|
+20190121_185842 MAIN INFO - created server|V109| quality|1| shelfsize|1|TB name|Very Desperate Backup 25| life|112179|
+20190121_185842 MAIN INFO - created server|V110| quality|1| shelfsize|1|TB name|Very Desperate Backup 24| life|121579|
+20190121_185842 MAIN INFO - created server|V111| quality|1| shelfsize|1|TB name|Very Desperate Backup 29| life|170051|
+20190121_185842 MAIN INFO - created server|V112| quality|1| shelfsize|1|TB name|Very Desperate Backup 28| life|29979|
+20190121_185842 MAIN INFO - created server|V113| quality|1| shelfsize|1|TB name|Yet Another 4| life|140622|
+20190121_185842 MAIN INFO - created server|V114| quality|1| shelfsize|1|TB name|Yet Another 5| life|215625|
+20190121_185842 MAIN INFO - created server|V115| quality|1| shelfsize|1|TB name|Yet Another 2| life|4592|
+20190121_185842 MAIN INFO - created server|V116| quality|1| shelfsize|1|TB name|Yet Another 3| life|35343|
+20190121_185842 MAIN INFO - created server|V117| quality|1| shelfsize|1|TB name|Desperate Backup 39| life|3926|
+20190121_185842 MAIN INFO - created server|V118| quality|1| shelfsize|1|TB name|Desperate Backup 38| life|97741|
+20190121_185842 MAIN INFO - created server|V119| quality|1| shelfsize|1|TB name|Desperate Backup 37| life|15190|
+20190121_185842 MAIN INFO - created server|V120| quality|1| shelfsize|1|TB name|Desperate Backup 36| life|28238|
+20190121_185842 MAIN INFO - created server|V121| quality|1| shelfsize|1|TB name|Desperate Backup 35| life|11895|
+20190121_185842 MAIN INFO - created server|V122| quality|1| shelfsize|1|TB name|Desperate Backup 34| life|23586|
+20190121_185842 MAIN INFO - created server|V123| quality|1| shelfsize|1|TB name|Desperate Backup 33| life|178084|
+20190121_185842 MAIN INFO - created server|V124| quality|1| shelfsize|1|TB name|Desperate Backup 32| life|50832|
+20190121_185842 MAIN INFO - created server|V125| quality|1| shelfsize|1|TB name|Desperate Backup 31| life|55432|
+20190121_185842 MAIN INFO - created server|V126| quality|1| shelfsize|1|TB name|Desperate Backup 30| life|51557|
+20190121_185842 MAIN INFO - created server|V127| quality|1| shelfsize|1|TB name|OneDrive Vanilla| life|129665|
+20190121_185842 MAIN INFO - created server|V128| quality|1| shelfsize|1|TB name|OneDrive  Premium| life|10301|
+20190121_185842 MAIN INFO - created server|V129| quality|1| shelfsize|1|TB name|Very Desperate Backup 16| life|101317|
+20190121_185842 MAIN INFO - created server|V130| quality|1| shelfsize|1|TB name|Very Desperate Backup 17| life|14621|
+20190121_185842 MAIN INFO - created server|V131| quality|1| shelfsize|1|TB name|Very Desperate Backup 14| life|575198|
+20190121_185842 MAIN INFO - created server|V132| quality|1| shelfsize|1|TB name|Very Desperate Backup 15| life|11765|
+20190121_185842 MAIN INFO - created server|V133| quality|1| shelfsize|1|TB name|Very Desperate Backup 12| life|40263|
+20190121_185842 MAIN INFO - created server|V134| quality|1| shelfsize|1|TB name|Very Desperate Backup 13| life|43362|
+20190121_185842 MAIN INFO - created server|V135| quality|1| shelfsize|1|TB name|Very Desperate Backup 10| life|3422|
+20190121_185842 MAIN INFO - created server|V136| quality|1| shelfsize|1|TB name|Very Desperate Backup 11| life|18413|
+20190121_185842 MAIN INFO - created server|V137| quality|1| shelfsize|1|TB name|Very Desperate Backup 18| life|132938|
+20190121_185842 MAIN INFO - created server|V138| quality|1| shelfsize|1|TB name|Very Desperate Backup 19| life|291794|
+20190121_185842 MAIN INFO - created server|V139| quality|1| shelfsize|1|TB name|Very Desperate Backup 30| life|108459|
+20190121_185842 MAIN INFO - created server|V140| quality|1| shelfsize|1|TB name|Amazon West Super Duper| life|3353|
+20190121_185842 MAIN INFO - created server|V141| quality|1| shelfsize|1|TB name|Desperate Backup 28| life|323001|
+20190121_185842 MAIN INFO - created server|V142| quality|1| shelfsize|1|TB name|Desperate Backup 29| life|19623|
+20190121_185842 MAIN INFO - created server|V143| quality|1| shelfsize|1|TB name|Desperate Backup 24| life|420591|
+20190121_185842 MAIN INFO - created server|V144| quality|1| shelfsize|1|TB name|Desperate Backup 25| life|90515|
+20190121_185842 MAIN INFO - created server|V145| quality|1| shelfsize|1|TB name|Desperate Backup 26| life|3158|
+20190121_185842 MAIN INFO - created server|V146| quality|1| shelfsize|1|TB name|Desperate Backup 27| life|76265|
+20190121_185842 MAIN INFO - created server|V147| quality|1| shelfsize|1|TB name|Desperate Backup 20| life|28124|
+20190121_185842 MAIN INFO - created server|V148| quality|1| shelfsize|1|TB name|Desperate Backup 21| life|65837|
+20190121_185842 MAIN INFO - created server|V149| quality|1| shelfsize|1|TB name|Desperate Backup 22| life|233791|
+20190121_185842 MAIN INFO - created server|V150| quality|1| shelfsize|1|TB name|Desperate Backup 23| life|490510|
+20190121_185842 SERVER INFO - server |V1| created storage shelf|H01| quality|1| size|1|TB svrlifespan|13582| svrlife|13582|
+20190121_185842 CLIENT INFO - client|T1| placed collection|C1| to server|V1|
+20190121_185842 SERVER INFO - server |V2| created storage shelf|H02| quality|1| size|1|TB svrlifespan|10517| svrlife|10517|
+20190121_185842 CLIENT INFO - client|T1| placed collection|C1| to server|V2|
+20190121_185842 SERVER INFO - server |V3| created storage shelf|H03| quality|1| size|1|TB svrlifespan|49093| svrlife|49093|
+20190121_185842 CLIENT INFO - client|T1| placed collection|C1| to server|V3|
+20190121_185842 SERVER INFO - server |V4| created storage shelf|H04| quality|1| size|1|TB svrlifespan|270603| svrlife|270603|
+20190121_185842 CLIENT INFO - client|T1| placed collection|C1| to server|V4|
+20190121_185842 SERVER INFO - server |V5| created storage shelf|H05| quality|1| size|1|TB svrlifespan|63618| svrlife|63618|
+20190121_185842 CLIENT INFO - client|T1| placed collection|C1| to server|V5|
+20190121_185842 MAIN INFO - created client|T1|
+20190121_185842 MAIN INFO - SERVERUSE shelf|V1-H01| qual|1| sectorexpolife|14426950| size|1000000| hiwater|1001| currentuse|1000| full%|0|
+20190121_185842 MAIN INFO - SERVERUSE shelf|V2-H02| qual|1| sectorexpolife|14426950| size|1000000| hiwater|1001| currentuse|1000| full%|0|
+20190121_185842 MAIN INFO - SERVERUSE shelf|V3-H03| qual|1| sectorexpolife|14426950| size|1000000| hiwater|1001| currentuse|1000| full%|0|
+20190121_185842 MAIN INFO - SERVERUSE shelf|V4-H04| qual|1| sectorexpolife|14426950| size|1000000| hiwater|1001| currentuse|1000| full%|0|
+20190121_185842 MAIN INFO - SERVERUSE shelf|V5-H05| qual|1| sectorexpolife|14426950| size|1000000| hiwater|1001| currentuse|1000| full%|0|
+20190121_185842 MAIN INFO - begin run
+20190121_185842 MAIN INFO - end run, simulated time|300000|
+20190121_185842 MAIN INFO - GOOD NEWS: Total documents lost by client |T1| in all servers |0|
+20190121_185842 MAIN INFO - COLLECTIONTOTALS client|T1| collection|C1| nservers|5| ndocs|20| nokay|0| nmajority|0| nminority|20| nlost|0| 
+20190121_185842 MAIN INFO - SERVERUSE shelf|V1-H01| qual|1| sectorexpolife|14426950| size|1000000| hiwater|1001| currentuse|1000| full%|0|
+20190121_185842 MAIN INFO - SERVERUSE shelf|V2-H02| qual|1| sectorexpolife|14426950| size|1000000| hiwater|1001| currentuse|1000| full%|0|
+20190121_185842 MAIN INFO - SERVERUSE shelf|V3-H03| qual|1| sectorexpolife|14426950| size|1000000| hiwater|1001| currentuse|1000| full%|0|
+20190121_185842 MAIN INFO - SERVERUSE shelf|V4-H04| qual|1| sectorexpolife|14426950| size|1000000| hiwater|1001| currentuse|1000| full%|0|
+20190121_185842 MAIN INFO - SERVERUSE shelf|V5-H05| qual|1| sectorexpolife|14426950| size|1000000| hiwater|1001| currentuse|1000| full%|0|
+20190121_185842 MAIN INFO - SERVERUSE shelf|V6-H06| qual|1| sectorexpolife|14426950| size|1000000| hiwater|1001| currentuse|1000| full%|0|
+20190121_185842 MAIN INFO - SERVERUSE shelf|V7-H07| qual|1| sectorexpolife|14426950| size|1000000| hiwater|1001| currentuse|1000| full%|0|
+20190121_185842 MAIN INFO - SERVERUSE shelf|V11-H08| qual|1| sectorexpolife|14426950| size|1000000| hiwater|1001| currentuse|1000| full%|0|
+20190121_185842 MAIN INFO - SERVERUSE shelf|V13-H09| qual|1| sectorexpolife|14426950| size|1000000| hiwater|1001| currentuse|1000| full%|0|
+20190121_185842 MAIN INFO - SERVERUSE shelf|V14-H10| qual|1| sectorexpolife|14426950| size|1000000| hiwater|1001| currentuse|1000| full%|0|
+20190121_185842 MAIN INFO - SERVERUSE shelf|V18-H11| qual|1| sectorexpolife|14426950| size|1000000| hiwater|1001| currentuse|1000| full%|0|
+20190121_185842 MAIN INFO - SERVERUSE shelf|V20-H12| qual|1| sectorexpolife|14426950| size|1000000| hiwater|1001| currentuse|1000| full%|0|
+20190121_185842 MAIN INFO - SERVERUSE shelf|V24-H13| qual|1| sectorexpolife|14426950| size|1000000| hiwater|1001| currentuse|1000| full%|0|
+20190121_185842 MAIN INFO - SERVERUSE shelf|V26-H14| qual|1| sectorexpolife|14426950| size|1000000| hiwater|1001| currentuse|1000| full%|0|
+20190121_185842 MAIN INFO - SERVERUSE shelf|V30-H15| qual|1| sectorexpolife|14426950| size|1000000| hiwater|1001| currentuse|1000| full%|0|
+20190121_185842 MAIN INFO - SERVERUSE shelf|V31-H16| qual|1| sectorexpolife|14426950| size|1000000| hiwater|1001| currentuse|1000| full%|0|
+20190121_185842 MAIN INFO - SERVERUSE shelf|V38-H17| qual|1| sectorexpolife|14426950| size|1000000| hiwater|1001| currentuse|1000| full%|0|
+20190121_185842 MAIN INFO - SERVERUSE shelf|V41-H18| qual|1| sectorexpolife|14426950| size|1000000| hiwater|1001| currentuse|1000| full%|0|
+20190121_185842 MAIN INFO - SERVERUSE shelf|V42-H19| qual|1| sectorexpolife|14426950| size|1000000| hiwater|1001| currentuse|1000| full%|0|
+20190121_185842 MAIN INFO - SERVERUSE shelf|V67-H20| qual|1| sectorexpolife|14426950| size|1000000| hiwater|1001| currentuse|1000| full%|0|
+20190121_185842 MAIN INFO - SERVERUSE shelf|V97-H21| qual|1| sectorexpolife|14426950| size|1000000| hiwater|1001| currentuse|1000| full%|0|
+20190121_185842 MAIN INFO - SERVERUSE shelf|V104-H22| qual|1| sectorexpolife|14426950| size|1000000| hiwater|1001| currentuse|1000| full%|0|
+20190121_185842 MAIN INFO - SERVERUSE shelf|V105-H23| qual|1| sectorexpolife|14426950| size|1000000| hiwater|1001| currentuse|1000| full%|0|
+20190121_185842 MAIN INFO - SERVERUSE shelf|V131-H24| qual|1| sectorexpolife|14426950| size|1000000| hiwater|1001| currentuse|1000| full%|0|
+20190121_185842 MAIN INFO - SERVERERR1 shelf|V1-H01| qual|1| totalhits|1| nonempty|0| empty|1| alive|False|
+20190121_185842 MAIN INFO - SERVERERR2 shelf|V1-H01| qual|1| totalhits|1| abovehiwater|1| multiples|0|
+20190121_185842 MAIN INFO - SERVERERR1 shelf|V2-H02| qual|1| totalhits|2| nonempty|0| empty|2| alive|False|
+20190121_185842 MAIN INFO - SERVERERR2 shelf|V2-H02| qual|1| totalhits|2| abovehiwater|2| multiples|0|
+20190121_185842 MAIN INFO - SERVERERR1 shelf|V3-H03| qual|1| totalhits|2| nonempty|0| empty|2| alive|False|
+20190121_185842 MAIN INFO - SERVERERR2 shelf|V3-H03| qual|1| totalhits|2| abovehiwater|2| multiples|0|
+20190121_185842 MAIN INFO - SERVERERR1 shelf|V4-H04| qual|1| totalhits|9| nonempty|0| empty|9| alive|False|
+20190121_185842 MAIN INFO - SERVERERR2 shelf|V4-H04| qual|1| totalhits|9| abovehiwater|9| multiples|0|
+20190121_185842 MAIN INFO - SERVERERR1 shelf|V5-H05| qual|1| totalhits|4| nonempty|0| empty|4| alive|False|
+20190121_185842 MAIN INFO - SERVERERR2 shelf|V5-H05| qual|1| totalhits|4| abovehiwater|4| multiples|0|
+20190121_185842 MAIN INFO - SERVERERR1 shelf|V6-H06| qual|1| totalhits|2| nonempty|0| empty|2| alive|False|
+20190121_185842 MAIN INFO - SERVERERR2 shelf|V6-H06| qual|1| totalhits|2| abovehiwater|2| multiples|0|
+20190121_185842 MAIN INFO - SERVERERR1 shelf|V7-H07| qual|1| totalhits|4| nonempty|0| empty|4| alive|False|
+20190121_185842 MAIN INFO - SERVERERR2 shelf|V7-H07| qual|1| totalhits|4| abovehiwater|4| multiples|0|
+20190121_185842 MAIN INFO - SERVERERR1 shelf|V11-H08| qual|1| totalhits|16| nonempty|0| empty|16| alive|False|
+20190121_185842 MAIN INFO - SERVERERR2 shelf|V11-H08| qual|1| totalhits|16| abovehiwater|16| multiples|0|
+20190121_185842 MAIN INFO - SERVERERR1 shelf|V13-H09| qual|1| totalhits|3| nonempty|1| empty|2| alive|False|
+20190121_185842 MAIN INFO - SERVERERR2 shelf|V13-H09| qual|1| totalhits|3| abovehiwater|2| multiples|0|
+20190121_185842 MAIN INFO - SERVERERR1 shelf|V14-H10| qual|1| totalhits|3| nonempty|0| empty|3| alive|False|
+20190121_185842 MAIN INFO - SERVERERR2 shelf|V14-H10| qual|1| totalhits|3| abovehiwater|3| multiples|0|
+20190121_185842 MAIN INFO - SERVERERR1 shelf|V18-H11| qual|1| totalhits|1| nonempty|0| empty|1| alive|False|
+20190121_185842 MAIN INFO - SERVERERR2 shelf|V18-H11| qual|1| totalhits|1| abovehiwater|1| multiples|0|
+20190121_185842 MAIN INFO - SERVERERR1 shelf|V20-H12| qual|1| totalhits|3| nonempty|0| empty|3| alive|False|
+20190121_185842 MAIN INFO - SERVERERR2 shelf|V20-H12| qual|1| totalhits|3| abovehiwater|3| multiples|0|
+20190121_185842 MAIN INFO - SERVERERR1 shelf|V24-H13| qual|1| totalhits|7| nonempty|0| empty|7| alive|False|
+20190121_185842 MAIN INFO - SERVERERR2 shelf|V24-H13| qual|1| totalhits|7| abovehiwater|7| multiples|0|
+20190121_185842 MAIN INFO - SERVERERR1 shelf|V26-H14| qual|1| totalhits|2| nonempty|0| empty|2| alive|False|
+20190121_185842 MAIN INFO - SERVERERR2 shelf|V26-H14| qual|1| totalhits|2| abovehiwater|2| multiples|0|
+20190121_185842 MAIN INFO - SERVERERR1 shelf|V30-H15| qual|1| totalhits|11| nonempty|0| empty|11| alive|False|
+20190121_185842 MAIN INFO - SERVERERR2 shelf|V30-H15| qual|1| totalhits|11| abovehiwater|11| multiples|0|
+20190121_185842 MAIN INFO - SERVERERR1 shelf|V31-H16| qual|1| totalhits|3| nonempty|0| empty|3| alive|False|
+20190121_185842 MAIN INFO - SERVERERR2 shelf|V31-H16| qual|1| totalhits|3| abovehiwater|3| multiples|0|
+20190121_185842 MAIN INFO - SERVERERR1 shelf|V38-H17| qual|1| totalhits|7| nonempty|0| empty|7| alive|False|
+20190121_185842 MAIN INFO - SERVERERR2 shelf|V38-H17| qual|1| totalhits|7| abovehiwater|7| multiples|0|
+20190121_185842 MAIN INFO - SERVERERR1 shelf|V41-H18| qual|1| totalhits|7| nonempty|0| empty|7| alive|True|
+20190121_185842 MAIN INFO - SERVERERR2 shelf|V41-H18| qual|1| totalhits|7| abovehiwater|7| multiples|0|
+20190121_185842 MAIN INFO - SERVERERR1 shelf|V42-H19| qual|1| totalhits|5| nonempty|0| empty|5| alive|False|
+20190121_185842 MAIN INFO - SERVERERR2 shelf|V42-H19| qual|1| totalhits|5| abovehiwater|5| multiples|0|
+20190121_185842 MAIN INFO - SERVERERR1 shelf|V67-H20| qual|1| totalhits|5| nonempty|0| empty|5| alive|False|
+20190121_185842 MAIN INFO - SERVERERR2 shelf|V67-H20| qual|1| totalhits|5| abovehiwater|5| multiples|0|
+20190121_185842 MAIN INFO - SERVERERR1 shelf|V97-H21| qual|1| totalhits|1| nonempty|0| empty|1| alive|True|
+20190121_185842 MAIN INFO - SERVERERR2 shelf|V97-H21| qual|1| totalhits|1| abovehiwater|1| multiples|0|
+20190121_185842 MAIN INFO - SERVERERR1 shelf|V104-H22| qual|1| totalhits|3| nonempty|0| empty|3| alive|True|
+20190121_185842 MAIN INFO - SERVERERR2 shelf|V104-H22| qual|1| totalhits|3| abovehiwater|3| multiples|0|
+20190121_185842 MAIN INFO - SERVERERR1 shelf|V105-H23| qual|1| totalhits|4| nonempty|0| empty|4| alive|True|
+20190121_185842 MAIN INFO - SERVERERR2 shelf|V105-H23| qual|1| totalhits|4| abovehiwater|4| multiples|0|
+20190121_185842 MAIN INFO - SERVERERR1 shelf|V131-H24| qual|1| totalhits|0| nonempty|0| empty|0| alive|True|
+20190121_185842 MAIN INFO - SERVERERR2 shelf|V131-H24| qual|1| totalhits|0| abovehiwater|0| multiples|0|
+20190121_185842 MAIN INFO - SERVERERRTOTALS totalhits|105| abovehiwater|104| nonempty|1| empty|104| multiples|0|
+20190121_185842 MAIN INFO - DEADSERVERS ALL n|142| |['V1', 'V2', 'V3', 'V4', 'V5', 'V6', 'V7', 'V8', 'V9', 'V10', 'V11', 'V12', 'V13', 'V14', 'V15', 'V16', 'V17', 'V18', 'V19', 'V20', 'V21', 'V22', 'V23', 'V24', 'V25', 'V26', 'V27', 'V28', 'V29', 'V30', 'V31', 'V32', 'V33', 'V34', 'V35', 'V36', 'V37', 'V38', 'V39', 'V40', 'V42', 'V43', 'V44', 'V45', 'V46', 'V47', 'V48', 'V49', 'V50', 'V51', 'V52', 'V53', 'V54', 'V55', 'V56', 'V57', 'V58', 'V59', 'V60', 'V61', 'V62', 'V63', 'V64', 'V65', 'V66', 'V67', 'V68', 'V69', 'V70', 'V71', 'V72', 'V73', 'V74', 'V75', 'V76', 'V77', 'V78', 'V79', 'V80', 'V81', 'V82', 'V83', 'V84', 'V85', 'V86', 'V87', 'V88', 'V89', 'V90', 'V91', 'V92', 'V93', 'V94', 'V95', 'V96', 'V98', 'V99', 'V100', 'V101', 'V102', 'V103', 'V106', 'V107', 'V108', 'V109', 'V110', 'V111', 'V112', 'V113', 'V114', 'V115', 'V116', 'V117', 'V118', 'V119', 'V120', 'V121', 'V122', 'V123', 'V124', 'V125', 'V126', 'V127', 'V128', 'V129', 'V130', 'V132', 'V133', 'V134', 'V135', 'V136', 'V137', 'V138', 'V139', 'V140', 'V142', 'V144', 'V145', 'V146', 'V147', 'V148', 'V149']|
+20190121_185842 MAIN INFO - DEADSERVERS ACTIVE n|19| |['V1', 'V2', 'V3', 'V4', 'V5', 'V6', 'V7', 'V11', 'V13', 'V14', 'V18', 'V20', 'V24', 'V26', 'V30', 'V31', 'V38', 'V42', 'V67']|
+20190121_185842 MAIN INFO - AUDITS id|A1| client|T1| coll|C1| server|*| ncycles|29| nrepairs|0| nlosses|0| nmajority|0| nminority|0|
+20190121_185842 MAIN INFO - AUDITTOTALS ncycles|29| nfrequency|10000| nsegments|1| nrepairs|0| nmajority|0| nminority|0| nlost|0| 
+20190121_185842 MAIN INFO - LIFETIME shelf|H01| lifetime|LIFE-H01| freq|0| impact|0| decay|1e+12| maxlife|1e+12| count|0| time|0.000|
+20190121_185842 MAIN INFO - LIFETIME shelf|H02| lifetime|LIFE-H02| freq|0| impact|0| decay|1e+12| maxlife|1e+12| count|0| time|0.000|
+20190121_185842 MAIN INFO - LIFETIME shelf|H03| lifetime|LIFE-H03| freq|0| impact|0| decay|1e+12| maxlife|1e+12| count|0| time|0.000|
+20190121_185842 MAIN INFO - LIFETIME shelf|H04| lifetime|LIFE-H04| freq|0| impact|0| decay|1e+12| maxlife|1e+12| count|0| time|0.000|
+20190121_185842 MAIN INFO - LIFETIME shelf|H05| lifetime|LIFE-H05| freq|0| impact|0| decay|1e+12| maxlife|1e+12| count|0| time|0.000|
+20190121_185842 MAIN INFO - LIFETIME shelf|H06| lifetime|LIFE-H06| freq|0| impact|0| decay|1e+12| maxlife|1e+12| count|0| time|0.000|
+20190121_185842 MAIN INFO - LIFETIME shelf|H07| lifetime|LIFE-H07| freq|0| impact|0| decay|1e+12| maxlife|1e+12| count|0| time|0.000|
+20190121_185842 MAIN INFO - LIFETIME shelf|H08| lifetime|LIFE-H08| freq|0| impact|0| decay|1e+12| maxlife|1e+12| count|0| time|0.000|
+20190121_185842 MAIN INFO - LIFETIME shelf|H09| lifetime|LIFE-H09| freq|0| impact|0| decay|1e+12| maxlife|1e+12| count|0| time|0.000|
+20190121_185842 MAIN INFO - LIFETIME shelf|H10| lifetime|LIFE-H10| freq|0| impact|0| decay|1e+12| maxlife|1e+12| count|0| time|0.000|
+20190121_185842 MAIN INFO - LIFETIME shelf|H11| lifetime|LIFE-H11| freq|0| impact|0| decay|1e+12| maxlife|1e+12| count|0| time|0.000|
+20190121_185842 MAIN INFO - LIFETIME shelf|H12| lifetime|LIFE-H12| freq|0| impact|0| decay|1e+12| maxlife|1e+12| count|0| time|0.000|
+20190121_185842 MAIN INFO - LIFETIME shelf|H13| lifetime|LIFE-H13| freq|0| impact|0| decay|1e+12| maxlife|1e+12| count|0| time|0.000|
+20190121_185842 MAIN INFO - LIFETIME shelf|H14| lifetime|LIFE-H14| freq|0| impact|0| decay|1e+12| maxlife|1e+12| count|0| time|0.000|
+20190121_185842 MAIN INFO - LIFETIME shelf|H15| lifetime|LIFE-H15| freq|0| impact|0| decay|1e+12| maxlife|1e+12| count|0| time|0.000|
+20190121_185842 MAIN INFO - LIFETIME shelf|H16| lifetime|LIFE-H16| freq|0| impact|0| decay|1e+12| maxlife|1e+12| count|0| time|0.000|
+20190121_185842 MAIN INFO - LIFETIME shelf|H17| lifetime|LIFE-H17| freq|0| impact|0| decay|1e+12| maxlife|1e+12| count|0| time|0.000|
+20190121_185842 MAIN INFO - LIFETIME shelf|H18| lifetime|LIFE-H18| freq|0| impact|0| decay|1e+12| maxlife|1e+12| count|0| time|0.000|
+20190121_185842 MAIN INFO - LIFETIME shelf|H19| lifetime|LIFE-H19| freq|0| impact|0| decay|1e+12| maxlife|1e+12| count|0| time|0.000|
+20190121_185842 MAIN INFO - LIFETIME shelf|H20| lifetime|LIFE-H20| freq|0| impact|0| decay|1e+12| maxlife|1e+12| count|0| time|0.000|
+20190121_185842 MAIN INFO - LIFETIME shelf|H21| lifetime|LIFE-H21| freq|0| impact|0| decay|1e+12| maxlife|1e+12| count|0| time|0.000|
+20190121_185842 MAIN INFO - LIFETIME shelf|H22| lifetime|LIFE-H22| freq|0| impact|0| decay|1e+12| maxlife|1e+12| count|0| time|0.000|
+20190121_185842 MAIN INFO - LIFETIME shelf|H23| lifetime|LIFE-H23| freq|0| impact|0| decay|1e+12| maxlife|1e+12| count|0| time|0.000|
+20190121_185842 MAIN INFO - LIFETIME shelf|H24| lifetime|LIFE-H24| freq|0| impact|0| decay|1e+12| maxlife|1e+12| count|0| time|0.000|
+20190121_185842 MAIN INFO - LIFETIME Total glitches|0|
+20190121_185842 MAIN INFO - SHOCKS Total shocks|0| deaths due to shock|0: []|
+20190121_185842 MAIN INFO - SHOCKS When nshocks|0| at times|[]|
+20190121_185842 0 MAIN  proc Document Preservation simulation 
+20190121_185842 0 MAIN  proc Begin run time|0|
+20190121_185842 0 MAIN  proc End simulation1 timenow|300000| cpusecs|0.421| lastevent|295780| 
+20190121_185842 0 MAIN  proc End simulation2 hidoc|D20| hicoll|C1| hishelf|H24|
+20190121_185842 0 MAIN  proc End simulation3 hiserver|V150| hiclient|T1| hicopy|X480|
+20190121_185842 0 MAIN  proc End time stats: wall|   0.533| cpu|   0.421|
+20190121_185842 0 MAIN  ENDENDEND
