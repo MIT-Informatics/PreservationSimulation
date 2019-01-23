@@ -51,13 +51,12 @@ python3 -c 'import sys; print(sys.version); print(sys.version_info)'
 #               Specify python2 for the main simulation, even though we
 #                now have an experimental version that runs on p3.
 #                newbroker and its trace run on p3.
-# 
 
 date +%Y%m%d_%H%M%S.%3N
 
 # Wait for end of log file to be written; else risk "nolinefound" errors 
 #  in extraction.  This should not be necessary, but apparently is.  
-(howlong=100; while [ $howlong -gt 0 ]; do howlong=$(expr $howlong - 1); if [ $(tail -3 {sFamilyDir}/{sSpecificDir}/log/{sShelfLogFileName}.log | grep "ENDENDEND" | wc -l) -eq 0 ]; then sleep 0.100; else sleep 0.010; break; fi; done )
+(howlong=1000; while [ $howlong -gt 0 ]; do howlong=$(expr $howlong - 1); if [ $(tail -3 {sFamilyDir}/{sSpecificDir}/log/{sShelfLogFileName}.log | grep "ENDENDEND" | wc -l) -eq 0 ]; then sleep 0.100; else sleep 0.010; break; fi; done )
 date +%Y%m%d_%H%M%S.%3N
 
 # Data extraction command.  Header must be forced here so that the 
@@ -88,6 +87,10 @@ date +%Y%m%d_%H%M%S.%3N
 #                I thought this had been fixed with newbroker, but 
 #                apparently Linux is still capable of thinking a job is 
 #                completed before its files have been written.  
+#                Appears in a few cases that the log file is extracted, badly, 
+#                before it is complete: length shows as short (36K vs 56K) 
+#                and fields missing.
+# 20190123  RBL Increase the waiting time: 10 seconds is not enough!
 # 
 
 #END
