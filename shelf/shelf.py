@@ -409,7 +409,7 @@ class CShelf(object):
             sDocID = G.dID2Copy[sCopyID].sDocID
             self.mDestroyCopy(sCopyID)
 #            G.dID2Server[self.sServerID].mDestroyDocument(sDocID,self.ID)
-            G.dID2Server[self.sServerID].mDestroyCopy(sCopyID,self.ID)
+            G.dID2Server[self.sServerID].mDestroyCopy(sCopyID,sDocId,self.ID)
             self.mReportDocumentLost(sDocID)
         NTRC.tracef(3, "FAIL", "proc t|%d| shelf failure server|%s| qual|%d| "
             "shelf|%s| docs|%d|" 
