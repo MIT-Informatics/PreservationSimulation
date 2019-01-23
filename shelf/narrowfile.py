@@ -86,6 +86,8 @@ def main(mysInputFilename):
 
     # Process file.
     with open(mysInputFilename, "r") as fhIn:
+        nErrors = 0
+        lErrors = []
         oReader = csv.reader(fhIn, delimiter=g.sSeparator)
     
         # First line better be the header.
@@ -95,13 +97,19 @@ def main(mysInputFilename):
         # For each data line, create dict of values and map them into 
         #  the reduced-width output template.  
         print(g.sCoreColumns)
+        nLine = 1               # Count the header line as 1.
         for lValues in oReader:
             NTRC.tracef(3, "NARO", "proc lValues|%s|" % (lValues))
             dValues = dict(zip(lHeader, lValues))
             NTRC.tracef(3, "NARO", "proc dValues|%s|" % (dValues))
             sOut = sTemplate.format(**dValues)
+            nLine += 1
             print(sOut)
-
+            if "nolinefound" in sOut:
+                nErrors += 1
+                lErrors.append(nLine)
+    if nErrors > 0:
+        print("#ERROR - MISSING DATA nolinefound at %s" % (lErrors))
 
 
 # E N T R Y   P O I N T 

@@ -384,7 +384,10 @@ class CShelf(object):
             collection more vulnerable during the repair.  
         '''
         fShelfLife = util.makeexpo(mynLifeParam)
-        NTRC.tracef(3, "SHLF", "proc mAge_shelf  time|%d| shelf|%s| "
+        lg.logInfo("SERVER", "mAge_shelf set lifetime time|%6.0f| shelf|%s| "
+            "next lifetime|%.3f|khr" 
+            % (G.env.now,self.ID,fShelfLife))
+        NTRC.tracef(3, "SHLF", "proc mAge_shelf  time|%6.0f| shelf|%s| "
             "next lifetime|%.3f|khr" 
             % (G.env.now,self.ID,fShelfLife))
         yield G.env.timeout(fShelfLife)

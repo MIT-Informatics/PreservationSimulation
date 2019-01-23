@@ -129,8 +129,8 @@ class P(object):
     #  but are now to be changed to half-lives.
     # TODO: fix these default values, which are not sufficiently
     #  deeply nested.  Or something.  
-    dShelfParams =      { 1 : [ [ 10, 100 ] ]
-                        , 2 : [ [ 20, 200 ] ]
+    dShelfParams =      { 1 : [ [ 10, 100000 ] ]
+                        , 2 : [ [ 20, 200000 ] ]
                         }
 
     # Distribution parameters: how many copies to make of what value doc.
