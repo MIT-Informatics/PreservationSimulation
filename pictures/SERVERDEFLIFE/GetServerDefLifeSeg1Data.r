@@ -2,10 +2,12 @@
 source("../common/DataUtil.r")
 library(ggplot2)
 source("../common/PlotUtil.r")
-if(!exists("debugprint")){debugprint<-0}
 
 # P A R A M S
 nSegments <- 1
+nCopies <- 5
+# ************ Also change summarize function and ggplot(color=...) and
+#               lLegendItemLabels and xaxis logs and xaxis breaks!!!
 
 # S T A N D A R D   F O R M A T T I N G 
 sPlotFile <- (  "serverdeflife"
@@ -19,7 +21,7 @@ fnGroupBy <- function(dfIn) {group_by(dfIn, copies, lifem
                                     )}
 fnSubset <- function(dfIn)  {subset(dfIn, serverdefaultlife>=10000
 #                                    & shockfreq==0
-                                    & copies==5
+                                    & copies==nCopies
                                     & auditfrequency==10000
                                     & auditsegments==nSegments
                                     )}
@@ -39,16 +41,21 @@ summarize(losspct=round(mean(lost/docstotal)*100.0, 2), n=n())
 newdat <- fnSubset(allnewdat)
 trows <- newdat
 
+
+sCopies <- sprintf("Copies=%.0f; ", nCopies)
+sSegments <- sprintf("%d segment(s))", nSegments)
 sTitleLine <-   (   ""
                 %+% "Varying Server Default Half-life: "
                 %+% "no shocks "
                 %+% " "
-                %+% "\n"
-                %+% "\n(Copies=5; annual systematic auditing in "
-                %+% sprintf("%d segment(s))", nSegments)
+                %+% "\n\n"
+                %+% sCopies
+                %+% "annual systematic auditing in "
+                %+% sSegments
                 )
 sLegendLabel <- "  Length of\nSimulation\n   (years)"
-lLegendItemLabels <- c("10","20","30","50")
+lLegendItemLabels <- levels(factor(trows$simlength/10000))
+
 sTimestamp <- fngettime()
 sSamples <- sprintf("samples=%.0f ", mean(trows$n))     #min(trows$n)
 sXLabel <- ("Server default life (half-life) in hours "
@@ -59,7 +66,6 @@ sXLabel <- sXLabel %+% ("\n\n                                  " # cheapo rjust.
             %+% sprintf("          %s   %s   %s", sPlotFile,sTimestamp,sSamples)
             )
 sYLabel <- ("probability of losing the entire collection (%)")
-# ************ Also change summarize function and ggplot(color=...).
 # E N D   O F   S T A N D A R D   F O R M A T T I N G 
 
 

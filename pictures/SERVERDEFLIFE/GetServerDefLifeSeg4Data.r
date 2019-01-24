@@ -2,19 +2,28 @@
 source("../common/DataUtil.r")
 library(ggplot2)
 source("../common/PlotUtil.r")
-if(!exists("debugprint")){debugprint<-0}
 
 # P A R A M S
-sPlotFile <- "serverdeflifeseg4.png"
+nSegments <- 4
+nCopies <- 5
+# ************ Also change summarize function and ggplot(color=...) and
+#               lLegendItemLabels and xaxis logs and xaxis breaks!!!
+
+# S T A N D A R D   F O R M A T T I N G 
+sPlotFile <- (  "serverdeflife"
+            %+% sprintf("seg%d",nSegments)
+            %+% ".png"
+            )
 fnGroupBy <- function(dfIn) {group_by(dfIn, copies, lifem
                                     , serverdefaultlife
-#                                    , shockfreq, shockspan, shockimpact
                                     , simlength
                                     , auditfrequency, auditsegments
                                     )}
 fnSubset <- function(dfIn)  {subset(dfIn, serverdefaultlife>=10000
-                                    & copies==5
-                                    & auditsegments==4
+#                                    & shockfreq==0
+                                    & copies==nCopies
+                                    & auditfrequency==10000
+                                    & auditsegments==nSegments
                                     )}
 want.varnames <- c("copies","lifem","lost","docstotal"
                 ,"serverdefaultlife","simlength"
@@ -22,31 +31,42 @@ want.varnames <- c("copies","lifem","lost","docstotal"
                 ,"auditfrequency","audittype","auditsegments"
                 ,"deadserversactive","deadserversall")
 fnNarrow <- function(dfIn)  {dfIn[want.varnames]}  
-sTitleLine <-   (   ""
-                %+% "Varying ServerDefaultHalfLife; no shocks; "
-                %+% "samples=1000 "
-                %+% " "
-                %+% "\n"
-                %+% "\n(Copies=5; annual systematic auditing in 4 segments)"
-                )
-sLegendLabel <- "  Length of\n Simulation\n (years)"
-lLegendItemLabels <- c("10","20","30","50")
-sXLabel <- ("Server Default Life (half-life) in hours "
-            %+% "      (one metric year = 10,000 hours) "
-            %+% "                           (less frequent server failures =====>)")
-sYLabel <- ("probability of losing the entire collection (%)")
-# ************ Also change summarize function and ggplot(color=...).
 
 
 # G E T   D A T A  
 # Get the data into the right form for these plots.
 alldat.df <- fndfGetGiantDataRaw("")
-if(debugprint){fnhere("after GetGientDataRaw")}
-newdat <- alldat.df %>% fnNarrow() %>% fnGroupBy() %>% 
-summarize(losspct=round(mean(lost/docstotal)*100.0, 2), n=n()) %>%
-fnSubset()
-if(debugprint){fnhere("after super-long pipes")}
+allnewdat <- alldat.df %>% fnNarrow() %>% fnGroupBy() %>% 
+summarize(losspct=round(mean(lost/docstotal)*100.0, 2), n=n()) 
+newdat <- fnSubset(allnewdat)
 trows <- newdat
+
+
+sCopies <- sprintf("Copies=%.0f; ", nCopies)
+sSegments <- sprintf("%d segment(s))", nSegments)
+sTitleLine <-   (   ""
+                %+% "Varying Server Default Half-life: "
+                %+% "no shocks "
+                %+% " "
+                %+% "\n\n"
+                %+% sCopies
+                %+% "annual systematic auditing in "
+                %+% sSegments
+                )
+sLegendLabel <- "  Length of\nSimulation\n   (years)"
+lLegendItemLabels <- levels(factor(trows$simlength/10000))
+
+sTimestamp <- fngettime()
+sSamples <- sprintf("samples=%.0f ", mean(trows$n))     #min(trows$n)
+sXLabel <- ("Server default life (half-life) in hours "
+            %+% "      (one metric year = 10,000 hours) "
+            %+% "                           (less frequent shocks =====>)"
+            )
+sXLabel <- sXLabel %+% ("\n\n                                  " # cheapo rjust.
+            %+% sprintf("          %s   %s   %s", sPlotFile,sTimestamp,sSamples)
+            )
+sYLabel <- ("probability of losing the entire collection (%)")
+# E N D   O F   S T A N D A R D   F O R M A T T I N G 
 
 
 # P L O T   D A T A 

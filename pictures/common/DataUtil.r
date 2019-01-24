@@ -4,7 +4,7 @@
 # From Micah Altman 20170726
 # Adapted RBLlandau 20171002
 if(!exists("debugprint")){debugprint<-0}
-
+setTimeLimit(elapsed=6000)      # Ten minutes enough?
 library(tidyverse)
 
 # H A C K S 
