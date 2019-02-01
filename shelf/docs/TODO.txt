@@ -2,11 +2,11 @@ TODO list for PreservationSimulation SHELF project
 
 
 TODO: shock
-FIXME - reduce collections for shock cases to just a few documents;
+DONE - reduce collections for shock cases to just a few documents;
     we care only if all docs are lost or none are lost; binary decision; 
     don't waste time scanning large collections.  
-FIXME - decrease NPOLITE timer to milliseconds.
-FIXME - decrease wait times for log files and such in brokercommandlist.
+DONE - decrease NPOLITE timer to milliseconds.
+DONE - decrease wait times for log files and such in brokercommandlist.
 DONE - increase number of servers available to 50 or 60.
 DONE - sort end-audit server list for easier reading.  
 DONE - add server default lifespan to param files and CLI, zero = infinite.
@@ -42,6 +42,8 @@ DONOTDO - if shockfreq==0, should we coerce serverdefaultlifetime=0?
 
 
 TODO: status bookkeeping database
+FIXME - BUG find out why skipping done jobs stopped working suddenly, and 
+    fix it.  
 DONOTDO - move to SQLite instead of the current MongoDB.
 FIXME - BUG datacleanup sometimes inserts a second header line as line 3;
     the first two jobs have a race condition; have to add locking
@@ -67,8 +69,8 @@ DONE - need new utils: list databases, list collections in db.
 
 
 TODO: web interface to select instructions for broker run
-FIXME - Make almost all entries multiple-select.  Curently several are not.
-FIXME - nDocuments does not appear in the interface; therefore, if it has 
+DONE - Make almost all entries multiple-select.  Curently several are not.
+DONE - nDocuments does not appear in the interface; therefore, if it has 
     multiple values, it will generate redundant instructions.  YIKES!
     Workaround: permit only one value, i.e., 10,000 docs.  
     BZZZT: conflicts with the needs of shock simulations that need
@@ -121,6 +123,15 @@ DONE - add routine to tell if production mode is on, so it can be logged.
 
 
 TODO: general
+FIXME - Think about an upper orchestration layer that drives broker 
+    for a long series of cases, but keeps the output files in
+    bite-size pieces, say < 10MB, and names and files the output
+    files appropriately.  
+    Alternative: do a zillion cases in one swell foop and then sort the 
+    output lines into separate bite-size files according to some
+    interesting params, and name the files appropriately.  
+    Note: this cannot be done until the "done" bug is fixed.  
+FIXME - Add a sh script to narrow a bunch of files.  Currently manual.  
 FIXME - For almost all cases, need a summary table of data, including midmean, 
     lightly trimmed mean (10%? 5%?), mean, median.
 FIXME - For almost all cases, need boxplots of results; particularly important
@@ -147,7 +158,7 @@ DONE - at end, report servers that died and were in use at the time;
 TODO: extractvalues.py
 FIXME - do not use the same lineregex more than once.  if a lineregex 
     has already been used on a line, hit or miss, don't bother asking again.  
-    minor optimization.  
+    minor optimization, almost at the don't-care level.  
 DONE - add audittype field to output.  this may require changes
     to other modules as well, but I can't think why at the moment.
     probably change only the instruction file to add the
@@ -194,8 +205,8 @@ FIXME - think about a way to rename the columns at the last instant,
     just before they go into R processing, with the style of names
     suggested by Altman, e.g., i_foo for inputs and o_bar for outputs.
     maybe p for params and r for results?  
-FIXME - learn what to do more simply, using Altman's style of R.
-FIXME - for every table and picture, preserve the entire R code alongside
+DONE - learn what to do more simply, using Altman's style of R.
+DONE - for every table and picture, preserve the entire R code alongside
     the data.
 DONE - can the ugly nested loop be restructured to run from a list of vars
     in the order we want them nested?
@@ -224,7 +235,7 @@ DONE - BUG, NEEDS FIXING: when client provisions a new server, it must
   on all servers, we can't invent a new copy for the new server.  
   this might be just a nit for most failures, but for 200% or 300% 
   correlated failures, this is a real concern.  
-FIXME - QUESTION: when provisioning a new server to replace a failed one, 
+ABANDON - QUESTION: when provisioning a new server to replace a failed one, 
     should the client mark the re-provisioning as majority or minority 
     repairs?  resolution: state the problem and point future developers to 
     where they can correct the counters.  
@@ -238,7 +249,11 @@ DONE - slow down after extractvalues, too.
 
 
 TODO: broker.py
-FIXME - add params for nDocuments, and for nCoverage during random auditing. 
+DONE - nDocuments added; nCoverage abandoned.  
+    nDocuments was required for speed in shock cases: don't care if a 
+    few docs get damaged; care only when entire server is lost.
+    ------
+    Add params for nDocuments, and for nCoverage during random auditing. 
     **** Note that new params are spread thinly throughout the system, into 
     at least a dozen different modules, from CLI to form to instuction 
     generation to reporting to output formatting.  
@@ -247,11 +262,13 @@ FIXME - add params for nDocuments, and for nCoverage during random auditing.
     That's the one parameter that I'm sure is linear, since we always report
     losses as percentages.  Hmmm.  Why did we ever start to do that?  
     Let's back out changes supporting the nDocuments param.
-FIXME - in listings and traces that show any instruction dictionaries, 
+DONE - in most cases.
+    In listings and traces that show any instruction dictionaries, 
     always sort the dictionary by item key.  util.py contains a 
     convenient fngSortDictItemsByKeys() to do that.  
-FIXME - in listonly listings, remove nLifeMax/Min, nCopiesMax/Min from dict.
-FIXME - write a utility to reconstitute the main.py and broker.py command lines 
+DONE - in listonly listings, remove nLifeMax/Min, nCopiesMax/Min from dict.
+DONE - different way: logs always contain a cut-and-pasteable command line.
+    Write a utility to reconstitute the main.py and broker.py command lines 
     from a result line in GiantOutput and from the dump in the log.  
 DONE - add a cleanstart shell script to empty the dirs that need to 
     be empty, set a clean GiantOutput file.
@@ -324,9 +341,11 @@ MAYBE - add a script to dump out some sample stats from a mongo db, such as name
 TODO: audit
 FIXME - Change SYSTEMATIC to TOTAL and allow segments>=1 for TOTAL audits.  
     Maybe.  Discuss with Micah for clarity.  
-FIXME - Change UNIFORM to RANDOMGENEROUS and add RANDOMNAIVE as a strategy.  
+ABANDON - Random auditing is such a bad idea that no one cares about 
+    subtle differences.
+    Change UNIFORM to RANDOMGENEROUS and add RANDOMNAIVE as a strategy.  
     Permit segments=1 for RANDOMNAIVE but not for GENEROUS.
-FIXME - Add number of audit segments to output line in addition to cycles.  
+DONE - Add number of audit segments to output line in addition to cycles.  
 DEFER - log stats at end of each audit cycle: lost, minority repairs, 
   majority repairs.  These are all cross-server figures.  We need to 
   add per-server figures, too.  Goal is to see if the user could 
