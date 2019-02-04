@@ -56,7 +56,7 @@ date +%Y%m%d_%H%M%S.%3N
 
 # Wait for end of log file to be written; else risk "nolinefound" errors 
 #  in extraction.  This should not be necessary, but apparently is.  
-(howlong=1000; while [ $howlong -gt 0 ]; do howlong=$(expr $howlong - 1); if [ $(tail -3 {sFamilyDir}/{sSpecificDir}/log/{sShelfLogFileName}.log | grep "ENDENDEND" | wc -l) -eq 0 ]; then sleep 0.100; else sleep 0.010; break; fi; done )
+(howlong=1000; while [ $howlong -gt 0 ]; do howlong=$(expr $howlong - 1); if [ $(tail -3 {sFamilyDir}/{sSpecificDir}/log/{sShelfLogFileName}.log | grep "ENDENDEND" | wc -l) -eq 0 ]; then echo "waiting $howlong ..."; sleep 0.100; else sleep 0.010; break; fi; done )
 date +%Y%m%d_%H%M%S.%3N
 
 # Data extraction command.  Header must be forced here so that the 

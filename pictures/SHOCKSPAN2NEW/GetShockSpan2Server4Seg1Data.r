@@ -50,7 +50,7 @@ sTitleLine <-   (   ""
                 %+% sprintf("%d segment(s))", nSegments)
                 )
 sLegendLabel <- "  Number of \nAudited Copies"
-lLegendItemLabels <- c("5","6")
+lLegendItemLabels <- c("5","6","7")
 sTimestamp <- fngettime()
 sSamples <- sprintf("samples=%d ", min(trows$n))
 sXLabel <- ("Shock Frequency (half-life) in hours "
