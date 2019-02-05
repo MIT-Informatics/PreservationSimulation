@@ -170,7 +170,9 @@ def mainsim_post():
     sPrefix = '''<html><body>
         <font face="Courier">\n
     '''
-    sPrefix += '<br />Working. . . \n'
+    sPrefix += '<br />'
+    sPrefix += util.fnsGetTimeStamp()
+    sPrefix += '  Working. . . \n'
     sPrefix += "<br />" + sActualCli + "<br />\n"
     sSuffix = '''
         </font>
@@ -285,9 +287,10 @@ sRangeTemplate = "'{\"$gte\":%s, \"$lte\":%s}'"
 #               Separate page code from entry point and main line.
 # 20171231  RBL Import command from common module.  
 # 20180408  RBL Add --simlen option in command to broker.py.
-# 20180925  RBL Change ServerDefaultLife to nulti-select.
+# 20180925  RBL Change ServerDefaultLife to multi-select.
 # 20181113  RBL Invoke broker2 with python3.
 # 20181115  RBL Add nDocuments.
+# 20190204  RBL Add standard timestamp to Working... message.
 # 
 # 
 
