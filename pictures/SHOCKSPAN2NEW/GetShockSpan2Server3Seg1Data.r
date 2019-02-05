@@ -41,27 +41,7 @@ summarize(losspct=round(mean(lost/docstotal)*100.0, 2), n=n())
 newdat <- fnSubset(allnewdat)
 trows <- newdat
 
-sTitleLine <-   (   ""
-                %+% "Shocks: "
-                %+% sprintf("span=%d; ", nShockspan) 
-                %+% sprintf("ServerDefaultHalflife=%dyrs ", nServerDefaultLife)
-                %+% " "
-                %+% "\n"
-                %+% "\n(Copies=5,6; annual systematic auditing in "
-                %+% sprintf("%d segment(s))", nSegments)
-                )
-sLegendLabel <- "  Number of \nAudited Copies"
-lLegendItemLabels <- c("5","6","7")
-sTimestamp <- fngettime()
-sSamples <- sprintf("samples=%d ", min(trows$n))
-sXLabel <- ("Shock Frequency (half-life) in hours "
-            %+% "      (one metric year = 10,000 hours) "
-            %+% "                           (less frequent shocks =====>)"
-            )
-sXLabel <- sXLabel %+% ("\n\n                                  " # cheapo rjust.
-            %+% sprintf("          %s   %s   %s", sPlotFile,sTimestamp,sSamples)
-            )
-sYLabel <- ("probability of losing the entire collection (%)")
+source("../common/shocktitles.r")
 # ************ Also change summarize function and ggplot(color=...).
 # E N D   O F   S T A N D A R D   F O R M A T T I N G 
 
