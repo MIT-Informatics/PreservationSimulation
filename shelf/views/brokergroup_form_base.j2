@@ -224,8 +224,8 @@
 
     </tr>
 
-<!-- redo button -->
     <tr bgcolor="#FF6666">
+<!-- redo button -->
         <td>{% block bRedo %}{% endblock %}
             <b>Redo</b><br/>
             Force recalculation of these cases
@@ -236,8 +236,8 @@
 <!-- test mode warning button -->
         {% block bTestOnly %}{% endblock %}
         <td colspan="2" centered><strong><font size="+2">TEST only!</font> </strong>
-            Print instructions, but
-            <em>do not run</em> simulations.<br />
+            Print instructions, 
+            <br />but <em>do not run</em> simulations.<br />
             <font size="+1">Uncheck me for production run!</font><br/>
             <input type="checkbox" name="bTestOnly" value="true" checked class="largerCheckbox" ><br/><br/>
         </td>
@@ -255,7 +255,7 @@
         <td>
             <strong>Logfile name for detached running</strong><br />
             Data will be appended to an existing file.<br />
-            <input type="text" name="sDetachedLogfile", size=15, value="">
+            <input type="text" name="sDetachedLogfile", size=40, value="">
         </td>
 
     </tr>
@@ -294,6 +294,7 @@
 20180408    RBL Check on simlen input, widen field, add comment. 
                  Change nSimLength to multi-select pulldown. 
 20181115    RBL Add nDocuments block.  Hope it fits.  
+20190217    RBL Lengthen logfilename block for easier reading.  
 
 
 -->
