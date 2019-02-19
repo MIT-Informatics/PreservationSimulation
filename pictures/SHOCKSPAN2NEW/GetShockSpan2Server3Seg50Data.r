@@ -8,6 +8,8 @@ source("../common/PlotUtil.r")
 nShockspan <- 2
 nServerDefaultLife <- 3
 nSegments <- 50
+nShockImpactMin <- 100
+nShockImpactMax <- 100
 
 
 # S T A N D A R D   P R O C E S S I N G   F O R   S H O C K S 
