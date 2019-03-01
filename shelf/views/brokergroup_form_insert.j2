@@ -84,6 +84,22 @@
     </td>
 {%endmacro%}
 
+<!-- in the future when I remember how to do this in jinja macros.
+{# Macro for   j u s t   p l a i n   v a l u e .  A similar table. #}
+{% macro insertjustvalue(name, heading, value="") %}
+    <td>
+        <table>
+            <tr><td>
+                <b>{{heading}}
+            </td></tr>
+            <tr><td>
+                 {{value}}
+            </td></tr>
+        </table>
+    </td>
+{%endmacro%}
+-->
+
 
 {% block nAuditFreq scoped %}
     {{insertmyvar(dVars.nAuditFreq)}}
@@ -181,6 +197,15 @@
    {{inserttextvar("sSpecificDir", "Specific Directory", 15, required=true)}}
 {% endblock %}
 
+<!-- in the future when I remember how to do this in jinja macros.
+{% block sWhenGenerated scoped %}
+   {{insertjustvalue(dVars.GeneratedTimestamp
+        , "Last generated at")
+   }}
+{% endblock %}
+-->
+
+
 <!-- empty placeholders -->
 {% block bRedo scoped %}
 {% endblock %}
@@ -219,24 +244,6 @@ nShockFreq
 nShockSpan
 nSimLength
 
-A notable kludge occurs here.  For params that have a min and max value
- that the user selects from separate drop-down lists, three variables
- need to be defined and one special case added to the instruction
- expander, searchspace.py.  
- - The variable, e.g., nCopies, needs to have three such variables with 
-    identical values:
-    1.  nCopies
-    2.  nCopiesMax
-    3.  nCopiesMin
-    The max and min versions populate the pull-downs for those parameters.
-    The nCopies version is used by searchspace to check if the user's
-    selections have produced any valid values, i.e., a non-empty vector
-    of possibilities.  HOWEVER, it is also necessary for searchspace to
-    null out the max and min versions, empty their lists, before the 
-    actual combinatorial expansion takes place.  
- Yes, kludge.  You were warned.  
-The same applies to nLifem.  And any other range-type params you were 
- thinking of adding.  Don't do it.  
 BZZZT!  New news: the min/max inputs hae been removed in favor of 
     multi-select option boxes.  If the form is being used by the 
     bottle web server, one must use the request.form.getall() function
@@ -255,6 +262,8 @@ BZZZT!  New news: the min/max inputs hae been removed in favor of
 20180408    RBL Add multivar for nSimLength.
 20180925    RBL Add multivar for ServerDefaultLife.
 20181115    RBL Add multivar for nDocuments.
+20190225    RBL Begin to add timestamp for when-generated.
+                 Wish I could remember just how these macros work.  Later, dude.
 
 
 -->

@@ -10,6 +10,7 @@
 
 import jinja2
 import sys
+import datetime
 import searchspace
 from NewTraceFac import NTRC,ntrace,ntracef
 
@@ -43,6 +44,7 @@ if 1:
     dPage= dict()
     dPage["sTitle"] = sTitle
     dPage["sSlugline"] = sSlugline
+    dPage["sGeneratedTimestamp"] = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
 
     # Process all instructions into dict.
     dVars = searchspace.fndReadAllInsFilesForGUI(
@@ -65,6 +67,7 @@ if 1:
 
 # Edit history
 # 20170218  RBL Original version.  
+# 20190225  RBL Add timestamp for generated form.
 # 
 # 
 
