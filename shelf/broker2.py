@@ -230,10 +230,13 @@ class CG(object):
     nCases = 1          # DEBUG
     nWaitedForSlot = 0  # DEBUG
     nWaitedForDone = 0  # DEBUG
+    
     nWaitedForInstr = 0 # DEBUG
     bDebugPrint = False # Print output of all jobs? (obsolete) 
     thrStart = None
+    thrStartStarted = False
     thrEnd = None
+    thrEndStarted = False
     
 
 #===========================================================
@@ -494,8 +497,7 @@ def fntProcessOneInstruction(mysRunNumber, mydInstruction, mynSeed):
             # Send the instruction out to be done.
             g.qInstructions.put(tThisInst)
             
-            if not g.thrStart.is_alive(): g.thrStart.start()
-            if not g.thrEnd.is_alive(): g.thrEnd.start()
+            nb.fnvStartThreads(g)
 
             return tThisInst
 

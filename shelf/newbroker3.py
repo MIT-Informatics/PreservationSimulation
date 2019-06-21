@@ -2,6 +2,14 @@
 # -*-coding: utf8-*-
 # newbroker.py
 '''
+This is the high-performance multiprocessing portion of the orchestration
+layer of the PreservationSimulation project.  The broker main module
+creates a series of instructions in a queue fed to this module.  This 
+module processes all the instructions in the queue as quickly as possible
+using all the cores available on the system.  
+'''
+
+'''
 One root process (like broker) starts two threads.
 - 1: start all jobs ("StartJobs") from a list of instructions until 
     none remain, then sleep a short time.
@@ -174,6 +182,7 @@ if not (os.getenv("DEBUG", "") == ""):
 
 # ==================== vanilla function: RunEverything ====================
 
+# f n t R u n E v e r y t h i n g 
 def fntRunEverything(mygl, qInstr, fnbQEnd, nWaitMsec, nWaitHowMany):
     '''Start an async job for each case.  Limit number of concurrent jobs
     to the size of the ltJobs vector.  
@@ -191,17 +200,24 @@ def fntRunEverything(mygl, qInstr, fnbQEnd, nWaitMsec, nWaitHowMany):
 
     # Create and start new threads
     NTRC.ntracef(5, "RUN", "proc make thread instances")
-    mygl.thrStart = CStartAllCases(mygl, mygl.nCoreTimer, mygl.nStuckLimit
+    mygl.thrStart = CStartAllCases(mygl, nWaitMsec, nWaitHowMany
                             , qInstr, fnbQEnd)
-    mygl.thrEnd = CEndAllCases(mygl, mygl.nCoreTimer, )
+    mygl.thrEnd = CEndAllCases(mygl, nWaitMsec, )
     mygl.llsFullOutput = [["",""]]
     #mygl.thrStart.start()
     #mygl.thrEnd.start()
     
     # Wait until all jobs have started and finished.
-    if (mygl.thrStart.is_alive() and mygl.thrStart.is_alive()):
+    # Make sure the thread is running, then wait for it to finish.
+    while not mygl.thrStart.bStarted():
+        time.sleep(nWaitMsec)
+    if (mygl.thrStart.is_alive()):
         mygl.thrStart.join()     # Runs out of instructions.
-        mygl.thrEnd.join()       # Runs out of finished jobs.  
+
+    while not mygl.thrEnd.bStarted():
+        time.sleep(nWaitMsec)
+    if (mygl.thrEnd.is_alive()):
+        mygl.thrEnd.join()     # Runs out of instructions.
     
     return tWaitStats(ncases=mygl.nCasesDone
                 , slot=mygl.nWaitedForSlot
@@ -209,8 +225,17 @@ def fntRunEverything(mygl, qInstr, fnbQEnd, nWaitMsec, nWaitHowMany):
                 , inst=mygl.nWaitedForInstr)
 
 
+# =================== vanilla function: fnvStartThreads ====================
+
+# f n v S t a r t T h r e a d s 
+def fnvStartThreads(mygl):
+    if not mygl.thrStart.is_alive(): mygl.thrStart.start()
+    if not mygl.thrEnd.is_alive(): mygl.thrEnd.start()
+
+
 # ==================== thread: DoAllCases ====================
 
+# c l a s s   C S t a r t A l l C a s e s 
 class CStartAllCases(threading.Thread):
     """pseudocode:
     arg gives list of instructions,
@@ -236,13 +261,15 @@ class CStartAllCases(threading.Thread):
         self.nProcess = 0
         self.qInstructions = myqInstructions
         self.fnbEnd = myfnbEnd
+        self.bStarted = False
         NTRC.ntracef(2, "STRT", "exit init gl|%s| instrs|%s|" 
                 % (self.gl, self.qInstructions))
 
 
-    # NEW VERSION THAT READS FROM QUEUE
+    # r u n   function for the StartAllCases thread
     @ntracef("STRT")
     def run(self):
+        self.bStarted = True
         while True:
             # Empty the queue of pending instructions.  
             while not self.qInstructions.empty():
@@ -317,9 +344,15 @@ class CStartAllCases(threading.Thread):
         NTRC.ntracef(3, "STRT", "proc end of while forever")
         # ENDWHILE TRUE
 
+
+    # m b S t a r t e d 
+    def mbStarted(self):
+        return self.bStarted
+
     
 # ==================== thread: EndAllCases ====================
 
+# c l a s s   C E n d A l l C a s e s 
 class CEndAllCases(threading.Thread):
     """pseudocode:
     while forever
@@ -344,12 +377,15 @@ class CEndAllCases(threading.Thread):
         self.gl = mygl
         self.nWaitMsec = mynWaitMsec
         self.llsFullOutput = list()
+        self.bStarted = False
         NTRC.ntracef(2, "END", "exit init gl|%s| wait|%s|" 
                     % (self.gl, self.nWaitMsec))
 
 
+# r u n   function for EndAllCases thread
     @ntracef("END")
     def run(self):
+        self.bStarted = True
         NTRC.ntracef(5, "END", "proc run ltJobs|%s|" % (self.gl.ltJobs))
         nCasesDone = 0
         self.gl.nWaitedForDone = 0
@@ -449,8 +485,14 @@ class CEndAllCases(threading.Thread):
             NTRC.ntracef(5, "END", "proc sFullOutput|%s|" % (sFullOutput))
 
 
+    # m b S t a r t e d 
+    def mbStarted(self):
+        return self.bStarted
+
+
 # ==================== utilities ====================
 
+# f n v R e p o r t C a s e I n s t r u c t i o n s 
 def fnvReportCaseInstructions(mytInstr):
     '''Print the details for the case: 
     '''
@@ -685,6 +727,7 @@ if __name__ == "__main__":
 #               Add print-locks around all traces in STRT and END.
 # 20181118  RBL Restructure the startall-run to use a plain queue instead
 #                of expecting a huge list of instructions.  
+# 20190317  RBL Fix the thread-start logic for Start and End.  
 # 
 # 
 
