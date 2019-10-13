@@ -209,12 +209,12 @@ def fntRunEverything(mygl, qInstr, fnbQEnd, nWaitMsec, nWaitHowMany):
     
     # Wait until all jobs have started and finished.
     # Make sure the thread is running, then wait for it to finish.
-    while not mygl.thrStart.bStarted():
+    while not mygl.thrStart.mbStarted():
         time.sleep(nWaitMsec)
     if (mygl.thrStart.is_alive()):
         mygl.thrStart.join()     # Runs out of instructions.
 
-    while not mygl.thrEnd.bStarted():
+    while not mygl.thrEnd.mbStarted():
         time.sleep(nWaitMsec)
     if (mygl.thrEnd.is_alive()):
         mygl.thrEnd.join()     # Runs out of instructions.
@@ -605,6 +605,8 @@ def fnsStampLine(mysStamp, mysLine, mybFirstLine):
 
 # E n t r y   p o i n t 
 if __name__ == "__main__":
+
+    assert False, "Cannot run as standalone program anymore!"
 
     # ==================== m a i n N e w B r o k e r ====================
     @ntrace
