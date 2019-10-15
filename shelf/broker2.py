@@ -1,46 +1,5 @@
 #!/usr/bin/python
-# broker2.py
-
-'''
-The broker takes a set of run parameters from its CLI, expands them into a
-set of instructions for jobs, and then runs those jobs.  It runs jobs in
-parallel using as many cores as are available.  
-
-This version, broker2.py, is a 90% rewrite of the previous version, using
-threading and multiprocessing to maximize use of the machine's resources. 
-Most of the threading and multiprocesing are done in the newbroker3.py
-module.
-
-Basic processing:
-- The main line thread reads the CLI, sends the parameters to the
-searchdatabase, which returns a sequence of instructions for individual
-jobs.  Those instructions are placed in a queue for the start-all thread.  
-
-- The start-all thread reads an instruction from the queue, and, if there is
-a free core to run the job, starts a job with that instruction.  It loops
-until it runs out of instructions in the queue.  If the queue is empty
-because the total set of instructions has been exhausted, the thread exits.  
-
-Jobs are fired off as multiprocessing jobs in separate processes using the
-Python multiprocessing module.  Each job runs a sequence of commands from a
-fixed template after parameters from the instruction are substituted into
-the commands.  
-
-- Each job executes the sequence of commands one line at a time, collecting
-the results into a log file with time stamps for each command and its
-output.  The individual commands are executed in shell processes using the
-Python subprocess module.  
-
-- The end-all thread looks for jobs that have completed.  It examines all
-jobs in CPU slots, finds one that has completed, if any, empties the output
-queue from that job, and removes it from the list.  
-
-If there are no jobs in the running list, it waits for a few milliseconds
-and looks again.  If the list of instructions is exhausted, then the entire
-run is complete and it exits.  
-
-- Simple, eh?  
-'''
+# broker.py
 
 import  os
 import  re
@@ -230,13 +189,10 @@ class CG(object):
     nCases = 1          # DEBUG
     nWaitedForSlot = 0  # DEBUG
     nWaitedForDone = 0  # DEBUG
-    
     nWaitedForInstr = 0 # DEBUG
     bDebugPrint = False # Print output of all jobs? (obsolete) 
     thrStart = None
-    thrStartStarted = False
     thrEnd = None
-    thrEndStarted = False
     
 
 #===========================================================
@@ -497,7 +453,8 @@ def fntProcessOneInstruction(mysRunNumber, mydInstruction, mynSeed):
             # Send the instruction out to be done.
             g.qInstructions.put(tThisInst)
             
-            nb.fnvStartThreads(g)
+            if not g.thrStart.is_alive(): g.thrStart.start()
+            if not g.thrEnd.is_alive(): g.thrEnd.start()
 
             return tThisInst
 
@@ -710,7 +667,6 @@ foreach single-line file in holding dir
 #                Puzzle: had to move the start instructions for the 
 #                startall and endall threads here after the first 
 #                instruction is enqueued.  Why?
-# 20181213  RBL Add some overview comments to make this half comprehensible. 
 # 
 # 
 

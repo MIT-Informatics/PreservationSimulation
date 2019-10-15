@@ -37,7 +37,53 @@
                 <p>For many options, multiple choices are permitted.  Be careful
                     when selecting multiple choices: the combinations can 
                     generate a very large number of cases.
-                </p><br/>
+                </p>
+                <p>There are <strong>two distinctly different</strong> types of 
+                    simulations, and they require different sets of parameters.
+                    <ul>
+                        <li><b>Modeling Sector Failures:</b> 
+                            <ul>
+                                <li>Choose the baseline number 
+                                    of documents, sector lifetimes, simulation length. </li> 
+                                <li>Leave server default life zero (forever).  <li>Add 
+                                    glitches if desired to impact the sector life 
+                                    expectancies.  </li>
+                                <li>Choose a reasonable number of random
+                                    seeds depending on the accuracy you want.  </li>
+                                <li>Choose
+                                    the desired auditing strategy: type, cycle length 
+                                    (e.g., annual), number of segments if more than one.</li>
+                            </ul>
+                        </li>
+                        <li><b>Modeling Server Failures:</b> 
+                            <ul>
+                                <li>Set the number of documents
+                                    to the low numbers suggested for shock modeling.  </li>
+                                <li>Set the sector lifetime to the highest number, since
+                                    sectors are assumed to be basically immortal for shock 
+                                    modeling.  </li>
+                                <li>Be sure to set the server default 
+                                    lifetime to a nonzero value that you feel is
+                                    a reasonable half-life (or range of half-lives); 
+                                    this is critical for shock modeling.  </li>
+                                <li>Set the shock frequency, the 
+                                    shock impact (typically, 100%), and the span of the
+                                    shocks.  </li>
+                                <li>If the shocks are not to be immediately 
+                                  fatal, set the shock impact and duration.  </li>
+                                <li>Note that
+                                    since shock results are binary -- the entire
+                                    collection is either preserved or lost -- 
+                                    accuracy requires
+                                    a large number of repetitions; set the number of
+                                    random seeds appropriately, at least 100, and
+                                    (currently) up to 10,000.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    
+                </p>
+                <p>Have fun exploring!</p><br/>
             </td></tr>
             <p></p>
         </table>
@@ -139,8 +185,10 @@
             </th></tr>
             <tr><td>
                 <select name="nDocuments" multiple size="6">
-                    <option value="10" selected>&nbsp;&nbsp;10 (for SHOCKs)&nbsp;</option>
-                    <option value="10000">&nbsp;&nbsp;10,000 (baseline)&nbsp;</option>
+                    <option value="20" selected>&nbsp;&nbsp;20 (for SHOCKs annual/qtly auditing)&nbsp;</option>
+                    <option value="30">&nbsp;&nbsp;30 (for SHOCKs monthly auditing)&nbsp;</option>
+                    <option value="100">&nbsp;&nbsp;100 (for SHOCKs weekly auditing)&nbsp;</option>
+                    <option value="10000">&nbsp;&nbsp;10,000 (baseline for sector errors)&nbsp;</option>
                     </select>
             </td></tr>
         </table>
@@ -191,7 +239,7 @@
     <td>
         <table>
             <tr><th align="left">
-                <b>Frequency of Scheduled Audit Cycles (hrs) (0=never)                    </b>
+                <b>Frequency of Scheduled Audit *Cycles* (hrs) (0=never)                    </b>
             </th></tr>
             <tr><td>
                 <select name="nAuditFreq">
@@ -201,7 +249,7 @@
                     <option value="5000">&nbsp;&nbsp;5000 (1/2 year)&nbsp;</option>
                     <option value="10000" selected>&nbsp;&nbsp;10000 (year)&nbsp;</option>
                     <option value="20000">&nbsp;&nbsp;20000 (two years)&nbsp;</option>
-                    <option value="50000">&nbsp;&nbsp;50000 (five years)&nbsp;</option>
+                    <option value="50000">&nbsp;&nbsp;50000 (five years, very slow)&nbsp;</option>
                     </select>
             </td></tr>
         </table>
@@ -211,7 +259,7 @@
     <td>
         <table>
             <tr><th align="left">
-                <b>Number of Audit Segments per Cycle (assuming annual)                    </b>
+                <b>Number of Audit Segments per Cycle (assuming annual cycle)                    </b>
             </th></tr>
             <tr><td>
                 <select name="nAuditSegments">
@@ -350,11 +398,11 @@
             <tr><td>
                 <select name="nServerDefaultLife" multiple size="6">
                     <option value="0" selected>&nbsp;&nbsp;0 (infinite)&nbsp;</option>
-                    <option value="10000">&nbsp;&nbsp;10000 (1 year)&nbsp;</option>
                     <option value="20000">&nbsp;&nbsp;20000 (2 years)&nbsp;</option>
                     <option value="30000">&nbsp;&nbsp;30000 (3 years)&nbsp;</option>
                     <option value="40000">&nbsp;&nbsp;40000 (4 years)&nbsp;</option>
                     <option value="50000">&nbsp;&nbsp;50000 (5 years)&nbsp;</option>
+                    <option value="60000">&nbsp;&nbsp;60000 (6 years)&nbsp;</option>
                     <option value="80000">&nbsp;&nbsp;80000 (8 years)&nbsp;</option>
                     <option value="100000">&nbsp;&nbsp;100000 (10 years)&nbsp;</option>
                     <option value="200000">&nbsp;&nbsp;200000 (20 years)&nbsp;</option>
@@ -566,8 +614,8 @@
 
     </tr>
 
-<!-- redo button -->
     <tr bgcolor="#FF6666">
+<!-- redo button -->
         <td>            <b>Redo</b><br/>
             Force recalculation of these cases
             even if they have been done recently.<br/>
@@ -576,8 +624,8 @@
 
 <!-- test mode warning button -->
                 <td colspan="2" centered><strong><font size="+2">TEST only!</font> </strong>
-            Print instructions, but
-            <em>do not run</em> simulations.<br />
+            Print instructions, 
+            <br />but <em>do not run</em> simulations.<br />
             <font size="+1">Uncheck me for production run!</font><br/>
             <input type="checkbox" name="bTestOnly" value="true" checked class="largerCheckbox" ><br/><br/>
         </td>
@@ -593,7 +641,7 @@
                 <td>
             <strong>Logfile name for detached running</strong><br />
             Data will be appended to an existing file.<br />
-            <input type="text" name="sDetachedLogfile", size=15, value="">
+            <input type="text" name="sDetachedLogfile", size=40, value="">
         </td>
 
     </tr>
@@ -612,7 +660,7 @@
 </form>
 
 <p>
-<font face="Arial" size="-2">      Last edited 20181116.1720 </font>
+<font face="Arial" size="-3">      Master last edited 20190225.1550 </font>
 </p>
 
 </body>
@@ -632,6 +680,7 @@
 20180408    RBL Check on simlen input, widen field, add comment. 
                  Change nSimLength to multi-select pulldown. 
 20181115    RBL Add nDocuments block.  Hope it fits.  
+20190217    RBL Lengthen logfilename block for easier reading.  
 
 
 -->
