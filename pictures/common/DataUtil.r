@@ -153,7 +153,7 @@ fndfGetAuditData <- function(results)
     lNamesIWant <- c("copies","lifem","mdmlosspct",
                     "auditfrequency","auditsegments",    
                     #"audittype", too, needs fixed, but is not in data!
-                    "docsize","shelfsize","simlength")
+                    "docsize","shelfsize","simlength","n")
     results.narrow <- fndfGetSubsetData(results, lNamesIWant)
     results.plausible <- results.narrow[results.narrow$lifem>=2,]
     return(results.plausible)
