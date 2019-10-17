@@ -45,7 +45,6 @@ bar.recast <- dcast(bar.melted, copies~lifem)
 # P L O T   D A T A 
 library(ggplot2)
 source("../common/PlotUtil.r")
-source("../common/noaudittitles.r")
 
 # Show lines for various copies, with no auditing, over wiiiide range.
 nCopies <- 1; trows1 <- fnSelectCopies(dat.auditannually, nCopies)
@@ -54,6 +53,8 @@ nCopies <- 5; trows5 <- fnSelectCopies(dat.auditannually, nCopies)
 nCopies <- 8; trows8 <- fnSelectCopies(dat.auditannually, nCopies)
 nCopies <- 10; trows10 <- fnSelectCopies(dat.auditannually, nCopies)
 trows <- rbind(trows1, trows3, trows5, trows8, trows10)
+
+source("../common/noaudittitles.r")
 
 gp <- ggplot(data=trows
             , aes(x=lifem,y=safe(mdmlosspct), color=factor(copies))

@@ -27,13 +27,16 @@ sTitleLine <-   (   ""
                 %+% "years)"
                 )
 sTimestamp <- fngettime()
-sSamples <- sprintf("samples=%d ", min(trows$n))
-sXLabel <- ("Sector (half-life) in megahours "
+sSamples <- sprintf("sample size=%d ", min(trows$n))
+sXLabel <- ("Sector (1MB) half-life in megahours "
             %+% "      (one metric year = 10,000 hours) "
-            %+% "                           (less frequent shocks =====>)"
+            %+% "                           (longer sector lifetime ========>)"
             )
+sProvenanceLine <- ("                                      "
+                    %+% "%s   %s   %s"
+                    )
 sXLabel <- sXLabel %+% ("\n\n                                  " # cheapo rjust.
-            %+% sprintf("          %s   %s   %s", sPlotFile,sTimestamp,sSamples)
+            %+% sprintf(sProvenanceLine, sPlotFile,sTimestamp,sSamples)
             )
 
 sYLabel <- ("permanent document losses (% of collection)")
