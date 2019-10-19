@@ -17,7 +17,7 @@ lLegendItemLabels <- levels(factor(trows$copies))
 sCopiesList <- paste0(lLegendItemLabels, sep=",", collapse="")
 sTitleLine <-   (   ""
                 %+% ""
-                %+% "Without auditing, in a peaceful world, "
+                %+% "Without auditing, even in a peaceful world, "
                 %+% "too many copies are required "
                 %+% "\nto reduce permanent errors "
                 %+% "to acceptable levels"

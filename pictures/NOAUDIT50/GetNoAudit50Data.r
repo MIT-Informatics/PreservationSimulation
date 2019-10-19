@@ -50,9 +50,10 @@ source("../common/PlotUtil.r")
 nCopies <- 1; trows1 <- fnSelectCopies(dat.auditannually, nCopies)
 nCopies <- 3; trows3 <- fnSelectCopies(dat.auditannually, nCopies)
 nCopies <- 5; trows5 <- fnSelectCopies(dat.auditannually, nCopies)
-nCopies <- 8; trows8 <- fnSelectCopies(dat.auditannually, nCopies)
 nCopies <- 10; trows10 <- fnSelectCopies(dat.auditannually, nCopies)
-trows <- rbind(trows1, trows3, trows5, trows8, trows10)
+nCopies <- 20; trows20 <- fnSelectCopies(dat.auditannually, nCopies)
+trowsall <- rbind(trows1, trows3, trows5, trows10, trows20)
+trows <- subset(trowsall, lifem>=10)
 
 source("../common/noaudittitles.r")
 
@@ -61,8 +62,8 @@ gp <- ggplot(data=trows
             ) 
 gp <- gp + labs(color="Number of\nCopies")
 gp <- fnPlotLogScales(gp, x="YES", y="YES"
-                ,xbreaks=c(2,5,10,100,1000)
-                ,ybreaks=c(0.01,0.10,1.00)
+                ,xbreaks=c(10,30,100,300,1000)
+                ,ybreaks=c(0.01,0.10,1.00,10.00,100.00)
                 )
 gp <- gp + geom_line(
                   size=3
