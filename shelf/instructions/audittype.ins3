@@ -1,10 +1,10 @@
 # Audit type
 
 sAuditType
-Auditing Strategy
+Auditing Strategy (BE CAREFUL!  TOTAL=one segment only; SYSTEMATIC=more segments per cycle)
 value,label,selected
-TOTAL,"TOTAL (every doc every cycle)",SELECTED
-SYSTEMATIC,"SYSTEMATIC (doc subset each segment)",0
+TOTAL,"TOTAL (every doc every cycle; ONE SEGMENT ONLY)",SELECTED
+SYSTEMATIC,"SYSTEMATIC (doc subset each segment, >1 segment)",0
 UNIFORM,"RANDOM (uniform random subset each segment)",0
 #ZIPF,"ZIPF (NYI!)",0
 

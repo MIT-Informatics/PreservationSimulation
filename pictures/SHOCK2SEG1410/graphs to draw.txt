@@ -1,0 +1,10 @@
+cop56 sdhl4 shkf1-4span2 af10000s1-4-10
+
+OOPS BAD DATA, NO SEG4.  START OVER.
+
+1
+x = shock hl
+y = prob of collection loss
+
+lines = copies 5,6
+

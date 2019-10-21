@@ -1,0 +1,6 @@
+1
+x = 
+y = prob of collection loss
+
+lines = 
+

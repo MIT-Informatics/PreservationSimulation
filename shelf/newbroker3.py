@@ -310,7 +310,7 @@ class CStartAllCases(threading.Thread):
                 NTRC.ntracef(3, "STRT", "proc waiting for instr "
                             "nwait|%s| " 
                             % (self.gl.nWaitedForInstr))
-                time.sleep(self.nWaitMsec)
+                time.sleep(self.nWaitMsec / 1000.0)
                 #continue    # Go back and try it again.
             NTRC.ntracef(3, "STRT", "proc end of while queue nonempty")
             #continue        #???

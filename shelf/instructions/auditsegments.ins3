@@ -1,7 +1,7 @@
 # Number of audit segments per audit cycle
 
 nAuditSegments 
-Number of Audit Segments per Cycle (assuming annual cycle)
+Number of Audit Segments per Cycle, assuming annual cycle (TOTAL limited to one segment)
 value,label,selected
 1,"1 (annual)",SELECTED
 2,"2 (semi-annual)",0

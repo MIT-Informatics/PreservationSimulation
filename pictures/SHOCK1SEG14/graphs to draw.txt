@@ -1,0 +1,6 @@
+1
+x = shock hl 1-4
+y = prob of collection loss
+af 1yr 1 seg
+lines = copies 5,6
+
