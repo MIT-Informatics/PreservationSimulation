@@ -1,6 +1,4 @@
-cop56 sdhl4 shkf1-4span2 af10000s1-4-10
-
-OOPS BAD DATA, NO SEG4.  START OVER.
+cop56 sdhl-4 shkf1-4span2 af10000s1-4-10
 
 1
 x = shock hl

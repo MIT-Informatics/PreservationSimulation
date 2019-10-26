@@ -38,19 +38,21 @@ fnNarrow <- function(dfIn)  {dfIn[want.varnames]}
 alldat.df <- fndfGetGiantDataRaw("")
 allnewdat <- alldat.df %>% fnNarrow() %>% fnGroupBy() %>% 
 summarize(losspct=round(mean(lost/docstotal)*100.0, 2), n=n()) 
-newdat <- fnSubset(allnewdat)
-trows <- newdat
+newdat1 <- fnSubset(allnewdat)
+newdat2 <- subset(newdat1, serverdefaultlife<=4*10000)
+newdat3 <- subset(newdat2, simlength!=20*10000)          
+trows <- newdat3
 
 
 sCopies <- sprintf("Copies=%.0f; ", nCopies)
-sSegments <- sprintf("%d segment(s))", nSegments)
+sSegments <- sprintf("%d segment)", nSegments)
 sTitleLine <-   (   ""
-                %+% "Varying Server Default Half-life: "
-                %+% "no shocks "
+                %+% "Collection maintained on servers with finite lifetimes (varying, shown as half-life). "
+                %+% "\n(Equivalent to random minor shocks that kill only one server) "
                 %+% " "
                 %+% "\n\n"
                 %+% sCopies
-                %+% "annual systematic auditing in "
+                %+% "annual total auditing in "
                 %+% sSegments
                 )
 sLegendLabel <- "  Length of\nSimulation\n   (years)"
@@ -58,7 +60,7 @@ lLegendItemLabels <- levels(factor(trows$simlength/10000))
 
 sTimestamp <- fngettime()
 sSamples <- sprintf("samples=%.0f ", mean(trows$n))     #min(trows$n)
-sXLabel <- ("Server default life (half-life) in hours "
+sXLabel <- ("Server default life or shock arrival rate (half-life) in hours "
             %+% "      (one metric year = 10,000 hours) "
             %+% "                           (less frequent shocks =====>)"
             )

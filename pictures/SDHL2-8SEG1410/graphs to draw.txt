@@ -1,0 +1,10 @@
+1
+x = sdhl 2-8
+y = prob of collection loss
+lines = audit segments 1-4-10
+copies=5
+
+2
+same
+copies=6
+

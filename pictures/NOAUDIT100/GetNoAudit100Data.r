@@ -76,6 +76,11 @@ gp <- gp + geom_point(data=trows
                 , color="black"
                 ) 
 
+gp <- gp + annotate("rect", fill = "yellow", alpha = 0.25
+                , xmin = 30, xmax = 1000-1
+                , ymin = 0.001, ymax = 100
+                ) 
+
 gp <- gp + theme(legend.position=c(0.9,0.86))
 gp <- gp + theme(legend.background=element_rect(fill="lightgray", 
                                   size=0.5, linetype="solid"))
