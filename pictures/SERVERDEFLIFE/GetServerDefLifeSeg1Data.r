@@ -39,7 +39,7 @@ alldat.df <- fndfGetGiantDataRaw("")
 allnewdat <- alldat.df %>% fnNarrow() %>% fnGroupBy() %>% 
 summarize(losspct=round(mean(lost/docstotal)*100.0, 2), n=n()) 
 newdat1 <- fnSubset(allnewdat)
-newdat2 <- subset(newdat1, serverdefaultlife<=4*10000)
+newdat2 <- subset(newdat1, serverdefaultlife<=6*10000)
 newdat3 <- subset(newdat2, simlength!=20*10000)          
 trows <- newdat3
 

@@ -69,6 +69,8 @@ DONE - need new utils: list databases, list collections in db.
 
 
 TODO: web interface to select instructions for broker run
+FIXME - Add Javascript code in the main form to check for required fields
+    and inconsistent choices, e.g., TOTAL audit of >1 segment, oops.
 DONE - Make almost all entries multiple-select.  Curently several are not.
 DONE - nDocuments does not appear in the interface; therefore, if it has 
     multiple values, it will generate redundant instructions.  YIKES!

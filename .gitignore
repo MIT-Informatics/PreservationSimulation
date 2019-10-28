@@ -12,6 +12,7 @@ logs
 # data directories from simulations, way too big to check in
 hl
 hl2018*
+hl2019*
 
 # files to ignore everywhere
 *.zip
