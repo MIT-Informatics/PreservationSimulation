@@ -39,7 +39,7 @@ gp <- gp + geom_point(data=trows
                 , color="black"
                 ) 
 
-gp <- gp + theme(legend.position=c(0.15,0.3))
+gp <- gp + theme(legend.position=c(0.45,0.3))
 gp <- gp + theme(legend.background=element_rect(fill="lightgray", 
                                   size=0.5, linetype="solid"))
 gp <- gp + theme(legend.key.size=unit(0.3, "in"))

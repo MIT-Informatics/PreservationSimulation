@@ -28,6 +28,7 @@ fnGroupBy <- function(dfIn) {group_by(dfIn, copies, lifem
                                     , serverdefaultlife
                                     , shockfreq, shockspan, shockimpact
                                     , auditfrequency, auditsegments
+                                    , simlength
                                     )}
 fnSubset <- function(dfIn)  {subset(dfIn, 
                                       serverdefaultlife==nServerDefaultLife * 10000
@@ -41,7 +42,7 @@ fnSubset <- function(dfIn)  {subset(dfIn,
 want.varnames <- c("copies","lifem","lost","docstotal","serverdefaultlife"
                 ,"shockfreq","shockimpact","shockspan","shockmaxlife"
                 ,"auditfrequency","audittype","auditsegments"
-                ,"deadserversactive","deadserversall")
+                ,"deadserversactive","deadserversall","simlength")
 fnNarrow <- function(dfIn)  {dfIn[want.varnames]}  
 
 # G E T   D A T A  

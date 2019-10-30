@@ -17,6 +17,7 @@
 #                      (Audit cycles are always annual.)
 # sPlotFile           (string) name of the file to write plots into.  
 # 
+# Uses trows$simlength to calculate simulation duration.  
 # Also uses the fngettime() function from PlotUtil, 
 #  which must be included first.
 # 
@@ -30,6 +31,7 @@ sTitleLine <-   (   ""
                 %+% sprintf(", impacts [%d%%,%d%%]", 
                             nShockImpactMin, nShockImpactMax)
                 %+% sprintf(", ServerDefaultHalflife=%dyrs", nServerDefaultLife)
+                %+% sprintf(", Duration=%dyrs", as.integer(min(trows$simlength)/10000))
                 %+% " "
                 %+% "\n"
                 %+% sprintf("\n(Copies=%s ", sCopiesList)

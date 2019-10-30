@@ -1,0 +1,31 @@
+new data needed:
+
+shock span 3; sdhl 4; freq 1,2,3,4; samples 5000
+../hl20191029/SHOCK3NEW4
+
+copies 5; audit 4 seg   DONE
+copies 7; audit 4 seg   DONE
+copies 9; audit 4 seg   DONE
+
+copies 5; audit 10 seg  DONE
+copies 7; audit 10 seg  DONE
+copies 9; audit 10 seg  DONE
+
+copies 5; audit 50 seg  DONE
+copies 7; audit 50 seg  DONE
+
+copies 7; audit 50 seg; samples 10000   DONE
+copies 8; audit 50 seg; samples 10000   DONE
+
+-------------------
+
+serverdefaultlife tests
+../hl20191029/SDHLLONG
+
+shock 0; samples 5000; copies 5; audit 10000 seg 4
+
+sdhl 5      
+sdhl 10     DONE
+sdhl 15     
+sdhl 20     DONE
+sdhl 30     
