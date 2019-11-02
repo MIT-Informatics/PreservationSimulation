@@ -40,7 +40,7 @@ allnewdat <- alldat.df %>% fnNarrow() %>% fnGroupBy() %>%
 summarize(losspct=round(mean(lost/docstotal)*100.0, 2), n=n()) 
 newdat1 <- fnSubset(allnewdat)
 newdat2 <- subset(newdat1, serverdefaultlife<=50*10000)
-newdat3 <- subset(newdat2, simlength=1*10000)          
+newdat3 <- subset(newdat2, simlength!=20*10000)          
 trows <- newdat3
 
 
@@ -95,7 +95,7 @@ gp <- gp + geom_point(data=trows
                 , color="black"
                 ) 
 
-gp <- gp + theme(legend.position=c(0.15,0.3))
+gp <- gp + theme(legend.position=c(0.50,0.3))
 gp <- gp + theme(legend.background=element_rect(fill="lightgray", 
                                   size=0.5, linetype="solid"))
 gp <- gp + theme(legend.key.size=unit(0.3, "in"))

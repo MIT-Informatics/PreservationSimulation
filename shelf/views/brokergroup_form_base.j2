@@ -1,6 +1,6 @@
 <!-- brokergroup_form_base.j2 -->
 {# Yes, this file really is the base file.  
-    The misleading comment below will appear in the generated file.#}
+    The very misleading comment below will appear in the generated .tpl file.#}
 <!-- THIS .tpl FORM IS AUTOMATICALLY GENERATED.  DO NOT EDIT. -->
 {# End of misleading comment.#}
 <html>
@@ -120,6 +120,7 @@
         {% block nCopies %}{% endblock %}
         {% block nDocuments%}{% endblock %}
         {% block nLifem %}{% endblock %}
+        {% block nServerDefaultLife %}{% endblock %}
         <td>&nbsp;</td>        <!-- blank separator -->
     </tr>
  
@@ -132,8 +133,8 @@
     
     <tr bgcolor="#ccffbb">
         {% block nAuditFreq %}{% endblock %}
-        {% block nAuditSegments %}{% endblock %}
         {% block sAuditType %}{% endblock %}
+        {% block nAuditSegments %}{% endblock %}
         <td>&nbsp;</td>
     </tr>
 
@@ -151,7 +152,6 @@
         {% block nShockImpact %}{% endblock %}
         {% block nShockMaxlife %}{% endblock %}
         {% block nShockSpan %}{% endblock %}
-        {% block nServerDefaultLife %}{% endblock %}
     </tr>
 
     <tr bgcolor="#ffaaaa">
@@ -299,6 +299,8 @@
                  is not in this file, as you would expect; instead
                  it comes from the .ins3 file for the field.  
                  I never remember this myself.  Confusing, yes.  
-
+20191102    RBL Reorder some fields to reduce cockpit errors:
+                 ServerDefLife with copies and such, not with shocks;
+                 AuditType before AuditSegments.
 -->
 </html>

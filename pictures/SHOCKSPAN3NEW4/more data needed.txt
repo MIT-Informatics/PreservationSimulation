@@ -42,5 +42,23 @@ sdhl 20; simlen 30      DONE
 sdhl 30; simlen 10      DONE
 sdhl 30; simlen 30      DONE
 
+------------------------------
+
+shock 0; samples 5000; copies 5; audit 10000 seg 1
+
+sdhl  8; simlen 50      DONE
+sdhl 10; simlen 50      DONE
+sdhl 15; simlen 50      DONE
+sdhl 20; simlen 50      DONE
+sdhl 30; simlen 50      DONE
+
+sdhl  8; simlen 100     DONE
+sdhl 10; simlen 100     DONE
+sdhl 15; simlen 100     DONE
+sdhl 20; simlen 100     DONE
+sdhl 30; simlen 100     DONE
+
 ---------------------
+
+
 
