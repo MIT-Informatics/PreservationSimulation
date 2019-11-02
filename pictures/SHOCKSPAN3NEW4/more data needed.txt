@@ -17,6 +17,9 @@ copies 7; audit 50 seg  DONE
 copies 7; audit 50 seg; samples 10000   DONE
 copies 8; audit 50 seg; samples 10000   DONE
 
+copies 7; audit 50 seg; samples 40000   
+copies 8; audit 50 seg; samples 40000   
+
 -------------------
 
 serverdefaultlife tests
@@ -24,8 +27,20 @@ serverdefaultlife tests
 
 shock 0; samples 5000; copies 5; audit 10000 seg 4
 
-sdhl 5      
-sdhl 10     DONE
-sdhl 15     
-sdhl 20     DONE
-sdhl 30     
+sdhl 8; simlen 10       DONE
+sdhl 8; simlen 30       DONE
+
+sdhl 10; simlen 10      DONE
+sdhl 10; simlen 30      DONE
+
+sdhl 15; simlen 10      DONE
+sdhl 15; simlen 30      DONE
+
+sdhl 20; simlen 10      DONE      
+sdhl 20; simlen 30      DONE      
+
+sdhl 30; simlen 10      DONE
+sdhl 30; simlen 30      DONE
+
+---------------------
+
