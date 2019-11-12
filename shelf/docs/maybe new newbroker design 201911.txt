@@ -1,0 +1,534 @@
+#/usr/bin/python3
+# newbroker4.py
+#               RBL 20191106
+
+'''
+Thread/Queue based design for newbroker4        RBL 20191106
+Stick to Raymond Hettinger's principles of queueing instead of locking. 
+Except oops on the ntrace routines which don't use queued print, so 
+we still have to lockprint around them.  Sorry about that.  Work in progress. 
+
+
+------------------
+start jobs loop
+
+while true:                 # daemon
+    qinstructions.get()     # blocks
+    get lines,logfilename
+    wait for opening while forever
+        send interrogate to qjobsmod.put(ask)
+        receive from qjobsaskdone.get()
+        if y then break
+    find empty slot in jobslist
+    put job info into jobs list
+        jobinfo into qjobsmod.put(add)
+        wait for slotnum = qjobsputdone.get()
+    create multiproc q
+    start job
+        job knows his name, number, slot number
+
+
+------------------
+end jobs loop
+
+while true:                 # daemon
+    qjobend.get()           # blocks
+        includes output, job name, number, slot number
+    log the output got from q
+    remove job from slot in jobslist
+        send slot number to qjobsmod.put(del)
+        wait for qjobsdeldone.get()
+    
+    qinstructions.task_done()
+    qjobend.task_done()
+
+
+------------------
+job process
+
+do all the usual stuff
+send output in msg to qjobend
+
+
+------------------
+sendinstructions
+
+get iterator for instructions
+qinstructions.put()
+
+
+------------------
+startup
+
+create jobslist
+
+create qinstructions
+create jobstart thread
+set daemon
+
+create qjobend
+create jobend thread
+set daemon
+
+start jobstart thread
+start jobend thread
+
+create qjobsmod
+create jobsmod thread
+create qjobsadddone
+create qjobsdeldone
+create qjobsaskdone
+start jobsmod thread
+
+call sendinstructions
+
+join qinstructions
+join qjobend
+
+end
+
+
+------------------
+modify jobslist
+
+this is a separate thread but calls to it are essentially synchronous:
+callers will always wait for return info on the particular qjobsxxxdone queue.
+this is done to isolate all access to the jobs list in a single thread 
+that has exclusive access to that list.  no locking needed.  no races.  
+
+needed operations are 
+- put job in empty slot because i know that one is available; return slot nr?
+- remove job from slot n
+- interrogate if empty slot is available; how do i get the answer back?
+use qjobsadddone to return job slot number
+use qjobsdeldone to return empty slot number
+use qjobsaskdone to return yes/no
+
+qjobmod.get()
+switch opreq:
+
+case ask
+scan for empty slot
+return y/n on qjobsaskdone.put()
+
+case add
+find an empty slot
+insert job info into that slot
+return slot number in qjobsadddone.put()
+
+case del
+remove jobinfo from slot n
+return n on qjobsdeldone.put()
+
+
+------------------
+
+'''
+
+'''
+maybe there's another way.  don't keep a list of jobs, but only a counter.
+ops: ask if still room, add one, subtract one.
+the jobs themselves have to keep context to return to the ender.
+start:
+while forever; ask if still room; wait for return q; break if room
+send add 1 to counter
+start job
+end:
+get job info from qjobend
+send subtract 1 to counter
+log job info
+
+'''
+
+import multiprocessing
+import subprocess 
+import threading
+import time
+import sys
+import collections
+import re
+import itertools
+import datetime
+import os
+import queue
+from NewTraceFac import NTRC, ntrace, ntracef
+
+import  os
+import  json
+from    catchex         import  catchex
+import  copy
+
+#===========================================================
+# class   C G   f o r   g l o b a l   d a t a 
+class CG(object):
+    ''' Global data.
+    '''
+    # Options that should be passed thru to main.py.
+    # All the interesting options should be None here, so that 
+    #  they are removed from the selection dictionary before
+    #  it is handed to MongoDB.  (No longer a consideration.)
+    #  If the user doesn't specify it on the command line, 
+    #  then it is not a selection criterion for searching.
+    nRandomSeeds = 21
+    sRandomSeedFile = "randomseeds.txt"
+
+    # Administrative options to guide broker's behavior.
+    nCores = 8          # Default, overridden by NCORES env var.
+    nCoreTimer = 50     # Wait for a free core (msec).
+    nPoliteTimer = 20   # Wait between sequential launches, in milliseconds.
+    nTestLimit = 0      # Max nr of runs executed for a test run, 0=infinite.
+    sTestCommand = "N"  # Should just echo commands instead of executing them?
+    sTestFib = "N"      # Should use Fibonacci calc instead of real programs?
+    sListOnly = "N"     # Just list out all cases matching the stated criteria.  
+                        #  but don't execute them.
+    sRedo = "N"         # Force cases to be redone (recalculated)?
+
+    
+    # Command template components.
+    #  filled in from templates.  
+    sCommandListFilename = "broker2commandlist.txt"  # default, not overridden.
+    # Special fake CPU-bound commands to test for proper parallel execution.  
+    # These take about a minute (75s) and a third of a minute (22s) on an
+    #  Intel 3Gi7 CPU in my Dell Optiplex 7010 i7-3770(2016-08).  Your mileage
+    #  may differ.  
+    # Make sure we have the right version of bash and Python.
+    sStartTime = 'date +%Y%m%d_%H%M%S.%3N'
+    sBashIdCmd = 'sh --version'
+    sPythonIdCmd = ('python -c "import sys; print sys.version; '
+                    'print sys.version_info"'
+                    )
+    sFibCmd1 = 'python fib.py 33'
+    sFibCmd2 = 'python fib.py 32'
+    sEndTime = 'date +%Y%m%d_%H%M%S.%3N'
+    lFibTemplates = [sStartTime, sBashIdCmd, sPythonIdCmd, 
+                    sFibCmd1, sFibCmd2, sEndTime]
+    
+    # queue to pass instructions to runeverything thread.
+    qInstructions = queue.Queue()
+    bLast = False   # Have we come to the end of all instructions.
+
+#===========================================================
+
+    """Additional data needed by the newbroker module.  
+    """
+    ltJobs = list()     # Job numbers or None
+    lockPrint = None    # Thread lock for trace printing.
+    
+    # Dictionaries that contain references to things we want cleaned up.
+    # These must be emptied when the jobs they point to are complete.
+    dId2Proc = dict()   # Map job number -> process object
+    dId2Queue = dict()  # Map job number -> queue object
+    
+    nParallel = 4       # Limit on jobs running in parallel (on separate CPUs)
+                        #  (overridden by nCores).
+    bThatsAllFolks = False  # All cases done, ran out of instructions.
+    nCasesTotal = 0     # Nr of instructions total, all started.
+    nCasesStarted = 0   # How many cases started so far.  # DEBUG
+    nCasesDone = 0      # How many cases done (finished) so far. # DEBUG
+    llsFullOutput = list()  # Output for all test cases.
+    nCases = 1          # DEBUG
+    nWaitedForSlot = 0  # DEBUG
+    nWaitedForDone = 0  # DEBUG
+    nWaitedForInstr = 0 # DEBUG
+    bDebugPrint = False # Print output of all jobs? (obsolete) 
+    thrStart = None
+    thrEnd = None
+    
+
+#===========================================================
+
+
+
+
+
+#===========================================================
+
+# ==================== subprocess user: do one line ====================
+
+# f n D o O n e L i n e 
+@ntracef("DO1L")
+def fntDoOneLine(mysLine, mynProc, mynLine):
+    """Execute one single-line command.  
+    
+    Input: single line of command.  
+    Output: tuple of the (Popen PIPE return code, command return code, list
+     of output lines as strings.
+    Contributes line(s) to be in log file.
+     Input lines and the first line of output blocks have timestamps;
+     other lines in output blocks are indented with spaces.  
+    """
+    sTimeBegin = fnsGetTimestamp()
+    proc = (subprocess.Popen(mysLine
+        , stdout=subprocess.PIPE
+        , close_fds=True            # The default anyway, I think.  
+        , stderr=subprocess.DEVNULL
+        , universal_newlines=True
+        , shell=True)
+        )
+    (sProcOut, sProcErr) = proc.communicate()
+    proc.stdout.close()
+    if not sProcErr: sProcErr = ""
+    sTimeEnd = fnsGetTimestamp()
+    
+    # Format lines for output by timestamping or indenting each line.  
+    sOut = ("-"*len(sTimeBegin) + "\n"
+            + sTimeBegin + "  " + "$ " + mysLine + "\n")
+    lTmpOut1 = sProcOut.rstrip().split("\n")
+    lTmpOut2 = [fnsStampLine(sTimeEnd, sLine, (i==0))
+                    for i,sLine in enumerate(lTmpOut1)]
+    sOut += "\n".join(lTmpOut2)
+    sOut += sProcErr.rstrip()
+    
+    # Collect and return everything to caller.  
+    nCmdStat = "n/a - RBL"
+    nReturnCode = proc.returncode
+    lOut = sOut.split("\n")
+    NTRC.ntracef(4, "DO1L", "proc DoOneLine case|%s| line|%s| "
+                "sline|%s| lResult|%s|" 
+                % (mynProc, mynLine, mysLine, lOut))
+    
+    return(tLineOut(callstatus=nReturnCode, cmdstatus=nCmdStat
+            , linenr=mynLine, casenr=mynProc, ltext=lOut))
+
+
+# ==================== multiprocessing: DoOneCase ====================
+
+# f n t D o O n e C a s e 
+@ntracef("DO1")
+def fntDoOneCase(mytInstruction, qToUse):
+    """Input: list of instructions generated by the broker for this case; 
+     multiprocessing queue through which to report results.
+    
+    Remove blanks, comments, etc., from the instructions.  Each line that
+     is not blank or comment is a command to be executed.  Blanks and 
+     comments are written directly into the output.
+
+    Output: list of commands and their output, sent to the supplied queue.
+     The text will also be written to a log file for the case.  
+    
+    This function will be a multiprocessing external process.
+    """
+    sWhoami = multiprocessing.current_process().name
+    NTRC.ntracef(3, "DO1", "proc procname|%s|" % (sWhoami))
+    nProc = fnsGetProcessNumber(sWhoami)
+    lResults = []                   # list of strings
+
+    # Unpack instruction command list and other items.
+    lInstruction = mytInstruction.cmdlist
+    (sLogfileDir, sLogfileName) = (mytInstruction.logdir
+                                , mytInstruction.logname)
+
+    # Process all command lines of the instruction list and collect results.  
+    for nLine, sLine in enumerate(lInstruction):
+        if fnbDoNotIgnoreLine(sLine):
+            # Genuine line; execute and collect answer line(s).  
+            tAnswer = fntDoOneLine(sLine, nProc, nLine)
+            (nRtn, nErr, lResult) = (tAnswer.callstatus
+                                    , tAnswer.cmdstatus
+                                    , tAnswer.ltext)
+            lResults.extend(lResult)
+            NTRC.ntracef(4, "DO1", "proc DoOneCase case|%s| line|%s| "
+                        "lResult|%s|" 
+                        % (nProc, nLine, lResult))
+        else:
+            # Comment or blank line; just append to results.
+            lResults.extend([("-"*len(fnsGetTimestamp()))
+                            , (fnsGetTimestamp() + "  " + sLine)])
+            NTRC.ntracef(4, "DO1", "proc DoOneCase case|%s| line|%s| "
+                        "comment|%s|" 
+                        % (nProc, nLine, sLine))
+    fnWriteLogFile(nProc, (lResults), sLogfileDir, sLogfileName)
+
+    lPrefix = [("BEGIN results from " + sWhoami)]
+    lSuffix = [("ENDOF results from " + sWhoami)]
+    lResultsToSee = ['\n'] + lPrefix + lResults + lSuffix + ['\n']
+    tAnswers = tLinesOut(procname=sWhoami, listoflists=lResultsToSee)
+    qToUse.put(tAnswers)
+    qToUse.close()
+    return (tAnswers)
+
+
+# f n W r i t e L o g F i l e 
+@ntracef("DO1")
+def fnWriteLogFile(mynProc, mylContents, mysFileDir, mysFileName):
+    sFullName = mysFileDir + "/" + mysFileName
+    sContents = '\n'.join(mylContents)
+    with (open(sFullName, "w")) as fhOut:
+        print(sContents, file=fhOut)
+
+# Debug version of same: write only every tenth log file.
+if not (os.getenv("DEBUG", "") == ""):
+    @ntracef("DO1")
+    def fnWriteLogFile(mynProc, mylContents, mysFileName):
+        sContents = '\n'.join(mylContents)
+        if fnIntPlease(mynProc) % 10 == 0:
+            with (open(mysFileName, "w")) as fhOut:
+                print(sContents, file=fhOut)
+
+
+#===========================================================
+# c l a s s   C S t a r t 
+class CStart(threading.Thread):
+
+    def __init__(self, mygl):
+        self.gl = mygl
+
+    def run(self):
+        while True:
+            tJob = qInstructions.get()
+            while True:
+                qJobMod.put("ask")
+                bResult = qJobAskDone.get()
+                if bResult:
+                    break
+                else:
+                    time.sleep(gl.nPoliteTimer/1000.0)
+                    nWaitedForSlot += 1
+            qJobMod.put("add")
+            # start job
+            qOut = multiprocessing.Queue()
+            nJob = next(self.nCounter)
+            proc = multiprocessing.Process(target=fntDoOneCase
+                            , args=(tOneInstr, qOut)
+                            )
+            proc.start()
+
+
+#===========================================================
+# c l a s s   C E n d 
+class CEnd(threading.Thread):
+
+    def __init__(self, mygl):
+        self.gl = mygl
+
+    def run():
+        shile True:
+            tOutput = qJobEnd.get()
+            nSlotNum = tOutput.slot
+            qJobMod.put("del")
+            qJobsDelDone.get()    
+            qInstructions.task_done()
+            qJobEnd.task_done()
+
+
+#===========================================================
+# f n J o b M o d 
+def fnJobMod():
+    while(True):
+        sCommand = qJobMod.get()
+        if sCommand = "ask":
+            if nJobsCurrent < nParallel:
+                 qJobAskDone.put(True)
+            else:
+                 qJobAskDone.put(False)
+        elif sCommand = "add":
+            nJobsCurrent += 1
+        elif sCommand = "del":
+            nJobsCurrent -= 1
+            qJobModDelDone.put(nJobsCurrent)
+        else:
+            assert (False, "Bad command to fnJobMod: %s" sCommand)
+
+
+#===========================================================
+
+
+
+#===========================================================
+# f n S t a r t u p 
+def fnStartup():
+    pass
+    nJobsCurrent = 0
+    
+    qInstructions = queue.Queue()    
+    thrStart = CStart(gl)
+    thrStart.daemon = True
+    thrStart.start()
+    
+    qJobEnd = queue.Queue()
+    thrEnd = CEnd(gl)
+    thrEnd.daemon = True
+    thrEnd.start()
+    
+    qJobsMod = queue.Queue()
+    qJobsAskDone = queue.Queue()
+    qJobsDelDone = queue.Queue()
+    thrJobMod = threading.Thread(target=fnJobMod)
+    thrJobMod.start()
+
+
+#===========================================================
+# f n S e n d I n s t r u c t i o n s 
+def fnSendInstructions():
+    pass
+
+
+
+
+
+#===========================================================
+#===========================================================
+
+
+# M A I N 
+@ntracef("MAIN")
+def main():
+    '''
+    NTRC.ntracef(0, "MAIN", "Begin.")
+    NTRC.ntracef(0, "MAIN", "TRACE  traceproduction|%s|" % NTRC.isProduction())
+
+    fnStartup()
+
+    # Get args from CLI and put them into the global data
+    nArgs = len(sys.argv)
+    if nArgs > 1: gl.nCases = int(sys.argv[1]) 
+    if nArgs > 2: gl.nParallel = int(sys.argv[2]) 
+
+    # Start the start-end threads.
+    nb.fntRunEverything(g, g.qInstructions, fnbQEnd
+                            , g.nCoreTimer, g.nStuckLimit)
+
+    nRuns = fnnProcessAllInstructions(itAllInstructions)
+    NTRC.ntracef(0, "MAIN", "End queued all runs ncases|%s|" % (g.nCases,))
+
+
+# f n n P r o c e s s A l l I n s t r u c t i o n s 
+@catchex
+@ntracef("MAIN")
+def fnnProcessAllInstructions(myitInstructionIterator):
+    ''' 
+    Get the set of instructions that match the user's criteria for this batch,
+     and run them one by one.
+    Each instruction (run) is executed once for each random seed value.
+    Count the number of runs, and don't exceed the user's limit, if any.
+    If the execution reports a serious error, stop the loop.
+    '''
+    nRunNumber = 0
+
+    fnSendInstructions(nCases)
+
+
+
+    # Return the full instruction.
+    tThisInst = tInstruction(casedict=mydInstruction
+                            , cmdlist=g.lCommands
+                            , logname=g.sShelfLogFileName + "_case.log"
+                            , logdir=g.sActorLogDir
+                            , runid=mysRunNumber
+                            )
+
+    # Send the instruction out to be done.
+    g.qInstructions.put(tThisInst)
+
+
+
+
+
+
+#===========================================================
+#
+# E n t r y   p o i n t . 
+if __name__ == "__main__":
+    g = CG()
+    sys.exit(main())
+
