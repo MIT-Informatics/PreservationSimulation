@@ -186,9 +186,10 @@ import os
 import queue
 from NewTraceFac import NTRC, ntrace, ntracef
 
-import  os
-import  json
-import  copy
+import os
+import json
+import copy
+import math
 
 
 # Complete instruction info to pass to newbroker.
@@ -255,7 +256,7 @@ class CG(object):
 
     lCommands = [
                   "# test instructions for newnewbroker4"
-                , "python3 -c 'import time,random; time.sleep(2*random.random())'"
+                , "python3 -c 'import time,random; time.sleep(1.0*random.random())'"
                 , ""
                 ]
 
@@ -274,6 +275,9 @@ class CG(object):
     
     nParallel = 4       # Limit on jobs running in parallel (on separate CPUs)
                         #  (overridden by nCores).
+    nOverbook = 0       # Percentage by which we should overbook the cores. 
+                        #  E.g., 0 is not overbooked, 100 is double-booked, 
+                        #  and 50 for 1.50 times as many jobs as cores.
     bThatsAllFolks = False  # All cases done, ran out of instructions.
     nCasesTotal = 0     # Nr of instructions total, all started.
     nCasesStarted = 0   # How many cases started so far.  # DEBUG
@@ -487,6 +491,16 @@ def fnbQEnd():
 # f n J o b M o d 
 @ntracef("JMOD")
 def fnJobMod():
+    ''' fnJobMod is the owner of the jobs list.  Jobs are identified
+         here only by job number (runid).  This is a daemon thread.  
+        Operations:
+        - ask if there is an opening in the list for another job.
+        - add a job to the list.
+        - delete a job from the list.
+        Most callers will use these operations synchronously by waiting
+         for the event to be declared true.  If they need the information
+         returned in the return queue, they must wait for the event.
+    '''
     while(True):
         [sCommand, evDone, *xMore] = g.qJobMod.get()
         g.qJobMod.task_done()
@@ -550,15 +564,11 @@ def fnStartup():
     g.lockPrint = threading.Lock()
     
     g.nJobsCurrent = 0
-    g.ltJobs = [None for _ in range(g.nParallel)]
+    nRunInParallel = int(math.ceil(g.nParallel * ((100.0 + g.nOverbook)/100.0)))
+    g.ltJobs = [None for _ in range(nRunInParallel)]
     with g.lockPrint:
         NTRC.ntracef(5, "STRT", "joblist|%s| |%s|" 
             % (g.ltJobs, len(g.ltJobs)))
-
-#    g.qInstructions = queue.Queue()    
-#    g.thrStart = CStart(g)
-#    g.thrStart.daemon = True
-#    g.thrStart.start()
     
     g.qJobEnd = queue.Queue()
     g.thrJobEnd = threading.Thread(target=fnEndOne)
@@ -578,7 +588,8 @@ def fnStartup():
 # f n E n d O n e 
 @ntracef("END1")
 def fnEndOne():
-    ''' Join every thread that sends its thread object here.
+    ''' Join (to kill) every thread that sends its thread object here.
+         This is a daemon thread.
     '''
     while True:
         sThrToKill = g.qJobEnd.get()
@@ -599,9 +610,11 @@ def fnEndOne():
 # f n S t a r t O n e 
 @ntracef("FST1")
 def fnStartOne(mytInstruction, myqReturn, myThreadObj):
-    ''' Thread to run one multiprocessing job on some other core.
+    ''' Thread to run one multiprocessing job on some other core.  
+         This is NOT a daemon thread, but invoked once per job.
     '''
     nJobNum = mytInstruction.runid
+    # Create mp job to run instruction.  
     qMpOut = multiprocessing.Queue()
     proc = multiprocessing.Process(target=fntDoOneCase
                     , args=(mytInstruction, qMpOut)
@@ -610,13 +623,18 @@ def fnStartOne(mytInstruction, myqReturn, myThreadObj):
         NTRC.ntracef(4, "FST1", "starting runid|%s| mpjob|%s| mpq|%s|" 
             % (nJobNum, proc, qMpOut))
     proc.start()
+    
     # Get output from the mp job and transfer it back to my caller.
     tJobOutput = qMpOut.get()
     with g.lockPrint:
         NTRC.ntracef(3, "FST1", "finished runid|%s| mpjob|%s| output|%s|" 
             % (nJobNum, proc, tJobOutput))
+
+    # Delete job from list.
     evDone = threading.Event()
     g.qJobMod.put(("del", evDone, nJobNum))
+    
+    # Ensure that my thread (this one) is killed someday.
     myqReturn.put(myThreadObj)
     with g.lockPrint:
         NTRC.ntracef(4, "FST1", "really the end runid|%s| mpjob|%s|" 
@@ -628,10 +646,13 @@ def fnStartOne(mytInstruction, myqReturn, myThreadObj):
 @ntracef("SNDI")
 def fnSendInstructions(mynCases):
     ''' Create stream of instructions and start threads to execute them.  
+         This is just an ordinary function.
+        In the real version, this will accept one instruction at a time
+         rather than creating its own stream.  
     '''
     evDone = threading.Event()
     for nCase in range(1, mynCases+1):
-        # Wait for a slot
+        # Wait for a job slot.
         while True:
             evDone.clear()
             g.qJobMod.put(("ask", evDone))
@@ -640,18 +661,20 @@ def fnSendInstructions(mynCases):
             if bIsOpening: 
                 break
             else:
+                # I know this is icky.  I should set up an event in JobMod
+                #  to wait for instead.  Maybe a new function: "askwait", 
+                #  but not simple without stalling the JobMod thread.
                 time.sleep(g.nPoliteTimer/1000.0)
                 g.nWaitedForSlot += 1
                 with g.lockPrint:
                     NTRC.ntracef(4,"SNDI","proc slotwait times|%s|" 
                         % (g.nWaitedForSlot))
 
-        # Create job
+        # Create job instruction.
         nJob = next(g.nJobCounter)
         g.qJobMod.put(("add", evDone, nJob))
-
+        # Have it print its own number.
         sIdent = "python3 -c 'print(%d)'" % (nJob)
-
         lCmdList = copy.deepcopy(g.lCommands)
         lCmdList.append(sIdent)
         sLogFilename = "testbr4_log%03d.log" % nCase
@@ -661,17 +684,22 @@ def fnSendInstructions(mynCases):
                                 , logname=sLogFilename
                                 , casedict={"nCase":nCase}
                                 )
+
         # Launch the starter thread that then launches the multiprocessing job.
         sThrStartOneName = "ThrOne-%06d" % nJob
         thrStartOne = threading.Thread(target=fnStartOne, 
                     args=(tThisInst, g.qJobEnd, sThrStartOneName))
+        # And save the thread name and object 
+        #  so that it can be joined when done.
         g.dName2Thread[sThrStartOneName] = thrStartOne
         with g.lockPrint:
             NTRC.ntracef(4, "SNDI", "startingOne thread|%s| njob|%s| name|%s|" 
                 % (thrStartOne, nJob, sThrStartOneName))
+        # Finally, start the job-start thread.  
         thrStartOne.start()
         evDone.wait()
-        
+
+    # If this is the end of all instructions, set flag.
     g.bLast = True          # Yes, sent the last instruction
 
 
@@ -691,6 +719,7 @@ def main():
     nArgs = len(sys.argv)
     if nArgs > 1: g.nCases = int(sys.argv[1]) 
     if nArgs > 2: g.nParallel = int(sys.argv[2]) 
+    if nArgs > 3: g.nOverbook = int(sys.argv[3]) 
 
     fnStartup()
 
