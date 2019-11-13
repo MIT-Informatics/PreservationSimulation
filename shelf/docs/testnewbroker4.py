@@ -4,16 +4,19 @@
 
 '''
 Thread/Queue based design for newbroker4        RBL 20191106
-Stick to Raymond Hettinger's principles of queueing instead of locking. 
-Except oops on the ntrace routines which don't use queued print, so 
-we still have to lockprint around them.  Sorry about that.  Work in progress. 
+
+Stick to Raymond Hettinger's principles of queueing instead of locking. Except
+oops on the ntrace routines which don't use queued print, so we still have to
+lockprint around them.  Sorry about that.  Work in progress. 
+And another oops on locking around set/del of the dictionary that tracks
+all transient threads so they all get gone.  
 
 
 ------------------
 ------------------
 job process
 
-do all the usual stuff
+do all the usual stuff with do1case and do1line
 send output in msg to q param
 
 
@@ -23,10 +26,10 @@ sendinstructions
 while instructions available:
 get iterator of instructions
 wait for slot
-create thread to handle job
-create queue for return data
+create thread to manage job
 add to list of jobs
 start job thread, args=tInstr, thread obj
+make thread dict entry of thread name and obj
 endwhile
 set last instr flag
 
@@ -38,25 +41,29 @@ create multiprocessing job
 create mp queue for return data
 start job
 wait for return data on mp q
-forward data, incl job number, thread id, etc.
-delete job from list
+queue task to delete job from list
 send your own thread object to killallmonstrers
+if there is anything else to be done with the mp job's output, 
+ do it here
 
+
+------------------
+function killallmonsters daemon thread
+
+get thread name from qjobend
+translate to thread object
+if it is alive, join it
+remove entry from thread dict
+taskdone
 
 ------------------
 startup
 
 create jobslist
 
-create qinstructions
-create jobstart thread
-set daemon
-
 create qjobend
 create jobend thread
 set daemon
-
-start jobstart thread
 start jobend thread
 
 create qJobmod
@@ -68,17 +75,18 @@ start jobsmod thread
 
 call sendinstructions
 
-join qinstructions
 join qjobend
+clean up any remaining threads
 
 end
 
 
 ------------------
-modify jobslist
+modjob daemon thread to modify jobslist
 
-this is a separate thread but calls to it are essentially synchronous:
-callers will always wait for return info on the particular qJobxxxdone queue.
+this is a separate thread but calls to it are often synchronous:
+callers will wait for return info on the particular qJobxxxdone queue; 
+they supply an event to be set when output is ready.  
 this is done to isolate all access to the jobs list in a single thread 
 that has exclusive access to that list.  no locking needed.  no races.  
 
@@ -91,6 +99,7 @@ use qJobdeldone to return empty slot number
 use qJobaskdone to return yes/no
 
 qjobmod.get()
+taskdone
 switch opreq:
 
 case ask
@@ -111,67 +120,6 @@ return n on qJobdeldone.put()
 
 '''
 
-'''
-maybe there's another way.  don't keep a list of jobs, but only a counter.
-ops: ask if still room, add one, subtract one.
-the jobs themselves have to keep context to return to the ender.
-start:
-while forever; ask if still room; wait for return q; break if room
-send add 1 to counter
-start job
-end:
-get job info from qjobend
-send subtract 1 to counter
-log job info
-
-'''
-
-'''
-well, that worked, but the threads don't know when to exit.  start would 
-be easy, but how would end know that the last job jsut passed by?  
-
-new approach: make StartOne a function, not a daemon thread, so that it 
-exits when the function exits.  one thread per job.  
-
-meter the issuing of instructions so that waiting for an empty core is
-done by the instruction generator stream.  then the job-start function
-has to wait only for the job to finish.  metering still done only with
-the counter, same as last time.  increment counter when sending the 
-instruction to start, decrement the counter when the job is completely 
-finished.  
-
-i don't think we need to join all those thousands of threads; i hope that 
-non-persistent threads exit when the function exits.  if not, then the 
-instruction generator that creates the thread can join it when the function
-returns.
-
-StartOne: args=tInstruction, return queue
-decode the instruction tuple
-create the multiprocessing job
-create the multiprocessing queue for answers
-start the multiprocessing job with cmdlist and queue
-wait for return info in the mp queue
-send the data to the generator on return queue
-
-InstructionGenerator:
-for list of instructions:
-wait for opening
-assign job number and other such
-assign logfilename
-increment core counter
-make instruction tuple
-create thread to start job
-set thread name and other stuff
-start thread
-receive data from queue
-correlate returned data with pending jobs
-remove job from list
-join the thread to kill it
-decrement core counter
-
-'''
-
-
 
 import multiprocessing
 import subprocess 
@@ -191,6 +139,8 @@ import json
 import copy
 import math
 
+#===========================================================
+# N a m e d   t u p l e s 
 
 # Complete instruction info to pass to newbroker.
 tInstruction = collections.namedtuple("tInstruction"
@@ -202,8 +152,6 @@ tLineOut = collections.namedtuple("tLineOut",
             "callstatus cmdstatus casenr linenr ltext ")
 # List of lines returned from list of commands
 tLinesOut = collections.namedtuple("tLinesOut", "procname, listoflists")
-# Sadistics on how many times we waited for something
-tWaitStats = collections.namedtuple("tWaitStats", "ncases slot done inst")
 
 
 #===========================================================
@@ -211,25 +159,9 @@ tWaitStats = collections.namedtuple("tWaitStats", "ncases slot done inst")
 class CG(object):
     ''' Global data.
     '''
-    # Options that should be passed thru to main.py.
-    # All the interesting options should be None here, so that 
-    #  they are removed from the selection dictionary before
-    #  it is handed to MongoDB.  (No longer a consideration.)
-    #  If the user doesn't specify it on the command line, 
-    #  then it is not a selection criterion for searching.
-    nRandomSeeds = 21
-    sRandomSeedFile = "randomseeds.txt"
-
     # Administrative options to guide broker's behavior.
     nCores = 8          # Default, overridden by NCORES env var.
-    nCoreTimer = 50     # Wait for a free core (msec).
     nPoliteTimer = 20   # Wait between sequential launches, in milliseconds.
-    nTestLimit = 0      # Max nr of runs executed for a test run, 0=infinite.
-    sTestCommand = "N"  # Should just echo commands instead of executing them?
-    sTestFib = "N"      # Should use Fibonacci calc instead of real programs?
-    sListOnly = "N"     # Just list out all cases matching the stated criteria.  
-                        #  but don't execute them.
-    sRedo = "N"         # Force cases to be redone (recalculated)?
 
     nJobCounter = itertools.count(1)
     
@@ -270,31 +202,21 @@ class CG(object):
     
     # Dictionaries that contain references to things we want cleaned up.
     # These must be emptied when the jobs they point to are complete.
-    dId2Proc = dict()   # Map job number -> process object
-    dId2Queue = dict()  # Map job number -> queue object
-    
+    dName2Thread = dict()   # Threads of fnStartOne, to be join()ed later.
+    lockThreadDict = None
+
     nParallel = 4       # Limit on jobs running in parallel (on separate CPUs)
                         #  (overridden by nCores).
     nOverbook = 0       # Percentage by which we should overbook the cores. 
                         #  E.g., 0 is not overbooked, 100 is double-booked, 
                         #  and 50 for 1.50 times as many jobs as cores.
-    bThatsAllFolks = False  # All cases done, ran out of instructions.
-    nCasesTotal = 0     # Nr of instructions total, all started.
-    nCasesStarted = 0   # How many cases started so far.  # DEBUG
-    nCasesDone = 0      # How many cases done (finished) so far. # DEBUG
-    llsFullOutput = list()  # Output for all test cases.
+
     nCases = 1          # DEBUG
     nWaitedForSlot = 0  # DEBUG
-    nWaitedForDone = 0  # DEBUG
-    nWaitedForInstr = 0 # DEBUG
     bDebugPrint = False # Print output of all jobs? (obsolete) 
-    thrStart = None
-    qInstructions = queue.Queue()
-    thrEnd = None
     qJobEnd = None    
     thrJobMod = None    
     qJobMod = None
-    dName2Thread = dict()
     
     nJobsCurrent = 0
 #===========================================================
@@ -486,7 +408,7 @@ def fnbQEnd():
 
 
 #===========================================================
-
+# NEW STUFF
 #===========================================================
 # f n J o b M o d 
 @ntracef("JMOD")
@@ -561,7 +483,10 @@ def fnJobMod():
 # f n S t a r t u p 
 @ntrace
 def fnStartup():
+    ''' Establish all the queues and daemon threads at startup time.
+    '''
     g.lockPrint = threading.Lock()
+    g.lockThreadDict = threading.Lock()
     
     g.nJobsCurrent = 0
     nRunInParallel = int(math.ceil(g.nParallel * ((100.0 + g.nOverbook)/100.0)))
@@ -593,7 +518,8 @@ def fnEndOne():
     '''
     while True:
         sThrToKill = g.qJobEnd.get()
-        thrToKill = g.dName2Thread[sThrToKill]
+        with g.lockThreadDict:
+            thrToKill = g.dName2Thread[sThrToKill]
         if thrToKill.is_alive():
             thrToKill.join()
             bAlive = True
@@ -603,6 +529,8 @@ def fnEndOne():
             NTRC.ntracef(3, "END1", "proc fnEndOne thread|%s| "
                 "name|%s| was alive}%s|" 
                 % (thrToKill, sThrToKill, bAlive))
+        with g.lockThreadDict:
+            del g.dName2Thread[sThrToKill]
         g.qJobEnd.task_done()
 
 
@@ -610,7 +538,7 @@ def fnEndOne():
 # f n S t a r t O n e 
 @ntracef("FST1")
 def fnStartOne(mytInstruction, myqReturn, myThreadObj):
-    ''' Thread to run one multiprocessing job on some other core.  
+    ''' Transient thread to run one multiprocessing job on some other core.  
          This is NOT a daemon thread, but invoked once per job.
     '''
     nJobNum = mytInstruction.runid
@@ -691,7 +619,8 @@ def fnSendInstructions(mynCases):
                     args=(tThisInst, g.qJobEnd, sThrStartOneName))
         # And save the thread name and object 
         #  so that it can be joined when done.
-        g.dName2Thread[sThrStartOneName] = thrStartOne
+        with g.lockThreadDict:
+            g.dName2Thread[sThrStartOneName] = thrStartOne
         with g.lockPrint:
             NTRC.ntracef(4, "SNDI", "startingOne thread|%s| njob|%s| name|%s|" 
                 % (thrStartOne, nJob, sThrStartOneName))
@@ -721,13 +650,19 @@ def main():
     if nArgs > 2: g.nParallel = int(sys.argv[2]) 
     if nArgs > 3: g.nOverbook = int(sys.argv[3]) 
 
+    # Create all the queues and such.
     fnStartup()
-
+    # Send instructions for all the jobs.
     fnSendInstructions(g.nCases)
+    # Wait for the last instruction to be at least queued.
     while not fnbQEnd():
         time.sleep(g.nPoliteTimer/1000.0)
-#    g.qInstructions.join()
     g.qJobEnd.join()
+    # If there are any threads left in the dict that should have been 
+    #  finished by fnEndOne, nuke 'em now so we can exit cleanly.  
+    with g.lockThreadDict:
+        for sThrX, thrX in g.dName2Thread.items():
+            thrX.join()
 
     NTRC.ntracef(0, "MAIN", "End queued all runs ncases|%s|" % (g.nCases,))
 
@@ -740,7 +675,7 @@ def main():
 #
 # E n t r y   p o i n t . 
 if __name__ == "__main__":
-    g = CG()
+    g = CG()                # Create class for global data.
     sys.exit(main())
 
 
@@ -748,14 +683,4 @@ if __name__ == "__main__":
 #===========================================================
 
 
-
-
-
-#===========================================================
-
-
-
-
-
-#===========================================================
 
