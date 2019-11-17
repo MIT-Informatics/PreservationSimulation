@@ -1,0 +1,867 @@
+20191116_195227 1       DEBUG info level 5 targets 1 facil 
+20191116_195227 1       DEBUG info level 5 targets 1 facil 
+20191116_195227 1 MAIN  entr main args=(),kw={}
+20191116_195227 0 MAIN  Begin.
+20191116_195227 0 MAIN  TRACE  traceproduction|False|
+20191116_195227 0 MAIN  cli argv|['testnewbroker4.py', '11', '3', '0', '1']| len|5|
+20191116_195227 1       entr fnStartup args=(),kw={}
+20191116_195227 5 STRT  joblist|[None, None, None]| |3|
+20191116_195227 1 END1  entr fnEndOne args=(),kw={}
+20191116_195227 1 JMOD  entr fnJobMod args=(),kw={}
+20191116_195227 1 TICK  entr fnThrTick args=(1,),kw={}
+20191116_195227 2       exit fnStartup result|None|
+20191116_195227 1 DOAL  entr fnDoAllInstructions args=(11,),kw={}
+20191116_195227 3 DOAL  proc doal inst|tInstruction(runid=1, cmdlist=['# test instructions for newnewbroker4', "python3 -c 'import time,random; time.sleep(1.0*random.random())'", '', "python3 -c 'print(1)'"], logdir='../tmp', logname='testbr4_log001.log', casedict={'nCase': 1})|
+20191116_195227 1 DO1I  entr fnDoOneInstruction args=(tInstruction(runid=1, cmdlist=['# test instructions for newnewbroker4', "python3 -c 'import time,random; time.sleep(1.0*random.random())'", '', "python3 -c 'print(1)'"], logdir='../tmp', logname='testbr4_log001.log', casedict={'nCase': 1}), 1),kw={}
+20191116_195227 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a240>| |[]|
+20191116_195227 5 JMOD  JobMod atentry joblist|[None, None, None]| len|3|
+20191116_195227 4 JMOD  JobMod ask result|True|
+20191116_195227 4 DO1I  startingOne thread|<Thread(T001, initial)>| njob|1| name|T001|
+20191116_195227 3 JMOD  JobMod args|add| |<threading.Event object at 0x6ffff87a240>| |[1]|
+20191116_195227 5 JMOD  JobMod atentry joblist|[None, None, None]| len|3|
+20191116_195227 5 JMOD  JobMod add end joblist|[1, None, None]| |3|
+20191116_195227 1 FST1  entr fnStartOne args=(tInstruction(runid=1, cmdlist=['# test instructions for newnewbroker4', "python3 -c 'import time,random; time.sleep(1.0*random.random())'", '', "python3 -c 'print(1)'"], logdir='../tmp', logname='testbr4_log001.log', casedict={'nCase': 1}), <queue.Queue object at 0x6ffff897b00>),kw={}
+20191116_195227 1 DO1I  exit fnDoOneInstruction result|None|
+20191116_195227 3 DOAL  proc doal inst|tInstruction(runid=2, cmdlist=['# test instructions for newnewbroker4', "python3 -c 'import time,random; time.sleep(1.0*random.random())'", '', "python3 -c 'print(2)'"], logdir='../tmp', logname='testbr4_log002.log', casedict={'nCase': 2})|
+20191116_195227 1 DO1I  entr fnDoOneInstruction args=(tInstruction(runid=2, cmdlist=['# test instructions for newnewbroker4', "python3 -c 'import time,random; time.sleep(1.0*random.random())'", '', "python3 -c 'print(2)'"], logdir='../tmp', logname='testbr4_log002.log', casedict={'nCase': 2}), 2),kw={}
+20191116_195227 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a4e0>| |[]|
+20191116_195227 5 JMOD  JobMod atentry joblist|[1, None, None]| len|3|
+20191116_195227 4 JMOD  JobMod ask result|True|
+20191116_195227 4 DO1I  startingOne thread|<Thread(T002, initial)>| njob|2| name|T002|
+20191116_195227 3 JMOD  JobMod args|add| |<threading.Event object at 0x6ffff87a4e0>| |[2]|
+20191116_195227 5 JMOD  JobMod atentry joblist|[1, None, None]| len|3|
+20191116_195227 5 JMOD  JobMod add end joblist|[1, 2, None]| |3|
+20191116_195227 1 FST1  entr fnStartOne args=(tInstruction(runid=2, cmdlist=['# test instructions for newnewbroker4', "python3 -c 'import time,random; time.sleep(1.0*random.random())'", '', "python3 -c 'print(2)'"], logdir='../tmp', logname='testbr4_log002.log', casedict={'nCase': 2}), <queue.Queue object at 0x6ffff897b00>),kw={}
+20191116_195227 1 DO1I  exit fnDoOneInstruction result|None|
+20191116_195227 3 DOAL  proc doal inst|tInstruction(runid=3, cmdlist=['# test instructions for newnewbroker4', "python3 -c 'import time,random; time.sleep(1.0*random.random())'", '', "python3 -c 'print(3)'"], logdir='../tmp', logname='testbr4_log003.log', casedict={'nCase': 3})|
+20191116_195227 1 DO1I  entr fnDoOneInstruction args=(tInstruction(runid=3, cmdlist=['# test instructions for newnewbroker4', "python3 -c 'import time,random; time.sleep(1.0*random.random())'", '', "python3 -c 'print(3)'"], logdir='../tmp', logname='testbr4_log003.log', casedict={'nCase': 3}), 3),kw={}
+20191116_195227 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a390>| |[]|
+20191116_195227 5 JMOD  JobMod atentry joblist|[1, 2, None]| len|3|
+20191116_195227 4 JMOD  JobMod ask result|True|
+20191116_195227 4 DO1I  startingOne thread|<Thread(T003, initial)>| njob|3| name|T003|
+20191116_195227 3 JMOD  JobMod args|add| |<threading.Event object at 0x6ffff87a390>| |[3]|
+20191116_195227 5 JMOD  JobMod atentry joblist|[1, 2, None]| len|3|
+20191116_195227 5 JMOD  JobMod add end joblist|[1, 2, 3]| |3|
+20191116_195227 1 FST1  entr fnStartOne args=(tInstruction(runid=3, cmdlist=['# test instructions for newnewbroker4', "python3 -c 'import time,random; time.sleep(1.0*random.random())'", '', "python3 -c 'print(3)'"], logdir='../tmp', logname='testbr4_log003.log', casedict={'nCase': 3}), <queue.Queue object at 0x6ffff897b00>),kw={}
+20191116_195227 1 DO1I  exit fnDoOneInstruction result|None|
+20191116_195227 3 DOAL  proc doal inst|tInstruction(runid=4, cmdlist=['# test instructions for newnewbroker4', "python3 -c 'import time,random; time.sleep(1.0*random.random())'", '', "python3 -c 'print(4)'"], logdir='../tmp', logname='testbr4_log004.log', casedict={'nCase': 4})|
+20191116_195227 1 DO1I  entr fnDoOneInstruction args=(tInstruction(runid=4, cmdlist=['# test instructions for newnewbroker4', "python3 -c 'import time,random; time.sleep(1.0*random.random())'", '', "python3 -c 'print(4)'"], logdir='../tmp', logname='testbr4_log004.log', casedict={'nCase': 4}), 4),kw={}
+20191116_195227 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a6d8>| |[]|
+20191116_195227 5 JMOD  JobMod atentry joblist|[1, 2, 3]| len|3|
+20191116_195227 4 JMOD  JobMod ask result|False|
+20191116_195227 4 DO1I  proc slotwait times|1|
+20191116_195227 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a6d8>| |[]|
+20191116_195227 5 JMOD  JobMod atentry joblist|[1, 2, 3]| len|3|
+20191116_195227 4 JMOD  JobMod ask result|False|
+20191116_195227 4 FST1  starting runid|2| mpjob|<Process(Process-1, initial)>| mpq|<multiprocessing.queues.Queue object at 0x6ffff87af60>|
+20191116_195227 4 DO1I  proc slotwait times|2|
+20191116_195227 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a6d8>| |[]|
+20191116_195227 5 JMOD  JobMod atentry joblist|[1, 2, 3]| len|3|
+20191116_195227 4 JMOD  JobMod ask result|False|
+20191116_195227 4 FST1  starting runid|3| mpjob|<Process(Process-2, initial)>| mpq|<multiprocessing.queues.Queue object at 0x6ffff87a3c8>|
+20191116_195227 4 FST1  starting runid|1| mpjob|<Process(Process-3, initial)>| mpq|<multiprocessing.queues.Queue object at 0x6ffff87a208>|
+20191116_195227 4 DO1I  proc slotwait times|3|
+20191116_195227 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a6d8>| |[]|
+20191116_195227 5 JMOD  JobMod atentry joblist|[1, 2, 3]| len|3|
+20191116_195227 4 JMOD  JobMod ask result|False|
+20191116_195227 4 DO1I  proc slotwait times|4|
+20191116_195227 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a6d8>| |[]|
+20191116_195227 5 JMOD  JobMod atentry joblist|[1, 2, 3]| len|3|
+20191116_195227 4 JMOD  JobMod ask result|False|
+20191116_195227 4 DO1I  proc slotwait times|5|
+20191116_195227 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a6d8>| |[]|
+20191116_195227 5 JMOD  JobMod atentry joblist|[1, 2, 3]| len|3|
+20191116_195227 4 JMOD  JobMod ask result|False|
+20191116_195228 4 DO1I  proc slotwait times|6|
+20191116_195228 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a6d8>| |[]|
+20191116_195228 5 JMOD  JobMod atentry joblist|[1, 2, 3]| len|3|
+20191116_195228 4 JMOD  JobMod ask result|False|
+20191116_195228 4 DO1I  proc slotwait times|7|
+20191116_195228 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a6d8>| |[]|
+20191116_195228 5 JMOD  JobMod atentry joblist|[1, 2, 3]| len|3|
+20191116_195228 4 JMOD  JobMod ask result|False|
+20191116_195228 4 DO1I  proc slotwait times|8|
+20191116_195228 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a6d8>| |[]|
+20191116_195228 5 JMOD  JobMod atentry joblist|[1, 2, 3]| len|3|
+20191116_195228 4 JMOD  JobMod ask result|False|
+20191116_195228 4 DO1I  proc slotwait times|9|
+20191116_195228 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a6d8>| |[]|
+20191116_195228 5 JMOD  JobMod atentry joblist|[1, 2, 3]| len|3|
+20191116_195228 4 JMOD  JobMod ask result|False|
+20191116_195228 4 DO1I  proc slotwait times|10|
+20191116_195228 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a6d8>| |[]|
+20191116_195228 5 JMOD  JobMod atentry joblist|[1, 2, 3]| len|3|
+20191116_195228 4 JMOD  JobMod ask result|False|
+20191116_195228 4 DO1I  proc slotwait times|11|
+20191116_195228 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a6d8>| |[]|
+20191116_195228 5 JMOD  JobMod atentry joblist|[1, 2, 3]| len|3|
+20191116_195228 4 JMOD  JobMod ask result|False|
+20191116_195228 4 DO1I  proc slotwait times|12|
+20191116_195228 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a6d8>| |[]|
+20191116_195228 5 JMOD  JobMod atentry joblist|[1, 2, 3]| len|3|
+20191116_195228 4 JMOD  JobMod ask result|False|
+20191116_195228 4 DO1I  proc slotwait times|13|
+20191116_195228 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a6d8>| |[]|
+20191116_195228 5 JMOD  JobMod atentry joblist|[1, 2, 3]| len|3|
+20191116_195228 4 JMOD  JobMod ask result|False|
+20191116_195228 4 DO1I  proc slotwait times|14|
+20191116_195228 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a6d8>| |[]|
+20191116_195228 5 JMOD  JobMod atentry joblist|[1, 2, 3]| len|3|
+20191116_195228 4 JMOD  JobMod ask result|False|
+20191116_195228 4 DO1I  proc slotwait times|15|
+20191116_195228 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a6d8>| |[]|
+20191116_195228 5 JMOD  JobMod atentry joblist|[1, 2, 3]| len|3|
+20191116_195228 4 JMOD  JobMod ask result|False|
+20191116_195228 4 DO1I  proc slotwait times|16|
+20191116_195228 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a6d8>| |[]|
+20191116_195228 5 JMOD  JobMod atentry joblist|[1, 2, 3]| len|3|
+20191116_195228 4 JMOD  JobMod ask result|False|
+20191116_195228 4 DO1I  proc slotwait times|17|
+20191116_195228 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a6d8>| |[]|
+20191116_195228 5 JMOD  JobMod atentry joblist|[1, 2, 3]| len|3|
+20191116_195228 4 JMOD  JobMod ask result|False|
+20191116_195228 4 DO1I  proc slotwait times|18|
+20191116_195228 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a6d8>| |[]|
+20191116_195228 5 JMOD  JobMod atentry joblist|[1, 2, 3]| len|3|
+20191116_195228 4 JMOD  JobMod ask result|False|
+20191116_195228 4 DO1I  proc slotwait times|19|
+20191116_195228 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a6d8>| |[]|
+20191116_195228 5 JMOD  JobMod atentry joblist|[1, 2, 3]| len|3|
+20191116_195228 4 JMOD  JobMod ask result|False|
+20191116_195228 4 DO1I  proc slotwait times|20|
+20191116_195228 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a6d8>| |[]|
+20191116_195228 5 JMOD  JobMod atentry joblist|[1, 2, 3]| len|3|
+20191116_195228 4 JMOD  JobMod ask result|False|
+20191116_195228 4 DO1I  proc slotwait times|21|
+20191116_195228 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a6d8>| |[]|
+20191116_195228 5 JMOD  JobMod atentry joblist|[1, 2, 3]| len|3|
+20191116_195228 4 JMOD  JobMod ask result|False|
+20191116_195228 4 DO1I  proc slotwait times|22|
+20191116_195228 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a6d8>| |[]|
+20191116_195228 5 JMOD  JobMod atentry joblist|[1, 2, 3]| len|3|
+20191116_195228 4 JMOD  JobMod ask result|False|
+20191116_195228 3 FST1  finished runid|2| mpjob|<Process(Process-1, started)>| output|tLinesOut(procname='Process-1', listoflists=['\n', 'BEGIN results from Process-1', '-------------------', '20191116_195227.893  # test instructions for newnewbroker4', '-------------------', "20191116_195227.893  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195228.087  ', '-------------------', '20191116_195228.087  ', '-------------------', "20191116_195228.087  $ python3 -c 'print(2)'", '20191116_195228.350  2', 'ENDOF results from Process-1', '\n'])|
+20191116_195228 4 FST1  really end runid|2| mpjob|<Process(Process-1, started)>| thr|T002|
+20191116_195228 1 FST1  exit fnStartOne result|('T002', 2, [1, 2, 3], 3)|
+20191116_195228 3 END1  proc fnEndOne1 thread|<Thread(T002, stopped 25770861008)>| name|T002| was alive|True|
+20191116_195228 3 END1  proc fnEndOne2 threaddict|{'T001': <Thread(T001, started 25770168160)>, 'T003': <Thread(T003, started 25771088112)>}| 
+20191116_195228 3 JMOD  JobMod args|del| |<threading.Event object at 0x6ffff6d58d0>| |[2]|
+20191116_195228 5 JMOD  JobMod atentry joblist|[1, 2, 3]| len|3|
+20191116_195228 5 JMOD  JobMod del done joblist|[1, None, 3]| current|2|
+20191116_195228 4 DO1I  proc slotwait times|23|
+20191116_195228 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a6d8>| |[]|
+20191116_195228 5 JMOD  JobMod atentry joblist|[1, None, 3]| len|3|
+20191116_195228 4 JMOD  JobMod ask result|True|
+20191116_195228 4 DO1I  startingOne thread|<Thread(T004, initial)>| njob|4| name|T004|
+20191116_195228 3 JMOD  JobMod args|add| |<threading.Event object at 0x6ffff87a6d8>| |[4]|
+20191116_195228 5 JMOD  JobMod atentry joblist|[1, None, 3]| len|3|
+20191116_195228 5 JMOD  JobMod add end joblist|[1, 4, 3]| |3|
+20191116_195228 1 FST1  entr fnStartOne args=(tInstruction(runid=4, cmdlist=['# test instructions for newnewbroker4', "python3 -c 'import time,random; time.sleep(1.0*random.random())'", '', "python3 -c 'print(4)'"], logdir='../tmp', logname='testbr4_log004.log', casedict={'nCase': 4}), <queue.Queue object at 0x6ffff897b00>),kw={}
+20191116_195228 1 DO1I  exit fnDoOneInstruction result|None|
+20191116_195228 3 DOAL  proc doal inst|tInstruction(runid=5, cmdlist=['# test instructions for newnewbroker4', "python3 -c 'import time,random; time.sleep(1.0*random.random())'", '', "python3 -c 'print(5)'"], logdir='../tmp', logname='testbr4_log005.log', casedict={'nCase': 5})|
+20191116_195228 1 DO1I  entr fnDoOneInstruction args=(tInstruction(runid=5, cmdlist=['# test instructions for newnewbroker4', "python3 -c 'import time,random; time.sleep(1.0*random.random())'", '', "python3 -c 'print(5)'"], logdir='../tmp', logname='testbr4_log005.log', casedict={'nCase': 5}), 5),kw={}
+20191116_195228 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff6c6eb8>| |[]|
+20191116_195228 5 JMOD  JobMod atentry joblist|[1, 4, 3]| len|3|
+20191116_195228 4 JMOD  JobMod ask result|False|
+20191116_195228 4 FST1  starting runid|4| mpjob|<Process(Process-4, initial)>| mpq|<multiprocessing.queues.Queue object at 0x6ffff8ac470>|
+20191116_195227 1 DO1C  entr fntDoOneCase args=(tInstruction(runid=3, cmdlist=['# test instructions for newnewbroker4', "python3 -c 'import time,random; time.sleep(1.0*random.random())'", '', "python3 -c 'print(3)'"], logdir='../tmp', logname='testbr4_log003.log', casedict={'nCase': 3}), <multiprocessing.queues.Queue object at 0x6ffff87a3c8>),kw={}
+20191116_195227 3 DO1C  proc procname|Process-2|
+20191116_195227 1       entr fnsGetProcessNumber args=('Process-2',),kw={}
+20191116_195227 2       exit fnsGetProcessNumber result|2|
+20191116_195227 4 DO1C  proc DoOneCase case|2| line|0| comment|# test instructions for newnewbroker4|
+20191116_195227 1 DO1L  entr fntDoOneLine args=("python3 -c 'import time,random; time.sleep(1.0*random.random())'", '2', 1),kw={}
+20191116_195228 4 DO1L  proc DoOneLine sProcOut case|2| line|1| sline|python3 -c 'import time,random; time.sleep(1.0*random.random())'| sProcOut|| len|0|
+20191116_195228 4 DO1L  proc DoOneLine case|2| line|1| sline|python3 -c 'import time,random; time.sleep(1.0*random.random())'| lResult|['-------------------', "20191116_195227.919  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195228.166  ']|
+20191116_195228 1 DO1L  exit fntDoOneLine result|tLineOut(callstatus=0, cmdstatus='n/a - RBL', casenr='2', linenr=1, ltext=['-------------------', "20191116_195227.919  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195228.166  '])|
+20191116_195228 4 DO1C  proc DoOneCase case|2| line|1| lResult|['-------------------', "20191116_195227.919  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195228.166  ']|
+20191116_195228 4 DO1C  proc DoOneCase case|2| line|2| comment||
+20191116_195228 1 DO1L  entr fntDoOneLine args=("python3 -c 'print(3)'", '2', 3),kw={}
+20191116_195228 4 DO1L  proc DoOneLine sProcOut case|2| line|3| sline|python3 -c 'print(3)'| sProcOut|3
+| len|2|
+20191116_195228 4 DO1L  proc DoOneLine case|2| line|3| sline|python3 -c 'print(3)'| lResult|['-------------------', "20191116_195228.167  $ python3 -c 'print(3)'", '20191116_195228.466  3']|
+20191116_195228 1 DO1L  exit fntDoOneLine result|tLineOut(callstatus=0, cmdstatus='n/a - RBL', casenr='2', linenr=3, ltext=['-------------------', "20191116_195228.167  $ python3 -c 'print(3)'", '20191116_195228.466  3'])|
+20191116_195228 4 DO1C  proc DoOneCase case|2| line|3| lResult|['-------------------', "20191116_195228.167  $ python3 -c 'print(3)'", '20191116_195228.466  3']|
+20191116_195228 1 DO1C  entr fnWriteLogFile args=('2', ['-------------------', '20191116_195227.919  # test instructions for newnewbroker4', '-------------------', "20191116_195227.919  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195228.166  ', '-------------------', '20191116_195228.167  ', '-------------------', "20191116_195228.167  $ python3 -c 'print(3)'", '20191116_195228.466  3'], '../tmp', 'testbr4_log003.log'),kw={}
+20191116_195228 1 DO1C  exit fnWriteLogFile result|None|
+20191116_195228 4 DO1C  proc DoOneCase case|2| tanswers|tLinesOut(procname='Process-2', listoflists=['\n', 'BEGIN results from Process-2', '-------------------', '20191116_195227.919  # test instructions for newnewbroker4', '-------------------', "20191116_195227.919  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195228.166  ', '-------------------', '20191116_195228.167  ', '-------------------', "20191116_195228.167  $ python3 -c 'print(3)'", '20191116_195228.466  3', 'ENDOF results from Process-2', '\n'])| 
+20191116_195228 1 DO1C  exit fntDoOneCase result|tLinesOut(procname='Process-2', listoflists=['\n', 'BEGIN results from Process-2', '-------------------', '20191116_195227.919  # test instructions for newnewbroker4', '-------------------', "20191116_195227.919  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195228.166  ', '-------------------', '20191116_195228.167  ', '-------------------', "20191116_195228.167  $ python3 -c 'print(3)'", '20191116_195228.466  3', 'ENDOF results from Process-2', '\n'])|
+20191116_195228 4 DO1I  proc slotwait times|24|
+20191116_195228 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff6c6eb8>| |[]|
+20191116_195228 5 JMOD  JobMod atentry joblist|[1, 4, 3]| len|3|
+20191116_195228 4 JMOD  JobMod ask result|False|
+20191116_195228 3 FST1  finished runid|3| mpjob|<Process(Process-2, started)>| output|tLinesOut(procname='Process-2', listoflists=['\n', 'BEGIN results from Process-2', '-------------------', '20191116_195227.919  # test instructions for newnewbroker4', '-------------------', "20191116_195227.919  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195228.166  ', '-------------------', '20191116_195228.167  ', '-------------------', "20191116_195228.167  $ python3 -c 'print(3)'", '20191116_195228.466  3', 'ENDOF results from Process-2', '\n'])|
+20191116_195228 4 FST1  really end runid|3| mpjob|<Process(Process-2, started)>| thr|T003|
+20191116_195228 1 FST1  exit fnStartOne result|('T003', 3, [1, 4, 3], 3)|
+20191116_195228 3 JMOD  JobMod args|del| |<threading.Event object at 0x6ffff6d5b38>| |[3]|
+20191116_195228 5 JMOD  JobMod atentry joblist|[1, 4, 3]| len|3|
+20191116_195228 5 JMOD  JobMod del done joblist|[1, 4, None]| current|2|
+20191116_195228 3 END1  proc fnEndOne1 thread|<Thread(T003, stopped 25771088112)>| name|T003| was alive|False|
+20191116_195228 3 END1  proc fnEndOne2 threaddict|{'T001': <Thread(T001, started 25770168160)>, 'T004': <Thread(T004, started 25772066864)>}| 
+20191116_195228 4 DO1I  proc slotwait times|25|
+20191116_195228 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff6c6eb8>| |[]|
+20191116_195228 5 JMOD  JobMod atentry joblist|[1, 4, None]| len|3|
+20191116_195228 4 JMOD  JobMod ask result|True|
+20191116_195228 4 DO1I  startingOne thread|<Thread(T005, initial)>| njob|5| name|T005|
+20191116_195228 3 JMOD  JobMod args|add| |<threading.Event object at 0x6ffff6c6eb8>| |[5]|
+20191116_195228 5 JMOD  JobMod atentry joblist|[1, 4, None]| len|3|
+20191116_195228 5 JMOD  JobMod add end joblist|[1, 4, 5]| |3|
+20191116_195228 1 FST1  entr fnStartOne args=(tInstruction(runid=5, cmdlist=['# test instructions for newnewbroker4', "python3 -c 'import time,random; time.sleep(1.0*random.random())'", '', "python3 -c 'print(5)'"], logdir='../tmp', logname='testbr4_log005.log', casedict={'nCase': 5}), <queue.Queue object at 0x6ffff897b00>),kw={}
+20191116_195228 1 DO1I  exit fnDoOneInstruction result|None|
+20191116_195228 3 DOAL  proc doal inst|tInstruction(runid=6, cmdlist=['# test instructions for newnewbroker4', "python3 -c 'import time,random; time.sleep(1.0*random.random())'", '', "python3 -c 'print(6)'"], logdir='../tmp', logname='testbr4_log006.log', casedict={'nCase': 6})|
+20191116_195228 1 DO1I  entr fnDoOneInstruction args=(tInstruction(runid=6, cmdlist=['# test instructions for newnewbroker4', "python3 -c 'import time,random; time.sleep(1.0*random.random())'", '', "python3 -c 'print(6)'"], logdir='../tmp', logname='testbr4_log006.log', casedict={'nCase': 6}), 6),kw={}
+20191116_195228 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a400>| |[]|
+20191116_195228 5 JMOD  JobMod atentry joblist|[1, 4, 5]| len|3|
+20191116_195228 4 JMOD  JobMod ask result|False|
+20191116_195228 4 FST1  starting runid|5| mpjob|<Process(Process-5, initial)>| mpq|<multiprocessing.queues.Queue object at 0x6ffff87ab38>|
+20191116_195227 4 DO1I  proc slotwait times|3|
+20191116_195227 1 DO1C  entr fntDoOneCase args=(tInstruction(runid=1, cmdlist=['# test instructions for newnewbroker4', "python3 -c 'import time,random; time.sleep(1.0*random.random())'", '', "python3 -c 'print(1)'"], logdir='../tmp', logname='testbr4_log001.log', casedict={'nCase': 1}), <multiprocessing.queues.Queue object at 0x6ffff87a208>),kw={}
+20191116_195227 3 DO1C  proc procname|Process-3|
+20191116_195227 1       entr fnsGetProcessNumber args=('Process-3',),kw={}
+20191116_195227 2       exit fnsGetProcessNumber result|3|
+20191116_195227 4 DO1C  proc DoOneCase case|3| line|0| comment|# test instructions for newnewbroker4|
+20191116_195227 1 DO1L  entr fntDoOneLine args=("python3 -c 'import time,random; time.sleep(1.0*random.random())'", '3', 1),kw={}
+20191116_195228 4 DO1L  proc DoOneLine sProcOut case|3| line|1| sline|python3 -c 'import time,random; time.sleep(1.0*random.random())'| sProcOut|| len|0|
+20191116_195228 4 DO1L  proc DoOneLine case|3| line|1| sline|python3 -c 'import time,random; time.sleep(1.0*random.random())'| lResult|['-------------------', "20191116_195227.947  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195228.772  ']|
+20191116_195228 1 DO1L  exit fntDoOneLine result|tLineOut(callstatus=0, cmdstatus='n/a - RBL', casenr='3', linenr=1, ltext=['-------------------', "20191116_195227.947  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195228.772  '])|
+20191116_195228 4 DO1C  proc DoOneCase case|3| line|1| lResult|['-------------------', "20191116_195227.947  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195228.772  ']|
+20191116_195228 4 DO1C  proc DoOneCase case|3| line|2| comment||
+20191116_195228 1 DO1L  entr fntDoOneLine args=("python3 -c 'print(1)'", '3', 3),kw={}
+20191116_195229 4 DO1L  proc DoOneLine sProcOut case|3| line|3| sline|python3 -c 'print(1)'| sProcOut|1
+| len|2|
+20191116_195229 4 DO1L  proc DoOneLine case|3| line|3| sline|python3 -c 'print(1)'| lResult|['-------------------', "20191116_195228.772  $ python3 -c 'print(1)'", '20191116_195229.067  1']|
+20191116_195229 1 DO1L  exit fntDoOneLine result|tLineOut(callstatus=0, cmdstatus='n/a - RBL', casenr='3', linenr=3, ltext=['-------------------', "20191116_195228.772  $ python3 -c 'print(1)'", '20191116_195229.067  1'])|
+20191116_195229 4 DO1C  proc DoOneCase case|3| line|3| lResult|['-------------------', "20191116_195228.772  $ python3 -c 'print(1)'", '20191116_195229.067  1']|
+20191116_195229 1 DO1C  entr fnWriteLogFile args=('3', ['-------------------', '20191116_195227.947  # test instructions for newnewbroker4', '-------------------', "20191116_195227.947  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195228.772  ', '-------------------', '20191116_195228.772  ', '-------------------', "20191116_195228.772  $ python3 -c 'print(1)'", '20191116_195229.067  1'], '../tmp', 'testbr4_log001.log'),kw={}
+20191116_195229 1 DO1C  exit fnWriteLogFile result|None|
+20191116_195229 4 DO1C  proc DoOneCase case|3| tanswers|tLinesOut(procname='Process-3', listoflists=['\n', 'BEGIN results from Process-3', '-------------------', '20191116_195227.947  # test instructions for newnewbroker4', '-------------------', "20191116_195227.947  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195228.772  ', '-------------------', '20191116_195228.772  ', '-------------------', "20191116_195228.772  $ python3 -c 'print(1)'", '20191116_195229.067  1', 'ENDOF results from Process-3', '\n'])| 
+20191116_195229 1 DO1C  exit fntDoOneCase result|tLinesOut(procname='Process-3', listoflists=['\n', 'BEGIN results from Process-3', '-------------------', '20191116_195227.947  # test instructions for newnewbroker4', '-------------------', "20191116_195227.947  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195228.772  ', '-------------------', '20191116_195228.772  ', '-------------------', "20191116_195228.772  $ python3 -c 'print(1)'", '20191116_195229.067  1', 'ENDOF results from Process-3', '\n'])|
+20191116_195228 4 DO1I  proc slotwait times|26|
+20191116_195228 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a400>| |[]|
+20191116_195228 5 JMOD  JobMod atentry joblist|[1, 4, 5]| len|3|
+20191116_195228 4 JMOD  JobMod ask result|False|
+20191116_195228 4 DO1I  proc slotwait times|27|
+20191116_195228 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a400>| |[]|
+20191116_195228 5 JMOD  JobMod atentry joblist|[1, 4, 5]| len|3|
+20191116_195228 4 JMOD  JobMod ask result|False|
+20191116_195228 4 DO1I  proc slotwait times|28|
+20191116_195228 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a400>| |[]|
+20191116_195228 5 JMOD  JobMod atentry joblist|[1, 4, 5]| len|3|
+20191116_195228 4 JMOD  JobMod ask result|False|
+20191116_195228 4 DO1I  proc slotwait times|29|
+20191116_195228 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a400>| |[]|
+20191116_195228 5 JMOD  JobMod atentry joblist|[1, 4, 5]| len|3|
+20191116_195228 4 JMOD  JobMod ask result|False|
+20191116_195228 4 DO1I  proc slotwait times|30|
+20191116_195228 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a400>| |[]|
+20191116_195228 5 JMOD  JobMod atentry joblist|[1, 4, 5]| len|3|
+20191116_195228 4 JMOD  JobMod ask result|False|
+20191116_195228 4 DO1I  proc slotwait times|31|
+20191116_195228 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a400>| |[]|
+20191116_195228 5 JMOD  JobMod atentry joblist|[1, 4, 5]| len|3|
+20191116_195228 4 JMOD  JobMod ask result|False|
+20191116_195228 4 DO1I  proc slotwait times|32|
+20191116_195228 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a400>| |[]|
+20191116_195228 5 JMOD  JobMod atentry joblist|[1, 4, 5]| len|3|
+20191116_195228 4 JMOD  JobMod ask result|False|
+20191116_195228 4 DO1I  proc slotwait times|33|
+20191116_195228 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a400>| |[]|
+20191116_195228 5 JMOD  JobMod atentry joblist|[1, 4, 5]| len|3|
+20191116_195228 4 JMOD  JobMod ask result|False|
+20191116_195228 4 DO1I  proc slotwait times|34|
+20191116_195228 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a400>| |[]|
+20191116_195228 5 JMOD  JobMod atentry joblist|[1, 4, 5]| len|3|
+20191116_195228 4 JMOD  JobMod ask result|False|
+20191116_195228 4 DO1I  proc slotwait times|35|
+20191116_195228 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a400>| |[]|
+20191116_195228 5 JMOD  JobMod atentry joblist|[1, 4, 5]| len|3|
+20191116_195228 4 JMOD  JobMod ask result|False|
+20191116_195228 4 DO1I  proc slotwait times|36|
+20191116_195228 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a400>| |[]|
+20191116_195228 5 JMOD  JobMod atentry joblist|[1, 4, 5]| len|3|
+20191116_195228 4 JMOD  JobMod ask result|False|
+20191116_195228 4 DO1I  proc slotwait times|37|
+20191116_195228 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a400>| |[]|
+20191116_195228 5 JMOD  JobMod atentry joblist|[1, 4, 5]| len|3|
+20191116_195228 4 JMOD  JobMod ask result|False|
+20191116_195228 0 TICK  
+20191116_195228 4 DO1I  proc slotwait times|38|
+20191116_195228 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a400>| |[]|
+20191116_195228 5 JMOD  JobMod atentry joblist|[1, 4, 5]| len|3|
+20191116_195228 4 JMOD  JobMod ask result|False|
+20191116_195228 4 DO1I  proc slotwait times|39|
+20191116_195228 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a400>| |[]|
+20191116_195228 5 JMOD  JobMod atentry joblist|[1, 4, 5]| len|3|
+20191116_195228 4 JMOD  JobMod ask result|False|
+20191116_195228 4 DO1I  proc slotwait times|40|
+20191116_195228 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a400>| |[]|
+20191116_195228 5 JMOD  JobMod atentry joblist|[1, 4, 5]| len|3|
+20191116_195228 4 JMOD  JobMod ask result|False|
+20191116_195228 4 DO1I  proc slotwait times|41|
+20191116_195228 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a400>| |[]|
+20191116_195228 5 JMOD  JobMod atentry joblist|[1, 4, 5]| len|3|
+20191116_195228 4 JMOD  JobMod ask result|False|
+20191116_195228 4 DO1I  proc slotwait times|42|
+20191116_195228 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a400>| |[]|
+20191116_195228 5 JMOD  JobMod atentry joblist|[1, 4, 5]| len|3|
+20191116_195228 4 JMOD  JobMod ask result|False|
+20191116_195228 4 DO1I  proc slotwait times|43|
+20191116_195228 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a400>| |[]|
+20191116_195228 5 JMOD  JobMod atentry joblist|[1, 4, 5]| len|3|
+20191116_195228 4 JMOD  JobMod ask result|False|
+20191116_195228 4 DO1I  proc slotwait times|44|
+20191116_195228 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a400>| |[]|
+20191116_195228 5 JMOD  JobMod atentry joblist|[1, 4, 5]| len|3|
+20191116_195228 4 JMOD  JobMod ask result|False|
+20191116_195228 4 DO1I  proc slotwait times|45|
+20191116_195228 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a400>| |[]|
+20191116_195228 5 JMOD  JobMod atentry joblist|[1, 4, 5]| len|3|
+20191116_195228 4 JMOD  JobMod ask result|False|
+20191116_195228 4 DO1I  proc slotwait times|46|
+20191116_195228 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a400>| |[]|
+20191116_195229 5 JMOD  JobMod atentry joblist|[1, 4, 5]| len|3|
+20191116_195229 4 JMOD  JobMod ask result|False|
+20191116_195229 4 DO1I  proc slotwait times|47|
+20191116_195229 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a400>| |[]|
+20191116_195229 5 JMOD  JobMod atentry joblist|[1, 4, 5]| len|3|
+20191116_195229 4 JMOD  JobMod ask result|False|
+20191116_195229 4 DO1I  proc slotwait times|48|
+20191116_195229 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a400>| |[]|
+20191116_195229 5 JMOD  JobMod atentry joblist|[1, 4, 5]| len|3|
+20191116_195229 4 JMOD  JobMod ask result|False|
+20191116_195229 4 DO1I  proc slotwait times|49|
+20191116_195229 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a400>| |[]|
+20191116_195229 5 JMOD  JobMod atentry joblist|[1, 4, 5]| len|3|
+20191116_195229 4 JMOD  JobMod ask result|False|
+20191116_195229 3 FST1  finished runid|1| mpjob|<Process(Process-3, started)>| output|tLinesOut(procname='Process-3', listoflists=['\n', 'BEGIN results from Process-3', '-------------------', '20191116_195227.947  # test instructions for newnewbroker4', '-------------------', "20191116_195227.947  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195228.772  ', '-------------------', '20191116_195228.772  ', '-------------------', "20191116_195228.772  $ python3 -c 'print(1)'", '20191116_195229.067  1', 'ENDOF results from Process-3', '\n'])|
+20191116_195229 4 FST1  really end runid|1| mpjob|<Process(Process-3, started)>| thr|T001|
+20191116_195229 1 FST1  exit fnStartOne result|('T001', 1, [1, 4, 5], 3)|
+20191116_195229 3 JMOD  JobMod args|del| |<threading.Event object at 0x6ffff6d54e0>| |[1]|
+20191116_195229 5 JMOD  JobMod atentry joblist|[1, 4, 5]| len|3|
+20191116_195229 5 JMOD  JobMod del done joblist|[None, 4, 5]| current|2|
+20191116_195229 3 END1  proc fnEndOne1 thread|<Thread(T001, stopped 25770168160)>| name|T001| was alive|False|
+20191116_195229 3 END1  proc fnEndOne2 threaddict|{'T004': <Thread(T004, started 25772066864)>, 'T005': <Thread(T005, started 25772916768)>}| 
+20191116_195229 4 DO1I  proc slotwait times|50|
+20191116_195229 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a400>| |[]|
+20191116_195229 5 JMOD  JobMod atentry joblist|[None, 4, 5]| len|3|
+20191116_195229 4 JMOD  JobMod ask result|True|
+20191116_195229 4 DO1I  startingOne thread|<Thread(T006, initial)>| njob|6| name|T006|
+20191116_195229 3 JMOD  JobMod args|add| |<threading.Event object at 0x6ffff87a400>| |[6]|
+20191116_195229 5 JMOD  JobMod atentry joblist|[None, 4, 5]| len|3|
+20191116_195229 5 JMOD  JobMod add end joblist|[6, 4, 5]| |3|
+20191116_195229 1 FST1  entr fnStartOne args=(tInstruction(runid=6, cmdlist=['# test instructions for newnewbroker4', "python3 -c 'import time,random; time.sleep(1.0*random.random())'", '', "python3 -c 'print(6)'"], logdir='../tmp', logname='testbr4_log006.log', casedict={'nCase': 6}), <queue.Queue object at 0x6ffff897b00>),kw={}
+20191116_195229 1 DO1I  exit fnDoOneInstruction result|None|
+20191116_195229 3 DOAL  proc doal inst|tInstruction(runid=7, cmdlist=['# test instructions for newnewbroker4', "python3 -c 'import time,random; time.sleep(1.0*random.random())'", '', "python3 -c 'print(7)'"], logdir='../tmp', logname='testbr4_log007.log', casedict={'nCase': 7})|
+20191116_195229 1 DO1I  entr fnDoOneInstruction args=(tInstruction(runid=7, cmdlist=['# test instructions for newnewbroker4', "python3 -c 'import time,random; time.sleep(1.0*random.random())'", '', "python3 -c 'print(7)'"], logdir='../tmp', logname='testbr4_log007.log', casedict={'nCase': 7}), 7),kw={}
+20191116_195229 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff6d5c50>| |[]|
+20191116_195229 5 JMOD  JobMod atentry joblist|[6, 4, 5]| len|3|
+20191116_195229 4 JMOD  JobMod ask result|False|
+20191116_195229 4 FST1  starting runid|6| mpjob|<Process(Process-6, initial)>| mpq|<multiprocessing.queues.Queue object at 0x6ffff6c6fd0>|
+20191116_195228 1 DO1C  entr fntDoOneCase args=(tInstruction(runid=5, cmdlist=['# test instructions for newnewbroker4', "python3 -c 'import time,random; time.sleep(1.0*random.random())'", '', "python3 -c 'print(5)'"], logdir='../tmp', logname='testbr4_log005.log', casedict={'nCase': 5}), <multiprocessing.queues.Queue object at 0x6ffff87ab38>),kw={}
+20191116_195228 3 DO1C  proc procname|Process-5|
+20191116_195228 1       entr fnsGetProcessNumber args=('Process-5',),kw={}
+20191116_195228 2       exit fnsGetProcessNumber result|5|
+20191116_195228 4 DO1C  proc DoOneCase case|5| line|0| comment|# test instructions for newnewbroker4|
+20191116_195228 1 DO1L  entr fntDoOneLine args=("python3 -c 'import time,random; time.sleep(1.0*random.random())'", '5', 1),kw={}
+20191116_195228 4 DO1L  proc DoOneLine sProcOut case|5| line|1| sline|python3 -c 'import time,random; time.sleep(1.0*random.random())'| sProcOut|| len|0|
+20191116_195228 4 DO1L  proc DoOneLine case|5| line|1| sline|python3 -c 'import time,random; time.sleep(1.0*random.random())'| lResult|['-------------------', "20191116_195228.576  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195228.892  ']|
+20191116_195228 1 DO1L  exit fntDoOneLine result|tLineOut(callstatus=0, cmdstatus='n/a - RBL', casenr='5', linenr=1, ltext=['-------------------', "20191116_195228.576  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195228.892  '])|
+20191116_195228 4 DO1C  proc DoOneCase case|5| line|1| lResult|['-------------------', "20191116_195228.576  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195228.892  ']|
+20191116_195228 4 DO1C  proc DoOneCase case|5| line|2| comment||
+20191116_195228 1 DO1L  entr fntDoOneLine args=("python3 -c 'print(5)'", '5', 3),kw={}
+20191116_195229 4 DO1L  proc DoOneLine sProcOut case|5| line|3| sline|python3 -c 'print(5)'| sProcOut|5
+| len|2|
+20191116_195229 4 DO1L  proc DoOneLine case|5| line|3| sline|python3 -c 'print(5)'| lResult|['-------------------', "20191116_195228.893  $ python3 -c 'print(5)'", '20191116_195229.151  5']|
+20191116_195229 1 DO1L  exit fntDoOneLine result|tLineOut(callstatus=0, cmdstatus='n/a - RBL', casenr='5', linenr=3, ltext=['-------------------', "20191116_195228.893  $ python3 -c 'print(5)'", '20191116_195229.151  5'])|
+20191116_195229 4 DO1C  proc DoOneCase case|5| line|3| lResult|['-------------------', "20191116_195228.893  $ python3 -c 'print(5)'", '20191116_195229.151  5']|
+20191116_195229 1 DO1C  entr fnWriteLogFile args=('5', ['-------------------', '20191116_195228.576  # test instructions for newnewbroker4', '-------------------', "20191116_195228.576  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195228.892  ', '-------------------', '20191116_195228.892  ', '-------------------', "20191116_195228.893  $ python3 -c 'print(5)'", '20191116_195229.151  5'], '../tmp', 'testbr4_log005.log'),kw={}
+20191116_195229 1 DO1C  exit fnWriteLogFile result|None|
+20191116_195229 4 DO1C  proc DoOneCase case|5| tanswers|tLinesOut(procname='Process-5', listoflists=['\n', 'BEGIN results from Process-5', '-------------------', '20191116_195228.576  # test instructions for newnewbroker4', '-------------------', "20191116_195228.576  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195228.892  ', '-------------------', '20191116_195228.892  ', '-------------------', "20191116_195228.893  $ python3 -c 'print(5)'", '20191116_195229.151  5', 'ENDOF results from Process-5', '\n'])| 
+20191116_195229 1 DO1C  exit fntDoOneCase result|tLinesOut(procname='Process-5', listoflists=['\n', 'BEGIN results from Process-5', '-------------------', '20191116_195228.576  # test instructions for newnewbroker4', '-------------------', "20191116_195228.576  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195228.892  ', '-------------------', '20191116_195228.892  ', '-------------------', "20191116_195228.893  $ python3 -c 'print(5)'", '20191116_195229.151  5', 'ENDOF results from Process-5', '\n'])|
+20191116_195229 4 DO1I  proc slotwait times|51|
+20191116_195229 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff6d5c50>| |[]|
+20191116_195229 5 JMOD  JobMod atentry joblist|[6, 4, 5]| len|3|
+20191116_195229 4 JMOD  JobMod ask result|False|
+20191116_195229 3 FST1  finished runid|5| mpjob|<Process(Process-5, started)>| output|tLinesOut(procname='Process-5', listoflists=['\n', 'BEGIN results from Process-5', '-------------------', '20191116_195228.576  # test instructions for newnewbroker4', '-------------------', "20191116_195228.576  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195228.892  ', '-------------------', '20191116_195228.892  ', '-------------------', "20191116_195228.893  $ python3 -c 'print(5)'", '20191116_195229.151  5', 'ENDOF results from Process-5', '\n'])|
+20191116_195229 4 FST1  really end runid|5| mpjob|<Process(Process-5, started)>| thr|T005|
+20191116_195229 3 JMOD  JobMod args|del| |<threading.Event object at 0x6ffff6d5cc0>| |[5]|
+20191116_195229 5 JMOD  JobMod atentry joblist|[6, 4, 5]| len|3|
+20191116_195229 5 JMOD  JobMod del done joblist|[6, 4, None]| current|2|
+20191116_195229 1 FST1  exit fnStartOne result|('T005', 5, [6, 4, None], 3)|
+20191116_195229 3 END1  proc fnEndOne1 thread|<Thread(T005, stopped 25772916768)>| name|T005| was alive|True|
+20191116_195229 3 END1  proc fnEndOne2 threaddict|{'T004': <Thread(T004, started 25772066864)>, 'T006': <Thread(T006, started 25770861008)>}| 
+20191116_195229 4 DO1I  proc slotwait times|52|
+20191116_195229 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff6d5c50>| |[]|
+20191116_195229 5 JMOD  JobMod atentry joblist|[6, 4, None]| len|3|
+20191116_195229 4 JMOD  JobMod ask result|True|
+20191116_195229 4 DO1I  startingOne thread|<Thread(T007, initial)>| njob|7| name|T007|
+20191116_195229 3 JMOD  JobMod args|add| |<threading.Event object at 0x6ffff6d5c50>| |[7]|
+20191116_195229 5 JMOD  JobMod atentry joblist|[6, 4, None]| len|3|
+20191116_195229 5 JMOD  JobMod add end joblist|[6, 4, 7]| |3|
+20191116_195229 1 FST1  entr fnStartOne args=(tInstruction(runid=7, cmdlist=['# test instructions for newnewbroker4', "python3 -c 'import time,random; time.sleep(1.0*random.random())'", '', "python3 -c 'print(7)'"], logdir='../tmp', logname='testbr4_log007.log', casedict={'nCase': 7}), <queue.Queue object at 0x6ffff897b00>),kw={}
+20191116_195229 1 DO1I  exit fnDoOneInstruction result|None|
+20191116_195229 3 DOAL  proc doal inst|tInstruction(runid=8, cmdlist=['# test instructions for newnewbroker4', "python3 -c 'import time,random; time.sleep(1.0*random.random())'", '', "python3 -c 'print(8)'"], logdir='../tmp', logname='testbr4_log008.log', casedict={'nCase': 8})|
+20191116_195229 1 DO1I  entr fnDoOneInstruction args=(tInstruction(runid=8, cmdlist=['# test instructions for newnewbroker4', "python3 -c 'import time,random; time.sleep(1.0*random.random())'", '', "python3 -c 'print(8)'"], logdir='../tmp', logname='testbr4_log008.log', casedict={'nCase': 8}), 8),kw={}
+20191116_195229 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a320>| |[]|
+20191116_195229 5 JMOD  JobMod atentry joblist|[6, 4, 7]| len|3|
+20191116_195229 4 JMOD  JobMod ask result|False|
+20191116_195229 4 FST1  starting runid|7| mpjob|<Process(Process-7, initial)>| mpq|<multiprocessing.queues.Queue object at 0x6ffff87ab38>|
+20191116_195228 1 DO1C  entr fntDoOneCase args=(tInstruction(runid=4, cmdlist=['# test instructions for newnewbroker4', "python3 -c 'import time,random; time.sleep(1.0*random.random())'", '', "python3 -c 'print(4)'"], logdir='../tmp', logname='testbr4_log004.log', casedict={'nCase': 4}), <multiprocessing.queues.Queue object at 0x6ffff8ac470>),kw={}
+20191116_195228 3 DO1C  proc procname|Process-4|
+20191116_195228 1       entr fnsGetProcessNumber args=('Process-4',),kw={}
+20191116_195228 2       exit fnsGetProcessNumber result|4|
+20191116_195228 4 DO1C  proc DoOneCase case|4| line|0| comment|# test instructions for newnewbroker4|
+20191116_195228 1 DO1L  entr fntDoOneLine args=("python3 -c 'import time,random; time.sleep(1.0*random.random())'", '4', 1),kw={}
+20191116_195228 4 DO1L  proc DoOneLine sProcOut case|4| line|1| sline|python3 -c 'import time,random; time.sleep(1.0*random.random())'| sProcOut|| len|0|
+20191116_195228 4 DO1L  proc DoOneLine case|4| line|1| sline|python3 -c 'import time,random; time.sleep(1.0*random.random())'| lResult|['-------------------', "20191116_195228.470  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195228.976  ']|
+20191116_195228 1 DO1L  exit fntDoOneLine result|tLineOut(callstatus=0, cmdstatus='n/a - RBL', casenr='4', linenr=1, ltext=['-------------------', "20191116_195228.470  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195228.976  '])|
+20191116_195228 4 DO1C  proc DoOneCase case|4| line|1| lResult|['-------------------', "20191116_195228.470  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195228.976  ']|
+20191116_195228 4 DO1C  proc DoOneCase case|4| line|2| comment||
+20191116_195228 1 DO1L  entr fntDoOneLine args=("python3 -c 'print(4)'", '4', 3),kw={}
+20191116_195229 4 DO1L  proc DoOneLine sProcOut case|4| line|3| sline|python3 -c 'print(4)'| sProcOut|4
+| len|2|
+20191116_195229 4 DO1L  proc DoOneLine case|4| line|3| sline|python3 -c 'print(4)'| lResult|['-------------------', "20191116_195228.977  $ python3 -c 'print(4)'", '20191116_195229.176  4']|
+20191116_195229 1 DO1L  exit fntDoOneLine result|tLineOut(callstatus=0, cmdstatus='n/a - RBL', casenr='4', linenr=3, ltext=['-------------------', "20191116_195228.977  $ python3 -c 'print(4)'", '20191116_195229.176  4'])|
+20191116_195229 4 DO1C  proc DoOneCase case|4| line|3| lResult|['-------------------', "20191116_195228.977  $ python3 -c 'print(4)'", '20191116_195229.176  4']|
+20191116_195229 1 DO1C  entr fnWriteLogFile args=('4', ['-------------------', '20191116_195228.469  # test instructions for newnewbroker4', '-------------------', "20191116_195228.470  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195228.976  ', '-------------------', '20191116_195228.977  ', '-------------------', "20191116_195228.977  $ python3 -c 'print(4)'", '20191116_195229.176  4'], '../tmp', 'testbr4_log004.log'),kw={}
+20191116_195229 1 DO1C  exit fnWriteLogFile result|None|
+20191116_195229 4 DO1C  proc DoOneCase case|4| tanswers|tLinesOut(procname='Process-4', listoflists=['\n', 'BEGIN results from Process-4', '-------------------', '20191116_195228.469  # test instructions for newnewbroker4', '-------------------', "20191116_195228.470  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195228.976  ', '-------------------', '20191116_195228.977  ', '-------------------', "20191116_195228.977  $ python3 -c 'print(4)'", '20191116_195229.176  4', 'ENDOF results from Process-4', '\n'])| 
+20191116_195229 1 DO1C  exit fntDoOneCase result|tLinesOut(procname='Process-4', listoflists=['\n', 'BEGIN results from Process-4', '-------------------', '20191116_195228.469  # test instructions for newnewbroker4', '-------------------', "20191116_195228.470  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195228.976  ', '-------------------', '20191116_195228.977  ', '-------------------', "20191116_195228.977  $ python3 -c 'print(4)'", '20191116_195229.176  4', 'ENDOF results from Process-4', '\n'])|
+20191116_195229 4 DO1I  proc slotwait times|53|
+20191116_195229 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a320>| |[]|
+20191116_195229 5 JMOD  JobMod atentry joblist|[6, 4, 7]| len|3|
+20191116_195229 4 JMOD  JobMod ask result|False|
+20191116_195229 3 FST1  finished runid|4| mpjob|<Process(Process-4, stopped)>| output|tLinesOut(procname='Process-4', listoflists=['\n', 'BEGIN results from Process-4', '-------------------', '20191116_195228.469  # test instructions for newnewbroker4', '-------------------', "20191116_195228.470  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195228.976  ', '-------------------', '20191116_195228.977  ', '-------------------', "20191116_195228.977  $ python3 -c 'print(4)'", '20191116_195229.176  4', 'ENDOF results from Process-4', '\n'])|
+20191116_195229 4 FST1  really end runid|4| mpjob|<Process(Process-4, stopped)>| thr|T004|
+20191116_195229 3 JMOD  JobMod args|del| |<threading.Event object at 0x6ffff6d5c88>| |[4]|
+20191116_195229 5 JMOD  JobMod atentry joblist|[6, 4, 7]| len|3|
+20191116_195229 5 JMOD  JobMod del done joblist|[6, None, 7]| current|2|
+20191116_195229 1 FST1  exit fnStartOne result|('T004', 4, [6, None, 7], 3)|
+20191116_195229 3 END1  proc fnEndOne1 thread|<Thread(T004, stopped 25772066864)>| name|T004| was alive|False|
+20191116_195229 3 END1  proc fnEndOne2 threaddict|{'T006': <Thread(T006, started 25770861008)>, 'T007': <Thread(T007, started 25771088112)>}| 
+20191116_195229 4 DO1I  proc slotwait times|54|
+20191116_195229 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a320>| |[]|
+20191116_195229 5 JMOD  JobMod atentry joblist|[6, None, 7]| len|3|
+20191116_195229 4 JMOD  JobMod ask result|True|
+20191116_195229 4 DO1I  startingOne thread|<Thread(T008, initial)>| njob|8| name|T008|
+20191116_195229 3 JMOD  JobMod args|add| |<threading.Event object at 0x6ffff87a320>| |[8]|
+20191116_195229 5 JMOD  JobMod atentry joblist|[6, None, 7]| len|3|
+20191116_195229 5 JMOD  JobMod add end joblist|[6, 8, 7]| |3|
+20191116_195229 1 FST1  entr fnStartOne args=(tInstruction(runid=8, cmdlist=['# test instructions for newnewbroker4', "python3 -c 'import time,random; time.sleep(1.0*random.random())'", '', "python3 -c 'print(8)'"], logdir='../tmp', logname='testbr4_log008.log', casedict={'nCase': 8}), <queue.Queue object at 0x6ffff897b00>),kw={}
+20191116_195229 1 DO1I  exit fnDoOneInstruction result|None|
+20191116_195229 3 DOAL  proc doal inst|tInstruction(runid=9, cmdlist=['# test instructions for newnewbroker4', "python3 -c 'import time,random; time.sleep(1.0*random.random())'", '', "python3 -c 'print(9)'"], logdir='../tmp', logname='testbr4_log009.log', casedict={'nCase': 9})|
+20191116_195229 1 DO1I  entr fnDoOneInstruction args=(tInstruction(runid=9, cmdlist=['# test instructions for newnewbroker4', "python3 -c 'import time,random; time.sleep(1.0*random.random())'", '', "python3 -c 'print(9)'"], logdir='../tmp', logname='testbr4_log009.log', casedict={'nCase': 9}), 9),kw={}
+20191116_195229 4 FST1  starting runid|8| mpjob|<Process(Process-8, initial)>| mpq|<multiprocessing.queues.Queue object at 0x6ffff8ac470>|
+20191116_195229 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a6a0>| |[]|
+20191116_195229 5 JMOD  JobMod atentry joblist|[6, 8, 7]| len|3|
+20191116_195229 4 JMOD  JobMod ask result|False|
+20191116_195229 1 DO1C  entr fntDoOneCase args=(tInstruction(runid=6, cmdlist=['# test instructions for newnewbroker4', "python3 -c 'import time,random; time.sleep(1.0*random.random())'", '', "python3 -c 'print(6)'"], logdir='../tmp', logname='testbr4_log006.log', casedict={'nCase': 6}), <multiprocessing.queues.Queue object at 0x6ffff6c6fd0>),kw={}
+20191116_195229 3 DO1C  proc procname|Process-6|
+20191116_195229 1       entr fnsGetProcessNumber args=('Process-6',),kw={}
+20191116_195229 2       exit fnsGetProcessNumber result|6|
+20191116_195229 4 DO1C  proc DoOneCase case|6| line|0| comment|# test instructions for newnewbroker4|
+20191116_195229 1 DO1L  entr fntDoOneLine args=("python3 -c 'import time,random; time.sleep(1.0*random.random())'", '6', 1),kw={}
+20191116_195229 4 DO1L  proc DoOneLine sProcOut case|6| line|1| sline|python3 -c 'import time,random; time.sleep(1.0*random.random())'| sProcOut|| len|0|
+20191116_195229 4 DO1L  proc DoOneLine case|6| line|1| sline|python3 -c 'import time,random; time.sleep(1.0*random.random())'| lResult|['-------------------', "20191116_195229.140  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195229.452  ']|
+20191116_195229 1 DO1L  exit fntDoOneLine result|tLineOut(callstatus=0, cmdstatus='n/a - RBL', casenr='6', linenr=1, ltext=['-------------------', "20191116_195229.140  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195229.452  '])|
+20191116_195229 4 DO1C  proc DoOneCase case|6| line|1| lResult|['-------------------', "20191116_195229.140  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195229.452  ']|
+20191116_195229 4 DO1C  proc DoOneCase case|6| line|2| comment||
+20191116_195229 1 DO1L  entr fntDoOneLine args=("python3 -c 'print(6)'", '6', 3),kw={}
+20191116_195229 4 DO1L  proc DoOneLine sProcOut case|6| line|3| sline|python3 -c 'print(6)'| sProcOut|6
+| len|2|
+20191116_195229 4 DO1L  proc DoOneLine case|6| line|3| sline|python3 -c 'print(6)'| lResult|['-------------------', "20191116_195229.453  $ python3 -c 'print(6)'", '20191116_195229.739  6']|
+20191116_195229 1 DO1L  exit fntDoOneLine result|tLineOut(callstatus=0, cmdstatus='n/a - RBL', casenr='6', linenr=3, ltext=['-------------------', "20191116_195229.453  $ python3 -c 'print(6)'", '20191116_195229.739  6'])|
+20191116_195229 4 DO1C  proc DoOneCase case|6| line|3| lResult|['-------------------', "20191116_195229.453  $ python3 -c 'print(6)'", '20191116_195229.739  6']|
+20191116_195229 1 DO1C  entr fnWriteLogFile args=('6', ['-------------------', '20191116_195229.140  # test instructions for newnewbroker4', '-------------------', "20191116_195229.140  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195229.452  ', '-------------------', '20191116_195229.453  ', '-------------------', "20191116_195229.453  $ python3 -c 'print(6)'", '20191116_195229.739  6'], '../tmp', 'testbr4_log006.log'),kw={}
+20191116_195229 1 DO1C  exit fnWriteLogFile result|None|
+20191116_195229 4 DO1C  proc DoOneCase case|6| tanswers|tLinesOut(procname='Process-6', listoflists=['\n', 'BEGIN results from Process-6', '-------------------', '20191116_195229.140  # test instructions for newnewbroker4', '-------------------', "20191116_195229.140  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195229.452  ', '-------------------', '20191116_195229.453  ', '-------------------', "20191116_195229.453  $ python3 -c 'print(6)'", '20191116_195229.739  6', 'ENDOF results from Process-6', '\n'])| 
+20191116_195229 1 DO1C  exit fntDoOneCase result|tLinesOut(procname='Process-6', listoflists=['\n', 'BEGIN results from Process-6', '-------------------', '20191116_195229.140  # test instructions for newnewbroker4', '-------------------', "20191116_195229.140  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195229.452  ', '-------------------', '20191116_195229.453  ', '-------------------', "20191116_195229.453  $ python3 -c 'print(6)'", '20191116_195229.739  6', 'ENDOF results from Process-6', '\n'])|
+20191116_195229 4 DO1I  proc slotwait times|55|
+20191116_195229 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a6a0>| |[]|
+20191116_195229 5 JMOD  JobMod atentry joblist|[6, 8, 7]| len|3|
+20191116_195229 4 JMOD  JobMod ask result|False|
+20191116_195229 4 DO1I  proc slotwait times|56|
+20191116_195229 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a6a0>| |[]|
+20191116_195229 5 JMOD  JobMod atentry joblist|[6, 8, 7]| len|3|
+20191116_195229 4 JMOD  JobMod ask result|False|
+20191116_195229 4 DO1I  proc slotwait times|57|
+20191116_195229 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a6a0>| |[]|
+20191116_195229 5 JMOD  JobMod atentry joblist|[6, 8, 7]| len|3|
+20191116_195229 4 JMOD  JobMod ask result|False|
+20191116_195229 4 DO1I  proc slotwait times|58|
+20191116_195229 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a6a0>| |[]|
+20191116_195229 5 JMOD  JobMod atentry joblist|[6, 8, 7]| len|3|
+20191116_195229 4 JMOD  JobMod ask result|False|
+20191116_195229 4 DO1I  proc slotwait times|59|
+20191116_195229 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a6a0>| |[]|
+20191116_195229 5 JMOD  JobMod atentry joblist|[6, 8, 7]| len|3|
+20191116_195229 4 JMOD  JobMod ask result|False|
+20191116_195229 4 DO1I  proc slotwait times|60|
+20191116_195229 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a6a0>| |[]|
+20191116_195229 5 JMOD  JobMod atentry joblist|[6, 8, 7]| len|3|
+20191116_195229 4 JMOD  JobMod ask result|False|
+20191116_195229 4 DO1I  proc slotwait times|61|
+20191116_195229 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a6a0>| |[]|
+20191116_195229 5 JMOD  JobMod atentry joblist|[6, 8, 7]| len|3|
+20191116_195229 4 JMOD  JobMod ask result|False|
+20191116_195229 4 DO1I  proc slotwait times|62|
+20191116_195229 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a6a0>| |[]|
+20191116_195229 5 JMOD  JobMod atentry joblist|[6, 8, 7]| len|3|
+20191116_195229 4 JMOD  JobMod ask result|False|
+20191116_195229 4 DO1I  proc slotwait times|63|
+20191116_195229 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a6a0>| |[]|
+20191116_195229 5 JMOD  JobMod atentry joblist|[6, 8, 7]| len|3|
+20191116_195229 4 JMOD  JobMod ask result|False|
+20191116_195229 4 DO1I  proc slotwait times|64|
+20191116_195229 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a6a0>| |[]|
+20191116_195229 5 JMOD  JobMod atentry joblist|[6, 8, 7]| len|3|
+20191116_195229 4 JMOD  JobMod ask result|False|
+20191116_195229 4 DO1I  proc slotwait times|65|
+20191116_195229 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a6a0>| |[]|
+20191116_195229 5 JMOD  JobMod atentry joblist|[6, 8, 7]| len|3|
+20191116_195229 4 JMOD  JobMod ask result|False|
+20191116_195229 4 DO1I  proc slotwait times|66|
+20191116_195229 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a6a0>| |[]|
+20191116_195229 5 JMOD  JobMod atentry joblist|[6, 8, 7]| len|3|
+20191116_195229 4 JMOD  JobMod ask result|False|
+20191116_195229 4 DO1I  proc slotwait times|67|
+20191116_195229 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a6a0>| |[]|
+20191116_195229 5 JMOD  JobMod atentry joblist|[6, 8, 7]| len|3|
+20191116_195229 4 JMOD  JobMod ask result|False|
+20191116_195229 4 DO1I  proc slotwait times|68|
+20191116_195229 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a6a0>| |[]|
+20191116_195229 5 JMOD  JobMod atentry joblist|[6, 8, 7]| len|3|
+20191116_195229 4 JMOD  JobMod ask result|False|
+20191116_195229 4 DO1I  proc slotwait times|69|
+20191116_195229 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a6a0>| |[]|
+20191116_195229 5 JMOD  JobMod atentry joblist|[6, 8, 7]| len|3|
+20191116_195229 4 JMOD  JobMod ask result|False|
+20191116_195229 4 DO1I  proc slotwait times|70|
+20191116_195229 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a6a0>| |[]|
+20191116_195229 5 JMOD  JobMod atentry joblist|[6, 8, 7]| len|3|
+20191116_195229 4 JMOD  JobMod ask result|False|
+20191116_195229 4 DO1I  proc slotwait times|71|
+20191116_195229 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a6a0>| |[]|
+20191116_195229 5 JMOD  JobMod atentry joblist|[6, 8, 7]| len|3|
+20191116_195229 4 JMOD  JobMod ask result|False|
+20191116_195229 4 DO1I  proc slotwait times|72|
+20191116_195229 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a6a0>| |[]|
+20191116_195229 5 JMOD  JobMod atentry joblist|[6, 8, 7]| len|3|
+20191116_195229 4 JMOD  JobMod ask result|False|
+20191116_195229 4 DO1I  proc slotwait times|73|
+20191116_195229 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a6a0>| |[]|
+20191116_195229 5 JMOD  JobMod atentry joblist|[6, 8, 7]| len|3|
+20191116_195229 4 JMOD  JobMod ask result|False|
+20191116_195229 4 DO1I  proc slotwait times|74|
+20191116_195229 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a6a0>| |[]|
+20191116_195229 5 JMOD  JobMod atentry joblist|[6, 8, 7]| len|3|
+20191116_195229 4 JMOD  JobMod ask result|False|
+20191116_195229 4 DO1I  proc slotwait times|75|
+20191116_195229 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a6a0>| |[]|
+20191116_195229 5 JMOD  JobMod atentry joblist|[6, 8, 7]| len|3|
+20191116_195229 4 JMOD  JobMod ask result|False|
+20191116_195229 4 DO1I  proc slotwait times|76|
+20191116_195229 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a6a0>| |[]|
+20191116_195229 5 JMOD  JobMod atentry joblist|[6, 8, 7]| len|3|
+20191116_195229 4 JMOD  JobMod ask result|False|
+20191116_195229 4 DO1I  proc slotwait times|77|
+20191116_195229 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a6a0>| |[]|
+20191116_195229 5 JMOD  JobMod atentry joblist|[6, 8, 7]| len|3|
+20191116_195229 4 JMOD  JobMod ask result|False|
+20191116_195229 3 FST1  finished runid|6| mpjob|<Process(Process-6, started)>| output|tLinesOut(procname='Process-6', listoflists=['\n', 'BEGIN results from Process-6', '-------------------', '20191116_195229.140  # test instructions for newnewbroker4', '-------------------', "20191116_195229.140  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195229.452  ', '-------------------', '20191116_195229.453  ', '-------------------', "20191116_195229.453  $ python3 -c 'print(6)'", '20191116_195229.739  6', 'ENDOF results from Process-6', '\n'])|
+20191116_195229 4 FST1  really end runid|6| mpjob|<Process(Process-6, started)>| thr|T006|
+20191116_195229 1 FST1  exit fnStartOne result|('T006', 6, [6, 8, 7], 3)|
+20191116_195229 3 END1  proc fnEndOne1 thread|<Thread(T006, stopped 25770861008)>| name|T006| was alive|True|
+20191116_195229 3 END1  proc fnEndOne2 threaddict|{'T007': <Thread(T007, started 25771088112)>, 'T008': <Thread(T008, started 25770168160)>}| 
+20191116_195229 3 JMOD  JobMod args|del| |<threading.Event object at 0x6ffff87a320>| |[6]|
+20191116_195229 5 JMOD  JobMod atentry joblist|[6, 8, 7]| len|3|
+20191116_195229 5 JMOD  JobMod del done joblist|[None, 8, 7]| current|2|
+20191116_195229 4 DO1I  proc slotwait times|78|
+20191116_195229 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a6a0>| |[]|
+20191116_195229 5 JMOD  JobMod atentry joblist|[None, 8, 7]| len|3|
+20191116_195229 4 JMOD  JobMod ask result|True|
+20191116_195229 4 DO1I  startingOne thread|<Thread(T009, initial)>| njob|9| name|T009|
+20191116_195229 3 JMOD  JobMod args|add| |<threading.Event object at 0x6ffff87a6a0>| |[9]|
+20191116_195229 5 JMOD  JobMod atentry joblist|[None, 8, 7]| len|3|
+20191116_195229 5 JMOD  JobMod add end joblist|[9, 8, 7]| |3|
+20191116_195229 1 FST1  entr fnStartOne args=(tInstruction(runid=9, cmdlist=['# test instructions for newnewbroker4', "python3 -c 'import time,random; time.sleep(1.0*random.random())'", '', "python3 -c 'print(9)'"], logdir='../tmp', logname='testbr4_log009.log', casedict={'nCase': 9}), <queue.Queue object at 0x6ffff897b00>),kw={}
+20191116_195229 1 DO1I  exit fnDoOneInstruction result|None|
+20191116_195229 3 DOAL  proc doal inst|tInstruction(runid=10, cmdlist=['# test instructions for newnewbroker4', "python3 -c 'import time,random; time.sleep(1.0*random.random())'", '', "python3 -c 'print(10)'"], logdir='../tmp', logname='testbr4_log010.log', casedict={'nCase': 10})|
+20191116_195229 1 DO1I  entr fnDoOneInstruction args=(tInstruction(runid=10, cmdlist=['# test instructions for newnewbroker4', "python3 -c 'import time,random; time.sleep(1.0*random.random())'", '', "python3 -c 'print(10)'"], logdir='../tmp', logname='testbr4_log010.log', casedict={'nCase': 10}), 10),kw={}
+20191116_195229 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87af60>| |[]|
+20191116_195229 5 JMOD  JobMod atentry joblist|[9, 8, 7]| len|3|
+20191116_195229 4 JMOD  JobMod ask result|False|
+20191116_195229 4 FST1  starting runid|9| mpjob|<Process(Process-9, initial)>| mpq|<multiprocessing.queues.Queue object at 0x6ffff6c6898>|
+20191116_195229 1 DO1C  entr fntDoOneCase args=(tInstruction(runid=7, cmdlist=['# test instructions for newnewbroker4', "python3 -c 'import time,random; time.sleep(1.0*random.random())'", '', "python3 -c 'print(7)'"], logdir='../tmp', logname='testbr4_log007.log', casedict={'nCase': 7}), <multiprocessing.queues.Queue object at 0x6ffff87ab38>),kw={}
+20191116_195229 3 DO1C  proc procname|Process-7|
+20191116_195229 1       entr fnsGetProcessNumber args=('Process-7',),kw={}
+20191116_195229 2       exit fnsGetProcessNumber result|7|
+20191116_195229 4 DO1C  proc DoOneCase case|7| line|0| comment|# test instructions for newnewbroker4|
+20191116_195229 1 DO1L  entr fntDoOneLine args=("python3 -c 'import time,random; time.sleep(1.0*random.random())'", '7', 1),kw={}
+20191116_195229 4 DO1L  proc DoOneLine sProcOut case|7| line|1| sline|python3 -c 'import time,random; time.sleep(1.0*random.random())'| sProcOut|| len|0|
+20191116_195229 4 DO1L  proc DoOneLine case|7| line|1| sline|python3 -c 'import time,random; time.sleep(1.0*random.random())'| lResult|['-------------------', "20191116_195229.200  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195229.957  ']|
+20191116_195229 1 DO1L  exit fntDoOneLine result|tLineOut(callstatus=0, cmdstatus='n/a - RBL', casenr='7', linenr=1, ltext=['-------------------', "20191116_195229.200  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195229.957  '])|
+20191116_195229 4 DO1C  proc DoOneCase case|7| line|1| lResult|['-------------------', "20191116_195229.200  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195229.957  ']|
+20191116_195229 4 DO1C  proc DoOneCase case|7| line|2| comment||
+20191116_195229 1 DO1L  entr fntDoOneLine args=("python3 -c 'print(7)'", '7', 3),kw={}
+20191116_195230 4 DO1L  proc DoOneLine sProcOut case|7| line|3| sline|python3 -c 'print(7)'| sProcOut|7
+| len|2|
+20191116_195230 4 DO1L  proc DoOneLine case|7| line|3| sline|python3 -c 'print(7)'| lResult|['-------------------', "20191116_195229.958  $ python3 -c 'print(7)'", '20191116_195230.247  7']|
+20191116_195230 1 DO1L  exit fntDoOneLine result|tLineOut(callstatus=0, cmdstatus='n/a - RBL', casenr='7', linenr=3, ltext=['-------------------', "20191116_195229.958  $ python3 -c 'print(7)'", '20191116_195230.247  7'])|
+20191116_195230 4 DO1C  proc DoOneCase case|7| line|3| lResult|['-------------------', "20191116_195229.958  $ python3 -c 'print(7)'", '20191116_195230.247  7']|
+20191116_195230 1 DO1C  entr fnWriteLogFile args=('7', ['-------------------', '20191116_195229.200  # test instructions for newnewbroker4', '-------------------', "20191116_195229.200  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195229.957  ', '-------------------', '20191116_195229.957  ', '-------------------', "20191116_195229.958  $ python3 -c 'print(7)'", '20191116_195230.247  7'], '../tmp', 'testbr4_log007.log'),kw={}
+20191116_195230 1 DO1C  exit fnWriteLogFile result|None|
+20191116_195230 4 DO1C  proc DoOneCase case|7| tanswers|tLinesOut(procname='Process-7', listoflists=['\n', 'BEGIN results from Process-7', '-------------------', '20191116_195229.200  # test instructions for newnewbroker4', '-------------------', "20191116_195229.200  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195229.957  ', '-------------------', '20191116_195229.957  ', '-------------------', "20191116_195229.958  $ python3 -c 'print(7)'", '20191116_195230.247  7', 'ENDOF results from Process-7', '\n'])| 
+20191116_195230 1 DO1C  exit fntDoOneCase result|tLinesOut(procname='Process-7', listoflists=['\n', 'BEGIN results from Process-7', '-------------------', '20191116_195229.200  # test instructions for newnewbroker4', '-------------------', "20191116_195229.200  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195229.957  ', '-------------------', '20191116_195229.957  ', '-------------------', "20191116_195229.958  $ python3 -c 'print(7)'", '20191116_195230.247  7', 'ENDOF results from Process-7', '\n'])|
+20191116_195229 0 TICK  
+20191116_195229 4 DO1I  proc slotwait times|79|
+20191116_195229 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87af60>| |[]|
+20191116_195229 5 JMOD  JobMod atentry joblist|[9, 8, 7]| len|3|
+20191116_195229 4 JMOD  JobMod ask result|False|
+20191116_195229 4 DO1I  proc slotwait times|80|
+20191116_195229 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87af60>| |[]|
+20191116_195229 5 JMOD  JobMod atentry joblist|[9, 8, 7]| len|3|
+20191116_195229 4 JMOD  JobMod ask result|False|
+20191116_195229 4 DO1I  proc slotwait times|81|
+20191116_195229 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87af60>| |[]|
+20191116_195229 5 JMOD  JobMod atentry joblist|[9, 8, 7]| len|3|
+20191116_195229 4 JMOD  JobMod ask result|False|
+20191116_195229 4 DO1I  proc slotwait times|82|
+20191116_195229 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87af60>| |[]|
+20191116_195229 5 JMOD  JobMod atentry joblist|[9, 8, 7]| len|3|
+20191116_195229 4 JMOD  JobMod ask result|False|
+20191116_195229 4 DO1I  proc slotwait times|83|
+20191116_195229 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87af60>| |[]|
+20191116_195229 5 JMOD  JobMod atentry joblist|[9, 8, 7]| len|3|
+20191116_195229 4 JMOD  JobMod ask result|False|
+20191116_195229 4 DO1I  proc slotwait times|84|
+20191116_195229 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87af60>| |[]|
+20191116_195229 5 JMOD  JobMod atentry joblist|[9, 8, 7]| len|3|
+20191116_195229 4 JMOD  JobMod ask result|False|
+20191116_195229 4 DO1I  proc slotwait times|85|
+20191116_195229 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87af60>| |[]|
+20191116_195229 5 JMOD  JobMod atentry joblist|[9, 8, 7]| len|3|
+20191116_195229 4 JMOD  JobMod ask result|False|
+20191116_195229 4 DO1I  proc slotwait times|86|
+20191116_195229 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87af60>| |[]|
+20191116_195229 5 JMOD  JobMod atentry joblist|[9, 8, 7]| len|3|
+20191116_195229 4 JMOD  JobMod ask result|False|
+20191116_195230 4 DO1I  proc slotwait times|87|
+20191116_195230 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87af60>| |[]|
+20191116_195230 5 JMOD  JobMod atentry joblist|[9, 8, 7]| len|3|
+20191116_195230 4 JMOD  JobMod ask result|False|
+20191116_195230 4 DO1I  proc slotwait times|88|
+20191116_195230 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87af60>| |[]|
+20191116_195230 5 JMOD  JobMod atentry joblist|[9, 8, 7]| len|3|
+20191116_195230 4 JMOD  JobMod ask result|False|
+20191116_195230 4 DO1I  proc slotwait times|89|
+20191116_195230 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87af60>| |[]|
+20191116_195230 5 JMOD  JobMod atentry joblist|[9, 8, 7]| len|3|
+20191116_195230 4 JMOD  JobMod ask result|False|
+20191116_195230 4 DO1I  proc slotwait times|90|
+20191116_195230 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87af60>| |[]|
+20191116_195230 5 JMOD  JobMod atentry joblist|[9, 8, 7]| len|3|
+20191116_195230 4 JMOD  JobMod ask result|False|
+20191116_195230 4 DO1I  proc slotwait times|91|
+20191116_195230 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87af60>| |[]|
+20191116_195230 5 JMOD  JobMod atentry joblist|[9, 8, 7]| len|3|
+20191116_195230 4 JMOD  JobMod ask result|False|
+20191116_195230 4 DO1I  proc slotwait times|92|
+20191116_195230 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87af60>| |[]|
+20191116_195230 5 JMOD  JobMod atentry joblist|[9, 8, 7]| len|3|
+20191116_195230 4 JMOD  JobMod ask result|False|
+20191116_195230 4 DO1I  proc slotwait times|93|
+20191116_195230 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87af60>| |[]|
+20191116_195230 5 JMOD  JobMod atentry joblist|[9, 8, 7]| len|3|
+20191116_195230 4 JMOD  JobMod ask result|False|
+20191116_195230 4 DO1I  proc slotwait times|94|
+20191116_195230 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87af60>| |[]|
+20191116_195230 5 JMOD  JobMod atentry joblist|[9, 8, 7]| len|3|
+20191116_195230 4 JMOD  JobMod ask result|False|
+20191116_195230 4 DO1I  proc slotwait times|95|
+20191116_195230 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87af60>| |[]|
+20191116_195230 5 JMOD  JobMod atentry joblist|[9, 8, 7]| len|3|
+20191116_195230 4 JMOD  JobMod ask result|False|
+20191116_195230 4 DO1I  proc slotwait times|96|
+20191116_195230 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87af60>| |[]|
+20191116_195230 5 JMOD  JobMod atentry joblist|[9, 8, 7]| len|3|
+20191116_195230 4 JMOD  JobMod ask result|False|
+20191116_195230 4 DO1I  proc slotwait times|97|
+20191116_195230 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87af60>| |[]|
+20191116_195230 5 JMOD  JobMod atentry joblist|[9, 8, 7]| len|3|
+20191116_195230 4 JMOD  JobMod ask result|False|
+20191116_195230 3 FST1  finished runid|7| mpjob|<Process(Process-7, started)>| output|tLinesOut(procname='Process-7', listoflists=['\n', 'BEGIN results from Process-7', '-------------------', '20191116_195229.200  # test instructions for newnewbroker4', '-------------------', "20191116_195229.200  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195229.957  ', '-------------------', '20191116_195229.957  ', '-------------------', "20191116_195229.958  $ python3 -c 'print(7)'", '20191116_195230.247  7', 'ENDOF results from Process-7', '\n'])|
+20191116_195230 4 FST1  really end runid|7| mpjob|<Process(Process-7, started)>| thr|T007|
+20191116_195230 1 FST1  exit fnStartOne result|('T007', 7, [9, 8, 7], 3)|
+20191116_195230 3 END1  proc fnEndOne1 thread|<Thread(T007, stopped 25771088112)>| name|T007| was alive|False|
+20191116_195230 3 END1  proc fnEndOne2 threaddict|{'T008': <Thread(T008, started 25770168160)>, 'T009': <Thread(T009, started 25772066864)>}| 
+20191116_195230 3 JMOD  JobMod args|del| |<threading.Event object at 0x6ffff6d5198>| |[7]|
+20191116_195230 5 JMOD  JobMod atentry joblist|[9, 8, 7]| len|3|
+20191116_195230 5 JMOD  JobMod del done joblist|[9, 8, None]| current|2|
+20191116_195230 4 DO1I  proc slotwait times|98|
+20191116_195230 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87af60>| |[]|
+20191116_195230 5 JMOD  JobMod atentry joblist|[9, 8, None]| len|3|
+20191116_195230 4 JMOD  JobMod ask result|True|
+20191116_195230 4 DO1I  startingOne thread|<Thread(T010, initial)>| njob|10| name|T010|
+20191116_195230 3 JMOD  JobMod args|add| |<threading.Event object at 0x6ffff87af60>| |[10]|
+20191116_195230 5 JMOD  JobMod atentry joblist|[9, 8, None]| len|3|
+20191116_195230 5 JMOD  JobMod add end joblist|[9, 8, 10]| |3|
+20191116_195230 1 FST1  entr fnStartOne args=(tInstruction(runid=10, cmdlist=['# test instructions for newnewbroker4', "python3 -c 'import time,random; time.sleep(1.0*random.random())'", '', "python3 -c 'print(10)'"], logdir='../tmp', logname='testbr4_log010.log', casedict={'nCase': 10}), <queue.Queue object at 0x6ffff897b00>),kw={}
+20191116_195230 1 DO1I  exit fnDoOneInstruction result|None|
+20191116_195230 3 DOAL  proc doal inst|tInstruction(runid=11, cmdlist=['# test instructions for newnewbroker4', "python3 -c 'import time,random; time.sleep(1.0*random.random())'", '', "python3 -c 'print(11)'"], logdir='../tmp', logname='testbr4_log011.log', casedict={'nCase': 11})|
+20191116_195230 1 DO1I  entr fnDoOneInstruction args=(tInstruction(runid=11, cmdlist=['# test instructions for newnewbroker4', "python3 -c 'import time,random; time.sleep(1.0*random.random())'", '', "python3 -c 'print(11)'"], logdir='../tmp', logname='testbr4_log011.log', casedict={'nCase': 11}), 11),kw={}
+20191116_195230 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a0f0>| |[]|
+20191116_195230 5 JMOD  JobMod atentry joblist|[9, 8, 10]| len|3|
+20191116_195230 4 JMOD  JobMod ask result|False|
+20191116_195230 4 FST1  starting runid|10| mpjob|<Process(Process-10, initial)>| mpq|<multiprocessing.queues.Queue object at 0x6ffff87a588>|
+20191116_195229 1 DO1C  entr fntDoOneCase args=(tInstruction(runid=8, cmdlist=['# test instructions for newnewbroker4', "python3 -c 'import time,random; time.sleep(1.0*random.random())'", '', "python3 -c 'print(8)'"], logdir='../tmp', logname='testbr4_log008.log', casedict={'nCase': 8}), <multiprocessing.queues.Queue object at 0x6ffff8ac470>),kw={}
+20191116_195229 3 DO1C  proc procname|Process-8|
+20191116_195229 1       entr fnsGetProcessNumber args=('Process-8',),kw={}
+20191116_195229 2       exit fnsGetProcessNumber result|8|
+20191116_195229 4 DO1C  proc DoOneCase case|8| line|0| comment|# test instructions for newnewbroker4|
+20191116_195229 1 DO1L  entr fntDoOneLine args=("python3 -c 'import time,random; time.sleep(1.0*random.random())'", '8', 1),kw={}
+20191116_195230 4 DO1L  proc DoOneLine sProcOut case|8| line|1| sline|python3 -c 'import time,random; time.sleep(1.0*random.random())'| sProcOut|| len|0|
+20191116_195230 4 DO1L  proc DoOneLine case|8| line|1| sline|python3 -c 'import time,random; time.sleep(1.0*random.random())'| lResult|['-------------------', "20191116_195229.258  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195230.143  ']|
+20191116_195230 1 DO1L  exit fntDoOneLine result|tLineOut(callstatus=0, cmdstatus='n/a - RBL', casenr='8', linenr=1, ltext=['-------------------', "20191116_195229.258  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195230.143  '])|
+20191116_195230 4 DO1C  proc DoOneCase case|8| line|1| lResult|['-------------------', "20191116_195229.258  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195230.143  ']|
+20191116_195230 4 DO1C  proc DoOneCase case|8| line|2| comment||
+20191116_195230 1 DO1L  entr fntDoOneLine args=("python3 -c 'print(8)'", '8', 3),kw={}
+20191116_195230 4 DO1L  proc DoOneLine sProcOut case|8| line|3| sline|python3 -c 'print(8)'| sProcOut|8
+| len|2|
+20191116_195230 4 DO1L  proc DoOneLine case|8| line|3| sline|python3 -c 'print(8)'| lResult|['-------------------', "20191116_195230.144  $ python3 -c 'print(8)'", '20191116_195230.381  8']|
+20191116_195230 1 DO1L  exit fntDoOneLine result|tLineOut(callstatus=0, cmdstatus='n/a - RBL', casenr='8', linenr=3, ltext=['-------------------', "20191116_195230.144  $ python3 -c 'print(8)'", '20191116_195230.381  8'])|
+20191116_195230 4 DO1C  proc DoOneCase case|8| line|3| lResult|['-------------------', "20191116_195230.144  $ python3 -c 'print(8)'", '20191116_195230.381  8']|
+20191116_195230 1 DO1C  entr fnWriteLogFile args=('8', ['-------------------', '20191116_195229.258  # test instructions for newnewbroker4', '-------------------', "20191116_195229.258  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195230.143  ', '-------------------', '20191116_195230.144  ', '-------------------', "20191116_195230.144  $ python3 -c 'print(8)'", '20191116_195230.381  8'], '../tmp', 'testbr4_log008.log'),kw={}
+20191116_195230 1 DO1C  exit fnWriteLogFile result|None|
+20191116_195230 4 DO1C  proc DoOneCase case|8| tanswers|tLinesOut(procname='Process-8', listoflists=['\n', 'BEGIN results from Process-8', '-------------------', '20191116_195229.258  # test instructions for newnewbroker4', '-------------------', "20191116_195229.258  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195230.143  ', '-------------------', '20191116_195230.144  ', '-------------------', "20191116_195230.144  $ python3 -c 'print(8)'", '20191116_195230.381  8', 'ENDOF results from Process-8', '\n'])| 
+20191116_195230 1 DO1C  exit fntDoOneCase result|tLinesOut(procname='Process-8', listoflists=['\n', 'BEGIN results from Process-8', '-------------------', '20191116_195229.258  # test instructions for newnewbroker4', '-------------------', "20191116_195229.258  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195230.143  ', '-------------------', '20191116_195230.144  ', '-------------------', "20191116_195230.144  $ python3 -c 'print(8)'", '20191116_195230.381  8', 'ENDOF results from Process-8', '\n'])|
+20191116_195230 4 DO1I  proc slotwait times|99|
+20191116_195230 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a0f0>| |[]|
+20191116_195230 5 JMOD  JobMod atentry joblist|[9, 8, 10]| len|3|
+20191116_195230 4 JMOD  JobMod ask result|False|
+20191116_195230 4 DO1I  proc slotwait times|100|
+20191116_195230 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a0f0>| |[]|
+20191116_195230 5 JMOD  JobMod atentry joblist|[9, 8, 10]| len|3|
+20191116_195230 4 JMOD  JobMod ask result|False|
+20191116_195230 4 DO1I  proc slotwait times|101|
+20191116_195230 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a0f0>| |[]|
+20191116_195230 5 JMOD  JobMod atentry joblist|[9, 8, 10]| len|3|
+20191116_195230 4 JMOD  JobMod ask result|False|
+20191116_195230 4 DO1I  proc slotwait times|102|
+20191116_195230 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a0f0>| |[]|
+20191116_195230 5 JMOD  JobMod atentry joblist|[9, 8, 10]| len|3|
+20191116_195230 4 JMOD  JobMod ask result|False|
+20191116_195230 3 FST1  finished runid|8| mpjob|<Process(Process-8, started)>| output|tLinesOut(procname='Process-8', listoflists=['\n', 'BEGIN results from Process-8', '-------------------', '20191116_195229.258  # test instructions for newnewbroker4', '-------------------', "20191116_195229.258  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195230.143  ', '-------------------', '20191116_195230.144  ', '-------------------', "20191116_195230.144  $ python3 -c 'print(8)'", '20191116_195230.381  8', 'ENDOF results from Process-8', '\n'])|
+20191116_195230 4 FST1  really end runid|8| mpjob|<Process(Process-8, started)>| thr|T008|
+20191116_195230 1 FST1  exit fnStartOne result|('T008', 8, [9, 8, 10], 3)|
+20191116_195230 3 JMOD  JobMod args|del| |<threading.Event object at 0x6ffff6d5cf8>| |[8]|
+20191116_195230 5 JMOD  JobMod atentry joblist|[9, 8, 10]| len|3|
+20191116_195230 5 JMOD  JobMod del done joblist|[9, None, 10]| current|2|
+20191116_195230 3 END1  proc fnEndOne1 thread|<Thread(T008, stopped 25770168160)>| name|T008| was alive|False|
+20191116_195230 3 END1  proc fnEndOne2 threaddict|{'T009': <Thread(T009, started 25772066864)>, 'T010': <Thread(T010, started 25772881568)>}| 
+20191116_195230 4 DO1I  proc slotwait times|103|
+20191116_195230 3 JMOD  JobMod args|ask| |<threading.Event object at 0x6ffff87a0f0>| |[]|
+20191116_195230 5 JMOD  JobMod atentry joblist|[9, None, 10]| len|3|
+20191116_195230 4 JMOD  JobMod ask result|True|
+20191116_195230 4 DO1I  startingOne thread|<Thread(T011, initial)>| njob|11| name|T011|
+20191116_195230 3 JMOD  JobMod args|add| |<threading.Event object at 0x6ffff87a0f0>| |[11]|
+20191116_195230 5 JMOD  JobMod atentry joblist|[9, None, 10]| len|3|
+20191116_195230 5 JMOD  JobMod add end joblist|[9, 11, 10]| |3|
+20191116_195230 1 FST1  entr fnStartOne args=(tInstruction(runid=11, cmdlist=['# test instructions for newnewbroker4', "python3 -c 'import time,random; time.sleep(1.0*random.random())'", '', "python3 -c 'print(11)'"], logdir='../tmp', logname='testbr4_log011.log', casedict={'nCase': 11}), <queue.Queue object at 0x6ffff897b00>),kw={}
+20191116_195230 1 DO1I  exit fnDoOneInstruction result|None|
+20191116_195230 1 DOAL  exit fnDoAllInstructions result|None|
+20191116_195230 5 MAIN  proc last instr|True|
+20191116_195230 3 MAIN  proc endof threaddict|{'T009': <Thread(T009, started 25772066864)>, 'T010': <Thread(T010, started 25772881568)>, 'T011': <Thread(T011, started 25770861008)>}|
+20191116_195230 5 MAIN  proc join()ing|T009| |<Thread(T009, started 25772066864)>|
+20191116_195230 4 FST1  starting runid|11| mpjob|<Process(Process-11, initial)>| mpq|<multiprocessing.queues.Queue object at 0x6ffff87a2b0>|
+20191116_195229 1 DO1C  entr fntDoOneCase args=(tInstruction(runid=9, cmdlist=['# test instructions for newnewbroker4', "python3 -c 'import time,random; time.sleep(1.0*random.random())'", '', "python3 -c 'print(9)'"], logdir='../tmp', logname='testbr4_log009.log', casedict={'nCase': 9}), <multiprocessing.queues.Queue object at 0x6ffff6c6898>),kw={}
+20191116_195229 3 DO1C  proc procname|Process-9|
+20191116_195229 1       entr fnsGetProcessNumber args=('Process-9',),kw={}
+20191116_195229 2       exit fnsGetProcessNumber result|9|
+20191116_195229 4 DO1C  proc DoOneCase case|9| line|0| comment|# test instructions for newnewbroker4|
+20191116_195229 1 DO1L  entr fntDoOneLine args=("python3 -c 'import time,random; time.sleep(1.0*random.random())'", '9', 1),kw={}
+20191116_195231 4 DO1L  proc DoOneLine sProcOut case|9| line|1| sline|python3 -c 'import time,random; time.sleep(1.0*random.random())'| sProcOut|| len|0|
+20191116_195231 4 DO1L  proc DoOneLine case|9| line|1| sline|python3 -c 'import time,random; time.sleep(1.0*random.random())'| lResult|['-------------------', "20191116_195229.850  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195231.095  ']|
+20191116_195231 1 DO1L  exit fntDoOneLine result|tLineOut(callstatus=0, cmdstatus='n/a - RBL', casenr='9', linenr=1, ltext=['-------------------', "20191116_195229.850  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195231.095  '])|
+20191116_195231 4 DO1C  proc DoOneCase case|9| line|1| lResult|['-------------------', "20191116_195229.850  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195231.095  ']|
+20191116_195231 4 DO1C  proc DoOneCase case|9| line|2| comment||
+20191116_195231 1 DO1L  entr fntDoOneLine args=("python3 -c 'print(9)'", '9', 3),kw={}
+20191116_195231 4 DO1L  proc DoOneLine sProcOut case|9| line|3| sline|python3 -c 'print(9)'| sProcOut|9
+| len|2|
+20191116_195231 4 DO1L  proc DoOneLine case|9| line|3| sline|python3 -c 'print(9)'| lResult|['-------------------', "20191116_195231.096  $ python3 -c 'print(9)'", '20191116_195231.388  9']|
+20191116_195231 1 DO1L  exit fntDoOneLine result|tLineOut(callstatus=0, cmdstatus='n/a - RBL', casenr='9', linenr=3, ltext=['-------------------', "20191116_195231.096  $ python3 -c 'print(9)'", '20191116_195231.388  9'])|
+20191116_195231 4 DO1C  proc DoOneCase case|9| line|3| lResult|['-------------------', "20191116_195231.096  $ python3 -c 'print(9)'", '20191116_195231.388  9']|
+20191116_195231 1 DO1C  entr fnWriteLogFile args=('9', ['-------------------', '20191116_195229.849  # test instructions for newnewbroker4', '-------------------', "20191116_195229.850  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195231.095  ', '-------------------', '20191116_195231.096  ', '-------------------', "20191116_195231.096  $ python3 -c 'print(9)'", '20191116_195231.388  9'], '../tmp', 'testbr4_log009.log'),kw={}
+20191116_195231 1 DO1C  exit fnWriteLogFile result|None|
+20191116_195231 4 DO1C  proc DoOneCase case|9| tanswers|tLinesOut(procname='Process-9', listoflists=['\n', 'BEGIN results from Process-9', '-------------------', '20191116_195229.849  # test instructions for newnewbroker4', '-------------------', "20191116_195229.850  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195231.095  ', '-------------------', '20191116_195231.096  ', '-------------------', "20191116_195231.096  $ python3 -c 'print(9)'", '20191116_195231.388  9', 'ENDOF results from Process-9', '\n'])| 
+20191116_195231 1 DO1C  exit fntDoOneCase result|tLinesOut(procname='Process-9', listoflists=['\n', 'BEGIN results from Process-9', '-------------------', '20191116_195229.849  # test instructions for newnewbroker4', '-------------------', "20191116_195229.850  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195231.095  ', '-------------------', '20191116_195231.096  ', '-------------------', "20191116_195231.096  $ python3 -c 'print(9)'", '20191116_195231.388  9', 'ENDOF results from Process-9', '\n'])|
+20191116_195230 1 DO1C  entr fntDoOneCase args=(tInstruction(runid=11, cmdlist=['# test instructions for newnewbroker4', "python3 -c 'import time,random; time.sleep(1.0*random.random())'", '', "python3 -c 'print(11)'"], logdir='../tmp', logname='testbr4_log011.log', casedict={'nCase': 11}), <multiprocessing.queues.Queue object at 0x6ffff87a2b0>),kw={}
+20191116_195230 3 DO1C  proc procname|Process-11|
+20191116_195230 1       entr fnsGetProcessNumber args=('Process-11',),kw={}
+20191116_195230 2       exit fnsGetProcessNumber result|11|
+20191116_195230 4 DO1C  proc DoOneCase case|11| line|0| comment|# test instructions for newnewbroker4|
+20191116_195230 1 DO1L  entr fntDoOneLine args=("python3 -c 'import time,random; time.sleep(1.0*random.random())'", '11', 1),kw={}
+20191116_195231 4 DO1L  proc DoOneLine sProcOut case|11| line|1| sline|python3 -c 'import time,random; time.sleep(1.0*random.random())'| sProcOut|| len|0|
+20191116_195231 4 DO1L  proc DoOneLine case|11| line|1| sline|python3 -c 'import time,random; time.sleep(1.0*random.random())'| lResult|['-------------------', "20191116_195230.474  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195231.158  ']|
+20191116_195231 1 DO1L  exit fntDoOneLine result|tLineOut(callstatus=0, cmdstatus='n/a - RBL', casenr='11', linenr=1, ltext=['-------------------', "20191116_195230.474  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195231.158  '])|
+20191116_195231 4 DO1C  proc DoOneCase case|11| line|1| lResult|['-------------------', "20191116_195230.474  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195231.158  ']|
+20191116_195231 4 DO1C  proc DoOneCase case|11| line|2| comment||
+20191116_195231 1 DO1L  entr fntDoOneLine args=("python3 -c 'print(11)'", '11', 3),kw={}
+20191116_195231 4 DO1L  proc DoOneLine sProcOut case|11| line|3| sline|python3 -c 'print(11)'| sProcOut|11
+| len|3|
+20191116_195231 4 DO1L  proc DoOneLine case|11| line|3| sline|python3 -c 'print(11)'| lResult|['-------------------', "20191116_195231.159  $ python3 -c 'print(11)'", '20191116_195231.463  11']|
+20191116_195231 1 DO1L  exit fntDoOneLine result|tLineOut(callstatus=0, cmdstatus='n/a - RBL', casenr='11', linenr=3, ltext=['-------------------', "20191116_195231.159  $ python3 -c 'print(11)'", '20191116_195231.463  11'])|
+20191116_195231 4 DO1C  proc DoOneCase case|11| line|3| lResult|['-------------------', "20191116_195231.159  $ python3 -c 'print(11)'", '20191116_195231.463  11']|
+20191116_195231 1 DO1C  entr fnWriteLogFile args=('11', ['-------------------', '20191116_195230.474  # test instructions for newnewbroker4', '-------------------', "20191116_195230.474  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195231.158  ', '-------------------', '20191116_195231.159  ', '-------------------', "20191116_195231.159  $ python3 -c 'print(11)'", '20191116_195231.463  11'], '../tmp', 'testbr4_log011.log'),kw={}
+20191116_195231 1 DO1C  exit fnWriteLogFile result|None|
+20191116_195231 4 DO1C  proc DoOneCase case|11| tanswers|tLinesOut(procname='Process-11', listoflists=['\n', 'BEGIN results from Process-11', '-------------------', '20191116_195230.474  # test instructions for newnewbroker4', '-------------------', "20191116_195230.474  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195231.158  ', '-------------------', '20191116_195231.159  ', '-------------------', "20191116_195231.159  $ python3 -c 'print(11)'", '20191116_195231.463  11', 'ENDOF results from Process-11', '\n'])| 
+20191116_195231 1 DO1C  exit fntDoOneCase result|tLinesOut(procname='Process-11', listoflists=['\n', 'BEGIN results from Process-11', '-------------------', '20191116_195230.474  # test instructions for newnewbroker4', '-------------------', "20191116_195230.474  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195231.158  ', '-------------------', '20191116_195231.159  ', '-------------------', "20191116_195231.159  $ python3 -c 'print(11)'", '20191116_195231.463  11', 'ENDOF results from Process-11', '\n'])|
+20191116_195230 1 DO1C  entr fntDoOneCase args=(tInstruction(runid=10, cmdlist=['# test instructions for newnewbroker4', "python3 -c 'import time,random; time.sleep(1.0*random.random())'", '', "python3 -c 'print(10)'"], logdir='../tmp', logname='testbr4_log010.log', casedict={'nCase': 10}), <multiprocessing.queues.Queue object at 0x6ffff87a588>),kw={}
+20191116_195230 3 DO1C  proc procname|Process-10|
+20191116_195230 1       entr fnsGetProcessNumber args=('Process-10',),kw={}
+20191116_195230 2       exit fnsGetProcessNumber result|10|
+20191116_195230 4 DO1C  proc DoOneCase case|10| line|0| comment|# test instructions for newnewbroker4|
+20191116_195230 1 DO1L  entr fntDoOneLine args=("python3 -c 'import time,random; time.sleep(1.0*random.random())'", '10', 1),kw={}
+20191116_195231 4 DO1L  proc DoOneLine sProcOut case|10| line|1| sline|python3 -c 'import time,random; time.sleep(1.0*random.random())'| sProcOut|| len|0|
+20191116_195231 4 DO1L  proc DoOneLine case|10| line|1| sline|python3 -c 'import time,random; time.sleep(1.0*random.random())'| lResult|['-------------------', "20191116_195230.324  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195231.328  ']|
+20191116_195231 1 DO1L  exit fntDoOneLine result|tLineOut(callstatus=0, cmdstatus='n/a - RBL', casenr='10', linenr=1, ltext=['-------------------', "20191116_195230.324  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195231.328  '])|
+20191116_195231 4 DO1C  proc DoOneCase case|10| line|1| lResult|['-------------------', "20191116_195230.324  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195231.328  ']|
+20191116_195231 4 DO1C  proc DoOneCase case|10| line|2| comment||
+20191116_195231 1 DO1L  entr fntDoOneLine args=("python3 -c 'print(10)'", '10', 3),kw={}
+20191116_195231 4 DO1L  proc DoOneLine sProcOut case|10| line|3| sline|python3 -c 'print(10)'| sProcOut|10
+| len|3|
+20191116_195231 4 DO1L  proc DoOneLine case|10| line|3| sline|python3 -c 'print(10)'| lResult|['-------------------', "20191116_195231.328  $ python3 -c 'print(10)'", '20191116_195231.613  10']|
+20191116_195231 1 DO1L  exit fntDoOneLine result|tLineOut(callstatus=0, cmdstatus='n/a - RBL', casenr='10', linenr=3, ltext=['-------------------', "20191116_195231.328  $ python3 -c 'print(10)'", '20191116_195231.613  10'])|
+20191116_195231 4 DO1C  proc DoOneCase case|10| line|3| lResult|['-------------------', "20191116_195231.328  $ python3 -c 'print(10)'", '20191116_195231.613  10']|
+20191116_195231 1 DO1C  entr fnWriteLogFile args=('10', ['-------------------', '20191116_195230.324  # test instructions for newnewbroker4', '-------------------', "20191116_195230.324  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195231.328  ', '-------------------', '20191116_195231.328  ', '-------------------', "20191116_195231.328  $ python3 -c 'print(10)'", '20191116_195231.613  10'], '../tmp', 'testbr4_log010.log'),kw={}
+20191116_195231 1 DO1C  exit fnWriteLogFile result|None|
+20191116_195231 4 DO1C  proc DoOneCase case|10| tanswers|tLinesOut(procname='Process-10', listoflists=['\n', 'BEGIN results from Process-10', '-------------------', '20191116_195230.324  # test instructions for newnewbroker4', '-------------------', "20191116_195230.324  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195231.328  ', '-------------------', '20191116_195231.328  ', '-------------------', "20191116_195231.328  $ python3 -c 'print(10)'", '20191116_195231.613  10', 'ENDOF results from Process-10', '\n'])| 
+20191116_195231 1 DO1C  exit fntDoOneCase result|tLinesOut(procname='Process-10', listoflists=['\n', 'BEGIN results from Process-10', '-------------------', '20191116_195230.324  # test instructions for newnewbroker4', '-------------------', "20191116_195230.324  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195231.328  ', '-------------------', '20191116_195231.328  ', '-------------------', "20191116_195231.328  $ python3 -c 'print(10)'", '20191116_195231.613  10', 'ENDOF results from Process-10', '\n'])|
+20191116_195230 0 TICK  
+20191116_195231 3 FST1  finished runid|9| mpjob|<Process(Process-9, started)>| output|tLinesOut(procname='Process-9', listoflists=['\n', 'BEGIN results from Process-9', '-------------------', '20191116_195229.849  # test instructions for newnewbroker4', '-------------------', "20191116_195229.850  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195231.095  ', '-------------------', '20191116_195231.096  ', '-------------------', "20191116_195231.096  $ python3 -c 'print(9)'", '20191116_195231.388  9', 'ENDOF results from Process-9', '\n'])|
+20191116_195231 4 FST1  really end runid|9| mpjob|<Process(Process-9, started)>| thr|T009|
+20191116_195231 1 FST1  exit fnStartOne result|('T009', 9, [9, 11, 10], 3)|
+20191116_195231 5 MAIN  proc join()ed |T009| |<Thread(T009, stopped 25772066864)>|
+20191116_195231 5 MAIN  proc join()ing|T010| |<Thread(T010, started 25772881568)>|
+20191116_195231 3 JMOD  JobMod args|del| |<threading.Event object at 0x6ffff87a6d8>| |[9]|
+20191116_195231 5 JMOD  JobMod atentry joblist|[9, 11, 10]| len|3|
+20191116_195231 5 JMOD  JobMod del done joblist|[None, 11, 10]| current|2|
+20191116_195231 3 FST1  finished runid|11| mpjob|<Process(Process-11, started)>| output|tLinesOut(procname='Process-11', listoflists=['\n', 'BEGIN results from Process-11', '-------------------', '20191116_195230.474  # test instructions for newnewbroker4', '-------------------', "20191116_195230.474  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195231.158  ', '-------------------', '20191116_195231.159  ', '-------------------', "20191116_195231.159  $ python3 -c 'print(11)'", '20191116_195231.463  11', 'ENDOF results from Process-11', '\n'])|
+20191116_195231 4 FST1  really end runid|11| mpjob|<Process(Process-11, started)>| thr|T011|
+20191116_195231 3 JMOD  JobMod args|del| |<threading.Event object at 0x6ffff87a0f0>| |[11]|
+20191116_195231 5 JMOD  JobMod atentry joblist|[None, 11, 10]| len|3|
+20191116_195231 5 JMOD  JobMod del done joblist|[None, None, 10]| current|1|
+20191116_195231 1 FST1  exit fnStartOne result|('T011', 11, [None, None, 10], 2)|
+20191116_195231 3 FST1  finished runid|10| mpjob|<Process(Process-10, started)>| output|tLinesOut(procname='Process-10', listoflists=['\n', 'BEGIN results from Process-10', '-------------------', '20191116_195230.324  # test instructions for newnewbroker4', '-------------------', "20191116_195230.324  $ python3 -c 'import time,random; time.sleep(1.0*random.random())'", '20191116_195231.328  ', '-------------------', '20191116_195231.328  ', '-------------------', "20191116_195231.328  $ python3 -c 'print(10)'", '20191116_195231.613  10', 'ENDOF results from Process-10', '\n'])|
+20191116_195231 4 FST1  really end runid|10| mpjob|<Process(Process-10, started)>| thr|T010|
+20191116_195231 3 JMOD  JobMod args|del| |<threading.Event object at 0x6ffff87a2b0>| |[10]|
+20191116_195231 5 JMOD  JobMod atentry joblist|[None, None, 10]| len|3|
+20191116_195231 5 JMOD  JobMod del done joblist|[None, None, None]| current|0|
+20191116_195231 1 FST1  exit fnStartOne result|('T010', 10, [None, None, None], 1)|
+20191116_195231 5 MAIN  proc join()ed |T010| |<Thread(T010, stopped 25772881568)>|
+20191116_195231 5 MAIN  proc join()ing|T011| |<Thread(T011, stopped 25770861008)>|
+20191116_195231 5 MAIN  proc join()ed |T011| |<Thread(T011, stopped 25770861008)>|
+20191116_195231 0 MAIN  End queued all runs ncases|11|
+20191116_195231 0 MAIN  End nslotwait|103|
+20191116_195231 1 MAIN  exit main result|0|
+20191116_195231 0 MAIN  endstatus|0|
+20191116_195231 0 MAIN  allthreads|[<_MainThread(MainThread, started 25769803792)>, <Thread(Thread-1, started daemon 25770212880)>, <Thread(Thread-2, started daemon 25770902224)>, <Thread(Thread-3, started daemon 25771267504)>]|
