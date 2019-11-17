@@ -412,7 +412,7 @@ def fnbQEnd():
 
 
 #===========================================================
-# NEW STUFF
+# Joblist maintenance routines
 #===========================================================
 # f n J o b M o d 
 @ntracef("JMOD")
@@ -491,7 +491,41 @@ def fnJobMod():
         evDone.set()
 
 #===========================================================
+# Thread dictionary maintenance routines
+#===========================================================
+# f n T h r D i c t A d d 
+@ntracef("TDIC")
+def fnThrDictAdd(mysThrName, myThrObj):
+    ''' Add a thread name/obj pair to the dict.
+    '''
+    with g.lockThreadDict:
+        g.dName2Thread[mysThrName] = myThrObj
 
+# f n T h r D i c t D e l 
+@ntracef("TDIC")
+def fnThrDictDel(mysThrName):
+    ''' Delete a thread name/obj pair from the dict.
+    '''
+    with g.lockThreadDict:
+        del g.dName2Thread[mysThrName]
+
+# f n T h r D i c t G e t 
+@ntracef("TDIC")
+def fnThrDictGet(mysThrName):
+    ''' Retrieve the thread obj given the name
+    '''
+    with g.lockThreadDict:
+        thrResult = g.dName2Thread[mysThrName]
+    return(thrResult)
+
+# f n T h r D i c t G e t A l l 
+@ntracef("TDIC")
+def fnThrDictGetAll():
+    ''' Retrieve a list of tuples of the entire dict.
+    '''
+    with g.lockThreadDict:
+        lResult = list(g.dName2Thread.items())
+    return(lResult)
 
 
 #===========================================================
@@ -511,8 +545,9 @@ def fnEndOne():
     '''
     while True:
         sThrToKill = g.qJobEnd.get()
-        with g.lockThreadDict:
-            thrToKill = g.dName2Thread[sThrToKill]
+        thrToKill = fnThrDictGet(sThrToKill)
+#        with g.lockThreadDict:
+#            thrToKill = g.dName2Thread[sThrToKill]
         if thrToKill.is_alive():
             thrToKill.join()
             bAlive = True
@@ -522,11 +557,12 @@ def fnEndOne():
             NTRC.ntracef(3, "END1", "proc fnEndOne1 thread|%s| "
                 "name|%s| was alive|%s|" 
                 % (thrToKill, sThrToKill, bAlive))
-        with g.lockThreadDict:
-            del g.dName2Thread[sThrToKill]
-            with g.lockPrint:
-                NTRC.ntracef(3, "END1", "proc fnEndOne2 threaddict|%s| "
-                    % (g.dName2Thread))
+        fnThrDictDel(sThrToKill)
+#        with g.lockThreadDict:
+#            del g.dName2Thread[sThrToKill]
+        with g.lockPrint:
+            NTRC.ntracef(3, "END1", "proc fnEndOne2 threaddict|%s| "
+                % (g.dName2Thread))
         g.qJobEnd.task_done()
 
 
@@ -605,8 +641,9 @@ def fnDoOneInstruction(mytInstruction, mynJob):
     thrStartOne.name = sThrStartOneName
     # And save the thread name and object 
     #  so that it can be joined when done.
-    with g.lockThreadDict:
-        g.dName2Thread[sThrStartOneName] = thrStartOne
+    fnThrDictAdd(sThrStartOneName, thrStartOne)
+#    with g.lockThreadDict:
+#        g.dName2Thread[sThrStartOneName] = thrStartOne
     with g.lockPrint:
         NTRC.ntracef(4, "DO1I", "startingOne thread|%s| njob|%s| name|%s|" 
             % (thrStartOne, mynJob, sThrStartOneName))
@@ -645,6 +682,7 @@ def fnDoAllInstructions(mynCases):
     g.bLast = True          # Yes, sent the last instruction
     
     
+"""
 #===========================================================
 # f n S e n d I n s t r u c t i o n s 
 @ntracef("SNDI")
@@ -707,38 +745,8 @@ def fnSendInstructions(mynCases):
 
     # If this is the end of all instructions, set flag.
     g.bLast = True          # Yes, sent the last instruction
-
 """
-#===========================================================
-# f n S t a r t u p 
-@ntrace
-def fnStartup():
-    ''' Establish all the queues and daemon threads at startup time.
-    '''
-    g.lockPrint = threading.Lock()
-    g.lockThreadDict = threading.Lock()
-    
-    g.nJobsCurrent = 0
-    nRunInParallel = int(math.ceil(g.nParallel * ((100.0 + g.nOverbook)/100.0)))
-    g.ltJobs = [None for _ in range(nRunInParallel)]
-    with g.lockPrint:
-        NTRC.ntracef(5, "STRT", "joblist|%s| |%s|" 
-            % (g.ltJobs, len(g.ltJobs)))
-    
-    g.qJobEnd = queue.Queue()
-    g.thrJobEnd = threading.Thread(target=fnEndOne)
-    g.thrJobEnd.daemon = True
-    g.thrJobEnd.start()
-    
-    g.qJobMod = queue.Queue()
-    g.qJobModAskDone = queue.Queue()
-    g.qJobModAddDone = queue.Queue()
-    g.qJobModDelDone = queue.Queue()
-    g.thrJobMod = threading.Thread(target=fnJobMod)
-    g.thrJobMod.daemon = True
-    g.thrJobMod.start()
 
-"""
 #===========================================================
 # f n T h r T i c k 
 @ntracef("TICK")
@@ -828,9 +836,11 @@ def main():
 
     # If there are any threads left in the dict that should have been 
     #  finished by fnEndOne, nuke 'em now so we can exit cleanly.  
+    lTmpDict = fnThrDictGetAll()
+    dTmpDict = dict(lTmpDict)
     with g.lockPrint:
         NTRC.ntracef(3, "MAIN", "proc endof threaddict|%s|" 
-            % (g.dName2Thread))
+            % (dTmpDict))
     with g.lockThreadDict:
         for sThrX, thrX in g.dName2Thread.items():
             with g.lockPrint:
