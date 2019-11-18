@@ -868,7 +868,6 @@ if __name__ == "__main__":
         NTRC.ntracef(0, "MAIN", "allthreads|%s|" % (threading.enumerate()))
     
     sys.exit(nResult)
-    NTRC.ntracef(0, "MAIN", "oops, exit didn\'t")
 
 
 
