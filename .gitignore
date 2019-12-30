@@ -33,7 +33,9 @@ results
 searchspacedb
 
 # but please backup any valid data anywhere
-!GiantOutput*
+# (Why doesn't this work as I expect?)
+!**/GiantOutput*.txt
+!GiantOutput*.txt
 
 # orphans from old instructions
 *.big

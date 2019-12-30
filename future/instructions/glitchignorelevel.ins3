@@ -1,7 +1,0 @@
-# Glitch ignore level in percent
-
-nGlitchIgnorelevel
-Ignore Glitch Impact Below This Level (pct)
-value,label,selected
-5,5,0
-
