@@ -6,13 +6,19 @@ Q1
 Q2
 Q3
 Q4
-hl
 logs
 
 # data directories from simulations, way too big to check in
 hl
 hl2018*
 hl2019*
+# but please backup any valid data anywhere
+# (Why doesn't this work as I expect?)
+# (Because if I ignore the entire directory, I cannot then
+#   un-ignore a file beneath that directory.  Glitch in git.  
+#   Oh, crap.)
+!**/GiantOutput*.txt
+!GiantOutput*.txt
 
 # files to ignore everywhere
 *.zip
@@ -31,11 +37,6 @@ tmp
 # moldy, old results and instructions
 results
 searchspacedb
-
-# but please backup any valid data anywhere
-# (Why doesn't this work as I expect?)
-!**/GiantOutput*.txt
-!GiantOutput*.txt
 
 # orphans from old instructions
 *.big
