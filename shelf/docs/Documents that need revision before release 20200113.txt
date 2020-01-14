@@ -1,0 +1,47 @@
+Docs that need revised  20200113
+
+
+docs and how-tos:
+
+shelf/docs/StructureOfSimulationCode-00.doc
+shelf/docs/HowTo_RunSimulationsWithBroker-01.doc
+shelf/docs/HowTo_Install-02.doc
+shelf/docs/HowTo_ModelWithParameters.doc
+shelf/docs/HowTo_RunOnAWS.txt
+shelf/docs/HowTo_RunYourFirstSimulation.doc
+shelf/docs/ShockArrivals.xls
+shelf/docs/SimulationMethod-07.doc
+
+
+
+long comments in code:
+
+shelf/audit2.py
+shelf/broker2.py
+shelf/brokercli.py      # add --overbook option.
+shelf/---missing---     # write short user manual on db*.py utils.
+shelf/extractvalues2.py
+shelf/filelock.py       # maybe remove?
+shelf/lifetime.py       # check calculation hints
+shelf/listactor.py      # remove?
+shelf/main.py           # fersherr!
+shelf/newbroker3.py
+shelf/repair.py         # remove?
+shelf/resettabletimer.py    # remove!
+shelf/searchlib.py      # remove?
+shelf/searchdatabase.py # remove?
+shelf/searchspace.py    # pep8ify
+shelf/shock.py
+shelf/testtimer1.py     # remove?
+shelf/util.py
+
+shelf/AWS_shelf_installscript.sh
+shelf/howlong.sh        # whatsit?
+
+shelf/broker2commandlist.txt
+shelf/fix ubuntu 18.04 awsinstall problem.txt
+shelf/hl-extractinstructions.txt
+
+shelf/
+shelf/
+shelf/
