@@ -16,6 +16,8 @@ The simulations are necessarily schematic in that they don't attempt to model th
         beyond the reach of accident."  
         --Thomas Jefferson, Feb. 18, 1791
 
+Results of this project will be presented at the IDCC20 conference in February, 2020.  A draft of the paper is available on arXiv.org at https://arxiv.org/abs/1912.07908 .
+
 
 ## Overview of Process
 
@@ -23,15 +25,23 @@ The basic process of a simulation is as follows:
 
 - A client (library) forms a collection of some number of documents.  
 
-- The client asks a number of servers to store and maintain a copy of the entire collection.  
+- The client decides on a level of redundancy for the collection and asks a number of servers to store and maintain a copy of the entire collection.  
 
 - Documents age, and they may be damaged by storage errors in the servers.  (This simulation does not attempt to look at the error rates of individual disks.)
 
-- The client may audit the collection copies on the several servers.  If the client finds that a document on a server has been damaged, the client will replace that copy on the server with new data from another extant copy, if there is one.  
+- The client may audit the collection copies on the several servers.  If the client finds that a document on a server has been damaged, the client will repair that copy by replacing it on the server with new data from another extant copy, if there is one.  
+
+- If there is no other extant copy, then the document is considered to be permanently lost.
+
+- It is also possible for one or more servers to fail due to economic, environmental, or political shocks.  In this case, all the document copies in a failed server are unavailable.  To maintain the desired level of redundancy, the client must acquire and provision a new server with a copy of the collection.  
+
+- If no other server is available from which to provision a replacement server, then the entire collection is considered to be permanently lost. 
 
 - At the end of the simulation time, the client looks at all copies of all documents on all servers and determines if any documents have been permanently lost, and how many.  
 
-- All simulation runs were replicated at least twenty-one times with known random seeds.  Aggregate numbers given here are medians, trimeans, and midmeans of the several runs. 
+- All simulation runs were replicated at least twenty-one times with known random seeds.  Aggregate numbers given here are medians and midmeans of the several runs. 
+
+- The simulations keep summary logs for analysis of document damage and repair, and server failure and replacement.  Detailed logs of individual document activity are also available if desired.  
 
 ## Study Questions
 
@@ -41,24 +51,28 @@ This study attempts to provide some baseline data that can be used to assess the
 
 1. Loss rates with regularly scheduled auditing?  At regular intervals, examine the health of some or all documents on all servers.  If a document has been lost on one or more servers, effect repairs where possible.  Examine several intervals for auditing and various strategies for choosing the documents to be audited at each interval.  
 
-1. Loss rates with increases in server error rates?  At random intervals, errors of some magnitude and duration impact the error rate of a storage structure, possibly causing a higher loss rate on that server, or even a total loss on a server.  Examine ranges of frequencies, severities, and durations.  
+1. Loss rates with increases in storage error rates?  At random intervals, errors of some magnitude and duration impact the error rate of a storage structure, possibly causing a higher loss rate on that server, or even a total loss on a server.  Examine ranges of frequencies, severities, and durations.  
 
-1. Loss rates with correlated server failures?  At random intervals, major exogenous shocks increase the likelihood of total failure of one or more servers.  Examine ranges of frequency of shock and span of the impact of a shock.
+1. Loss rates as servers age?  Servers, as enterprises that offer a storage service, are not immortal.  They die, merge, change business, and so forth.  When they cease to function or lose their independence, they need to be replaced.  Examine ranges of server failure rates, redundancies, and auditing strategies.  
+
+1. Loss rates with correlated server failures?  At random intervals, major exogenous shocks increase the likelihood of total failure of one or more servers.  Examine ranges of frequency of shock and span of the impact of a shock, levels of redundancy, and auditing strategies.
 
 
 ## The Programs
 
 All the code to run the simulations, and the results of simulations, are published on github at github.com/MIT-Informatics/PreservationSimulation and are accessible to the public under the MIT license.  The code consists of several parts.
 
-- Python programs using Python v2.7 run the actual simulations and collect the result data.  The main program comprises twenty-four modules currently.  Six additional modules decode the instructions for a series of simulations and run computations in parallel to take advantage of multiple cores available in a computer.  The programs have been tested on 2-, 4-, 8-, and 32-core systems.  Additional modules are used to create databases of instructions to guide the simulations.  
+- Python programs using Python v2.7 and v3.5 run the actual simulations and collect the result data.  The main program comprises twenty-four modules currently.  Six additional modules decode the instructions for a series of simulations and run computations in parallel to take advantage of multiple cores available in a computer.  The programs have been tested on 2-, 4-, 8-, and 32-core systems.  Additional modules are used to create databases of instructions to guide the simulations.  
 
-- Bash scripts run many aspects of the processes.  All programs, the Python and the scripts, were developed using the Cygwin library on Windows 7, 8.1, and 10.  Some programs and scripts have been tested also on various versions of Linux and on Mac OS/X.  
+- Bash scripts run many aspects of the processes.  All programs, the Python and the scripts, were developed using the Cygwin library on Windows 7 and 10.  Some programs and scripts have been tested also on various versions of Linux and on Mac OS/X.  
 
 - An installation procedure (bash script) can install the simulation programs on an Ubuntu Linux server, intended primarily for use on Amazon's AWS EC2 web services.  This has been used to generate many of the results on large, multi-core machines.  Complete testing is still required for OS/X and other versions of Linux.  
 
 - Bash scripts and Python programs extract data from large log files, using regex-based instruction files to guide the extractions.  
 
-- Basic R scripts are used to organize the data into more easily accessible tables.  
+- Basic R scripts are used to organize the data into more easily accessible tables and graphs.  
+
+------------------------- needs work from here on ----------------------
 
 - Several programs and scripts create instruction sequences for the many cases to be examined.  There are two separate mechanisms to construct, extract, and execute instructions: one for simple cases only (up to and including total auditing); and one for all cases, including auditing and glitches and shocks of all kinds.  The complex mechanism uses a MongoDB database to store and query the instruction parameters.  
 
@@ -68,6 +82,8 @@ All the code to run the simulations, and the results of simulations, are publish
 The data results from the many simulation runs is also included in the github repository in a set of zip archives.  
 
 - The Python code of the project may be translated to Python version 3 after the bulk of the simulations have been completed.  
+
+- web ui using bottle web server, not pretty but functional
 
 
 ## Simulation Data Output

@@ -3,6 +3,8 @@ Docs that need revised  20200113
 
 docs and how-tos:
 
+./README.md
+
 shelf/docs/StructureOfSimulationCode-00.doc
 shelf/docs/HowTo_RunSimulationsWithBroker-01.doc
 shelf/docs/HowTo_Install-02.doc
