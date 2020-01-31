@@ -48,6 +48,9 @@ DONOTDO - move to SQLite instead of the current MongoDB.
 FIXME - BUG datacleanup sometimes inserts a second header line as line 3;
     the first two jobs have a race condition; have to add locking
     of the GiantOutput file, oops.
+    I think this is a race condition with two instances of datacleanup reading
+    the GiantOutput empty file at the hsame time before the first one is
+    able to write into the file.  
 DONE - add server default half-life, and any other vagrant parameters 
     you find lying about, to the hash for done-detection.  
 DONE - write searchdb status database based on json files.
@@ -69,6 +72,7 @@ DONE - need new utils: list databases, list collections in db.
 
 
 TODO: web interface to select instructions for broker run
+FIXME - Add selectoins for --overbook option in CLI.  
 FIXME - Add Javascript code in the main form to check for required fields
     and inconsistent choices, e.g., TOTAL audit of >1 segment, oops.
 DONE - Make almost all entries multiple-select.  Curently several are not.
@@ -251,6 +255,9 @@ DONE - slow down after extractvalues, too.
 
 
 TODO: broker.py
+FIXME - Add --overbook=int option so that one can demand more processes than
+    cores.  Seems to improve throughput a lot at 50-100% overbooking.  
+    But should I bother to add it to the output line?  Doubtful.  
 DONE - nDocuments added; nCoverage abandoned.  
     nDocuments was required for speed in shock cases: don't care if a 
     few docs get damaged; care only when entire server is lost.
