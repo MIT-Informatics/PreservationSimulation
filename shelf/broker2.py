@@ -9,7 +9,7 @@ from    NewTraceFac     import  NTRC,ntrace,ntracef
 import  sys
 from    catchex         import  catchex
 import  searchspace
-import  searchdatabase
+#import  searchdatabase
 import  searchdatabasemongo
 import  util
 import  brokercli
