@@ -1,6 +1,6 @@
 How to run on AWS
                 RBL 20170519
-                updated many times, most recently 20181114.
+                updated many times, most recently 20200215.
 
 
 START AWS EC2 MACHINE
@@ -121,7 +121,8 @@ You can then run the startup.sh script to load the web server.
 PREPARING FOR A RUN
 -------------------
 
-Remove any pulled directories of moldy, old results that you don't want.
+Remove any directories (pulled from github with the rest of the project) 
+of moldy, old results that you don't want.
 - below working/ remove any directories that have names you want to use
 - rm -rf working/shocks   for instance
 
@@ -179,8 +180,8 @@ Run broker for a single range of cases.
 - fill in the form and submit.
 - be sure to check ALL the fields, esp. server default life, numbers of copies,
    lifetimes, shock and glitch frequencies, impacts, durations.  
-- useful trick: set seeds=1 and TEST mode on to count the number of cases, then 
-    set seeds=21 or whatever and TEST mode off to do the actual run.  
+- useful trick: set seeds=1 and TEST mode ON to count the number of cases, then 
+    set seeds=21 or whatever and TEST mode OFF to do the actual run.  
 - Usually, you want to run detached, so check that box and supply a filename
     for the logfile to be produced.  You want to include the date and probably
     the purpose of the runs.  
@@ -209,7 +210,7 @@ Poweroff and/or stop the EC instance when you're done
 
 
 Things to note about the form:
-- The Setup page is accessible from the form.  That is the easy way
+- The Setup page is accessible from the main form.  That is the easy way
     to create (and clear) the output directory tree, and to 
     clear the "done" records from the run history database.  
 - Some of the fields are marked "Required" and they really are.  
