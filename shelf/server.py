@@ -10,7 +10,7 @@ import  util
 import  logoutput       as lg
 from    catchex         import  catchex
 from    shelf           import  CShelf
-import  resettabletimer as rt
+#import  resettabletimer as rt
 from    datetime        import  datetime
 
 
@@ -50,7 +50,7 @@ class CServer(object):
         self.fCurrentLifespan = self.fOriginalLifespan
                                     # Keep current lifespan value here so that 
                                     #  shock can find it and reduce it.
-        self.oTimer = rt.CResettableTimer(G.env, self.fCurrentLifespan, 
+        #self.oTimer = rt.CResettableTimer(G.env, self.fCurrentLifespan, 
                         fnTimerCall, fnTimerInt, (self, self.ID))
                                     # Max server lifetime, initially.
                                     # Context contains server instance and id.
@@ -208,7 +208,7 @@ class CServer(object):
         for sShelfID in self.mListShelves():
             cShelf = G.dID2Shelf[sShelfID]
             cShelf.mCorrFailHappensToMe()
-        self.oTimer.stop()
+        #self.oTimer.stop()
 
 
 # S e r v e r . m f G e t O r i g i n a l M y L i f e
@@ -501,7 +501,8 @@ def fnTimerInt(objTimer, xContext):
 # 201901016 RBL Record server's birthday when it is created.  
 #               Add routines to get and use birthday.
 #               Take account of birthday when assessing should server die.
-# 
+# 20200216  RBL Remove refs to resettabletimer, which does not work
+#                with simpy.  
 # 
 
 #END
