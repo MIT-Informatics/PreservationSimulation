@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # util.py
 # Dinky utility functions used all over the place.
-# Includes all time and size calculcations, sorting, etc.
+# Includes all time and size calculations, sorting, etc.
 
 import random
 from NewTraceFac import NTRC, ntrace, ntracef
@@ -54,7 +54,7 @@ def makennnorm(mean, sdev=0):
     return abs(random.gauss(mean, sdev) if sdev > 0 else mean)
 
 
-# Functions to random deviates for various event streams:
+# Functions to calc random deviates for various event streams:
 #  sector, server, glitch, and shock lifetimes.  
 
 
@@ -308,7 +308,7 @@ def fngSortDictItemsByValues(mydIn):
 # 20171220  RBL Correct three, count 'em, three, errors in little imported 
 #                functions.
 #               Add function to sort dictionary by keys.
-# 
+# 20200220  RBL Correct a few typos.
 # 
 
 

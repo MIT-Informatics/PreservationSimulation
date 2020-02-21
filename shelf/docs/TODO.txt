@@ -14,27 +14,26 @@ DONE - shelf/docs/SimulationMethod-07.doc
 
 TODO: fix code comments for release
 FIXME - shelf/audit2.py
-FIXME - shelf/broker2.py        # integrated with newbroker3.  
-FIXME - shelf/brokercli.py      # add --overbook option.  
-FIXME - shelf/---missing---     # write short user manual on db*.py utils.  
+DONE - shelf/broker2.py        # integrated with newbroker3.  
+FIXME - shelf/brokercli.py      # TODO: add --overbook option.  
 DONE - shelf/extractvalues2.py
 REMOVED - shelf/filelock.py       # maybe remove?  never integrated.  
-FIXME - shelf/lifetime.py       # check calculation hints.  
-FIXME - shelf/listactor.py      # remove?  no longer used.  
+DONE - shelf/lifetime.py       # check calculation hints.  
+REMOVED - shelf/listactor.py      # remove?  no longer used.  
 FIXME - shelf/main.py           # fersherr!  
-FIXME - shelf/newbroker3.py
-FIXME - shelf/repair.py         # remove?  empty.  
+DONE - shelf/newbroker3.py
+REMOVED - shelf/repair.py         # remove?  empty.  
 DONE - shelf/resettabletimer.py    # remove!  doesn't work with simpy.  
-FIXME - shelf/searchlib.py      # remove?  obsolete, mongo-based.  
+REMOVED - shelf/searchlib.py      # remove?  obsolete, mongo-based.  
 REMOVED - shelf/searchdatabase.py # remove?  obsolete, mongo-based.  
 FIXME - shelf/searchspace.py    # pep8ify.  
 DONE - shelf/server.py         # remove refs to resettabletimer.
 FIXME - shelf/shock.py
 DONE - shelf/testtimer1.py     # remove?  timer doesn't work.  
-FIXME - shelf/util.py
+DONE - shelf/util.py
 FIXME - shelf/AWS_shelf_installscript.sh    # update to Ubuntu 18.04 LTS Server?
 FIXME - shelf/howlong.sh        # whatsit?  
-FIXME - shelf/broker2commandlist.txt
+DONE - shelf/broker2commandlist.txt
 FIXME - shelf/fix ubuntu 18.04 awsinstall problem.txt
 FIXME - shelf/hl-extractinstructions.txt
 FIXME - shelf/pretestchecklist.sh   # fix needfile list.  

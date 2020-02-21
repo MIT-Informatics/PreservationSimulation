@@ -31,6 +31,9 @@ tInstruction = collections.namedtuple("tInstruction"
 # class   C G   f o r   g l o b a l   d a t a 
 class CG(object):
     ''' Global data.
+        Almost all the data here is write-once, so effectively readonly.  
+         There are a couple counters that are exceptions to that rule, 
+         but they are only for reporting status from the main thread.  
     '''
     # Options that should be passed thru to main.py.
     # All the interesting options should be None here, so that 
@@ -132,7 +135,7 @@ class CG(object):
                     ).split()
     # Special fake CPU-bound commands to test for proper parallel execution.  
     # These take about a minute (75s) and a third of a minute (22s) on an
-    #  Intel 3Gi7 CPU in my Dell Optiplex 7010 (2016-08).  Your mileage
+    #  Intel 3Gi7 3770 CPU in my Dell Optiplex 7010 (2016-08).  Your mileage
     #  may differ.  
     # Make sure we have the right version of bash and Python.
     sStartTime = 'date +%Y%m%d_%H%M%S.%3N'
@@ -667,7 +670,7 @@ foreach single-line file in holding dir
 #                Puzzle: had to move the start instructions for the 
 #                startall and endall threads here after the first 
 #                instruction is enqueued.  Why?
-# 
+# 20200220  RBL Clarify a few comments.
 # 
 
 #END

@@ -4,8 +4,8 @@
 #  instruction chosen from the database.
 # Values will be substituted into these commands from the instructions 
 #  (so the field names better match precisely)
-#  and then the sequence will be packaged into a .cmds file 
-#  and a process spawned to execute the commands when a core is free.  
+#  and then the sequence will be packaged into a list of command lines,
+#  and a process will be spawned to execute the commands when a core is free.  
 
 # These commands must be SINGLE LINES.  No backslash-return foolishness.
 # As usual, blank lines and comment lines will be removed from the sequence.
@@ -37,6 +37,7 @@ python3 -c 'import sys; print(sys.version); print(sys.version_info)'
 
 # Turn off any tracing that might have been going on in the broker.
 #  This could poison any python programs by exploding their log files.  
+# Beware this ridiculously long command line with its twenty-plus substitutions.
 (export TRACE_LEVEL=0; export TRACE_PRODUCTION=YES; unset TRACE_FACIL; unset TRACE_TARGET; unset DEBUG; python2 main.py {sFamilyDir} {sSpecificDir} {nSimLength} {nRandomseed} --ncopies={nCopies} --lifek={nLifem}000 --audit={nAuditFreq} --auditsegments={nAuditSegments} --audittype={sAuditType} --glitchfreq={nGlitchFreq} --glitchimpact={nGlitchImpact} --glitchdecay={nGlitchDecay} --glitchmaxlife={nGlitchMaxlife} --glitchspan={nGlitchSpan} --serverdefaultlife={nServerDefaultLife} --shockfreq={nShockFreq} --shockimpact={nShockImpact} --shockmaxlife={nShockMaxlife} --shockspan={nShockSpan} --shelfsize={nShelfSize} --ndocuments={nDocuments} --smalldoc={nDocSize} --pctsmall=100 {sShortLogOption} --mongoid=\'{_id}\'  >  {sFamilyDir}/{sSpecificDir}/log/{sShelfLogFileName}.log  2>&1)
 
 # Slow things down here to avoid maybe looking at the log file
@@ -91,6 +92,7 @@ date +%Y%m%d_%H%M%S.%3N
 #                before it is complete: length shows as short (36K vs 56K) 
 #                and fields missing.
 # 20190123  RBL Increase the waiting time: 10 seconds is not enough!
+# 20200220  RBL Clean up comments a little.  
 # 
 
 #END
