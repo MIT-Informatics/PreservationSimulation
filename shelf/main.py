@@ -11,7 +11,12 @@
 Blank page version of bookshelf preservation of documents.
 Vague beginning of document preservation simulation.  
 
-This really is an awful mess, and I apologize for that.  
+This really is an awful mess, and I apologize for that.  It started out
+ looking simple, and then grew beyond all expectations.  At least some
+ of the code has been exported to other modules so that this one is not
+ crazy long anymore.  
+
+Beware that some of the descriptions here may be, um, out of date.  
 
 The plan: 
 
@@ -68,32 +73,75 @@ create clients
 run
 
 Recent changes in terminology:
-- A Server has a number of Sites where documents may be stored.  A Server may become unavailable due to failure of the institution, e.g., budget cut to zero.  
-- A Site is a physical location.  A Site may become unavailable due to a physical catastrophe, such as fire, flood, earthquake, a plane falling on it, war, terrorism, etc.  Sites NYI.  
+- A Server has a number of Sites where documents may be stored.  
+A Server may become unavailable due to failure of the institution, 
+e.g., budget cut to zero.  
+- A Site is a physical location.  A Site may become unavailable due to 
+a physical catastrophe, such as fire, flood, earthquake, a plane falling 
+on it, war, terrorism, etc.  Sites NYI.  
 - A Site contains a number of Shelves on which documents are stored.  
-- Shelves vary in their reliability characteristics; some are more reliable than others, and therefore more expensive to maintain and occupy.  (A Shelf is probably roughly equivalent to a RAID storage system including all its servers, controllers, and disks.  I prefer not to use a storage term such as "array" because of the implication of underlying technology.  "Shelf" is a fairly neutral term for a place where you put books to store them.)  
-- A Shelf may contain a number of redundant components to enhance its reliability.  Generally, failure of a redundant component is handled internally by the Shelf and not reported to the outside, though internal repair of a redundant component may place the Shelf at a higher risk of total failure for a limited time.  A Shelf may become unavailable due to failure of a non-redundant component or simultaneous failure of a fatal number of redundant components.  
+- Shelves vary in their reliability characteristics; some are more 
+reliable than others, and therefore more expensive to maintain and occupy.  
+(A Shelf is probably roughly equivalent to a RAID storage system 
+including all its servers, controllers, and disks.  I prefer not to use 
+a storage term such as "array" because of the implication of underlying 
+technology.  "Shelf" is a fairly neutral term for a place where you put books to 
+store them.)  
+- A Shelf may contain a number of redundant components to enhance its 
+reliability.  Generally, failure of a redundant component is handled 
+internally by the Shelf and not reported to the outside, though internal 
+repair of a redundant component may place the Shelf at a higher risk of 
+total failure for a limited time.  A Shelf may become unavailable due to 
+failure of a non-redundant component or simultaneous failure of a fatal 
+number of redundant components.  
 - A Shelf stores a set of documents.  
-- A Document is a blob of data.  It has a size, a value, and a sensitivity to corruption.  Some documents are more sensitive to small corruptions than others, e.g., highly compressed or encrypted documents may become unavailable due to errors in small regions of data.  
-- A Document may be encrypted or licensed, and therefore may become unavailable due to the loss of the encryption key or license key, generally a much smaller piece of data that may be stored elsewhere.  
+- A Document is a blob of data.  It has a size, a value, and a sensitivity 
+to corruption.  Some documents are more sensitive to small corruptions than 
+others, e.g., highly compressed or encrypted documents may become unavailable 
+due to errors in small regions of data.  
+- A Document may be encrypted or licensed, and therefore may become 
+unavailable due to the loss of the encryption key or license key, 
+generally a much smaller piece of data that may be stored elsewhere.  
 
 Aging processes and their consequences:
-- Shelf: small hidden failure.  Affects part(s) of one or more documents depending on error size and doc size.  Rate: cover range from manufacturers' MTBF dodwn one order of magnitude.  
-- Shelf: device failure.  Does not impact documents, but renders the shelf vulnerable to total failure if another happens before it is repaired.  Rate: cover range from manufacturers' device MTBF numbers down an order of magnitude. 
-- Shelf: total failure.  The entire shelf of documents is lost.  Rate: range based on server and controller MTBFs.  
-- Site: temporary outage, e.g., due to power failure, major commnication outage, or similar transient condition.  Makes all Shelves in the site unavailable for some time.  Rate: range based on power and weather incident history.  
-- Site: total permanent failure, due to physical loss.  Makes all Shelves in the site unavailable permanently.  
+- Shelf: small hidden failure.  Affects part(s) of one or more documents 
+depending on error size and doc size.  Rate: cover range from manufacturers' 
+MTBF dodwn one order of magnitude.  
+- Shelf: device failure.  Does not impact documents, but renders the shelf 
+vulnerable to total failure if another happens before it is repaired.  Rate: 
+cover range from manufacturers' device MTBF numbers down an order of magnitude. 
+- Shelf: total failure.  The entire shelf of documents is lost.  Rate: range 
+based on server and controller MTBFs.  
+- Site: temporary outage, e.g., due to power failure, major commnication 
+outage, or similar transient condition.  Makes all Shelves in the site 
+unavailable for some time.  Rate: range based on power and weather incident 
+history.  
+- Site: total permanent failure, due to physical loss.  Makes all Shelves 
+in the site unavailable permanently.  
 - Server: total permanent loss.  Makes all sites unavailable permanently.  
 
 Implemented in the short term:
 - One or more clients.  A client has one or more collections.
-- A collection has a name, a value, and a target size.  The actual size is a random close to the target size.  Some number of documents get created, all with the stated value, and placed in the collection.  
-- One or more servers.  A server has a quality rating and a shelf size.  The quality rating determines the value of documents that get placed in it.  The shelf size is a storage unit that can fail completely at some rate.  
+- A collection has a name, a value, and a target size.  The actual size is 
+a random close to the target size.  Some number of documents get created, all 
+with the stated value, and placed in the collection.  
+- One or more servers.  A server has a quality rating and a shelf size.  The 
+quality rating determines the value of documents that get placed in it.  The 
+shelf size is a storage unit that can fail completely at some rate.  
 - Currently servers have no size limit.
-- The several servers can represent either (a) one institution with a number of sites with different quality (failure) characteristics, or (b) a number of institutions with one site each.  The choice of interpretations depends on whether one is modelling media quality risks, geographic risks, or institutional risks.  
-- Several quality levels, which specify the MTTF of a sector and the MTTF of an entire shelf.  (Later this will include values for altering the failure rates of nearby sectors and shelves.)  
-- Distribution policy?  Nothing fancy yet.  A client will send distributions only to servers (sites) with adequate quality ratings.  Currently a collection is sent to one site.
-- Most early experiments will probably be done with one client, one collection, stored at one site with one quality rating.
+- The several servers can represent either (a) one institution with a number 
+of sites with different quality (failure) characteristics, or (b) a number of 
+institutions with one site each.  The choice of interpretations depends on 
+whether one is modelling media quality risks, geographic risks, or 
+institutional risks.  
+- Several quality levels, which specify the MTTF of a sector and the MTTF of 
+an entire shelf.  (Later this will include values for altering the failure rates 
+of nearby sectors and shelves.)  
+- Distribution policy?  Nothing fancy yet.  A client will send distributions only 
+to servers (sites) with adequate quality ratings.  Currently a collection is 
+sent to one site.
+- Most early experiments will probably be done with one client, one collection, 
+stored at one site with one quality rating.
 - Storing a collection in multiple locations, repairing, and auditing come later.
 '''
 
@@ -370,7 +418,8 @@ if __name__ == "__main__":
 # 20180826  RBL Fix printing of CPU time to %8.3f.
 # 20190121  RBL Flush stdout and stderr before exiting; might help with 
 #                extract starting too early on incomplete log files.
-# 
+# 20200221  RBL Clean up a few comments.  And add even more apologies for 
+#                the horrible mess that this module is.  
 # 
 
 # END

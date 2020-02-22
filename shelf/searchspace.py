@@ -41,12 +41,14 @@ def fndReadAllInsFiles(mysDir, mysTyp):
         raise ValueError("No instruction files for type|%s|" % (mysTyp))
     return dInstructions
 
+
 # f n t R e a d O n e F i l e 
 @ntracef("SRCH")
 def fntReadOneFile(mysFilespec):
     '''
     Read one instruction file into a list with separate header name.
     All the values in the list are integer-ized where possible.  
+    
     WARNING: the single-column instruction files and this routine are
      OBSOLETE.  Fatal error if called.  
     '''
@@ -59,6 +61,7 @@ def fntReadOneFile(mysFilespec):
     sName = lLines.pop(0)
     lValueList = [util.fnIntPlease(line) for line in lLines]
     return (sName, lValueList)
+
 
 # f n d R e a d A l l I n s F i l e s F o r G U I 
 @ntracef("SRCH")
@@ -79,6 +82,7 @@ def fndReadAllInsFilesForGUI(mysDir, mysTyp):
     if len([k for k in dInstructions.keys()]) == 0:
         raise ValueError("No instruction files for type|%s|" % (mysTyp))
     return dInstructions
+
 
 # f n t R e a d O n e F i l e F o r G U I 
 @ntracef("SRCH")
@@ -107,6 +111,7 @@ def fntReadOneFileForGUI(mysFilespec):
         ldValues.append(dValue)
     return (sName, sHeading, ldValues)
 
+
 # f n t P r o c e s s A l l U s e r R u l e s 
 @ntracef("SRCH")
 def fntProcessAllUserRules(mydUserRuleDict, mysInstructionDict):
@@ -118,6 +123,7 @@ def fntProcessAllUserRules(mydUserRuleDict, mysInstructionDict):
     for (sName, xRule) in mydUserRuleDict.items():
         fndProcessOneUserRule(dWorkingInstructionDict, sName, xRule)
     return (dWorkingInstructionDict, dOldInstructionDict)
+
 
 # f n d P r o c e s s O n e U s e r R u l e 
 @ntracef("SRCH")
@@ -181,6 +187,7 @@ def fndProcessOneUserRule(mydInstructionDict, mysName, myxRule):
     mydInstructionDict[mysName] = lNewVals
     return mydInstructionDict
 
+
 # f n d F i l t e r R e s u l t s 
 @ntracef("SRCH")
 def fndFilterResults(mydOldInstructions):
@@ -229,6 +236,7 @@ def fndFilterResults(mydOldInstructions):
     """
     return dInstructions
 
+
 # f n v T e s t R e s u l t s 
 @ntracef("SRCH")
 def fnvTestResults(mydInstructions, mydOldInstructions):
@@ -244,6 +252,7 @@ def fnvTestResults(mydInstructions, mydOldInstructions):
                              % (sKey, mydOldInstructions[sKey], 
                                 ))
 
+
 # f n l g C o m b i n e R e s u l t s 
 @ntracef("SRCH")
 def fndgCombineResults(mydInstructions):
@@ -256,7 +265,9 @@ def fndgCombineResults(mydInstructions):
         dInstruction = dict(zip(lKeyNames, lInstruction)) 
         # Add unique id, as Mongo does, so we can find jobs already done.
 ###        dInstruction["_id"] = hashlib.sha1(str(dInstruction)).hexdigest()
-        dInstruction["_id"] = hashlib.sha1(str(dInstruction).encode('ascii')).hexdigest()
+        dInstruction["_id"] = (
+            hashlib.sha1(str(dInstruction).encode('ascii')).hexdigest()
+                                )
         NTRC.ntracef(3, "SRCH", "proc CombineResults:dInstruction|%s|" 
             % (dInstruction))
         yield dInstruction
@@ -276,12 +287,14 @@ def fndgCombineResults(mydInstructions):
     then zip the names and values together into a dictionary.
     '''
 
+
 # f n l G e t S e a r c h S p a c e N a m e s 
 @ntracef("SRCH")
 def fnlGetSearchSpaceNames(mydInstructions):
     lKeyNames = [k for k in mydInstructions.keys()]
     lKeyNames = [k for k in mydInstructions.keys()]
     return lKeyNames
+
 
 # f n l g G e t S e a r c h S p a c e 
 @ntracef("SRCH")
@@ -298,7 +311,10 @@ def fndgGetSearchSpace(mysDir, mysTyp, mydUserRuleDict):
         % (dFilteredDict))
     return fndgCombineResults(dFilteredDict)
 
+
 '''
+original pseudocode:
+
 cross product the dimensions and yield out
 use itertools.product()
 
@@ -394,7 +410,8 @@ Acceptable types of things to specify, just examples.  Be careful with quotes.
 #                the number of auditing segments requested.  This may increase
 #                nDocuments for the runs, something we have not done before.  
 # 20190121  RBL Disable that last check for nDocuments.  Find a better way.  
-# 
+# 20200221  RBL Clean up a few comments.  PEP8-ify a little.  
+#
 # 
 
 #END

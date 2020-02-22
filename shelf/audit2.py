@@ -23,7 +23,7 @@ from    shock           import  CShock
 class CAudit2(object):
     '''\
     Procedures for auditing collections kept on 
-    remote servers.  Clients will create one instance
+    remote servers.  The client will create one instance
     of this class for each collection (across all servers).
     Collection audits run asynchronously.  
     '''
@@ -258,7 +258,7 @@ class CAudit2(object):
             '''NOTE: Phase 2 here can be factored out of this function entirely
                 because it does not yield or otherwise molest the clock.
                 But refactoring must be done carefully because it consumes
-                and supplies data from phases 1 and 3.  
+                and supplies data from/for phases 1 and 3.  
             '''
 
             # P h a s e  2: Record severity (majority/minority/permanent) of copy losses.
@@ -1038,7 +1038,7 @@ TODO (x=done):
 #               Also, consider factoring out Phase 2 of AuditSegment.
 # 20161231  RBL Call CShock routine to check for dead servers before each 
 #                segment of audit.
-# 20160102  RBL PIP8-ify most of the trace and log lines. 
+# 20160102  RBL PEP8-ify most of the trace and log lines. 
 # 20171101  RBL Clarify comments about uniform random auditing: the several
 #                segments are sampled WITH replacement across segments, but
 #                each segment is sampled WITHOUT replacement so that the
@@ -1047,7 +1047,8 @@ TODO (x=done):
 #                from quarter to quarter documents may be sampled more than
 #                one time or zero times, depending on random choice.  
 # 20180516  RBL Update to use only ntrace, ntracef, NTRC.
-# 
+# 20200221  RBL Fix a very few comments.
+#
 # 
 
 #END
