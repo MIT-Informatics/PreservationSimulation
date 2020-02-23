@@ -51,7 +51,7 @@ class CServer(object):
                                     # Keep current lifespan value here so that 
                                     #  shock can find it and reduce it.
         #self.oTimer = rt.CResettableTimer(G.env, self.fCurrentLifespan, 
-                        fnTimerCall, fnTimerInt, (self, self.ID))
+                                    #  fnTimerCall, fnTimerInt, (self, self.ID))
                                     # Max server lifetime, initially.
                                     # Context contains server instance and id.
                                     # TODO: the param is a halflife; need to 

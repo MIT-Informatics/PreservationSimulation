@@ -65,7 +65,7 @@ done
 
 # Do we have the db manipulation files?
 sTargetDir="$sShelfDir"
-for needfile in dbclearcollection.py dbdeletedatabase.py dbdumpcollection.py dbdumpdonekeys.py dblistcollections.py dblistdatabases.py mongolib.py searchspace.py searchdatabase.py searchdatabasemongo.py NewTraceFac.py 
+for needfile in dbclearcollection.py dbdeletedatabase.py dbdumpcollection.py dbdumpdonekeys.py dblistcollections.py dblistdatabases.py mongolib.py searchspace.py searchdatabasemongo.py NewTraceFac.py 
 do
     if [ ! -f "$sTargetDir/$needfile" ]
     then
@@ -89,7 +89,7 @@ done
 
 # Do we have all the simulation files?
 sTargetDir="$sShelfDir"
-for needfile in audit2.py brokercli.py catchex.py client2.py cliparse.py collection.py command.py datacleanup.py doccopy.py document.py dumpparams.py dumpuse.py getcliargs.py getparams.py globaldata.py logoutput.py main.py NewTraceFac.py logoutput.py readin.py repair.py server.py shelf.py shock.py util.py 
+for needfile in audit2.py brokercli.py catchex.py client2.py cliparse.py collection.py command.py datacleanup.py doccopy.py document.py dumpparams.py dumpuse.py getcliargs.py getparams.py globaldata.py logoutput.py main.py NewTraceFac.py logoutput.py readin.py server.py shelf.py shock.py util.py 
 do
     if [ ! -f "$sTargetDir/$needfile" ]
     then
