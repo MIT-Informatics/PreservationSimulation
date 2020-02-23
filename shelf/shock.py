@@ -5,7 +5,6 @@
 
 from    NewTraceFac     import  NTRC,ntracef,ntrace
 import  simpy
-import  resettabletimer
 from    globaldata      import  G
 import  util
 import  logoutput       as lg
