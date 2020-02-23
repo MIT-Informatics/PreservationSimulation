@@ -6,7 +6,6 @@ from NewTraceFac import NTRC,ntrace,ntracef
 import itertools
 from globaldata import G
 from audit2 import fAudit_Select
-from repair import CRepair
 import util
 import math
 import logoutput as lg

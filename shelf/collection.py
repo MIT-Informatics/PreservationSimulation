@@ -7,7 +7,6 @@ import  itertools
 from    globaldata      import  G
 from    server          import  CServer
 from    audit2          import  fAudit_Select
-from    repair          import  CRepair
 import  util
 import  math
 import  logoutput       as      lg
