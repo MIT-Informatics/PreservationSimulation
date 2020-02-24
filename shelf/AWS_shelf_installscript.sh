@@ -75,6 +75,9 @@
 # 20181127  RBL Turn on millisecond trace printing for broker2.  
 # 20181218  RBL Correct the post-install tests for new ndocuments arg and 
 #                different randomseeds files.  
+# 20200223  RBL Add forgotten --yes to apt-get install of virtualenv.  
+#               Delete Mongo database before broker tests.  
+# 
 # 
 
 if [ -n "$1" -a "$1" != "CLEAROLD" -a "$1" != "TESTING" ]
@@ -112,7 +115,7 @@ sudo apt-get update
 sudo apt-get --yes install build-essential python-dev
 sudo apt-get --yes install python-pip
 sudo pip install --upgrade pip
-sudo apt-get install python-virtualenv
+sudo apt-get --yes install python-virtualenv
 # Restrict python packages to this user, to operate with lower privilege.
 virtualenv shelfenv
 . shelfenv/bin/activate
@@ -189,6 +192,7 @@ then
 fi
 
 # B R O K E R   T E S T   1 
+python dbdeletedatabase.py installtest 
 # Broker should find exactly one test case to run.
 python3 broker2.py installtest done --familydir=../hl --specificdir=a0 \
     --serverdefaultlife=0 --glitchfreq=0 --shockfreq=0 \
@@ -208,6 +212,7 @@ else
 fi
 
 # B R O K E R   T E S T   2 
+python dbdeletedatabase.py installtest 
 # And fifteen cases here.
 python3 broker2.py installtest done --familydir=../hl --specificdir=a0 \
     --serverdefaultlife=0 --glitchfreq=0 \
@@ -232,7 +237,7 @@ echo "**************************************** Test broker result"
 sudo rm --force --recursive ../hl
 bash setupfamilydir.sh ../hl installtest
 bash pretestchecklist.sh ../hl installtest
-python dbclearcollection.py installtest done
+python dbdeletedatabase.py installtest 
 # Juggle the randomseeds file to make sure we get the right first seed.
 # Many runs will be done with much larger seeds file, like 10K or 100K seeds.
 mv randomseeds.txt randomseeds.txt_TEMPASIDE
@@ -279,7 +284,7 @@ else
 fi
 
 # Clean out Mongo databases.
-python dbclearcollection.py installtest done
+python dbdeletedatabase.py installtest 
 # And set up new working directories for these runs.  
 bash setupfamilydir.sh ../hl testing
 python3 broker2.py installtest done --familydir=../hl \
