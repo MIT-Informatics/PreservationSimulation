@@ -77,6 +77,7 @@
 #                different randomseeds files.  
 # 20200223  RBL Add forgotten --yes to apt-get install of virtualenv.  
 #               Delete Mongo database before broker tests.  
+#               Install python3-pip explicitly for older Ubuntu versions.
 # 
 # 
 
@@ -115,6 +116,7 @@ sudo apt-get update
 sudo apt-get --yes install build-essential python-dev
 sudo apt-get --yes install python-pip
 sudo pip install --upgrade pip
+sudo apt-get --yes install python3-pip
 sudo apt-get --yes install python-virtualenv
 # Restrict python packages to this user, to operate with lower privilege.
 virtualenv shelfenv
