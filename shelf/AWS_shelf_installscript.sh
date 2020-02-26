@@ -76,8 +76,9 @@
 # 20181218  RBL Correct the post-install tests for new ndocuments arg and 
 #                different randomseeds files.  
 # 20200223  RBL Add forgotten --yes to apt-get install of virtualenv.  
-#               Delete Mongo database before broker tests.  
 #               Install python3-pip explicitly for older Ubuntu versions.
+# 20200225  RBL Delete Mongo database collections before broker tests.  
+#               Some leftovers got in the way of datacleanup.  
 # 
 # 
 
@@ -194,7 +195,8 @@ then
 fi
 
 # B R O K E R   T E S T   1 
-python dbdeletedatabase.py installtest 
+python2 dbclearcollection.py brokeradmin installtest 
+python2 dbclearcollection.py brokeradmin done
 # Broker should find exactly one test case to run.
 python3 broker2.py installtest done --familydir=../hl --specificdir=a0 \
     --serverdefaultlife=0 --glitchfreq=0 --shockfreq=0 \
@@ -214,7 +216,8 @@ else
 fi
 
 # B R O K E R   T E S T   2 
-python dbdeletedatabase.py installtest 
+python2 dbclearcollection.py brokeradmin installtest 
+python2 dbclearcollection.py brokeradmin done
 # And fifteen cases here.
 python3 broker2.py installtest done --familydir=../hl --specificdir=a0 \
     --serverdefaultlife=0 --glitchfreq=0 \
@@ -239,7 +242,8 @@ echo "**************************************** Test broker result"
 sudo rm --force --recursive ../hl
 bash setupfamilydir.sh ../hl installtest
 bash pretestchecklist.sh ../hl installtest
-python dbdeletedatabase.py installtest 
+python2 dbclearcollection.py brokeradmin installtest 
+python2 dbclearcollection.py brokeradmin done
 # Juggle the randomseeds file to make sure we get the right first seed.
 # Many runs will be done with much larger seeds file, like 10K or 100K seeds.
 mv randomseeds.txt randomseeds.txt_TEMPASIDE

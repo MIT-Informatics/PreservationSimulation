@@ -1,6 +1,6 @@
 #!/usr/bin/python
 '''
-dbclearcollection.py
+dbdumpdonekeys.py
 
 List all the items in a collection of a database.  
 
@@ -105,6 +105,8 @@ if __name__ == "__main__":
 # Edit history:
 # 20170128  RBL Original version.
 # 20181218  RBL Add sShockImpact and sDoneId to the output line.  
+# 20200225  RBL Change incredibly misleading module name and other
+#                leftovers in the comments.  Yikes.  
 # 
 # 
 
