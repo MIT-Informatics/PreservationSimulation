@@ -117,7 +117,9 @@ sudo apt-get update
 sudo apt-get --yes install build-essential python-dev
 sudo apt-get --yes install python-pip
 sudo pip install --upgrade pip
+sudo apt-get --yes install build-essential python3-dev
 sudo apt-get --yes install python3-pip
+sudo pip3 install --upgrade pip3
 sudo apt-get --yes install python-virtualenv
 # Restrict python packages to this user, to operate with lower privilege.
 virtualenv shelfenv
