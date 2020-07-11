@@ -79,6 +79,33 @@ def fntDoOneLine(mysLine):
         , ltext=lOut))
 
 
+# ==================== multiprocessing: DoOneList ====================
+# f n t D o O n e L i s t 
+@ntracef("DO1T")
+def fnlsDoOneList(mylLines):
+    # Process all command lines of the instruction list and collect results.  
+    lResults = []               # list of strings
+    for nLine, sLine in enumerate(mylLines):
+        if fnbDoNotIgnoreLine(sLine):
+            # Genuine line; execute and collect answer line(s).  
+            tAnswer = fntDoOneLine(sLine)
+            (nRtn, nErr, lResult) = (tAnswer.callstatus
+                                    , tAnswer.cmdstatus
+                                    , tAnswer.ltext)
+            lResults.extend(lResult)
+            NTRC.ntracef(4, "DO1", "proc DoOneList line|%s| "
+                        "lResult|%s|" 
+                        % (nLine, lResult))
+        else:
+            # Comment or blank line; just append to results.
+            lResults.extend([("-"*len(fnsGetTimestamp()))
+                            , (fnsGetTimestamp() + "  " + sLine)])
+            NTRC.ntracef(4, "DO1", "proc DoOneCase line|%s| "
+                        "comment|%s|" 
+                        % (nLine, sLine))
+    return lResults
+
+
 # ==================== multiprocessing: DoOneCase ====================
 # f n t D o O n e C a s e 
 @ntracef("DO1")
@@ -98,7 +125,6 @@ def fntDoOneCase(mytInstruction):
     sWhoami = mp.current_process().name
     NTRC.ntracef(3, "DO1", "proc procname|%s|" % (sWhoami))
     nProc = fnsGetProcessNumber(sWhoami)
-    lResults = []                   # list of strings
 
     # Unpack instruction command list and other items.
     lInstruction = mytInstruction.cmdlist
@@ -106,7 +132,12 @@ def fntDoOneCase(mytInstruction):
                                 , mytInstruction.logname)
     qToUse = mytInstruction.qoutput
     
+    
+    
     # Process all command lines of the instruction list and collect results.  
+    lResults = fnlsDoOneList(lInstruction)
+
+    """ 
     for nLine, sLine in enumerate(lInstruction):
         if fnbDoNotIgnoreLine(sLine):
             # Genuine line; execute and collect answer line(s).  
@@ -125,6 +156,8 @@ def fntDoOneCase(mytInstruction):
             NTRC.ntracef(4, "DO1", "proc DoOneCase case|%s| line|%s| "
                         "comment|%s|" 
                         % (nProc, nLine, sLine))
+    """
+    
     fnWriteLogFile((lResults), sLogfileDir, sLogfileName)
 
     lPrefix = [("BEGIN results from " + sWhoami)]

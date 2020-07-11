@@ -21,7 +21,6 @@ from NewTraceFac import NTRC, ntrace, ntracef
 from t15docase import fntDoOneCase, tLinesOut, tInstruction
 
 
-
 def printnow(sWhen):
     print(sWhen, time.process_time_ns(), time.perf_counter(), time.time())
     pass
@@ -35,10 +34,7 @@ def after():
 def printdiff(beforetime, aftertime):
     pass
     diff = aftertime - beforetime
-    print("diff = %.6f" % diff)
-
-
-
+    print("diff time = %.3f" % diff)
 
 
 # f n b D o N o t I g n o r e L i n e 
@@ -49,6 +45,19 @@ def fnbDoNotIgnoreLine(mysLine):
     '''
     # Ignore comment and blank lines, but take all others.
     return (not re.match("^\s*#", mysLine)) and (not re.match("^\s*$", mysLine))
+
+
+# A few lines just to see if the process works.  
+lLines = ["date +%Y%m%d_%H%M%S.%3N"
+        , "# comment 1"
+        , "pwd"
+        , "ls | head -3"
+        , ""
+        , "# comment 2"
+        , "cat /proc/version"
+        , "#ps | grep python | grep -v grep | head -3"
+        , "date +%Y%m%d_%H%M%S.%3N"
+        ]
 
 
 @ntrace
@@ -63,27 +72,18 @@ def main():
     if nArgs > 3: nWaitMsec = int(sys.argv[3]) if sys.argv[3] else nWaitMsec
     nWaitHowMany = 100
     if nArgs > 4: nWaitHowMany = int(sys.argv[4]) if sys.argv[4] else nWaitHowMany
-    NTRC.ntrace(3, "proc params ncases|%s| nparallel|%s| "
+    NTRC.ntrace(0, "proc params ncases|%s| nparallel|%s| "
                     "nwaitmsec|%s| nwaitmany|%s|" 
                 % (nCases, nParallel, nWaitMsec, nWaitHowMany))
 
-    lLines = [""
-            , "date +%Y%m%d_%H%M%S.%3N"
-            , "# comment 1"
-            , "pwd"
-            , "ls | head -3"
-            , ""
-            , "# comment 2"
-            , "cat /proc/version"
-            , "#ps | grep python | grep -v grep | head -3"
-            , "date +%Y%m%d_%H%M%S.%3N"
-            ]
-
-    # Manager to own queue.
+    # Need a Multiprocessing Manager to own the output queue.
     multiMgr = mp.Manager()
     qOut = multiMgr.Queue()
     
     # Ah, this won't work because pool.map cannot pickle a generator, oops.  
+    # This means we have to render the entire instruction sequence into a list,
+    #  which is sort of okay for a few things, but not for thousands at a time.
+    #  Grumble.  Find another way without overly complicating the code.  
     # Never mind.
     def gentInstruction(myllsInstructions):
         ''' cheap generator to paste argument list together for callee'''
@@ -93,35 +93,37 @@ def main():
                     , logdir="."
                     , logname=f't15foo{(nCaseNumber+1):03d}.log')
             yield tPacket
-
-    # MAP to worker pool.
+    # End of nevermind.
+    
+    # Create worker pool.
     pool = mp.Pool(processes=nParallel)
-    bef = before()
-    printnow('map before')
     
     # Put all the instructions into a list of tInstruction tuples.
     llsInstructions = [lLines for _ in range(nCases)]  # Dummy repetitive list.
     ltInstructions = [tInstruction(cmdlist=lsInstr
                         , qoutput=qOut
-                        , logdir="."
+                        , logdir="./tmp"
                         , logname=f't15foo{(nCaseNumber+1):03d}.log')
                         for (nCaseNumber, lsInstr) in enumerate(llsInstructions)]
 
+    bef = before()
+    printnow('map before')
     results = pool.map(fntDoOneCase, (ltInstructions))
-    
     printnow('map after ')
     pool.close()
     pool.join()
     aft = after()
     printdiff(bef, aft)
     NTRC.ntrace(5, "map giant results = |%s|" % (results))
-    print("")
 
     # Get all output from the multiprocessing queue.
+    # For long runs, need to find a way to get this gradually, too, 
+    #  rather than waiting for the thousands of jobs to finish
+    #  and let the pool.map() call return to this thread.  
+    # Another grumble.  
     lOutput = []
     while not qOut.empty():
         lOutput.append(qOut.get())
-
     print("---------begin cases----------")
     print(f'Number of cases returned={len(lOutput)}')
     for (nCaseNumber, lCase) in enumerate(lOutput):
@@ -130,6 +132,8 @@ def main():
             print(tCmd)
         print("")
     print("--------------")
+
+    return 0
 
 
 if __name__ == "__main__":
