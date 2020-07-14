@@ -44,9 +44,11 @@ class CG(object):
             , "# comment 1"
             , "pwd"
             ]
-
-    # Poison message to cause workers to exit.
-    tEndMsg = tInstruction(cmdlist="", qoutput=qOutput, logdir='', logname='')
+    
+    sIdentLine = "# ============= t15main Job # {}\n"
+    
+    # Poison messages to cause workers to exit.
+    tEndJobMsg = tInstruction(cmdlist="", qoutput=qOutput, logdir='', logname='')
     tEndOutMsg = tLinesOut(listoflists='', procname='')
 
 # =======================================
@@ -93,7 +95,7 @@ def fnSendInstructions(mygInstructionSource, mynHowMany, mynPoliteTimerMsec):
 # Send out suicide messages.
 def fnSendAllEndMessages():
     for _ in range(g.nParallel):
-        g.qJobs.put(g.tEndMsg)
+        g.qJobs.put(g.tEndJobMsg)
     
 
 # =======================================
@@ -112,6 +114,7 @@ def fnCreateOutputReceiver(myqOutput, myLockPrint, myfReceiver=None):
     procReceiver.start()
     NTRC.ntrace(3, "proc rcvr|%s| started on q|%s|" % (procRcvrToday, g.qOutput))
     return procReceiver
+
 
 # ===================== main ========================
 @ntrace
@@ -148,7 +151,12 @@ def main():
     # =======================================
     # Dumb testing version, same instructions many times.
     # Put all the instructions into a list of tInstruction tuples.
-    llsInstructions = [g.lLines for _ in range(nCases)]  # Dummy repetitive list.
+    lIdents = [ [g.sIdentLine.format(linenr+1)] 
+                for linenr in range(nCases)]
+    for lIdent1 in lIdents:
+        lIdent1.extend(g.lLines)
+    llsInstructions = [x for x in lIdents]
+    NTRC.ntracef(5, "MAKI", "proc llsinstructions|%s|" % (llsInstructions))
     # Generator for the instruction stream, merely reads the list.  
     gtInstructions = (tInstruction(cmdlist=lsInstr
                         , qoutput=g.qOutput
@@ -175,6 +183,8 @@ def main():
     NTRC.ntrace(3, "proc sending end msgs")
     fnSendAllEndMessages()
     #!!!!!!!!!!!!! I should wait here for all workers to exit.
+    for proc in lprocWorkers:
+        proc.join()
 
     # =======================================
     # Close up.  Make sure everything exits.  
