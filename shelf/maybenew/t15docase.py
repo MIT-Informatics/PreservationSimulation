@@ -19,7 +19,7 @@
         the specified multiprocessing queue.  
     DoOneCmdList: execute the sequence of shell commands, 
         return the resulting commands and output.  
-    DoOneLine: execute a single shell command and collect the output.
+    DoOneCmdLine: execute a single shell command and collect the output.
         mark the output lines with a timestamp.  
 '''
 
@@ -49,7 +49,7 @@ tInstruction = collections.namedtuple("tInstruction"
                 , "cmdlist logdir logname qoutput")
 
 
-# ==================== subprocess user: DoOneLine ====================
+# ==================== subprocess user: DoOneCmdLine ====================
 # f n t D o O n e C m d L i n e 
 @ntracef("DO1L")
 def fntDoOneCmdLine(mysLine):
@@ -166,10 +166,10 @@ def fnDoOneJob(mytInstruction):
 # f n D o M a n y J o b s 
 @ntracef("DOMJ")
 def doManyJobs(myqJobs):
-    ''' this is the guy called as a pool job worker
-        read a job from input queue
-        if it is a real instruction, do it
-        if it is an end code, exit
+    ''' This is the guy who gets called as a job worker
+        Read a job from input queue.
+        If it is a real instruction, do it.
+        If it is an end code, exit.
         '''
     while True:
         tInstructionJob = myqJobs.get()
