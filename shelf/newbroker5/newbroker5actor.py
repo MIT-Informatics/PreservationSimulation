@@ -49,6 +49,22 @@ tInstruction = collections.namedtuple("tInstruction"
                 , "cmdlist logdir logname qoutput")
 
 
+# Global data for this module, read-only, or at most write-once.
+
+qJobs = None
+#qOutput = None
+lockPrint = None
+lprocWorkers = []
+procOutput = None
+nParallel = None
+
+# Poison messages to cause workers to exit.
+tEndJobMsg = tInstruction(cmdlist="", qoutput="", logdir='', logname='')
+tEndOutMsg = tLinesOut(listoflists='', procname='')
+
+
+# ================ Functions that run in external processes =============
+
 # ==================== subprocess user: DoOneCmdLine ====================
 # f n t D o O n e C m d L i n e 
 @ntracef("DO1L")
@@ -149,17 +165,21 @@ def fnDoOneJob(mytInstruction):
     (sLogfileDir, sLogfileName) = (mytInstruction.logdir
                                 , mytInstruction.logname)
     qToUse = mytInstruction.qoutput
+    global qOutput
+    qOutput = qToUse
 
     lResults = fnlsDoOneCmdList(lInstructions)
     # Send official results to the log file.
     fnWriteLogFile((lResults), sLogfileDir, sLogfileName)
 
-    # And send a copy of results to the specified output queue.
-    lPrefix = [("BEGIN results from " + sWhoami)]
-    lSuffix = [("ENDOF results from " + sWhoami)]
-    lResultsToSee = ['\n'] + lPrefix + lResults + lSuffix + ['\n']
-    tAnswers = tLinesOut(procname=sWhoami, listoflists=lResultsToSee)
-    qToUse.put(tAnswers)
+    # If an output queue specified, pack up the answer and send it.
+    if qToUse:
+        # And send a copy of results to the specified output queue.
+        lPrefix = [("BEGIN results from " + sWhoami)]
+        lSuffix = [("ENDOF results from " + sWhoami)]
+        lResultsToSee = ['\n'] + lPrefix + lResults + lSuffix + ['\n']
+        tAnswers = tLinesOut(procname=sWhoami, listoflists=lResultsToSee)
+        qToUse.put(tAnswers)
     
 
 # ==================== multiprocessing: DoManyJobs ====================
@@ -181,7 +201,6 @@ def doManyJobs(myqJobs):
             sys.exit(0)
 
 
-# ===============================================================================
 # ==================== multiprocessing: DefaultReceiveOutput ====================
 # This is an instance of mp.Process(), not part of a mp.Pool().
 #
@@ -202,6 +221,68 @@ def defaultReceiveOutput(myqOutput, mylockPrint):
                 print("--------------")
         else:
             sys.exit(0)
+
+
+# ===============================================================================
+# ========= Management routines for multiprocessing processes ==========
+
+# ================================================
+# f n C r e a t e W o r k e r P r o c e s s e s 
+@ntrace
+def fnCreateWorkerProcesses(mynHowMany, myqJobs):
+    ''' Create worker pool and start them all. '''
+    global nParallel
+    nParallel = mynHowMany
+    global qJobs
+    qJobs = myqJobs
+    lProcs = []
+    for _ in range(nParallel):
+        proc = mp.Process(target=doManyJobs, args=(myqJobs,))
+        lProcs.append(proc)
+        proc.start()
+    global lprocWorkers
+    lprocWorkers = lProcs   # Save a list of all workers.
+    return lProcs
+
+
+# ================================================
+# f n C r e a t e O u t p u t R e c e i v e r 
+@ntrace
+def fnCreateOutputReceiver(myqOutput, myLockPrint, myfReceiver=None):
+    ''' Make one more async process to receive job outputs. '''
+    if not myfReceiver:
+        # Take default if none specified.
+        procRcvrToday = defaultReceiveOutput
+    else:
+        procRcvrToday = myfReceiver
+
+    procReceiver = mp.Process(target=procRcvrToday, 
+                        args=(myqOutput, myLockPrint))
+    procReceiver.start()
+    NTRC.ntrace(3, "proc rcvr|%s| started on q|%s|" % (procRcvrToday, myqOutput))
+    global procOutput
+    procOutput = procReceiver
+    return procReceiver
+
+
+# ================================================
+# f n C l o s e A l l W o r k e r s 
+# Send out suicide messages.
+@ntrace
+def fnCloseAllWorkers():
+    for _ in range(nParallel):
+        qJobs.put(tEndJobMsg)
+    for proc in lprocWorkers:
+        proc.join()
+
+
+# ================================================
+# f n C l o s e O u t p u t R e c e i v e r 
+@ntrace
+def fnCloseOutputReceiver(myqOut):
+    myqOut.put(tEndOutMsg)
+    # And wait for the last output.
+    procOutput.join()
 
 
 # ===================================================================
@@ -263,3 +344,34 @@ def fnbDoNotIgnoreLine(mysLine):
 
 
 #END
+
+'''
+next version is a class
+
+class workers
+
+init args:
+    number of workers
+    jobs queue
+    receiver output queue or null
+
+data:
+    nparallel
+    list of workers
+    jobs queue
+
+methods:
+called by init
+    create workers
+    create receiver
+stop
+    kill workers
+    kill receiver
+
+
+functions that do work still separate, not methods
+
+
+'''
+
+

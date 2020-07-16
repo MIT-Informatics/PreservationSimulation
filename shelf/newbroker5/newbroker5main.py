@@ -16,8 +16,8 @@ import sys
 import collections
 import re
 from NewTraceFac import NTRC, ntrace, ntracef
-from t15docase import tLinesOut, tInstruction, doManyJobs, defaultReceiveOutput
-
+#from newbroker5actor import tLinesOut, tInstruction, doManyJobs, defaultReceiveOutput
+import newbroker5actor as nba
 
 # Global data, read-only, or at most write-once.
 class CG(object):
@@ -25,6 +25,10 @@ class CG(object):
     qOutput = None
     lockPrint = None
     procOutput = None
+    
+    nParallel = None
+    nOverbookPct = None
+    nPoliteTimerMsec = None
     
     # =================== test instruction stream =====================
     # A few lines just to see if the process works.  
@@ -45,23 +49,12 @@ class CG(object):
             , "pwd"
             ]
     
-    sIdentLine = "# ============= t15main Job # {}\n"
+    sIdentLine = "# ============= t15main Job # {}"
     
     # Poison messages to cause workers to exit.
-    tEndJobMsg = tInstruction(cmdlist="", qoutput=qOutput, logdir='', logname='')
-    tEndOutMsg = tLinesOut(listoflists='', procname='')
+    tEndJobMsg = nba.tInstruction(cmdlist="", qoutput=qOutput, logdir='', logname='')
+    tEndOutMsg = nba.tLinesOut(listoflists='', procname='')
 
-# =======================================
-# f n C r e a t e W o r k e r P r o c e s s e s 
-@ntrace
-def fnCreateWorkerProcesses(mynHowMany):
-    ''' Create worker pool and start them all. '''
-    lProcs = []
-    for _ in range(g.nParallel):
-        proc = mp.Process(target=doManyJobs, args=(g.qJobs,))
-        lProcs.append(proc)
-        proc.start()
-    return lProcs
 
 # =======================================
 # f n S e n d I n s t r u c t i o n s 
@@ -90,32 +83,6 @@ def fnSendInstructions(mygInstructionSource, mynHowMany, mynPoliteTimerMsec):
     return nCountInst
 
 
-# =======================================
-# f n S e n d A l l E n d M e s s a g e s 
-# Send out suicide messages.
-def fnSendAllEndMessages():
-    for _ in range(g.nParallel):
-        g.qJobs.put(g.tEndJobMsg)
-    
-
-# =======================================
-# f n C r e a t e O u t p u t R e c e i v e r 
-@ntrace
-def fnCreateOutputReceiver(myqOutput, myLockPrint, myfReceiver=None):
-    ''' Make one more async process to receive job outputs. '''
-    if not myfReceiver:
-        # Take default if none specified.
-        procRcvrToday = defaultReceiveOutput
-    else:
-        procRcvrToday = myfReceiver
-
-    procReceiver = mp.Process(target=procRcvrToday, 
-                        args=(myqOutput, myLockPrint))
-    procReceiver.start()
-    NTRC.ntrace(3, "proc rcvr|%s| started on q|%s|" % (procRcvrToday, g.qOutput))
-    return procReceiver
-
-
 # ===================== main ========================
 @ntrace
 def main():
@@ -127,13 +94,13 @@ def main():
     if nArgs > 1: nCases = int(sys.argv[1]) if sys.argv[1] else nCases
     g.nParallel = mp.cpu_count()
     if nArgs > 2: g.nParallel = int(sys.argv[2]) if sys.argv[2] else g.nParallel
-    nOverbookPct = 0
-    if nArgs > 3: nOverbookPct = int(sys.argv[3]) if sys.argv[3] else nOverbookPct
-    nPoliteTimerMsec = 100
-    if nArgs > 4: nPoliteTimerMsec = int(sys.argv[4]) if sys.argv[4] else nPoliteTimerMsec
+    g.nOverbookPct = 0
+    if nArgs > 3: g.nOverbookPct = int(sys.argv[3]) if sys.argv[3] else g.nOverbookPct
+    g.nPoliteTimerMsec = 100
+    if nArgs > 4: g.nPoliteTimerMsec = int(sys.argv[4]) if sys.argv[4] else g.nPoliteTimerMsec
     NTRC.ntrace(0, "proc params ncases|%s| nparallel|%s| "
                     "overbookpct|%s| politetime|%s|" 
-                % (nCases, g.nParallel, nOverbookPct, nPoliteTimerMsec))
+                % (nCases, g.nParallel, g.nOverbookPct, g.nPoliteTimerMsec))
 
     # =======================================
     # Need a Multiprocessing Manager to own the output queue.  (Do we?)
@@ -145,8 +112,8 @@ def main():
     
     # =======================================
     # Maybe increase worker pool by some overbooking amount.
-    g.nParallel *= int(1.0 + (nOverbookPct / 100.0))
-    lprocWorkers = fnCreateWorkerProcesses(g.nParallel)
+    g.nParallel *= int(1.0 + (g.nOverbookPct / 100.0))
+    lprocWorkers = nba.fnCreateWorkerProcesses(g.nParallel, g.qJobs)
 
     # =======================================
     # Dumb testing version, same instructions many times.
@@ -158,7 +125,7 @@ def main():
     llsInstructions = [x for x in lIdents]
     NTRC.ntracef(5, "MAKI", "proc llsinstructions|%s|" % (llsInstructions))
     # Generator for the instruction stream, merely reads the list.  
-    gtInstructions = (tInstruction(cmdlist=lsInstr
+    gtInstructions = (nba.tInstruction(cmdlist=lsInstr
                         , qoutput=g.qOutput
                         , logdir="./tmp"
                         , logname=f't15foo{(nCaseNumber+1):03d}.log')
@@ -167,32 +134,26 @@ def main():
 
     # =======================================
     # Make one more async process to receive job outputs.
-    g.procOutput = fnCreateOutputReceiver(g.qOutput, g.lockPrint)
+    g.procOutput = nba.fnCreateOutputReceiver(g.qOutput, g.lockPrint)
 
     # =======================================
     # Now, they're all waiting for work.  Give them some.
     NTRC.ntrace(3, "proc sending instructions from|%s|" % (gtInstructions))
-    fnSendInstructions(gtInstructions, 0, nPoliteTimerMsec)    
+    fnSendInstructions(gtInstructions, 0, g.nPoliteTimerMsec)    
 
     # Wait some decent interval before killing all the workers.
 #    time.sleep(10)
-    time.sleep(5)
+#    time.sleep(2)
     
     # =======================================
     # Send out suicide messages.
     NTRC.ntrace(3, "proc sending end msgs")
-    fnSendAllEndMessages()
-    #!!!!!!!!!!!!! I should wait here for all workers to exit.
-    for proc in lprocWorkers:
-        proc.join()
+    nba.fnCloseAllWorkers()
 
     # =======================================
     # Close up.  Make sure everything exits.  
+    nba.fnCloseOutputReceiver(g.qOutput)
 
-    g.qOutput.put(g.tEndOutMsg)
-    # And wait for the last output.
-    g.procOutput.join()
-    
 
     return 0
 
