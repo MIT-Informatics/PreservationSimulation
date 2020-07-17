@@ -3,11 +3,28 @@
 # newbroker5actor.py
 #                   RBLandau 20200710
 
-''' Multiprocessing job executor.
+''' Multiprocessing job stream executor.
+
+    Have a number of computing jobs that can be executed
+     in parallel on a multi-core machine?  Express those
+     jobs as a sequence of CLI commands and feed the shell
+     commands to this class.  Put the instructions for each
+     job in a tuple, put the tuples into the queue of jobs
+     to be done.  When you have queued the last instruction, 
+     tell the here to close all the multi-processes.  
+    Each job's results go into a log file that you specify, 
+     and there is an option for getting a real-time copy
+     of the results as the jobs finish, for use in a 
+     thermometer display, for instance, or just a listing
+     to give the human watchers confidence in progress.  
+    The job instructions may be queued at whatever rate
+     is convenient to the caller.  Instructions are 
+     typically small, so memory requirements are minimal.  
+    
     Processes sequences of instructions as shell commands
      one line at a time in sequence, collects the output.
     Lines are time stamped and presented with command
-     followed by output.  
+     followed by output.  Timestamps are in milliseconds.  
     The output is sent to a specified log file and to a 
      specified multiprocessing queue (for logging, thermometer
      assessment, whatever).  
@@ -63,7 +80,39 @@ tInstruction = collections.namedtuple("tInstruction"
 # ================================================
 # c l a s s   C W o r k e r s 
 class CWorkers(object):
-    
+    ''' Create and manage a collection of multiprocessing processes
+         to execute a set of (CLI shell) jobs on multiple cores in 
+         parallel.  Uses the standard Python3 multiprocessing package.  
+        
+        Inputs: 
+        - nservers: number of multiprocessing processes to create as
+            workers for the sequence of jobs.  This may be equal to, 
+            or smaller, or slightly larger than the number of cores
+            available, depending on local needs.  
+            The number of cores can be read from 
+            multiprocessing.cpu_count().
+        - qinputjobs: a multiprocessing queue into which job
+            instructions will be fed.  The instructions must be 
+            in the form of a tInstruction named tuple, defined
+            here. The shell commands are in a list of strings, 
+            each string being one shell command.  
+        - qoutputdata: a managed multiprocessing queue that, if not
+            None, will be sent a copy of the output of each job
+            as the job completes.  
+        - outputreceiver: if not None, a multiprocessing process to 
+            process the stream of job results in the qoutputdata 
+            queue.  
+
+        To start: Create an instance of this class.  The multiple
+         processes will be created and started in the construction.  
+        To stop: After all the job instructions have been *queued*
+         (but not necessarily executed, of course), call 
+         cworkerinstance.Close().
+        
+        Caution: a job instruction with an empty list of shell 
+         commands will cause the worker process that takes that
+         command to exit.  
+    '''    
     qJobs = None
     qOutput = None  # BEWARE! This needs to be accessed statically for each job.
     nParallel = None
@@ -152,9 +201,12 @@ class CWorkers(object):
     # m _ C l o s e O u t p u t R e c e i v e r 
     @ntrace
     def m_CloseOutputReceiver(self):
-        CWorkers.qOutput.put(self.tEndOutMsg)
-        # And wait for the last output.
-        self.procOutput.join()
+        ''' Nuke the output receive process, if any. '''
+        qOut = CWorkers.getOutputQueue()
+        if qOut:
+            qOut.put(self.tEndOutMsg)
+            # And wait for the last output.
+            self.procOutput.join()
 
 
     # ================================================
@@ -168,11 +220,19 @@ class CWorkers(object):
         self.m_CloseOutputReceiver()
 
 
+    # ================================================
+    # g e t O u t p u t Q u e u e 
     @staticmethod
     @ntrace
     # g e t O u t p u t Q u e u e 
     def getOutputQueue():
+        ''' Return the managed multiprocessing queue used
+            for output to a receiver.  This is used by 
+            each job to determine whether to send a copy
+            of the job output, and if so where.
+            '''
         return CWorkers.qOutput
+
 
 # END of class CWorkers
 
@@ -335,8 +395,8 @@ def defaultReceiveOutput(myqOutput):
             sys.exit(0)
 
 
-# ===============================================================================
-# ========= Management routines for multiprocessing processes ==========
+# ===================================================================
+# ======== Management routines for multiprocessing processes ========
 
 # ===================================================================
 # U T I L I T Y   F U N C T I O N S 

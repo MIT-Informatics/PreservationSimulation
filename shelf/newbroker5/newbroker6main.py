@@ -44,6 +44,7 @@ class CG(object):
     # Even fewer lines just to see if the process works.  
     lLines = ["date +%Y%m%d_%H%M%S.%3N"
             , "# comment 1"
+            , "sleep $(date +%N | awk '{ns=$1/100.0; print 2*ns/10000000}')"
             , "pwd"
             ]
     
