@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*-coding: utf8-*-
-# newbroker5actor.py
+# newbroker6workers.py
 #                   RBLandau 20200710
 
 ''' Multiprocessing job stream executor.
