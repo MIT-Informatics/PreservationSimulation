@@ -17,7 +17,7 @@ import collections
 import re
 from NewTraceFac import NTRC, ntrace, ntracef
 #from newbroker5actor import tLinesOut, tInstruction, doManyJobs, defaultReceiveOutput
-import newbroker6workers as nb
+import cworkers
 
 # Global data, read-only, or at most write-once.
 class CG(object):
@@ -108,7 +108,8 @@ def main():
     # Create workers.
     # Maybe increase worker pool by some overbooking amount.
     g.nParallel *= int(1.0 + (g.nOverbookPct / 100.0))
-    cWorkers = nb.CWorkers(nservers=g.nParallel, qinputjobs=g.qJobs, qoutputdata=g.qOutput)
+    cWorkersInst = cworkers.CWorkers(nservers=g.nParallel
+                    , qinputjobs=g.qJobs, qoutputdata=g.qOutput)
 
     # =======================================
     # Create instruction stream. 
@@ -121,7 +122,7 @@ def main():
     llsInstructions = [x for x in lIdents]
     NTRC.ntracef(5, "MAKI", "proc llsinstructions|%s|" % (llsInstructions))
     # Generator for the instruction stream, merely reads the list.  
-    gtInstructions = (nb.tInstruction(cmdlist=lsInstr
+    gtInstructions = (cworkers.tInstruction(cmdlist=lsInstr
                         , logdir="./tmp"
                         , logname=f't15foo{(nCaseNumber+1):03d}.log')
                         for (nCaseNumber, lsInstr) in enumerate(llsInstructions)
@@ -140,7 +141,7 @@ def main():
     # =======================================
     # End: stop all workers.  
     NTRC.ntrace(3, "proc sending end msgs")
-    cWorkers.Close()
+    cWorkersInst.Close()
 
 
     return 0

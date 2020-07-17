@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*-coding: utf8-*-
-# newbroker6workers.py
+# cworkers.py
 #                   RBLandau 20200710
 
 ''' Multiprocessing job stream executor.
@@ -11,7 +11,7 @@
      commands to this class.  Put the instructions for each
      job in a tuple, put the tuples into the queue of jobs
      to be done.  When you have queued the last instruction, 
-     tell the here to close all the multi-processes.  
+     tell it to close all the multi-processes.  
     Each job's results go into a log file that you specify, 
      and there is an option for getting a real-time copy
      of the results as the jobs finish, for use in a 
@@ -454,6 +454,13 @@ def fnbDoNotIgnoreLine(mysLine):
     '''
     # Ignore comment and blank lines, but take all others.
     return (not re.match("^\s*#", mysLine)) and (not re.match("^\s*$", mysLine))
+
+
+
+# Edit history:
+# 
+# 20200717  RBL Original version of cworkers.py.
+# 
 
 
 #END
