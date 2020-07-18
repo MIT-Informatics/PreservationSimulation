@@ -12,17 +12,20 @@ import os
 import sys
 from NewTraceFac import NTRC, ntrace, ntracef
 import command
+import multiprocessing
+
 
 # f n n G e t H W C o r e s 
 @ntracef("GETC")
 def fnnGetHWCores(default=8):
-    cmd = command.CCommand()
-    sGetCoreCount = "cat /proc/cpuinfo | grep processor | wc -l"
-    sCount = cmd.doCmdStr(sGetCoreCount)
-    try:
-        nCount = int(sCount)
-    except: 
-        nCount = default
+#    cmd = command.CCommand()
+#    sGetCoreCount = "cat /proc/cpuinfo | grep processor | wc -l"
+#    sCount = cmd.doCmdStr(sGetCoreCount)
+#    try:
+#        nCount = int(sCount)
+#    except: 
+#        nCount = default
+    nCount = multiprocessing.cpu_count()
     return nCount
 
 
@@ -43,7 +46,6 @@ def fnnGetResolvedCores():
     nHWCount = fnnGetHWCores()
     nUserCount = fnnGetUserCores()
     nCount = nUserCount if nUserCount < nHWCount else nHWCount
-#    nCount = nUserCount # if nUserCount < nHWCount else nHWCount
     return nCount
 
 
@@ -63,7 +65,8 @@ if __name__ == "__main__":
 
 # Edit history:
 # 20170520  RBL Original version, extracted from broker.py.  
-# 
+# 20200717  RBL Use multiprocssing.cpu_count() instead of running 
+#                an external command to get nCores.
 # 
     
 #END
