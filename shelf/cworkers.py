@@ -160,8 +160,9 @@ class CWorkers(object):
         ''' Make one more async process to receive job outputs. 
             If there is no output queue at all, then there will be no 
              receiver process.
-            If the user does not specify a function for the receiver, 
-             the default receiver will be used.
+            If the user specifies an output queue, but does not specify 
+             a function for the receiver, then the default receiver 
+             will be used.
         '''
         if CWorkers.qOutput:
             if not myfReceiver:
@@ -227,9 +228,12 @@ class CWorkers(object):
     # g e t O u t p u t Q u e u e 
     def getOutputQueue():
         ''' Return the managed multiprocessing queue used
-            for output to a receiver.  This is used by 
-            each job to determine whether to send a copy
-            of the job output, and if so where.
+             for output to a receiver.  This is used by 
+             each job to determine whether to send a copy
+             of the job output, and if so where.
+            The data item lives in the class, but at runtime
+             the job routine does not have an instance pointer
+             to the class.
             '''
         return CWorkers.qOutput
 
@@ -462,7 +466,8 @@ def fnbDoNotIgnoreLine(mysLine):
 
 # Edit history: 
 # 20200717  RBL Original version of cworkers.py.
-# 20200718  RBL Add a case number at the beginning of each output listing.  
+# 20200718  RBL Add a case number at the beginning of each output listing. 
+#               Improve some comments.   
 # 
 
 

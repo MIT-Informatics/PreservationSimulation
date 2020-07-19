@@ -15,7 +15,7 @@ import  brokercli
 import  copy
 import  brokerformat
 import  brokergetcores
-import  newbroker3 as nb
+#import  newbroker3 as nb
 import  collections
 import  queue
 import  cworkers
@@ -26,7 +26,7 @@ import  multiprocessing as mp
 # class   C G   f o r   g l o b a l   d a t a 
 class CG(object):
     ''' Global data.
-        Almost all the data here is write-once, so effectively readonly.  
+        Almost all the data here is write-once, so effectively read-only.  
          There are a couple counters that are exceptions to that rule, 
          but they are only for reporting status from the main thread.  
     '''
@@ -160,42 +160,20 @@ class CG(object):
     # List of all instructions, to be given to RunEverything.
     lGiantInstr = []
 
-    # queue to pass instructions to workers.
+    # CWorkers input queue to pass instructions to workers.
     qJobs = None
+    # CWorkers output queue for reporting progress.
     qOutput = None
 
 #===========================================================
-
-    """Additional data needed by the newbroker module.  
+    """ Additional data needed by something or other.  
     """
-    ltJobs = list()     # Job numbers or None
-    lockJobList = None  # Thread lock for ltJobs job list.
-    lockPrint = None    # Thread lock for trace printing.
-    
-    # Dictionaries that contain references to things we want cleaned up.
-    # These must be emptied when the jobs they point to are complete.
-    dId2Proc = dict()   # Map job number -> process object
-    dId2Queue = dict()  # Map job number -> queue object
-    
     nParallel = 4       # Limit on jobs running in parallel (on separate CPUs)
-                        #  (overridden by nCores).
-    bThatsAllFolks = False  # All cases done, ran out of instructions.
-    nCasesTotal = 0     # Nr of instructions total, all started.
-    nCasesStarted = 0   # How many cases started so far.  # DEBUG
-    nCasesDone = 0      # How many cases done (finished) so far. # DEBUG
-    llsFullOutput = list()  # Output for all test cases.
+                        #  (may be overridden by nCores).
     nCases = 0          # DEBUG
-    nWaitedForSlot = 0  # DEBUG
-    nWaitedForDone = 0  # DEBUG
-    nWaitedForInstr = 0 # DEBUG
-    bDebugPrint = False # Print output of all jobs? (obsolete) 
-    thrStart = None
-    thrEnd = None
     
 
 #===========================================================
-
-
 # f n G e t C o m m a n d T e m p l a t e s 
 @ntrace
 def fnGetCommandTemplates(mysCommandFilename):
@@ -210,8 +188,6 @@ def fnGetCommandTemplates(mysCommandFilename):
 
 
 #===========================================================
-
-
 # f n d M a y b e E n h a n c e I n s t r u c t i o n 
 @catchex
 @ntracef("MAIN", level=5)
@@ -232,10 +208,9 @@ def fndMaybeEnhanceInstruction(mydRawInstruction):
     
     return dInstruction
 
+
 #===========================================================
 #===========================================================
-
-
 # M A I N 
 @catchex
 @ntracef("MAIN")
@@ -314,6 +289,7 @@ def main():
     NTRC.ntracef(0, "MAIN", "End queued all runs ncases|%s|" % (g.nCases,))
 
 
+#===========================================================
 # f n n P r o c e s s A l l I n s t r u c t i o n s 
 @catchex
 @ntracef("MAIN")
@@ -352,6 +328,7 @@ def fnnProcessAllInstructions(myitInstructionIterator):
     return nRunNumber
 
 
+#===========================================================
 # f n s t P r o c e s s O n e I n s t r u c t i o n M a n y T i m e s 
 @catchex
 @ntracef("MAIN")
@@ -385,6 +362,7 @@ def fnnProcessOneInstructionManyTimes(mynRunNumber, mydInstruction):
     return g.nRandomSeeds
 
 
+#===========================================================
 # f n t P r o c e s s O n e I n s t r u c t i o n 
 @catchex
 @ntracef("MAIN")
@@ -462,6 +440,7 @@ def fntProcessOneInstruction(mysRunNumber, mydInstruction, mynSeed):
 # - Check for valid dirs
 
 
+#===========================================================
 # f n l G e t R a n d o m S e e d s 
 @catchex
 @ntracef("MAIN")
@@ -478,6 +457,7 @@ def fnlGetRandomSeeds(mynHowMany, mysFilename):
     return lnSeeds
 
 
+#===========================================================
 # f n v G e t E n v i r o n m e n t O v e r r i d e s 
 @catchex
 @ntracef("MAIN")
@@ -497,6 +477,7 @@ def fnvGetEnvironmentOverrides():
                         "an integer number of milliseconds.")
 
 
+#===========================================================
 # f n s R e c o n s t i t u t e C o m m a n d 
 @ntrace
 def fnsReconstituteCommand(lArgs):
@@ -505,6 +486,7 @@ def fnsReconstituteCommand(lArgs):
     return sOut
 
 
+#===========================================================
 # f n b M a y b e L o g C o m m a n d 
 @ntrace
 def fnbMaybeLogCommand(sCommand):
@@ -518,6 +500,7 @@ def fnbMaybeLogCommand(sCommand):
         return False
 
 
+#===========================================================
 # f n b V a l i d a t e D i r 
 @ntrace
 def fnbValidateDir(sPath):
@@ -537,6 +520,9 @@ if __name__ == "__main__":
 # 20200717  RBL Original version of broker3.py, a slight adaptation of
 #                broker2 using CWorkers instead of threads and all that 
 #                complexity.
+# 20200119  RBL Remove some stuff leftover from newbroker3, no longer used.
+#                In particular, old global data needed by the newbroker.
+#                CWorkers is a much cleaner solution.
 # 
 # 
 
