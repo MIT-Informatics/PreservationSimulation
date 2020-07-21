@@ -79,6 +79,7 @@
 #               Install python3-pip explicitly for older Ubuntu versions.
 # 20200225  RBL Delete Mongo database collections before broker tests.  
 #               Some leftovers got in the way of datacleanup.  
+# 20200721  RBL Update broker test calls to broker3.py.
 # 
 # 
 
@@ -200,7 +201,7 @@ fi
 python2 dbclearcollection.py brokeradmin installtest 
 python2 dbclearcollection.py brokeradmin done
 # Broker should find exactly one test case to run.
-python3 broker2.py installtest done --familydir=../hl --specificdir=a0 \
+python3 broker3.py installtest done --familydir=../hl --specificdir=a0 \
     --serverdefaultlife=0 --glitchfreq=0 --shockfreq=0 \
     --ncopies=1 --lifem=1000 --auditfreq=0 \
     --docsize=50 --ndocuments=10000 --shelfsize=1 --simlen=0 --nseeds=1 \
@@ -221,7 +222,7 @@ fi
 python2 dbclearcollection.py brokeradmin installtest 
 python2 dbclearcollection.py brokeradmin done
 # And fifteen cases here.
-python3 broker2.py installtest done --familydir=../hl --specificdir=a0 \
+python3 broker3.py installtest done --familydir=../hl --specificdir=a0 \
     --serverdefaultlife=0 --glitchfreq=0 \
     --ncopies='{"$gte":1,"$lte":5}' --lifem='[100,200,300]' \
     --auditfreq=10000 --audittype=TOTAL --auditsegments='[1]' \
@@ -251,7 +252,7 @@ python2 dbclearcollection.py brokeradmin done
 mv randomseeds.txt randomseeds.txt_TEMPASIDE
 cp randomseeds_TESTING.txt randomseeds.txt
 #
-python3 broker2.py installtest done --familydir=../hl --specificdir=installtest \
+python3 broker3.py installtest done --familydir=../hl --specificdir=installtest \
     --ncopies=1 --lifem=1000 --auditfreq=0 --auditsegments=0 \
     --audittype=TOTAL --glitchfreq=0 --glitchimpact=0 \
     --glitchdecay=0 --glitchmaxlife=0 --glitchspan=0 \
@@ -295,7 +296,7 @@ fi
 python dbdeletedatabase.py installtest 
 # And set up new working directories for these runs.  
 bash setupfamilydir.sh ../hl testing
-python3 broker2.py installtest done --familydir=../hl \
+python3 broker3.py installtest done --familydir=../hl \
     --specificdir=testing --serverdefaultlife=0 --glitchfreq=0 \
     --ncopies='{"$gte":1,"$lte":5}' --lifem='[100,200,300]' \
     --auditfreq=10000 --audittype=TOTAL --auditsegments=1 \
@@ -307,7 +308,7 @@ python3 broker2.py installtest done --familydir=../hl \
 #export NCORES=32       # Max 32 cores on Amazon.
 # This command will run thirty individual simulation tests, which will take
 #  more than a couple minutes. 
-#python3 broker2.py inprogress done --familydir=../hl --specificdir=testing --serverdefaultlife=0 --glitchfreq=0 --ncopies='{"$gte":1,"$lte":5}' --lifem='[100,200,300]' --auditfreq=10000 --audittype=TOTAL --auditsegments=1 --nseeds=20 --redo 
+#python3 broker3.py inprogress done --familydir=../hl --specificdir=testing --serverdefaultlife=0 --glitchfreq=0 --ncopies='{"$gte":1,"$lte":5}' --lifem='[100,200,300]' --auditfreq=10000 --audittype=TOTAL --auditsegments=1 --nseeds=20 --redo 
 
 echo "**************************************** Done initial tests"
 
@@ -352,7 +353,7 @@ echo "***  of your instructions.                           ***"
 echo "***                                                  ***" 
 echo "*** For those who like typing CLI commands,          ***" 
 echo "***  try   python main.py -h                         ***"
-echo "***  or    python3 broker2.py -h                     ***" 
+echo "***  or    python3 broker3.py -h                     ***" 
 echo "*** for help.                                        ***"
 echo "***                                                  ***" 
 echo "***    I M P O R T A N T  R E M I N D E R            ***" 
