@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # broker3.py
 
+# Herewith a truly ridiculous number of imports.  
 import  os
 import  re
 import  time
@@ -15,7 +16,6 @@ import  brokercli
 import  copy
 import  brokerformat
 import  brokergetcores
-#import  newbroker3 as nb
 import  collections
 import  queue
 import  cworkers
@@ -199,7 +199,7 @@ def fndMaybeEnhanceInstruction(mydRawInstruction):
     the instruction dict.  Add them to instruction dict.
     '''
     dInstruction = copy.deepcopy(mydRawInstruction)
-    # Add additional attributed here.
+    # Add additional attributes here.
     
     # shortlog is unusual in not taking an argument but being true by presence.
     dInstruction["sShortLogOption"] = ("--shortlog" 
@@ -219,13 +219,15 @@ def main():
     Process:
     - Parse the CLI command into g.various data items.
     - Validate user-supplied directories; get environment variables.
+    - Make queues to send instructions to pool of worker processes.
+    - Create pool of worker processes.
     - Query the searchspace for the stream of instructions
     - For each instruction from database selection, get dict for line
     - Using dict args, construct plausible command lines, into file
-    - Check to see that there aren't too many similar processes 
-      already running; if too many, then wait.
-    - Launch ListActor process to execute commands.
-    - Wait a polite interval before launching another.
+    - For each instruction, expand to the number of samples (seeds) to use.
+    - When we finally have a single instruction to execute, queue that
+       to the worker jobs.
+    - When all instructions have been queued, close down the worker processes.
     '''
     NTRC.ntracef(0, "MAIN", "Begin.")
     NTRC.ntracef(0, "MAIN", "TRACE  traceproduction|%s|" % NTRC.isProduction())
@@ -315,7 +317,7 @@ def fnnProcessAllInstructions(myitInstructionIterator):
         NTRC.ntracef(3,"MAIN","proc main enhanced instruction\n|%s|" 
             % (dInstruction))
 
-        # Execute each instruction once for each random seed value.
+        # Execute each instruction many times, once for each random seed value.
         nRunNumber += 1
         fnnProcessOneInstructionManyTimes(nRunNumber
                         , dInstruction)
@@ -324,6 +326,9 @@ def fnnProcessAllInstructions(myitInstructionIterator):
         maxcount -= 1
         if int(g.nTestLimit) > 0 and maxcount <= 0: break
 
+    # That's all, folks.  All instructions have been queued and will 
+    #  eventually be processed.  
+    # Send the shutdown messages to worker processes.  
     g.cWorkersInst.Close()
     return nRunNumber
 
@@ -369,9 +374,15 @@ def fnnProcessOneInstructionManyTimes(mynRunNumber, mydInstruction):
 def fntProcessOneInstruction(mysRunNumber, mydInstruction, mynSeed):
     ''' 
     Process one single instruction for one run.  
+    Slightly convoluted logic required here.  
     If just testing today, print instruction contents but do not run it.
     If the instruction has already been processed, skip over it unless
      the user requires it to be redone.  
+     ("Has been processed" = there is a MongoDB "done" record with the
+     same key.  The key is the concatenation of all options and the 
+     seed number.)
+    The instruction is actually executed by some worker process at 
+     sometime in the future.  We just queue the instruction for processing.
     '''
     sInstructionId = str(mydInstruction["_id"])
     
@@ -396,14 +407,14 @@ def fntProcessOneInstruction(mysRunNumber, mydInstruction, mynSeed):
                 % (mysRunNumber, mydInstruction["nCopies"], mydInstruction["nLifem"],
                 sInstructionId, list(util.fngSortDictItemsByKeys(mydInstruction))))
         else:
-            # Okay, really do this instruction.  
+            # Okay, not listonly, therefore really do this instruction.  
             mydInstruction["nRandomSeed"] = mynSeed
             NTRC.ntracef(0,"MAIN","proc queue instr, item run|%s| "
                 "ncopies|%s| lifem|%s| id|%s|" 
                 % (mysRunNumber, mydInstruction["nCopies"], mydInstruction["nLifem"],
                 sInstructionId))
 
-            # Format commands to be executed by actor.
+            # Format commands to be executed by somebody.
             g.sShelfLogFileName = g.cFmt.msGentlyFormat(
                                 g.sShelfLogFileTemplate, mydInstruction, g, CG)
             g.lCommands = []
@@ -419,13 +430,14 @@ def fntProcessOneInstruction(mysRunNumber, mydInstruction, mynSeed):
             mydInstruction["starttime"] = util.fnsGetTimeStamp()
             g.mdb.fndInsertProgressRecord(mydInstruction["_id"], mydInstruction)
             
-            # Return the full instruction.
+            # Return the full instruction to caller, too.
             tThisInst = cworkers.tInstruction(cmdlist=g.lCommands
                                     , logname=g.sShelfLogFileName + "_case.log"
                                     , logdir=g.sActorLogDir
                                     )
 
-            # Send the instruction out to be done.
+            # Send the instruction out to be done.  Just drop it in the 
+            #  queue (think of it as the outbox).
             g.qJobs.put(tThisInst)
             g.nCases += 1
             
@@ -462,10 +474,15 @@ def fnlGetRandomSeeds(mynHowMany, mysFilename):
 @catchex
 @ntracef("MAIN")
 def fnvGetEnvironmentOverrides():
+    ''' 
+        Get a few arguments from environment variables, which are
+         allowed to override built-in defaults.
+    '''
     # Allow user to override number of cores to use today.
     # Utility routine looks at HW and possible user envir override.
     g.nCores = brokergetcores.fnnGetResolvedCores()
     NTRC.ntracef(0, "MAIN", "proc ncores|%s|" % (g.nCores))
+    # If you want to overbook the available cores, do it here.
     g.nParallel = g.nCores      # Sorry for the name change.
     # Allow user to override the polite interval to use today.
     try:
@@ -481,6 +498,7 @@ def fnvGetEnvironmentOverrides():
 # f n s R e c o n s t i t u t e C o m m a n d 
 @ntrace
 def fnsReconstituteCommand(lArgs):
+    ''' Make a readable copy of the command for the user to cut and paste.'''
     sPyVer = sys.version_info.major
     sOut = "python" + str(sPyVer) + " " + " ".join(lArgs)
     return sOut
@@ -490,6 +508,10 @@ def fnsReconstituteCommand(lArgs):
 # f n b M a y b e L o g C o m m a n d 
 @ntrace
 def fnbMaybeLogCommand(sCommand):
+    '''
+        If there is a file into which broker commands are to be logged, 
+         then append this command to the file.
+    '''
     if os.path.isfile(g.sBrokerCommandLogFile):
         sTime = util.fnsGetTimeStamp() + " "
         with open(g.sBrokerCommandLogFile, "a") as fhBrokerCommandLog:
@@ -523,6 +545,7 @@ if __name__ == "__main__":
 # 20200119  RBL Remove some stuff leftover from newbroker3, no longer used.
 #                In particular, old global data needed by the newbroker.
 #                CWorkers is a much cleaner solution.
+# 20200721  RBL Improve comments slightly.
 # 
 # 
 
