@@ -1,5 +1,7 @@
 #!/usr/bin/python
 # extractvalues.py
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 '''
 Extract data from lines of log files, using regular expression commands
  supplied by the user.  
@@ -52,7 +54,7 @@ import  os
 import  csv
 from    NewTraceFac     import NTRC,ntrace,ntracef
 import  argparse
-from    time            import clock,localtime
+import  time
 import  extractcpuinfo
 
 
@@ -65,11 +67,11 @@ def fndCliParse(mysArglist):
         Return a dictionary of all of them.   
     '''
     sVersion = "2.1.1"
-    cParse = argparse.ArgumentParser(description="Digital Library Preservation Simulation, Utility to extract values from log files, CLI version %s  "%(sVersion) + \
+    cParse = argparse.ArgumentParser(description="Digital Library Preservation Simulation, Utility to extract values from log files, CLI version %s.   "%(sVersion) + \
         "Takes one simulation log file and instruction file.  Produces (to stdout)" + \
         "one line of data, plus optional header line of field names."
         , epilog="Defaults for args as follows: separator=blank.\n"
-        , version=sVersion
+#        , version=sVersion
         )
 
     # P O S I T I O N A L  arguments
@@ -146,27 +148,28 @@ def fnldParseInput(mysFilename):
 
     '''
     dParams = dict()
-    with open(mysFilename,"rb") as fhInfile:
+    with open(mysFilename,"r", encoding="'utf-8") as fhInfile:
         # Remove comments.  
-        lLines = filter( lambda sLine:                          \
-                        not re.match("^ *#[^#]",sLine)          \
-                        and not re.match("^ *$",sLine.rstrip()) \
-                        , fhInfile )
+        lLines = list(filter( lambda sLine:
+                        not re.match("^ *#[^#]",sLine)
+                        and not re.match("^ *$",sLine.rstrip())
+                        , fhInfile ))
 
         # Get the output template.  It may be longer than one line.  
         lTemplate = fnlLinesInRange(lLines,"^=template","^=variables")
-        lTemplate = map( lambda sLine: sLine.rstrip().replace("###","").replace("##","#"), lTemplate )
-        NTRC.tracef(3,"INPT","proc ParseInput template|%s|" % (lTemplate))
+        lTemplate = list(map( lambda sLine: sLine.rstrip().replace("###","").replace("##","#"), lTemplate ))
+        NTRC.tracef(3,"INPT","proc ParseInput1 template|%s|" % (lTemplate))
 
         # Fix the separator in the template according to the user spec.
         lAllTemplateNames = [lTemplateLine.split() for lTemplateLine in lTemplate]
-        lNewTemplate = [g.sSeparator.join(lTemplateNamesOneLine) \
+        lNewTemplate = [g.sSeparator.join(lTemplateNamesOneLine) 
             for lTemplateNamesOneLine in lAllTemplateNames]
+        NTRC.tracef(3,"INPT","proc ParseInput2 template|%s|" % (lNewTemplate))
 
         # Now get the CSV args into a dictionary of dictionaries.
         lVarLines = fnlLinesInRange(lLines,"^=variables","^=thiswillnotbefound")
         lRowDicts = csv.DictReader(lVarLines)
-        NTRC.tracef(5,"INPT","proc ParseInput lRowDicts all|%s|" % (lRowDicts))
+        NTRC.tracef(5,"INPT","proc ParseInput3 lRowDicts all|%s|" % (lRowDicts))
         
         dParams = dict( map( lambda dRowDict:   \
             (dRowDict["varname"],dRowDict)      \
@@ -191,9 +194,9 @@ def fnlLinesInRange(mylLines,mysStart,mysStop):
 # m a i n ( ) 
 @ntracef("MAIN")
 def main(mysInstructionsFileName,mysLogFileName):
-    (lTemplate,g.dVars) = fnldParseInput(mysInstructionsFileName)
+    (lTemplate, g.dVars) = fnldParseInput(mysInstructionsFileName)
     lLines = list()
-    with open(mysLogFileName,"r") as fhLogFile:
+    with open(mysLogFileName,"r", encoding="'utf-8") as fhLogFile:
 
         '''\
         get list of tuples: lines that match some lineregex, for which var
@@ -217,7 +220,8 @@ def main(mysInstructionsFileName,mysLogFileName):
                 # If line matches any var, save the line and the varname.
                 if tResult[0]: 
                     lLinesSelectedRaw.append(tResult)
-        NTRC.tracef(3,"MN2","proc lLinesSelectedRaw len|%s| all|%s|" % (len(lLinesSelectedRaw),lLinesSelectedRaw))
+        NTRC.tracef(3,"MN2","proc lLinesSelectedRaw len|%s| all|%s|" 
+                    % (len(lLinesSelectedRaw),lLinesSelectedRaw))
 
     # Eliminate duplicates.  Should not be any if the lineregexes are 
     #  specific enough.  
@@ -226,8 +230,12 @@ def main(mysInstructionsFileName,mysLogFileName):
 
     # Extract variable value from each matching line.
     # List of lines selected is actually a list of triples.
-    lResults = map( lambda (omatch, sLine, sVarname): 
-                fntMatchValue(sLine, g.dVars[sVarname])
+#    lResults = map( lambda ((omatch, sLine, sVarname)): 
+#                fntMatchValue(sLine, g.dVars[sVarname])
+#                , lLinesSelected )
+# AAARGH: PythonV3 removed tuples as args for lambdas!!!
+    lResults = map( lambda tLine: 
+                fntMatchValue(tLine[1], g.dVars[tLine[2]])
                 , lLinesSelected )
     # Returned list of (name,val) tuples for vars in lines selected.
     #  Make a dictionary.  
@@ -263,9 +271,9 @@ def main(mysInstructionsFileName,mysLogFileName):
         #  If the template is longer than one line, well, you can't read 
         #  the data with a simple header anyway.  Oops.  
         sHeader = sTemplateHeader
-        print sHeader
+        print(sHeader)
     # Newline already pasted on the end of template; don't add another.
-    print sLineout,
+    print(sLineout,)
     # Done.  
 
 # f n t D o e s L i n e M a t c h T h i s V a r 
@@ -324,7 +332,7 @@ def fndGetSyntheticVars():
     dTemp["logfilesize"] =  os.stat(g.sLogFileName).st_size
     dTemp["instructionfilename"] = g.sInstructionsFileName
 
-    (yr,mo,da,hr,mins,sec,x,y,z) = localtime()
+    (yr,mo,da,hr,mins,sec,x,y,z) = time.localtime()
     sAsciiT = "%4d%02d%02d_%02d%02d%02d" \
         % (yr,mo,da,hr,mins,sec)
     dTemp["todaysdatetime"] = sAsciiT
@@ -352,9 +360,9 @@ if "__main__" == __name__:
     dCliDict = fndCliParse("")
     dCliDictClean = {k:v for k,v in dCliDict.items() if v is not None}
     g.__dict__.update(dCliDictClean)
-    timestart = clock()
+    timestart = time.clock()
     main(g.sInstructionsFileName,g.sLogFileName)
-    timestop = clock()
+    timestop = time.clock()
 #    NTRC.tracef(0,"MAIN","proc cputime|%s|" % (timestop-timestart))
 
 # Edit history:
@@ -376,6 +384,12 @@ if "__main__" == __name__:
 #               And bump version number.  
 # 20181218  RBL Make seed value print constant width to improve legibility of 
 #                lost value.
+# 20200726  RBL Sneak up on PythonV3.
+#               Fix prints.
+#               Fix lambda syntax to accept a tuple in V3.
+#               Fix several map and filter calls that return iterators 
+#                instead of lists.
+#               Fix version arg given to ArgumentParser; arg removed in PyV3.
 # 
 # 
 

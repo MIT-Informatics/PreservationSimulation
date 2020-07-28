@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # extractcpuinfo.py
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 # Get real info from the OS about how many cores there are on this system.  
 # If the user has specified the NCORES environment variable, then
@@ -60,7 +61,7 @@ def fnIntPlease(myString):
 def main():
     sArglen = sys.argv[1] if len(sys.argv)>1 else ""
     sCpuId = fnsGetCpuIdString(sArglen)
-    print sCpuId
+    print(sCpuId)
     return 0
 
 
@@ -71,6 +72,7 @@ if __name__ == "__main__":
 
 # Edit history:
 # 20170522  RBL Original version, extracted from broker.py.  
+# 20200726  RBL Update to PyV3.
 # 
 # 
     

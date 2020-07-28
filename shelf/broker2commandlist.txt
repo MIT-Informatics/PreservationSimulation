@@ -63,14 +63,14 @@ date +%Y%m%d_%H%M%S.%3N
 # Data extraction command.  Header must be forced here so that the 
 #  cleanup program can label the data fields correctly.
 
-(export TRACE_LEVEL=0; export TRACE_PRODUCTION=YES; unset TRACE_FACIL; unset TRACE_TARGET; python2 extractvalues2.py --header --separator=' ' hl-extractinstructions.txt {sFamilyDir}/{sSpecificDir}/log/{sShelfLogFileName}.log  |  tee  {sFamilyDir}/{sSpecificDir}/ext/{sShelfLogFileName}.ext)
+(export TRACE_LEVEL=0; export TRACE_PRODUCTION=YES; unset TRACE_FACIL; unset TRACE_TARGET; python3 extractvalues2.py --header --separator=' ' hl-extractinstructions.txt {sFamilyDir}/{sSpecificDir}/log/{sShelfLogFileName}.log  |  tee  {sFamilyDir}/{sSpecificDir}/ext/{sShelfLogFileName}.ext)
 
 date +%Y%m%d_%H%M%S.%3N
 
 # Data cleanup command.  Appends line from extract file to output file, 
 #  and usually deletes the extract file and records it in the done collection.
 
-(export TRACE_LEVEL=0; export TRACE_PRODUCTION=YES; unset TRACE_FACIL; unset TRACE_TARGET; python2 datacleanup.py {sSearchDbProgressCollectionName} {sSearchDbDoneCollectionName} {sFamilyDir}/{sSpecificDir}/ext/{sShelfLogFileName}.ext {sFamilyDir}/{sSpecificDir}/dat/GiantOutput_00.txt  --separator=' ' --donotdelete=N)
+(export TRACE_LEVEL=0; export TRACE_PRODUCTION=YES; unset TRACE_FACIL; unset TRACE_TARGET; python3 datacleanup.py {sSearchDbProgressCollectionName} {sSearchDbDoneCollectionName} {sFamilyDir}/{sSpecificDir}/ext/{sShelfLogFileName}.ext {sFamilyDir}/{sSpecificDir}/dat/GiantOutput_00.txt  --separator=' ' --donotdelete=N)
 
 # End time
 date +%Y%m%d_%H%M%S.%3N
@@ -93,6 +93,10 @@ date +%Y%m%d_%H%M%S.%3N
 #                and fields missing.
 # 20190123  RBL Increase the waiting time: 10 seconds is not enough!
 # 20200220  RBL Clean up comments a little.  
+# 20200726  RBL Change extractvaluesNNN.py to python3.
+# 20200727	RBL	Change datacleanup.py to python3.
+# 
+# 
 # 
 
 #END

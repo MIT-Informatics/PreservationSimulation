@@ -1,14 +1,12 @@
 #!/usr/bin/python
 # datacleanup.py
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 import  argparse
 import  os
 import  sys
-import  re
 import  time
-import  json
 from    NewTraceFac     import NTRC,ntrace,ntracef
-#import  mongolib
 import  csv
 import  searchdatabasemongo
 
@@ -19,7 +17,7 @@ def fndCliParse(mysArglist):
          many options for this run from the command line.  
         Return a dictionary of all of them.  
     '''
-    sVersion = "0.0.2"
+    sVersion = "0.0.3"
     cParse = argparse.ArgumentParser(description="Digital Library Preservation "+
         "Simulation DataCleanup, CLI v"+sVersion+"  "+
         "Process a file with the (single-line plus header line) results of a " + 
@@ -28,7 +26,8 @@ def fndCliParse(mysArglist):
         "and then delete the input file so we don't bother to look at it again." +
         "" 
         , epilog="Defaults for args as follows: separator=blank, \n"
-        , version=sVersion)
+#        , version=sVersion
+        )
     
     # P O S I T I O N A L  arguments
     #cParse.add_argument('--something', type=, dest='', metavar='', help='')
@@ -155,8 +154,8 @@ def main():
     # Get data from the extract file: one line of header, one line of data.
     with open(g.sInputFilename,'r') as fhInput:
         oReader = csv.reader(fhInput, delimiter=g.sSeparator)
-        lHeader = oReader.next()
-        lValues = oReader.next()
+        lHeader = next(oReader)
+        lValues = next(oReader)
         NTRC.tracef(3, "DCLN", "proc lHeader|%s|" % (lHeader))
         NTRC.tracef(3, "DCLN", "proc lValues|%s|" % (lValues))
     dValues = dict(zip(lHeader, lValues))
@@ -170,7 +169,7 @@ def main():
     sInstructionId = dValues["mongoid"]
     sLineOut = g.sSeparator.join(lValues)
     NTRC.tracef(0,"DCLN","proc looking for done recd|%s|" 
-        % (sInstructionId))
+                % (sInstructionId))
 
     # If this extract is already stored in the database, don't do it again.  
     bIsItDone = g.mdb.fnbIsItDone(sInstructionId)
@@ -188,7 +187,7 @@ def main():
                     % (sHeaderLine))
             fhOutput.write(sLineOut + "\n")
             NTRC.tracef(0, "DCLN", "proc line appended to output \nsLineOut|%s|" 
-                % (sLineOut))
+                        % (sLineOut))
 
         # Probably record the done record in db.
         if g.sDoNotRecord.startswith("Y"):
@@ -202,14 +201,14 @@ def main():
         else:
             os.remove(g.sInputFilename)
             NTRC.tracef(3,"DCLN", "proc fileremoved|%s|" 
-                % (g.sInputFilename))
+                        % (g.sInputFilename))
             # And remove its in-progress record from the search db.
             g.mdb.fndDeleteProgressRecord(sInstructionId)
     else:
         # Duplicate instruction; do not add line to output file.
-        NTRC.tracef(0, "DCLN", "proc line NOT appended to output file \n"
-            "sLineOut|%s|" 
-            % (sLineOut))
+        NTRC.tracef(0, "DCLN", "proc line *NOT* appended to output file \n"
+                    "sLineOut|%s|" 
+                    % (sLineOut))
 
     NTRC.ntracef(0,"DCLN","datacleanup End.")
     return 0
@@ -231,6 +230,8 @@ if __name__ == "__main__":
 #                before the data line.  This is done to prevent the header
 #                line getting out of sync with the extracted data items, 
 #                which happened twice already this year.  
+# 20200727  RBL Sneak up on PyV3.
+#               Remove version arg from call to ArgumentParser; removed in V3.
 # 
 # 
 
