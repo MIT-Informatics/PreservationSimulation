@@ -165,6 +165,12 @@ class CG(object):
     # CWorkers output queue for reporting progress.
     qOutput = None
 
+    # Thresholds for job queue size.
+    # Put some distance between lo and hi for hysteresis to prevent stuttering.  
+    nQThreshLo = 30
+    nQThreshHi = 100
+    nQThreshSleep = 1.0
+
 #===========================================================
     """ Additional data needed by something or other.  
     """
@@ -438,10 +444,41 @@ def fntProcessOneInstruction(mysRunNumber, mydInstruction, mynSeed):
 
             # Send the instruction out to be done.  Just drop it in the 
             #  queue (think of it as the outbox).
-            g.qJobs.put(tThisInst)
+#            g.qJobs.put(tThisInst)
+            fnSendOneJobSlowly(tThisInst, g.qJobs)
             g.nCases += 1
             
             return tThisInst
+
+
+# f n S e n d O n e J o b S l o w l y 
+@ntracef("QTHR")
+def fnSendOneJobSlowly(myInstruction, myqJobs):
+    ''' Queue this instruction as a job.
+        If the queue size gets out of hand, wait for
+         some jobs to be removed from it.0
+     '''
+    # If qsize > hi threshold, wait for it to come down.
+    """ Boy, the walrus operator would really come in handy here.
+        But that would restrict us to Python versions >= 3.8.  
+    if (nQSize := myqJobs.qsize()) > g.nQThreshHi:
+        NTRC.ntracef(3, "QTHR", "proc qsize over hi  |%s|" % (nQSize))
+        while (nQSize := myqJobs.qsize()) > g.nQThreshLo:
+            time.sleep(g.nQThreshSleep)
+        NTRC.ntracef(3, "QTHR", "proc qsize under lo |%s|" % (nQSize))
+    """
+    nQSize = myqJobs.qsize()
+    if nQSize > g.nQThreshHi:
+        NTRC.ntracef(3, "QTHR", "proc qsize over hi  |%s|" % (nQSize))
+        while True:
+            time.sleep(g.nQThreshSleep)
+            nQSize = myqJobs.qsize()
+            if nQSize < g.nQThreshLo:
+                break
+        NTRC.ntracef(3, "QTHR", "proc qsize under lo |%s|" % (nQSize))
+    # Okay, now queue the job.  
+    myqJobs.put(myInstruction)
+    return nQSize
 
 
 #===========================================================
@@ -546,6 +583,7 @@ if __name__ == "__main__":
 #                In particular, old global data needed by the newbroker.
 #                CWorkers is a much cleaner solution.
 # 20200721  RBL Improve comments slightly.
+# 20200816  RBL Add routine to fill job queue slowly, not all at once.  
 # 
 # 
 

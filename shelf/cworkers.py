@@ -123,7 +123,7 @@ class CWorkers(object):
     tEndJobMsg = tInstruction(cmdlist="", logdir='', logname='')
     tEndOutMsg = tLinesOut(listoflists='', procname='')
 
-    @ntrace
+    @ntracef("CWRK")
     def __init__(self, nservers, qinputjobs, qoutputdata=None, outputreceiver=None):
         self.nParallel = nservers if nservers>0 else 8
         self.qJobs = qinputjobs
@@ -135,7 +135,7 @@ class CWorkers(object):
 
     # ================================================
     # m _ C r e a t e W o r k e r s 
-    @ntrace
+    @ntracef("CWRK")
     def m_CreateWorkers(self):
         ''' Create worker pool and start them all. 
             The number of workers was specified in the class construction.
@@ -143,9 +143,9 @@ class CWorkers(object):
         lProcs = []
         for iProcessNum in range(self.nParallel):
             proc = mp.Process(target=doManyJobs
-                    , args=(self.qJobs,)
-                    , name=f'CWorker-{iProcessNum+1}'
-                    )
+                            , args=(self.qJobs,)
+                            , name=f'CWorker-{iProcessNum+1}'
+                            )
             lProcs.append(proc)
             proc.start()
         NTRC.ntrace(3, "proc worker|%s| started on q|%s|" % (proc, self.qJobs))
@@ -155,7 +155,7 @@ class CWorkers(object):
 
     # ================================================
     # m _ C r e a t e O u t p u t R e c e i v e r 
-    @ntrace
+    @ntracef("CWRK")
     def m_CreateOutputReceiver(self, myfReceiver=None):
         ''' Make one more async process to receive job outputs. 
             If there is no output queue at all, then there will be no 
@@ -174,7 +174,7 @@ class CWorkers(object):
                                 args=(CWorkers.qOutput,))
             procReceiver.start()
             NTRC.ntrace(3, "proc rcvr|%s||%s| started on q|%s|" 
-                    % (procRcvrToday, procReceiver, CWorkers.qOutput))
+                        % (procRcvrToday, procReceiver, CWorkers.qOutput))
             self.procOutput = procReceiver
         else:
             self.procOutput = None
@@ -183,7 +183,7 @@ class CWorkers(object):
 
     # ================================================
     # m _ C l o s e W o r k e r s 
-    @ntrace
+    @ntracef("CWRK")
     def m_CloseWorkers(self):
         ''' Nuke all the worker processes.
             Send please-kill-yourself messages to all
@@ -200,7 +200,7 @@ class CWorkers(object):
 
     # ================================================
     # m _ C l o s e O u t p u t R e c e i v e r 
-    @ntrace
+    @ntracef("CWRK")
     def m_CloseOutputReceiver(self):
         ''' Nuke the output receive process, if any. '''
         qOut = CWorkers.getOutputQueue()
@@ -212,7 +212,7 @@ class CWorkers(object):
 
     # ================================================
     # C l o s e 
-    @ntrace
+    @ntracef("CWRK")
     def Close(self):
         ''' Close all async processes that we started.
             This is the routine that the user should invoke.
@@ -224,7 +224,7 @@ class CWorkers(object):
     # ================================================
     # g e t O u t p u t Q u e u e 
     @staticmethod
-    @ntrace
+    @ntracef("CWRK")
     # g e t O u t p u t Q u e u e 
     def getOutputQueue():
         ''' Return the managed multiprocessing queue used
@@ -259,12 +259,12 @@ def fntDoOneCmdLine(mysLine):
     """
     sTimeBegin = fnsGetTimestamp()
     proc = (sp.Popen(mysLine
-        , stdout=sp.PIPE
-        , close_fds=True            # The default anyway, I think.  
-        , stderr=sp.DEVNULL
-        , universal_newlines=True
-        , shell=True)
-        )
+            , stdout=sp.PIPE
+            , close_fds=True            # The default anyway, I think.  
+            , stderr=sp.DEVNULL
+            , universal_newlines=True
+            , shell=True)
+            )
     (sProcOut, sProcErr) = proc.communicate()
     proc.stdout.close()
     if not sProcErr: sProcErr = ""
@@ -409,7 +409,7 @@ def defaultReceiveOutput(myqOutput):
 # U T I L I T Y   F U N C T I O N S 
 
 # f n W r i t e L o g F i l e 
-@ntrace
+@ntracef("CWRK")
 def fnWriteLogFile(mylContents, mysFileDir, mysFileName):
     sFullName = mysFileDir + "/" + mysFileName
     # Remove file if present.
@@ -449,7 +449,10 @@ def fnsGetProcessNumber(mysProcName):
     '''Extract the process number, which is the same as the case number
     in this case, so we can use its abbreviated form in logs and traces.
     '''
-    sProcNum = re.match(".*-(\d+)", mysProcName).group(1)
+    try:
+        sProcNum = re.match(".*-(\d+)", mysProcName).group(1)
+    except:
+        sProcNum = "00"
     return sProcNum if sProcNum else ""
 
 
@@ -468,7 +471,9 @@ def fnbDoNotIgnoreLine(mysLine):
 # 20200717  RBL Original version of cworkers.py.
 # 20200718  RBL Add a case number at the beginning of each output listing. 
 #               Improve some comments.   
+# 20200728  RBL Protect the re.match in GetProcessNumber with try-except.
+# 20200816  RBL Add CWRK facility code to traces.  
 # 
-
+# 
 
 #END
