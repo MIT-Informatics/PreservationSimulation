@@ -360,9 +360,9 @@ if "__main__" == __name__:
     dCliDict = fndCliParse("")
     dCliDictClean = {k:v for k,v in dCliDict.items() if v is not None}
     g.__dict__.update(dCliDictClean)
-    timestart = time.clock()
+    timestart = time.clock_gettime(time.CLOCK_PROCESS_CPUTIME_ID)
     main(g.sInstructionsFileName,g.sLogFileName)
-    timestop = time.clock()
+    timestop = time.clock_gettime(time.CLOCK_PROCESS_CPUTIME_ID)
 #    NTRC.tracef(0,"MAIN","proc cputime|%s|" % (timestop-timestart))
 
 # Edit history:
@@ -390,6 +390,9 @@ if "__main__" == __name__:
 #               Fix several map and filter calls that return iterators 
 #                instead of lists.
 #               Fix version arg given to ArgumentParser; arg removed in PyV3.
+# 20201102  RBL Update time.clock() to a more precise version because
+#                the simple version was removed sometime betweeen 3.5, the last
+#                version I tested on AWS, and 3.8 today.  Oops.  
 # 
 # 
 
