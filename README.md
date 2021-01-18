@@ -16,7 +16,17 @@ The simulations are necessarily schematic in that they don't attempt to model th
         beyond the reach of accident."  
         --Thomas Jefferson, Feb. 18, 1791
 
-Results of this project will be presented at the IDCC20 conference in February, 2020.  A draft of the paper is available on arXiv.org at https://arxiv.org/abs/1912.07908 .
+Results of this project was presented at the IDCC20 conference in February, 2020.  
+A draft of the paper is available on arXiv.org at https://arxiv.org/abs/1912.07908 .  
+The published paper is available at http://www.ijdc.net/article/view/727/598 or 
+DOI: https://doi.org/10.2218/ijdc.v15i1.727 
+
+
+## Contact Information
+
+Micah Altman: escience@mit.edu
+
+Richard Landau: landau@ricksoft.com
 
 
 ## Overview of Process
