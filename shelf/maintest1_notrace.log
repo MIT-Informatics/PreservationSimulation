@@ -1,0 +1,739 @@
+20210203_142505 MAIN INFO - Simulation parameters
+20210203_142505 MAIN INFO - Command line|['main.py', '../hl', 'installtest', '0', '1', '--lifek=693147', '--ncopies=1', '--audit=0', '--ndocuments=10000']|
+20210203_142505 MAIN INFO - Usable CLI line|python2 main.py ../hl installtest 0 1 --lifek=693147 --ncopies=1 --audit=0 --ndocuments=10000|
+20210203_142505 PARAMS INFO - familydir|../hl| specificdir|installtest|
+20210203_142505 PARAMS INFO - RANDOM random seed|1| 
+20210203_142505 PARAMS INFO - begin simulation timelimit|100000|hr=|10|metricyr defaultlimit|100000|hr=|10|metricyr
+20210203_142505 PARAMS INFO - POLITE time|1000|msec
+20210203_142505 PARAMS INFO - LOG    logfile|-| loglevel|INFO|
+20210203_142505 PARAMS INFO - TRACE  traceproduction|False|
+20210203_142505 PARAMS INFO - CLIENT client|MIT| collection|Mags| quality|1| ndocs|10|
+20210203_142505 PARAMS INFO - ALLCLIENTS nDocuments|10000| override if nz
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 11| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 10| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 13| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 12| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 15| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 14| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 17| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 16| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 19| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 18| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|AWS Euro  Plus| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Google Drive Plus| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|AWS Euro Vanilla| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 06| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 07| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 04| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 05| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 02| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 03| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 01| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Yet Another 1| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 08| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 09| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Google Drive Platinum| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Very Desperate Backup 09| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Very Desperate Backup 08| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Very Desperate Backup 01| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Very Desperate Backup 03| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Very Desperate Backup 02| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Very Desperate Backup 05| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Very Desperate Backup 04| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Very Desperate Backup 07| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Very Desperate Backup 06| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Amazon East Premium| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Amazon West Plus| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 70| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Amazon West| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Amazon West Premium| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Amazon East Super Duper| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Google Drive Super Duper| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 60| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 61| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 62| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 63| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 64| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 65| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 66| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 67| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 68| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 69| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|AWS Euro  Super Duper| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Google Drive Premium| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|AWS Euro  Premium| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Amazon East Platinum| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Very Desperate Backup 50| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|OneDrive  Super Duper| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Amazon East Plus| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Amazon West Platinum| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 55| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 54| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 57| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 56| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 51| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 50| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 53| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 52| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 59| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 58| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|AWS Euro  Platinum| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|OneDrive  Platinum| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Google Drive| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|OneDrive  Plus| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Amazon East| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Very Desperate Backup 31| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Very Desperate Backup 32| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Very Desperate Backup 33| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Very Desperate Backup 34| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Very Desperate Backup 35| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Very Desperate Backup 36| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Very Desperate Backup 37| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Very Desperate Backup 38| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Very Desperate Backup 39| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Very Desperate Backup 45| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Very Desperate Backup 44| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Very Desperate Backup 47| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Very Desperate Backup 46| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Very Desperate Backup 41| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Very Desperate Backup 40| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Very Desperate Backup 43| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Very Desperate Backup 42| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Very Desperate Backup 49| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Very Desperate Backup 48| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 48| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 49| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 42| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 43| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 40| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 41| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 46| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 47| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 44| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 45| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Very Desperate Backup 23| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Very Desperate Backup 22| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Very Desperate Backup 21| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Very Desperate Backup 20| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Very Desperate Backup 27| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Very Desperate Backup 26| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Very Desperate Backup 25| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Very Desperate Backup 24| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Very Desperate Backup 29| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Very Desperate Backup 28| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Yet Another 4| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Yet Another 5| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Yet Another 2| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Yet Another 3| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 39| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 38| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 37| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 36| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 35| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 34| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 33| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 32| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 31| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 30| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|OneDrive Vanilla| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|OneDrive  Premium| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Very Desperate Backup 16| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Very Desperate Backup 17| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Very Desperate Backup 14| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Very Desperate Backup 15| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Very Desperate Backup 12| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Very Desperate Backup 13| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Very Desperate Backup 10| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Very Desperate Backup 11| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Very Desperate Backup 18| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Very Desperate Backup 19| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Very Desperate Backup 30| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Amazon West Super Duper| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 28| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 29| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 24| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 25| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 26| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 27| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 20| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 21| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 22| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER server|Desperate Backup 23| quality|1| shelfsize|10|TB
+20210203_142505 PARAMS INFO - SERVER DefaultHalflife|0|
+20210203_142505 PARAMS INFO - SHELF quality|1| smallfailrate|693147|Khr=|79072|yr shelffailrate|100000000000|Khr=|11407711613|yr
+20210203_142505 PARAMS INFO - SHELF quality|2| smallfailrate|693147|Khr=|79072|yr shelffailrate|200000000000|Khr=|22815423226|yr
+20210203_142505 PARAMS INFO - SHELF quality|3| smallfailrate|693147|Khr=|79072|yr shelffailrate|400000000000|Khr=|45630846452|yr
+20210203_142505 PARAMS INFO - SHELF quality|4| smallfailrate|693147|Khr=|79072|yr shelffailrate|800000000000|Khr=|91261692904|yr
+20210203_142505 PARAMS INFO - SHELF quality|5| smallfailrate|693147|Khr=|79072|yr shelffailrate|1600000000000|Khr=|182523385808|yr
+20210203_142505 PARAMS INFO - DISTRIBUTION value|1| quality|1| copies|1|
+20210203_142505 PARAMS INFO - DISTRIBUTION value|2| quality|2| copies|4|
+20210203_142505 PARAMS INFO - DISTRIBUTION value|3| quality|3| copies|3|
+20210203_142505 PARAMS INFO - DISTRIBUTION value|4| quality|4| copies|2|
+20210203_142505 PARAMS INFO - DISTRIBUTION value|5| quality|5| copies|1|
+20210203_142505 PARAMS INFO - DOCUMENT value|1| percent|100| meanMB|50| sd|0|
+20210203_142505 PARAMS INFO - DOCUMENT value|1| percent|0| meanMB|5000| sd|2000|
+20210203_142505 PARAMS INFO - AUDIT interval hours|0| segments|1| type|OFF| bandwidth Mbps|100|
+20210203_142505 PARAMS INFO - GLITCH freq|0| impact|0| span|0| decay|0| maxlife|0| ignorelimit|0.050|
+20210203_142505 PARAMS INFO - SHOCKS freq|0| impact|33| span|1| maxlife|10000| type|2|
+20210203_142505 MAIN INFO - created server|V1| quality|1| shelfsize|10|TB name|Desperate Backup 11| life|0|
+20210203_142505 MAIN INFO - created server|V2| quality|1| shelfsize|10|TB name|Desperate Backup 10| life|0|
+20210203_142505 MAIN INFO - created server|V3| quality|1| shelfsize|10|TB name|Desperate Backup 13| life|0|
+20210203_142505 MAIN INFO - created server|V4| quality|1| shelfsize|10|TB name|Desperate Backup 12| life|0|
+20210203_142505 MAIN INFO - created server|V5| quality|1| shelfsize|10|TB name|Desperate Backup 15| life|0|
+20210203_142505 MAIN INFO - created server|V6| quality|1| shelfsize|10|TB name|Desperate Backup 14| life|0|
+20210203_142505 MAIN INFO - created server|V7| quality|1| shelfsize|10|TB name|Desperate Backup 17| life|0|
+20210203_142505 MAIN INFO - created server|V8| quality|1| shelfsize|10|TB name|Desperate Backup 16| life|0|
+20210203_142505 MAIN INFO - created server|V9| quality|1| shelfsize|10|TB name|Desperate Backup 19| life|0|
+20210203_142505 MAIN INFO - created server|V10| quality|1| shelfsize|10|TB name|Desperate Backup 18| life|0|
+20210203_142505 MAIN INFO - created server|V11| quality|1| shelfsize|10|TB name|AWS Euro  Plus| life|0|
+20210203_142505 MAIN INFO - created server|V12| quality|1| shelfsize|10|TB name|Google Drive Plus| life|0|
+20210203_142505 MAIN INFO - created server|V13| quality|1| shelfsize|10|TB name|AWS Euro Vanilla| life|0|
+20210203_142505 MAIN INFO - created server|V14| quality|1| shelfsize|10|TB name|Desperate Backup 06| life|0|
+20210203_142505 MAIN INFO - created server|V15| quality|1| shelfsize|10|TB name|Desperate Backup 07| life|0|
+20210203_142505 MAIN INFO - created server|V16| quality|1| shelfsize|10|TB name|Desperate Backup 04| life|0|
+20210203_142505 MAIN INFO - created server|V17| quality|1| shelfsize|10|TB name|Desperate Backup 05| life|0|
+20210203_142505 MAIN INFO - created server|V18| quality|1| shelfsize|10|TB name|Desperate Backup 02| life|0|
+20210203_142505 MAIN INFO - created server|V19| quality|1| shelfsize|10|TB name|Desperate Backup 03| life|0|
+20210203_142505 MAIN INFO - created server|V20| quality|1| shelfsize|10|TB name|Desperate Backup 01| life|0|
+20210203_142505 MAIN INFO - created server|V21| quality|1| shelfsize|10|TB name|Yet Another 1| life|0|
+20210203_142505 MAIN INFO - created server|V22| quality|1| shelfsize|10|TB name|Desperate Backup 08| life|0|
+20210203_142505 MAIN INFO - created server|V23| quality|1| shelfsize|10|TB name|Desperate Backup 09| life|0|
+20210203_142505 MAIN INFO - created server|V24| quality|1| shelfsize|10|TB name|Google Drive Platinum| life|0|
+20210203_142505 MAIN INFO - created server|V25| quality|1| shelfsize|10|TB name|Very Desperate Backup 09| life|0|
+20210203_142505 MAIN INFO - created server|V26| quality|1| shelfsize|10|TB name|Very Desperate Backup 08| life|0|
+20210203_142505 MAIN INFO - created server|V27| quality|1| shelfsize|10|TB name|Very Desperate Backup 01| life|0|
+20210203_142505 MAIN INFO - created server|V28| quality|1| shelfsize|10|TB name|Very Desperate Backup 03| life|0|
+20210203_142505 MAIN INFO - created server|V29| quality|1| shelfsize|10|TB name|Very Desperate Backup 02| life|0|
+20210203_142505 MAIN INFO - created server|V30| quality|1| shelfsize|10|TB name|Very Desperate Backup 05| life|0|
+20210203_142505 MAIN INFO - created server|V31| quality|1| shelfsize|10|TB name|Very Desperate Backup 04| life|0|
+20210203_142505 MAIN INFO - created server|V32| quality|1| shelfsize|10|TB name|Very Desperate Backup 07| life|0|
+20210203_142505 MAIN INFO - created server|V33| quality|1| shelfsize|10|TB name|Very Desperate Backup 06| life|0|
+20210203_142505 MAIN INFO - created server|V34| quality|1| shelfsize|10|TB name|Amazon East Premium| life|0|
+20210203_142505 MAIN INFO - created server|V35| quality|1| shelfsize|10|TB name|Amazon West Plus| life|0|
+20210203_142505 MAIN INFO - created server|V36| quality|1| shelfsize|10|TB name|Desperate Backup 70| life|0|
+20210203_142505 MAIN INFO - created server|V37| quality|1| shelfsize|10|TB name|Amazon West| life|0|
+20210203_142505 MAIN INFO - created server|V38| quality|1| shelfsize|10|TB name|Amazon West Premium| life|0|
+20210203_142505 MAIN INFO - created server|V39| quality|1| shelfsize|10|TB name|Amazon East Super Duper| life|0|
+20210203_142505 MAIN INFO - created server|V40| quality|1| shelfsize|10|TB name|Google Drive Super Duper| life|0|
+20210203_142505 MAIN INFO - created server|V41| quality|1| shelfsize|10|TB name|Desperate Backup 60| life|0|
+20210203_142505 MAIN INFO - created server|V42| quality|1| shelfsize|10|TB name|Desperate Backup 61| life|0|
+20210203_142505 MAIN INFO - created server|V43| quality|1| shelfsize|10|TB name|Desperate Backup 62| life|0|
+20210203_142505 MAIN INFO - created server|V44| quality|1| shelfsize|10|TB name|Desperate Backup 63| life|0|
+20210203_142505 MAIN INFO - created server|V45| quality|1| shelfsize|10|TB name|Desperate Backup 64| life|0|
+20210203_142505 MAIN INFO - created server|V46| quality|1| shelfsize|10|TB name|Desperate Backup 65| life|0|
+20210203_142505 MAIN INFO - created server|V47| quality|1| shelfsize|10|TB name|Desperate Backup 66| life|0|
+20210203_142505 MAIN INFO - created server|V48| quality|1| shelfsize|10|TB name|Desperate Backup 67| life|0|
+20210203_142505 MAIN INFO - created server|V49| quality|1| shelfsize|10|TB name|Desperate Backup 68| life|0|
+20210203_142505 MAIN INFO - created server|V50| quality|1| shelfsize|10|TB name|Desperate Backup 69| life|0|
+20210203_142505 MAIN INFO - created server|V51| quality|1| shelfsize|10|TB name|AWS Euro  Super Duper| life|0|
+20210203_142505 MAIN INFO - created server|V52| quality|1| shelfsize|10|TB name|Google Drive Premium| life|0|
+20210203_142505 MAIN INFO - created server|V53| quality|1| shelfsize|10|TB name|AWS Euro  Premium| life|0|
+20210203_142505 MAIN INFO - created server|V54| quality|1| shelfsize|10|TB name|Amazon East Platinum| life|0|
+20210203_142505 MAIN INFO - created server|V55| quality|1| shelfsize|10|TB name|Very Desperate Backup 50| life|0|
+20210203_142505 MAIN INFO - created server|V56| quality|1| shelfsize|10|TB name|OneDrive  Super Duper| life|0|
+20210203_142505 MAIN INFO - created server|V57| quality|1| shelfsize|10|TB name|Amazon East Plus| life|0|
+20210203_142505 MAIN INFO - created server|V58| quality|1| shelfsize|10|TB name|Amazon West Platinum| life|0|
+20210203_142505 MAIN INFO - created server|V59| quality|1| shelfsize|10|TB name|Desperate Backup 55| life|0|
+20210203_142505 MAIN INFO - created server|V60| quality|1| shelfsize|10|TB name|Desperate Backup 54| life|0|
+20210203_142505 MAIN INFO - created server|V61| quality|1| shelfsize|10|TB name|Desperate Backup 57| life|0|
+20210203_142505 MAIN INFO - created server|V62| quality|1| shelfsize|10|TB name|Desperate Backup 56| life|0|
+20210203_142505 MAIN INFO - created server|V63| quality|1| shelfsize|10|TB name|Desperate Backup 51| life|0|
+20210203_142505 MAIN INFO - created server|V64| quality|1| shelfsize|10|TB name|Desperate Backup 50| life|0|
+20210203_142505 MAIN INFO - created server|V65| quality|1| shelfsize|10|TB name|Desperate Backup 53| life|0|
+20210203_142505 MAIN INFO - created server|V66| quality|1| shelfsize|10|TB name|Desperate Backup 52| life|0|
+20210203_142505 MAIN INFO - created server|V67| quality|1| shelfsize|10|TB name|Desperate Backup 59| life|0|
+20210203_142505 MAIN INFO - created server|V68| quality|1| shelfsize|10|TB name|Desperate Backup 58| life|0|
+20210203_142505 MAIN INFO - created server|V69| quality|1| shelfsize|10|TB name|AWS Euro  Platinum| life|0|
+20210203_142505 MAIN INFO - created server|V70| quality|1| shelfsize|10|TB name|OneDrive  Platinum| life|0|
+20210203_142505 MAIN INFO - created server|V71| quality|1| shelfsize|10|TB name|Google Drive| life|0|
+20210203_142505 MAIN INFO - created server|V72| quality|1| shelfsize|10|TB name|OneDrive  Plus| life|0|
+20210203_142505 MAIN INFO - created server|V73| quality|1| shelfsize|10|TB name|Amazon East| life|0|
+20210203_142505 MAIN INFO - created server|V74| quality|1| shelfsize|10|TB name|Very Desperate Backup 31| life|0|
+20210203_142505 MAIN INFO - created server|V75| quality|1| shelfsize|10|TB name|Very Desperate Backup 32| life|0|
+20210203_142505 MAIN INFO - created server|V76| quality|1| shelfsize|10|TB name|Very Desperate Backup 33| life|0|
+20210203_142505 MAIN INFO - created server|V77| quality|1| shelfsize|10|TB name|Very Desperate Backup 34| life|0|
+20210203_142505 MAIN INFO - created server|V78| quality|1| shelfsize|10|TB name|Very Desperate Backup 35| life|0|
+20210203_142505 MAIN INFO - created server|V79| quality|1| shelfsize|10|TB name|Very Desperate Backup 36| life|0|
+20210203_142505 MAIN INFO - created server|V80| quality|1| shelfsize|10|TB name|Very Desperate Backup 37| life|0|
+20210203_142505 MAIN INFO - created server|V81| quality|1| shelfsize|10|TB name|Very Desperate Backup 38| life|0|
+20210203_142505 MAIN INFO - created server|V82| quality|1| shelfsize|10|TB name|Very Desperate Backup 39| life|0|
+20210203_142505 MAIN INFO - created server|V83| quality|1| shelfsize|10|TB name|Very Desperate Backup 45| life|0|
+20210203_142505 MAIN INFO - created server|V84| quality|1| shelfsize|10|TB name|Very Desperate Backup 44| life|0|
+20210203_142505 MAIN INFO - created server|V85| quality|1| shelfsize|10|TB name|Very Desperate Backup 47| life|0|
+20210203_142505 MAIN INFO - created server|V86| quality|1| shelfsize|10|TB name|Very Desperate Backup 46| life|0|
+20210203_142505 MAIN INFO - created server|V87| quality|1| shelfsize|10|TB name|Very Desperate Backup 41| life|0|
+20210203_142505 MAIN INFO - created server|V88| quality|1| shelfsize|10|TB name|Very Desperate Backup 40| life|0|
+20210203_142505 MAIN INFO - created server|V89| quality|1| shelfsize|10|TB name|Very Desperate Backup 43| life|0|
+20210203_142505 MAIN INFO - created server|V90| quality|1| shelfsize|10|TB name|Very Desperate Backup 42| life|0|
+20210203_142505 MAIN INFO - created server|V91| quality|1| shelfsize|10|TB name|Very Desperate Backup 49| life|0|
+20210203_142505 MAIN INFO - created server|V92| quality|1| shelfsize|10|TB name|Very Desperate Backup 48| life|0|
+20210203_142505 MAIN INFO - created server|V93| quality|1| shelfsize|10|TB name|Desperate Backup 48| life|0|
+20210203_142505 MAIN INFO - created server|V94| quality|1| shelfsize|10|TB name|Desperate Backup 49| life|0|
+20210203_142505 MAIN INFO - created server|V95| quality|1| shelfsize|10|TB name|Desperate Backup 42| life|0|
+20210203_142505 MAIN INFO - created server|V96| quality|1| shelfsize|10|TB name|Desperate Backup 43| life|0|
+20210203_142505 MAIN INFO - created server|V97| quality|1| shelfsize|10|TB name|Desperate Backup 40| life|0|
+20210203_142505 MAIN INFO - created server|V98| quality|1| shelfsize|10|TB name|Desperate Backup 41| life|0|
+20210203_142505 MAIN INFO - created server|V99| quality|1| shelfsize|10|TB name|Desperate Backup 46| life|0|
+20210203_142505 MAIN INFO - created server|V100| quality|1| shelfsize|10|TB name|Desperate Backup 47| life|0|
+20210203_142505 MAIN INFO - created server|V101| quality|1| shelfsize|10|TB name|Desperate Backup 44| life|0|
+20210203_142505 MAIN INFO - created server|V102| quality|1| shelfsize|10|TB name|Desperate Backup 45| life|0|
+20210203_142505 MAIN INFO - created server|V103| quality|1| shelfsize|10|TB name|Very Desperate Backup 23| life|0|
+20210203_142505 MAIN INFO - created server|V104| quality|1| shelfsize|10|TB name|Very Desperate Backup 22| life|0|
+20210203_142505 MAIN INFO - created server|V105| quality|1| shelfsize|10|TB name|Very Desperate Backup 21| life|0|
+20210203_142505 MAIN INFO - created server|V106| quality|1| shelfsize|10|TB name|Very Desperate Backup 20| life|0|
+20210203_142505 MAIN INFO - created server|V107| quality|1| shelfsize|10|TB name|Very Desperate Backup 27| life|0|
+20210203_142505 MAIN INFO - created server|V108| quality|1| shelfsize|10|TB name|Very Desperate Backup 26| life|0|
+20210203_142505 MAIN INFO - created server|V109| quality|1| shelfsize|10|TB name|Very Desperate Backup 25| life|0|
+20210203_142505 MAIN INFO - created server|V110| quality|1| shelfsize|10|TB name|Very Desperate Backup 24| life|0|
+20210203_142505 MAIN INFO - created server|V111| quality|1| shelfsize|10|TB name|Very Desperate Backup 29| life|0|
+20210203_142505 MAIN INFO - created server|V112| quality|1| shelfsize|10|TB name|Very Desperate Backup 28| life|0|
+20210203_142505 MAIN INFO - created server|V113| quality|1| shelfsize|10|TB name|Yet Another 4| life|0|
+20210203_142505 MAIN INFO - created server|V114| quality|1| shelfsize|10|TB name|Yet Another 5| life|0|
+20210203_142505 MAIN INFO - created server|V115| quality|1| shelfsize|10|TB name|Yet Another 2| life|0|
+20210203_142505 MAIN INFO - created server|V116| quality|1| shelfsize|10|TB name|Yet Another 3| life|0|
+20210203_142505 MAIN INFO - created server|V117| quality|1| shelfsize|10|TB name|Desperate Backup 39| life|0|
+20210203_142505 MAIN INFO - created server|V118| quality|1| shelfsize|10|TB name|Desperate Backup 38| life|0|
+20210203_142505 MAIN INFO - created server|V119| quality|1| shelfsize|10|TB name|Desperate Backup 37| life|0|
+20210203_142505 MAIN INFO - created server|V120| quality|1| shelfsize|10|TB name|Desperate Backup 36| life|0|
+20210203_142505 MAIN INFO - created server|V121| quality|1| shelfsize|10|TB name|Desperate Backup 35| life|0|
+20210203_142505 MAIN INFO - created server|V122| quality|1| shelfsize|10|TB name|Desperate Backup 34| life|0|
+20210203_142505 MAIN INFO - created server|V123| quality|1| shelfsize|10|TB name|Desperate Backup 33| life|0|
+20210203_142505 MAIN INFO - created server|V124| quality|1| shelfsize|10|TB name|Desperate Backup 32| life|0|
+20210203_142505 MAIN INFO - created server|V125| quality|1| shelfsize|10|TB name|Desperate Backup 31| life|0|
+20210203_142505 MAIN INFO - created server|V126| quality|1| shelfsize|10|TB name|Desperate Backup 30| life|0|
+20210203_142505 MAIN INFO - created server|V127| quality|1| shelfsize|10|TB name|OneDrive Vanilla| life|0|
+20210203_142505 MAIN INFO - created server|V128| quality|1| shelfsize|10|TB name|OneDrive  Premium| life|0|
+20210203_142505 MAIN INFO - created server|V129| quality|1| shelfsize|10|TB name|Very Desperate Backup 16| life|0|
+20210203_142505 MAIN INFO - created server|V130| quality|1| shelfsize|10|TB name|Very Desperate Backup 17| life|0|
+20210203_142505 MAIN INFO - created server|V131| quality|1| shelfsize|10|TB name|Very Desperate Backup 14| life|0|
+20210203_142505 MAIN INFO - created server|V132| quality|1| shelfsize|10|TB name|Very Desperate Backup 15| life|0|
+20210203_142505 MAIN INFO - created server|V133| quality|1| shelfsize|10|TB name|Very Desperate Backup 12| life|0|
+20210203_142505 MAIN INFO - created server|V134| quality|1| shelfsize|10|TB name|Very Desperate Backup 13| life|0|
+20210203_142505 MAIN INFO - created server|V135| quality|1| shelfsize|10|TB name|Very Desperate Backup 10| life|0|
+20210203_142505 MAIN INFO - created server|V136| quality|1| shelfsize|10|TB name|Very Desperate Backup 11| life|0|
+20210203_142505 MAIN INFO - created server|V137| quality|1| shelfsize|10|TB name|Very Desperate Backup 18| life|0|
+20210203_142505 MAIN INFO - created server|V138| quality|1| shelfsize|10|TB name|Very Desperate Backup 19| life|0|
+20210203_142505 MAIN INFO - created server|V139| quality|1| shelfsize|10|TB name|Very Desperate Backup 30| life|0|
+20210203_142505 MAIN INFO - created server|V140| quality|1| shelfsize|10|TB name|Amazon West Super Duper| life|0|
+20210203_142505 MAIN INFO - created server|V141| quality|1| shelfsize|10|TB name|Desperate Backup 28| life|0|
+20210203_142505 MAIN INFO - created server|V142| quality|1| shelfsize|10|TB name|Desperate Backup 29| life|0|
+20210203_142505 MAIN INFO - created server|V143| quality|1| shelfsize|10|TB name|Desperate Backup 24| life|0|
+20210203_142505 MAIN INFO - created server|V144| quality|1| shelfsize|10|TB name|Desperate Backup 25| life|0|
+20210203_142505 MAIN INFO - created server|V145| quality|1| shelfsize|10|TB name|Desperate Backup 26| life|0|
+20210203_142505 MAIN INFO - created server|V146| quality|1| shelfsize|10|TB name|Desperate Backup 27| life|0|
+20210203_142505 MAIN INFO - created server|V147| quality|1| shelfsize|10|TB name|Desperate Backup 20| life|0|
+20210203_142505 MAIN INFO - created server|V148| quality|1| shelfsize|10|TB name|Desperate Backup 21| life|0|
+20210203_142505 MAIN INFO - created server|V149| quality|1| shelfsize|10|TB name|Desperate Backup 22| life|0|
+20210203_142505 MAIN INFO - created server|V150| quality|1| shelfsize|10|TB name|Desperate Backup 23| life|0|
+20210203_142505 SERVER INFO - server |V1| created storage shelf|H01| quality|1| size|10|TB svrlifespan|0| svrlife|0|
+20210203_142506 CLIENT INFO - client|T1| placed collection|C1| to server|V1|
+20210203_142506 MAIN INFO - created client|T1|
+20210203_142506 MAIN INFO - SERVERUSE shelf|V1-H01| qual|1| sectorexpolife|1000000| size|10000000| hiwater|500001| currentuse|500000| full%|5|
+20210203_142506 MAIN INFO - begin run
+20210203_142506 SERVER INFO - mAge_shelf set lifetime time|     0| shelf|H01| next lifetime|28338122020026.574|khr
+20210203_142506 SERVER INFO - small error t|    67| svr|V1| shelf|H01| hidden failure in copy|None|
+20210203_142506 SERVER INFO - small error t|  2419| svr|V1| shelf|H01| consecutive misses|20|
+20210203_142506 SERVER INFO - small error t|  2419| svr|V1| shelf|H01| hidden failure in copy|X5837| doc|D5837|
+20210203_142506 SERVER INFO - small error t|  2454| svr|V1| shelf|H01| hidden failure in copy|None|
+20210203_142506 SERVER INFO - small error t|  5142| svr|V1| shelf|H01| consecutive misses|33|
+20210203_142506 SERVER INFO - small error t|  5142| svr|V1| shelf|H01| hidden failure in copy|X5485| doc|D5485|
+20210203_142506 SERVER INFO - small error t|  5183| svr|V1| shelf|H01| hidden failure in copy|None|
+20210203_142506 SERVER INFO - small error t|  5497| svr|V1| shelf|H01| consecutive misses|3|
+20210203_142506 SERVER INFO - small error t|  5497| svr|V1| shelf|H01| hidden failure in copy|X89| doc|D89|
+20210203_142506 SERVER INFO - small error t|  5607| svr|V1| shelf|H01| hidden failure in copy|None|
+20210203_142506 SERVER INFO - small error t|  5666| svr|V1| shelf|H01| consecutive misses|1|
+20210203_142506 SERVER INFO - small error t|  5666| svr|V1| shelf|H01| hidden failure in copy|X783| doc|D783|
+20210203_142506 SERVER INFO - small error t|  5897| svr|V1| shelf|H01| hidden failure in copy|X5285| doc|D5285|
+20210203_142506 SERVER INFO - small error t|  5978| svr|V1| shelf|H01| hidden failure in copy|X9696| doc|D9696|
+20210203_142506 SERVER INFO - small error t|  6073| svr|V1| shelf|H01| hidden failure in copy|None|
+20210203_142506 SERVER INFO - small error t|  6184| svr|V1| shelf|H01| consecutive misses|2|
+20210203_142506 SERVER INFO - small error t|  6184| svr|V1| shelf|H01| hidden failure in copy|X3387| doc|D3387|
+20210203_142506 SERVER INFO - small error t|  6489| svr|V1| shelf|H01| hidden failure in copy|X6231| doc|D6231|
+20210203_142506 SERVER INFO - small error t|  6633| svr|V1| shelf|H01| hidden failure in copy|None|
+20210203_142506 SERVER INFO - small error t|  9689| svr|V1| shelf|H01| consecutive misses|23|
+20210203_142506 SERVER INFO - small error t|  9689| svr|V1| shelf|H01| hidden failure in copy|X2392| doc|D2392|
+20210203_142506 SERVER INFO - small error t|  9904| svr|V1| shelf|H01| hidden failure in copy|X7503| doc|D7503|
+20210203_142506 SERVER INFO - small error t| 10290| svr|V1| shelf|H01| hidden failure in copy|None|
+20210203_142506 SERVER INFO - small error t| 13163| svr|V1| shelf|H01| consecutive misses|21|
+20210203_142506 SERVER INFO - small error t| 13163| svr|V1| shelf|H01| hidden failure in copy|X623| doc|D623|
+20210203_142506 SERVER INFO - small error t| 13444| svr|V1| shelf|H01| hidden failure in copy|None|
+20210203_142506 SERVER INFO - small error t| 13767| svr|V1| shelf|H01| consecutive misses|4|
+20210203_142506 SERVER INFO - small error t| 13767| svr|V1| shelf|H01| hidden failure in copy|X9762| doc|D9762|
+20210203_142506 SERVER INFO - small error t| 13837| svr|V1| shelf|H01| hidden failure in copy|None|
+20210203_142506 SERVER INFO - small error t| 14681| svr|V1| shelf|H01| consecutive misses|11|
+20210203_142506 SERVER INFO - small error t| 14681| svr|V1| shelf|H01| hidden failure in copy|X8895| doc|D8895|
+20210203_142506 SERVER INFO - small error t| 14761| svr|V1| shelf|H01| hidden failure in copy|X2799| doc|D2799|
+20210203_142506 SERVER INFO - small error t| 14777| svr|V1| shelf|H01| hidden failure in copy|None|
+20210203_142506 SERVER INFO - small error t| 14876| svr|V1| shelf|H01| consecutive misses|1|
+20210203_142506 SERVER INFO - small error t| 14876| svr|V1| shelf|H01| hidden failure in copy|X288| doc|D288|
+20210203_142506 SERVER INFO - small error t| 14942| svr|V1| shelf|H01| hidden failure in copy|None|
+20210203_142506 SERVER INFO - small error t| 17134| svr|V1| shelf|H01| consecutive misses|13|
+20210203_142506 SERVER INFO - small error t| 17134| svr|V1| shelf|H01| hidden failure in copy|X5131| doc|D5131|
+20210203_142506 SERVER INFO - small error t| 17176| svr|V1| shelf|H01| hidden failure in copy|None|
+20210203_142506 SERVER INFO - small error t| 20952| svr|V1| shelf|H01| consecutive misses|40|
+20210203_142506 SERVER INFO - small error t| 20952| svr|V1| shelf|H01| hidden failure in copy|X8190| doc|D8190|
+20210203_142506 SERVER INFO - small error t| 21092| svr|V1| shelf|H01| hidden failure in copy|None|
+20210203_142506 SERVER INFO - small error t| 21496| svr|V1| shelf|H01| consecutive misses|9|
+20210203_142506 SERVER INFO - small error t| 21496| svr|V1| shelf|H01| hidden failure in copy|X7462| doc|D7462|
+20210203_142506 SERVER INFO - small error t| 21504| svr|V1| shelf|H01| hidden failure in copy|None|
+20210203_142506 SERVER INFO - small error t| 25270| svr|V1| shelf|H01| consecutive misses|39|
+20210203_142506 SERVER INFO - small error t| 25270| svr|V1| shelf|H01| hidden failure in copy|X9107| doc|D9107|
+20210203_142506 SERVER INFO - small error t| 25318| svr|V1| shelf|H01| hidden failure in copy|None|
+20210203_142506 SERVER INFO - small error t| 26976| svr|V1| shelf|H01| consecutive misses|14|
+20210203_142506 SERVER INFO - small error t| 26976| svr|V1| shelf|H01| hidden failure in copy|X5007| doc|D5007|
+20210203_142506 SERVER INFO - small error t| 26986| svr|V1| shelf|H01| hidden failure in copy|None|
+20210203_142506 SERVER INFO - small error t| 28587| svr|V1| shelf|H01| consecutive misses|13|
+20210203_142506 SERVER INFO - small error t| 28587| svr|V1| shelf|H01| hidden failure in copy|X6521| doc|D6521|
+20210203_142506 SERVER INFO - small error t| 28608| svr|V1| shelf|H01| hidden failure in copy|None|
+20210203_142506 SERVER INFO - small error t| 29900| svr|V1| shelf|H01| consecutive misses|20|
+20210203_142506 SERVER INFO - small error t| 29900| svr|V1| shelf|H01| hidden failure in copy|X1318| doc|D1318|
+20210203_142506 SERVER INFO - small error t| 30273| svr|V1| shelf|H01| hidden failure in copy|None|
+20210203_142506 SERVER INFO - small error t| 32673| svr|V1| shelf|H01| consecutive misses|23|
+20210203_142506 SERVER INFO - small error t| 32673| svr|V1| shelf|H01| hidden failure in copy|X6200| doc|D6200|
+20210203_142506 SERVER INFO - small error t| 32709| svr|V1| shelf|H01| hidden failure in copy|None|
+20210203_142506 SERVER INFO - small error t| 34122| svr|V1| shelf|H01| consecutive misses|17|
+20210203_142506 SERVER INFO - small error t| 34122| svr|V1| shelf|H01| hidden failure in copy|X657| doc|D657|
+20210203_142506 SERVER INFO - small error t| 34167| svr|V1| shelf|H01| hidden failure in copy|None|
+20210203_142506 SERVER INFO - small error t| 35839| svr|V1| shelf|H01| consecutive misses|16|
+20210203_142506 SERVER INFO - small error t| 35839| svr|V1| shelf|H01| hidden failure in copy|X4050| doc|D4050|
+20210203_142506 SERVER INFO - small error t| 35871| svr|V1| shelf|H01| hidden failure in copy|None|
+20210203_142506 SERVER INFO - small error t| 36206| svr|V1| shelf|H01| consecutive misses|9|
+20210203_142506 SERVER INFO - small error t| 36206| svr|V1| shelf|H01| hidden failure in copy|X9059| doc|D9059|
+20210203_142506 SERVER INFO - small error t| 36248| svr|V1| shelf|H01| hidden failure in copy|None|
+20210203_142506 SERVER INFO - small error t| 37995| svr|V1| shelf|H01| consecutive misses|15|
+20210203_142506 SERVER INFO - small error t| 37995| svr|V1| shelf|H01| hidden failure in copy|X982| doc|D982|
+20210203_142506 SERVER INFO - small error t| 38003| svr|V1| shelf|H01| hidden failure in copy|None|
+20210203_142506 SERVER INFO - small error t| 38155| svr|V1| shelf|H01| consecutive misses|3|
+20210203_142506 SERVER INFO - small error t| 38155| svr|V1| shelf|H01| hidden failure in copy|X7569| doc|D7569|
+20210203_142506 SERVER INFO - small error t| 38177| svr|V1| shelf|H01| hidden failure in copy|None|
+20210203_142506 SERVER INFO - small error t| 41643| svr|V1| shelf|H01| consecutive misses|35|
+20210203_142506 SERVER INFO - small error t| 41643| svr|V1| shelf|H01| hidden failure in copy|X2347| doc|D2347|
+20210203_142506 SERVER INFO - small error t| 41718| svr|V1| shelf|H01| hidden failure in copy|None|
+20210203_142506 SERVER INFO - small error t| 42042| svr|V1| shelf|H01| consecutive misses|1|
+20210203_142506 SERVER INFO - small error t| 42042| svr|V1| shelf|H01| hidden failure in copy|X8879| doc|D8879|
+20210203_142506 SERVER INFO - small error t| 42120| svr|V1| shelf|H01| hidden failure in copy|None|
+20210203_142506 SERVER INFO - small error t| 43682| svr|V1| shelf|H01| consecutive misses|15|
+20210203_142506 SERVER INFO - small error t| 43682| svr|V1| shelf|H01| hidden failure in copy|X9136| doc|D9136|
+20210203_142506 SERVER INFO - small error t| 43717| svr|V1| shelf|H01| hidden failure in copy|None|
+20210203_142506 SERVER INFO - small error t| 43776| svr|V1| shelf|H01| consecutive misses|1|
+20210203_142506 SERVER INFO - small error t| 43776| svr|V1| shelf|H01| hidden failure in copy|X1218| doc|D1218|
+20210203_142506 SERVER INFO - small error t| 43938| svr|V1| shelf|H01| hidden failure in copy|None|
+20210203_142506 SERVER INFO - small error t| 49434| svr|V1| shelf|H01| consecutive misses|45|
+20210203_142506 SERVER INFO - small error t| 49434| svr|V1| shelf|H01| hidden failure in copy|X3926| doc|D3926|
+20210203_142506 SERVER INFO - small error t| 49619| svr|V1| shelf|H01| hidden failure in copy|None|
+20210203_142506 SERVER INFO - small error t| 55889| svr|V1| shelf|H01| consecutive misses|57|
+20210203_142506 SERVER INFO - small error t| 55889| svr|V1| shelf|H01| hidden failure in copy|X8066| doc|D8066|
+20210203_142506 SERVER INFO - small error t| 55932| svr|V1| shelf|H01| hidden failure in copy|None|
+20210203_142506 SERVER INFO - small error t| 55975| svr|V1| shelf|H01| consecutive misses|1|
+20210203_142506 SERVER INFO - small error t| 55975| svr|V1| shelf|H01| hidden failure in copy|X8412| doc|D8412|
+20210203_142506 SERVER INFO - small error t| 56059| svr|V1| shelf|H01| hidden failure in copy|None|
+20210203_142506 SERVER INFO - small error t| 57981| svr|V1| shelf|H01| consecutive misses|23|
+20210203_142506 SERVER INFO - small error t| 57981| svr|V1| shelf|H01| hidden failure in copy|X5803| doc|D5803|
+20210203_142506 SERVER INFO - small error t| 58168| svr|V1| shelf|H01| hidden failure in copy|None|
+20210203_142506 SERVER INFO - small error t| 58870| svr|V1| shelf|H01| consecutive misses|9|
+20210203_142506 SERVER INFO - small error t| 58870| svr|V1| shelf|H01| hidden failure in copy|X2355| doc|D2355|
+20210203_142506 SERVER INFO - small error t| 58874| svr|V1| shelf|H01| hidden failure in copy|None|
+20210203_142506 SERVER INFO - small error t| 66831| svr|V1| shelf|H01| consecutive misses|83|
+20210203_142506 SERVER INFO - small error t| 66831| svr|V1| shelf|H01| hidden failure in copy|X8055| doc|D8055|
+20210203_142506 SERVER INFO - small error t| 66865| svr|V1| shelf|H01| hidden failure in copy|None|
+20210203_142506 SERVER INFO - small error t| 70140| svr|V1| shelf|H01| consecutive misses|42|
+20210203_142506 SERVER INFO - small error t| 70140| svr|V1| shelf|H01| hidden failure in copy|X8448| doc|D8448|
+20210203_142506 SERVER INFO - small error t| 70492| svr|V1| shelf|H01| hidden failure in copy|None|
+20210203_142506 SERVER INFO - small error t| 71084| svr|V1| shelf|H01| consecutive misses|7|
+20210203_142506 SERVER INFO - small error t| 71084| svr|V1| shelf|H01| hidden failure in copy|X1902| doc|D1902|
+20210203_142506 SERVER INFO - small error t| 71117| svr|V1| shelf|H01| hidden failure in copy|None|
+20210203_142506 SERVER INFO - small error t| 72602| svr|V1| shelf|H01| consecutive misses|14|
+20210203_142506 SERVER INFO - small error t| 72602| svr|V1| shelf|H01| hidden failure in copy|X4654| doc|D4654|
+20210203_142506 SERVER INFO - small error t| 72688| svr|V1| shelf|H01| hidden failure in copy|None|
+20210203_142506 SERVER INFO - small error t| 74582| svr|V1| shelf|H01| consecutive misses|13|
+20210203_142506 SERVER INFO - small error t| 74582| svr|V1| shelf|H01| hidden failure in copy|X575| doc|D575|
+20210203_142506 SERVER INFO - small error t| 74723| svr|V1| shelf|H01| hidden failure in copy|None|
+20210203_142506 SERVER INFO - small error t| 77823| svr|V1| shelf|H01| consecutive misses|19|
+20210203_142506 SERVER INFO - small error t| 77823| svr|V1| shelf|H01| hidden failure in copy|X4832| doc|D4832|
+20210203_142506 SERVER INFO - small error t| 78145| svr|V1| shelf|H01| hidden failure in copy|None|
+20210203_142506 SERVER INFO - small error t| 81265| svr|V1| shelf|H01| consecutive misses|35|
+20210203_142506 SERVER INFO - small error t| 81265| svr|V1| shelf|H01| hidden failure in copy|X7360| doc|D7360|
+20210203_142506 SERVER INFO - small error t| 81398| svr|V1| shelf|H01| hidden failure in copy|X8473| doc|D8473|
+20210203_142506 SERVER INFO - small error t| 81500| svr|V1| shelf|H01| hidden failure in copy|None|
+20210203_142506 SERVER INFO - small error t| 87767| svr|V1| shelf|H01| consecutive misses|55|
+20210203_142506 SERVER INFO - small error t| 87767| svr|V1| shelf|H01| hidden failure in copy|X9565| doc|D9565|
+20210203_142506 SERVER INFO - small error t| 87862| svr|V1| shelf|H01| hidden failure in copy|None|
+20210203_142506 SERVER INFO - small error t| 92133| svr|V1| shelf|H01| consecutive misses|46|
+20210203_142506 SERVER INFO - small error t| 92133| svr|V1| shelf|H01| hidden failure in copy|X9892| doc|D9892|
+20210203_142506 SERVER INFO - small error t| 92212| svr|V1| shelf|H01| hidden failure in copy|None|
+20210203_142506 SERVER INFO - small error t| 98654| svr|V1| shelf|H01| consecutive misses|68|
+20210203_142506 SERVER INFO - small error t| 98654| svr|V1| shelf|H01| hidden failure in copy|X106| doc|D106|
+20210203_142506 SERVER INFO - small error t| 98699| svr|V1| shelf|H01| hidden failure in copy|None|
+20210203_142506 SERVER INFO - small error t| 99169| svr|V1| shelf|H01| consecutive misses|7|
+20210203_142506 SERVER INFO - small error t| 99169| svr|V1| shelf|H01| hidden failure in copy|X3293| doc|D3293|
+20210203_142506 SERVER INFO - small error t| 99270| svr|V1| shelf|H01| hidden failure in copy|None|
+20210203_142506 SHOCK  INFO - t|100000| end of run checking all server lifetimes
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V1| life|0|=|0.0|yr inuse
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V2| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V3| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V4| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V5| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V6| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V7| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V8| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V9| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V10| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V11| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V12| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V13| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V14| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V15| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V16| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V17| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V18| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V19| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V20| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V21| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V22| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V23| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V24| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V25| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V26| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V27| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V28| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V29| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V30| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V31| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V32| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V33| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V34| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V35| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V36| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V37| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V38| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V39| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V40| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V41| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V42| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V43| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V44| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V45| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V46| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V47| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V48| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V49| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V50| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V51| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V52| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V53| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V54| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V55| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V56| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V57| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V58| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V59| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V60| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V61| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V62| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V63| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V64| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V65| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V66| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V67| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V68| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V69| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V70| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V71| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V72| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V73| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V74| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V75| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V76| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V77| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V78| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V79| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V80| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V81| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V82| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V83| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V84| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V85| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V86| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V87| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V88| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V89| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V90| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V91| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V92| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V93| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V94| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V95| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V96| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V97| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V98| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V99| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V100| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V101| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V102| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V103| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V104| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V105| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V106| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V107| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V108| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V109| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V110| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V111| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V112| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V113| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V114| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V115| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V116| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V117| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V118| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V119| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V120| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V121| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V122| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V123| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V124| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V125| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V126| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V127| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V128| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V129| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V130| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V131| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V132| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V133| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V134| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V135| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V136| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V137| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V138| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V139| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V140| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V141| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V142| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V143| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V144| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V145| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V146| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V147| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V148| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V149| life|0|=|0.0|yr 
+20210203_142506 SHOCK  INFO - t|100000| audit+end check svr|V150| life|0|=|0.0|yr 
+20210203_142506 MAIN INFO - end run, simulated time|100000|
+20210203_142506 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D89| majority|False|0| minority|False|0| lost|True|
+20210203_142506 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D106| majority|False|0| minority|False|0| lost|True|
+20210203_142506 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D288| majority|False|0| minority|False|0| lost|True|
+20210203_142506 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D575| majority|False|0| minority|False|0| lost|True|
+20210203_142506 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D623| majority|False|0| minority|False|0| lost|True|
+20210203_142506 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D657| majority|False|0| minority|False|0| lost|True|
+20210203_142506 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D783| majority|False|0| minority|False|0| lost|True|
+20210203_142506 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D982| majority|False|0| minority|False|0| lost|True|
+20210203_142506 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D1218| majority|False|0| minority|False|0| lost|True|
+20210203_142506 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D1318| majority|False|0| minority|False|0| lost|True|
+20210203_142506 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D1902| majority|False|0| minority|False|0| lost|True|
+20210203_142506 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D2347| majority|False|0| minority|False|0| lost|True|
+20210203_142506 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D2355| majority|False|0| minority|False|0| lost|True|
+20210203_142506 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D2392| majority|False|0| minority|False|0| lost|True|
+20210203_142506 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D2799| majority|False|0| minority|False|0| lost|True|
+20210203_142506 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D3293| majority|False|0| minority|False|0| lost|True|
+20210203_142506 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D3387| majority|False|0| minority|False|0| lost|True|
+20210203_142506 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D3926| majority|False|0| minority|False|0| lost|True|
+20210203_142506 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D4050| majority|False|0| minority|False|0| lost|True|
+20210203_142506 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D4654| majority|False|0| minority|False|0| lost|True|
+20210203_142506 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D4832| majority|False|0| minority|False|0| lost|True|
+20210203_142506 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D5007| majority|False|0| minority|False|0| lost|True|
+20210203_142506 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D5131| majority|False|0| minority|False|0| lost|True|
+20210203_142506 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D5285| majority|False|0| minority|False|0| lost|True|
+20210203_142506 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D5485| majority|False|0| minority|False|0| lost|True|
+20210203_142506 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D5803| majority|False|0| minority|False|0| lost|True|
+20210203_142506 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D5837| majority|False|0| minority|False|0| lost|True|
+20210203_142506 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D6200| majority|False|0| minority|False|0| lost|True|
+20210203_142506 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D6231| majority|False|0| minority|False|0| lost|True|
+20210203_142506 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D6521| majority|False|0| minority|False|0| lost|True|
+20210203_142506 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D7360| majority|False|0| minority|False|0| lost|True|
+20210203_142506 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D7462| majority|False|0| minority|False|0| lost|True|
+20210203_142506 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D7503| majority|False|0| minority|False|0| lost|True|
+20210203_142506 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D7569| majority|False|0| minority|False|0| lost|True|
+20210203_142506 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D8055| majority|False|0| minority|False|0| lost|True|
+20210203_142506 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D8066| majority|False|0| minority|False|0| lost|True|
+20210203_142506 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D8190| majority|False|0| minority|False|0| lost|True|
+20210203_142506 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D8412| majority|False|0| minority|False|0| lost|True|
+20210203_142506 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D8448| majority|False|0| minority|False|0| lost|True|
+20210203_142506 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D8473| majority|False|0| minority|False|0| lost|True|
+20210203_142506 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D8879| majority|False|0| minority|False|0| lost|True|
+20210203_142506 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D8895| majority|False|0| minority|False|0| lost|True|
+20210203_142506 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D9059| majority|False|0| minority|False|0| lost|True|
+20210203_142506 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D9107| majority|False|0| minority|False|0| lost|True|
+20210203_142506 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D9136| majority|False|0| minority|False|0| lost|True|
+20210203_142506 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D9565| majority|False|0| minority|False|0| lost|True|
+20210203_142506 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D9696| majority|False|0| minority|False|0| lost|True|
+20210203_142506 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D9762| majority|False|0| minority|False|0| lost|True|
+20210203_142506 DOCUMENT INFO - doc injured cli|T1| coll|C1| doc|D9892| majority|False|0| minority|False|0| lost|True|
+20210203_142506 MAIN INFO - client |T1| lost doc|D89| size|50|
+20210203_142506 MAIN INFO - client |T1| lost doc|D106| size|50|
+20210203_142506 MAIN INFO - client |T1| lost doc|D288| size|50|
+20210203_142506 MAIN INFO - client |T1| lost doc|D575| size|50|
+20210203_142506 MAIN INFO - client |T1| lost doc|D623| size|50|
+20210203_142506 MAIN INFO - client |T1| lost doc|D657| size|50|
+20210203_142506 MAIN INFO - client |T1| lost doc|D783| size|50|
+20210203_142506 MAIN INFO - client |T1| lost doc|D982| size|50|
+20210203_142506 MAIN INFO - client |T1| lost doc|D1218| size|50|
+20210203_142506 MAIN INFO - client |T1| lost doc|D1318| size|50|
+20210203_142506 MAIN INFO - client |T1| lost doc|D1902| size|50|
+20210203_142506 MAIN INFO - client |T1| lost doc|D2347| size|50|
+20210203_142506 MAIN INFO - client |T1| lost doc|D2355| size|50|
+20210203_142506 MAIN INFO - client |T1| lost doc|D2392| size|50|
+20210203_142506 MAIN INFO - client |T1| lost doc|D2799| size|50|
+20210203_142506 MAIN INFO - client |T1| lost doc|D3293| size|50|
+20210203_142506 MAIN INFO - client |T1| lost doc|D3387| size|50|
+20210203_142506 MAIN INFO - client |T1| lost doc|D3926| size|50|
+20210203_142506 MAIN INFO - client |T1| lost doc|D4050| size|50|
+20210203_142506 MAIN INFO - client |T1| lost doc|D4654| size|50|
+20210203_142506 MAIN INFO - client |T1| lost doc|D4832| size|50|
+20210203_142506 MAIN INFO - client |T1| lost doc|D5007| size|50|
+20210203_142506 MAIN INFO - client |T1| lost doc|D5131| size|50|
+20210203_142506 MAIN INFO - client |T1| lost doc|D5285| size|50|
+20210203_142506 MAIN INFO - client |T1| lost doc|D5485| size|50|
+20210203_142506 MAIN INFO - client |T1| lost doc|D5803| size|50|
+20210203_142506 MAIN INFO - client |T1| lost doc|D5837| size|50|
+20210203_142506 MAIN INFO - client |T1| lost doc|D6200| size|50|
+20210203_142506 MAIN INFO - client |T1| lost doc|D6231| size|50|
+20210203_142506 MAIN INFO - client |T1| lost doc|D6521| size|50|
+20210203_142506 MAIN INFO - client |T1| lost doc|D7360| size|50|
+20210203_142506 MAIN INFO - client |T1| lost doc|D7462| size|50|
+20210203_142506 MAIN INFO - client |T1| lost doc|D7503| size|50|
+20210203_142506 MAIN INFO - client |T1| lost doc|D7569| size|50|
+20210203_142506 MAIN INFO - client |T1| lost doc|D8055| size|50|
+20210203_142506 MAIN INFO - client |T1| lost doc|D8066| size|50|
+20210203_142506 MAIN INFO - client |T1| lost doc|D8190| size|50|
+20210203_142506 MAIN INFO - client |T1| lost doc|D8412| size|50|
+20210203_142506 MAIN INFO - client |T1| lost doc|D8448| size|50|
+20210203_142506 MAIN INFO - client |T1| lost doc|D8473| size|50|
+20210203_142506 MAIN INFO - client |T1| lost doc|D8879| size|50|
+20210203_142506 MAIN INFO - client |T1| lost doc|D8895| size|50|
+20210203_142506 MAIN INFO - client |T1| lost doc|D9059| size|50|
+20210203_142506 MAIN INFO - client |T1| lost doc|D9107| size|50|
+20210203_142506 MAIN INFO - client |T1| lost doc|D9136| size|50|
+20210203_142506 MAIN INFO - client |T1| lost doc|D9565| size|50|
+20210203_142506 MAIN INFO - client |T1| lost doc|D9696| size|50|
+20210203_142506 MAIN INFO - client |T1| lost doc|D9762| size|50|
+20210203_142506 MAIN INFO - client |T1| lost doc|D9892| size|50|
+20210203_142506 MAIN INFO - BAD NEWS: Total documents lost by client |T1| in all servers |49|
+20210203_142506 MAIN INFO - COLLECTIONTOTALS client|T1| collection|C1| nservers|1| ndocs|10000| nokay|9951| nmajority|0| nminority|0| nlost|49| 
+20210203_142506 MAIN INFO - SERVERUSE shelf|V1-H01| qual|1| sectorexpolife|1000000| size|10000000| hiwater|500001| currentuse|500000| full%|5|
+20210203_142506 MAIN INFO - SERVERERR1 shelf|V1-H01| qual|1| totalhits|986| nonempty|49| empty|937| alive|True|
+20210203_142506 MAIN INFO - SERVERERR2 shelf|V1-H01| qual|1| totalhits|986| abovehiwater|937| multiples|0|
+20210203_142506 MAIN INFO - SERVERERRTOTALS totalhits|986| abovehiwater|937| nonempty|49| empty|937| multiples|0|
+20210203_142506 MAIN INFO - DEADSERVERS ALL n|0| |[]|
+20210203_142506 MAIN INFO - DEADSERVERS ACTIVE n|0| |[]|
+20210203_142506 MAIN INFO - AUDITTOTALS ncycles|0| nfrequency|0| nsegments|0| nrepairs|0| nmajority|0| nminority|0| nlost|0| 
+20210203_142506 MAIN INFO - LIFETIME shelf|H01| lifetime|LIFE-H01| freq|0| impact|0| decay|1e+12| maxlife|1e+12| count|0| time|0.000|
+20210203_142506 MAIN INFO - LIFETIME Total glitches|0|
+20210203_142506 MAIN INFO - SHOCKS Total shocks|0| deaths due to shock|0: []|
+20210203_142506 MAIN INFO - SHOCKS When nshocks|0| at times|[]|
+20210203_142505 0 MAIN  proc Document Preservation simulation 
+20210203_142506 0 MAIN  proc Begin run time|0|
+20210203_142506 0 MAIN  proc End simulation1 timenow|100000| cpusecs|0.078| lastevent|99964| 
+20210203_142506 0 MAIN  proc End simulation2 hidoc|D10000| hicoll|C1| hishelf|H01|
+20210203_142506 0 MAIN  proc End simulation3 hiserver|V150| hiclient|T1| hicopy|X10000|
+20210203_142506 0 MAIN  proc End time stats: wall|   1.358| cpu|   0.078|
+20210203_142506 0 MAIN  ENDENDEND
