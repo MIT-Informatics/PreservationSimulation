@@ -24,9 +24,9 @@ DOI: https://doi.org/10.2218/ijdc.v15i1.727
 
 ## Contact Information
 
-Micah Altman: escience@mit.edu
+Micah Altman: escience@mit.edu, for topics related to digital curation. 
 
-Richard Landau: landau@ricksoft.com
+Richard Landau: landau@ricksoft.com, for topics related to the contents of this repository.
 
 
 ## Overview of Process
