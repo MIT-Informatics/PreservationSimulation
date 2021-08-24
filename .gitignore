@@ -20,6 +20,9 @@ hl2019*
 !**/GiantOutput*.txt
 !GiantOutput*.txt
 
+# ignore speculative directory for Python3 development
+shelf3
+
 # files to ignore everywhere
 *.zip
 *.tmp
@@ -29,7 +32,7 @@ hl2019*
 *.cmds
 *logs*.zip
 
-# 
+# other early development info not to be preserved
 articles
 test
 tmp
