@@ -22,7 +22,7 @@ import command
 @get('/mainsim')
 @ntrace
 def mainsim_get():
-    sMakeformCmd = ('python2 brokergroup_makeform.py '
+    sMakeformCmd = ('python3 brokergroup_makeform.py '
                         'brokergroup_form_insert.j2 '
                         'views/brokergroup_form2.tpl '
                         'instructions')
@@ -256,7 +256,7 @@ sMainCommandStringToStdout = ('python3 broker2.py inprogress done '
 #            '--help'
             )
 # Itsy bitsy test versions
-sMainCommandStringTestOnly = '''python2 main.py -h
+sMainCommandStringTestOnly = '''python3 main.py -h
 '''
 sMainCommandStringDumbTest = '''ls -l
 '''
